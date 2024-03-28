@@ -6,7 +6,6 @@
 #nullable disable
 
 using System;
-using System.Threading;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -57,22 +56,14 @@ namespace Azure.Compute.Batch
             _endpoint = endpoint;
         }
 
-        private Ops _cachedOps;
-
-        /// <summary> Initializes a new instance of Ops. </summary>
-        public virtual Ops GetOpsClient()
-        {
-            return Volatile.Read(ref _cachedOps) ?? Interlocked.CompareExchange(ref _cachedOps, new Ops(ClientDiagnostics, _pipeline, _tokenCredential), null) ?? _cachedOps;
-        }
-
-        /// <summary> Initializes a new instance of Batch. </summary>
+        /// <summary> Initializes a new instance of BatchApi. </summary>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="apiVersion"/> is null. </exception>
-        public virtual Batch GetBatchClient(string apiVersion = "2024-02-01.19.0")
+        public virtual BatchApi GetBatchApiClient(string apiVersion = "2024-02-01.19.0")
         {
             Argument.AssertNotNull(apiVersion, nameof(apiVersion));
 
-            return new Batch(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
+            return new BatchApi(ClientDiagnostics, _pipeline, _tokenCredential, _endpoint, apiVersion);
         }
     }
 }

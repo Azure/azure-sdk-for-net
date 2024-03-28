@@ -16,8 +16,8 @@ using Azure.Core.Pipeline;
 namespace Azure.Compute.Batch
 {
     // Data plane generated sub-client.
-    /// <summary> The Batch sub-client. </summary>
-    public partial class Batch
+    /// <summary> The BatchApi sub-client. </summary>
+    public partial class BatchApi
     {
         private static readonly string[] AuthorizationScopes = new string[] { "https://batch.core.windows.net//.default" };
         private readonly TokenCredential _tokenCredential;
@@ -31,18 +31,18 @@ namespace Azure.Compute.Batch
         /// <summary> The HTTP pipeline for sending and receiving REST requests and responses. </summary>
         public virtual HttpPipeline Pipeline => _pipeline;
 
-        /// <summary> Initializes a new instance of Batch for mocking. </summary>
-        protected Batch()
+        /// <summary> Initializes a new instance of BatchApi for mocking. </summary>
+        protected BatchApi()
         {
         }
 
-        /// <summary> Initializes a new instance of Batch. </summary>
+        /// <summary> Initializes a new instance of BatchApi. </summary>
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="tokenCredential"> The token credential to copy. </param>
         /// <param name="endpoint"> Batch account endpoint (for example: https://batchaccount.eastus2.batch.azure.com). </param>
         /// <param name="apiVersion"> The API version to use for this operation. </param>
-        internal Batch(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
+        internal BatchApi(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, TokenCredential tokenCredential, Uri endpoint, string apiVersion)
         {
             ClientDiagnostics = clientDiagnostics;
             _pipeline = pipeline;
@@ -69,7 +69,7 @@ namespace Azure.Compute.Batch
         /// available to Compute Nodes, use the Azure portal or the Azure Resource Manager
         /// API.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetApplicationAsync(string,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetApplicationAsync(string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<BatchApplication>> GetApplicationAsync(string applicationId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
@@ -97,7 +97,7 @@ namespace Azure.Compute.Batch
         /// available to Compute Nodes, use the Azure portal or the Azure Resource Manager
         /// API.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetApplication(string,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetApplication(string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<BatchApplication> GetApplication(string applicationId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
@@ -134,12 +134,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetApplicationAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetApplicationAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> GetApplicationAsync(string applicationId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetApplication");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetApplication");
             scope.Start();
             try
             {
@@ -180,12 +180,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="applicationId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetApplication(string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetApplication(string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response GetApplication(string applicationId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetApplication");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetApplication");
             scope.Start();
             try
             {
@@ -214,7 +214,7 @@ namespace Azure.Compute.Batch
         /// secret project names. This information may appear in telemetry logs accessible
         /// to Microsoft Support engineers.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreatePoolAsync(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreatePoolAsync(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> CreatePoolAsync(BatchPoolCreateContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(pool, nameof(pool));
@@ -240,7 +240,7 @@ namespace Azure.Compute.Batch
         /// secret project names. This information may appear in telemetry logs accessible
         /// to Microsoft Support engineers.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreatePool(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreatePool(BatchPoolCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response CreatePool(BatchPoolCreateContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(pool, nameof(pool));
@@ -277,12 +277,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreatePoolAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreatePoolAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> CreatePoolAsync(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreatePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreatePool");
             scope.Start();
             try
             {
@@ -322,12 +322,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreatePool(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreatePool(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response CreatePool(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreatePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreatePool");
             scope.Start();
             try
             {
@@ -365,12 +365,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeletePoolAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeletePoolAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> DeletePoolAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeletePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeletePool");
             scope.Start();
             try
             {
@@ -408,12 +408,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeletePool(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeletePool(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response DeletePool(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeletePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeletePool");
             scope.Start();
             try
             {
@@ -451,12 +451,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='PoolExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='PoolExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response<bool>> PoolExistsAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.PoolExists");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.PoolExists");
             scope.Start();
             try
             {
@@ -494,12 +494,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='PoolExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='PoolExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response<bool> PoolExists(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.PoolExists");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.PoolExists");
             scope.Start();
             try
             {
@@ -527,7 +527,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BatchPool>> GetPoolAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -551,7 +551,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual Response<BatchPool> GetPool(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -591,12 +591,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> GetPoolAsync(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetPool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetPool");
             scope.Start();
             try
             {
@@ -640,12 +640,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPool(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
         public virtual Response GetPool(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetPool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetPool");
             scope.Start();
             try
             {
@@ -683,13 +683,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UpdatePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UpdatePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> UpdatePoolAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.UpdatePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.UpdatePool");
             scope.Start();
             try
             {
@@ -727,13 +727,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UpdatePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UpdatePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response UpdatePool(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.UpdatePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.UpdatePool");
             scope.Start();
             try
             {
@@ -770,12 +770,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisablePoolAutoScaleAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisablePoolAutoScaleAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> DisablePoolAutoScaleAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DisablePoolAutoScale");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DisablePoolAutoScale");
             scope.Start();
             try
             {
@@ -812,12 +812,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisablePoolAutoScale(string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisablePoolAutoScale(string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response DisablePoolAutoScale(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DisablePoolAutoScale");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DisablePoolAutoScale");
             scope.Start();
             try
             {
@@ -852,7 +852,7 @@ namespace Azure.Compute.Batch
         /// and/or a new evaluation interval. You cannot call this API for the same Pool
         /// more than once every 30 seconds.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnablePoolAutoScaleAsync(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnablePoolAutoScaleAsync(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> EnablePoolAutoScaleAsync(string poolId, BatchPoolEnableAutoScaleContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -885,7 +885,7 @@ namespace Azure.Compute.Batch
         /// and/or a new evaluation interval. You cannot call this API for the same Pool
         /// more than once every 30 seconds.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnablePoolAutoScale(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnablePoolAutoScale(string,BatchPoolEnableAutoScaleContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response EnablePoolAutoScale(string poolId, BatchPoolEnableAutoScaleContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -926,13 +926,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnablePoolAutoScaleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnablePoolAutoScaleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> EnablePoolAutoScaleAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EnablePoolAutoScale");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EnablePoolAutoScale");
             scope.Start();
             try
             {
@@ -975,13 +975,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnablePoolAutoScale(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnablePoolAutoScale(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response EnablePoolAutoScale(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EnablePoolAutoScale");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EnablePoolAutoScale");
             scope.Start();
             try
             {
@@ -1012,7 +1012,7 @@ namespace Azure.Compute.Batch
         /// the result without applying the formula to the Pool. The Pool must have auto
         /// scaling enabled in order to evaluate a formula.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EvaluatePoolAutoScaleAsync(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EvaluatePoolAutoScaleAsync(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<AutoScaleRun>> EvaluatePoolAutoScaleAsync(string poolId, BatchPoolEvaluateAutoScaleContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -1041,7 +1041,7 @@ namespace Azure.Compute.Batch
         /// the result without applying the formula to the Pool. The Pool must have auto
         /// scaling enabled in order to evaluate a formula.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EvaluatePoolAutoScale(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EvaluatePoolAutoScale(string,BatchPoolEvaluateAutoScaleContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<AutoScaleRun> EvaluatePoolAutoScale(string poolId, BatchPoolEvaluateAutoScaleContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -1081,13 +1081,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EvaluatePoolAutoScaleAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EvaluatePoolAutoScaleAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> EvaluatePoolAutoScaleAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EvaluatePoolAutoScale");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EvaluatePoolAutoScale");
             scope.Start();
             try
             {
@@ -1129,13 +1129,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EvaluatePoolAutoScale(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EvaluatePoolAutoScale(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response EvaluatePoolAutoScale(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EvaluatePoolAutoScale");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EvaluatePoolAutoScale");
             scope.Start();
             try
             {
@@ -1171,7 +1171,7 @@ namespace Azure.Compute.Batch
         /// Batch service chooses which Compute Nodes to remove. To remove specific Compute
         /// Nodes, use the Pool remove Compute Nodes API instead.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ResizePoolAsync(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ResizePoolAsync(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> ResizePoolAsync(string poolId, BatchPoolResizeContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -1205,7 +1205,7 @@ namespace Azure.Compute.Batch
         /// Batch service chooses which Compute Nodes to remove. To remove specific Compute
         /// Nodes, use the Pool remove Compute Nodes API instead.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ResizePool(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ResizePool(string,BatchPoolResizeContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response ResizePool(string poolId, BatchPoolResizeContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -1246,13 +1246,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ResizePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ResizePoolAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> ResizePoolAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ResizePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ResizePool");
             scope.Start();
             try
             {
@@ -1295,13 +1295,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ResizePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ResizePool(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response ResizePool(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ResizePool");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ResizePool");
             scope.Start();
             try
             {
@@ -1339,12 +1339,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='StopPoolResizeAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='StopPoolResizeAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> StopPoolResizeAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.StopPoolResize");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.StopPoolResize");
             scope.Start();
             try
             {
@@ -1382,12 +1382,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='StopPoolResize(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='StopPoolResize(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response StopPoolResize(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.StopPoolResize");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.StopPoolResize");
             scope.Start();
             try
             {
@@ -1418,7 +1418,7 @@ namespace Azure.Compute.Batch
         /// the Pool has a StartTask associated with it and if StartTask is not specified
         /// with this request, then the Batch service will remove the existing StartTask.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplacePoolPropertiesAsync(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplacePoolPropertiesAsync(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> ReplacePoolPropertiesAsync(string poolId, BatchPoolReplaceContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -1447,7 +1447,7 @@ namespace Azure.Compute.Batch
         /// the Pool has a StartTask associated with it and if StartTask is not specified
         /// with this request, then the Batch service will remove the existing StartTask.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplacePoolProperties(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplacePoolProperties(string,BatchPoolReplaceContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response ReplacePoolProperties(string poolId, BatchPoolReplaceContent pool, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -1487,13 +1487,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplacePoolPropertiesAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplacePoolPropertiesAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> ReplacePoolPropertiesAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplacePoolProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplacePoolProperties");
             scope.Start();
             try
             {
@@ -1535,13 +1535,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplacePoolProperties(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplacePoolProperties(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response ReplacePoolProperties(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplacePoolProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplacePoolProperties");
             scope.Start();
             try
             {
@@ -1573,7 +1573,7 @@ namespace Azure.Compute.Batch
         /// When this operation runs, the allocation state changes from steady to resizing.
         /// Each request may remove up to 100 nodes.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='RemoveNodesAsync(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='RemoveNodesAsync(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> RemoveNodesAsync(string poolId, BatchNodeRemoveContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -1603,7 +1603,7 @@ namespace Azure.Compute.Batch
         /// When this operation runs, the allocation state changes from steady to resizing.
         /// Each request may remove up to 100 nodes.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='RemoveNodes(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='RemoveNodes(string,BatchNodeRemoveContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response RemoveNodes(string poolId, BatchNodeRemoveContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -1644,13 +1644,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='RemoveNodesAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='RemoveNodesAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> RemoveNodesAsync(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.RemoveNodes");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.RemoveNodes");
             scope.Start();
             try
             {
@@ -1693,13 +1693,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='RemoveNodes(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='RemoveNodes(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response RemoveNodes(string poolId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.RemoveNodes");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.RemoveNodes");
             scope.Start();
             try
             {
@@ -1737,12 +1737,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteJobAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteJobAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> DeleteJobAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteJob");
             scope.Start();
             try
             {
@@ -1780,12 +1780,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteJob(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteJob(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response DeleteJob(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteJob");
             scope.Start();
             try
             {
@@ -1813,7 +1813,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BatchJob>> GetJobAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -1837,7 +1837,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual Response<BatchJob> GetJob(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -1877,12 +1877,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> GetJobAsync(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetJob");
             scope.Start();
             try
             {
@@ -1926,12 +1926,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJob(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
         public virtual Response GetJob(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetJob");
             scope.Start();
             try
             {
@@ -1969,13 +1969,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UpdateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UpdateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> UpdateJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.UpdateJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.UpdateJob");
             scope.Start();
             try
             {
@@ -2013,13 +2013,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UpdateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UpdateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response UpdateJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.UpdateJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.UpdateJob");
             scope.Start();
             try
             {
@@ -2051,7 +2051,7 @@ namespace Azure.Compute.Batch
         /// the Job has constraints associated with it and if constraints is not specified
         /// with this request, then the Batch service will remove the existing constraints.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceJobAsync(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceJobAsync(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> ReplaceJobAsync(string jobId, BatchJob job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2081,7 +2081,7 @@ namespace Azure.Compute.Batch
         /// the Job has constraints associated with it and if constraints is not specified
         /// with this request, then the Batch service will remove the existing constraints.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceJob(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceJob(string,BatchJob,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response ReplaceJob(string jobId, BatchJob job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2122,13 +2122,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> ReplaceJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplaceJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplaceJob");
             scope.Start();
             try
             {
@@ -2171,13 +2171,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response ReplaceJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplaceJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplaceJob");
             scope.Start();
             try
             {
@@ -2214,7 +2214,7 @@ namespace Azure.Compute.Batch
         /// disable a Job that is in any state other than active, disabling, or disabled,
         /// the request fails with status code 409.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableJobAsync(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableJobAsync(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> DisableJobAsync(string jobId, BatchJobDisableContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2249,7 +2249,7 @@ namespace Azure.Compute.Batch
         /// disable a Job that is in any state other than active, disabling, or disabled,
         /// the request fails with status code 409.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableJob(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableJob(string,BatchJobDisableContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response DisableJob(string jobId, BatchJobDisableContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2290,13 +2290,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> DisableJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DisableJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DisableJob");
             scope.Start();
             try
             {
@@ -2339,13 +2339,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response DisableJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DisableJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DisableJob");
             scope.Start();
             try
             {
@@ -2383,12 +2383,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnableJobAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnableJobAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> EnableJobAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EnableJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EnableJob");
             scope.Start();
             try
             {
@@ -2426,12 +2426,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnableJob(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnableJob(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response EnableJob(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EnableJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EnableJob");
             scope.Start();
             try
             {
@@ -2466,7 +2466,7 @@ namespace Azure.Compute.Batch
         /// state, they will remain in the active state. Once a Job is terminated, new
         /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='TerminateJobAsync(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> TerminateJobAsync(string jobId, BatchJobTerminateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2498,7 +2498,7 @@ namespace Azure.Compute.Batch
         /// state, they will remain in the active state. Once a Job is terminated, new
         /// Tasks cannot be added and any remaining active Tasks will not be scheduled.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='TerminateJob(string,BatchJobTerminateContent,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response TerminateJob(string jobId, BatchJobTerminateContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2538,12 +2538,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='TerminateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='TerminateJobAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> TerminateJobAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.TerminateJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.TerminateJob");
             scope.Start();
             try
             {
@@ -2586,12 +2586,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='TerminateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='TerminateJob(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response TerminateJob(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.TerminateJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.TerminateJob");
             scope.Start();
             try
             {
@@ -2626,7 +2626,7 @@ namespace Azure.Compute.Batch
         /// This information may appear in telemetry logs accessible to Microsoft Support
         /// engineers.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateJobAsync(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateJobAsync(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> CreateJobAsync(BatchJobCreateContent job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(job, nameof(job));
@@ -2658,7 +2658,7 @@ namespace Azure.Compute.Batch
         /// This information may appear in telemetry logs accessible to Microsoft Support
         /// engineers.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateJob(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateJob(BatchJobCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response CreateJob(BatchJobCreateContent job, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(job, nameof(job));
@@ -2695,12 +2695,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateJobAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateJobAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> CreateJobAsync(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateJob");
             scope.Start();
             try
             {
@@ -2740,12 +2740,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateJob(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateJob(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response CreateJob(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateJob");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateJob");
             scope.Start();
             try
             {
@@ -2776,7 +2776,7 @@ namespace Azure.Compute.Batch
         /// state are counted as running. Note that the numbers returned may not always be
         /// up to date. If you need exact task counts, use a list query.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobTaskCountsAsync(string,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobTaskCountsAsync(string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<BatchTaskCountsResult>> GetJobTaskCountsAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2803,7 +2803,7 @@ namespace Azure.Compute.Batch
         /// state are counted as running. Note that the numbers returned may not always be
         /// up to date. If you need exact task counts, use a list query.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobTaskCounts(string,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobTaskCounts(string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<BatchTaskCountsResult> GetJobTaskCounts(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -2840,12 +2840,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobTaskCountsAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobTaskCountsAsync(string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> GetJobTaskCountsAsync(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetJobTaskCounts");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetJobTaskCounts");
             scope.Start();
             try
             {
@@ -2886,12 +2886,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobTaskCounts(string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobTaskCounts(string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response GetJobTaskCounts(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetJobTaskCounts");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetJobTaskCounts");
             scope.Start();
             try
             {
@@ -2978,7 +2978,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateCertificate");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateCertificate");
             scope.Start();
             try
             {
@@ -3023,7 +3023,7 @@ namespace Azure.Compute.Batch
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateCertificate");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateCertificate");
             scope.Start();
             try
             {
@@ -3067,7 +3067,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CancelCertificateDeletion");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CancelCertificateDeletion");
             scope.Start();
             try
             {
@@ -3111,7 +3111,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CancelCertificateDeletion");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CancelCertificateDeletion");
             scope.Start();
             try
             {
@@ -3155,7 +3155,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteCertificate");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteCertificate");
             scope.Start();
             try
             {
@@ -3199,7 +3199,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteCertificate");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteCertificate");
             scope.Start();
             try
             {
@@ -3296,7 +3296,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetCertificate");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetCertificate");
             scope.Start();
             try
             {
@@ -3345,7 +3345,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(thumbprintAlgorithm, nameof(thumbprintAlgorithm));
             Argument.AssertNotNullOrEmpty(thumbprint, nameof(thumbprint));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetCertificate");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetCertificate");
             scope.Start();
             try
             {
@@ -3383,12 +3383,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='JobScheduleExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='JobScheduleExistsAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response<bool>> JobScheduleExistsAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.JobScheduleExists");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.JobScheduleExists");
             scope.Start();
             try
             {
@@ -3426,12 +3426,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='JobScheduleExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='JobScheduleExists(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response<bool> JobScheduleExists(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.JobScheduleExists");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.JobScheduleExists");
             scope.Start();
             try
             {
@@ -3469,12 +3469,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> DeleteJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteJobSchedule");
             scope.Start();
             try
             {
@@ -3512,12 +3512,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response DeleteJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteJobSchedule");
             scope.Start();
             try
             {
@@ -3545,7 +3545,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BatchJobSchedule>> GetJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
@@ -3569,7 +3569,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual Response<BatchJobSchedule> GetJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
@@ -3609,12 +3609,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobScheduleAsync(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> GetJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetJobSchedule");
             scope.Start();
             try
             {
@@ -3658,12 +3658,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobSchedule(string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
         public virtual Response GetJobSchedule(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetJobSchedule");
             scope.Start();
             try
             {
@@ -3701,13 +3701,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UpdateJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UpdateJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> UpdateJobScheduleAsync(string jobScheduleId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.UpdateJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.UpdateJobSchedule");
             scope.Start();
             try
             {
@@ -3745,13 +3745,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UpdateJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UpdateJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response UpdateJobSchedule(string jobScheduleId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.UpdateJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.UpdateJobSchedule");
             scope.Start();
             try
             {
@@ -3785,7 +3785,7 @@ namespace Azure.Compute.Batch
         /// impact Jobs created by the schedule after the update has taken place; currently
         /// running Jobs are unaffected.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceJobScheduleAsync(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceJobScheduleAsync(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> ReplaceJobScheduleAsync(string jobScheduleId, BatchJobSchedule jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
@@ -3817,7 +3817,7 @@ namespace Azure.Compute.Batch
         /// impact Jobs created by the schedule after the update has taken place; currently
         /// running Jobs are unaffected.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceJobSchedule(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceJobSchedule(string,BatchJobSchedule,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response ReplaceJobSchedule(string jobScheduleId, BatchJobSchedule jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
@@ -3858,13 +3858,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceJobScheduleAsync(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> ReplaceJobScheduleAsync(string jobScheduleId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplaceJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplaceJobSchedule");
             scope.Start();
             try
             {
@@ -3907,13 +3907,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceJobSchedule(string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response ReplaceJobSchedule(string jobScheduleId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplaceJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplaceJobSchedule");
             scope.Start();
             try
             {
@@ -3951,12 +3951,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> DisableJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DisableJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DisableJobSchedule");
             scope.Start();
             try
             {
@@ -3994,12 +3994,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response DisableJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DisableJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DisableJobSchedule");
             scope.Start();
             try
             {
@@ -4037,12 +4037,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnableJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnableJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> EnableJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EnableJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EnableJobSchedule");
             scope.Start();
             try
             {
@@ -4080,12 +4080,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnableJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnableJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response EnableJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EnableJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EnableJobSchedule");
             scope.Start();
             try
             {
@@ -4123,12 +4123,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='TerminateJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='TerminateJobScheduleAsync(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> TerminateJobScheduleAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.TerminateJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.TerminateJobSchedule");
             scope.Start();
             try
             {
@@ -4166,12 +4166,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='TerminateJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='TerminateJobSchedule(string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response TerminateJobSchedule(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.TerminateJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.TerminateJobSchedule");
             scope.Start();
             try
             {
@@ -4195,7 +4195,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobSchedule"/> is null. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateJobScheduleAsync(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateJobScheduleAsync(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> CreateJobScheduleAsync(BatchJobScheduleCreateContent jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
@@ -4216,7 +4216,7 @@ namespace Azure.Compute.Batch
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobSchedule"/> is null. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateJobSchedule(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateJobSchedule(BatchJobScheduleCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response CreateJobSchedule(BatchJobScheduleCreateContent jobSchedule, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(jobSchedule, nameof(jobSchedule));
@@ -4253,12 +4253,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateJobScheduleAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateJobScheduleAsync(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> CreateJobScheduleAsync(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateJobSchedule");
             scope.Start();
             try
             {
@@ -4298,12 +4298,12 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateJobSchedule(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateJobSchedule(RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response CreateJobSchedule(RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateJobSchedule");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateJobSchedule");
             scope.Start();
             try
             {
@@ -4334,7 +4334,7 @@ namespace Azure.Compute.Batch
         /// Task has not completed within 180 days of being added it will be terminated by
         /// the Batch service and left in whatever state it was in at that time.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateTaskAsync(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateTaskAsync(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> CreateTaskAsync(string jobId, BatchTaskCreateContent task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4363,7 +4363,7 @@ namespace Azure.Compute.Batch
         /// Task has not completed within 180 days of being added it will be terminated by
         /// the Batch service and left in whatever state it was in at that time.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateTask(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateTask(string,BatchTaskCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response CreateTask(string jobId, BatchTaskCreateContent task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4403,13 +4403,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateTaskAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateTaskAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> CreateTaskAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateTask");
             scope.Start();
             try
             {
@@ -4451,13 +4451,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateTask(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateTask(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response CreateTask(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateTask");
             scope.Start();
             try
             {
@@ -4499,7 +4499,7 @@ namespace Azure.Compute.Batch
         /// completed within 180 days of being added it will be terminated by the Batch
         /// service and left in whatever state it was in at that time.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<BatchTaskAddCollectionResult>> CreateTaskCollectionAsync(string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4539,7 +4539,7 @@ namespace Azure.Compute.Batch
         /// completed within 180 days of being added it will be terminated by the Batch
         /// service and left in whatever state it was in at that time.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateTaskCollection(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateTaskCollection(string,BatchTaskGroup,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<BatchTaskAddCollectionResult> CreateTaskCollection(string jobId, BatchTaskGroup taskCollection, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4579,13 +4579,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateTaskCollectionAsync(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> CreateTaskCollectionAsync(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateTaskCollection");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateTaskCollection");
             scope.Start();
             try
             {
@@ -4627,13 +4627,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateTaskCollection(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateTaskCollection(string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response CreateTaskCollection(string jobId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateTaskCollection");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateTaskCollection");
             scope.Start();
             try
             {
@@ -4672,13 +4672,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTaskAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteTask");
             scope.Start();
             try
             {
@@ -4717,13 +4717,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response DeleteTask(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteTask");
             scope.Start();
             try
             {
@@ -4757,7 +4757,7 @@ namespace Azure.Compute.Batch
         /// nodeInfo refer to the primary Task. Use the list subtasks API to retrieve
         /// information about subtasks.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BatchTask>> GetTaskAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4788,7 +4788,7 @@ namespace Azure.Compute.Batch
         /// nodeInfo refer to the primary Task. Use the list subtasks API to retrieve
         /// information about subtasks.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,CancellationToken)']/*" />
         public virtual Response<BatchTask> GetTask(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4830,13 +4830,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> GetTaskAsync(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetTask");
             scope.Start();
             try
             {
@@ -4881,13 +4881,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTask(string,string,int?,DateTimeOffset?,IEnumerable{string},IEnumerable{string},RequestConditions,RequestContext)']/*" />
         public virtual Response GetTask(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, IEnumerable<string> expand, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetTask");
             scope.Start();
             try
             {
@@ -4915,7 +4915,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="task"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response> ReplaceTaskAsync(string jobId, string taskId, BatchTask task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4942,7 +4942,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="task"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceTask(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceTask(string,string,BatchTask,int?,DateTimeOffset?,RequestConditions,CancellationToken)']/*" />
         public virtual Response ReplaceTask(string jobId, string taskId, BatchTask task, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -4985,14 +4985,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceTaskAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> ReplaceTaskAsync(string jobId, string taskId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplaceTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplaceTask");
             scope.Start();
             try
             {
@@ -5036,14 +5036,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceTask(string,string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceTask(string,string,RequestContent,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response ReplaceTask(string jobId, string taskId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplaceTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplaceTask");
             scope.Start();
             try
             {
@@ -5082,13 +5082,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='TerminateTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='TerminateTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> TerminateTaskAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.TerminateTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.TerminateTask");
             scope.Start();
             try
             {
@@ -5127,13 +5127,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='TerminateTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='TerminateTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response TerminateTask(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.TerminateTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.TerminateTask");
             scope.Start();
             try
             {
@@ -5173,13 +5173,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReactivateTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReactivateTaskAsync(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> ReactivateTaskAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReactivateTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReactivateTask");
             scope.Start();
             try
             {
@@ -5219,13 +5219,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReactivateTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReactivateTask(string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response ReactivateTask(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReactivateTask");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReactivateTask");
             scope.Start();
             try
             {
@@ -5270,14 +5270,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteTaskFileAsync(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteTaskFileAsync(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> DeleteTaskFileAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? recursive = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteTaskFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteTaskFile");
             scope.Start();
             try
             {
@@ -5322,14 +5322,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteTaskFile(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteTaskFile(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
         public virtual Response DeleteTaskFile(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? recursive = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
             Argument.AssertNotNullOrEmpty(taskId, nameof(taskId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteTaskFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteTaskFile");
             scope.Start();
             try
             {
@@ -5361,7 +5361,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetTaskFileAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -5391,7 +5391,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetTaskFile(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -5437,7 +5437,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> GetTaskFileAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -5453,7 +5453,7 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetTaskFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetTaskFile");
             scope.Start();
             try
             {
@@ -5501,7 +5501,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
         public virtual Response GetTaskFile(string jobId, string taskId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -5517,7 +5517,7 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetTaskFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetTaskFile");
             scope.Start();
             try
             {
@@ -5557,7 +5557,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response<bool>> GetTaskFilePropertiesAsync(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -5573,7 +5573,7 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetTaskFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetTaskFileProperties");
             scope.Start();
             try
             {
@@ -5613,7 +5613,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/>, <paramref name="taskId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response<bool> GetTaskFileProperties(string jobId, string taskId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -5629,7 +5629,7 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetTaskFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetTaskFileProperties");
             scope.Start();
             try
             {
@@ -5660,7 +5660,7 @@ namespace Azure.Compute.Batch
         /// You can add a user Account to a Compute Node only when it is in the idle or
         /// running state.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateNodeUserAsync(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateNodeUserAsync(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> CreateNodeUserAsync(string poolId, string nodeId, BatchNodeUserCreateContent user, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -5690,7 +5690,7 @@ namespace Azure.Compute.Batch
         /// You can add a user Account to a Compute Node only when it is in the idle or
         /// running state.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateNodeUser(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateNodeUser(string,string,BatchNodeUserCreateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response CreateNodeUser(string poolId, string nodeId, BatchNodeUserCreateContent user, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -5732,14 +5732,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateNodeUserAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateNodeUserAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> CreateNodeUserAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateNodeUser");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateNodeUser");
             scope.Start();
             try
             {
@@ -5782,14 +5782,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='CreateNodeUser(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='CreateNodeUser(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response CreateNodeUser(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.CreateNodeUser");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.CreateNodeUser");
             scope.Start();
             try
             {
@@ -5828,14 +5828,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteNodeUserAsync(string,string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteNodeUserAsync(string,string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> DeleteNodeUserAsync(string poolId, string nodeId, string userName, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteNodeUser");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteNodeUser");
             scope.Start();
             try
             {
@@ -5874,14 +5874,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteNodeUser(string,string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteNodeUser(string,string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response DeleteNodeUser(string poolId, string nodeId, string userName, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteNodeUser");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteNodeUser");
             scope.Start();
             try
             {
@@ -5915,7 +5915,7 @@ namespace Azure.Compute.Batch
         /// replaced with the default value, not left unmodified. You can update a user
         /// Account on a Compute Node only when it is in the idle or running state.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceNodeUserAsync(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceNodeUserAsync(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> ReplaceNodeUserAsync(string poolId, string nodeId, string userName, BatchNodeUserUpdateContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -5949,7 +5949,7 @@ namespace Azure.Compute.Batch
         /// replaced with the default value, not left unmodified. You can update a user
         /// Account on a Compute Node only when it is in the idle or running state.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceNodeUser(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceNodeUser(string,string,string,BatchNodeUserUpdateContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response ReplaceNodeUser(string poolId, string nodeId, string userName, BatchNodeUserUpdateContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -5993,7 +5993,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceNodeUserAsync(string,string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceNodeUserAsync(string,string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> ReplaceNodeUserAsync(string poolId, string nodeId, string userName, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6001,7 +6001,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplaceNodeUser");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplaceNodeUser");
             scope.Start();
             try
             {
@@ -6045,7 +6045,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="userName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReplaceNodeUser(string,string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReplaceNodeUser(string,string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response ReplaceNodeUser(string poolId, string nodeId, string userName, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6053,7 +6053,7 @@ namespace Azure.Compute.Batch
             Argument.AssertNotNullOrEmpty(userName, nameof(userName));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReplaceNodeUser");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReplaceNodeUser");
             scope.Start();
             try
             {
@@ -6080,7 +6080,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         public virtual async Task<Response<BatchNode>> GetNodeAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6104,7 +6104,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         public virtual Response<BatchNode> GetNode(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6144,13 +6144,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         public virtual async Task<Response> GetNodeAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNode");
             scope.Start();
             try
             {
@@ -6193,13 +6193,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNode(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         public virtual Response GetNode(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNode");
             scope.Start();
             try
             {
@@ -6227,7 +6227,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can restart a Compute Node only if it is in an idle or running state. </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='RebootNodeAsync(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='RebootNodeAsync(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> RebootNodeAsync(string poolId, string nodeId, BatchNodeRebootContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6253,7 +6253,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> You can restart a Compute Node only if it is in an idle or running state. </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='RebootNode(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='RebootNode(string,string,BatchNodeRebootContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response RebootNode(string poolId, string nodeId, BatchNodeRebootContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6294,13 +6294,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='RebootNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='RebootNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> RebootNodeAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.RebootNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.RebootNode");
             scope.Start();
             try
             {
@@ -6343,13 +6343,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='RebootNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='RebootNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response RebootNode(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.RebootNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.RebootNode");
             scope.Start();
             try
             {
@@ -6381,7 +6381,7 @@ namespace Azure.Compute.Batch
         /// idle or running state. This API can be invoked only on Pools created with the
         /// cloud service configuration property.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> ReimageNodeAsync(string poolId, string nodeId, BatchNodeReimageContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6411,7 +6411,7 @@ namespace Azure.Compute.Batch
         /// idle or running state. This API can be invoked only on Pools created with the
         /// cloud service configuration property.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReimageNode(string,string,BatchNodeReimageContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response ReimageNode(string poolId, string nodeId, BatchNodeReimageContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6452,13 +6452,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReimageNodeAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> ReimageNodeAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReimageNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReimageNode");
             scope.Start();
             try
             {
@@ -6501,13 +6501,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='ReimageNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='ReimageNode(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response ReimageNode(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.ReimageNode");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.ReimageNode");
             scope.Start();
             try
             {
@@ -6538,7 +6538,7 @@ namespace Azure.Compute.Batch
         /// You can disable Task scheduling on a Compute Node only if its current
         /// scheduling state is enabled.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableNodeSchedulingAsync(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response> DisableNodeSchedulingAsync(string poolId, string nodeId, BatchNodeDisableSchedulingContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6567,7 +6567,7 @@ namespace Azure.Compute.Batch
         /// You can disable Task scheduling on a Compute Node only if its current
         /// scheduling state is enabled.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableNodeScheduling(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableNodeScheduling(string,string,BatchNodeDisableSchedulingContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response DisableNodeScheduling(string poolId, string nodeId, BatchNodeDisableSchedulingContent parameters = null, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6608,13 +6608,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableNodeSchedulingAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableNodeSchedulingAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> DisableNodeSchedulingAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DisableNodeScheduling");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DisableNodeScheduling");
             scope.Start();
             try
             {
@@ -6657,13 +6657,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DisableNodeScheduling(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DisableNodeScheduling(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response DisableNodeScheduling(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DisableNodeScheduling");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DisableNodeScheduling");
             scope.Start();
             try
             {
@@ -6701,13 +6701,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnableNodeSchedulingAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnableNodeSchedulingAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> EnableNodeSchedulingAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EnableNodeScheduling");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EnableNodeScheduling");
             scope.Start();
             try
             {
@@ -6745,13 +6745,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='EnableNodeScheduling(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='EnableNodeScheduling(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response EnableNodeScheduling(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.EnableNodeScheduling");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.EnableNodeScheduling");
             scope.Start();
             try
             {
@@ -6784,7 +6784,7 @@ namespace Azure.Compute.Batch
         /// For Pools created with a cloud service configuration, see the GetRemoteDesktop
         /// API.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<BatchNodeRemoteLoginSettings>> GetNodeRemoteLoginSettingsAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6814,7 +6814,7 @@ namespace Azure.Compute.Batch
         /// For Pools created with a cloud service configuration, see the GetRemoteDesktop
         /// API.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<BatchNodeRemoteLoginSettings> GetNodeRemoteLoginSettings(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6853,13 +6853,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettingsAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> GetNodeRemoteLoginSettingsAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeRemoteLoginSettings");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeRemoteLoginSettings");
             scope.Start();
             try
             {
@@ -6901,13 +6901,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeRemoteLoginSettings(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response GetNodeRemoteLoginSettings(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeRemoteLoginSettings");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeRemoteLoginSettings");
             scope.Start();
             try
             {
@@ -6942,7 +6942,7 @@ namespace Azure.Compute.Batch
         /// with a cloud service configuration. For Pools created with a virtual machine
         /// configuration, see the GetRemoteLoginSettings API.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetNodeRemoteDesktopFileAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -6974,7 +6974,7 @@ namespace Azure.Compute.Batch
         /// with a cloud service configuration. For Pools created with a virtual machine
         /// configuration, see the GetRemoteLoginSettings API.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetNodeRemoteDesktopFile(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7016,13 +7016,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFileAsync(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> GetNodeRemoteDesktopFileAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeRemoteDesktopFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeRemoteDesktopFile");
             scope.Start();
             try
             {
@@ -7067,13 +7067,13 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeRemoteDesktopFile(string,string,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response GetNodeRemoteDesktopFile(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeRemoteDesktopFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeRemoteDesktopFile");
             scope.Start();
             try
             {
@@ -7112,7 +7112,7 @@ namespace Azure.Compute.Batch
         /// Azure support. The Azure Batch service log files should be shared with Azure
         /// support to aid in debugging issues with the Batch service.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UploadNodeLogsAsync(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UploadNodeLogsAsync(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual async Task<Response<UploadBatchServiceLogsResult>> UploadNodeLogsAsync(string poolId, string nodeId, UploadBatchServiceLogsContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7150,7 +7150,7 @@ namespace Azure.Compute.Batch
         /// Azure support. The Azure Batch service log files should be shared with Azure
         /// support to aid in debugging issues with the Batch service.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UploadNodeLogs(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UploadNodeLogs(string,string,UploadBatchServiceLogsContent,int?,DateTimeOffset?,CancellationToken)']/*" />
         public virtual Response<UploadBatchServiceLogsResult> UploadNodeLogs(string poolId, string nodeId, UploadBatchServiceLogsContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7196,14 +7196,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UploadNodeLogsAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UploadNodeLogsAsync(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual async Task<Response> UploadNodeLogsAsync(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.UploadNodeLogs");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.UploadNodeLogs");
             scope.Start();
             try
             {
@@ -7250,14 +7250,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='UploadNodeLogs(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='UploadNodeLogs(string,string,RequestContent,int?,DateTimeOffset?,RequestContext)']/*" />
         public virtual Response UploadNodeLogs(string poolId, string nodeId, RequestContent content, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNull(content, nameof(content));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.UploadNodeLogs");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.UploadNodeLogs");
             scope.Start();
             try
             {
@@ -7285,7 +7285,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         public virtual async Task<Response<BatchNodeVMExtension>> GetNodeExtensionAsync(string poolId, string nodeId, string extensionName, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7311,7 +7311,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         public virtual Response<BatchNodeVMExtension> GetNodeExtension(string poolId, string nodeId, string extensionName, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7353,14 +7353,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeExtensionAsync(string,string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         public virtual async Task<Response> GetNodeExtensionAsync(string poolId, string nodeId, string extensionName, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeExtension");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeExtension");
             scope.Start();
             try
             {
@@ -7404,14 +7404,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="extensionName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeExtension(string,string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         public virtual Response GetNodeExtension(string poolId, string nodeId, string extensionName, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(extensionName, nameof(extensionName));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeExtension");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeExtension");
             scope.Start();
             try
             {
@@ -7456,14 +7456,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteNodeFileAsync(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteNodeFileAsync(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
         public virtual async Task<Response> DeleteNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? recursive = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteNodeFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteNodeFile");
             scope.Start();
             try
             {
@@ -7508,14 +7508,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='DeleteNodeFile(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='DeleteNodeFile(string,string,string,int?,DateTimeOffset?,bool?,RequestContext)']/*" />
         public virtual Response DeleteNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, bool? recursive = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
             Argument.AssertNotNullOrEmpty(nodeId, nameof(nodeId));
             Argument.AssertNotNullOrEmpty(filePath, nameof(filePath));
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.DeleteNodeFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.DeleteNodeFile");
             scope.Start();
             try
             {
@@ -7547,7 +7547,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
         public virtual async Task<Response<BinaryData>> GetNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7577,7 +7577,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,CancellationToken)']/*" />
         public virtual Response<BinaryData> GetNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, string ocpRange = null, RequestConditions requestConditions = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7623,7 +7623,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFileAsync(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response> GetNodeFileAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7639,7 +7639,7 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeFile");
             scope.Start();
             try
             {
@@ -7687,7 +7687,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFile(string,string,string,int?,DateTimeOffset?,string,RequestConditions,RequestContext)']/*" />
         public virtual Response GetNodeFile(string poolId, string nodeId, string filePath, int? timeOutInSeconds, DateTimeOffset? ocpdate, string ocpRange, RequestConditions requestConditions, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7703,7 +7703,7 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeFile");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeFile");
             scope.Start();
             try
             {
@@ -7743,7 +7743,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFilePropertiesAsync(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual async Task<Response<bool>> GetNodeFilePropertiesAsync(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7759,7 +7759,7 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeFileProperties");
             scope.Start();
             try
             {
@@ -7799,7 +7799,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/>, <paramref name="nodeId"/> or <paramref name="filePath"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFileProperties(string,string,string,int?,DateTimeOffset?,RequestConditions,RequestContext)']/*" />
         public virtual Response<bool> GetNodeFileProperties(string poolId, string nodeId, string filePath, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, RequestConditions requestConditions = null, RequestContext context = null)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -7815,7 +7815,7 @@ namespace Azure.Compute.Batch
                 throw new ArgumentNullException(nameof(requestConditions), "Service does not support the If-None-Match header for this operation.");
             }
 
-            using var scope = ClientDiagnostics.CreateScope("Batch.GetNodeFileProperties");
+            using var scope = ClientDiagnostics.CreateScope("BatchApi.GetNodeFileProperties");
             scope.Start();
             try
             {
@@ -7848,13 +7848,13 @@ namespace Azure.Compute.Batch
         /// available to Compute Nodes, use the Azure portal or the Azure Resource Manager
         /// API.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetApplicationsAsync(int?,DateTimeOffset?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetApplicationsAsync(int?,DateTimeOffset?,int?,CancellationToken)']/*" />
         public virtual AsyncPageable<BatchApplication> GetApplicationsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpdate, maxresults, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchApplication.DeserializeBatchApplication(e), ClientDiagnostics, _pipeline, "Batch.GetApplications", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchApplication.DeserializeBatchApplication(e), ClientDiagnostics, _pipeline, "BatchApi.GetApplications", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the applications available in the specified Account. </summary>
@@ -7876,13 +7876,13 @@ namespace Azure.Compute.Batch
         /// available to Compute Nodes, use the Azure portal or the Azure Resource Manager
         /// API.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetApplications(int?,DateTimeOffset?,int?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetApplications(int?,DateTimeOffset?,int?,CancellationToken)']/*" />
         public virtual Pageable<BatchApplication> GetApplications(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpdate, maxresults, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchApplication.DeserializeBatchApplication(e), ClientDiagnostics, _pipeline, "Batch.GetApplications", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchApplication.DeserializeBatchApplication(e), ClientDiagnostics, _pipeline, "BatchApi.GetApplications", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -7913,12 +7913,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetApplicationsAsync(int?,DateTimeOffset?,int?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetApplicationsAsync(int?,DateTimeOffset?,int?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetApplicationsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpdate, maxresults, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetApplications", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetApplications", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -7949,12 +7949,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetApplications(int?,DateTimeOffset?,int?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetApplications(int?,DateTimeOffset?,int?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetApplications(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetApplicationsRequest(timeOutInSeconds, ocpdate, maxresults, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetApplicationsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetApplications", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetApplications", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -7994,13 +7994,13 @@ namespace Azure.Compute.Batch
         /// times of the last aggregation interval currently available; that is, only the
         /// last aggregation interval is returned.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
         public virtual AsyncPageable<BatchPoolUsageMetrics> GetPoolUsageMetricsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, DateTimeOffset? starttime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(e), ClientDiagnostics, _pipeline, "Batch.GetPoolUsageMetrics", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(e), ClientDiagnostics, _pipeline, "BatchApi.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8040,13 +8040,13 @@ namespace Azure.Compute.Batch
         /// times of the last aggregation interval currently available; that is, only the
         /// last aggregation interval is returned.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,CancellationToken)']/*" />
         public virtual Pageable<BatchPoolUsageMetrics> GetPoolUsageMetrics(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, DateTimeOffset? starttime = null, DateTimeOffset? endtime = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(e), ClientDiagnostics, _pipeline, "Batch.GetPoolUsageMetrics", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPoolUsageMetrics.DeserializeBatchPoolUsageMetrics(e), ClientDiagnostics, _pipeline, "BatchApi.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8092,12 +8092,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolUsageMetricsAsync(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetPoolUsageMetricsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetPoolUsageMetrics", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8143,12 +8143,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolUsageMetrics(int?,DateTimeOffset?,int?,DateTimeOffset?,DateTimeOffset?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetPoolUsageMetrics(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, DateTimeOffset? starttime, DateTimeOffset? endtime, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolUsageMetricsRequest(timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolUsageMetricsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, starttime, endtime, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetPoolUsageMetrics", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetPoolUsageMetrics", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Pools in the specified Account. </summary>
@@ -8169,13 +8169,13 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchPool> GetPoolsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPool.DeserializeBatchPool(e), ClientDiagnostics, _pipeline, "Batch.GetPools", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPool.DeserializeBatchPool(e), ClientDiagnostics, _pipeline, "BatchApi.GetPools", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Pools in the specified Account. </summary>
@@ -8196,13 +8196,13 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchPool> GetPools(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPool.DeserializeBatchPool(e), ClientDiagnostics, _pipeline, "Batch.GetPools", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPool.DeserializeBatchPool(e), ClientDiagnostics, _pipeline, "BatchApi.GetPools", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8239,12 +8239,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetPoolsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetPools", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetPools", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8281,12 +8281,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPools(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetPools(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetPools", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetPools", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all Virtual Machine Images supported by the Azure Batch service. </summary>
@@ -8305,13 +8305,13 @@ namespace Azure.Compute.Batch
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
         public virtual AsyncPageable<ImageInfo> GetSupportedImagesAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ImageInfo.DeserializeImageInfo(e), ClientDiagnostics, _pipeline, "Batch.GetSupportedImages", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ImageInfo.DeserializeImageInfo(e), ClientDiagnostics, _pipeline, "BatchApi.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all Virtual Machine Images supported by the Azure Batch service. </summary>
@@ -8330,13 +8330,13 @@ namespace Azure.Compute.Batch
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
         public virtual Pageable<ImageInfo> GetSupportedImages(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ImageInfo.DeserializeImageInfo(e), ClientDiagnostics, _pipeline, "Batch.GetSupportedImages", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ImageInfo.DeserializeImageInfo(e), ClientDiagnostics, _pipeline, "BatchApi.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8371,12 +8371,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetSupportedImagesAsync(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSupportedImagesAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetSupportedImages", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8411,12 +8411,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetSupportedImages(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSupportedImages(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSupportedImagesRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSupportedImagesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetSupportedImages", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetSupportedImages", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8439,13 +8439,13 @@ namespace Azure.Compute.Batch
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
         public virtual AsyncPageable<BatchPoolNodeCounts> GetPoolNodeCountsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPoolNodeCounts.DeserializeBatchPoolNodeCounts(e), ClientDiagnostics, _pipeline, "Batch.GetPoolNodeCounts", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchPoolNodeCounts.DeserializeBatchPoolNodeCounts(e), ClientDiagnostics, _pipeline, "BatchApi.GetPoolNodeCounts", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8468,13 +8468,13 @@ namespace Azure.Compute.Batch
         /// https://docs.microsoft.com/en-us/rest/api/batchservice/odata-filters-in-batch#list-support-images.
         /// </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,CancellationToken)']/*" />
         public virtual Pageable<BatchPoolNodeCounts> GetPoolNodeCounts(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPoolNodeCounts.DeserializeBatchPoolNodeCounts(e), ClientDiagnostics, _pipeline, "Batch.GetPoolNodeCounts", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchPoolNodeCounts.DeserializeBatchPoolNodeCounts(e), ClientDiagnostics, _pipeline, "BatchApi.GetPoolNodeCounts", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8511,12 +8511,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolNodeCountsAsync(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetPoolNodeCountsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetPoolNodeCounts", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetPoolNodeCounts", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8553,12 +8553,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetPoolNodeCounts(int?,DateTimeOffset?,int?,string,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetPoolNodeCounts(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetPoolNodeCountsRequest(timeOutInSeconds, ocpdate, maxresults, filter, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetPoolNodeCountsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetPoolNodeCounts", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetPoolNodeCounts", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Jobs in the specified Account. </summary>
@@ -8579,13 +8579,13 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchJob> GetJobsAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "Batch.GetJobs", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "BatchApi.GetJobs", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Jobs in the specified Account. </summary>
@@ -8606,13 +8606,13 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchJob> GetJobs(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "Batch.GetJobs", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "BatchApi.GetJobs", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8649,12 +8649,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobsAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetJobsAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetJobs", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetJobs", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8691,12 +8691,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobs(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetJobs(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetJobs", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetJobs", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
@@ -8720,7 +8720,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchJob> GetJobsFromSchedulesAsync(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
@@ -8728,7 +8728,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "Batch.GetJobsFromSchedules", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "BatchApi.GetJobsFromSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Jobs that have been created under the specified Job Schedule. </summary>
@@ -8752,7 +8752,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobScheduleId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchJob> GetJobsFromSchedules(string jobScheduleId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
@@ -8760,7 +8760,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "Batch.GetJobsFromSchedules", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJob.DeserializeBatchJob(e), ClientDiagnostics, _pipeline, "BatchApi.GetJobsFromSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8800,14 +8800,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobsFromSchedulesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetJobsFromSchedulesAsync(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetJobsFromSchedules", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetJobsFromSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8847,14 +8847,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobScheduleId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobsFromSchedules(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetJobsFromSchedules(string jobScheduleId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobScheduleId, nameof(jobScheduleId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobsFromSchedulesRequest(jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobsFromSchedulesNextPageRequest(nextLink, jobScheduleId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetJobsFromSchedules", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetJobsFromSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8888,7 +8888,7 @@ namespace Azure.Compute.Batch
         /// service returns HTTP status code 409 (Conflict) with an error code of
         /// JobPreparationTaskNotSpecified.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -8896,7 +8896,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJobPreparationAndReleaseTaskStatus.DeserializeBatchJobPreparationAndReleaseTaskStatus(e), ClientDiagnostics, _pipeline, "Batch.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJobPreparationAndReleaseTaskStatus.DeserializeBatchJobPreparationAndReleaseTaskStatus(e), ClientDiagnostics, _pipeline, "BatchApi.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8930,7 +8930,7 @@ namespace Azure.Compute.Batch
         /// service returns HTTP status code 409 (Conflict) with an error code of
         /// JobPreparationTaskNotSpecified.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchJobPreparationAndReleaseTaskStatus> GetJobPreparationAndReleaseTaskStatuses(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -8938,7 +8938,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJobPreparationAndReleaseTaskStatus.DeserializeBatchJobPreparationAndReleaseTaskStatus(e), ClientDiagnostics, _pipeline, "Batch.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJobPreparationAndReleaseTaskStatus.DeserializeBatchJobPreparationAndReleaseTaskStatus(e), ClientDiagnostics, _pipeline, "BatchApi.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -8978,14 +8978,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatusesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetJobPreparationAndReleaseTaskStatusesAsync(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9025,14 +9025,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobPreparationAndReleaseTaskStatuses(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetJobPreparationAndReleaseTaskStatuses(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobPreparationAndReleaseTaskStatusesRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobPreparationAndReleaseTaskStatusesNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetJobPreparationAndReleaseTaskStatuses", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Certificates that have been added to the specified Account. </summary>
@@ -9058,7 +9058,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchCertificate.DeserializeBatchCertificate(e), ClientDiagnostics, _pipeline, "Batch.GetCertificates", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchCertificate.DeserializeBatchCertificate(e), ClientDiagnostics, _pipeline, "BatchApi.GetCertificates", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Certificates that have been added to the specified Account. </summary>
@@ -9084,7 +9084,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchCertificate.DeserializeBatchCertificate(e), ClientDiagnostics, _pipeline, "Batch.GetCertificates", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchCertificate.DeserializeBatchCertificate(e), ClientDiagnostics, _pipeline, "BatchApi.GetCertificates", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9125,7 +9125,7 @@ namespace Azure.Compute.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetCertificates", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetCertificates", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9166,7 +9166,7 @@ namespace Azure.Compute.Batch
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetCertificatesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetCertificatesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetCertificates", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetCertificates", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Job Schedules in the specified Account. </summary>
@@ -9187,13 +9187,13 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchJobSchedule> GetJobSchedulesAsync(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJobSchedule.DeserializeBatchJobSchedule(e), ClientDiagnostics, _pipeline, "Batch.GetJobSchedules", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchJobSchedule.DeserializeBatchJobSchedule(e), ClientDiagnostics, _pipeline, "BatchApi.GetJobSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Job Schedules in the specified Account. </summary>
@@ -9214,13 +9214,13 @@ namespace Azure.Compute.Batch
         /// <param name="select"> An OData $select clause. </param>
         /// <param name="expand"> An OData $expand clause. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchJobSchedule> GetJobSchedules(int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJobSchedule.DeserializeBatchJobSchedule(e), ClientDiagnostics, _pipeline, "Batch.GetJobSchedules", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchJobSchedule.DeserializeBatchJobSchedule(e), ClientDiagnostics, _pipeline, "BatchApi.GetJobSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9257,12 +9257,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobSchedulesAsync(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetJobSchedulesAsync(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetJobSchedules", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetJobSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9299,12 +9299,12 @@ namespace Azure.Compute.Batch
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetJobSchedules(int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetJobSchedules(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetJobSchedulesRequest(timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetJobSchedulesNextPageRequest(nextLink, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetJobSchedules", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetJobSchedules", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Tasks that are associated with the specified Job. </summary>
@@ -9333,7 +9333,7 @@ namespace Azure.Compute.Batch
         /// nodeInfo refer to the primary Task. Use the list subtasks API to retrieve
         /// information about subtasks.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchTask> GetTasksAsync(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9341,7 +9341,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchTask.DeserializeBatchTask(e), ClientDiagnostics, _pipeline, "Batch.GetTasks", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchTask.DeserializeBatchTask(e), ClientDiagnostics, _pipeline, "BatchApi.GetTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the Tasks that are associated with the specified Job. </summary>
@@ -9370,7 +9370,7 @@ namespace Azure.Compute.Batch
         /// nodeInfo refer to the primary Task. Use the list subtasks API to retrieve
         /// information about subtasks.
         /// </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchTask> GetTasks(string jobId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, IEnumerable<string> expand = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9378,7 +9378,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchTask.DeserializeBatchTask(e), ClientDiagnostics, _pipeline, "Batch.GetTasks", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchTask.DeserializeBatchTask(e), ClientDiagnostics, _pipeline, "BatchApi.GetTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9418,14 +9418,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTasksAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTasksAsync(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetTasks", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9465,14 +9465,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTasks(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTasks(string jobId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, IEnumerable<string> expand, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTasksRequest(jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTasksNextPageRequest(nextLink, jobId, timeOutInSeconds, ocpdate, maxresults, filter, select, expand, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetTasks", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9492,7 +9492,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> If the Task is not a multi-instance Task then this returns an empty collection. </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchSubtask> GetSubTasksAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9501,7 +9501,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSubtask.DeserializeBatchSubtask(e), ClientDiagnostics, _pipeline, "Batch.GetSubTasks", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchSubtask.DeserializeBatchSubtask(e), ClientDiagnostics, _pipeline, "BatchApi.GetSubTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9521,7 +9521,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <remarks> If the Task is not a multi-instance Task then this returns an empty collection. </remarks>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchSubtask> GetSubTasks(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9530,7 +9530,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSubtask.DeserializeBatchSubtask(e), ClientDiagnostics, _pipeline, "Batch.GetSubTasks", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchSubtask.DeserializeBatchSubtask(e), ClientDiagnostics, _pipeline, "BatchApi.GetSubTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9563,7 +9563,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetSubTasksAsync(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetSubTasksAsync(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9571,7 +9571,7 @@ namespace Azure.Compute.Batch
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetSubTasks", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetSubTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9604,7 +9604,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetSubTasks(string,string,int?,DateTimeOffset?,IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetSubTasks(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9612,7 +9612,7 @@ namespace Azure.Compute.Batch
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetSubTasksRequest(jobId, taskId, timeOutInSeconds, ocpdate, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetSubTasksNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetSubTasks", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetSubTasks", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the files in a Task's directory on its Compute Node. </summary>
@@ -9639,7 +9639,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
         public virtual AsyncPageable<BatchNodeFile> GetTaskFilesAsync(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9648,7 +9648,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "Batch.GetTaskFiles", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "BatchApi.GetTaskFiles", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the files in a Task's directory on its Compute Node. </summary>
@@ -9675,7 +9675,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="jobId"/> or <paramref name="taskId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
         public virtual Pageable<BatchNodeFile> GetTaskFiles(string jobId, string taskId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9684,7 +9684,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "Batch.GetTaskFiles", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "BatchApi.GetTaskFiles", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9727,7 +9727,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetTaskFilesAsync(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9735,7 +9735,7 @@ namespace Azure.Compute.Batch
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetTaskFiles", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetTaskFiles", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9778,7 +9778,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="jobId"/> or <paramref name="taskId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetTaskFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetTaskFiles(string jobId, string taskId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(jobId, nameof(jobId));
@@ -9786,7 +9786,7 @@ namespace Azure.Compute.Batch
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetTaskFilesRequest(jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetTaskFilesNextPageRequest(nextLink, jobId, taskId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetTaskFiles", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetTaskFiles", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
@@ -9809,7 +9809,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchNode> GetNodesAsync(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -9817,7 +9817,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNode.DeserializeBatchNode(e), ClientDiagnostics, _pipeline, "Batch.GetNodes", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNode.DeserializeBatchNode(e), ClientDiagnostics, _pipeline, "BatchApi.GetNodes", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Compute Nodes in the specified Pool. </summary>
@@ -9840,7 +9840,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchNode> GetNodes(string poolId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -9848,7 +9848,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNode.DeserializeBatchNode(e), ClientDiagnostics, _pipeline, "Batch.GetNodes", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNode.DeserializeBatchNode(e), ClientDiagnostics, _pipeline, "BatchApi.GetNodes", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9887,14 +9887,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodesAsync(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetNodesAsync(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetNodes", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetNodes", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -9933,14 +9933,14 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodes(string,int?,DateTimeOffset?,int?,string,IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetNodes(string poolId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodesRequest(poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodesNextPageRequest(nextLink, poolId, timeOutInSeconds, ocpdate, maxresults, filter, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetNodes", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetNodes", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Compute Nodes Extensions in the specified Pool. </summary>
@@ -9960,7 +9960,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)']/*" />
         public virtual AsyncPageable<BatchNodeVMExtension> GetNodeExtensionsAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -9969,7 +9969,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeVMExtension.DeserializeBatchNodeVMExtension(e), ClientDiagnostics, _pipeline, "Batch.GetNodeExtensions", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeVMExtension.DeserializeBatchNodeVMExtension(e), ClientDiagnostics, _pipeline, "BatchApi.GetNodeExtensions", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists the Compute Nodes Extensions in the specified Pool. </summary>
@@ -9989,7 +9989,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},CancellationToken)']/*" />
         public virtual Pageable<BatchNodeVMExtension> GetNodeExtensions(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, IEnumerable<string> select = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -9998,7 +9998,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeVMExtension.DeserializeBatchNodeVMExtension(e), ClientDiagnostics, _pipeline, "Batch.GetNodeExtensions", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeVMExtension.DeserializeBatchNodeVMExtension(e), ClientDiagnostics, _pipeline, "BatchApi.GetNodeExtensions", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -10034,7 +10034,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeExtensionsAsync(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetNodeExtensionsAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -10042,7 +10042,7 @@ namespace Azure.Compute.Batch
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetNodeExtensions", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetNodeExtensions", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -10078,7 +10078,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeExtensions(string,string,int?,DateTimeOffset?,int?,IEnumerable{string},RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetNodeExtensions(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, IEnumerable<string> select, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -10086,7 +10086,7 @@ namespace Azure.Compute.Batch
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeExtensionsRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeExtensionsNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, select, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetNodeExtensions", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetNodeExtensions", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the files in Task directories on the specified Compute Node. </summary>
@@ -10110,7 +10110,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
         public virtual AsyncPageable<BatchNodeFile> GetNodeFilesAsync(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -10119,7 +10119,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "Batch.GetNodeFiles", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "BatchApi.GetNodeFiles", "value", "odata.nextLink", context);
         }
 
         /// <summary> Lists all of the files in Task directories on the specified Compute Node. </summary>
@@ -10143,7 +10143,7 @@ namespace Azure.Compute.Batch
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,CancellationToken)']/*" />
         public virtual Pageable<BatchNodeFile> GetNodeFiles(string poolId, string nodeId, int? timeOutInSeconds = null, DateTimeOffset? ocpdate = null, int? maxresults = null, string filter = null, bool? recursive = null, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -10152,7 +10152,7 @@ namespace Azure.Compute.Batch
             RequestContext context = cancellationToken.CanBeCanceled ? new RequestContext { CancellationToken = cancellationToken } : null;
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "Batch.GetNodeFiles", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BatchNodeFile.DeserializeBatchNodeFile(e), ClientDiagnostics, _pipeline, "BatchApi.GetNodeFiles", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -10192,7 +10192,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="AsyncPageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFilesAsync(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
         public virtual AsyncPageable<BinaryData> GetNodeFilesAsync(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -10200,7 +10200,7 @@ namespace Azure.Compute.Batch
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetNodeFiles", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetNodeFiles", "value", "odata.nextLink", context);
         }
 
         /// <summary>
@@ -10240,7 +10240,7 @@ namespace Azure.Compute.Batch
         /// <exception cref="ArgumentException"> <paramref name="poolId"/> or <paramref name="nodeId"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The <see cref="Pageable{T}"/> from the service containing a list of <see cref="BinaryData"/> objects. Details of the body schema for each item in the collection are in the Remarks section below. </returns>
-        /// <include file="Docs/Batch.xml" path="doc/members/member[@name='GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
+        /// <include file="Docs/BatchApi.xml" path="doc/members/member[@name='GetNodeFiles(string,string,int?,DateTimeOffset?,int?,string,bool?,RequestContext)']/*" />
         public virtual Pageable<BinaryData> GetNodeFiles(string poolId, string nodeId, int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, string filter, bool? recursive, RequestContext context)
         {
             Argument.AssertNotNullOrEmpty(poolId, nameof(poolId));
@@ -10248,7 +10248,7 @@ namespace Azure.Compute.Batch
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetNodeFilesRequest(poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetNodeFilesNextPageRequest(nextLink, poolId, nodeId, timeOutInSeconds, ocpdate, maxresults, filter, recursive, context);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "Batch.GetNodeFiles", "value", "odata.nextLink", context);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => BinaryData.FromString(e.GetRawText()), ClientDiagnostics, _pipeline, "BatchApi.GetNodeFiles", "value", "odata.nextLink", context);
         }
 
         internal HttpMessage CreateGetApplicationsRequest(int? timeOutInSeconds, DateTimeOffset? ocpdate, int? maxresults, RequestContext context)

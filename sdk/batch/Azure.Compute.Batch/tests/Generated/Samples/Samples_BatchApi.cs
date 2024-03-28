@@ -16,7 +16,7 @@ using NUnit.Framework;
 
 namespace Azure.Compute.Batch.Samples
 {
-    public partial class Samples_Batch
+    public partial class Samples_BatchApi
     {
         [Test]
         [Ignore("Only validating compilation of examples")]
@@ -24,7 +24,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetApplication("<applicationId>", null, null, null);
 
@@ -40,7 +40,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetApplicationAsync("<applicationId>", null, null, null);
 
@@ -56,7 +56,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchApplication> response = client.GetApplication("<applicationId>");
         }
@@ -67,7 +67,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchApplication> response = await client.GetApplicationAsync("<applicationId>");
         }
@@ -78,7 +78,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetApplication("<applicationId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
 
@@ -94,7 +94,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetApplicationAsync("<applicationId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
 
@@ -110,7 +110,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchApplication> response = client.GetApplication("<applicationId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
@@ -121,7 +121,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchApplication> response = await client.GetApplicationAsync("<applicationId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
@@ -132,7 +132,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -150,7 +150,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -168,7 +168,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>");
             Response response = client.CreatePool(pool);
@@ -180,7 +180,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>");
             Response response = await client.CreatePoolAsync(pool);
@@ -192,7 +192,7 @@ namespace Azure.Compute.Batch.Samples
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -537,7 +537,7 @@ mountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -882,7 +882,7 @@ mountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
             {
@@ -1112,7 +1112,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolCreateContent pool = new BatchPoolCreateContent("<id>", "<vmSize>")
             {
@@ -1342,7 +1342,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeletePool("<poolId>");
 
@@ -1355,7 +1355,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeletePoolAsync("<poolId>");
 
@@ -1368,7 +1368,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeletePool("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -1381,7 +1381,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeletePoolAsync("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -1394,7 +1394,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = client.PoolExists("<poolId>");
 
@@ -1407,7 +1407,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = await client.PoolExistsAsync("<poolId>");
 
@@ -1420,7 +1420,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = client.PoolExists("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -1433,7 +1433,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = await client.PoolExistsAsync("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -1446,7 +1446,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetPool("<poolId>", null, null, null, null, null, null);
 
@@ -1460,7 +1460,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetPoolAsync("<poolId>", null, null, null, null, null, null);
 
@@ -1474,7 +1474,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchPool> response = client.GetPool("<poolId>");
         }
@@ -1485,7 +1485,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchPool> response = await client.GetPoolAsync("<poolId>");
         }
@@ -1496,7 +1496,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetPool("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, new string[] { "<expand>" }, null, null);
 
@@ -1694,7 +1694,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetPoolAsync("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, new string[] { "<expand>" }, null, null);
 
@@ -1892,7 +1892,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchPool> response = client.GetPool("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }, expand: new string[] { "<expand>" }, requestConditions: null);
         }
@@ -1903,7 +1903,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchPool> response = await client.GetPoolAsync("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }, expand: new string[] { "<expand>" }, requestConditions: null);
         }
@@ -1914,7 +1914,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdatePool("<poolId>", content);
@@ -1928,7 +1928,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdatePoolAsync("<poolId>", content);
@@ -1942,7 +1942,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2040,7 +2040,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2138,7 +2138,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DisablePoolAutoScale("<poolId>");
 
@@ -2151,7 +2151,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DisablePoolAutoScaleAsync("<poolId>");
 
@@ -2164,7 +2164,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DisablePoolAutoScale("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
@@ -2177,7 +2177,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DisablePoolAutoScaleAsync("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
@@ -2190,7 +2190,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.EnablePoolAutoScale("<poolId>", content);
@@ -2204,7 +2204,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.EnablePoolAutoScaleAsync("<poolId>", content);
@@ -2218,7 +2218,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolEnableAutoScaleContent content = new BatchPoolEnableAutoScaleContent();
             Response response = client.EnablePoolAutoScale("<poolId>", content);
@@ -2230,7 +2230,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolEnableAutoScaleContent content = new BatchPoolEnableAutoScaleContent();
             Response response = await client.EnablePoolAutoScaleAsync("<poolId>", content);
@@ -2242,7 +2242,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2260,7 +2260,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2278,7 +2278,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolEnableAutoScaleContent content = new BatchPoolEnableAutoScaleContent
             {
@@ -2294,7 +2294,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolEnableAutoScaleContent content = new BatchPoolEnableAutoScaleContent
             {
@@ -2310,7 +2310,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2328,7 +2328,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2346,7 +2346,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolEvaluateAutoScaleContent content = new BatchPoolEvaluateAutoScaleContent("<autoScaleFormula>");
             Response<AutoScaleRun> response = client.EvaluatePoolAutoScale("<poolId>", content);
@@ -2358,7 +2358,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolEvaluateAutoScaleContent content = new BatchPoolEvaluateAutoScaleContent("<autoScaleFormula>");
             Response<AutoScaleRun> response = await client.EvaluatePoolAutoScaleAsync("<poolId>", content);
@@ -2370,7 +2370,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2393,7 +2393,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2416,7 +2416,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolEvaluateAutoScaleContent content = new BatchPoolEvaluateAutoScaleContent("<autoScaleFormula>");
             Response<AutoScaleRun> response = client.EvaluatePoolAutoScale("<poolId>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -2428,7 +2428,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolEvaluateAutoScaleContent content = new BatchPoolEvaluateAutoScaleContent("<autoScaleFormula>");
             Response<AutoScaleRun> response = await client.EvaluatePoolAutoScaleAsync("<poolId>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
@@ -2440,7 +2440,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.ResizePool("<poolId>", content);
@@ -2454,7 +2454,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ResizePoolAsync("<poolId>", content);
@@ -2468,7 +2468,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolResizeContent content = new BatchPoolResizeContent();
             Response response = client.ResizePool("<poolId>", content);
@@ -2480,7 +2480,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolResizeContent content = new BatchPoolResizeContent();
             Response response = await client.ResizePoolAsync("<poolId>", content);
@@ -2492,7 +2492,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2512,7 +2512,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2532,7 +2532,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolResizeContent content = new BatchPoolResizeContent
             {
@@ -2550,7 +2550,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolResizeContent content = new BatchPoolResizeContent
             {
@@ -2568,7 +2568,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.StopPoolResize("<poolId>");
 
@@ -2581,7 +2581,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.StopPoolResizeAsync("<poolId>");
 
@@ -2594,7 +2594,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.StopPoolResize("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -2607,7 +2607,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.StopPoolResizeAsync("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -2620,7 +2620,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2659,7 +2659,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2698,7 +2698,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateReference[]
             {
@@ -2719,7 +2719,7 @@ new MetadataItem("<name>", "<value>")
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateReference[]
             {
@@ -2740,7 +2740,7 @@ new MetadataItem("<name>", "<value>")
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2838,7 +2838,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -2936,7 +2936,7 @@ value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateReference[]
             {
@@ -3011,7 +3011,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchPoolReplaceContent pool = new BatchPoolReplaceContent(new BatchCertificateReference[]
             {
@@ -3086,7 +3086,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3106,7 +3106,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3126,7 +3126,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { "<nodeList>" });
             Response response = client.RemoveNodes("<poolId>", content);
@@ -3138,7 +3138,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { "<nodeList>" });
             Response response = await client.RemoveNodesAsync("<poolId>", content);
@@ -3150,7 +3150,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3172,7 +3172,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -3194,7 +3194,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { "<nodeList>" })
             {
@@ -3210,7 +3210,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeRemoveContent content = new BatchNodeRemoveContent(new string[] { "<nodeList>" })
             {
@@ -3226,7 +3226,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteJob("<jobId>");
 
@@ -3239,7 +3239,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteJobAsync("<jobId>");
 
@@ -3252,7 +3252,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteJob("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -3265,7 +3265,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteJobAsync("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -3278,7 +3278,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetJob("<jobId>", null, null, null, null, null, null);
 
@@ -3292,7 +3292,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetJobAsync("<jobId>", null, null, null, null, null, null);
 
@@ -3306,7 +3306,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchJob> response = client.GetJob("<jobId>");
         }
@@ -3317,7 +3317,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchJob> response = await client.GetJobAsync("<jobId>");
         }
@@ -3328,7 +3328,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetJob("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, new string[] { "<expand>" }, null, null);
 
@@ -3619,7 +3619,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetJobAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, new string[] { "<expand>" }, null, null);
 
@@ -3910,7 +3910,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchJob> response = client.GetJob("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }, expand: new string[] { "<expand>" }, requestConditions: null);
         }
@@ -3921,7 +3921,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchJob> response = await client.GetJobAsync("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }, expand: new string[] { "<expand>" }, requestConditions: null);
         }
@@ -3932,7 +3932,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateJob("<jobId>", content);
@@ -3946,7 +3946,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateJobAsync("<jobId>", content);
@@ -3960,7 +3960,7 @@ Value = "<value>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4327,7 +4327,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4694,7 +4694,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4711,7 +4711,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -4728,7 +4728,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJob job = new BatchJob(new BatchPoolInfo());
             Response response = client.ReplaceJob("<jobId>", job);
@@ -4740,7 +4740,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJob job = new BatchJob(new BatchPoolInfo());
             Response response = await client.ReplaceJobAsync("<jobId>", job);
@@ -4752,7 +4752,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5119,7 +5119,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5486,7 +5486,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJob job = new BatchJob(new BatchPoolInfo
             {
@@ -5734,7 +5734,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJob job = new BatchJob(new BatchPoolInfo
             {
@@ -5982,7 +5982,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -5999,7 +5999,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6016,7 +6016,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Requeue);
             Response response = client.DisableJob("<jobId>", content);
@@ -6028,7 +6028,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Requeue);
             Response response = await client.DisableJobAsync("<jobId>", content);
@@ -6040,7 +6040,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6057,7 +6057,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6074,7 +6074,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Requeue);
             Response response = client.DisableJob("<jobId>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
@@ -6086,7 +6086,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobDisableContent content = new BatchJobDisableContent(DisableBatchJobOption.Requeue);
             Response response = await client.DisableJobAsync("<jobId>", content, timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
@@ -6098,7 +6098,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.EnableJob("<jobId>");
 
@@ -6111,7 +6111,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.EnableJobAsync("<jobId>");
 
@@ -6124,7 +6124,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.EnableJob("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -6137,7 +6137,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.EnableJobAsync("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -6150,7 +6150,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = null;
             Response response = client.TerminateJob("<jobId>", content);
@@ -6164,7 +6164,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = null;
             Response response = await client.TerminateJobAsync("<jobId>", content);
@@ -6178,7 +6178,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.TerminateJob("<jobId>");
         }
@@ -6189,7 +6189,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.TerminateJobAsync("<jobId>");
         }
@@ -6200,7 +6200,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6217,7 +6217,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6234,7 +6234,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobTerminateContent parameters = new BatchJobTerminateContent
             {
@@ -6249,7 +6249,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobTerminateContent parameters = new BatchJobTerminateContent
             {
@@ -6264,7 +6264,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6282,7 +6282,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6300,7 +6300,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo());
             Response response = client.CreateJob(job);
@@ -6312,7 +6312,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo());
             Response response = await client.CreateJobAsync(job);
@@ -6324,7 +6324,7 @@ MountOptions = "<mountOptions>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -6796,7 +6796,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -7268,7 +7268,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
             {
@@ -7577,7 +7577,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobCreateContent job = new BatchJobCreateContent("<id>", new BatchPoolInfo
             {
@@ -7886,7 +7886,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetJobTaskCounts("<jobId>", null, null, null);
 
@@ -7909,7 +7909,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetJobTaskCountsAsync("<jobId>", null, null, null);
 
@@ -7932,7 +7932,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchTaskCountsResult> response = client.GetJobTaskCounts("<jobId>");
         }
@@ -7943,7 +7943,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchTaskCountsResult> response = await client.GetJobTaskCountsAsync("<jobId>");
         }
@@ -7954,7 +7954,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetJobTaskCounts("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
 
@@ -7977,7 +7977,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetJobTaskCountsAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
 
@@ -8000,7 +8000,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchTaskCountsResult> response = client.GetJobTaskCounts("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
@@ -8011,7 +8011,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchTaskCountsResult> response = await client.GetJobTaskCountsAsync("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
@@ -8022,7 +8022,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = client.JobScheduleExists("<jobScheduleId>");
 
@@ -8035,7 +8035,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = await client.JobScheduleExistsAsync("<jobScheduleId>");
 
@@ -8048,7 +8048,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = client.JobScheduleExists("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -8061,7 +8061,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = await client.JobScheduleExistsAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -8074,7 +8074,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteJobSchedule("<jobScheduleId>");
 
@@ -8087,7 +8087,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteJobScheduleAsync("<jobScheduleId>");
 
@@ -8100,7 +8100,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteJobSchedule("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -8113,7 +8113,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteJobScheduleAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -8126,7 +8126,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetJobSchedule("<jobScheduleId>", null, null, null, null, null, null);
 
@@ -8140,7 +8140,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetJobScheduleAsync("<jobScheduleId>", null, null, null, null, null, null);
 
@@ -8154,7 +8154,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchJobSchedule> response = client.GetJobSchedule("<jobScheduleId>");
         }
@@ -8165,7 +8165,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchJobSchedule> response = await client.GetJobScheduleAsync("<jobScheduleId>");
         }
@@ -8176,7 +8176,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetJobSchedule("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, new string[] { "<expand>" }, null, null);
 
@@ -8469,7 +8469,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetJobScheduleAsync("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, new string[] { "<expand>" }, null, null);
 
@@ -8762,7 +8762,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchJobSchedule> response = client.GetJobSchedule("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }, expand: new string[] { "<expand>" }, requestConditions: null);
         }
@@ -8773,7 +8773,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchJobSchedule> response = await client.GetJobScheduleAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }, expand: new string[] { "<expand>" }, requestConditions: null);
         }
@@ -8784,7 +8784,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.UpdateJobSchedule("<jobScheduleId>", content);
@@ -8798,7 +8798,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.UpdateJobScheduleAsync("<jobScheduleId>", content);
@@ -8812,7 +8812,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -9297,7 +9297,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -9782,7 +9782,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -9802,7 +9802,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -9822,7 +9822,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(new BatchPoolInfo()));
             Response response = client.ReplaceJobSchedule("<jobScheduleId>", jobSchedule);
@@ -9834,7 +9834,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(new BatchPoolInfo()));
             Response response = await client.ReplaceJobScheduleAsync("<jobScheduleId>", jobSchedule);
@@ -9846,7 +9846,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -10331,7 +10331,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -10816,7 +10816,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(new BatchPoolInfo
             {
@@ -11135,7 +11135,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobSchedule jobSchedule = new BatchJobSchedule(new BatchJobSpecification(new BatchPoolInfo
             {
@@ -11454,7 +11454,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DisableJobSchedule("<jobScheduleId>");
 
@@ -11467,7 +11467,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DisableJobScheduleAsync("<jobScheduleId>");
 
@@ -11480,7 +11480,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DisableJobSchedule("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -11493,7 +11493,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DisableJobScheduleAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -11506,7 +11506,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.EnableJobSchedule("<jobScheduleId>");
 
@@ -11519,7 +11519,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.EnableJobScheduleAsync("<jobScheduleId>");
 
@@ -11532,7 +11532,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.EnableJobSchedule("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -11545,7 +11545,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.EnableJobScheduleAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -11558,7 +11558,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.TerminateJobSchedule("<jobScheduleId>");
 
@@ -11571,7 +11571,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.TerminateJobScheduleAsync("<jobScheduleId>");
 
@@ -11584,7 +11584,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.TerminateJobSchedule("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -11597,7 +11597,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.TerminateJobScheduleAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -11610,7 +11610,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -11632,7 +11632,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -11654,7 +11654,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<id>", new BatchJobScheduleConfiguration(), new BatchJobSpecification(new BatchPoolInfo()));
             Response response = client.CreateJobSchedule(jobSchedule);
@@ -11666,7 +11666,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<id>", new BatchJobScheduleConfiguration(), new BatchJobSpecification(new BatchPoolInfo()));
             Response response = await client.CreateJobScheduleAsync(jobSchedule);
@@ -11678,7 +11678,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -12165,7 +12165,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -12652,7 +12652,7 @@ null
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<id>", new BatchJobScheduleConfiguration
             {
@@ -12971,7 +12971,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchJobScheduleCreateContent jobSchedule = new BatchJobScheduleCreateContent("<id>", new BatchJobScheduleConfiguration
             {
@@ -13290,7 +13290,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -13308,7 +13308,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -13326,7 +13326,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTaskCreateContent task = new BatchTaskCreateContent("<id>", "<commandLine>");
             Response response = client.CreateTask("<jobId>", task);
@@ -13338,7 +13338,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTaskCreateContent task = new BatchTaskCreateContent("<id>", "<commandLine>");
             Response response = await client.CreateTaskAsync("<jobId>", task);
@@ -13350,7 +13350,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -13517,7 +13517,7 @@ version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -13684,7 +13684,7 @@ version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTaskCreateContent task = new BatchTaskCreateContent("<id>", "<commandLine>")
             {
@@ -13787,7 +13787,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTaskCreateContent task = new BatchTaskCreateContent("<id>", "<commandLine>")
             {
@@ -13890,7 +13890,7 @@ Version = "<version>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -13915,7 +13915,7 @@ commandLine = "<commandLine>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -13940,7 +13940,7 @@ commandLine = "<commandLine>",
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
             {
@@ -13955,7 +13955,7 @@ new BatchTaskCreateContent("<id>", "<commandLine>")
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
             {
@@ -13970,7 +13970,7 @@ new BatchTaskCreateContent("<id>", "<commandLine>")
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -14153,7 +14153,7 @@ access = new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -14336,7 +14336,7 @@ access = new object[]
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
             {
@@ -14442,7 +14442,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTaskGroup taskCollection = new BatchTaskGroup(new BatchTaskCreateContent[]
             {
@@ -14548,7 +14548,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteTask("<jobId>", "<taskId>");
 
@@ -14561,7 +14561,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteTaskAsync("<jobId>", "<taskId>");
 
@@ -14574,7 +14574,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteTask("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -14587,7 +14587,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteTaskAsync("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -14600,7 +14600,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetTask("<jobId>", "<taskId>", null, null, null, null, null, null);
 
@@ -14614,7 +14614,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetTaskAsync("<jobId>", "<taskId>", null, null, null, null, null, null);
 
@@ -14628,7 +14628,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchTask> response = client.GetTask("<jobId>", "<taskId>");
         }
@@ -14639,7 +14639,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchTask> response = await client.GetTaskAsync("<jobId>", "<taskId>");
         }
@@ -14650,7 +14650,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetTask("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, new string[] { "<expand>" }, null, null);
 
@@ -14766,7 +14766,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetTaskAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, new string[] { "<expand>" }, null, null);
 
@@ -14882,7 +14882,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchTask> response = client.GetTask("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }, expand: new string[] { "<expand>" }, requestConditions: null);
         }
@@ -14893,7 +14893,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchTask> response = await client.GetTaskAsync("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }, expand: new string[] { "<expand>" }, requestConditions: null);
         }
@@ -14904,7 +14904,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.ReplaceTask("<jobId>", "<taskId>", content);
@@ -14918,7 +14918,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReplaceTaskAsync("<jobId>", "<taskId>", content);
@@ -14932,7 +14932,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTask task = new BatchTask();
             Response response = client.ReplaceTask("<jobId>", "<taskId>", task);
@@ -14944,7 +14944,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTask task = new BatchTask();
             Response response = await client.ReplaceTaskAsync("<jobId>", "<taskId>", task);
@@ -14956,7 +14956,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -14978,7 +14978,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -15000,7 +15000,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTask task = new BatchTask
             {
@@ -15020,7 +15020,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchTask task = new BatchTask
             {
@@ -15040,7 +15040,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.TerminateTask("<jobId>", "<taskId>");
 
@@ -15053,7 +15053,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.TerminateTaskAsync("<jobId>", "<taskId>");
 
@@ -15066,7 +15066,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.TerminateTask("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -15079,7 +15079,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.TerminateTaskAsync("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -15092,7 +15092,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.ReactivateTask("<jobId>", "<taskId>");
 
@@ -15105,7 +15105,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.ReactivateTaskAsync("<jobId>", "<taskId>");
 
@@ -15118,7 +15118,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.ReactivateTask("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -15131,7 +15131,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.ReactivateTaskAsync("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -15144,7 +15144,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteTaskFile("<jobId>", "<taskId>", "<filePath>");
 
@@ -15157,7 +15157,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteTaskFileAsync("<jobId>", "<taskId>", "<filePath>");
 
@@ -15170,7 +15170,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteTaskFile("<jobId>", "<taskId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), recursive: true);
 
@@ -15183,7 +15183,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteTaskFileAsync("<jobId>", "<taskId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), recursive: true);
 
@@ -15196,7 +15196,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetTaskFile("<jobId>", "<taskId>", "<filePath>", null, null, null, null, null);
 
@@ -15210,7 +15210,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetTaskFileAsync("<jobId>", "<taskId>", "<filePath>", null, null, null, null, null);
 
@@ -15224,7 +15224,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = client.GetTaskFile("<jobId>", "<taskId>", "<filePath>");
         }
@@ -15235,7 +15235,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = await client.GetTaskFileAsync("<jobId>", "<taskId>", "<filePath>");
         }
@@ -15246,7 +15246,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetTaskFile("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), "<ocp-range>", null, null);
 
@@ -15260,7 +15260,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetTaskFileAsync("<jobId>", "<taskId>", "<filePath>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), "<ocp-range>", null, null);
 
@@ -15274,7 +15274,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = client.GetTaskFile("<jobId>", "<taskId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), ocpRange: "<ocp-range>", requestConditions: null);
         }
@@ -15285,7 +15285,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = await client.GetTaskFileAsync("<jobId>", "<taskId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), ocpRange: "<ocp-range>", requestConditions: null);
         }
@@ -15296,7 +15296,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>");
 
@@ -15309,7 +15309,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>");
 
@@ -15322,7 +15322,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = client.GetTaskFileProperties("<jobId>", "<taskId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -15335,7 +15335,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = await client.GetTaskFilePropertiesAsync("<jobId>", "<taskId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -15348,7 +15348,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -15365,7 +15365,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -15382,7 +15382,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("<name>");
             Response response = client.CreateNodeUser("<poolId>", "<nodeId>", user);
@@ -15394,7 +15394,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("<name>");
             Response response = await client.CreateNodeUserAsync("<poolId>", "<nodeId>", user);
@@ -15406,7 +15406,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -15427,7 +15427,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -15448,7 +15448,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("<name>")
             {
@@ -15466,7 +15466,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeUserCreateContent user = new BatchNodeUserCreateContent("<name>")
             {
@@ -15484,7 +15484,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteNodeUser("<poolId>", "<nodeId>", "<userName>");
 
@@ -15497,7 +15497,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteNodeUserAsync("<poolId>", "<nodeId>", "<userName>");
 
@@ -15510,7 +15510,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteNodeUser("<poolId>", "<nodeId>", "<userName>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
@@ -15523,7 +15523,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteNodeUserAsync("<poolId>", "<nodeId>", "<userName>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
@@ -15536,7 +15536,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content);
@@ -15550,7 +15550,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new object());
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content);
@@ -15564,7 +15564,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent();
             Response response = client.ReplaceNodeUser("<poolId>", "<nodeId>", "<userName>", content);
@@ -15576,7 +15576,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent();
             Response response = await client.ReplaceNodeUserAsync("<poolId>", "<nodeId>", "<userName>", content);
@@ -15588,7 +15588,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -15607,7 +15607,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -15626,7 +15626,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
             {
@@ -15643,7 +15643,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeUserUpdateContent content = new BatchNodeUserUpdateContent
             {
@@ -15660,7 +15660,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNode("<poolId>", "<nodeId>", null, null, null, null);
 
@@ -15674,7 +15674,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeAsync("<poolId>", "<nodeId>", null, null, null, null);
 
@@ -15688,7 +15688,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNode> response = client.GetNode("<poolId>", "<nodeId>");
         }
@@ -15699,7 +15699,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNode> response = await client.GetNodeAsync("<poolId>", "<nodeId>");
         }
@@ -15710,7 +15710,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNode("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, null);
 
@@ -15820,7 +15820,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, null);
 
@@ -15930,7 +15930,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNode> response = client.GetNode("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" });
         }
@@ -15941,7 +15941,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNode> response = await client.GetNodeAsync("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" });
         }
@@ -15952,7 +15952,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = null;
             Response response = client.RebootNode("<poolId>", "<nodeId>", content);
@@ -15966,7 +15966,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = null;
             Response response = await client.RebootNodeAsync("<poolId>", "<nodeId>", content);
@@ -15980,7 +15980,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.RebootNode("<poolId>", "<nodeId>");
         }
@@ -15991,7 +15991,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.RebootNodeAsync("<poolId>", "<nodeId>");
         }
@@ -16002,7 +16002,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16019,7 +16019,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16036,7 +16036,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeRebootContent parameters = new BatchNodeRebootContent
             {
@@ -16051,7 +16051,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeRebootContent parameters = new BatchNodeRebootContent
             {
@@ -16066,7 +16066,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = null;
             Response response = client.ReimageNode("<poolId>", "<nodeId>", content);
@@ -16080,7 +16080,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = null;
             Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>", content);
@@ -16094,7 +16094,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.ReimageNode("<poolId>", "<nodeId>");
         }
@@ -16105,7 +16105,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.ReimageNodeAsync("<poolId>", "<nodeId>");
         }
@@ -16116,7 +16116,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16133,7 +16133,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16150,7 +16150,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeReimageContent parameters = new BatchNodeReimageContent
             {
@@ -16165,7 +16165,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeReimageContent parameters = new BatchNodeReimageContent
             {
@@ -16180,7 +16180,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = null;
             Response response = client.DisableNodeScheduling("<poolId>", "<nodeId>", content);
@@ -16194,7 +16194,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = null;
             Response response = await client.DisableNodeSchedulingAsync("<poolId>", "<nodeId>", content);
@@ -16208,7 +16208,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DisableNodeScheduling("<poolId>", "<nodeId>");
         }
@@ -16219,7 +16219,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DisableNodeSchedulingAsync("<poolId>", "<nodeId>");
         }
@@ -16230,7 +16230,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16247,7 +16247,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16264,7 +16264,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeDisableSchedulingContent parameters = new BatchNodeDisableSchedulingContent
             {
@@ -16279,7 +16279,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             BatchNodeDisableSchedulingContent parameters = new BatchNodeDisableSchedulingContent
             {
@@ -16294,7 +16294,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.EnableNodeScheduling("<poolId>", "<nodeId>");
 
@@ -16307,7 +16307,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.EnableNodeSchedulingAsync("<poolId>", "<nodeId>");
 
@@ -16320,7 +16320,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.EnableNodeScheduling("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
@@ -16333,7 +16333,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.EnableNodeSchedulingAsync("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
 
@@ -16346,7 +16346,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNodeRemoteLoginSettings("<poolId>", "<nodeId>", null, null, null);
 
@@ -16361,7 +16361,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeRemoteLoginSettingsAsync("<poolId>", "<nodeId>", null, null, null);
 
@@ -16376,7 +16376,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNodeRemoteLoginSettings> response = client.GetNodeRemoteLoginSettings("<poolId>", "<nodeId>");
         }
@@ -16387,7 +16387,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNodeRemoteLoginSettings> response = await client.GetNodeRemoteLoginSettingsAsync("<poolId>", "<nodeId>");
         }
@@ -16398,7 +16398,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNodeRemoteLoginSettings("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
 
@@ -16413,7 +16413,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeRemoteLoginSettingsAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
 
@@ -16428,7 +16428,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNodeRemoteLoginSettings> response = client.GetNodeRemoteLoginSettings("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
@@ -16439,7 +16439,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNodeRemoteLoginSettings> response = await client.GetNodeRemoteLoginSettingsAsync("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
@@ -16450,7 +16450,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNodeRemoteDesktopFile("<poolId>", "<nodeId>", null, null, null);
 
@@ -16464,7 +16464,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeRemoteDesktopFileAsync("<poolId>", "<nodeId>", null, null, null);
 
@@ -16478,7 +16478,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = client.GetNodeRemoteDesktopFile("<poolId>", "<nodeId>");
         }
@@ -16489,7 +16489,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = await client.GetNodeRemoteDesktopFileAsync("<poolId>", "<nodeId>");
         }
@@ -16500,7 +16500,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNodeRemoteDesktopFile("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
 
@@ -16514,7 +16514,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeRemoteDesktopFileAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), null);
 
@@ -16528,7 +16528,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = client.GetNodeRemoteDesktopFile("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
@@ -16539,7 +16539,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = await client.GetNodeRemoteDesktopFileAsync("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"));
         }
@@ -16550,7 +16550,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16570,7 +16570,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16590,7 +16590,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
             Response<UploadBatchServiceLogsResult> response = client.UploadNodeLogs("<poolId>", "<nodeId>", content);
@@ -16602,7 +16602,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"));
             Response<UploadBatchServiceLogsResult> response = await client.UploadNodeLogsAsync("<poolId>", "<nodeId>", content);
@@ -16614,7 +16614,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16639,7 +16639,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             using RequestContent content = RequestContent.Create(new
             {
@@ -16664,7 +16664,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
             {
@@ -16683,7 +16683,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             UploadBatchServiceLogsContent content = new UploadBatchServiceLogsContent("<containerUrl>", DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"))
             {
@@ -16702,7 +16702,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNodeExtension("<poolId>", "<nodeId>", "<extensionName>", null, null, null, null);
 
@@ -16716,7 +16716,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", null, null, null, null);
 
@@ -16730,7 +16730,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNodeVMExtension> response = client.GetNodeExtension("<poolId>", "<nodeId>", "<extensionName>");
         }
@@ -16741,7 +16741,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNodeVMExtension> response = await client.GetNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>");
         }
@@ -16752,7 +16752,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNodeExtension("<poolId>", "<nodeId>", "<extensionName>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, null);
 
@@ -16786,7 +16786,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, null);
 
@@ -16820,7 +16820,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNodeVMExtension> response = client.GetNodeExtension("<poolId>", "<nodeId>", "<extensionName>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" });
         }
@@ -16831,7 +16831,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BatchNodeVMExtension> response = await client.GetNodeExtensionAsync("<poolId>", "<nodeId>", "<extensionName>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" });
         }
@@ -16842,7 +16842,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteNodeFile("<poolId>", "<nodeId>", "<filePath>");
 
@@ -16855,7 +16855,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteNodeFileAsync("<poolId>", "<nodeId>", "<filePath>");
 
@@ -16868,7 +16868,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.DeleteNodeFile("<poolId>", "<nodeId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), recursive: true);
 
@@ -16881,7 +16881,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.DeleteNodeFileAsync("<poolId>", "<nodeId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), recursive: true);
 
@@ -16894,7 +16894,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNodeFile("<poolId>", "<nodeId>", "<filePath>", null, null, null, null, null);
 
@@ -16908,7 +16908,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeFileAsync("<poolId>", "<nodeId>", "<filePath>", null, null, null, null, null);
 
@@ -16922,7 +16922,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = client.GetNodeFile("<poolId>", "<nodeId>", "<filePath>");
         }
@@ -16933,7 +16933,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = await client.GetNodeFileAsync("<poolId>", "<nodeId>", "<filePath>");
         }
@@ -16944,7 +16944,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = client.GetNodeFile("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), "<ocp-range>", null, null);
 
@@ -16958,7 +16958,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response response = await client.GetNodeFileAsync("<poolId>", "<nodeId>", "<filePath>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), "<ocp-range>", null, null);
 
@@ -16972,7 +16972,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = client.GetNodeFile("<poolId>", "<nodeId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), ocpRange: "<ocp-range>", requestConditions: null);
         }
@@ -16983,7 +16983,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<BinaryData> response = await client.GetNodeFileAsync("<poolId>", "<nodeId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), ocpRange: "<ocp-range>", requestConditions: null);
         }
@@ -16994,7 +16994,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>");
 
@@ -17007,7 +17007,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>");
 
@@ -17020,7 +17020,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = client.GetNodeFileProperties("<poolId>", "<nodeId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -17033,7 +17033,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             Response<bool> response = await client.GetNodeFilePropertiesAsync("<poolId>", "<nodeId>", "<filePath>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), requestConditions: null);
 
@@ -17046,7 +17046,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetApplications(null, null, null, null))
             {
@@ -17063,7 +17063,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetApplicationsAsync(null, null, null, null))
             {
@@ -17080,7 +17080,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchApplication item in client.GetApplications())
             {
@@ -17093,7 +17093,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchApplication item in client.GetApplicationsAsync())
             {
@@ -17106,7 +17106,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetApplications(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, null))
             {
@@ -17123,7 +17123,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetApplicationsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, null))
             {
@@ -17140,7 +17140,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchApplication item in client.GetApplications(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234))
             {
@@ -17153,7 +17153,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchApplication item in client.GetApplicationsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234))
             {
@@ -17166,7 +17166,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetPoolUsageMetrics(null, null, null, null, null, null, null))
             {
@@ -17185,7 +17185,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(null, null, null, null, null, null, null))
             {
@@ -17204,7 +17204,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetrics())
             {
@@ -17217,7 +17217,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync())
             {
@@ -17230,7 +17230,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetPoolUsageMetrics(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), "<filter>", null))
             {
@@ -17249,7 +17249,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetPoolUsageMetricsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), "<filter>", null))
             {
@@ -17268,7 +17268,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetrics(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), endtime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), filter: "<filter>"))
             {
@@ -17281,7 +17281,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchPoolUsageMetrics item in client.GetPoolUsageMetricsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, starttime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), endtime: DateTimeOffset.Parse("2022-05-10T14:57:31.2311892-04:00"), filter: "<filter>"))
             {
@@ -17294,7 +17294,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetPools(null, null, null, null, null, null, null))
             {
@@ -17309,7 +17309,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetPoolsAsync(null, null, null, null, null, null, null))
             {
@@ -17324,7 +17324,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchPool item in client.GetPools())
             {
@@ -17337,7 +17337,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchPool item in client.GetPoolsAsync())
             {
@@ -17350,7 +17350,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetPools(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -17549,7 +17549,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetPoolsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -17748,7 +17748,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchPool item in client.GetPools(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -17761,7 +17761,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchPool item in client.GetPoolsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -17774,7 +17774,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetSupportedImages(null, null, null, null, null))
             {
@@ -17792,7 +17792,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetSupportedImagesAsync(null, null, null, null, null))
             {
@@ -17810,7 +17810,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (ImageInfo item in client.GetSupportedImages())
             {
@@ -17823,7 +17823,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (ImageInfo item in client.GetSupportedImagesAsync())
             {
@@ -17836,7 +17836,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetSupportedImages(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", null))
             {
@@ -17861,7 +17861,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetSupportedImagesAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", null))
             {
@@ -17886,7 +17886,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (ImageInfo item in client.GetSupportedImages(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>"))
             {
@@ -17899,7 +17899,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (ImageInfo item in client.GetSupportedImagesAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>"))
             {
@@ -17912,7 +17912,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetPoolNodeCounts(null, null, null, null, null))
             {
@@ -17927,7 +17927,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetPoolNodeCountsAsync(null, null, null, null, null))
             {
@@ -17942,7 +17942,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchPoolNodeCounts item in client.GetPoolNodeCounts())
             {
@@ -17955,7 +17955,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchPoolNodeCounts item in client.GetPoolNodeCountsAsync())
             {
@@ -17968,7 +17968,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetPoolNodeCounts(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", null))
             {
@@ -18013,7 +18013,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetPoolNodeCountsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", null))
             {
@@ -18058,7 +18058,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchPoolNodeCounts item in client.GetPoolNodeCounts(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>"))
             {
@@ -18071,7 +18071,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchPoolNodeCounts item in client.GetPoolNodeCountsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>"))
             {
@@ -18084,7 +18084,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetJobs(null, null, null, null, null, null, null))
             {
@@ -18099,7 +18099,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetJobsAsync(null, null, null, null, null, null, null))
             {
@@ -18114,7 +18114,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchJob item in client.GetJobs())
             {
@@ -18127,7 +18127,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchJob item in client.GetJobsAsync())
             {
@@ -18140,7 +18140,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetJobs(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -18432,7 +18432,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetJobsAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -18724,7 +18724,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchJob item in client.GetJobs(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -18737,7 +18737,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchJob item in client.GetJobsAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -18750,7 +18750,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetJobsFromSchedules("<jobScheduleId>", null, null, null, null, null, null, null))
             {
@@ -18765,7 +18765,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("<jobScheduleId>", null, null, null, null, null, null, null))
             {
@@ -18780,7 +18780,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchJob item in client.GetJobsFromSchedules("<jobScheduleId>"))
             {
@@ -18793,7 +18793,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchJob item in client.GetJobsFromSchedulesAsync("<jobScheduleId>"))
             {
@@ -18806,7 +18806,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetJobsFromSchedules("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -19098,7 +19098,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetJobsFromSchedulesAsync("<jobScheduleId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -19390,7 +19390,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchJob item in client.GetJobsFromSchedules("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -19403,7 +19403,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchJob item in client.GetJobsFromSchedulesAsync("<jobScheduleId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -19416,7 +19416,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatuses("<jobId>", null, null, null, null, null, null))
             {
@@ -19431,7 +19431,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatusesAsync("<jobId>", null, null, null, null, null, null))
             {
@@ -19446,7 +19446,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchJobPreparationAndReleaseTaskStatus item in client.GetJobPreparationAndReleaseTaskStatuses("<jobId>"))
             {
@@ -19459,7 +19459,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchJobPreparationAndReleaseTaskStatus item in client.GetJobPreparationAndReleaseTaskStatusesAsync("<jobId>"))
             {
@@ -19472,7 +19472,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatuses("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, null))
             {
@@ -19521,7 +19521,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetJobPreparationAndReleaseTaskStatusesAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, null))
             {
@@ -19570,7 +19570,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchJobPreparationAndReleaseTaskStatus item in client.GetJobPreparationAndReleaseTaskStatuses("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }))
             {
@@ -19583,7 +19583,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchJobPreparationAndReleaseTaskStatus item in client.GetJobPreparationAndReleaseTaskStatusesAsync("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }))
             {
@@ -19596,7 +19596,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetJobSchedules(null, null, null, null, null, null, null))
             {
@@ -19611,7 +19611,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetJobSchedulesAsync(null, null, null, null, null, null, null))
             {
@@ -19626,7 +19626,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchJobSchedule item in client.GetJobSchedules())
             {
@@ -19639,7 +19639,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchJobSchedule item in client.GetJobSchedulesAsync())
             {
@@ -19652,7 +19652,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetJobSchedules(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -19946,7 +19946,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetJobSchedulesAsync(1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -20240,7 +20240,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchJobSchedule item in client.GetJobSchedules(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -20253,7 +20253,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchJobSchedule item in client.GetJobSchedulesAsync(timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -20266,7 +20266,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetTasks("<jobId>", null, null, null, null, null, null, null))
             {
@@ -20281,7 +20281,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetTasksAsync("<jobId>", null, null, null, null, null, null, null))
             {
@@ -20296,7 +20296,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchTask item in client.GetTasks("<jobId>"))
             {
@@ -20309,7 +20309,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchTask item in client.GetTasksAsync("<jobId>"))
             {
@@ -20322,7 +20322,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetTasks("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -20439,7 +20439,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetTasksAsync("<jobId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, new string[] { "<expand>" }, null))
             {
@@ -20556,7 +20556,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchTask item in client.GetTasks("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -20569,7 +20569,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchTask item in client.GetTasksAsync("<jobId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }, expand: new string[] { "<expand>" }))
             {
@@ -20582,7 +20582,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetSubTasks("<jobId>", "<taskId>", null, null, null, null))
             {
@@ -20597,7 +20597,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetSubTasksAsync("<jobId>", "<taskId>", null, null, null, null))
             {
@@ -20612,7 +20612,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchSubtask item in client.GetSubTasks("<jobId>", "<taskId>"))
             {
@@ -20625,7 +20625,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchSubtask item in client.GetSubTasksAsync("<jobId>", "<taskId>"))
             {
@@ -20638,7 +20638,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetSubTasks("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, null))
             {
@@ -20675,7 +20675,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetSubTasksAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), new string[] { "<select>" }, null))
             {
@@ -20712,7 +20712,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchSubtask item in client.GetSubTasks("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }))
             {
@@ -20725,7 +20725,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchSubtask item in client.GetSubTasksAsync("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), select: new string[] { "<select>" }))
             {
@@ -20738,7 +20738,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetTaskFiles("<jobId>", "<taskId>", null, null, null, null, null, null))
             {
@@ -20753,7 +20753,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetTaskFilesAsync("<jobId>", "<taskId>", null, null, null, null, null, null))
             {
@@ -20768,7 +20768,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchNodeFile item in client.GetTaskFiles("<jobId>", "<taskId>"))
             {
@@ -20781,7 +20781,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchNodeFile item in client.GetTaskFilesAsync("<jobId>", "<taskId>"))
             {
@@ -20794,7 +20794,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetTaskFiles("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", true, null))
             {
@@ -20816,7 +20816,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetTaskFilesAsync("<jobId>", "<taskId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", true, null))
             {
@@ -20838,7 +20838,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchNodeFile item in client.GetTaskFiles("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", recursive: true))
             {
@@ -20851,7 +20851,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchNodeFile item in client.GetTaskFilesAsync("<jobId>", "<taskId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", recursive: true))
             {
@@ -20864,7 +20864,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetNodes("<poolId>", null, null, null, null, null, null))
             {
@@ -20879,7 +20879,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetNodesAsync("<poolId>", null, null, null, null, null, null))
             {
@@ -20894,7 +20894,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchNode item in client.GetNodes("<poolId>"))
             {
@@ -20907,7 +20907,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchNode item in client.GetNodesAsync("<poolId>"))
             {
@@ -20920,7 +20920,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetNodes("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, null))
             {
@@ -21031,7 +21031,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetNodesAsync("<poolId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", new string[] { "<select>" }, null))
             {
@@ -21142,7 +21142,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchNode item in client.GetNodes("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }))
             {
@@ -21155,7 +21155,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchNode item in client.GetNodesAsync("<poolId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", select: new string[] { "<select>" }))
             {
@@ -21168,7 +21168,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetNodeExtensions("<poolId>", "<nodeId>", null, null, null, null, null))
             {
@@ -21183,7 +21183,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetNodeExtensionsAsync("<poolId>", "<nodeId>", null, null, null, null, null))
             {
@@ -21198,7 +21198,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchNodeVMExtension item in client.GetNodeExtensions("<poolId>", "<nodeId>"))
             {
@@ -21211,7 +21211,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchNodeVMExtension item in client.GetNodeExtensionsAsync("<poolId>", "<nodeId>"))
             {
@@ -21224,7 +21224,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetNodeExtensions("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, new string[] { "<select>" }, null))
             {
@@ -21259,7 +21259,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetNodeExtensionsAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, new string[] { "<select>" }, null))
             {
@@ -21294,7 +21294,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchNodeVMExtension item in client.GetNodeExtensions("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, select: new string[] { "<select>" }))
             {
@@ -21307,7 +21307,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchNodeVMExtension item in client.GetNodeExtensionsAsync("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, select: new string[] { "<select>" }))
             {
@@ -21320,7 +21320,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetNodeFiles("<poolId>", "<nodeId>", null, null, null, null, null, null))
             {
@@ -21335,7 +21335,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetNodeFilesAsync("<poolId>", "<nodeId>", null, null, null, null, null, null))
             {
@@ -21350,7 +21350,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchNodeFile item in client.GetNodeFiles("<poolId>", "<nodeId>"))
             {
@@ -21363,7 +21363,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchNodeFile item in client.GetNodeFilesAsync("<poolId>", "<nodeId>"))
             {
@@ -21376,7 +21376,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BinaryData item in client.GetNodeFiles("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", true, null))
             {
@@ -21398,7 +21398,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BinaryData item in client.GetNodeFilesAsync("<poolId>", "<nodeId>", 1234, DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), 1234, "<filter>", true, null))
             {
@@ -21420,7 +21420,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             foreach (BatchNodeFile item in client.GetNodeFiles("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", recursive: true))
             {
@@ -21433,7 +21433,7 @@ Access = {AccessScope.Job},
         {
             Uri endpoint = new Uri("<https://my-service.azure.com>");
             TokenCredential credential = new DefaultAzureCredential();
-            Batch client = new BatchClient(endpoint, credential).GetBatchClient(apiVersion: "2024-02-01.19.0");
+            BatchApi client = new BatchClient(endpoint, credential).GetBatchApiClient(apiVersion: "2024-02-01.19.0");
 
             await foreach (BatchNodeFile item in client.GetNodeFilesAsync("<poolId>", "<nodeId>", timeOutInSeconds: 1234, ocpdate: DateTimeOffset.Parse("Tue, 10 May 2022 18:57:31 GMT"), maxresults: 1234, filter: "<filter>", recursive: true))
             {
