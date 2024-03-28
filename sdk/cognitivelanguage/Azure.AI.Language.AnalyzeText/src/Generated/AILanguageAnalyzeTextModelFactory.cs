@@ -1034,9 +1034,11 @@ namespace Azure.AI.Language.AnalyzeText
         /// <summary> Initializes a new instance of <see cref="AnalyzeText.TemporalSpanMetadata"/>. </summary>
         /// <param name="spanValues"></param>
         /// <returns> A new <see cref="AnalyzeText.TemporalSpanMetadata"/> instance for mocking. </returns>
-        public static TemporalSpanMetadata TemporalSpanMetadata(TemporalSpanValues spanValues = null)
+        public static TemporalSpanMetadata TemporalSpanMetadata(IEnumerable<TemporalSpanValues> spanValues = null)
         {
-            return new TemporalSpanMetadata(MetadataKind.TemporalSpanMetadata, serializedAdditionalRawData: null, spanValues);
+            spanValues ??= new List<TemporalSpanValues>();
+
+            return new TemporalSpanMetadata(MetadataKind.TemporalSpanMetadata, serializedAdditionalRawData: null, spanValues?.ToList());
         }
 
         /// <summary> Initializes a new instance of <see cref="AnalyzeText.TemporalSpanValues"/>. </summary>

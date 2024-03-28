@@ -26,10 +26,15 @@ namespace Azure.AI.Language.AnalyzeText
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(SpanValues))
+            if (Optional.IsCollectionDefined(SpanValues))
             {
                 writer.WritePropertyName("spanValues"u8);
-                writer.WriteObjectValue<TemporalSpanValues>(SpanValues, options);
+                writer.WriteStartArray();
+                foreach (var item in SpanValues)
+                {
+                    writer.WriteObjectValue<TemporalSpanValues>(item, options);
+                }
+                writer.WriteEndArray();
             }
             writer.WritePropertyName("metadataKind"u8);
             writer.WriteStringValue(MetadataKind.ToString());
@@ -71,7 +76,7 @@ namespace Azure.AI.Language.AnalyzeText
             {
                 return null;
             }
-            TemporalSpanValues spanValues = default;
+            IReadOnlyList<TemporalSpanValues> spanValues = default;
             MetadataKind metadataKind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -83,7 +88,12 @@ namespace Azure.AI.Language.AnalyzeText
                     {
                         continue;
                     }
-                    spanValues = TemporalSpanValues.DeserializeTemporalSpanValues(property.Value, options);
+                    List<TemporalSpanValues> array = new List<TemporalSpanValues>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(TemporalSpanValues.DeserializeTemporalSpanValues(item, options));
+                    }
+                    spanValues = array;
                     continue;
                 }
                 if (property.NameEquals("metadataKind"u8))
@@ -97,7 +107,7 @@ namespace Azure.AI.Language.AnalyzeText
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TemporalSpanMetadata(metadataKind, serializedAdditionalRawData, spanValues);
+            return new TemporalSpanMetadata(metadataKind, serializedAdditionalRawData, spanValues ?? new ChangeTrackingList<TemporalSpanValues>());
         }
 
         BinaryData IPersistableModel<TemporalSpanMetadata>.Write(ModelReaderWriterOptions options)

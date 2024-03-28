@@ -17,18 +17,19 @@ namespace Azure.AI.Language.AnalyzeText
         internal TemporalSpanMetadata()
         {
             MetadataKind = MetadataKind.TemporalSpanMetadata;
+            SpanValues = new ChangeTrackingList<TemporalSpanValues>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TemporalSpanMetadata"/>. </summary>
         /// <param name="metadataKind"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="spanValues"></param>
-        internal TemporalSpanMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, TemporalSpanValues spanValues) : base(metadataKind, serializedAdditionalRawData)
+        internal TemporalSpanMetadata(MetadataKind metadataKind, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<TemporalSpanValues> spanValues) : base(metadataKind, serializedAdditionalRawData)
         {
             SpanValues = spanValues;
         }
 
         /// <summary> Gets the span values. </summary>
-        public TemporalSpanValues SpanValues { get; }
+        public IReadOnlyList<TemporalSpanValues> SpanValues { get; }
     }
 }
