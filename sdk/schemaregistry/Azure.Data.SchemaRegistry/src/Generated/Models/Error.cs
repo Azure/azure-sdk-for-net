@@ -13,16 +13,16 @@ namespace Azure.Data.SchemaRegistry.Models
     internal partial class Error
     {
         /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
-        /// <param name="errorProperty"> Error response returned from Azure Schema Registry service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="errorProperty"/> is null. </exception>
-        internal Error(ErrorDetail errorProperty)
+        /// <param name="errorValue"> Error response returned from Azure Schema Registry service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="errorValue"/> is null. </exception>
+        internal Error(ErrorDetail errorValue)
         {
-            Argument.AssertNotNull(errorProperty, nameof(errorProperty));
+            Argument.AssertNotNull(errorValue, nameof(errorValue));
 
-            ErrorProperty = errorProperty;
+            ErrorValue = errorValue;
         }
 
         /// <summary> Error response returned from Azure Schema Registry service. </summary>
-        public ErrorDetail ErrorProperty { get; }
+        public ErrorDetail ErrorValue { get; }
     }
 }
