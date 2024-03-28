@@ -12,7 +12,5 @@ namespace Azure.Communication.PhoneNumbers
     /// <summary> Represents a wrapper around a list of cities or towns. </summary>
     internal partial class PhoneNumberLocalities
     {
-        /// <summary> Represents the underlying list of localities, e.g. cities or town. </summary>
-        public IReadOnlyList<PhoneNumberLocality> PhoneNumberLocalitiesProperty { get; }
     }
 }
