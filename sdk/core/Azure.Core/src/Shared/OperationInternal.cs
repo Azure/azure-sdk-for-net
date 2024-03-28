@@ -89,13 +89,13 @@ namespace Azure.Core
             string? operationTypeName = null,
             IEnumerable<KeyValuePair<string, string>>? scopeAttributes = null,
             DelayStrategy? fallbackStrategy = null)
-            :base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
+            : base(clientDiagnostics, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy)
         {
             _internalOperation = new OperationInternal<VoidValue>(new OperationToOperationOfTProxy(operation), clientDiagnostics, rawResponse, operationTypeName ?? operation.GetType().Name, scopeAttributes, fallbackStrategy);
         }
 
-        private OperationInternal(OperationState finalState)
-            :base(finalState.RawResponse)
+        internal OperationInternal(OperationState finalState)
+            : base(finalState.RawResponse)
         {
             _internalOperation = finalState.HasSucceeded
                 ? OperationInternal<VoidValue>.Succeeded(finalState.RawResponse, default)
