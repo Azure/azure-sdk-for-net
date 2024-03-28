@@ -38,17 +38,22 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> Server edition name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> The list of editions supported by this server edition. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("supportedStorageEditions")]
         public IReadOnlyList<PostgreSqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get; }
         /// <summary> The list of server versions supported by this server edition. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("supportedServerVersions")]
         public IReadOnlyList<PostgreSqlFlexibleServerServerVersionCapability> SupportedServerVersions { get; }
         /// <summary> The list of Node Types supported by this server edition. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("supportedNodeTypes")]
         public IReadOnlyList<PostgreSqlFlexibleServerNodeTypeCapability> SupportedNodeTypes { get; }
         /// <summary> The status. </summary>
+        [WirePath("status")]
         public string Status { get; }
     }
 }

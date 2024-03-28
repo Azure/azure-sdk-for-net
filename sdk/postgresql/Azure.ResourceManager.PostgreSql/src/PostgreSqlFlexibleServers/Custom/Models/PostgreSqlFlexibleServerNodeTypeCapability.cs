@@ -29,12 +29,15 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> note type name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> note type. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("nodeType")]
         public string NodeType { get; }
         /// <summary> The status. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("status")]
         public string Status { get; }
     }
 }

@@ -33,18 +33,23 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 
         /// <summary> vCore name. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> supported vCores. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("vCores")]
         public long? VCores { get; }
         /// <summary> supported IOPS. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("supportedIops")]
         public long? SupportedIops { get; }
         /// <summary> supported memory per vCore in MB. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("supportedMemoryPerVcoreMB")]
         public long? SupportedMemoryPerVCoreInMB { get; }
         /// <summary> The status. </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
+        [WirePath("status")]
         public string Status { get; }
     }
 }

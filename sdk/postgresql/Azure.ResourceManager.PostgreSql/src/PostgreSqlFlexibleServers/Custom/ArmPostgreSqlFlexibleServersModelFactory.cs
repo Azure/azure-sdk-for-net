@@ -6,6 +6,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -77,6 +78,236 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 replicaCapacity,
                 createMode,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/>. </summary>
+        /// <param name="zone"> zone name. </param>
+        /// <param name="supportedHAModes"> Supported high availability mode. </param>
+        /// <param name="isGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
+        /// <param name="isZoneRedundantHASupported"> A value indicating whether a new server in this region can support multi zone HA. </param>
+        /// <param name="isZoneRedundantHAAndGeoBackupSupported"> A value indicating whether a new server in this region can have geo-backups to paired region. </param>
+        /// <param name="supportedFlexibleServerEditions"></param>
+        /// <param name="supportedHyperscaleNodeEditions"></param>
+        /// <param name="fastProvisioningSupported"> A value indicating whether fast provisioning is supported in this region. </param>
+        /// <param name="supportedFastProvisioningEditions"></param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerCapabilityProperties"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerCapabilityProperties PostgreSqlFlexibleServerCapabilityProperties(
+            string zone = null,
+            IEnumerable<string> supportedHAModes = null,
+            bool? isGeoBackupSupported = null,
+            bool? isZoneRedundantHASupported = null,
+            bool? isZoneRedundantHAAndGeoBackupSupported = null,
+            IEnumerable<PostgreSqlFlexibleServerEditionCapability> supportedFlexibleServerEditions = null,
+            IEnumerable<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability> supportedHyperscaleNodeEditions = null,
+            bool? fastProvisioningSupported = null,
+            IEnumerable<PostgreSqlFlexibleServerFastProvisioningEditionCapability> supportedFastProvisioningEditions = null,
+            string status = null)
+        {
+            supportedHAModes ??= new List<string>();
+            supportedFlexibleServerEditions ??= new List<PostgreSqlFlexibleServerEditionCapability>();
+            supportedHyperscaleNodeEditions ??= new List<PostgreSqlFlexibleServerHyperscaleNodeEditionCapability>();
+            supportedFastProvisioningEditions ??= new List<PostgreSqlFlexibleServerFastProvisioningEditionCapability>();
+
+            Enum.TryParse<PostgreSqlFlexbileServerCapabilityStatus>(status, out var statusEnum);
+            return new PostgreSqlFlexibleServerCapabilityProperties(
+                capabilityStatus: statusEnum,
+                reason: default,
+                serializedAdditionalRawData: default,
+                name: default,
+                supportedServerEditions: supportedFlexibleServerEditions.ToList(),
+                supportedServerVersions: default,
+                supportFastProvisioning: fastProvisioningSupported switch
+                {
+                    true => PostgreSqlFlexibleServerFastProvisioningSupported.Enabled,
+                    false => PostgreSqlFlexibleServerFastProvisioningSupported.Disabled,
+                    _ => default
+                },
+                supportedFastProvisioningEditions: supportedFastProvisioningEditions.ToList(),
+                geoBackupSupported: isGeoBackupSupported == true ? PostgreSqlFlexibleServerGeoBackupSupported.Enabled :
+                isGeoBackupSupported == false ? PostgreSqlFlexibleServerGeoBackupSupported.Disabled : default,
+                zoneRedundantHaSupported: isZoneRedundantHASupported switch
+                {
+                    true => PostgreSqlFlexibleServerZoneRedundantHaSupported.Enabled,
+                    false => PostgreSqlFlexibleServerZoneRedundantHaSupported.Disabled,
+                    _ => default
+                },
+                zoneRedundantHaAndGeoBackupSupported: isZoneRedundantHAAndGeoBackupSupported switch
+                {
+                    true => PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported.Enabled,
+                    false => PostgreSqlFlexibleServerZoneRedundantHaAndGeoBackupSupported.Disabled,
+                    _ => default
+                },
+                storageAutoGrowthSupported: default,
+                onlineResizeSupported: default,
+                restricted: default)
+            {
+                Zone = zone,
+                SupportedHAModesInternal = supportedHAModes.ToList(),
+                SupportedHyperscaleNodeEditionsInternal = supportedHyperscaleNodeEditions.ToList(),
+            };
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerEditionCapability"/>. </summary>
+        /// <param name="name"> Server edition name. </param>
+        /// <param name="supportedStorageEditions"> The list of editions supported by this server edition. </param>
+        /// <param name="supportedServerVersions"> The list of server versions supported by this server edition. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerEditionCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerEditionCapability PostgreSqlFlexibleServerEditionCapability(string name = null, IEnumerable<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions = null, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = null, string status = null)
+        {
+            supportedStorageEditions ??= new List<PostgreSqlFlexibleServerStorageEditionCapability>();
+            supportedServerVersions ??= new List<PostgreSqlFlexibleServerServerVersionCapability>();
+
+            Enum.TryParse<PostgreSqlFlexbileServerCapabilityStatus>(status, out var statusEnum);
+
+            return new PostgreSqlFlexibleServerEditionCapability(
+                capabilityStatus: statusEnum,
+                reason: default,
+                serializedAdditionalRawData: default,
+                name: name,
+                defaultSkuName: default,
+                supportedStorageEditions: supportedStorageEditions.ToList(),
+                supportedServerSkus: default)
+                {
+                    SupportedServerVersionsInternal = supportedServerVersions.ToList()
+                };
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/>. </summary>
+        /// <param name="supportedSku"> Fast provisioning supported sku name. </param>
+        /// <param name="supportedStorageGb"> Fast provisioning supported storage in Gb. </param>
+        /// <param name="supportedServerVersions"> Fast provisioning supported version. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerFastProvisioningEditionCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerFastProvisioningEditionCapability PostgreSqlFlexibleServerFastProvisioningEditionCapability(string supportedSku = null, long? supportedStorageGb = null, string supportedServerVersions = null)
+        {
+            return new PostgreSqlFlexibleServerFastProvisioningEditionCapability(
+                capabilityStatus: default,
+                reason: default,
+                serializedAdditionalRawData: default,
+                supportedTier: default,
+                supportedSku: supportedSku,
+                supportedStorageGb: supportedStorageGb,
+                supportedServerVersions: supportedServerVersions,
+                serverCount: default);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerHyperscaleNodeEditionCapability"/>. </summary>
+        /// <param name="name"> Server edition name. </param>
+        /// <param name="supportedStorageEditions"> The list of editions supported by this server edition. </param>
+        /// <param name="supportedServerVersions"> The list of server versions supported by this server edition. </param>
+        /// <param name="supportedNodeTypes"> The list of Node Types supported by this server edition. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerHyperscaleNodeEditionCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerHyperscaleNodeEditionCapability PostgreSqlFlexibleServerHyperscaleNodeEditionCapability(string name = null, IEnumerable<PostgreSqlFlexibleServerStorageEditionCapability> supportedStorageEditions = null, IEnumerable<PostgreSqlFlexibleServerServerVersionCapability> supportedServerVersions = null, IEnumerable<PostgreSqlFlexibleServerNodeTypeCapability> supportedNodeTypes = null, string status = null)
+        {
+            supportedStorageEditions ??= new List<PostgreSqlFlexibleServerStorageEditionCapability>();
+            supportedServerVersions ??= new List<PostgreSqlFlexibleServerServerVersionCapability>();
+            supportedNodeTypes ??= new List<PostgreSqlFlexibleServerNodeTypeCapability>();
+
+            return new PostgreSqlFlexibleServerHyperscaleNodeEditionCapability(
+                name,
+                supportedStorageEditions.ToList(),
+                supportedServerVersions.ToList(),
+                supportedNodeTypes.ToList(),
+                status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerNodeTypeCapability"/>. </summary>
+        /// <param name="name"> note type name. </param>
+        /// <param name="nodeType"> note type. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerNodeTypeCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerNodeTypeCapability PostgreSqlFlexibleServerNodeTypeCapability(string name = null, string nodeType = null, string status = null)
+        {
+            return new PostgreSqlFlexibleServerNodeTypeCapability(name, nodeType, status);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/>. </summary>
+        /// <param name="name"> server version. </param>
+        /// <param name="supportedVersionsToUpgrade"> Supported servers versions to upgrade. </param>
+        /// <param name="supportedVCores"></param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerServerVersionCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerServerVersionCapability PostgreSqlFlexibleServerServerVersionCapability(string name = null, IEnumerable<string> supportedVersionsToUpgrade = null, IEnumerable<PostgreSqlFlexibleServerVCoreCapability> supportedVCores = null, string status = null)
+        {
+            supportedVersionsToUpgrade ??= new List<string>();
+            supportedVCores ??= new List<PostgreSqlFlexibleServerVCoreCapability>();
+
+            Enum.TryParse<PostgreSqlFlexbileServerCapabilityStatus>(status, out var statusEnum);
+            return new PostgreSqlFlexibleServerServerVersionCapability(statusEnum, default, null, name,
+                supportedVersionsToUpgrade.ToList()) { SupportedVCoresInternal = supportedVCores.ToList() };
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/>. </summary>
+        /// <param name="name"> storage MB name. </param>
+        /// <param name="supportedIops"> supported IOPS. </param>
+        /// <param name="storageSizeInMB"> storage size in MB. </param>
+        /// <param name="supportedUpgradableTierList"></param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerStorageCapability PostgreSqlFlexibleServerStorageCapability(string name = null, long? supportedIops = null, long? storageSizeInMB = null, IEnumerable<PostgreSqlFlexibleServerStorageTierCapability> supportedUpgradableTierList = null, string status = null)
+        {
+            supportedUpgradableTierList ??= new List<PostgreSqlFlexibleServerStorageTierCapability>();
+            Enum.TryParse<PostgreSqlFlexbileServerCapabilityStatus>(status, out var statusEnum);
+
+            return new PostgreSqlFlexibleServerStorageCapability(
+                statusEnum,
+                default,
+                default,
+                supportedIops,
+                storageSizeInMB,
+                default,
+                supportedUpgradableTierList.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageEditionCapability"/>. </summary>
+        /// <param name="name"> storage edition name. </param>
+        /// <param name="supportedStorageCapabilities"></param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageEditionCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerStorageEditionCapability PostgreSqlFlexibleServerStorageEditionCapability(string name = null, IEnumerable<PostgreSqlFlexibleServerStorageCapability> supportedStorageCapabilities = null, string status = null)
+        {
+            supportedStorageCapabilities ??= new List<PostgreSqlFlexibleServerStorageCapability>();
+            Enum.TryParse<PostgreSqlFlexbileServerCapabilityStatus>(status, out var statusEnum);
+
+            return new PostgreSqlFlexibleServerStorageEditionCapability(statusEnum, default, default, name, default, supportedStorageCapabilities?.ToList());
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/>. </summary>
+        /// <param name="name"> Name to represent Storage tier capability. </param>
+        /// <param name="tierName"> Storage tier name. </param>
+        /// <param name="iops"> Supported IOPS for this storage tier. </param>
+        /// <param name="isBaseline"> Indicates if this is a baseline storage tier or not. </param>
+        /// <param name="status"> Status os this storage tier. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerStorageTierCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerStorageTierCapability PostgreSqlFlexibleServerStorageTierCapability(string name = null, string tierName = null, long? iops = null, bool? isBaseline = null, string status = null)
+        {
+            Enum.TryParse<PostgreSqlFlexbileServerCapabilityStatus>(status, out var statusEnum);
+
+            return new PostgreSqlFlexibleServerStorageTierCapability(
+                statusEnum,
+                default,
+                default,
+                name,
+                iops);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.PostgreSqlFlexibleServerVCoreCapability"/>. </summary>
+        /// <param name="name"> vCore name. </param>
+        /// <param name="vCores"> supported vCores. </param>
+        /// <param name="supportedIops"> supported IOPS. </param>
+        /// <param name="supportedMemoryPerVCoreInMB"> supported memory per vCore in MB. </param>
+        /// <param name="status"> The status. </param>
+        /// <returns> A new <see cref="Models.PostgreSqlFlexibleServerVCoreCapability"/> instance for mocking. </returns>
+        public static PostgreSqlFlexibleServerVCoreCapability PostgreSqlFlexibleServerVCoreCapability(string name = null, long? vCores = null, long? supportedIops = null, long? supportedMemoryPerVCoreInMB = null, string status = null)
+        {
+            return new PostgreSqlFlexibleServerVCoreCapability(
+                name,
+                vCores,
+                supportedIops,
+                supportedMemoryPerVCoreInMB,
+                status);
         }
     }
 }
