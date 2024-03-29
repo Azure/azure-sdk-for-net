@@ -13,16 +13,16 @@ namespace Azure.AI.TextAnalytics.Legacy
     internal partial class AnalysisInput
     {
         /// <summary> Initializes a new instance of <see cref="AnalysisInput"/>. </summary>
-        /// <param name="analysisInputProperty"> Contains a set of input documents to be analyzed by the service. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="analysisInputProperty"/> is null. </exception>
-        public AnalysisInput(MultiLanguageBatchInput analysisInputProperty)
+        /// <param name="analysisInputValue"> Contains a set of input documents to be analyzed by the service. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="analysisInputValue"/> is null. </exception>
+        public AnalysisInput(MultiLanguageBatchInput analysisInputValue)
         {
-            Argument.AssertNotNull(analysisInputProperty, nameof(analysisInputProperty));
+            Argument.AssertNotNull(analysisInputValue, nameof(analysisInputValue));
 
-            AnalysisInputProperty = analysisInputProperty;
+            AnalysisInputValue = analysisInputValue;
         }
 
         /// <summary> Contains a set of input documents to be analyzed by the service. </summary>
-        public MultiLanguageBatchInput AnalysisInputProperty { get; }
+        public MultiLanguageBatchInput AnalysisInputValue { get; }
     }
 }
