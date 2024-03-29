@@ -23,9 +23,9 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
 
         public string PoolId { get; private set; }
 
-        protected readonly BatchApi client;
+        protected readonly BatchClient client;
 
-        protected PoolFixture(string poolId, BatchApi batchClient)
+        protected PoolFixture(string poolId, BatchClient batchClient)
         {
             PoolId = poolId;
             client = batchClient;
@@ -61,7 +61,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
             return null;
         }
 
-        public static async Task<BatchPool> WaitForPoolAllocation(BatchApi client, string poolId)
+        public static async Task<BatchPool> WaitForPoolAllocation(BatchClient client, string poolId)
         {
             BatchPool thePool = await client.GetPoolAsync(poolId);
 

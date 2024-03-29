@@ -15,7 +15,7 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
     {
         #region Wait helpers
 
-        public static async Task WaitForPoolToReachStateAsync(BatchApi client, string poolId, AllocationState targetAllocationState, TimeSpan timeout)
+        public static async Task WaitForPoolToReachStateAsync(BatchClient client, string poolId, AllocationState targetAllocationState, TimeSpan timeout)
         {
             BatchPool pool = await client.GetPoolAsync(poolId);
 

@@ -35,10 +35,10 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
         /// <param name="useTokenCredential">Whether or not to use a <see cref="TokenCredential"/> to authenticate. An <see cref="AzureKeyCredential"/> is used by default.</param>
         /// <param name="skipInstrumenting">Whether or not instrumenting should be skipped. Avoid skipping it as much as possible.</param>
         /// <returns>The instrumented <see cref="BatchClient" />.</returns>
-        public BatchApi CreateBatchClient(bool useTokenCredential = true, bool skipInstrumenting = false)
+        public BatchClient CreateBatchClient(bool useTokenCredential = true, bool skipInstrumenting = false)
         {
             var options = InstrumentClientOptions(new BatchClientOptions());
-            BatchApi client;
+            BatchClient client;
             Uri uri = new Uri("https://" + TestEnvironment.BatchAccountURI);
 
             var authorityHost = TestEnvironment.AuthorityHostUrl;
@@ -53,12 +53,12 @@ namespace Azure.Compute.Batch.Tests.Infrastructure
                         AuthorityHost = new Uri(authorityHost)
                     });
 
-                client = new BatchClient(uri,credential, options).GetBatchApiClient();
+                client = new BatchClient(uri,credential, options);
             }
             else
             {
                 var credential = new AzureNamedKeyCredential(TestEnvironment.BatchAccountName, TestEnvironment.BatchAccountKey);
-                client = new BatchClient(uri, credential, options).GetBatchApiClient();
+                client = new BatchClient(uri, credential, options);
             }
 
             return skipInstrumenting ? client : InstrumentClient(client);
