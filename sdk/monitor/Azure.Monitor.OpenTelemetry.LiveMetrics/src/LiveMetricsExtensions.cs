@@ -4,11 +4,13 @@
 #nullable disable
 
 using System;
-using Azure.Monitor.OpenTelemetry.Exporter.Internals.Platform;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using OpenTelemetry.Metrics;
+using OpenTelemetry;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics
@@ -19,56 +21,65 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
     public static class LiveMetricsExtensions
     {
         /// <summary>
-        /// Adds Live Metrics to the TracerProvider.
+        /// Configures Azure Monitor Live Metrics for distributed tracing and logging.
         /// </summary>
-        /// <param name="builder"><see cref="TracerProviderBuilder"/> builder to use.</param>
+        /// <param name="builder"><see cref="OpenTelemetryBuilder"/>.</param>
         /// <param name="configure">Callback action for configuring <see cref="LiveMetricsExporterOptions"/>.</param>
-        /// <param name="name">Name which is used when retrieving options.</param>
-        /// <returns>The instance of <see cref="TracerProviderBuilder"/> to chain the calls.</returns>
-        public static TracerProviderBuilder AddLiveMetrics(
-            this TracerProviderBuilder builder,
-            Action<LiveMetricsExporterOptions> configure = null,
-            string name = null)
+        /// <returns>The supplied <see cref="OpenTelemetryBuilder"/> for chaining calls.</returns>
+        /// <exception cref="ArgumentNullException">Throws an exception if OpenTelemetryBuilder is null.</exception>
+        public static OpenTelemetryBuilder AddLiveMetrics(this OpenTelemetryBuilder builder, Action<LiveMetricsExporterOptions> configure = null)
         {
-            if (builder == null)
+            if (builder.Services == null)
             {
-                throw new ArgumentNullException(nameof(builder));
+                throw new ArgumentNullException(nameof(builder.Services));
             }
 
-            var finalOptionsName = name ?? Options.DefaultName;
-
-            builder.ConfigureServices(services =>
+            // Register a user provided configuration for Options.
+            if (configure != null)
             {
-                if (name != null && configure != null)
-                {
-                    // If we are using named options we register the
-                    // configuration delegate into options pipeline.
-                    services.Configure(finalOptionsName, configure);
-                }
+                builder.Services.Configure(configure);
+            }
+
+            // Register a singleton for the internal Manager.
+            builder.Services.TryAddSingleton<Manager>(implementationFactory: serviceProvider =>
+            {
+                var options = serviceProvider.GetRequiredService<IOptions<LiveMetricsExporterOptions>>().Value;
+                return new Manager(options);
             });
 
-            return builder.AddProcessor(sp =>
+            // Register the LiveMetricsActivityProcessor.
+            builder.WithTracing(configure: builder =>
             {
-                // SETUP OPTIONS
-                LiveMetricsExporterOptions exporterOptions;
+                builder.AddLiveMetrics();
+            });
 
-                if (name == null)
+            // Register the LiveMetricsLogProcessor.
+            builder.Services.AddLogging(configure: logging =>
+            {
+                logging.AddOpenTelemetry(configure: options =>
                 {
-                    exporterOptions = sp.GetRequiredService<IOptionsFactory<LiveMetricsExporterOptions>>().Create(finalOptionsName);
+                    options.AddLiveMetrics();
+                });
+            });
 
-                    // Configuration delegate is executed inline on the fresh instance.
-                    configure?.Invoke(exporterOptions);
-                }
-                else
-                {
-                    // When using named options we can properly utilize Options
-                    // API to create or reuse an instance.
-                    exporterOptions = sp.GetRequiredService<IOptionsMonitor<LiveMetricsExporterOptions>>().Get(finalOptionsName);
-                }
+            return builder;
+        }
 
-                // INITIALIZE INTERNALS
-                var manager = new Manager(exporterOptions, new DefaultPlatform());
+        private static TracerProviderBuilder AddLiveMetrics(this TracerProviderBuilder builder)
+        {
+            return builder.AddProcessor(serviceProvider =>
+            {
+                var manager = serviceProvider.GetRequiredService<Manager>();
                 return new LiveMetricsActivityProcessor(manager);
+            });
+        }
+
+        private static OpenTelemetryLoggerOptions AddLiveMetrics(this OpenTelemetryLoggerOptions loggerOptions)
+        {
+            return loggerOptions.AddProcessor(serviceProvider =>
+            {
+                var manager = serviceProvider.GetRequiredService<Manager>();
+                return new LiveMetricsLogProcessor(manager);
             });
         }
     }

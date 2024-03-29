@@ -4,6 +4,10 @@
 
 ### Features Added
 
+* Add Logs to the Documents which are exported to LiveMetrics.
+  These are displayed in the right-side of the Live Metrics UX.
+  ([]())
+
 ### Breaking Changes
 
 ### Bugs Fixed

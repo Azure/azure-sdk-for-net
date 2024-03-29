@@ -4,7 +4,8 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
-using OpenTelemetry;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using OpenTelemetry.Trace;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
@@ -13,6 +14,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
     {
         private const string ActivitySourceName = "MyCompany.MyProduct.MyLibrary";
         private static readonly ActivitySource s_activitySource = new(ActivitySourceName);
+        private static ILogger _logger;
 
         private const string ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000";
 
@@ -23,10 +25,21 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
 
         public static async Task Main(string[] args)
         {
-            using TracerProvider tracerProvider = Sdk.CreateTracerProviderBuilder()
-                            .AddSource(ActivitySourceName)
-                            .AddLiveMetrics(configure => configure.ConnectionString = ConnectionString)
-                            .Build();
+            // Until this console app can be replaced with an ASP.NET Core app,
+            // we need to manually configure a ServiceCollection.
+            IServiceCollection services = new ServiceCollection();
+            services.AddOpenTelemetry()
+                .AddLiveMetrics(x => x.ConnectionString = ConnectionString)
+                .WithTracing(configure: builder => builder.AddSource(ActivitySourceName));
+            var serviceProvider = services.BuildServiceProvider();
+
+            // Retrieve the TracerProvider - this is only necessary because this is a Console app.
+            // In an ASP.NET Core app, this is handled by the OpenTelemetry.Extensions.Hosting package.
+            var tracerProvider = serviceProvider.GetRequiredService<TracerProvider>();
+
+            // Retrieve an instance of the logger
+            _logger = serviceProvider.GetService<ILogger<Program>>();
+            Debug.Assert(_logger != null);
 
             Console.WriteLine("Press any key to stop the loop.");
 
@@ -71,7 +84,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         Console.WriteLine("Request Exception");
                         try
                         {
-                            throw new Exception("Test exception");
+                            throw new Exception("Test Request Exception");
                         }
                         catch (Exception ex)
                         {
@@ -94,13 +107,45 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Demo
                         Console.WriteLine("Dependency Exception");
                         try
                         {
-                            throw new Exception("Test exception");
+                            throw new Exception("Test Dependency Exception");
                         }
                         catch (Exception ex)
                         {
                             activity?.SetStatus(ActivityStatusCode.Error);
                             activity?.RecordException(ex);
                         }
+                    }
+                }
+            }
+
+            // Logs
+            if (GetRandomBool(percent: 70))
+            {
+                Console.WriteLine("Log");
+
+                _logger.Log(
+                    logLevel: LogLevel.Information,
+                    eventId: 0,
+                    exception: null,
+                    message: "Hello {name}.",
+                    args: new object[] { "World" });
+
+                // Exception
+                if (GetRandomBool(percent: 40))
+                {
+                    Console.WriteLine("Log Exception");
+                    try
+                    {
+                        throw new Exception("Test Log Exception");
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.Log(
+                            logLevel: LogLevel.Error,
+                            eventId: 0,
+                            exception: ex,
+                            message: "Hello {name}.",
+                            args: new object[] { "World" });
                     }
                 }
             }

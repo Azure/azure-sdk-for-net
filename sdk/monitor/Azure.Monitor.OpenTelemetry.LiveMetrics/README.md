@@ -26,9 +26,16 @@ These are provided without support and are not intended for production workloads
 The following examples demonstrate how to add the Live Metrics client to your OpenTelemetry configuration.
 
 ```csharp
-Sdk.CreateTracerProviderBuilder()
-    .AddLiveMetrics(o => o.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
-    .Build();
+// This method gets called by the runtime. Use this method to add services to the container.
+var builder = WebApplication.CreateBuilder(args);
+
+// The following line enables Azure Monitor Distro.
+builder.Services.AddOpenTelemetry().AddLiveMetrics(x => x.ConnectionString = "InstrumentationKey=00000000-0000-0000-0000-000000000000")
+
+// This code adds other services for your application.
+builder.Services.AddMvc();
+
+var app = builder.Build();
 ```
 
 For a complete example see [`Program.cs`](https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/monitor/Azure.Monitor.OpenTelemetry.LiveMetrics/tests/Azure.Monitor.OpenTelemetry.LiveMetrics.Demo/Program.cs)

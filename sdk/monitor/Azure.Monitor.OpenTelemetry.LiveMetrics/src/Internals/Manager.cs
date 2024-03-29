@@ -19,7 +19,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         private readonly string _streamId = Guid.NewGuid().ToString(); // StreamId should be unique per application instance.
         private bool _disposedValue;
 
-        public Manager(LiveMetricsExporterOptions options, IPlatform platform)
+        public Manager(LiveMetricsExporterOptions options) : this (options, new DefaultPlatform())
+        {
+        }
+
+        private Manager(LiveMetricsExporterOptions options, IPlatform platform)
         {
             options.Retry.MaxRetries = 0; // prevent Azure.Core from automatically retrying.
 
