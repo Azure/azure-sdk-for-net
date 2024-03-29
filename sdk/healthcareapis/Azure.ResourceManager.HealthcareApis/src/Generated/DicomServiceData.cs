@@ -74,11 +74,11 @@ namespace Azure.ResourceManager.HealthcareApis
         /// <param name="eventState"> DICOM Service event support status. </param>
         /// <param name="encryption"> The encryption settings of the DICOM service. </param>
         /// <param name="storageConfiguration"> The configuration of external storage account. </param>
-        /// <param name="enableDataPartitions"> If data partitions is enabled or not. </param>
+        /// <param name="isDataPartitionsEnabled"> If data partitions is enabled or not. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Encryption encryption, StorageConfiguration storageConfiguration, bool? enableDataPartitions, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IReadOnlyList<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Encryption encryption, HealthcareApisServiceStorageConfiguration storageConfiguration, bool? isDataPartitionsEnabled, ManagedServiceIdentity identity, ETag? etag, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             AuthenticationConfiguration = authenticationConfiguration;
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HealthcareApis
             EventState = eventState;
             Encryption = encryption;
             StorageConfiguration = storageConfiguration;
-            EnableDataPartitions = enableDataPartitions;
+            IsDataPartitionsEnabled = isDataPartitionsEnabled;
             Identity = identity;
             ETag = etag;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -129,9 +129,9 @@ namespace Azure.ResourceManager.HealthcareApis
         }
 
         /// <summary> The configuration of external storage account. </summary>
-        public StorageConfiguration StorageConfiguration { get; set; }
+        public HealthcareApisServiceStorageConfiguration StorageConfiguration { get; set; }
         /// <summary> If data partitions is enabled or not. </summary>
-        public bool? EnableDataPartitions { get; set; }
+        public bool? IsDataPartitionsEnabled { get; set; }
         /// <summary> Setting indicating whether the service has a managed identity associated with it. </summary>
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> An etag associated with the resource, used for optimistic concurrency when editing it. </summary>
