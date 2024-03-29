@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             var format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("reportType"u8);
             writer.WriteStringValue(ReportType);
             writer.WritePropertyName("dateRange"u8);
-            writer.WriteObjectValue(DateRange);
+            writer.WriteObjectValue<DateRange>(DateRange, options);
             writer.WritePropertyName("subscriptionList"u8);
             writer.WriteStartArray();
             foreach (var item in SubscriptionList)
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(ResourceGroupUrlList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGroupUrlList))
             {
                 writer.WritePropertyName("resourceGroupUrlList"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ResourceTypeList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypeList))
             {
                 writer.WritePropertyName("resourceTypeList"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LocationList is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LocationList))
             {
                 writer.WritePropertyName("locationList"u8);
                 writer.WriteStartArray();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             var format = options.Format == "W" ? ((IPersistableModel<OverallSummaryReportQueryFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +201,15 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OverallSummaryReportQueryFilter(reportType, dateRange, subscriptionList, resourceGroupUrlList ?? new ChangeTrackingList<string>(), resourceTypeList ?? new ChangeTrackingList<string>(), locationList ?? new ChangeTrackingList<string>(), carbonScopeList, serializedAdditionalRawData);
+            return new OverallSummaryReportQueryFilter(
+                reportType,
+                dateRange,
+                subscriptionList,
+                resourceGroupUrlList ?? new ChangeTrackingList<string>(),
+                resourceTypeList ?? new ChangeTrackingList<string>(),
+                locationList ?? new ChangeTrackingList<string>(),
+                carbonScopeList,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OverallSummaryReportQueryFilter>.Write(ModelReaderWriterOptions options)
@@ -213,7 +221,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +237,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                         return DeserializeOverallSummaryReportQueryFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OverallSummaryReportQueryFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

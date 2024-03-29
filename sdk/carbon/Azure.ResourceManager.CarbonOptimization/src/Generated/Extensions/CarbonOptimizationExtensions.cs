@@ -8,8 +8,6 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CarbonOptimization.Mocking;
 using Azure.ResourceManager.CarbonOptimization.Models;
 using Azure.ResourceManager.Resources;
@@ -52,10 +50,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <returns> An async collection of <see cref="CarbonEmissionData"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<CarbonEmissionData> GetCarbonEmissionReportsCarbonServicesAsync(this TenantResource tenantResource, QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableCarbonOptimizationTenantResource(tenantResource).GetCarbonEmissionReportsCarbonServicesAsync(queryParameters, cancellationToken);
         }
@@ -88,10 +83,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <returns> A collection of <see cref="CarbonEmissionData"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<CarbonEmissionData> GetCarbonEmissionReportsCarbonServices(this TenantResource tenantResource, QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableCarbonOptimizationTenantResource(tenantResource).GetCarbonEmissionReportsCarbonServices(queryParameters, cancellationToken);
         }
@@ -122,10 +114,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static async Task<Response<CarbonEmissionDataAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(cancellationToken).ConfigureAwait(false);
         }
@@ -156,10 +145,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
         public static Response<CarbonEmissionDataAvailableDateRange> QueryCarbonEmissionDataAvailableDateRangeCarbonService(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionDataAvailableDateRangeCarbonService(cancellationToken);
         }

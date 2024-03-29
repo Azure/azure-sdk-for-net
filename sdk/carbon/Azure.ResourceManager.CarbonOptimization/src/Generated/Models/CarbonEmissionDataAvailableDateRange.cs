@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <exception cref="ArgumentNullException"> <paramref name="startDate"/> or <paramref name="endDate"/> is null. </exception>
         internal CarbonEmissionDataAvailableDateRange(string startDate, string endDate)
         {
-            if (startDate == null)
-            {
-                throw new ArgumentNullException(nameof(startDate));
-            }
-            if (endDate == null)
-            {
-                throw new ArgumentNullException(nameof(endDate));
-            }
+            Argument.AssertNotNull(startDate, nameof(startDate));
+            Argument.AssertNotNull(endDate, nameof(endDate));
 
             StartDate = startDate;
             EndDate = endDate;

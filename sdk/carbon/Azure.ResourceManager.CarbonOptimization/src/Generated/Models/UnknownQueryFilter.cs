@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    /// <summary> The UnknownQueryFilter. </summary>
+    /// <summary> Unknown version of QueryFilter. </summary>
     internal partial class UnknownQueryFilter : QueryFilter
     {
         /// <summary> Initializes a new instance of <see cref="UnknownQueryFilter"/>. </summary>

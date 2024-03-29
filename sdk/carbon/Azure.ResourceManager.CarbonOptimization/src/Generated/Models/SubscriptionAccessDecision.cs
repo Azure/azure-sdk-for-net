@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         internal SubscriptionAccessDecision(string subscriptionId, AccessDecisionEnum decision)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
 
             SubscriptionId = subscriptionId;
             Decision = decision;

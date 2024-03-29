@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -58,18 +57,9 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/> or <paramref name="carbonScopeList"/> is null. </exception>
         protected QueryFilter(DateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<EmissionScopeEnum> carbonScopeList)
         {
-            if (dateRange == null)
-            {
-                throw new ArgumentNullException(nameof(dateRange));
-            }
-            if (subscriptionList == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionList));
-            }
-            if (carbonScopeList == null)
-            {
-                throw new ArgumentNullException(nameof(carbonScopeList));
-            }
+            Argument.AssertNotNull(dateRange, nameof(dateRange));
+            Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
+            Argument.AssertNotNull(carbonScopeList, nameof(carbonScopeList));
 
             DateRange = dateRange;
             SubscriptionList = subscriptionList.ToList();

@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    /// <summary> The UnknownCarbonEmissionData. </summary>
+    /// <summary> Unknown version of CarbonEmissionData. </summary>
     internal partial class UnknownCarbonEmissionData : CarbonEmissionData
     {
         /// <summary> Initializes a new instance of <see cref="UnknownCarbonEmissionData"/>. </summary>

@@ -28,22 +28,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <exception cref="ArgumentNullException"> <paramref name="itemName"/>, <paramref name="groupName"/>, <paramref name="subscriptionId"/> or <paramref name="resourceGroup"/> is null. </exception>
         internal ResourceCarbonEmissionItemDetailData(double totalCarbonEmission, double totalCarbonEmissionLastMonth, double changeRatioForLastMonth, double totalCarbonEmission12MonthsAgo, double changeRatioFor12Months, string itemName, string groupName, CategoryTypeEnum categoryType, string subscriptionId, string resourceGroup) : base(totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months)
         {
-            if (itemName == null)
-            {
-                throw new ArgumentNullException(nameof(itemName));
-            }
-            if (groupName == null)
-            {
-                throw new ArgumentNullException(nameof(groupName));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (resourceGroup == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroup));
-            }
+            Argument.AssertNotNull(itemName, nameof(itemName));
+            Argument.AssertNotNull(groupName, nameof(groupName));
+            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNull(resourceGroup, nameof(resourceGroup));
 
             ItemName = itemName;
             GroupName = groupName;

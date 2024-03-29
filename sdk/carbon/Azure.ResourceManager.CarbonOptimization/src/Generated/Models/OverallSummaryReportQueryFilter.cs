@@ -20,18 +20,9 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/> or <paramref name="carbonScopeList"/> is null. </exception>
         public OverallSummaryReportQueryFilter(DateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<EmissionScopeEnum> carbonScopeList) : base(dateRange, subscriptionList, carbonScopeList)
         {
-            if (dateRange == null)
-            {
-                throw new ArgumentNullException(nameof(dateRange));
-            }
-            if (subscriptionList == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionList));
-            }
-            if (carbonScopeList == null)
-            {
-                throw new ArgumentNullException(nameof(carbonScopeList));
-            }
+            Argument.AssertNotNull(dateRange, nameof(dateRange));
+            Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
+            Argument.AssertNotNull(carbonScopeList, nameof(carbonScopeList));
 
             ReportType = "OverallSummaryReport";
         }

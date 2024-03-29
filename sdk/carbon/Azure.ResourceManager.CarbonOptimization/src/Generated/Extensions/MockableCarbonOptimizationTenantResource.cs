@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CarbonOptimization;
 using Azure.ResourceManager.CarbonOptimization.Models;
 
 namespace Azure.ResourceManager.CarbonOptimization.Mocking
@@ -68,10 +65,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// <returns> An async collection of <see cref="CarbonEmissionData"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<CarbonEmissionData> GetCarbonEmissionReportsCarbonServicesAsync(QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CarbonServiceRestClient.CreateListCarbonEmissionReportsRequest(queryParameters);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CarbonServiceRestClient.CreateListCarbonEmissionReportsNextPageRequest(nextLink, queryParameters);
@@ -101,10 +95,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// <returns> A collection of <see cref="CarbonEmissionData"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<CarbonEmissionData> GetCarbonEmissionReportsCarbonServices(QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => CarbonServiceRestClient.CreateListCarbonEmissionReportsRequest(queryParameters);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CarbonServiceRestClient.CreateListCarbonEmissionReportsNextPageRequest(nextLink, queryParameters);

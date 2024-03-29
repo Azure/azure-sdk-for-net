@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CarbonOptimization.Models;
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.CarbonOptimization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(queryParameters);
+            content.JsonWriter.WriteObjectValue<QueryFilter>(queryParameters, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -62,10 +62,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
         public async Task<Response<CarbonEmissionDataListResult>> ListCarbonEmissionReportsAsync(QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
             using var message = CreateListCarbonEmissionReportsRequest(queryParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -89,10 +86,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
         public Response<CarbonEmissionDataListResult> ListCarbonEmissionReports(QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
             using var message = CreateListCarbonEmissionReportsRequest(queryParameters);
             _pipeline.Send(message, cancellationToken);
@@ -186,14 +180,8 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="queryParameters"/> is null. </exception>
         public async Task<Response<CarbonEmissionDataListResult>> ListCarbonEmissionReportsNextPageAsync(string nextLink, QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
             using var message = CreateListCarbonEmissionReportsNextPageRequest(nextLink, queryParameters);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -218,14 +206,8 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="queryParameters"/> is null. </exception>
         public Response<CarbonEmissionDataListResult> ListCarbonEmissionReportsNextPage(string nextLink, QueryFilter queryParameters, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(queryParameters, nameof(queryParameters));
 
             using var message = CreateListCarbonEmissionReportsNextPageRequest(nextLink, queryParameters);
             _pipeline.Send(message, cancellationToken);

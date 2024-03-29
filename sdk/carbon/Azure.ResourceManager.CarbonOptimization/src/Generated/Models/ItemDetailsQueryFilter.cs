@@ -25,30 +25,12 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dateRange"/>, <paramref name="subscriptionList"/>, <paramref name="carbonScopeList"/>, <paramref name="orderBy"/>, <paramref name="sortDirection"/> or <paramref name="groupCategory"/> is null. </exception>
         public ItemDetailsQueryFilter(DateRange dateRange, IEnumerable<string> subscriptionList, IEnumerable<EmissionScopeEnum> carbonScopeList, CategoryTypeEnum categoryType, string orderBy, string sortDirection, string groupCategory, int pageSize) : base(dateRange, subscriptionList, carbonScopeList)
         {
-            if (dateRange == null)
-            {
-                throw new ArgumentNullException(nameof(dateRange));
-            }
-            if (subscriptionList == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionList));
-            }
-            if (carbonScopeList == null)
-            {
-                throw new ArgumentNullException(nameof(carbonScopeList));
-            }
-            if (orderBy == null)
-            {
-                throw new ArgumentNullException(nameof(orderBy));
-            }
-            if (sortDirection == null)
-            {
-                throw new ArgumentNullException(nameof(sortDirection));
-            }
-            if (groupCategory == null)
-            {
-                throw new ArgumentNullException(nameof(groupCategory));
-            }
+            Argument.AssertNotNull(dateRange, nameof(dateRange));
+            Argument.AssertNotNull(subscriptionList, nameof(subscriptionList));
+            Argument.AssertNotNull(carbonScopeList, nameof(carbonScopeList));
+            Argument.AssertNotNull(orderBy, nameof(orderBy));
+            Argument.AssertNotNull(sortDirection, nameof(sortDirection));
+            Argument.AssertNotNull(groupCategory, nameof(groupCategory));
 
             CategoryType = categoryType;
             OrderBy = orderBy;

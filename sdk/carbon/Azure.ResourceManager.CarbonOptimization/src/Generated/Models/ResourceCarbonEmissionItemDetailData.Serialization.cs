@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCarbonEmissionItemDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceCarbonEmissionItemDetailData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceCarbonEmissionItemDetailData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,27 +36,27 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             writer.WriteStringValue(SubscriptionId);
             writer.WritePropertyName("resourceGroup"u8);
             writer.WriteStringValue(ResourceGroup);
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (ResourceTypeFriendlyName != null)
+            if (Optional.IsDefined(ResourceTypeFriendlyName))
             {
                 writer.WritePropertyName("resourceTypeFriendlyName"u8);
                 writer.WriteStringValue(ResourceTypeFriendlyName);
             }
-            if (ResourceProvider != null)
+            if (Optional.IsDefined(ResourceProvider))
             {
                 writer.WritePropertyName("resourceProvider"u8);
                 writer.WriteStringValue(ResourceProvider);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             writer.WriteNumberValue(TotalCarbonEmission12MonthsAgo);
             writer.WritePropertyName("changeRatioFor12Months"u8);
             writer.WriteNumberValue(ChangeRatioFor12Months);
-            if (ChangeValueMonthOverMonth.HasValue)
+            if (Optional.IsDefined(ChangeValueMonthOverMonth))
             {
                 writer.WritePropertyName("changeValueMonthOverMonth"u8);
                 writer.WriteNumberValue(ChangeValueMonthOverMonth.Value);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceCarbonEmissionItemDetailData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceCarbonEmissionItemDetailData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceCarbonEmissionItemDetailData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,18 +121,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             CategoryTypeEnum categoryType = default;
             string subscriptionId = default;
             string resourceGroup = default;
-            Optional<string> resourceId = default;
-            Optional<AzureLocation> location = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceTypeFriendlyName = default;
-            Optional<string> resourceProvider = default;
+            string resourceId = default;
+            AzureLocation? location = default;
+            string resourceType = default;
+            string resourceTypeFriendlyName = default;
+            string resourceProvider = default;
             string dataType = default;
             double totalCarbonEmission = default;
             double totalCarbonEmissionLastMonth = default;
             double changeRatioForLastMonth = default;
             double totalCarbonEmission12MonthsAgo = default;
             double changeRatioFor12Months = default;
-            Optional<double> changeValueMonthOverMonth = default;
+            double? changeValueMonthOverMonth = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,25 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceCarbonEmissionItemDetailData(dataType, totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, Optional.ToNullable(changeValueMonthOverMonth), serializedAdditionalRawData, itemName, groupName, categoryType, subscriptionId, resourceGroup, resourceId.Value, Optional.ToNullable(location), resourceType.Value, resourceTypeFriendlyName.Value, resourceProvider.Value);
+            return new ResourceCarbonEmissionItemDetailData(
+                dataType,
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData,
+                itemName,
+                groupName,
+                categoryType,
+                subscriptionId,
+                resourceGroup,
+                resourceId,
+                location,
+                resourceType,
+                resourceTypeFriendlyName,
+                resourceProvider);
         }
 
         BinaryData IPersistableModel<ResourceCarbonEmissionItemDetailData>.Write(ModelReaderWriterOptions options)
@@ -248,7 +266,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceCarbonEmissionItemDetailData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceCarbonEmissionItemDetailData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +282,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                         return DeserializeResourceCarbonEmissionItemDetailData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceCarbonEmissionItemDetailData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceCarbonEmissionItemDetailData)} does not support reading '{options.Format}' format.");
             }
         }
 

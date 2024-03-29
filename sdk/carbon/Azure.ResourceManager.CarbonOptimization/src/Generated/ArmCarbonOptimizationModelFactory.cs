@@ -31,7 +31,15 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             locationList ??= new List<string>();
             carbonScopeList ??= new List<EmissionScopeEnum>();
 
-            return new UnknownQueryFilter(reportType, dateRange, subscriptionList?.ToList(), resourceGroupUrlList?.ToList(), resourceTypeList?.ToList(), locationList?.ToList(), carbonScopeList?.ToList(), serializedAdditionalRawData: null);
+            return new UnknownQueryFilter(
+                reportType,
+                dateRange,
+                subscriptionList?.ToList(),
+                resourceGroupUrlList?.ToList(),
+                resourceTypeList?.ToList(),
+                locationList?.ToList(),
+                carbonScopeList?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionData"/>. </summary>
@@ -45,7 +53,15 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.CarbonEmissionData"/> instance for mocking. </returns>
         public static CarbonEmissionData CarbonEmissionData(string dataType = null, double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null)
         {
-            return new UnknownCarbonEmissionData(dataType, totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null);
+            return new UnknownCarbonEmissionData(
+                dataType,
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionDataAvailableDateRange"/>. </summary>
@@ -70,7 +86,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.CarbonEmissionItemDetailData"/> instance for mocking. </returns>
         public static CarbonEmissionItemDetailData CarbonEmissionItemDetailData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, string groupName = null, CategoryTypeEnum categoryType = default)
         {
-            return new CarbonEmissionItemDetailData("ItemDetailsData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, groupName, categoryType);
+            return new CarbonEmissionItemDetailData(
+                "ItemDetailsData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                groupName,
+                categoryType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionMonthlySummaryData"/>. </summary>
@@ -85,7 +112,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.CarbonEmissionMonthlySummaryData"/> instance for mocking. </returns>
         public static CarbonEmissionMonthlySummaryData CarbonEmissionMonthlySummaryData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string date = null, double carbonIntensity = default)
         {
-            return new CarbonEmissionMonthlySummaryData("MonthlySummaryData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, date, carbonIntensity);
+            return new CarbonEmissionMonthlySummaryData(
+                "MonthlySummaryData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                date,
+                carbonIntensity);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionOverallSummaryData"/>. </summary>
@@ -98,7 +135,15 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.CarbonEmissionOverallSummaryData"/> instance for mocking. </returns>
         public static CarbonEmissionOverallSummaryData CarbonEmissionOverallSummaryData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null)
         {
-            return new CarbonEmissionOverallSummaryData("OverallSummaryData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null);
+            return new CarbonEmissionOverallSummaryData(
+                "OverallSummaryData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionTopItemMonthlySummaryData"/>. </summary>
@@ -114,7 +159,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.CarbonEmissionTopItemMonthlySummaryData"/> instance for mocking. </returns>
         public static CarbonEmissionTopItemMonthlySummaryData CarbonEmissionTopItemMonthlySummaryData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, CategoryTypeEnum categoryType = default, string date = null)
         {
-            return new CarbonEmissionTopItemMonthlySummaryData("TopItemsMonthlySummaryData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, categoryType, date);
+            return new CarbonEmissionTopItemMonthlySummaryData(
+                "TopItemsMonthlySummaryData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                categoryType,
+                date);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.CarbonEmissionTopItemsSummaryData"/>. </summary>
@@ -129,7 +185,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.CarbonEmissionTopItemsSummaryData"/> instance for mocking. </returns>
         public static CarbonEmissionTopItemsSummaryData CarbonEmissionTopItemsSummaryData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, CategoryTypeEnum categoryType = default)
         {
-            return new CarbonEmissionTopItemsSummaryData("TopItemsSummaryData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, categoryType);
+            return new CarbonEmissionTopItemsSummaryData(
+                "TopItemsSummaryData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                categoryType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ItemDetailsQueryFilter"/>. </summary>
@@ -154,7 +220,21 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             locationList ??= new List<string>();
             carbonScopeList ??= new List<EmissionScopeEnum>();
 
-            return new ItemDetailsQueryFilter("ItemDetailsReport", dateRange, subscriptionList?.ToList(), resourceGroupUrlList?.ToList(), resourceTypeList?.ToList(), locationList?.ToList(), carbonScopeList?.ToList(), serializedAdditionalRawData: null, categoryType, orderBy, sortDirection, groupCategory, pageSize, skipToken);
+            return new ItemDetailsQueryFilter(
+                "ItemDetailsReport",
+                dateRange,
+                subscriptionList?.ToList(),
+                resourceGroupUrlList?.ToList(),
+                resourceTypeList?.ToList(),
+                locationList?.ToList(),
+                carbonScopeList?.ToList(),
+                serializedAdditionalRawData: null,
+                categoryType,
+                orderBy,
+                sortDirection,
+                groupCategory,
+                pageSize,
+                skipToken);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.MonthlySummaryReportQueryFilter"/>. </summary>
@@ -173,7 +253,15 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             locationList ??= new List<string>();
             carbonScopeList ??= new List<EmissionScopeEnum>();
 
-            return new MonthlySummaryReportQueryFilter("MonthlySummaryReport", dateRange, subscriptionList?.ToList(), resourceGroupUrlList?.ToList(), resourceTypeList?.ToList(), locationList?.ToList(), carbonScopeList?.ToList(), serializedAdditionalRawData: null);
+            return new MonthlySummaryReportQueryFilter(
+                "MonthlySummaryReport",
+                dateRange,
+                subscriptionList?.ToList(),
+                resourceGroupUrlList?.ToList(),
+                resourceTypeList?.ToList(),
+                locationList?.ToList(),
+                carbonScopeList?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.OverallSummaryReportQueryFilter"/>. </summary>
@@ -192,7 +280,15 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             locationList ??= new List<string>();
             carbonScopeList ??= new List<EmissionScopeEnum>();
 
-            return new OverallSummaryReportQueryFilter("OverallSummaryReport", dateRange, subscriptionList?.ToList(), resourceGroupUrlList?.ToList(), resourceTypeList?.ToList(), locationList?.ToList(), carbonScopeList?.ToList(), serializedAdditionalRawData: null);
+            return new OverallSummaryReportQueryFilter(
+                "OverallSummaryReport",
+                dateRange,
+                subscriptionList?.ToList(),
+                resourceGroupUrlList?.ToList(),
+                resourceTypeList?.ToList(),
+                locationList?.ToList(),
+                carbonScopeList?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceCarbonEmissionItemDetailData"/>. </summary>
@@ -215,7 +311,25 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.ResourceCarbonEmissionItemDetailData"/> instance for mocking. </returns>
         public static ResourceCarbonEmissionItemDetailData ResourceCarbonEmissionItemDetailData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, string groupName = null, CategoryTypeEnum categoryType = default, string subscriptionId = null, string resourceGroup = null, string resourceId = null, AzureLocation? location = null, string resourceType = null, string resourceTypeFriendlyName = null, string resourceProvider = null)
         {
-            return new ResourceCarbonEmissionItemDetailData("ResourceItemDetailsData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, groupName, categoryType, subscriptionId, resourceGroup, resourceId, location, resourceType, resourceTypeFriendlyName, resourceProvider);
+            return new ResourceCarbonEmissionItemDetailData(
+                "ResourceItemDetailsData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                groupName,
+                categoryType,
+                subscriptionId,
+                resourceGroup,
+                resourceId,
+                location,
+                resourceType,
+                resourceTypeFriendlyName,
+                resourceProvider);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceCarbonEmissionTopItemMonthlySummaryData"/>. </summary>
@@ -233,7 +347,20 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.ResourceCarbonEmissionTopItemMonthlySummaryData"/> instance for mocking. </returns>
         public static ResourceCarbonEmissionTopItemMonthlySummaryData ResourceCarbonEmissionTopItemMonthlySummaryData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, CategoryTypeEnum categoryType = default, string date = null, string subscriptionId = null, string resourceGroup = null)
         {
-            return new ResourceCarbonEmissionTopItemMonthlySummaryData("ResourceTopItemsMonthlySummaryData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, categoryType, date, subscriptionId, resourceGroup);
+            return new ResourceCarbonEmissionTopItemMonthlySummaryData(
+                "ResourceTopItemsMonthlySummaryData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                categoryType,
+                date,
+                subscriptionId,
+                resourceGroup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceCarbonEmissionTopItemsSummaryData"/>. </summary>
@@ -250,7 +377,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.ResourceCarbonEmissionTopItemsSummaryData"/> instance for mocking. </returns>
         public static ResourceCarbonEmissionTopItemsSummaryData ResourceCarbonEmissionTopItemsSummaryData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, CategoryTypeEnum categoryType = default, string subscriptionId = null, string resourceGroup = null)
         {
-            return new ResourceCarbonEmissionTopItemsSummaryData("ResourceTopItemsSummaryData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, categoryType, subscriptionId, resourceGroup);
+            return new ResourceCarbonEmissionTopItemsSummaryData(
+                "ResourceTopItemsSummaryData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                categoryType,
+                subscriptionId,
+                resourceGroup);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceGroupCarbonEmissionItemDetailData"/>. </summary>
@@ -267,7 +406,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.ResourceGroupCarbonEmissionItemDetailData"/> instance for mocking. </returns>
         public static ResourceGroupCarbonEmissionItemDetailData ResourceGroupCarbonEmissionItemDetailData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, string groupName = null, CategoryTypeEnum categoryType = default, string subscriptionId = null)
         {
-            return new ResourceGroupCarbonEmissionItemDetailData("ResourceGroupItemDetailsData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, groupName, categoryType, subscriptionId);
+            return new ResourceGroupCarbonEmissionItemDetailData(
+                "ResourceGroupItemDetailsData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                groupName,
+                categoryType,
+                subscriptionId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceGroupCarbonEmissionTopItemMonthlySummaryData"/>. </summary>
@@ -284,7 +435,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.ResourceGroupCarbonEmissionTopItemMonthlySummaryData"/> instance for mocking. </returns>
         public static ResourceGroupCarbonEmissionTopItemMonthlySummaryData ResourceGroupCarbonEmissionTopItemMonthlySummaryData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, CategoryTypeEnum categoryType = default, string date = null, string subscriptionId = null)
         {
-            return new ResourceGroupCarbonEmissionTopItemMonthlySummaryData("ResourceGroupTopItemsMonthlySummaryData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, categoryType, date, subscriptionId);
+            return new ResourceGroupCarbonEmissionTopItemMonthlySummaryData(
+                "ResourceGroupTopItemsMonthlySummaryData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                categoryType,
+                date,
+                subscriptionId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceGroupCarbonEmissionTopItemsSummaryData"/>. </summary>
@@ -300,7 +463,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.ResourceGroupCarbonEmissionTopItemsSummaryData"/> instance for mocking. </returns>
         public static ResourceGroupCarbonEmissionTopItemsSummaryData ResourceGroupCarbonEmissionTopItemsSummaryData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, CategoryTypeEnum categoryType = default, string subscriptionId = null)
         {
-            return new ResourceGroupCarbonEmissionTopItemsSummaryData("ResourceGroupTopItemsSummaryData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, categoryType, subscriptionId);
+            return new ResourceGroupCarbonEmissionTopItemsSummaryData(
+                "ResourceGroupTopItemsSummaryData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                categoryType,
+                subscriptionId);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ResourceTypeCarbonEmissionItemDetailData"/>. </summary>
@@ -316,7 +490,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <returns> A new <see cref="Models.ResourceTypeCarbonEmissionItemDetailData"/> instance for mocking. </returns>
         public static ResourceTypeCarbonEmissionItemDetailData ResourceTypeCarbonEmissionItemDetailData(double totalCarbonEmission = default, double totalCarbonEmissionLastMonth = default, double changeRatioForLastMonth = default, double totalCarbonEmission12MonthsAgo = default, double changeRatioFor12Months = default, double? changeValueMonthOverMonth = null, string itemName = null, string resourceTypeFriendlyName = null, CategoryTypeEnum categoryType = default)
         {
-            return new ResourceTypeCarbonEmissionItemDetailData("ResourceTypeItemDetailsData", totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months, changeValueMonthOverMonth, serializedAdditionalRawData: null, itemName, resourceTypeFriendlyName, categoryType);
+            return new ResourceTypeCarbonEmissionItemDetailData(
+                "ResourceTypeItemDetailsData",
+                totalCarbonEmission,
+                totalCarbonEmissionLastMonth,
+                changeRatioForLastMonth,
+                totalCarbonEmission12MonthsAgo,
+                changeRatioFor12Months,
+                changeValueMonthOverMonth,
+                serializedAdditionalRawData: null,
+                itemName,
+                resourceTypeFriendlyName,
+                categoryType);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TopItemsMonthlySummaryReportQueryFilter"/>. </summary>
@@ -337,7 +522,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             locationList ??= new List<string>();
             carbonScopeList ??= new List<EmissionScopeEnum>();
 
-            return new TopItemsMonthlySummaryReportQueryFilter("TopItemsMonthlySummaryReport", dateRange, subscriptionList?.ToList(), resourceGroupUrlList?.ToList(), resourceTypeList?.ToList(), locationList?.ToList(), carbonScopeList?.ToList(), serializedAdditionalRawData: null, categoryType, topItems);
+            return new TopItemsMonthlySummaryReportQueryFilter(
+                "TopItemsMonthlySummaryReport",
+                dateRange,
+                subscriptionList?.ToList(),
+                resourceGroupUrlList?.ToList(),
+                resourceTypeList?.ToList(),
+                locationList?.ToList(),
+                carbonScopeList?.ToList(),
+                serializedAdditionalRawData: null,
+                categoryType,
+                topItems);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TopItemsSummaryReportQueryFilter"/>. </summary>
@@ -358,7 +553,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             locationList ??= new List<string>();
             carbonScopeList ??= new List<EmissionScopeEnum>();
 
-            return new TopItemsSummaryReportQueryFilter("TopItemsSummaryReport", dateRange, subscriptionList?.ToList(), resourceGroupUrlList?.ToList(), resourceTypeList?.ToList(), locationList?.ToList(), carbonScopeList?.ToList(), serializedAdditionalRawData: null, categoryType, topItems);
+            return new TopItemsSummaryReportQueryFilter(
+                "TopItemsSummaryReport",
+                dateRange,
+                subscriptionList?.ToList(),
+                resourceGroupUrlList?.ToList(),
+                resourceTypeList?.ToList(),
+                locationList?.ToList(),
+                carbonScopeList?.ToList(),
+                serializedAdditionalRawData: null,
+                categoryType,
+                topItems);
         }
     }
 }

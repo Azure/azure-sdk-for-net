@@ -25,14 +25,8 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <exception cref="ArgumentNullException"> <paramref name="itemName"/> or <paramref name="resourceTypeFriendlyName"/> is null. </exception>
         internal ResourceTypeCarbonEmissionItemDetailData(double totalCarbonEmission, double totalCarbonEmissionLastMonth, double changeRatioForLastMonth, double totalCarbonEmission12MonthsAgo, double changeRatioFor12Months, string itemName, string resourceTypeFriendlyName, CategoryTypeEnum categoryType) : base(totalCarbonEmission, totalCarbonEmissionLastMonth, changeRatioForLastMonth, totalCarbonEmission12MonthsAgo, changeRatioFor12Months)
         {
-            if (itemName == null)
-            {
-                throw new ArgumentNullException(nameof(itemName));
-            }
-            if (resourceTypeFriendlyName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceTypeFriendlyName));
-            }
+            Argument.AssertNotNull(itemName, nameof(itemName));
+            Argument.AssertNotNull(resourceTypeFriendlyName, nameof(resourceTypeFriendlyName));
 
             ItemName = itemName;
             ResourceTypeFriendlyName = resourceTypeFriendlyName;
