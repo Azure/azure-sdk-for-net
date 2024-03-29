@@ -46,7 +46,7 @@ namespace Azure.Communication.JobRouter
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="RouterWorker"/>. </summary>
-        internal RouterWorker()
+        public RouterWorker()
         {
             Queues = new ChangeTrackingList<string>();
             _labels = new ChangeTrackingDictionary<string, BinaryData>();
