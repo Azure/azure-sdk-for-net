@@ -369,6 +369,10 @@ namespace Azure.Storage.Files.Shares
             request.Headers.Add("x-ms-lease-action", "release");
             request.Headers.Add("x-ms-lease-id", leaseId);
             request.Headers.Add("x-ms-version", _version);
+            if (_fileRequestIntent != null)
+            {
+                request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
