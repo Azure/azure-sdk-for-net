@@ -914,6 +914,7 @@ namespace Azure.Storage.Files.Shares.Tests
             var shareName = GetNewShareName();
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
             ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateIfNotExistsAsync();
 
             // Act
             Response<ShareProperties> response = await share.GetPropertiesAsync();
@@ -1783,6 +1784,23 @@ namespace Azure.Storage.Files.Shares.Tests
 
             // Cleanup
             await shareClient.DeleteAsync();
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task DeleteAsync_OAuth()
+        {
+            // Arrange
+            var shareName = GetNewShareName();
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareClient share = InstrumentClient(service.GetShareClient(shareName));
+            await share.CreateIfNotExistsAsync(quotaInGB: 1);
+
+            // Act
+            Response response = await share.DeleteAsync(false);
+
+            // Assert
+            Assert.IsNotNull(response.Headers.RequestId);
         }
 
         [RecordedTest]
