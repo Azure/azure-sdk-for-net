@@ -1,10 +1,5 @@
 namespace Azure.Provisioning
 {
-    public static partial class CdkExtensions
-    {
-        public static T? GetSingleResourceInScope<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
-        public static T? GetSingleResource<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
-    }
     public partial class Configuration
     {
         public Configuration() { }
@@ -87,6 +82,11 @@ namespace Azure.Provisioning
         public bool IsSecure { get { throw null; } }
         public string Name { get { throw null; } }
     }
+    public static partial class ProvisioningExtensions
+    {
+        public static T? GetSingleResourceInScope<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
+        public static T? GetSingleResource<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
+    }
     public abstract partial class Resource : System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>
     {
         protected Resource(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Resource? parent, string resourceName, Azure.Core.ResourceType resourceType, string version, System.Func<string, object> createProperties) { }
@@ -136,42 +136,6 @@ namespace Azure.Provisioning.ApplicationInsights
         public ApplicationInsightsComponent(Azure.Provisioning.IConstruct scope, string kind = "web", string applicationType = "web", Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "appinsights", string version = "2020-02-02", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ApplicationInsights.ApplicationInsightsComponentData>)) { }
         public static Azure.Provisioning.ApplicationInsights.ApplicationInsightsComponent FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
-    }
-}
-namespace Azure.Provisioning.AppService
-{
-    public partial class AppServicePlan : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.AppServicePlanData>
-    {
-        public AppServicePlan(Azure.Provisioning.IConstruct scope, string name, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppService.AppServicePlanData>)) { }
-        public static Azure.Provisioning.AppService.AppServicePlan FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
-    }
-    public static partial class AppServicesExtensions
-    {
-        public static Azure.Provisioning.AppService.AppServicePlan AddAppServicePlan(this Azure.Provisioning.IConstruct construct, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "appServicePlan") { throw null; }
-    }
-    public partial class WebSite : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.WebSiteData>
-    {
-        public WebSite(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.AppService.AppServicePlan appServicePlan, Azure.Provisioning.AppService.WebSiteRuntime runtime, string runtimeVersion, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppService.WebSiteData>)) { }
-        public void AddApplicationSetting(string key, Azure.Provisioning.Parameter value) { }
-        public void AddApplicationSetting(string key, string value) { }
-        public void AddLogConfig(string resourceName) { }
-        public static Azure.Provisioning.AppService.WebSite FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
-    }
-    public partial class WebSiteConfigLogs : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.SiteLogsConfigData>
-    {
-        public WebSiteConfigLogs(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.AppService.WebSite? parent = null, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppService.SiteLogsConfigData>)) { }
-        public static Azure.Provisioning.AppService.WebSiteConfigLogs FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.AppService.WebSite? parent = null) { throw null; }
-        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
-    }
-    public partial class WebSitePublishingCredentialPolicy : Azure.Provisioning.Resource<Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>
-    {
-        public WebSitePublishingCredentialPolicy(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.AppService.WebSite? parent = null, string version = "2021-02-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.AppService.CsmPublishingCredentialsPoliciesEntityData>)) { }
-        public static Azure.Provisioning.AppService.WebSitePublishingCredentialPolicy FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.AppService.WebSite? parent = null) { throw null; }
-    }
-    public enum WebSiteRuntime
-    {
-        Node = 0,
-        Dotnetcore = 1,
     }
 }
 namespace Azure.Provisioning.Authorization
@@ -270,19 +234,19 @@ namespace Azure.Provisioning.EventHubs
 {
     public partial class EventHub : Azure.Provisioning.Resource<Azure.ResourceManager.EventHubs.EventHubData>
     {
-        public EventHub(Azure.Provisioning.IConstruct scope, Azure.Provisioning.EventHubs.EventHubsNamespace? parent = null, string name = "hub", string version = "2022-10-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.EventHubs.EventHubData>)) { }
+        public EventHub(Azure.Provisioning.IConstruct scope, Azure.Provisioning.EventHubs.EventHubsNamespace? parent = null, string name = "hub", string version = "2021-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.EventHubs.EventHubData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         public static Azure.Provisioning.EventHubs.EventHub FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.EventHubs.EventHubsNamespace parent) { throw null; }
     }
     public partial class EventHubsConsumerGroup : Azure.Provisioning.Resource<Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>
     {
-        public EventHubsConsumerGroup(Azure.Provisioning.IConstruct scope, Azure.Provisioning.EventHubs.EventHub? parent = null, string name = "cg", string version = "2022-10-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>)) { }
+        public EventHubsConsumerGroup(Azure.Provisioning.IConstruct scope, Azure.Provisioning.EventHubs.EventHub? parent = null, string name = "cg", string version = "2021-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.EventHubs.EventHubsConsumerGroupData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         public static Azure.Provisioning.EventHubs.EventHubsConsumerGroup FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.EventHubs.EventHub parent) { throw null; }
     }
     public partial class EventHubsNamespace : Azure.Provisioning.Resource<Azure.ResourceManager.EventHubs.EventHubsNamespaceData>
     {
-        public EventHubsNamespace(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.EventHubs.Models.EventHubsSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "eh", string version = "2022-10-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.EventHubs.EventHubsNamespaceData>)) { }
+        public EventHubsNamespace(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.EventHubs.Models.EventHubsSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "eh", string version = "2021-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.EventHubs.EventHubsNamespaceData>)) { }
         public static Azure.Provisioning.EventHubs.EventHubsNamespace FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
@@ -341,7 +305,7 @@ namespace Azure.Provisioning.PostgreSql
     }
     public partial class PostgreSqlFlexibleServer : Azure.Provisioning.Resource<Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>
     {
-        public PostgreSqlFlexibleServer(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku? sku = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion? serverVersion = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHighAvailability? highAvailability = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerStorage? storage = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerDataEncryption? encryption = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupProperties? backup = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork? network = null, string? availabilityZone = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "postgres", string version = "2023-03-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>)) { }
+        public PostgreSqlFlexibleServer(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerSku? sku = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion? serverVersion = default(Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerVersion?), Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerHighAvailability? highAvailability = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerDataEncryption? encryption = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerBackupProperties? backup = null, Azure.ResourceManager.PostgreSql.FlexibleServers.Models.PostgreSqlFlexibleServerNetwork? network = null, int? storageSizeInGB = default(int?), string? availabilityZone = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "postgres", string version = "2023-03-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.PostgreSql.FlexibleServers.PostgreSqlFlexibleServerData>)) { }
         public static Azure.Provisioning.PostgreSql.PostgreSqlFlexibleServer FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
         public Azure.Provisioning.PostgreSql.PostgreSqlConnectionString GetConnectionString(Azure.Provisioning.Parameter administratorLogin, Azure.Provisioning.Parameter administratorPassword) { throw null; }
@@ -415,25 +379,25 @@ namespace Azure.Provisioning.ServiceBus
 {
     public partial class ServiceBusNamespace : Azure.Provisioning.Resource<Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>
     {
-        public ServiceBusNamespace(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.ServiceBus.Models.ServiceBusSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "sb", string version = "2022-10-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>)) { }
+        public ServiceBusNamespace(Azure.Provisioning.IConstruct scope, Azure.ResourceManager.ServiceBus.Models.ServiceBusSku? sku = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "sb", string version = "2021-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusNamespaceData>)) { }
         public static Azure.Provisioning.ServiceBus.ServiceBusNamespace FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
     public partial class ServiceBusQueue : Azure.Provisioning.Resource<Azure.ResourceManager.ServiceBus.ServiceBusQueueData>
     {
-        public ServiceBusQueue(Azure.Provisioning.IConstruct scope, bool? requiresSession = default(bool?), Azure.Provisioning.ServiceBus.ServiceBusNamespace? parent = null, string name = "queue", string version = "2022-10-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusQueueData>)) { }
+        public ServiceBusQueue(Azure.Provisioning.IConstruct scope, bool? requiresSession = default(bool?), Azure.Provisioning.ServiceBus.ServiceBusNamespace? parent = null, string name = "queue", string version = "2021-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusQueueData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         public static Azure.Provisioning.ServiceBus.ServiceBusQueue FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ServiceBus.ServiceBusNamespace parent) { throw null; }
     }
     public partial class ServiceBusSubscription : Azure.Provisioning.Resource<Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>
     {
-        public ServiceBusSubscription(Azure.Provisioning.IConstruct scope, bool? requiresSession = default(bool?), Azure.Provisioning.ServiceBus.ServiceBusTopic? parent = null, string name = "subscription", string version = "2022-10-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>)) { }
+        public ServiceBusSubscription(Azure.Provisioning.IConstruct scope, bool? requiresSession = default(bool?), Azure.Provisioning.ServiceBus.ServiceBusTopic? parent = null, string name = "subscription", string version = "2021-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusSubscriptionData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         public static Azure.Provisioning.ServiceBus.ServiceBusSubscription FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ServiceBus.ServiceBusTopic parent) { throw null; }
     }
     public partial class ServiceBusTopic : Azure.Provisioning.Resource<Azure.ResourceManager.ServiceBus.ServiceBusTopicData>
     {
-        public ServiceBusTopic(Azure.Provisioning.IConstruct scope, Azure.Provisioning.ServiceBus.ServiceBusNamespace? parent = null, string name = "topic", string version = "2022-10-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusTopicData>)) { }
+        public ServiceBusTopic(Azure.Provisioning.IConstruct scope, Azure.Provisioning.ServiceBus.ServiceBusNamespace? parent = null, string name = "topic", string version = "2021-11-01", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ServiceBus.ServiceBusTopicData>)) { }
         protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         public static Azure.Provisioning.ServiceBus.ServiceBusTopic FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ServiceBus.ServiceBusNamespace parent) { throw null; }
     }

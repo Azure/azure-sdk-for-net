@@ -150,7 +150,7 @@ namespace Azure.Provisioning
         /// </summary>
         /// <param name="resourceName">The specified name when constructing the resource.</param>
         protected string GetGloballyUniqueName(string resourceName)
-            => $"toLower(take(concat('{resourceName}', uniqueString(resourceGroup().id)), 24))";
+            => $"toLower(take('{resourceName}${{uniqueString(resourceGroup().id)}}', 24))";
 
         /// <summary>
         /// Finds the parent resource in the scope.

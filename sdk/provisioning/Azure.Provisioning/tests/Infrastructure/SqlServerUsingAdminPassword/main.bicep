@@ -11,20 +11,19 @@ param adminLogin string
 param adminPassword string
 
 
-resource sqlServer_Yt40VknQJ 'Microsoft.Sql/servers@2020-11-01-preview' = {
-  name: toLower(take(concat('sqlserver', uniqueString(resourceGroup().id)), 24))
+resource sqlServer_DLIjdcaKF 'Microsoft.Sql/servers@2020-11-01-preview' = {
+  name: toLower(take('sqlserver${uniqueString(resourceGroup().id)}', 24))
   location: location
   properties: {
     administratorLogin: adminLogin
     administratorLoginPassword: adminPassword
     version: '12.0'
-    minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
   }
 }
 
-resource sqlDatabase_qFhDi2oga 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
-  parent: sqlServer_Yt40VknQJ
+resource sqlDatabase_LkBQNoSaa 'Microsoft.Sql/servers/databases@2020-11-01-preview' = {
+  parent: sqlServer_DLIjdcaKF
   name: 'db'
   location: location
   properties: {

@@ -11,6 +11,8 @@
     "**/SessionRecords/**",
     "**/packages/**",
     "artifacts/**/*",
+    "*.cbor",
+    "*.cose",
     "*.exe",
     "*.dll",
     "*.nupkg",
@@ -32,6 +34,7 @@
     "*.user",
     ".vscode/cspell.json",
     "assets.json",
+    "sdk/confidentialledger/Azure.Security.CodeTransparency/tests/TestFiles/*",
     // These services are opted out of public API surface spell checking.
     // Spelling issues must be addressed before adding these back in.
     "sdk/agrifood/*/api/*.cs",
@@ -249,7 +252,10 @@
     {
       "filename": "**/sdk/confidentialledger/**/*.cs",
       "words": [
-        "ccfs"
+        "cbor",
+        "ccfs",
+        "cose",
+        "scitt"
       ]
     },
     {

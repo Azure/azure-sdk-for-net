@@ -352,10 +352,10 @@ namespace Azure.ResourceManager.ScVmm.Models
         /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
         /// <returns> A new <see cref="Models.ScVmmInventoryItemProperties"/> instance for mocking. </returns>
-        public static ScVmmInventoryItemProperties ScVmmInventoryItemProperties(string inventoryType = "Unknown", string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null)
+        public static ScVmmInventoryItemProperties ScVmmInventoryItemProperties(string inventoryType = null, string managedResourceId = null, string uuid = null, string inventoryItemName = null, ScVmmProvisioningState? provisioningState = null)
         {
             return new UnknownInventoryItemProperties(
-                inventoryType,
+                inventoryType == null ? default : new ScVmmInventoryType(inventoryType),
                 managedResourceId,
                 uuid,
                 inventoryItemName,

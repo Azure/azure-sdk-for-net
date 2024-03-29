@@ -8,8 +8,8 @@ resource keyVault_vxw9QYjTK 'Microsoft.KeyVault/vaults@2022-07-01' existing = {
   name: 'existingVault'
 }
 
-resource redisCache_YE3v6ym48 'Microsoft.Cache/Redis@2020-06-01' = {
-  name: toLower(take(concat('redis', uniqueString(resourceGroup().id)), 24))
+resource redisCache_1pkKDcARg 'Microsoft.Cache/Redis@2020-06-01' = {
+  name: toLower(take('redis${uniqueString(resourceGroup().id)}', 24))
   location: location
   properties: {
     enableNonSslPort: false
@@ -27,7 +27,7 @@ resource keyVaultSecret_PGXfP6Z9q 'Microsoft.KeyVault/vaults/secrets@2022-07-01'
   name: 'primaryConnectionString'
   location: location
   properties: {
-    value: '${redisCache_YE3v6ym48.properties.hostName},ssl=true,password=${redisCache_YE3v6ym48.listkeys(redisCache_YE3v6ym48.apiVersion).primaryKey}'
+    value: '${redisCache_1pkKDcARg.properties.hostName},ssl=true,password=${redisCache_1pkKDcARg.listkeys(redisCache_1pkKDcARg.apiVersion).primaryKey}'
   }
 }
 
@@ -36,7 +36,7 @@ resource keyVaultSecret_bTFii2gaH 'Microsoft.KeyVault/vaults/secrets@2022-07-01'
   name: 'secondaryConnectionStrin'
   location: location
   properties: {
-    value: '${redisCache_YE3v6ym48.properties.hostName},ssl=true,password=${redisCache_YE3v6ym48.listkeys(redisCache_YE3v6ym48.apiVersion).secondaryKey}'
+    value: '${redisCache_1pkKDcARg.properties.hostName},ssl=true,password=${redisCache_1pkKDcARg.listkeys(redisCache_1pkKDcARg.apiVersion).secondaryKey}'
   }
 }
 
