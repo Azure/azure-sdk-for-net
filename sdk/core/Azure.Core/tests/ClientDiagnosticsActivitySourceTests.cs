@@ -380,7 +380,7 @@ namespace Azure.Core.Tests
 
         [Test]
         [NonParallelizable]
-        public void StartActivitySourceActivityIgnoresInvalidLinkParent()
+        public void StartActivitySourceActivityDoesNotIgnoreInvalidLinkParent()
         {
             using var activityListener = new TestActivitySourceListener("Azure.Clients.ClientName");
 
@@ -388,12 +388,18 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ClientName.ActivityName");
 
-            scope.AddLink("test", "ignored");
+            var linkAttributes = new Dictionary<string, object>
+            {
+                { "key", "value" }
+            };
+            scope.AddLink("test", "ignored", linkAttributes);
 
             scope.Start();
             scope.Dispose();
 
-            Assert.AreEqual(0, activityListener.Activities.Single().Links.Count());
+            var links = activityListener.Activities.Single().Links;
+            Assert.AreEqual(1, links.Count());
+            Assert.AreEqual("value", links.Single().Tags.Single(o => o.Key == "key").Value);
         }
 
         [Test]
