@@ -2,6 +2,8 @@
 
 ## 1.0.0 (2024-04-09)
 
+This release is the first stable release of the Azure API Center library.
+
 ### Features Added
 
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
