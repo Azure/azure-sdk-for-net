@@ -13,6 +13,7 @@ using TestSchema;
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {
     [NonParallelizable]
+    [LiveOnly]
     public class EventSourceLiveTests : SchemaRegistryAvroObjectSerializerLiveTestBase
     {
         private TestEventListener _listener;
