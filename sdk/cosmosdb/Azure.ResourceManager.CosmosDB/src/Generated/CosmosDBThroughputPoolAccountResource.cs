@@ -15,14 +15,14 @@ using Azure.Core.Pipeline;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A Class representing a ThroughputPoolAccountResource along with the instance operations that can be performed on it.
-    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="ThroughputPoolAccountResource"/>
-    /// from an instance of <see cref="ArmClient"/> using the GetThroughputPoolAccountResource method.
-    /// Otherwise you can get one from its parent resource <see cref="ThroughputPoolResource"/> using the GetThroughputPoolAccountResource method.
+    /// A Class representing a CosmosDBThroughputPoolAccount along with the instance operations that can be performed on it.
+    /// If you have a <see cref="ResourceIdentifier"/> you can construct a <see cref="CosmosDBThroughputPoolAccountResource"/>
+    /// from an instance of <see cref="ArmClient"/> using the GetCosmosDBThroughputPoolAccountResource method.
+    /// Otherwise you can get one from its parent resource <see cref="CosmosDBThroughputPoolResource"/> using the GetCosmosDBThroughputPoolAccount method.
     /// </summary>
-    public partial class ThroughputPoolAccountResource : ArmResource
+    public partial class CosmosDBThroughputPoolAccountResource : ArmResource
     {
-        /// <summary> Generate the resource identifier of a <see cref="ThroughputPoolAccountResource"/> instance. </summary>
+        /// <summary> Generate the resource identifier of a <see cref="CosmosDBThroughputPoolAccountResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
         /// <param name="throughputPoolName"> The throughputPoolName. </param>
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.CosmosDB
             return new ResourceIdentifier(resourceId);
         }
 
-        private readonly ClientDiagnostics _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics;
-        private readonly ThroughputPoolAccountRestOperations _throughputPoolAccountResourceThroughputPoolAccountRestClient;
-        private readonly ThroughputPoolAccountResourceData _data;
+        private readonly ClientDiagnostics _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics;
+        private readonly ThroughputPoolAccountRestOperations _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient;
+        private readonly CosmosDBThroughputPoolAccountData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
         public static readonly ResourceType ResourceType = "Microsoft.DocumentDB/throughputPools/throughputPoolAccounts";
 
-        /// <summary> Initializes a new instance of the <see cref="ThroughputPoolAccountResource"/> class for mocking. </summary>
-        protected ThroughputPoolAccountResource()
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBThroughputPoolAccountResource"/> class for mocking. </summary>
+        protected CosmosDBThroughputPoolAccountResource()
         {
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ThroughputPoolAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBThroughputPoolAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="data"> The resource that is the target of operations. </param>
-        internal ThroughputPoolAccountResource(ArmClient client, ThroughputPoolAccountResourceData data) : this(client, data.Id)
+        internal CosmosDBThroughputPoolAccountResource(ArmClient client, CosmosDBThroughputPoolAccountData data) : this(client, data.Id)
         {
             HasData = true;
             _data = data;
         }
 
-        /// <summary> Initializes a new instance of the <see cref="ThroughputPoolAccountResource"/> class. </summary>
+        /// <summary> Initializes a new instance of the <see cref="CosmosDBThroughputPoolAccountResource"/> class. </summary>
         /// <param name="client"> The client parameters to use in these operations. </param>
         /// <param name="id"> The identifier of the resource that is the target of operations. </param>
-        internal ThroughputPoolAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
+        internal CosmosDBThroughputPoolAccountResource(ArmClient client, ResourceIdentifier id) : base(client, id)
         {
-            _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
-            TryGetApiVersion(ResourceType, out string throughputPoolAccountResourceThroughputPoolAccountApiVersion);
-            _throughputPoolAccountResourceThroughputPoolAccountRestClient = new ThroughputPoolAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, throughputPoolAccountResourceThroughputPoolAccountApiVersion);
+            _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.CosmosDB", ResourceType.Namespace, Diagnostics);
+            TryGetApiVersion(ResourceType, out string cosmosDBThroughputPoolAccountThroughputPoolAccountApiVersion);
+            _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient = new ThroughputPoolAccountRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, cosmosDBThroughputPoolAccountThroughputPoolAccountApiVersion);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.CosmosDB
 
         /// <summary> Gets the data representing this Feature. </summary>
         /// <exception cref="InvalidOperationException"> Throws if there is no data loaded in the current instance. </exception>
-        public virtual ThroughputPoolAccountResourceData Data
+        public virtual CosmosDBThroughputPoolAccountData Data
         {
             get
             {
@@ -105,21 +105,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ThroughputPoolAccountResource"/></description>
+        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<ThroughputPoolAccountResource>> GetAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CosmosDBThroughputPoolAccountResource>> GetAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics.CreateScope("ThroughputPoolAccountResource.Get");
+            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountResource.Get");
             scope.Start();
             try
             {
-                var response = await _throughputPoolAccountResourceThroughputPoolAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.GetAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ThroughputPoolAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBThroughputPoolAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -145,21 +145,21 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ThroughputPoolAccountResource"/></description>
+        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<ThroughputPoolAccountResource> Get(CancellationToken cancellationToken = default)
+        public virtual Response<CosmosDBThroughputPoolAccountResource> Get(CancellationToken cancellationToken = default)
         {
-            using var scope = _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics.CreateScope("ThroughputPoolAccountResource.Get");
+            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountResource.Get");
             scope.Start();
             try
             {
-                var response = _throughputPoolAccountResourceThroughputPoolAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.Get(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 if (response.Value == null)
                     throw new RequestFailedException(response.GetRawResponse());
-                return Response.FromValue(new ThroughputPoolAccountResource(Client, response.Value), response.GetRawResponse());
+                return Response.FromValue(new CosmosDBThroughputPoolAccountResource(Client, response.Value), response.GetRawResponse());
             }
             catch (Exception e)
             {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ThroughputPoolAccountResource"/></description>
+        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -193,12 +193,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual async Task<ArmOperation> DeleteAsync(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics.CreateScope("ThroughputPoolAccountResource.Delete");
+            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountResource.Delete");
             scope.Start();
             try
             {
-                var response = await _throughputPoolAccountResourceThroughputPoolAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation(_throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics, Pipeline, _throughputPoolAccountResourceThroughputPoolAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = await _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.DeleteAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation(_cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics, Pipeline, _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionResponseAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ThroughputPoolAccountResource"/></description>
+        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -235,12 +235,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         public virtual ArmOperation Delete(WaitUntil waitUntil, CancellationToken cancellationToken = default)
         {
-            using var scope = _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics.CreateScope("ThroughputPoolAccountResource.Delete");
+            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountResource.Delete");
             scope.Start();
             try
             {
-                var response = _throughputPoolAccountResourceThroughputPoolAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
-                var operation = new CosmosDBArmOperation(_throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics, Pipeline, _throughputPoolAccountResourceThroughputPoolAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
+                var response = _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.Delete(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var operation = new CosmosDBArmOperation(_cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics, Pipeline, _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.CreateDeleteRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name).Request, response, OperationFinalStateVia.Location);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletionResponse(cancellationToken);
                 return operation;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ThroughputPoolAccountResource"/></description>
+        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -277,16 +277,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The parameters to provide for the current ThroughputPoolAccount. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual async Task<ArmOperation<ThroughputPoolAccountResource>> UpdateAsync(WaitUntil waitUntil, ThroughputPoolAccountResourceData data, CancellationToken cancellationToken = default)
+        public virtual async Task<ArmOperation<CosmosDBThroughputPoolAccountResource>> UpdateAsync(WaitUntil waitUntil, CosmosDBThroughputPoolAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics.CreateScope("ThroughputPoolAccountResource.Update");
+            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountResource.Update");
             scope.Start();
             try
             {
-                var response = await _throughputPoolAccountResourceThroughputPoolAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
-                var operation = new CosmosDBArmOperation<ThroughputPoolAccountResource>(new ThroughputPoolAccountResourceOperationSource(Client), _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics, Pipeline, _throughputPoolAccountResourceThroughputPoolAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = await _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.CreateAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken).ConfigureAwait(false);
+                var operation = new CosmosDBArmOperation<CosmosDBThroughputPoolAccountResource>(new CosmosDBThroughputPoolAccountOperationSource(Client), _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics, Pipeline, _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     await operation.WaitForCompletionAsync(cancellationToken).ConfigureAwait(false);
                 return operation;
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Resource</term>
-        /// <description><see cref="ThroughputPoolAccountResource"/></description>
+        /// <description><see cref="CosmosDBThroughputPoolAccountResource"/></description>
         /// </item>
         /// </list>
         /// </summary>
@@ -323,16 +323,16 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="data"> The parameters to provide for the current ThroughputPoolAccount. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
-        public virtual ArmOperation<ThroughputPoolAccountResource> Update(WaitUntil waitUntil, ThroughputPoolAccountResourceData data, CancellationToken cancellationToken = default)
+        public virtual ArmOperation<CosmosDBThroughputPoolAccountResource> Update(WaitUntil waitUntil, CosmosDBThroughputPoolAccountData data, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(data, nameof(data));
 
-            using var scope = _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics.CreateScope("ThroughputPoolAccountResource.Update");
+            using var scope = _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics.CreateScope("CosmosDBThroughputPoolAccountResource.Update");
             scope.Start();
             try
             {
-                var response = _throughputPoolAccountResourceThroughputPoolAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
-                var operation = new CosmosDBArmOperation<ThroughputPoolAccountResource>(new ThroughputPoolAccountResourceOperationSource(Client), _throughputPoolAccountResourceThroughputPoolAccountClientDiagnostics, Pipeline, _throughputPoolAccountResourceThroughputPoolAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
+                var response = _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.Create(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data, cancellationToken);
+                var operation = new CosmosDBArmOperation<CosmosDBThroughputPoolAccountResource>(new CosmosDBThroughputPoolAccountOperationSource(Client), _cosmosDBThroughputPoolAccountThroughputPoolAccountClientDiagnostics, Pipeline, _cosmosDBThroughputPoolAccountThroughputPoolAccountRestClient.CreateCreateRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, data).Request, response, OperationFinalStateVia.AzureAsyncOperation);
                 if (waitUntil == WaitUntil.Completed)
                     operation.WaitForCompletion(cancellationToken);
                 return operation;

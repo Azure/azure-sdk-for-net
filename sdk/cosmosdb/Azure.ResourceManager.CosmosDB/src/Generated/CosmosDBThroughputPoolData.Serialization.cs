@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -16,19 +17,32 @@ using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.CosmosDB
 {
-    public partial class ThroughputPoolAccountResourceData : IUtf8JsonSerializable, IJsonModel<ThroughputPoolAccountResourceData>
+    public partial class CosmosDBThroughputPoolData : IUtf8JsonSerializable, IJsonModel<CosmosDBThroughputPoolData>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputPoolAccountResourceData>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBThroughputPoolData>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ThroughputPoolAccountResourceData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBThroughputPoolData>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputPoolAccountResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBThroughputPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputPoolAccountResourceData)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBThroughputPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            if (Optional.IsCollectionDefined(Tags))
+            {
+                writer.WritePropertyName("tags"u8);
+                writer.WriteStartObject();
+                foreach (var item in Tags)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            writer.WritePropertyName("location"u8);
+            writer.WriteStringValue(Location);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -56,20 +70,10 @@ namespace Azure.ResourceManager.CosmosDB
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Optional.IsDefined(AccountResourceIdentifier))
+            if (Optional.IsDefined(MaxThroughput))
             {
-                writer.WritePropertyName("accountResourceIdentifier"u8);
-                writer.WriteStringValue(AccountResourceIdentifier);
-            }
-            if (Optional.IsDefined(AccountLocation))
-            {
-                writer.WritePropertyName("accountLocation"u8);
-                writer.WriteStringValue(AccountLocation);
-            }
-            if (options.Format != "W" && Optional.IsDefined(AccountInstanceId))
-            {
-                writer.WritePropertyName("accountInstanceId"u8);
-                writer.WriteStringValue(AccountInstanceId);
+                writer.WritePropertyName("maxThroughput"u8);
+                writer.WriteNumberValue(MaxThroughput.Value);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -90,19 +94,19 @@ namespace Azure.ResourceManager.CosmosDB
             writer.WriteEndObject();
         }
 
-        ThroughputPoolAccountResourceData IJsonModel<ThroughputPoolAccountResourceData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBThroughputPoolData IJsonModel<CosmosDBThroughputPoolData>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputPoolAccountResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBThroughputPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputPoolAccountResourceData)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBThroughputPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeThroughputPoolAccountResourceData(document.RootElement, options);
+            return DeserializeCosmosDBThroughputPoolData(document.RootElement, options);
         }
 
-        internal static ThroughputPoolAccountResourceData DeserializeThroughputPoolAccountResourceData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBThroughputPoolData DeserializeCosmosDBThroughputPoolData(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -110,18 +114,37 @@ namespace Azure.ResourceManager.CosmosDB
             {
                 return null;
             }
+            IDictionary<string, string> tags = default;
+            AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
             CosmosDBStatus? provisioningState = default;
-            string accountResourceIdentifier = default;
-            string accountLocation = default;
-            string accountInstanceId = default;
+            int? maxThroughput = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("tags"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetString());
+                    }
+                    tags = dictionary;
+                    continue;
+                }
+                if (property.NameEquals("location"u8))
+                {
+                    location = new AzureLocation(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("id"u8))
                 {
                     id = new ResourceIdentifier(property.Value.GetString());
@@ -164,19 +187,13 @@ namespace Azure.ResourceManager.CosmosDB
                             provisioningState = new CosmosDBStatus(property0.Value.GetString());
                             continue;
                         }
-                        if (property0.NameEquals("accountResourceIdentifier"u8))
+                        if (property0.NameEquals("maxThroughput"u8))
                         {
-                            accountResourceIdentifier = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("accountLocation"u8))
-                        {
-                            accountLocation = property0.Value.GetString();
-                            continue;
-                        }
-                        if (property0.NameEquals("accountInstanceId"u8))
-                        {
-                            accountInstanceId = property0.Value.GetString();
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            maxThroughput = property0.Value.GetInt32();
                             continue;
                         }
                     }
@@ -188,15 +205,15 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputPoolAccountResourceData(
+            return new CosmosDBThroughputPoolData(
                 id,
                 name,
                 type,
                 systemData,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                location,
                 provisioningState,
-                accountResourceIdentifier,
-                accountLocation,
-                accountInstanceId,
+                maxThroughput,
                 serializedAdditionalRawData);
         }
 
@@ -229,6 +246,53 @@ namespace Azure.ResourceManager.CosmosDB
                     else
                     {
                         builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            builder.Append("  location: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Location.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tags), out propertyOverride);
+            if (Optional.IsCollectionDefined(Tags) || hasPropertyOverride)
+            {
+                if (Tags.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  tags: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in Tags)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            if (item.Value == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Value.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("'''");
+                                builder.AppendLine($"{item.Value}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"'{item.Value}'");
+                            }
+                        }
+                        builder.AppendLine("  }");
                     }
                 }
             }
@@ -277,69 +341,17 @@ namespace Azure.ResourceManager.CosmosDB
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountResourceIdentifier), out propertyOverride);
-            if (Optional.IsDefined(AccountResourceIdentifier) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxThroughput), out propertyOverride);
+            if (Optional.IsDefined(MaxThroughput) || hasPropertyOverride)
             {
-                builder.Append("    accountResourceIdentifier: ");
+                builder.Append("    maxThroughput: ");
                 if (hasPropertyOverride)
                 {
                     builder.AppendLine($"{propertyOverride}");
                 }
                 else
                 {
-                    if (AccountResourceIdentifier.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AccountResourceIdentifier}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AccountResourceIdentifier}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountLocation), out propertyOverride);
-            if (Optional.IsDefined(AccountLocation) || hasPropertyOverride)
-            {
-                builder.Append("    accountLocation: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (AccountLocation.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AccountLocation}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AccountLocation}'");
-                    }
-                }
-            }
-
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountInstanceId), out propertyOverride);
-            if (Optional.IsDefined(AccountInstanceId) || hasPropertyOverride)
-            {
-                builder.Append("    accountInstanceId: ");
-                if (hasPropertyOverride)
-                {
-                    builder.AppendLine($"{propertyOverride}");
-                }
-                else
-                {
-                    if (AccountInstanceId.Contains(Environment.NewLine))
-                    {
-                        builder.AppendLine("'''");
-                        builder.AppendLine($"{AccountInstanceId}'''");
-                    }
-                    else
-                    {
-                        builder.AppendLine($"'{AccountInstanceId}'");
-                    }
+                    builder.AppendLine($"{MaxThroughput.Value}");
                 }
             }
 
@@ -348,9 +360,9 @@ namespace Azure.ResourceManager.CosmosDB
             return BinaryData.FromString(builder.ToString());
         }
 
-        BinaryData IPersistableModel<ThroughputPoolAccountResourceData>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBThroughputPoolData>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputPoolAccountResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBThroughputPoolData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
@@ -359,26 +371,26 @@ namespace Azure.ResourceManager.CosmosDB
                 case "bicep":
                     return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputPoolAccountResourceData)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBThroughputPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ThroughputPoolAccountResourceData IPersistableModel<ThroughputPoolAccountResourceData>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBThroughputPoolData IPersistableModel<CosmosDBThroughputPoolData>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputPoolAccountResourceData>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBThroughputPoolData>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeThroughputPoolAccountResourceData(document.RootElement, options);
+                        return DeserializeCosmosDBThroughputPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputPoolAccountResourceData)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBThroughputPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ThroughputPoolAccountResourceData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBThroughputPoolData>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

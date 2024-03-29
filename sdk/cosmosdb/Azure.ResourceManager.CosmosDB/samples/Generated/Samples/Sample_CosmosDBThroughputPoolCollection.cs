@@ -13,7 +13,7 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
-    public partial class Sample_ThroughputPoolResourceCollection
+    public partial class Sample_CosmosDBThroughputPoolCollection
     {
         // CosmosDB ThroughputPool List by Resource Group
         [NUnit.Framework.Test]
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ThroughputPoolResource
-            ThroughputPoolResourceCollection collection = resourceGroupResource.GetThroughputPoolResources();
+            // get the collection of this CosmosDBThroughputPoolResource
+            CosmosDBThroughputPoolCollection collection = resourceGroupResource.GetCosmosDBThroughputPools();
 
             // invoke the operation and iterate over the result
-            await foreach (ThroughputPoolResource item in collection.GetAllAsync())
+            await foreach (CosmosDBThroughputPoolResource item in collection.GetAllAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ThroughputPoolResourceData resourceData = item.Data;
+                CosmosDBThroughputPoolData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -71,16 +71,16 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ThroughputPoolResource
-            ThroughputPoolResourceCollection collection = resourceGroupResource.GetThroughputPoolResources();
+            // get the collection of this CosmosDBThroughputPoolResource
+            CosmosDBThroughputPoolCollection collection = resourceGroupResource.GetCosmosDBThroughputPools();
 
             // invoke the operation
             string throughputPoolName = "tp1";
-            ThroughputPoolResource result = await collection.GetAsync(throughputPoolName);
+            CosmosDBThroughputPoolResource result = await collection.GetAsync(throughputPoolName);
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ThroughputPoolResourceData resourceData = result.Data;
+            CosmosDBThroughputPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -105,8 +105,8 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ThroughputPoolResource
-            ThroughputPoolResourceCollection collection = resourceGroupResource.GetThroughputPoolResources();
+            // get the collection of this CosmosDBThroughputPoolResource
+            CosmosDBThroughputPoolCollection collection = resourceGroupResource.GetCosmosDBThroughputPools();
 
             // invoke the operation
             string throughputPoolName = "tp1";
@@ -135,13 +135,13 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ThroughputPoolResource
-            ThroughputPoolResourceCollection collection = resourceGroupResource.GetThroughputPoolResources();
+            // get the collection of this CosmosDBThroughputPoolResource
+            CosmosDBThroughputPoolCollection collection = resourceGroupResource.GetCosmosDBThroughputPools();
 
             // invoke the operation
             string throughputPoolName = "tp1";
-            NullableResponse<ThroughputPoolResource> response = await collection.GetIfExistsAsync(throughputPoolName);
-            ThroughputPoolResource result = response.HasValue ? response.Value : null;
+            NullableResponse<CosmosDBThroughputPoolResource> response = await collection.GetIfExistsAsync(throughputPoolName);
+            CosmosDBThroughputPoolResource result = response.HasValue ? response.Value : null;
 
             if (result == null)
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             {
                 // the variable result is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ThroughputPoolResourceData resourceData = result.Data;
+                CosmosDBThroughputPoolData resourceData = result.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -177,24 +177,24 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             ResourceIdentifier resourceGroupResourceId = ResourceGroupResource.CreateResourceIdentifier(subscriptionId, resourceGroupName);
             ResourceGroupResource resourceGroupResource = client.GetResourceGroupResource(resourceGroupResourceId);
 
-            // get the collection of this ThroughputPoolResource
-            ThroughputPoolResourceCollection collection = resourceGroupResource.GetThroughputPoolResources();
+            // get the collection of this CosmosDBThroughputPoolResource
+            CosmosDBThroughputPoolCollection collection = resourceGroupResource.GetCosmosDBThroughputPools();
 
             // invoke the operation
             string throughputPoolName = "tp1";
-            ThroughputPoolResourceData data = new ThroughputPoolResourceData(new AzureLocation("westus2"))
+            CosmosDBThroughputPoolData data = new CosmosDBThroughputPoolData(new AzureLocation("westus2"))
             {
                 MaxThroughput = 10000,
                 Tags =
 {
 },
             };
-            ArmOperation<ThroughputPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, throughputPoolName, data);
-            ThroughputPoolResource result = lro.Value;
+            ArmOperation<CosmosDBThroughputPoolResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, throughputPoolName, data);
+            CosmosDBThroughputPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ThroughputPoolResourceData resourceData = result.Data;
+            CosmosDBThroughputPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }

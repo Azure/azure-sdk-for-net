@@ -7,11 +7,17 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
+using Azure.ResourceManager.CosmosDB.Models;
+using Azure.ResourceManager.Models;
 
-namespace Azure.ResourceManager.CosmosDB.Models
+namespace Azure.ResourceManager.CosmosDB
 {
-    /// <summary> Represents a throughput pool resource for updates. </summary>
-    public partial class ThroughputPoolResourcePatch
+    /// <summary>
+    /// A class representing the CosmosDBThroughputPool data model.
+    /// An Azure Cosmos DB Throughputpool.
+    /// </summary>
+    public partial class CosmosDBThroughputPoolData : TrackedResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,20 +51,32 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ThroughputPoolResourcePatch"/>. </summary>
-        public ThroughputPoolResourcePatch()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolData"/>. </summary>
+        /// <param name="location"> The location. </param>
+        public CosmosDBThroughputPoolData(AzureLocation location) : base(location)
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThroughputPoolResourcePatch"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolData"/>. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> A provisioning state of the ThroughputPool. </param>
         /// <param name="maxThroughput"> Value for throughput to be shared among CosmosDB resources in the pool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThroughputPoolResourcePatch(CosmosDBStatus? provisioningState, int? maxThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CosmosDBThroughputPoolData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, CosmosDBStatus? provisioningState, int? maxThroughput, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             ProvisioningState = provisioningState;
             MaxThroughput = maxThroughput;
             _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolData"/> for deserialization. </summary>
+        internal CosmosDBThroughputPoolData()
+        {
         }
 
         /// <summary> A provisioning state of the ThroughputPool. </summary>

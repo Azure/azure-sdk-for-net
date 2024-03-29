@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="azureConnectionMethod"> How to connect to the azure services needed for running the cluster. </param>
         /// <param name="privateLinkResourceId"> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, AutoReplicate? autoReplicate, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, IList<string> externalDataCenters, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules, ScheduledEventStrategy? scheduledEventStrategy, AzureConnectionType? azureConnectionMethod, string privateLinkResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraClusterProperties(CassandraProvisioningState? provisioningState, string restoreFromBackupId, ResourceIdentifier delegatedManagementSubnetId, string cassandraVersion, string clusterNameOverride, CassandraAuthenticationMethod? authenticationMethod, string initialCassandraAdminPassword, CassandraDataCenterSeedNode prometheusEndpoint, bool? isRepairEnabled, CassandraAutoReplicateForm? autoReplicate, IList<CassandraCertificate> clientCertificates, IList<CassandraCertificate> externalGossipCertificates, IReadOnlyList<CassandraCertificate> gossipCertificates, IList<CassandraDataCenterSeedNode> externalSeedNodes, IReadOnlyList<CassandraDataCenterSeedNode> seedNodes, IList<string> externalDataCenters, int? hoursBetweenBackups, bool? isDeallocated, bool? isCassandraAuditLoggingEnabled, CassandraClusterType? clusterType, CassandraError provisionError, IList<string> extensions, IList<CassandraClusterBackupSchedule> backupSchedules, ScheduledEventStrategy? scheduledEventStrategy, ServiceConnectionType? azureConnectionMethod, ResourceIdentifier privateLinkResourceId, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ProvisioningState = provisioningState;
             RestoreFromBackupId = restoreFromBackupId;
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public bool? IsRepairEnabled { get; set; }
         /// <summary> The form of AutoReplicate that is being used by this cluster. </summary>
         [WirePath("autoReplicate")]
-        public AutoReplicate? AutoReplicate { get; set; }
+        public CassandraAutoReplicateForm? AutoReplicate { get; set; }
         /// <summary> List of TLS certificates used to authorize clients connecting to the cluster. All connections are TLS encrypted whether clientCertificates is set or not, but if clientCertificates is set, the managed Cassandra cluster will reject all connections not bearing a TLS client certificate that can be validated from one or more of the public certificates in this property. </summary>
         [WirePath("clientCertificates")]
         public IList<CassandraCertificate> ClientCertificates { get; }
@@ -204,9 +204,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public ScheduledEventStrategy? ScheduledEventStrategy { get; set; }
         /// <summary> How to connect to the azure services needed for running the cluster. </summary>
         [WirePath("azureConnectionMethod")]
-        public AzureConnectionType? AzureConnectionMethod { get; set; }
+        public ServiceConnectionType? AzureConnectionMethod { get; set; }
         /// <summary> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </summary>
         [WirePath("privateLinkResourceId")]
-        public string PrivateLinkResourceId { get; }
+        public ResourceIdentifier PrivateLinkResourceId { get; }
     }
 }

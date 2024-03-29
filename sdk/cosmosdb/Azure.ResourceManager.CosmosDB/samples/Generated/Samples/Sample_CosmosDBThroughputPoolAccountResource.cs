@@ -12,7 +12,7 @@ using Azure.Identity;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
-    public partial class Sample_ThroughputPoolAccountResource
+    public partial class Sample_CosmosDBThroughputPoolAccountResource
     {
         // CosmosDB ThroughputPool Account Get
         [NUnit.Framework.Test]
@@ -27,21 +27,21 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ThroughputPoolAccountResource created on azure
-            // for more information of creating ThroughputPoolAccountResource, please refer to the document of ThroughputPoolAccountResource
+            // this example assumes you already have this CosmosDBThroughputPoolAccountResource created on azure
+            // for more information of creating CosmosDBThroughputPoolAccountResource, please refer to the document of CosmosDBThroughputPoolAccountResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rgName";
             string throughputPoolName = "tp1";
             string throughputPoolAccountName = "db1";
-            ResourceIdentifier throughputPoolAccountResourceId = ThroughputPoolAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
-            ThroughputPoolAccountResource throughputPoolAccountResource = client.GetThroughputPoolAccountResource(throughputPoolAccountResourceId);
+            ResourceIdentifier cosmosDBThroughputPoolAccountResourceId = CosmosDBThroughputPoolAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
+            CosmosDBThroughputPoolAccountResource cosmosDBThroughputPoolAccount = client.GetCosmosDBThroughputPoolAccountResource(cosmosDBThroughputPoolAccountResourceId);
 
             // invoke the operation
-            ThroughputPoolAccountResource result = await throughputPoolAccountResource.GetAsync();
+            CosmosDBThroughputPoolAccountResource result = await cosmosDBThroughputPoolAccount.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ThroughputPoolAccountResourceData resourceData = result.Data;
+            CosmosDBThroughputPoolAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -59,27 +59,27 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ThroughputPoolAccountResource created on azure
-            // for more information of creating ThroughputPoolAccountResource, please refer to the document of ThroughputPoolAccountResource
+            // this example assumes you already have this CosmosDBThroughputPoolAccountResource created on azure
+            // for more information of creating CosmosDBThroughputPoolAccountResource, please refer to the document of CosmosDBThroughputPoolAccountResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rg1";
             string throughputPoolName = "tp1";
             string throughputPoolAccountName = "db1";
-            ResourceIdentifier throughputPoolAccountResourceId = ThroughputPoolAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
-            ThroughputPoolAccountResource throughputPoolAccountResource = client.GetThroughputPoolAccountResource(throughputPoolAccountResourceId);
+            ResourceIdentifier cosmosDBThroughputPoolAccountResourceId = CosmosDBThroughputPoolAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
+            CosmosDBThroughputPoolAccountResource cosmosDBThroughputPoolAccount = client.GetCosmosDBThroughputPoolAccountResource(cosmosDBThroughputPoolAccountResourceId);
 
             // invoke the operation
-            ThroughputPoolAccountResourceData data = new ThroughputPoolAccountResourceData()
+            CosmosDBThroughputPoolAccountData data = new CosmosDBThroughputPoolAccountData()
             {
-                AccountResourceIdentifier = "/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/providers/Microsoft.DocumentDB/resourceGroup/rg1/databaseAccounts/db1/",
-                AccountLocation = "West US",
+                AccountResourceIdentifier = new ResourceIdentifier("/subscriptions/ffffffff-ffff-ffff-ffff-ffffffffffff/providers/Microsoft.DocumentDB/resourceGroup/rg1/databaseAccounts/db1/"),
+                AccountLocation = new AzureLocation("West US"),
             };
-            ArmOperation<ThroughputPoolAccountResource> lro = await throughputPoolAccountResource.UpdateAsync(WaitUntil.Completed, data);
-            ThroughputPoolAccountResource result = lro.Value;
+            ArmOperation<CosmosDBThroughputPoolAccountResource> lro = await cosmosDBThroughputPoolAccount.UpdateAsync(WaitUntil.Completed, data);
+            CosmosDBThroughputPoolAccountResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ThroughputPoolAccountResourceData resourceData = result.Data;
+            CosmosDBThroughputPoolAccountData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -97,17 +97,17 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ThroughputPoolAccountResource created on azure
-            // for more information of creating ThroughputPoolAccountResource, please refer to the document of ThroughputPoolAccountResource
+            // this example assumes you already have this CosmosDBThroughputPoolAccountResource created on azure
+            // for more information of creating CosmosDBThroughputPoolAccountResource, please refer to the document of CosmosDBThroughputPoolAccountResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rgName";
             string throughputPoolName = "tp1";
             string throughputPoolAccountName = "db1";
-            ResourceIdentifier throughputPoolAccountResourceId = ThroughputPoolAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
-            ThroughputPoolAccountResource throughputPoolAccountResource = client.GetThroughputPoolAccountResource(throughputPoolAccountResourceId);
+            ResourceIdentifier cosmosDBThroughputPoolAccountResourceId = CosmosDBThroughputPoolAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName, throughputPoolAccountName);
+            CosmosDBThroughputPoolAccountResource cosmosDBThroughputPoolAccount = client.GetCosmosDBThroughputPoolAccountResource(cosmosDBThroughputPoolAccountResourceId);
 
             // invoke the operation
-            await throughputPoolAccountResource.DeleteAsync(WaitUntil.Completed);
+            await cosmosDBThroughputPoolAccount.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }
