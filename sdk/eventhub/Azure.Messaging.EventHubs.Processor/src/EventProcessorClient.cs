@@ -1121,7 +1121,7 @@ namespace Azure.Messaging.EventHubs
                     emptyBatch = false;
 
                     using var scope = StartProcessorScope(eventData);
-                    
+
                     try
                     {
                         Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);

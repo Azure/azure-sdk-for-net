@@ -228,25 +228,34 @@ namespace Azure.Core.Pipeline
                 foreach (var link in _links)
                 {
                     var activity = new Activity("LinkedActivity");
-                    if (link.Context != default) // TODO
+                    activity.SetIdFormat(ActivityIdFormat.W3C);
+                    if (link.Context != default)
                     {
-                        string flags = (link.Context.TraceFlags == ActivityTraceFlags.None) ? "00" : "01";
-                        activity.SetParentId("00-" + link.Context.TraceId + "-" + link.Context.SpanId + "-" + flags);
+                        activity.SetParentId(ActivityContextToTraceParent(link.Context));
+                        activity.TraceStateString = link.Context.TraceState;
                     }
-                    activity.TraceStateString = link.Context.TraceState;
 
                     if (link.Tags != null)
                     {
                         foreach (var tag in link.Tags)
                         {
-                            // old code path, only string attributes are supported
-                            activity.AddTag(tag.Key, tag.Value?.ToString());
+                            if (tag.Value != null)
+                            {
+                                // old code path, only string attributes are supported
+                                activity.AddTag(tag.Key, tag.Value.ToString());
+                            }
                         }
                     }
                     linkCollection.Add(activity);
                 }
 
                 return linkCollection;
+            }
+
+            private static string ActivityContextToTraceParent(ActivityContext context)
+            {
+                string flags = (context.TraceFlags == ActivityTraceFlags.None) ? "00" : "01";
+                return "00-" + context.TraceId + "-" + context.SpanId + "-" + flags;
             }
 
             public void AddLink(string traceparent, string? tracestate, IDictionary<string, object?>? attributes)

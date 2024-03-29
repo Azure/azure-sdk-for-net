@@ -2299,14 +2299,14 @@ namespace Azure.Messaging.EventHubs.Primitives
                     if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
                     {
                         // Set link in all cases.
-                        
+
                         diagnosticScope.AddLink(traceparent, tracestate, linkAttributes);
 
                         if (!isBatch)
                         {
                             // Parent is not required, but allowed when there is just one message.
                             // It helps to correlate producer and consumers.
-                            
+
                             diagnosticScope.SetTraceContext(traceparent, tracestate);
                         }
                     }
