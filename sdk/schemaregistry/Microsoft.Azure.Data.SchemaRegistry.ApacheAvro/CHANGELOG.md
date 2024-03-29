@@ -1,14 +1,10 @@
 # Release History
 
-## 1.1.0-beta.1 (Unreleased)
+## 1.0.1 (2024-03-29)
 
-### Features Added
+### Other changes
 
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
+- Added a direct reference to `Newtonsoft.Json` v13.0.3 to hoist up the version used by `Apache.Avro`, which has known security vulnerabilities.
 
 ## 1.0.0 (2022-05-11)
 
