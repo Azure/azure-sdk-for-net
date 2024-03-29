@@ -187,21 +187,21 @@ function CreateUpdatePackageWorkItem($pkgInfo)
 }
 
 # Read package property file and identify all packages to process
-Write-Host "Processing package: $PackageName"
+Write-Host "Processing artifact: $PackageName"
 Write-Host "Is Release Build: $IsReleaseBuild"
 $packagePropertyFile = Join-Path $ConfigFileDir "$PackageName.json"
 $pkgInfo = Get-Content $packagePropertyFile | ConvertFrom-Json
-
+$pkgName = $pkgInfo.Name
 $changeLogPath = $pkgInfo.ChangeLogPath
 $versionString = $pkgInfo.Version
-Write-Host "Checking if we need to create or update work item for package $packageName with version $versionString."
-$isShipped = IsVersionShipped $packageName $versionString
+Write-Host "Checking if we need to create or update work item for package $pkgName with version $versionString."
+$isShipped = IsVersionShipped $pkgName $versionString
 if ($isShipped) {
     Write-Host "Package work item already exists for version [$versionString] that is marked as shipped. Skipping the update of package work item."
     exit 0
 }
 
-Write-Host "Validating package $packageName with version $versionString."
+Write-Host "Validating package $pkgName with version $versionString."
 
 # Change log validation
 $changeLogStatus = [PSCustomObject]@{
@@ -212,14 +212,14 @@ $changeLogStatus = [PSCustomObject]@{
 ValidateChangeLog $changeLogPath $versionString $changeLogStatus
 
 # API review and package name validation
-$fulPackageName = $PackageName
+$fulPackageName = $pkgName
 if ($pkgInfo.Group){
-    $fulPackageName = "$($pkgInfo.Group):$PackageName"
+    $fulPackageName = "$($pkgInfo.Group):$pkgName"
 }
 $apireviewDetails = VerifyAPIReview $fulPackageName $pkgInfo.Version $Language
 
 $pkgValidationDetails= [PSCustomObject]@{
-    Name = $PackageName
+    Name = $pkgName
     Version = $pkgInfo.Version
     ChangeLogValidation = $changeLogStatus
     APIReviewValidation = $apireviewDetails.ApiviewApproval
@@ -250,7 +250,7 @@ Write-Host "Package Name status:" $apireviewDetails.PackageNameApproval.Status
 if ($IsReleaseBuild)
 {
     if (!$updatedWi -or $changelogStatus.Status -ne "Success" -or $apireviewDetails.ApiviewApproval.Status -ne "Approved" -or $apireviewDetails.PackageNameApproval.Status -ne "Approved") {        
-        Write-Error "At least one of the Validations above failed for package $PackageName with version $versionString."
+        Write-Error "At least one of the Validations above failed for package $pkgName with version $versionString."
         exit 1
     }
 }
