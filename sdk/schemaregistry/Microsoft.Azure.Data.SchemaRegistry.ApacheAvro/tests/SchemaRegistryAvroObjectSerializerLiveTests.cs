@@ -18,6 +18,7 @@ using TestSchema;
 
 namespace Microsoft.Azure.Data.SchemaRegistry.ApacheAvro.Tests
 {
+    [LiveOnly]
     public class SchemaRegistryAvroObjectSerializerLiveTests : SchemaRegistryAvroObjectSerializerLiveTestBase
     {
         public SchemaRegistryAvroObjectSerializerLiveTests(bool isAsync) : base(isAsync)
