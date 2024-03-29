@@ -258,7 +258,7 @@ function ProcessPackage($packageName)
                     # Return error code if status code is 201 for new data plane package
                     # Temporarily enable API review for spring SDK types. Ideally this should be done be using 'IsReviewRequired' method in language side
                     # to override default check of SDK type client
-                    if (IsApiviewStatusCheckRequired($pkgInfo))
+                    if (IsApiviewStatusCheckRequired $pkgInfo)
                     {
                         if (!$apiStatus.IsApproved)
                         {
