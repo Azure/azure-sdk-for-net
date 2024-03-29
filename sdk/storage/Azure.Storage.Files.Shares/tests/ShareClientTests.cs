@@ -1450,6 +1450,23 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task CreateSnapshotAsync_OAuth()
+        {
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // Act
+            Response<ShareSnapshotInfo> response = await share.CreateSnapshotAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+        }
+
+        [RecordedTest]
         public async Task SetPropertiesAsync()
         {
             // Arrange
