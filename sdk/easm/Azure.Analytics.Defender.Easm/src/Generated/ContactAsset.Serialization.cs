@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ContactAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContactAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContactAsset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Names)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +47,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Organizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ObservedString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +57,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in Sources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SourceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -100,7 +99,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<ContactAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContactAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContactAsset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +225,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContactAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContactAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +241,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeContactAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContactAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContactAsset)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -260,7 +259,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ContactAsset>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

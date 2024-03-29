@@ -8,10 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobContainerImmutabilityPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Storage.Models
                 writer.WriteStartArray();
                 foreach (var item in UpdateHistory)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UpdateHistoryEntry>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobContainerImmutabilityPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,6 +201,118 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UpdateHistory), out propertyOverride);
+            if (Optional.IsCollectionDefined(UpdateHistory) || hasPropertyOverride)
+            {
+                if (UpdateHistory.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  updateHistory: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in UpdateHistory)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  updateHistory: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ImmutabilityPeriodSinceCreationInDays), out propertyOverride);
+            if (Optional.IsDefined(ImmutabilityPeriodSinceCreationInDays) || hasPropertyOverride)
+            {
+                builder.Append("    immutabilityPeriodSinceCreationInDays: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ImmutabilityPeriodSinceCreationInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(State), out propertyOverride);
+            if (Optional.IsDefined(State) || hasPropertyOverride)
+            {
+                builder.Append("    state: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{State.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowProtectedAppendWrites), out propertyOverride);
+            if (Optional.IsDefined(AllowProtectedAppendWrites) || hasPropertyOverride)
+            {
+                builder.Append("    allowProtectedAppendWrites: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = AllowProtectedAppendWrites.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowProtectedAppendWritesAll), out propertyOverride);
+            if (Optional.IsDefined(AllowProtectedAppendWritesAll) || hasPropertyOverride)
+            {
+                builder.Append("    allowProtectedAppendWritesAll: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = AllowProtectedAppendWritesAll.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<BlobContainerImmutabilityPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<BlobContainerImmutabilityPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -209,8 +321,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +340,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeBlobContainerImmutabilityPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobContainerImmutabilityPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

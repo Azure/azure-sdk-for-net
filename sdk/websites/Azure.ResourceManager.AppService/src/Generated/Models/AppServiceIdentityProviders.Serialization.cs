@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,49 +24,49 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceIdentityProviders>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AzureActiveDirectory))
             {
                 writer.WritePropertyName("azureActiveDirectory"u8);
-                writer.WriteObjectValue(AzureActiveDirectory);
+                writer.WriteObjectValue<AppServiceAadProvider>(AzureActiveDirectory, options);
             }
             if (Optional.IsDefined(Facebook))
             {
                 writer.WritePropertyName("facebook"u8);
-                writer.WriteObjectValue(Facebook);
+                writer.WriteObjectValue<AppServiceFacebookProvider>(Facebook, options);
             }
             if (Optional.IsDefined(GitHub))
             {
                 writer.WritePropertyName("gitHub"u8);
-                writer.WriteObjectValue(GitHub);
+                writer.WriteObjectValue<AppServiceGitHubProvider>(GitHub, options);
             }
             if (Optional.IsDefined(Google))
             {
                 writer.WritePropertyName("google"u8);
-                writer.WriteObjectValue(Google);
+                writer.WriteObjectValue<AppServiceGoogleProvider>(Google, options);
             }
             if (Optional.IsDefined(LegacyMicrosoftAccount))
             {
                 writer.WritePropertyName("legacyMicrosoftAccount"u8);
-                writer.WriteObjectValue(LegacyMicrosoftAccount);
+                writer.WriteObjectValue<LegacyMicrosoftAccount>(LegacyMicrosoftAccount, options);
             }
             if (Optional.IsDefined(Twitter))
             {
                 writer.WritePropertyName("twitter"u8);
-                writer.WriteObjectValue(Twitter);
+                writer.WriteObjectValue<AppServiceTwitterProvider>(Twitter, options);
             }
             if (Optional.IsDefined(Apple))
             {
                 writer.WritePropertyName("apple"u8);
-                writer.WriteObjectValue(Apple);
+                writer.WriteObjectValue<AppServiceAppleProvider>(Apple, options);
             }
             if (Optional.IsDefined(AzureStaticWebApps))
             {
                 writer.WritePropertyName("azureStaticWebApps"u8);
-                writer.WriteObjectValue(AzureStaticWebApps);
+                writer.WriteObjectValue<AppServiceStaticWebAppsProvider>(AzureStaticWebApps, options);
             }
             if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders))
             {
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
                 foreach (var item in CustomOpenIdConnectProviders)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<CustomOpenIdConnectProvider>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -101,7 +102,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceIdentityProviders>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -234,6 +235,156 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureActiveDirectory), out propertyOverride);
+            if (Optional.IsDefined(AzureActiveDirectory) || hasPropertyOverride)
+            {
+                builder.Append("  azureActiveDirectory: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureActiveDirectory, options, 2, false, "  azureActiveDirectory: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Facebook), out propertyOverride);
+            if (Optional.IsDefined(Facebook) || hasPropertyOverride)
+            {
+                builder.Append("  facebook: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Facebook, options, 2, false, "  facebook: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GitHub), out propertyOverride);
+            if (Optional.IsDefined(GitHub) || hasPropertyOverride)
+            {
+                builder.Append("  gitHub: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, GitHub, options, 2, false, "  gitHub: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Google), out propertyOverride);
+            if (Optional.IsDefined(Google) || hasPropertyOverride)
+            {
+                builder.Append("  google: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Google, options, 2, false, "  google: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LegacyMicrosoftAccount), out propertyOverride);
+            if (Optional.IsDefined(LegacyMicrosoftAccount) || hasPropertyOverride)
+            {
+                builder.Append("  legacyMicrosoftAccount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, LegacyMicrosoftAccount, options, 2, false, "  legacyMicrosoftAccount: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Twitter), out propertyOverride);
+            if (Optional.IsDefined(Twitter) || hasPropertyOverride)
+            {
+                builder.Append("  twitter: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Twitter, options, 2, false, "  twitter: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Apple), out propertyOverride);
+            if (Optional.IsDefined(Apple) || hasPropertyOverride)
+            {
+                builder.Append("  apple: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Apple, options, 2, false, "  apple: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStaticWebApps), out propertyOverride);
+            if (Optional.IsDefined(AzureStaticWebApps) || hasPropertyOverride)
+            {
+                builder.Append("  azureStaticWebApps: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AzureStaticWebApps, options, 2, false, "  azureStaticWebApps: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomOpenIdConnectProviders), out propertyOverride);
+            if (Optional.IsCollectionDefined(CustomOpenIdConnectProviders) || hasPropertyOverride)
+            {
+                if (CustomOpenIdConnectProviders.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  customOpenIdConnectProviders: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("{");
+                        foreach (var item in CustomOpenIdConnectProviders)
+                        {
+                            builder.Append($"    '{item.Key}': ");
+                            BicepSerializationHelpers.AppendChildObject(builder, item.Value, options, 4, false, "  customOpenIdConnectProviders: ");
+                        }
+                        builder.AppendLine("  }");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppServiceIdentityProviders>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceIdentityProviders>)this).GetFormatFromOptions(options) : options.Format;
@@ -242,8 +393,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +412,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceIdentityProviders(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceIdentityProviders)} does not support reading '{options.Format}' format.");
             }
         }
 

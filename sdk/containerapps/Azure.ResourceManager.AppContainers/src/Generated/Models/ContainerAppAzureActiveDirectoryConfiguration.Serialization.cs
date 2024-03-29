@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,17 +34,17 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryRegistrationConfiguration>(Registration, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryLoginConfiguration>(Login, options);
             }
             if (Optional.IsDefined(Validation))
             {
                 writer.WritePropertyName("validation"u8);
-                writer.WriteObjectValue(Validation);
+                writer.WriteObjectValue<ContainerAppAzureActiveDirectoryValidationConfiguration>(Validation, options);
             }
             if (Optional.IsDefined(IsAutoProvisioned))
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppAzureActiveDirectoryConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

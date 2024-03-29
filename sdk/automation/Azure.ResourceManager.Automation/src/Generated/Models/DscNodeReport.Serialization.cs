@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeReport)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DscReportError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -112,14 +111,14 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DscReportResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(MetaConfiguration))
             {
                 writer.WritePropertyName("metaConfiguration"u8);
-                writer.WriteObjectValue(MetaConfiguration);
+                writer.WriteObjectValue<DscMetaConfiguration>(MetaConfiguration, options);
             }
             if (Optional.IsDefined(HostName))
             {
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeReport>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeReport)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeReport)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -408,7 +407,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -424,7 +423,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscNodeReport(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeReport)} does not support reading '{options.Format}' format.");
             }
         }
 

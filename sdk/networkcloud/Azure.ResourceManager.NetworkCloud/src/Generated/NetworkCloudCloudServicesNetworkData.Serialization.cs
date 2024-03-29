@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudCloudServicesNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
+            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in AdditionalEgressEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EgressEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in EnabledEgressEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EgressEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudCloudServicesNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudCloudServicesNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudCloudServicesNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

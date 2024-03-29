@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<EventHubsProvisioningIssueProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,6 +104,57 @@ namespace Azure.ResourceManager.EventHubs.Models
             return new EventHubsProvisioningIssue(name, properties, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            if (Optional.IsDefined(Properties) || hasPropertyOverride)
+            {
+                builder.Append("  properties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Properties, options, 2, false, "  properties: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EventHubsProvisioningIssue>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsProvisioningIssue>)this).GetFormatFromOptions(options) : options.Format;
@@ -112,8 +163,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +182,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEventHubsProvisioningIssue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsProvisioningIssue)} does not support reading '{options.Format}' format.");
             }
         }
 

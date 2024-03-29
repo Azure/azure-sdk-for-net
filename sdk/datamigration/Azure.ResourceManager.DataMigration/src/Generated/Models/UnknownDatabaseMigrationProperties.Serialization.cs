@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(SourceSqlConnection))
             {
                 writer.WritePropertyName("sourceSqlConnection"u8);
-                writer.WriteObjectValue(SourceSqlConnection);
+                writer.WriteObjectValue<SqlConnectionInformation>(SourceSqlConnection, options);
             }
             if (Optional.IsDefined(SourceDatabaseName))
             {
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(MigrationFailureError))
             {
                 writer.WritePropertyName("migrationFailureError"u8);
-                writer.WriteObjectValue(MigrationFailureError);
+                writer.WriteObjectValue<ErrorInfo>(MigrationFailureError, options);
             }
             if (Optional.IsDefined(TargetDatabaseCollation))
             {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseMigrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -269,7 +268,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -285,7 +284,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDatabaseMigrationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseMigrationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

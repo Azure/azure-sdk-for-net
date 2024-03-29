@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,6 +179,143 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ThreatId), out propertyOverride);
+            if (Optional.IsDefined(ThreatId) || hasPropertyOverride)
+            {
+                builder.Append("  threatId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ThreatId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ThreatId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ThreatId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Statement), out propertyOverride);
+            if (Optional.IsDefined(Statement) || hasPropertyOverride)
+            {
+                builder.Append("  statement: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Statement.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Statement}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Statement}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatementHighlightOffset), out propertyOverride);
+            if (Optional.IsDefined(StatementHighlightOffset) || hasPropertyOverride)
+            {
+                builder.Append("  statementHighlightOffset: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{StatementHighlightOffset.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatementHighlightLength), out propertyOverride);
+            if (Optional.IsDefined(StatementHighlightLength) || hasPropertyOverride)
+            {
+                builder.Append("  statementHighlightLength: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{StatementHighlightLength.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorCode), out propertyOverride);
+            if (Optional.IsDefined(ErrorCode) || hasPropertyOverride)
+            {
+                builder.Append("  errorCode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ErrorCode.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorSeverity), out propertyOverride);
+            if (Optional.IsDefined(ErrorSeverity) || hasPropertyOverride)
+            {
+                builder.Append("  errorSeverity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{ErrorSeverity.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorMessage), out propertyOverride);
+            if (Optional.IsDefined(ErrorMessage) || hasPropertyOverride)
+            {
+                builder.Append("  errorMessage: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ErrorMessage.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ErrorMessage}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ErrorMessage}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SecurityEventSqlInjectionAdditionalProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -187,8 +324,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +343,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeSecurityEventSqlInjectionAdditionalProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityEventSqlInjectionAdditionalProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

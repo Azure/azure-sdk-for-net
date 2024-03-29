@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -86,10 +85,13 @@ namespace Azure.ResourceManager.Resources
         }
 
         /// <summary> The type of policy definition. Possible values are NotSpecified, BuiltIn, Custom, and Static. </summary>
+        [WirePath("properties.policyType")]
         public PolicyType? PolicyType { get; set; }
         /// <summary> The display name of the policy set definition. </summary>
+        [WirePath("properties.displayName")]
         public string DisplayName { get; set; }
         /// <summary> The policy set definition description. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary>
         /// The policy set definition metadata.  Metadata is an open ended object and is typically a collection of key value pairs.
@@ -121,12 +123,16 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.metadata")]
         public BinaryData Metadata { get; set; }
         /// <summary> The policy set definition parameters that can be used in policy definition references. </summary>
+        [WirePath("properties.parameters")]
         public IDictionary<string, ArmPolicyParameter> Parameters { get; }
         /// <summary> An array of policy definition references. </summary>
+        [WirePath("properties.policyDefinitions")]
         public IList<PolicyDefinitionReference> PolicyDefinitions { get; }
         /// <summary> The metadata describing groups of policy definition references within the policy set definition. </summary>
+        [WirePath("properties.policyDefinitionGroups")]
         public IList<PolicyDefinitionGroup> PolicyDefinitionGroups { get; }
     }
 }

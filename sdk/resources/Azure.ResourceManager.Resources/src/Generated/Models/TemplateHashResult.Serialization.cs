@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateHashResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateHashResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateHashResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<TemplateHashResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TemplateHashResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TemplateHashResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,6 +100,65 @@ namespace Azure.ResourceManager.Resources.Models
             return new TemplateHashResult(minifiedTemplate, templateHash, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinifiedTemplate), out propertyOverride);
+            if (Optional.IsDefined(MinifiedTemplate) || hasPropertyOverride)
+            {
+                builder.Append("  minifiedTemplate: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MinifiedTemplate.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinifiedTemplate}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinifiedTemplate}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateHash), out propertyOverride);
+            if (Optional.IsDefined(TemplateHash) || hasPropertyOverride)
+            {
+                builder.Append("  templateHash: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TemplateHash.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TemplateHash}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TemplateHash}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<TemplateHashResult>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<TemplateHashResult>)this).GetFormatFromOptions(options) : options.Format;
@@ -108,8 +167,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(TemplateHashResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateHashResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeTemplateHashResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TemplateHashResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TemplateHashResult)} does not support reading '{options.Format}' format.");
             }
         }
 

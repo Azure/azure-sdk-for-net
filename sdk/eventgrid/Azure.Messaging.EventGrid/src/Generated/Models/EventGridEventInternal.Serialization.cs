@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Azure.Core;
-using Azure.Messaging.EventGrid;
 
 namespace Azure.Messaging.EventGrid.Models
 {
@@ -111,7 +110,7 @@ namespace Azure.Messaging.EventGrid.Models
         {
             public override void Write(Utf8JsonWriter writer, EventGridEventInternal model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<EventGridEventInternal>(model);
             }
             public override EventGridEventInternal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

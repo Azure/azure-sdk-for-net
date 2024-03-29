@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> &lt;code&gt;true&lt;/code&gt; if use32BitWorkerProcess should be set to true for the stack; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("use32BitWorkerProcess")]
         public bool? Use32BitWorkerProcess { get; }
         /// <summary> LinuxFxVersion configuration setting. </summary>
+        [WirePath("linuxFxVersion")]
         public string LinuxFxVersion { get; }
         /// <summary> JavaVersion configuration setting. </summary>
+        [WirePath("javaVersion")]
         public string JavaVersion { get; }
         /// <summary> PowerShellVersion configuration setting. </summary>
+        [WirePath("powerShellVersion")]
         public string PowerShellVersion { get; }
     }
 }

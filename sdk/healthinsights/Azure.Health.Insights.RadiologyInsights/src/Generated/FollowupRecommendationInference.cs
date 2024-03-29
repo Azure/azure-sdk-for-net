@@ -18,7 +18,11 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="isOption"> The option value indicates whether or not the sentence containing the recommendation includes an optional statement. Keywords for optional statements include 'recommend', 'consider', and so on. </param>
         /// <param name="isGuideline"> The guideline value indicates whether or not the recommendation is part of a guideline section that compiles all recommendations applicable to various findings. </param>
         /// <param name="isHedging"> Hedging refers to ambiguous, vague or imprecise language within the sentence of the recommendation. Keywords for hedging are 'can be','may be',and so on. </param>
-        /// <param name="recommendedProcedure"> The procedure recommendation can be a generic procedure or an imaging procedure. </param>
+        /// <param name="recommendedProcedure">
+        /// The procedure recommendation can be a generic procedure or an imaging procedure.
+        /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
+        /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="recommendedProcedure"/> is null. </exception>
         internal FollowupRecommendationInference(bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure)
         {
@@ -44,7 +48,11 @@ namespace Azure.Health.Insights.RadiologyInsights
         /// <param name="isOption"> The option value indicates whether or not the sentence containing the recommendation includes an optional statement. Keywords for optional statements include 'recommend', 'consider', and so on. </param>
         /// <param name="isGuideline"> The guideline value indicates whether or not the recommendation is part of a guideline section that compiles all recommendations applicable to various findings. </param>
         /// <param name="isHedging"> Hedging refers to ambiguous, vague or imprecise language within the sentence of the recommendation. Keywords for hedging are 'can be','may be',and so on. </param>
-        /// <param name="recommendedProcedure"> The procedure recommendation can be a generic procedure or an imaging procedure. </param>
+        /// <param name="recommendedProcedure">
+        /// The procedure recommendation can be a generic procedure or an imaging procedure.
+        /// Please note <see cref="ProcedureRecommendation"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="GenericProcedureRecommendation"/> and <see cref="ImagingProcedureRecommendation"/>.
+        /// </param>
         internal FollowupRecommendationInference(string kind, IReadOnlyList<FhirR4Extension> extension, IDictionary<string, BinaryData> serializedAdditionalRawData, string effectiveDateTime, FhirR4Period effectivePeriod, IReadOnlyList<FhirR4Extendible> findings, bool isConditional, bool isOption, bool isGuideline, bool isHedging, ProcedureRecommendation recommendedProcedure) : base(kind, extension, serializedAdditionalRawData)
         {
             EffectiveDateTime = effectiveDateTime;

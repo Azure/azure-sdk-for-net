@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,79 +22,79 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RowCount))
             {
                 writer.WritePropertyName("rowCount"u8);
-                writer.WriteObjectValue(RowCount);
+                writer.WriteObjectValue<object>(RowCount);
             }
             if (Optional.IsDefined(RowSkips))
             {
                 writer.WritePropertyName("rowSkips"u8);
-                writer.WriteObjectValue(RowSkips);
+                writer.WriteObjectValue<object>(RowSkips);
             }
             if (Optional.IsDefined(RfcTableFields))
             {
                 writer.WritePropertyName("rfcTableFields"u8);
-                writer.WriteObjectValue(RfcTableFields);
+                writer.WriteObjectValue<object>(RfcTableFields);
             }
             if (Optional.IsDefined(RfcTableOptions))
             {
                 writer.WritePropertyName("rfcTableOptions"u8);
-                writer.WriteObjectValue(RfcTableOptions);
+                writer.WriteObjectValue<object>(RfcTableOptions);
             }
             if (Optional.IsDefined(BatchSize))
             {
                 writer.WritePropertyName("batchSize"u8);
-                writer.WriteObjectValue(BatchSize);
+                writer.WriteObjectValue<object>(BatchSize);
             }
             if (Optional.IsDefined(CustomRfcReadTableFunctionModule))
             {
                 writer.WritePropertyName("customRfcReadTableFunctionModule"u8);
-                writer.WriteObjectValue(CustomRfcReadTableFunctionModule);
+                writer.WriteObjectValue<object>(CustomRfcReadTableFunctionModule);
             }
             if (Optional.IsDefined(SapDataColumnDelimiter))
             {
                 writer.WritePropertyName("sapDataColumnDelimiter"u8);
-                writer.WriteObjectValue(SapDataColumnDelimiter);
+                writer.WriteObjectValue<object>(SapDataColumnDelimiter);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                writer.WriteObjectValue(PartitionOption);
+                writer.WriteObjectValue<object>(PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                writer.WriteObjectValue<SapTablePartitionSettings>(PartitionSettings);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout);
+                writer.WriteObjectValue<object>(QueryTimeout);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns);
+                writer.WriteObjectValue<object>(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -282,7 +281,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SapTableSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SapTableSource>(model);
             }
             public override SapTableSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

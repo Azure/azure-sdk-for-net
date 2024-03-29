@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DependentResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DependentResource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -128,7 +127,7 @@ namespace Azure.Analytics.Defender.Easm
                 writer.WriteStartArray();
                 foreach (var item in SriChecks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubResourceIntegrityCheck>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -180,7 +179,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<DependentResource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DependentResource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DependentResource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -436,7 +435,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DependentResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DependentResource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -452,7 +451,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeDependentResource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DependentResource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DependentResource)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -470,7 +469,7 @@ namespace Azure.Analytics.Defender.Easm
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DependentResource>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataLakeStore
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataLakeStore
             if (options.Format != "W" && Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
-                writer.WriteObjectValue(EncryptionConfig);
+                writer.WriteObjectValue<DataLakeStoreAccountEncryptionConfig>(EncryptionConfig, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EncryptionState))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreFirewallRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreVirtualNetworkRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreTrustedIdProviderData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.DataLakeStore
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.DataLakeStore
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.DataLakeStore
                         return DeserializeDataLakeStoreAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

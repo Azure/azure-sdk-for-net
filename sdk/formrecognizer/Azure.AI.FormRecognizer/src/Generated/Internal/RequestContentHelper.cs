@@ -21,7 +21,7 @@ namespace Azure.AI.FormRecognizer
             content.JsonWriter.WriteStartArray();
             foreach (var item in enumerable)
             {
-                content.JsonWriter.WriteObjectValue(item);
+                content.JsonWriter.WriteObjectValue<T>(item);
             }
             content.JsonWriter.WriteEndArray();
 
@@ -63,7 +63,7 @@ namespace Azure.AI.FormRecognizer
             foreach (var item in dictionary)
             {
                 content.JsonWriter.WritePropertyName(item.Key);
-                content.JsonWriter.WriteObjectValue(item.Value);
+                content.JsonWriter.WriteObjectValue<TValue>(item.Value);
             }
             content.JsonWriter.WriteEndObject();
 
@@ -101,7 +101,7 @@ namespace Azure.AI.FormRecognizer
         public static RequestContent FromObject(object value)
         {
             Utf8JsonRequestContent content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(value);
+            content.JsonWriter.WriteObjectValue<object>(value);
             return content;
         }
 

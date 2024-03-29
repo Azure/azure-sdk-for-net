@@ -65,7 +65,7 @@ namespace Azure.Monitor.Query.Tests
             var metricClient = new MetricsQueryClient(_testEnvironment.MetricsEndpoint, _testEnvironment.Credential);
 
             var senderClient = new MetricsSenderClient(
-                _testEnvironment.MetricsLocation,
+                _testEnvironment.DataplaneEndpoint,
                 _testEnvironment.MetricsIngestionEndpoint,
                 _testEnvironment.MetricsResource,
                 _testEnvironment.Credential,

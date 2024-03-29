@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -23,19 +22,19 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(InfrastructureVpnConfiguration))
             {
                 writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureVpnConfiguration);
+                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(InfrastructureVpnConfiguration, options);
             }
             if (Optional.IsDefined(WorkloadVpnConfiguration))
             {
                 writer.WritePropertyName("workloadVpnConfiguration"u8);
-                writer.WriteObjectValue(WorkloadVpnConfiguration);
+                writer.WriteObjectValue<VpnConfigurationPatchableProperties>(WorkloadVpnConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationPatchableProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeManagementNetworkConfigurationPatchableProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationPatchableProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

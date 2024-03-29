@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -27,14 +26,14 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("wholeMetricConfiguration"u8);
-            writer.WriteObjectValue(WholeSeriesDetectionConditions);
+            writer.WriteObjectValue<MetricWholeSeriesDetectionCondition>(WholeSeriesDetectionConditions);
             if (Optional.IsCollectionDefined(SeriesGroupDetectionConditions))
             {
                 writer.WritePropertyName("dimensionGroupOverrideConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SeriesGroupDetectionConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricSeriesGroupDetectionCondition>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -44,7 +43,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in SeriesDetectionConditions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricSingleSeriesDetectionCondition>(item);
                 }
                 writer.WriteEndArray();
             }

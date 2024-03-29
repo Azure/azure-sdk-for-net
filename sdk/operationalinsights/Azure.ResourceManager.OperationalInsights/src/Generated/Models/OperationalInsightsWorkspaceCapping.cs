@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The workspace daily quota for ingestion. </summary>
+        [WirePath("dailyQuotaGb")]
         public double? DailyQuotaInGB { get; set; }
         /// <summary> The time when the quota will be rest. </summary>
+        [WirePath("quotaNextResetTime")]
         public string QuotaNextResetTime { get; }
         /// <summary> The status of data ingestion for this workspace. </summary>
+        [WirePath("dataIngestionStatus")]
         public OperationalInsightsDataIngestionStatus? DataIngestionStatus { get; }
     }
 }

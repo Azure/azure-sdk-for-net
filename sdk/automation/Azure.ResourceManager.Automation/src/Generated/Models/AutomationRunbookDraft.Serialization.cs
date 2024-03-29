@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookDraft>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(DraftContentLink))
             {
                 writer.WritePropertyName("draftContentLink"u8);
-                writer.WriteObjectValue(DraftContentLink);
+                writer.WriteObjectValue<AutomationContentLink>(DraftContentLink, options);
             }
             if (Optional.IsDefined(CreatedOn))
             {
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Automation.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RunbookParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -91,7 +90,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRunbookDraft>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +204,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationRunbookDraft(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRunbookDraft)} does not support reading '{options.Format}' format.");
             }
         }
 

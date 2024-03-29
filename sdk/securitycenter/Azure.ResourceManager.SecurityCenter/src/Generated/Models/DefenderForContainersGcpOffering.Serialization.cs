@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SecurityCenter;
 
 namespace Azure.ResourceManager.SecurityCenter.Models
 {
@@ -23,19 +22,19 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(NativeCloudConnection))
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
-                writer.WriteObjectValue(NativeCloudConnection);
+                writer.WriteObjectValue<DefenderForContainersGcpOfferingNativeCloudConnection>(NativeCloudConnection, options);
             }
             if (Optional.IsDefined(DataPipelineNativeCloudConnection))
             {
                 writer.WritePropertyName("dataPipelineNativeCloudConnection"u8);
-                writer.WriteObjectValue(DataPipelineNativeCloudConnection);
+                writer.WriteObjectValue<DefenderForContainersGcpOfferingDataPipelineNativeCloudConnection>(DataPipelineNativeCloudConnection, options);
             }
             if (Optional.IsDefined(IsAuditLogsAutoProvisioningEnabled))
             {
@@ -55,12 +54,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(MdcContainersImageAssessment))
             {
                 writer.WritePropertyName("mdcContainersImageAssessment"u8);
-                writer.WriteObjectValue(MdcContainersImageAssessment);
+                writer.WriteObjectValue<DefenderForContainersGcpOfferingMdcContainersImageAssessment>(MdcContainersImageAssessment, options);
             }
             if (Optional.IsDefined(MdcContainersAgentlessDiscoveryK8S))
             {
                 writer.WritePropertyName("mdcContainersAgentlessDiscoveryK8s"u8);
-                writer.WriteObjectValue(MdcContainersAgentlessDiscoveryK8S);
+                writer.WriteObjectValue<DefenderForContainersGcpOfferingMdcContainersAgentlessDiscoveryK8S>(MdcContainersAgentlessDiscoveryK8S, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderForContainersGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -221,7 +220,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderForContainersGcpOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderForContainersGcpOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

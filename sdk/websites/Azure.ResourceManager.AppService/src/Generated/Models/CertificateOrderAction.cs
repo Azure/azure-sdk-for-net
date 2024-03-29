@@ -70,10 +70,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Action type. </summary>
+        [WirePath("properties.actionType")]
         public CertificateOrderActionType? ActionType { get; }
         /// <summary> Time at which the certificate action was performed. </summary>
+        [WirePath("properties.createdAt")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

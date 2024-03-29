@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -23,29 +22,29 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Triggers))
             {
                 writer.WritePropertyName("triggers"u8);
-                writer.WriteObjectValue(Triggers);
+                writer.WriteObjectValue<FlowAccessControlConfigurationPolicy>(Triggers, options);
             }
             if (Optional.IsDefined(Contents))
             {
                 writer.WritePropertyName("contents"u8);
-                writer.WriteObjectValue(Contents);
+                writer.WriteObjectValue<FlowAccessControlConfigurationPolicy>(Contents, options);
             }
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                writer.WriteObjectValue<FlowAccessControlConfigurationPolicy>(Actions, options);
             }
             if (Optional.IsDefined(WorkflowManagement))
             {
                 writer.WritePropertyName("workflowManagement"u8);
-                writer.WriteObjectValue(WorkflowManagement);
+                writer.WriteObjectValue<FlowAccessControlConfigurationPolicy>(WorkflowManagement, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowAccessControlConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeFlowAccessControlConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowAccessControlConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

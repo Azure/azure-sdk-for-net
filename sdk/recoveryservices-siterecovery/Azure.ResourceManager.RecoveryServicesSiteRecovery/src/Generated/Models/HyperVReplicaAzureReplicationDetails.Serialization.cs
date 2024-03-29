@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureVmDiskDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryVmDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(InitialReplicationDetails))
             {
                 writer.WritePropertyName("initialReplicationDetails"u8);
-                writer.WriteObjectValue(InitialReplicationDetails);
+                writer.WriteObjectValue<InitialReplicationDetails>(InitialReplicationDetails, options);
             }
             if (Optional.IsCollectionDefined(VmNics))
             {
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VmNicDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(OSDetails))
             {
                 writer.WritePropertyName("oSDetails"u8);
-                writer.WriteObjectValue(OSDetails);
+                writer.WriteObjectValue<SiteRecoveryOSDetails>(OSDetails, options);
             }
             if (Optional.IsDefined(SourceVmRamSizeInMB))
             {
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in ProtectedManagedDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HyperVReplicaAzureManagedDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -237,7 +236,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 writer.WriteStartArray();
                 foreach (var item in AllAvailableOSUpgradeConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OSUpgradeSupportedVersions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -266,7 +265,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<HyperVReplicaAzureReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -673,7 +672,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -689,7 +688,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeHyperVReplicaAzureReplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HyperVReplicaAzureReplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

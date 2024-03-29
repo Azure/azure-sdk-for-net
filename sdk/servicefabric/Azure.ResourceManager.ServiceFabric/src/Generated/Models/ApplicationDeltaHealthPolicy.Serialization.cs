@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ServiceFabric;
 
 namespace Azure.ResourceManager.ServiceFabric.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(DefaultServiceTypeDeltaHealthPolicy))
             {
                 writer.WritePropertyName("defaultServiceTypeDeltaHealthPolicy"u8);
-                writer.WriteObjectValue(DefaultServiceTypeDeltaHealthPolicy);
+                writer.WriteObjectValue<ServiceTypeDeltaHealthPolicy>(DefaultServiceTypeDeltaHealthPolicy, options);
             }
             if (Optional.IsCollectionDefined(ServiceTypeDeltaHealthPolicies))
             {
@@ -39,7 +38,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 foreach (var item in ServiceTypeDeltaHealthPolicies)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ServiceTypeDeltaHealthPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationDeltaHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeApplicationDeltaHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationDeltaHealthPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

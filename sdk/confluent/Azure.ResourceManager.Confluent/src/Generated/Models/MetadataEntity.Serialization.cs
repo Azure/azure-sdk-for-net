@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Confluent;
 
 namespace Azure.ResourceManager.Confluent.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetadataEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetadataEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetadataEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Confluent.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetadataEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetadataEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetadataEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.Confluent.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetadataEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetadataEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.Confluent.Models
                         return DeserializeMetadataEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetadataEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetadataEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

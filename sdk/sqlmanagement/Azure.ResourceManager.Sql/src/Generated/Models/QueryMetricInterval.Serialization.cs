@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryMetricInterval>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QueryMetricProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryMetricInterval>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,6 +145,93 @@ namespace Azure.ResourceManager.Sql.Models
             return new QueryMetricInterval(intervalStartTime, intervalType, executionCount, metrics ?? new ChangeTrackingList<QueryMetricProperties>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalStartTime), out propertyOverride);
+            if (Optional.IsDefined(IntervalStartTime) || hasPropertyOverride)
+            {
+                builder.Append("  intervalStartTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (IntervalStartTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{IntervalStartTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{IntervalStartTime}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalType), out propertyOverride);
+            if (Optional.IsDefined(IntervalType) || hasPropertyOverride)
+            {
+                builder.Append("  intervalType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{IntervalType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExecutionCount), out propertyOverride);
+            if (Optional.IsDefined(ExecutionCount) || hasPropertyOverride)
+            {
+                builder.Append("  executionCount: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ExecutionCount.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Metrics), out propertyOverride);
+            if (Optional.IsCollectionDefined(Metrics) || hasPropertyOverride)
+            {
+                if (Metrics.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  metrics: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Metrics)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metrics: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<QueryMetricInterval>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<QueryMetricInterval>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,8 +240,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +259,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeQueryMetricInterval(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryMetricInterval)} does not support reading '{options.Format}' format.");
             }
         }
 

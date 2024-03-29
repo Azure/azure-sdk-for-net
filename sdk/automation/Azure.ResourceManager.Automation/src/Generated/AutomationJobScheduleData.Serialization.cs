@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobScheduleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobScheduleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobScheduleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Automation
             if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                writer.WriteObjectValue<ScheduleAssociationProperty>(Schedule, options);
             }
             if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook);
+                writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
             }
             if (Optional.IsDefined(RunOn))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Automation
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobScheduleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobScheduleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobScheduleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.Automation
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobScheduleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobScheduleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.Automation
                         return DeserializeAutomationJobScheduleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobScheduleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobScheduleData)} does not support reading '{options.Format}' format.");
             }
         }
 

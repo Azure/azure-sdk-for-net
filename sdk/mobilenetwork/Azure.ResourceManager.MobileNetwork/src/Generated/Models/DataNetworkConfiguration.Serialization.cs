@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MobileNetwork;
 using Azure.ResourceManager.Resources.Models;
 
 namespace Azure.ResourceManager.MobileNetwork.Models
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("dataNetwork"u8);
             JsonSerializer.Serialize(writer, DataNetwork);
             writer.WritePropertyName("sessionAmbr"u8);
-            writer.WriteObjectValue(SessionAmbr);
+            writer.WriteObjectValue<Ambr>(SessionAmbr, options);
             if (Optional.IsDefined(FiveQi))
             {
                 writer.WritePropertyName("5qi"u8);
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -248,7 +247,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +263,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeDataNetworkConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataNetworkConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.ResourceMover
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<MoverResourceProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ResourceMover
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ResourceMover
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ResourceMover
                         return DeserializeMoverResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

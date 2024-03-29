@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RoutingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in LoadBalancingSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorLoadBalancingSettingsData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in HealthProbeSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorHealthProbeSettingsData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in BackendPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorBackendPool>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,14 +114,14 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in FrontendEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontendEndpointData>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(BackendPoolsSettings))
             {
                 writer.WritePropertyName("backendPoolsSettings"u8);
-                writer.WriteObjectValue(BackendPoolsSettings);
+                writer.WriteObjectValue<BackendPoolsSettings>(BackendPoolsSettings, options);
             }
             if (Optional.IsDefined(EnabledState))
             {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.FrontDoor
                 writer.WriteStartArray();
                 foreach (var item in RulesEngines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FrontDoorRulesEngineData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.FrontDoor
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.FrontDoor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.FrontDoor
                         return DeserializeFrontDoorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorData)} does not support reading '{options.Format}' format.");
             }
         }
 

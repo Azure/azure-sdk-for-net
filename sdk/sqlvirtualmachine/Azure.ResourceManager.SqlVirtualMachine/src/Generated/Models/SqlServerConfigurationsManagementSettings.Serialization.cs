@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SqlVirtualMachine;
 
 namespace Azure.ResourceManager.SqlVirtualMachine.Models
 {
@@ -23,34 +22,34 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SqlConnectivityUpdateSettings))
             {
                 writer.WritePropertyName("sqlConnectivityUpdateSettings"u8);
-                writer.WriteObjectValue(SqlConnectivityUpdateSettings);
+                writer.WriteObjectValue<SqlConnectivityUpdateSettings>(SqlConnectivityUpdateSettings, options);
             }
             if (Optional.IsDefined(SqlWorkloadTypeUpdateSettings))
             {
                 writer.WritePropertyName("sqlWorkloadTypeUpdateSettings"u8);
-                writer.WriteObjectValue(SqlWorkloadTypeUpdateSettings);
+                writer.WriteObjectValue<SqlWorkloadTypeUpdateSettings>(SqlWorkloadTypeUpdateSettings, options);
             }
             if (Optional.IsDefined(SqlStorageUpdateSettings))
             {
                 writer.WritePropertyName("sqlStorageUpdateSettings"u8);
-                writer.WriteObjectValue(SqlStorageUpdateSettings);
+                writer.WriteObjectValue<SqlStorageUpdateSettings>(SqlStorageUpdateSettings, options);
             }
             if (Optional.IsDefined(AdditionalFeaturesServerConfigurations))
             {
                 writer.WritePropertyName("additionalFeaturesServerConfigurations"u8);
-                writer.WriteObjectValue(AdditionalFeaturesServerConfigurations);
+                writer.WriteObjectValue<AdditionalFeaturesServerConfigurations>(AdditionalFeaturesServerConfigurations, options);
             }
             if (Optional.IsDefined(SqlInstanceSettings))
             {
                 writer.WritePropertyName("sqlInstanceSettings"u8);
-                writer.WriteObjectValue(SqlInstanceSettings);
+                writer.WriteObjectValue<SqlInstanceSettings>(SqlInstanceSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlServerConfigurationsManagementSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlServerConfigurationsManagementSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlServerConfigurationsManagementSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

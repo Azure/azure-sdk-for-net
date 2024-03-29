@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.StreamAnalytics.Models;
@@ -25,14 +24,14 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<StreamAnalyticsClusterSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<StreamAnalyticsClusterProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.StreamAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<StreamAnalyticsClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamAnalyticsClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamAnalyticsClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.StreamAnalytics
                         return DeserializeStreamAnalyticsClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamAnalyticsClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamAnalyticsClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

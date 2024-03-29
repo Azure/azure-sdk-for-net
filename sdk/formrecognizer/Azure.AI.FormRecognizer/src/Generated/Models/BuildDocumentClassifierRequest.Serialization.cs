@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.FormRecognizer;
 using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
@@ -28,7 +27,7 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             foreach (var item in DocTypes)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<ClassifierDocumentTypeDetails>(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

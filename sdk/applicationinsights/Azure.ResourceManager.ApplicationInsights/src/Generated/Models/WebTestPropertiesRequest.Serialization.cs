@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebTestPropertiesRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HeaderField>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebTestPropertiesRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,6 +178,131 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestUri), out propertyOverride);
+            if (Optional.IsDefined(RequestUri) || hasPropertyOverride)
+            {
+                builder.Append("  RequestUrl: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RequestUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Headers), out propertyOverride);
+            if (Optional.IsCollectionDefined(Headers) || hasPropertyOverride)
+            {
+                if (Headers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  Headers: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Headers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  Headers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(HttpVerb), out propertyOverride);
+            if (Optional.IsDefined(HttpVerb) || hasPropertyOverride)
+            {
+                builder.Append("  HttpVerb: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (HttpVerb.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{HttpVerb}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{HttpVerb}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RequestBody), out propertyOverride);
+            if (Optional.IsDefined(RequestBody) || hasPropertyOverride)
+            {
+                builder.Append("  RequestBody: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RequestBody.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RequestBody}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RequestBody}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParseDependentRequests), out propertyOverride);
+            if (Optional.IsDefined(ParseDependentRequests) || hasPropertyOverride)
+            {
+                builder.Append("  ParseDependentRequests: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = ParseDependentRequests.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FollowRedirects), out propertyOverride);
+            if (Optional.IsDefined(FollowRedirects) || hasPropertyOverride)
+            {
+                builder.Append("  FollowRedirects: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = FollowRedirects.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WebTestPropertiesRequest>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WebTestPropertiesRequest>)this).GetFormatFromOptions(options) : options.Format;
@@ -185,8 +311,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +330,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWebTestPropertiesRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebTestPropertiesRequest)} does not support reading '{options.Format}' format.");
             }
         }
 

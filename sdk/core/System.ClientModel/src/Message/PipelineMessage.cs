@@ -115,6 +115,8 @@ public class PipelineMessage : IDisposable
     /// </remarks>
     public void Apply(RequestOptions options)
     {
+        Argument.AssertNotNull(options, nameof(options));
+
         // This design moves the client-author API (options.Apply) off the
         // client-user type RequestOptions. Its only purpose is to call through to
         // the internal options.Apply method.

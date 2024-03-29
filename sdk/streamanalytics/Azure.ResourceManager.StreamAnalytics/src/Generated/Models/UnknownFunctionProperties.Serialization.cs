@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.StreamAnalytics;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +41,19 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 writer.WriteStartArray();
                 foreach (var item in Inputs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StreamingJobFunctionInput>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Output))
             {
                 writer.WritePropertyName("output"u8);
-                writer.WriteObjectValue(Output);
+                writer.WriteObjectValue<StreamingJobFunctionOutput>(Output, options);
             }
             if (Optional.IsDefined(Binding))
             {
                 writer.WritePropertyName("binding"u8);
-                writer.WriteObjectValue(Binding);
+                writer.WriteObjectValue<StreamingJobFunctionBinding>(Binding, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -81,7 +79,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingJobFunctionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +185,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +201,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStreamingJobFunctionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingJobFunctionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

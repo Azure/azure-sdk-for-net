@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppLogsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppLogsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLogsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(LogAnalyticsConfiguration))
             {
                 writer.WritePropertyName("logAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(LogAnalyticsConfiguration);
+                writer.WriteObjectValue<LogAnalyticsConfiguration>(LogAnalyticsConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppLogsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppLogsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppLogsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,6 +104,57 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppLogsConfiguration(destination, logAnalyticsConfiguration, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
+            if (Optional.IsDefined(Destination) || hasPropertyOverride)
+            {
+                builder.Append("  destination: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Destination.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Destination}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Destination}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogAnalyticsConfiguration), out propertyOverride);
+            if (Optional.IsDefined(LogAnalyticsConfiguration) || hasPropertyOverride)
+            {
+                builder.Append("  logAnalyticsConfiguration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, LogAnalyticsConfiguration, options, 2, false, "  logAnalyticsConfiguration: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppLogsConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppLogsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -112,8 +163,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppLogsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLogsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppLogsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppLogsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppLogsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

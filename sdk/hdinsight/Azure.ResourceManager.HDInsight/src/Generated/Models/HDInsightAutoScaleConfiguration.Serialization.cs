@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -23,19 +22,19 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<HDInsightAutoScaleCapacity>(Capacity, options);
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue<HDInsightAutoScaleRecurrence>(Recurrence, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightAutoScaleConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

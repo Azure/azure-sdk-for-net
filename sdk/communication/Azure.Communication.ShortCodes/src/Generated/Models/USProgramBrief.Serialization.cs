@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Communication.ShortCodes;
 using Azure.Core;
 
 namespace Azure.Communication.ShortCodes.Models
@@ -36,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in ReviewNotes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReviewNote>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -46,7 +45,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ShortCodeCost>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -63,22 +62,22 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ProgramDetails))
             {
                 writer.WritePropertyName("programDetails"u8);
-                writer.WriteObjectValue(ProgramDetails);
+                writer.WriteObjectValue<ProgramDetails>(ProgramDetails);
             }
             if (Optional.IsDefined(CompanyInformation))
             {
                 writer.WritePropertyName("companyInformation"u8);
-                writer.WriteObjectValue(CompanyInformation);
+                writer.WriteObjectValue<CompanyInformation>(CompanyInformation);
             }
             if (Optional.IsDefined(MessageDetails))
             {
                 writer.WritePropertyName("messageDetails"u8);
-                writer.WriteObjectValue(MessageDetails);
+                writer.WriteObjectValue<MessageDetails>(MessageDetails);
             }
             if (Optional.IsDefined(TrafficDetails))
             {
                 writer.WritePropertyName("trafficDetails"u8);
-                writer.WriteObjectValue(TrafficDetails);
+                writer.WriteObjectValue<TrafficDetails>(TrafficDetails);
             }
             writer.WriteEndObject();
         }

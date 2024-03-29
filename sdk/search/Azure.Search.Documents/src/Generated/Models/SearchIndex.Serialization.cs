@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in _fields)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchField>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(ScoringProfiles))
@@ -32,7 +31,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in ScoringProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScoringProfile>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -46,7 +45,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (CorsOptions != null)
                 {
                     writer.WritePropertyName("corsOptions"u8);
-                    writer.WriteObjectValue(CorsOptions);
+                    writer.WriteObjectValue<CorsOptions>(CorsOptions);
                 }
                 else
                 {
@@ -59,7 +58,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Suggesters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchSuggester>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +68,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Analyzers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LexicalAnalyzer>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +78,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Tokenizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LexicalTokenizer>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +88,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in TokenFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TokenFilter>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in CharFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CharFilter>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -109,7 +108,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Normalizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LexicalNormalizer>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -118,7 +117,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {
@@ -128,14 +127,14 @@ namespace Azure.Search.Documents.Indexes.Models
             if (Optional.IsDefined(Similarity))
             {
                 writer.WritePropertyName("similarity"u8);
-                writer.WriteObjectValue(Similarity);
+                writer.WriteObjectValue<SimilarityAlgorithm>(Similarity);
             }
             if (Optional.IsDefined(SemanticSearch))
             {
                 if (SemanticSearch != null)
                 {
                     writer.WritePropertyName("semantic"u8);
-                    writer.WriteObjectValue(SemanticSearch);
+                    writer.WriteObjectValue<SemanticSearch>(SemanticSearch);
                 }
                 else
                 {
@@ -147,7 +146,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (VectorSearch != null)
                 {
                     writer.WritePropertyName("vectorSearch"u8);
-                    writer.WriteObjectValue(VectorSearch);
+                    writer.WriteObjectValue<VectorSearch>(VectorSearch);
                 }
                 else
                 {

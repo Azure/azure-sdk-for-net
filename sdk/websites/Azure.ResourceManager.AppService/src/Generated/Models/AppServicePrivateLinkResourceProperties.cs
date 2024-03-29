@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> GroupId of a private link resource. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
         /// <summary> RequiredMembers of a private link resource. </summary>
+        [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> RequiredZoneNames of a private link resource. </summary>
+        [WirePath("requiredZoneNames")]
         public IReadOnlyList<string> RequiredZoneNames { get; }
     }
 }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerService;
 
 namespace Azure.ResourceManager.ContainerService.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStringValue(BindingSelector);
             }
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity);
+            writer.WriteObjectValue<ContainerServiceUserAssignedIdentity>(Identity, options);
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
@@ -46,7 +45,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(ProvisioningInfo))
             {
                 writer.WritePropertyName("provisioningInfo"u8);
-                writer.WriteObjectValue(ProvisioningInfo);
+                writer.WriteObjectValue<ManagedClusterPodIdentityProvisioningInfo>(ProvisioningInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +174,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterPodIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

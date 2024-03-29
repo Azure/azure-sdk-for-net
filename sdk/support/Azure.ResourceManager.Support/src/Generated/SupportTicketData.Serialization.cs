@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportTicketData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,17 +103,17 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                writer.WriteObjectValue<SupportContactProfile>(ContactDetails, options);
             }
             if (Optional.IsDefined(ServiceLevelAgreement))
             {
                 writer.WritePropertyName("serviceLevelAgreement"u8);
-                writer.WriteObjectValue(ServiceLevelAgreement);
+                writer.WriteObjectValue<SupportServiceLevelAgreement>(ServiceLevelAgreement, options);
             }
             if (Optional.IsDefined(SupportEngineer))
             {
                 writer.WritePropertyName("supportEngineer"u8);
-                writer.WriteObjectValue(SupportEngineer);
+                writer.WriteObjectValue<SupportEngineer>(SupportEngineer, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SupportPlanType))
             {
@@ -168,12 +168,12 @@ namespace Azure.ResourceManager.Support
             if (Optional.IsDefined(TechnicalTicketDetails))
             {
                 writer.WritePropertyName("technicalTicketDetails"u8);
-                writer.WriteObjectValue(TechnicalTicketDetails);
+                writer.WriteObjectValue<TechnicalTicketDetails>(TechnicalTicketDetails, options);
             }
             if (Optional.IsDefined(QuotaTicketDetails))
             {
                 writer.WritePropertyName("quotaTicketDetails"u8);
-                writer.WriteObjectValue(QuotaTicketDetails);
+                writer.WriteObjectValue<QuotaTicketDetails>(QuotaTicketDetails, options);
             }
             if (Optional.IsCollectionDefined(SecondaryConsent))
             {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Support
                 writer.WriteStartArray();
                 foreach (var item in SecondaryConsent)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecondaryConsent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<SupportTicketData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportTicketData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Support
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Support
                         return DeserializeSupportTicketData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportTicketData)} does not support reading '{options.Format}' format.");
             }
         }
 

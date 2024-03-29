@@ -8,10 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentPropertiesExtended>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,14 +76,14 @@ namespace Azure.ResourceManager.Resources.Models
                 writer.WriteStartArray();
                 foreach (var item in Dependencies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ArmDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink);
+                writer.WriteObjectValue<ArmDeploymentTemplateLink>(TemplateLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Parameters))
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue(ParametersLink);
+                writer.WriteObjectValue<ArmDeploymentParametersLink>(ParametersLink, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Mode))
             {
@@ -110,12 +110,12 @@ namespace Azure.ResourceManager.Resources.Models
             if (options.Format != "W" && Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue(DebugSetting);
+                writer.WriteObjectValue<DebugSetting>(DebugSetting, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(ErrorDeployment);
+                writer.WriteObjectValue<ErrorDeploymentExtended>(ErrorDeployment, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TemplateHash))
             {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentPropertiesExtended>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -398,6 +398,331 @@ namespace Azure.ResourceManager.Resources.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("  provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CorrelationId), out propertyOverride);
+            if (Optional.IsDefined(CorrelationId) || hasPropertyOverride)
+            {
+                builder.Append("  correlationId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CorrelationId.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CorrelationId}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CorrelationId}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Timestamp), out propertyOverride);
+            if (Optional.IsDefined(Timestamp) || hasPropertyOverride)
+            {
+                builder.Append("  timestamp: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(Timestamp.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Duration), out propertyOverride);
+            if (Optional.IsDefined(Duration) || hasPropertyOverride)
+            {
+                builder.Append("  duration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedTimeSpan = TypeFormatters.ToString(Duration.Value, "P");
+                    builder.AppendLine($"'{formattedTimeSpan}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Outputs), out propertyOverride);
+            if (Optional.IsDefined(Outputs) || hasPropertyOverride)
+            {
+                builder.Append("  outputs: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Outputs.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Providers), out propertyOverride);
+            if (Optional.IsCollectionDefined(Providers) || hasPropertyOverride)
+            {
+                if (Providers.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  providers: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Providers)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  providers: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Dependencies), out propertyOverride);
+            if (Optional.IsCollectionDefined(Dependencies) || hasPropertyOverride)
+            {
+                if (Dependencies.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  dependencies: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Dependencies)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  dependencies: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateLink), out propertyOverride);
+            if (Optional.IsDefined(TemplateLink) || hasPropertyOverride)
+            {
+                builder.Append("  templateLink: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, TemplateLink, options, 2, false, "  templateLink: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Parameters), out propertyOverride);
+            if (Optional.IsDefined(Parameters) || hasPropertyOverride)
+            {
+                builder.Append("  parameters: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Parameters.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ParametersLink), out propertyOverride);
+            if (Optional.IsDefined(ParametersLink) || hasPropertyOverride)
+            {
+                builder.Append("  parametersLink: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ParametersLink, options, 2, false, "  parametersLink: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Mode), out propertyOverride);
+            if (Optional.IsDefined(Mode) || hasPropertyOverride)
+            {
+                builder.Append("  mode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Mode.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DebugSetting), out propertyOverride);
+            if (Optional.IsDefined(DebugSetting) || hasPropertyOverride)
+            {
+                builder.Append("  debugSetting: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, DebugSetting, options, 2, false, "  debugSetting: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorDeployment), out propertyOverride);
+            if (Optional.IsDefined(ErrorDeployment) || hasPropertyOverride)
+            {
+                builder.Append("  onErrorDeployment: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ErrorDeployment, options, 2, false, "  onErrorDeployment: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateHash), out propertyOverride);
+            if (Optional.IsDefined(TemplateHash) || hasPropertyOverride)
+            {
+                builder.Append("  templateHash: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TemplateHash.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TemplateHash}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TemplateHash}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(OutputResources), out propertyOverride);
+            if (Optional.IsCollectionDefined(OutputResources) || hasPropertyOverride)
+            {
+                if (OutputResources.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  outputResources: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in OutputResources)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  outputResources: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidatedResources), out propertyOverride);
+            if (Optional.IsCollectionDefined(ValidatedResources) || hasPropertyOverride)
+            {
+                if (ValidatedResources.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  validatedResources: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ValidatedResources)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  validatedResources: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Error), out propertyOverride);
+            if (Optional.IsDefined(Error) || hasPropertyOverride)
+            {
+                builder.Append("  error: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Error, options, 2, false, "  error: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "DebugSettingDetailLevel":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("DetailLevel", item.Value);
+                        bicepOptions.PropertyOverrides.Add(DebugSetting, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ArmDeploymentPropertiesExtended>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentPropertiesExtended>)this).GetFormatFromOptions(options) : options.Format;
@@ -406,8 +731,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -423,7 +750,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmDeploymentPropertiesExtended(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentPropertiesExtended)} does not support reading '{options.Format}' format.");
             }
         }
 

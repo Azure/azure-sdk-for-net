@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<VirtualMachineExtensionInstanceView>(InstanceView, options);
             }
             if (Optional.IsDefined(SuppressFailures))
             {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(KeyVaultProtectedSettings);
+                writer.WriteObjectValue<KeyVaultSecretReference>(KeyVaultProtectedSettings, options);
             }
             if (Optional.IsCollectionDefined(ProvisionAfterExtensions))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetVmExtensionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -400,7 +400,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeVirtualMachineScaleSetVmExtensionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetVmExtensionData)} does not support reading '{options.Format}' format.");
             }
         }
 

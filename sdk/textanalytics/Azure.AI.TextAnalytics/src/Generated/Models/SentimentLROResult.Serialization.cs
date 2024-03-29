@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -18,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results);
+            writer.WriteObjectValue<SentimentResponse>(Results);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))

@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualIPMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualIPMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,6 +151,108 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VirtualIP), out propertyOverride);
+            if (Optional.IsDefined(VirtualIP) || hasPropertyOverride)
+            {
+                builder.Append("  virtualIP: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (VirtualIP.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{VirtualIP}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{VirtualIP}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternalHttpPort), out propertyOverride);
+            if (Optional.IsDefined(InternalHttpPort) || hasPropertyOverride)
+            {
+                builder.Append("  internalHttpPort: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{InternalHttpPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InternalHttpsPort), out propertyOverride);
+            if (Optional.IsDefined(InternalHttpsPort) || hasPropertyOverride)
+            {
+                builder.Append("  internalHttpsPort: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{InternalHttpsPort.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsInUse), out propertyOverride);
+            if (Optional.IsDefined(IsInUse) || hasPropertyOverride)
+            {
+                builder.Append("  inUse: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsInUse.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceName), out propertyOverride);
+            if (Optional.IsDefined(ServiceName) || hasPropertyOverride)
+            {
+                builder.Append("  serviceName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ServiceName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ServiceName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ServiceName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<VirtualIPMapping>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<VirtualIPMapping>)this).GetFormatFromOptions(options) : options.Format;
@@ -159,8 +261,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +280,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeVirtualIPMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualIPMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

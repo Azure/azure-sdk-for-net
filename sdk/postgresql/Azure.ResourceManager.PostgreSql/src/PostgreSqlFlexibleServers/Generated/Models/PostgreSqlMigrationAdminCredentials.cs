@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.PostgreSql;
 
 namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
 {
@@ -76,8 +75,10 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Password for source server. </summary>
+        [WirePath("sourceServerPassword")]
         public string SourceServerPassword { get; set; }
         /// <summary> Password for target server. </summary>
+        [WirePath("targetServerPassword")]
         public string TargetServerPassword { get; set; }
     }
 }

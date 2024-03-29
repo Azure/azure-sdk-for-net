@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -19,19 +18,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(TrustedCertificates))
             {
                 writer.WritePropertyName("trustedCertificates"u8);
-                writer.WriteObjectValue(TrustedCertificates);
+                writer.WriteObjectValue<CertificateSource>(TrustedCertificates);
             }
             if (Optional.IsDefined(ValidationOptions))
             {
                 writer.WritePropertyName("validationOptions"u8);
-                writer.WriteObjectValue(ValidationOptions);
+                writer.WriteObjectValue<TlsValidationOptions>(ValidationOptions);
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<CredentialsBase>(Credentials);
             }
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(Url);

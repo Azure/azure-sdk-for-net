@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.AppContainers
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAuthConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAuthConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAuthConfigData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,27 +53,27 @@ namespace Azure.ResourceManager.AppContainers
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                writer.WriteObjectValue<ContainerAppAuthPlatform>(Platform, options);
             }
             if (Optional.IsDefined(GlobalValidation))
             {
                 writer.WritePropertyName("globalValidation"u8);
-                writer.WriteObjectValue(GlobalValidation);
+                writer.WriteObjectValue<ContainerAppGlobalValidation>(GlobalValidation, options);
             }
             if (Optional.IsDefined(IdentityProviders))
             {
                 writer.WritePropertyName("identityProviders"u8);
-                writer.WriteObjectValue(IdentityProviders);
+                writer.WriteObjectValue<ContainerAppIdentityProvidersConfiguration>(IdentityProviders, options);
             }
             if (Optional.IsDefined(Login))
             {
                 writer.WritePropertyName("login"u8);
-                writer.WriteObjectValue(Login);
+                writer.WriteObjectValue<ContainerAppLogin>(Login, options);
             }
             if (Optional.IsDefined(HttpSettings))
             {
                 writer.WritePropertyName("httpSettings"u8);
-                writer.WriteObjectValue(HttpSettings);
+                writer.WriteObjectValue<ContainerAppHttpSettings>(HttpSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAuthConfigData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAuthConfigData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAuthConfigData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.AppContainers
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAuthConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAuthConfigData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.AppContainers
                         return DeserializeContainerAppAuthConfigData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAuthConfigData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAuthConfigData)} does not support reading '{options.Format}' format.");
             }
         }
 

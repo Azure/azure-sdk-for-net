@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SparkConfigurationReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SparkConfigurationReference>(model);
             }
             public override SparkConfigurationReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

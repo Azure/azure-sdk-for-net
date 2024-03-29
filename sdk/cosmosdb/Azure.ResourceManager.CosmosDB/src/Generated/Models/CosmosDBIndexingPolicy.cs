@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -75,16 +74,22 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Indicates if the indexing policy is automatic. </summary>
+        [WirePath("automatic")]
         public bool? IsAutomatic { get; set; }
         /// <summary> Indicates the indexing mode. </summary>
+        [WirePath("indexingMode")]
         public CosmosDBIndexingMode? IndexingMode { get; set; }
         /// <summary> List of paths to include in the indexing. </summary>
+        [WirePath("includedPaths")]
         public IList<CosmosDBIncludedPath> IncludedPaths { get; }
         /// <summary> List of paths to exclude from indexing. </summary>
+        [WirePath("excludedPaths")]
         public IList<CosmosDBExcludedPath> ExcludedPaths { get; }
         /// <summary> List of composite path list. </summary>
+        [WirePath("compositeIndexes")]
         public IList<IList<CosmosDBCompositePath>> CompositeIndexes { get; }
         /// <summary> List of spatial specifics. </summary>
+        [WirePath("spatialIndexes")]
         public IList<SpatialSpec> SpatialIndexes { get; }
     }
 }

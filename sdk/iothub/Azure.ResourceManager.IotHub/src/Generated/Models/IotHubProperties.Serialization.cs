@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotHub;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in AuthorizationPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SharedAccessSignatureAuthorizationRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,14 +77,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in IPFilterRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubIPFilterRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
-                writer.WriteObjectValue(NetworkRuleSets);
+                writer.WriteObjectValue<IotHubNetworkRuleSetProperties>(NetworkRuleSets, options);
             }
             if (Optional.IsDefined(MinTlsVersion))
             {
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -124,14 +123,14 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in EventHubEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EventHubCompatibleEndpointProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Routing))
             {
                 writer.WritePropertyName("routing"u8);
-                writer.WriteObjectValue(Routing);
+                writer.WriteObjectValue<IotHubRoutingProperties>(Routing, options);
             }
             if (Optional.IsCollectionDefined(StorageEndpoints))
             {
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in StorageEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<IotHubStorageEndpointProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 foreach (var item in MessagingEndpoints)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<MessagingEndpointProperties>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.IotHub.Models
             if (Optional.IsDefined(CloudToDevice))
             {
                 writer.WritePropertyName("cloudToDevice"u8);
-                writer.WriteObjectValue(CloudToDevice);
+                writer.WriteObjectValue<CloudToDeviceProperties>(CloudToDevice, options);
             }
             if (Optional.IsDefined(Comments))
             {
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotHubLocationDescription>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -535,7 +534,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -551,7 +550,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

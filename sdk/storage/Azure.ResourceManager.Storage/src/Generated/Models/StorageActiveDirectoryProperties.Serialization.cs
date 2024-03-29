@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,6 +173,178 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainName), out propertyOverride);
+            if (Optional.IsDefined(DomainName) || hasPropertyOverride)
+            {
+                builder.Append("  domainName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(NetBiosDomainName), out propertyOverride);
+            if (Optional.IsDefined(NetBiosDomainName) || hasPropertyOverride)
+            {
+                builder.Append("  netBiosDomainName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (NetBiosDomainName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{NetBiosDomainName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{NetBiosDomainName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ForestName), out propertyOverride);
+            if (Optional.IsDefined(ForestName) || hasPropertyOverride)
+            {
+                builder.Append("  forestName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ForestName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ForestName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ForestName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainGuid), out propertyOverride);
+            builder.Append("  domainGuid: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{DomainGuid.ToString()}'");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DomainSid), out propertyOverride);
+            if (Optional.IsDefined(DomainSid) || hasPropertyOverride)
+            {
+                builder.Append("  domainSid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DomainSid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DomainSid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DomainSid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AzureStorageSid), out propertyOverride);
+            if (Optional.IsDefined(AzureStorageSid) || hasPropertyOverride)
+            {
+                builder.Append("  azureStorageSid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AzureStorageSid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AzureStorageSid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AzureStorageSid}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SamAccountName), out propertyOverride);
+            if (Optional.IsDefined(SamAccountName) || hasPropertyOverride)
+            {
+                builder.Append("  samAccountName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SamAccountName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SamAccountName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SamAccountName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AccountType), out propertyOverride);
+            if (Optional.IsDefined(AccountType) || hasPropertyOverride)
+            {
+                builder.Append("  accountType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AccountType.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StorageActiveDirectoryProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageActiveDirectoryProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -181,8 +353,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +372,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageActiveDirectoryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageActiveDirectoryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
 
@@ -19,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("hookParameter"u8);
-            writer.WriteObjectValue(HookParameter);
+            writer.WriteObjectValue<WebhookHookParameter>(HookParameter);
             writer.WritePropertyName("hookType"u8);
             writer.WriteStringValue(HookKind.ToString());
             writer.WritePropertyName("hookName"u8);

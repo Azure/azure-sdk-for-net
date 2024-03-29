@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BackendHttpSettings))
             {
                 writer.WritePropertyName("backendHttpSettings"u8);
-                writer.WriteObjectValue(BackendHttpSettings);
+                writer.WriteObjectValue<ApplicationGatewayBackendHttpSettings>(BackendHttpSettings, options);
             }
             if (Optional.IsCollectionDefined(Servers))
             {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Servers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayBackendHealthServer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayBackendHealthHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayBackendHealthHttpSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayBackendHealthHttpSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

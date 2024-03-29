@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDescriptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsmOperationDescriptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsmOperationDescriptionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceSpecification))
             {
                 writer.WritePropertyName("serviceSpecification"u8);
-                writer.WriteObjectValue(ServiceSpecification);
+                writer.WriteObjectValue<ServiceSpecification>(ServiceSpecification, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDescriptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CsmOperationDescriptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CsmOperationDescriptionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,6 +93,35 @@ namespace Azure.ResourceManager.AppService.Models
             return new CsmOperationDescriptionProperties(serviceSpecification, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServiceSpecification), out propertyOverride);
+            if (Optional.IsDefined(ServiceSpecification) || hasPropertyOverride)
+            {
+                builder.Append("  serviceSpecification: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ServiceSpecification, options, 2, false, "  serviceSpecification: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CsmOperationDescriptionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CsmOperationDescriptionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,8 +130,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CsmOperationDescriptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsmOperationDescriptionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +149,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeCsmOperationDescriptionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CsmOperationDescriptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CsmOperationDescriptionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

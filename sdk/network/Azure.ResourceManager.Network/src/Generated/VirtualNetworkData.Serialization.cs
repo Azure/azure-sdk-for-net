@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,12 +74,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace);
+                writer.WriteObjectValue<AddressSpace>(AddressSpace, options);
             }
             if (Optional.IsDefined(DhcpOptions))
             {
                 writer.WritePropertyName("dhcpOptions"u8);
-                writer.WriteObjectValue(DhcpOptions);
+                writer.WriteObjectValue<DhcpOptions>(DhcpOptions, options);
             }
             if (Optional.IsDefined(FlowTimeoutInMinutes))
             {
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in Subnets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubnetData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkPeerings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualNetworkPeeringData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -135,12 +134,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(BgpCommunities))
             {
                 writer.WritePropertyName("bgpCommunities"u8);
-                writer.WriteObjectValue(BgpCommunities);
+                writer.WriteObjectValue<VirtualNetworkBgpCommunities>(BgpCommunities, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<VirtualNetworkEncryption>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(IPAllocations))
             {
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in FlowLogs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FlowLogData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -186,7 +185,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -488,7 +487,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -504,7 +503,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVirtualNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

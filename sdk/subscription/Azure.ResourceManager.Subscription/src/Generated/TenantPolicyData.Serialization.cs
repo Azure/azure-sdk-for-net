@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Subscription
             var format = options.Format == "W" ? ((IPersistableModel<TenantPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantPolicyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<TenantPolicyProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Subscription
             var format = options.Format == "W" ? ((IPersistableModel<TenantPolicyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TenantPolicyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TenantPolicyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Subscription
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TenantPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantPolicyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Subscription
                         return DeserializeTenantPolicyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TenantPolicyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TenantPolicyData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -56,6 +56,7 @@
     <Compile Include="Shared\DiagnosticScopeFactory.cs" />
     <Compile Include="Shared\DictionaryHeaders.cs" />
     <Compile Include="Shared\EventSourceEventFormatting.cs" />
+    <Compile Include="Shared\ExperimentalAttribute.cs" />
     <Compile Include="Shared\FixedDelayWithNoJitterStrategy.cs" />
     <Compile Include="Shared\HashCodeBuilder.cs" />
     <Compile Include="Shared\HttpMessageSanitizer.cs" />

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -23,24 +22,24 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(InstantRPDetails))
             {
                 writer.WritePropertyName("instantRPDetails"u8);
-                writer.WriteObjectValue(InstantRPDetails);
+                writer.WriteObjectValue<InstantRPAdditionalDetails>(InstantRPDetails, options);
             }
             if (Optional.IsDefined(SchedulePolicy))
             {
                 writer.WritePropertyName("schedulePolicy"u8);
-                writer.WriteObjectValue(SchedulePolicy);
+                writer.WriteObjectValue<BackupSchedulePolicy>(SchedulePolicy, options);
             }
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<BackupRetentionPolicy>(RetentionPolicy, options);
             }
             if (Optional.IsCollectionDefined(TieringPolicy))
             {
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in TieringPolicy)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<BackupTieringPolicy>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -108,7 +107,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<IaasVmProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +273,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeIaasVmProtectionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IaasVmProtectionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

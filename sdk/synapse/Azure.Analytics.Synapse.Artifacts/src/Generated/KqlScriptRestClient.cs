@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Analytics.Synapse.Artifacts.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -50,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(kqlScript);
+            content.JsonWriter.WriteObjectValue<KqlScriptResource>(kqlScript);
             request.Content = content;
             return message;
         }
@@ -258,7 +257,7 @@ namespace Azure.Analytics.Synapse.Artifacts
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(renameRequest);
+            content.JsonWriter.WriteObjectValue<ArtifactRenameRequest>(renameRequest);
             request.Content = content;
             return message;
         }

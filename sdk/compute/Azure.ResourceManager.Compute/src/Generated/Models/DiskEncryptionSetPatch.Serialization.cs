@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Compute.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey);
+                writer.WriteObjectValue<KeyForDiskEncryptionSet>(ActiveKey, options);
             }
             if (Optional.IsDefined(RotationToLatestKeyVersionEnabled))
             {
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +206,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +222,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDiskEncryptionSetPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

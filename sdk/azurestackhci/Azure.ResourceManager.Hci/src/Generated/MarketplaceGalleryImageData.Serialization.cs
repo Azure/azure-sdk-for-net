@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceGalleryImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceGalleryImageData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<ArcVmExtendedLocation>(ExtendedLocation, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Hci
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                writer.WriteObjectValue<GalleryImageIdentifier>(Identifier, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version);
+                writer.WriteObjectValue<GalleryImageVersion>(Version, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<MarketplaceGalleryImageStatus>(Status, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceGalleryImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceGalleryImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceGalleryImageData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.Hci
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Hci
                         return DeserializeMarketplaceGalleryImageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceGalleryImageData)} does not support reading '{options.Format}' format.");
             }
         }
 

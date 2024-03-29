@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<HubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.CustomerInsights
             if (Optional.IsDefined(HubBillingInfo))
             {
                 writer.WritePropertyName("hubBillingInfo"u8);
-                writer.WriteObjectValue(HubBillingInfo);
+                writer.WriteObjectValue<HubBillingInfoFormat>(HubBillingInfo, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CustomerInsights
             var format = options.Format == "W" ? ((IPersistableModel<HubData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HubData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HubData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.CustomerInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HubData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.CustomerInsights
                         return DeserializeHubData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HubData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HubData)} does not support reading '{options.Format}' format.");
             }
         }
 

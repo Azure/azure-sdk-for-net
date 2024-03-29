@@ -11,7 +11,6 @@ using System.Linq;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -190,7 +189,7 @@ namespace Azure.Communication.PhoneNumbers
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<PhoneNumberSearchRequest>(body);
             request.Content = content;
             return message;
         }
@@ -337,7 +336,7 @@ namespace Azure.Communication.PhoneNumbers
                 SearchId = searchId
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<PhoneNumberPurchaseRequest>(model);
             request.Content = content;
             return message;
         }
@@ -396,7 +395,7 @@ namespace Azure.Communication.PhoneNumbers
                 Sms = sms
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<PhoneNumberCapabilitiesRequest>(model);
             request.Content = content;
             return message;
         }
@@ -620,7 +619,7 @@ namespace Azure.Communication.PhoneNumbers
                 Options = options
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<OperatorInformationRequest>(model);
             request.Content = content;
             return message;
         }

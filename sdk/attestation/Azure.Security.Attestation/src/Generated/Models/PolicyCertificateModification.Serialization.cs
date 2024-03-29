@@ -21,7 +21,7 @@ namespace Azure.Security.Attestation
             if (Optional.IsDefined(InternalPolicyCertificate))
             {
                 writer.WritePropertyName("policyCertificate"u8);
-                writer.WriteObjectValue(InternalPolicyCertificate);
+                writer.WriteObjectValue<JsonWebKey>(InternalPolicyCertificate);
             }
             writer.WriteEndObject();
         }
@@ -52,7 +52,7 @@ namespace Azure.Security.Attestation
         {
             public override void Write(Utf8JsonWriter writer, PolicyCertificateModification model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<PolicyCertificateModification>(model);
             }
             public override PolicyCertificateModification Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

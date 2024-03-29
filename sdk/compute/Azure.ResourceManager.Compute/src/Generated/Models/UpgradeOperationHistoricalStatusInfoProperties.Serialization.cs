@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,24 +22,24 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(RunningStatus))
             {
                 writer.WritePropertyName("runningStatus"u8);
-                writer.WriteObjectValue(RunningStatus);
+                writer.WriteObjectValue<UpgradeOperationHistoryStatus>(RunningStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
-                writer.WriteObjectValue(Progress);
+                writer.WriteObjectValue<RollingUpgradeProgressInfo>(Progress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ComputeApiError>(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(StartedBy))
             {
@@ -50,12 +49,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(TargetImageReference))
             {
                 writer.WritePropertyName("targetImageReference"u8);
-                writer.WriteObjectValue(TargetImageReference);
+                writer.WriteObjectValue<ImageReference>(TargetImageReference, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RollbackInfo))
             {
                 writer.WritePropertyName("rollbackInfo"u8);
-                writer.WriteObjectValue(RollbackInfo);
+                writer.WriteObjectValue<RollbackStatusInfo>(RollbackInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpgradeOperationHistoricalStatusInfoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +199,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeUpgradeOperationHistoricalStatusInfoProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfoProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

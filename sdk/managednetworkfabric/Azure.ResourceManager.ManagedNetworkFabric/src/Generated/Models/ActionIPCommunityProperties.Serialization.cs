@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ManagedNetworkFabric;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric.Models
 {
@@ -23,24 +22,24 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                writer.WriteObjectValue<IPCommunityIdList>(Delete, options);
             }
             if (Optional.IsDefined(Set))
             {
                 writer.WritePropertyName("set"u8);
-                writer.WriteObjectValue(Set);
+                writer.WriteObjectValue<IPCommunityIdList>(Set, options);
             }
             if (Optional.IsDefined(Add))
             {
                 writer.WritePropertyName("add"u8);
-                writer.WriteObjectValue(Add);
+                writer.WriteObjectValue<IPCommunityIdList>(Add, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionIPCommunityProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeActionIPCommunityProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionIPCommunityProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

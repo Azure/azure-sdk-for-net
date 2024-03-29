@@ -16,13 +16,13 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("aggregation"u8);
-            writer.WriteObjectValue(Aggregation);
+            writer.WriteObjectValue<TimeSeriesExpression>(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<TimeSeriesExpression>(Filter);
             }
             writer.WriteEndObject();
         }

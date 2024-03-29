@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUserData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             if (Optional.IsDefined(EncryptedPassword))
             {
                 writer.WritePropertyName("encryptedPassword"u8);
-                writer.WriteObjectValue(EncryptedPassword);
+                writer.WriteObjectValue<AsymmetricEncryptedSecret>(EncryptedPassword, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ShareAccessRights))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WriteStartArray();
                 foreach (var item in ShareAccessRights)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ShareAccessRight>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeUserData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         return DeserializeDataBoxEdgeUserData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeUserData)} does not support reading '{options.Format}' format.");
             }
         }
 

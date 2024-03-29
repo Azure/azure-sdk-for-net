@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlMigrationTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMigrationTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMigrationTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            writer.WriteObjectValue<SqlConnectionInfo>(SourceConnectionInfo, options);
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            writer.WriteObjectValue<SqlConnectionInfo>(TargetConnectionInfo, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlMigrationTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlMigrationTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlMigrationTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlMigrationTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMigrationTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSqlMigrationTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlMigrationTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlMigrationTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

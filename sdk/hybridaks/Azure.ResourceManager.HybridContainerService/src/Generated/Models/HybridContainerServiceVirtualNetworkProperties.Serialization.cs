@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.HybridContainerService;
 
 namespace Azure.ResourceManager.HybridContainerService.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(InfraVnetProfile))
             {
                 writer.WritePropertyName("infraVnetProfile"u8);
-                writer.WriteObjectValue(InfraVnetProfile);
+                writer.WriteObjectValue<InfraVnetProfile>(InfraVnetProfile, options);
             }
             if (Optional.IsCollectionDefined(VipPool))
             {
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VipPool)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KubernetesVirtualIPItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in VmipPool)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineIPItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<HybridContainerServiceNetworkStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -254,7 +253,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -270,7 +269,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeHybridContainerServiceVirtualNetworkProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVirtualNetworkProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

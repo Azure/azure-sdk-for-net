@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,14 +37,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SharingProfileGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(CommunityGalleryInfo))
             {
                 writer.WritePropertyName("communityGalleryInfo"u8);
-                writer.WriteObjectValue(CommunityGalleryInfo);
+                writer.WriteObjectValue<CommunityGalleryInfo>(CommunityGalleryInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSharingProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

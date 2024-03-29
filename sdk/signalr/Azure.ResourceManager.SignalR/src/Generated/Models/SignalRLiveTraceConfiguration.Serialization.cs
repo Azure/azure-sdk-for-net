@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRLiveTraceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 writer.WriteStartArray();
                 foreach (var item in Categories)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SignalRLiveTraceCategory>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +66,7 @@ namespace Azure.ResourceManager.SignalR.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignalRLiveTraceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,6 +115,65 @@ namespace Azure.ResourceManager.SignalR.Models
             return new SignalRLiveTraceConfiguration(enabled, categories ?? new ChangeTrackingList<SignalRLiveTraceCategory>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (Optional.IsDefined(Enabled) || hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Enabled.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Enabled}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Enabled}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Categories), out propertyOverride);
+            if (Optional.IsCollectionDefined(Categories) || hasPropertyOverride)
+            {
+                if (Categories.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  categories: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Categories)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  categories: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SignalRLiveTraceConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SignalRLiveTraceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,8 +182,10 @@ namespace Azure.ResourceManager.SignalR.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +201,7 @@ namespace Azure.ResourceManager.SignalR.Models
                         return DeserializeSignalRLiveTraceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignalRLiveTraceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

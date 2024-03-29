@@ -117,14 +117,7 @@ namespace Azure.ResourceManager.HDInsight.Containers
         /// <summary> Properties of underlying AKS cluster. </summary>
         public AksClusterProfile AksClusterProfile { get; }
         /// <summary> Cluster pool network profile. </summary>
-        internal ClusterPoolNetworkProfile NetworkProfile { get; set; }
-        /// <summary> Cluster pool subnet resource id. </summary>
-        public ResourceIdentifier NetworkSubnetId
-        {
-            get => NetworkProfile is null ? default : NetworkProfile.SubnetId;
-            set => NetworkProfile = new ClusterPoolNetworkProfile(value);
-        }
-
+        public ClusterPoolNetworkProfile NetworkProfile { get; set; }
         /// <summary> Cluster pool log analytics profile to enable OMS agent for AKS cluster. </summary>
         public ClusterPoolLogAnalyticsProfile LogAnalyticsProfile { get; set; }
         /// <summary> Business status of the resource. </summary>

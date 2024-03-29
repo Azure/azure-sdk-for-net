@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Purview
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<PurviewPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.Purview
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Purview
                         return DeserializePurviewPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

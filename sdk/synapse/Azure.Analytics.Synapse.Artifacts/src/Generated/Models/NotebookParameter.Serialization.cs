@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -21,15 +20,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteStartObject();
             if (Optional.IsDefined(Value))
             {
-                if (Value != null)
-                {
-                    writer.WritePropertyName("value"u8);
-                    writer.WriteObjectValue(Value);
-                }
-                else
-                {
-                    writer.WriteNull("value");
-                }
+                writer.WritePropertyName("value"u8);
+                writer.WriteObjectValue<object>(Value);
             }
             if (Optional.IsDefined(Type))
             {
@@ -53,7 +45,6 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
-                        value = null;
                         continue;
                     }
                     value = property.Value.GetObject();
@@ -76,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, NotebookParameter model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<NotebookParameter>(model);
             }
             public override NotebookParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

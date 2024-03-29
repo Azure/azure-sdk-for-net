@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageSkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,6 +130,92 @@ namespace Azure.ResourceManager.Storage.Models
             return new StorageSkuRestriction(type, values ?? new ChangeTrackingList<string>(), reasonCode, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestrictionType), out propertyOverride);
+            if (Optional.IsDefined(RestrictionType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RestrictionType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RestrictionType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RestrictionType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Values), out propertyOverride);
+            if (Optional.IsCollectionDefined(Values) || hasPropertyOverride)
+            {
+                if (Values.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  values: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Values)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReasonCode), out propertyOverride);
+            if (Optional.IsDefined(ReasonCode) || hasPropertyOverride)
+            {
+                builder.Append("  reasonCode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ReasonCode.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StorageSkuRestriction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageSkuRestriction>)this).GetFormatFromOptions(options) : options.Format;
@@ -137,8 +224,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +243,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageSkuRestriction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSkuRestriction)} does not support reading '{options.Format}' format.");
             }
         }
 

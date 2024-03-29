@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageCache
             var format = options.Format == "W" ? ((IPersistableModel<StorageTargetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageTargetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageTargetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.StorageCache
                 writer.WriteStartArray();
                 foreach (var item in Junctions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NamespaceJunction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,22 +83,22 @@ namespace Azure.ResourceManager.StorageCache
             if (Optional.IsDefined(Nfs3))
             {
                 writer.WritePropertyName("nfs3"u8);
-                writer.WriteObjectValue(Nfs3);
+                writer.WriteObjectValue<Nfs3Target>(Nfs3, options);
             }
             if (Optional.IsDefined(Clfs))
             {
                 writer.WritePropertyName("clfs"u8);
-                writer.WriteObjectValue(Clfs);
+                writer.WriteObjectValue<ClfsTarget>(Clfs, options);
             }
             if (Optional.IsDefined(Unknown))
             {
                 writer.WritePropertyName("unknown"u8);
-                writer.WriteObjectValue(Unknown);
+                writer.WriteObjectValue<UnknownTarget>(Unknown, options);
             }
             if (Optional.IsDefined(BlobNfs))
             {
                 writer.WritePropertyName("blobNfs"u8);
-                writer.WriteObjectValue(BlobNfs);
+                writer.WriteObjectValue<BlobNfsTarget>(BlobNfs, options);
             }
             if (options.Format != "W" && Optional.IsDefined(AllocationPercentage))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.StorageCache
             var format = options.Format == "W" ? ((IPersistableModel<StorageTargetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageTargetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageTargetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.StorageCache
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageTargetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageTargetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.StorageCache
                         return DeserializeStorageTargetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageTargetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageTargetData)} does not support reading '{options.Format}' format.");
             }
         }
 

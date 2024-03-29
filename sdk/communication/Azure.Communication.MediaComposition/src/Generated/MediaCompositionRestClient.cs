@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Communication.MediaComposition.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -144,7 +143,7 @@ namespace Azure.Communication.MediaComposition
             }
             var model = mediaComposition;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<MediaComposition>(model);
             request.Content = content;
             return message;
         }
@@ -248,7 +247,7 @@ namespace Azure.Communication.MediaComposition
             }
             var model = mediaComposition;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<MediaComposition>(model);
             request.Content = content;
             return message;
         }

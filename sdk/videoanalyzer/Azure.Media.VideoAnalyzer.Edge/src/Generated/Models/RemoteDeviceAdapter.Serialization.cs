@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -21,12 +20,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                writer.WriteObjectValue<SystemData>(SystemData);
             }
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<RemoteDeviceAdapterProperties>(Properties);
             }
             writer.WriteEndObject();
         }

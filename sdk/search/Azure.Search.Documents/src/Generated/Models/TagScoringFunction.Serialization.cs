@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -17,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tag"u8);
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue<TagScoringParameters>(Parameters);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("fieldName"u8);

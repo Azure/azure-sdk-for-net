@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Logic;
 
 namespace Azure.ResourceManager.Logic.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,17 +59,17 @@ namespace Azure.ResourceManager.Logic.Models
             if (Optional.IsDefined(Annotation))
             {
                 writer.WritePropertyName("annotation"u8);
-                writer.WriteObjectValue(Annotation);
+                writer.WriteObjectValue<LogicApiOperationAnnotation>(Annotation, options);
             }
             if (Optional.IsDefined(Api))
             {
                 writer.WritePropertyName("api"u8);
-                writer.WriteObjectValue(Api);
+                writer.WriteObjectValue<LogicApiReference>(Api, options);
             }
             if (Optional.IsDefined(InputsDefinition))
             {
                 writer.WritePropertyName("inputsDefinition"u8);
-                writer.WriteObjectValue(InputsDefinition);
+                writer.WriteObjectValue<SwaggerSchema>(InputsDefinition, options);
             }
             if (Optional.IsCollectionDefined(ResponsesDefinition))
             {
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.Logic.Models
                 foreach (var item in ResponsesDefinition)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SwaggerSchema>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiOperationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -271,7 +270,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -287,7 +286,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiOperationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiOperationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

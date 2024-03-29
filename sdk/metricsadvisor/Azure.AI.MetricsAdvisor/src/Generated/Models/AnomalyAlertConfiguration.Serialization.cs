@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -50,7 +49,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in MetricAlertConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MetricAlertConfiguration>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

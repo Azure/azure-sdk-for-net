@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +26,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowOptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowOptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowOptionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +63,7 @@ namespace Azure.ResourceManager.Sql
                 writer.WriteStartArray();
                 foreach (var item in MaintenanceWindowCycles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaintenanceWindowTimeRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +116,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowOptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceWindowOptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceWindowOptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -269,6 +271,182 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            if (Optional.IsDefined(IsEnabled) || hasPropertyOverride)
+            {
+                builder.Append("    isEnabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsEnabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaintenanceWindowCycles), out propertyOverride);
+            if (Optional.IsCollectionDefined(MaintenanceWindowCycles) || hasPropertyOverride)
+            {
+                if (MaintenanceWindowCycles.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    maintenanceWindowCycles: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in MaintenanceWindowCycles)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    maintenanceWindowCycles: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinDurationInMinutes), out propertyOverride);
+            if (Optional.IsDefined(MinDurationInMinutes) || hasPropertyOverride)
+            {
+                builder.Append("    minDurationInMinutes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MinDurationInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultDurationInMinutes), out propertyOverride);
+            if (Optional.IsDefined(DefaultDurationInMinutes) || hasPropertyOverride)
+            {
+                builder.Append("    defaultDurationInMinutes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{DefaultDurationInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinCycles), out propertyOverride);
+            if (Optional.IsDefined(MinCycles) || hasPropertyOverride)
+            {
+                builder.Append("    minCycles: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MinCycles.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeGranularityInMinutes), out propertyOverride);
+            if (Optional.IsDefined(TimeGranularityInMinutes) || hasPropertyOverride)
+            {
+                builder.Append("    timeGranularityInMinutes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{TimeGranularityInMinutes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowMultipleMaintenanceWindowsPerCycle), out propertyOverride);
+            if (Optional.IsDefined(AllowMultipleMaintenanceWindowsPerCycle) || hasPropertyOverride)
+            {
+                builder.Append("    allowMultipleMaintenanceWindowsPerCycle: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = AllowMultipleMaintenanceWindowsPerCycle.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<MaintenanceWindowOptionData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceWindowOptionData>)this).GetFormatFromOptions(options) : options.Format;
@@ -277,8 +455,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowOptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowOptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -294,7 +474,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeMaintenanceWindowOptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceWindowOptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceWindowOptionData)} does not support reading '{options.Format}' format.");
             }
         }
 

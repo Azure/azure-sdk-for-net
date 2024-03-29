@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.MachineLearning
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningPrivateEndpointConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MachineLearningSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.MachineLearning
             if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
-                writer.WriteObjectValue(PrivateEndpoint);
+                writer.WriteObjectValue<MachineLearningPrivateEndpoint>(PrivateEndpoint, options);
             }
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<MachineLearningPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.MachineLearning
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningPrivateEndpointConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningPrivateEndpointConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningPrivateEndpointConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningPrivateEndpointConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.MachineLearning
                         return DeserializeMachineLearningPrivateEndpointConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningPrivateEndpointConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningPrivateEndpointConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

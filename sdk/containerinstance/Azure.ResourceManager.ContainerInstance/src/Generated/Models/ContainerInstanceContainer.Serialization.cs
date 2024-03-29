@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerInstance;
 
 namespace Azure.ResourceManager.ContainerInstance.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -49,7 +48,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in Ports)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerPort>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,41 +58,41 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerEnvironmentVariable>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<ContainerInstanceView>(InstanceView, options);
             }
             writer.WritePropertyName("resources"u8);
-            writer.WriteObjectValue(Resources);
+            writer.WriteObjectValue<ContainerResourceRequirements>(Resources, options);
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
                 writer.WritePropertyName("volumeMounts"u8);
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerVolumeMount>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe);
+                writer.WriteObjectValue<ContainerProbe>(LivenessProbe, options);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe);
+                writer.WriteObjectValue<ContainerProbe>(ReadinessProbe, options);
             }
             if (Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
-                writer.WriteObjectValue(SecurityContext);
+                writer.WriteObjectValue<ContainerSecurityContextDefinition>(SecurityContext, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -298,7 +297,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerInstanceContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

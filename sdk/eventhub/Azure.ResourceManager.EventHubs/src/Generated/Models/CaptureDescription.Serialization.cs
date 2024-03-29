@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.EventHubs;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CaptureDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<EventHubDestination>(Destination, options);
             }
             if (Optional.IsDefined(SkipEmptyArchives))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CaptureDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,6 +175,107 @@ namespace Azure.ResourceManager.EventHubs.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Enabled), out propertyOverride);
+            if (Optional.IsDefined(Enabled) || hasPropertyOverride)
+            {
+                builder.Append("  enabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = Enabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Encoding), out propertyOverride);
+            if (Optional.IsDefined(Encoding) || hasPropertyOverride)
+            {
+                builder.Append("  encoding: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Encoding.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IntervalInSeconds), out propertyOverride);
+            if (Optional.IsDefined(IntervalInSeconds) || hasPropertyOverride)
+            {
+                builder.Append("  intervalInSeconds: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{IntervalInSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SizeLimitInBytes), out propertyOverride);
+            if (Optional.IsDefined(SizeLimitInBytes) || hasPropertyOverride)
+            {
+                builder.Append("  sizeLimitInBytes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{SizeLimitInBytes.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Destination), out propertyOverride);
+            if (Optional.IsDefined(Destination) || hasPropertyOverride)
+            {
+                builder.Append("  destination: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Destination, options, 2, false, "  destination: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkipEmptyArchives), out propertyOverride);
+            if (Optional.IsDefined(SkipEmptyArchives) || hasPropertyOverride)
+            {
+                builder.Append("  skipEmptyArchives: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = SkipEmptyArchives.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<CaptureDescription>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<CaptureDescription>)this).GetFormatFromOptions(options) : options.Format;
@@ -183,8 +284,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +303,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeCaptureDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CaptureDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

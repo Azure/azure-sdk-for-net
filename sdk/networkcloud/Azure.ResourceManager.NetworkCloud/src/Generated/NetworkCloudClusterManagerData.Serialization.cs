@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WriteStartArray();
                 foreach (var item in ClusterVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterAvailableVersion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,12 +103,12 @@ namespace Azure.ResourceManager.NetworkCloud
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<ManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ManagerExtendedLocation))
             {
                 writer.WritePropertyName("managerExtendedLocation"u8);
-                writer.WriteObjectValue(ManagerExtendedLocation);
+                writer.WriteObjectValue<ExtendedLocation>(ManagerExtendedLocation, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudClusterManagerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudClusterManagerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudClusterManagerData)} does not support reading '{options.Format}' format.");
             }
         }
 

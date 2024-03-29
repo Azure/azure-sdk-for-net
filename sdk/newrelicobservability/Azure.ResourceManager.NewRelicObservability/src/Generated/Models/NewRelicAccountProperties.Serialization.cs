@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,17 +34,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             if (Optional.IsDefined(AccountInfo))
             {
                 writer.WritePropertyName("accountInfo"u8);
-                writer.WriteObjectValue(AccountInfo);
+                writer.WriteObjectValue<NewRelicObservabilityAccountInfo>(AccountInfo, options);
             }
             if (Optional.IsDefined(OrganizationInfo))
             {
                 writer.WritePropertyName("organizationInfo"u8);
-                writer.WriteObjectValue(OrganizationInfo);
+                writer.WriteObjectValue<NewRelicObservabilityOrganizationInfo>(OrganizationInfo, options);
             }
             if (Optional.IsDefined(SingleSignOnProperties))
             {
                 writer.WritePropertyName("singleSignOnProperties"u8);
-                writer.WriteObjectValue(SingleSignOnProperties);
+                writer.WriteObjectValue<NewRelicSingleSignOnProperties>(SingleSignOnProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
             var format = options.Format == "W" ? ((IPersistableModel<NewRelicAccountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
                         return DeserializeNewRelicAccountProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NewRelicAccountProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

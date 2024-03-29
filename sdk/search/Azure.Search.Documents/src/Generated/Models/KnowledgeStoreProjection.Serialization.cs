@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Tables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KnowledgeStoreTableProjectionSelector>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -33,7 +32,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Objects)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KnowledgeStoreObjectProjectionSelector>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +42,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in Files)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KnowledgeStoreFileProjectionSelector>(item);
                 }
                 writer.WriteEndArray();
             }

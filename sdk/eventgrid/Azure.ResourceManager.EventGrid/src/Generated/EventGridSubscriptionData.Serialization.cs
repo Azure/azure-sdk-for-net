@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,17 +63,17 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
-                writer.WriteObjectValue(Destination);
+                writer.WriteObjectValue<EventSubscriptionDestination>(Destination, options);
             }
             if (Optional.IsDefined(DeliveryWithResourceIdentity))
             {
                 writer.WritePropertyName("deliveryWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeliveryWithResourceIdentity);
+                writer.WriteObjectValue<DeliveryWithResourceIdentity>(DeliveryWithResourceIdentity, options);
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<EventSubscriptionFilter>(Filter, options);
             }
             if (Optional.IsCollectionDefined(Labels))
             {
@@ -98,17 +98,17 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(RetryPolicy))
             {
                 writer.WritePropertyName("retryPolicy"u8);
-                writer.WriteObjectValue(RetryPolicy);
+                writer.WriteObjectValue<EventSubscriptionRetryPolicy>(RetryPolicy, options);
             }
             if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
-                writer.WriteObjectValue(DeadLetterDestination);
+                writer.WriteObjectValue<DeadLetterDestination>(DeadLetterDestination, options);
             }
             if (Optional.IsDefined(DeadLetterWithResourceIdentity))
             {
                 writer.WritePropertyName("deadLetterWithResourceIdentity"u8);
-                writer.WriteObjectValue(DeadLetterWithResourceIdentity);
+                writer.WriteObjectValue<DeadLetterWithResourceIdentity>(DeadLetterWithResourceIdentity, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridSubscriptionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializeEventGridSubscriptionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridSubscriptionData)} does not support reading '{options.Format}' format.");
             }
         }
 

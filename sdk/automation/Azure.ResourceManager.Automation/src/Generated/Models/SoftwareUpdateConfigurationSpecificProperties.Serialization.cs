@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automation;
 
 namespace Azure.ResourceManager.Automation.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,12 +31,12 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Windows))
             {
                 writer.WritePropertyName("windows"u8);
-                writer.WriteObjectValue(Windows);
+                writer.WriteObjectValue<WindowsUpdateConfigurationProperties>(Windows, options);
             }
             if (Optional.IsDefined(Linux))
             {
                 writer.WritePropertyName("linux"u8);
-                writer.WriteObjectValue(Linux);
+                writer.WriteObjectValue<LinuxUpdateConfigurationProperties>(Linux, options);
             }
             if (Optional.IsDefined(Duration))
             {
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Targets))
             {
                 writer.WritePropertyName("targets"u8);
-                writer.WriteObjectValue(Targets);
+                writer.WriteObjectValue<SoftwareUpdateConfigurationTargetProperties>(Targets, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -92,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationSpecificProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -213,7 +212,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSoftwareUpdateConfigurationSpecificProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationSpecificProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

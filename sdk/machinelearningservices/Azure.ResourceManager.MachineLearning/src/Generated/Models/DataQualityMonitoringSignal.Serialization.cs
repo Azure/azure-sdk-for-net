@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataQualityMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataQualityMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataQualityMonitoringSignal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -50,7 +49,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Features != null)
                 {
                     writer.WritePropertyName("features"u8);
-                    writer.WriteObjectValue(Features);
+                    writer.WriteObjectValue<MonitoringFeatureFilterBase>(Features, options);
                 }
                 else
                 {
@@ -61,13 +60,13 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WriteStartArray();
             foreach (var item in MetricThresholds)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataQualityMetricThresholdBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("productionData"u8);
-            writer.WriteObjectValue(ProductionData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ProductionData, options);
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
+            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
             if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataQualityMonitoringSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataQualityMonitoringSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataQualityMonitoringSignal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataQualityMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataQualityMonitoringSignal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeDataQualityMonitoringSignal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataQualityMonitoringSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataQualityMonitoringSignal)} does not support reading '{options.Format}' format.");
             }
         }
 

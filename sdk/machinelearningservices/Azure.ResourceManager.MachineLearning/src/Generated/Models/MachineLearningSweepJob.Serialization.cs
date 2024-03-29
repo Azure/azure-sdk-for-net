@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (EarlyTermination != null)
                 {
                     writer.WritePropertyName("earlyTermination"u8);
-                    writer.WriteObjectValue(EarlyTermination);
+                    writer.WriteObjectValue<MachineLearningEarlyTerminationPolicy>(EarlyTermination, options);
                 }
                 else
                 {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Inputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningJobInput>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -60,10 +59,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
             if (Optional.IsDefined(Limits))
             {
                 writer.WritePropertyName("limits"u8);
-                writer.WriteObjectValue(Limits);
+                writer.WriteObjectValue<MachineLearningSweepJobLimits>(Limits, options);
             }
             writer.WritePropertyName("objective"u8);
-            writer.WriteObjectValue(Objective);
+            writer.WriteObjectValue<MachineLearningObjective>(Objective, options);
             if (Optional.IsCollectionDefined(Outputs))
             {
                 if (Outputs != null)
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Outputs)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningJobOutput>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -87,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (QueueSettings != null)
                 {
                     writer.WritePropertyName("queueSettings"u8);
-                    writer.WriteObjectValue(QueueSettings);
+                    writer.WriteObjectValue<JobQueueSettings>(QueueSettings, options);
                 }
                 else
                 {
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("samplingAlgorithm"u8);
-            writer.WriteObjectValue(SamplingAlgorithm);
+            writer.WriteObjectValue<SamplingAlgorithm>(SamplingAlgorithm, options);
             writer.WritePropertyName("searchSpace"u8);
 #if NET6_0_OR_GREATER
 				writer.WriteRawValue(SearchSpace);
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
 #endif
             writer.WritePropertyName("trial"u8);
-            writer.WriteObjectValue(Trial);
+            writer.WriteObjectValue<MachineLearningTrialComponent>(Trial, options);
             if (Optional.IsDefined(ComponentId))
             {
                 if (ComponentId != null)
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<MachineLearningIdentityConfiguration>(Identity, options);
                 }
                 else
                 {
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NotificationSetting != null)
                 {
                     writer.WritePropertyName("notificationSetting"u8);
-                    writer.WriteObjectValue(NotificationSetting);
+                    writer.WriteObjectValue<NotificationSetting>(NotificationSetting, options);
                 }
                 else
                 {
@@ -188,7 +187,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in SecretsConfiguration)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<SecretConfiguration>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Services)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<MachineLearningJobService>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -291,7 +290,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningSweepJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -602,7 +601,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -618,7 +617,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningSweepJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningSweepJob)} does not support reading '{options.Format}' format.");
             }
         }
 

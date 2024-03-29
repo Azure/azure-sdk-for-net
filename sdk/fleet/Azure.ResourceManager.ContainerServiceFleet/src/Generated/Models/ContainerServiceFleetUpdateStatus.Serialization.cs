@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.ContainerServiceFleet;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +69,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceFleetUpdateStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +146,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +162,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                         return DeserializeContainerServiceFleetUpdateStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceFleetUpdateStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

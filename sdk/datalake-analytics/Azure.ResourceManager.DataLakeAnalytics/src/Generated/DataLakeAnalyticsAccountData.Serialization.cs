@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in DataLakeStoreAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreAccountInformationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in PublicDataLakeStoreAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeStoreAccountInformationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeAnalyticsStorageAccountInformationData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in ComputePolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeAnalyticsComputePolicyData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in HiveMetastores)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeAnalyticsHiveMetastore>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeAnalyticsVirtualNetworkRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataLakeAnalyticsFirewallRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -725,7 +725,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -741,7 +741,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics
                         return DeserializeDataLakeAnalyticsAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

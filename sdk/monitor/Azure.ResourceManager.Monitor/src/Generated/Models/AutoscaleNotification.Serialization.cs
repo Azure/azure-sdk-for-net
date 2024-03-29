@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Email))
             {
                 writer.WritePropertyName("email"u8);
-                writer.WriteObjectValue(Email);
+                writer.WriteObjectValue<EmailNotification>(Email, options);
             }
             if (Optional.IsCollectionDefined(Webhooks))
             {
@@ -40,7 +39,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Webhooks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebhookNotification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleNotification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAutoscaleNotification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleNotification)} does not support reading '{options.Format}' format.");
             }
         }
 

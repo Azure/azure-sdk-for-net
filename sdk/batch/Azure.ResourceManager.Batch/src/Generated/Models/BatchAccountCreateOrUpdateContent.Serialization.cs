@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Batch;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Batch.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +50,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(AutoStorage))
             {
                 writer.WritePropertyName("autoStorage"u8);
-                writer.WriteObjectValue(AutoStorage);
+                writer.WriteObjectValue<BatchAccountAutoStorageBaseConfiguration>(AutoStorage, options);
             }
             if (Optional.IsDefined(PoolAllocationMode))
             {
@@ -61,7 +60,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(KeyVaultReference))
             {
                 writer.WritePropertyName("keyVaultReference"u8);
-                writer.WriteObjectValue(KeyVaultReference);
+                writer.WriteObjectValue<BatchKeyVaultReference>(KeyVaultReference, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -71,12 +70,12 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<BatchNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<BatchAccountEncryptionConfiguration>(Encryption, options);
             }
             if (Optional.IsCollectionDefined(AllowedAuthenticationModes))
             {
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

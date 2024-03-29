@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppContainers;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Traffic)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppRevisionTrafficWeight>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppCustomDomain>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,14 +82,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in IPSecurityRestrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppIPSecurityRestrictionRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StickySessions))
             {
                 writer.WritePropertyName("stickySessions"u8);
-                writer.WriteObjectValue(StickySessions);
+                writer.WriteObjectValue<IngressStickySessions>(StickySessions, options);
             }
             if (Optional.IsDefined(ClientCertificateMode))
             {
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(CorsPolicy))
             {
                 writer.WritePropertyName("corsPolicy"u8);
-                writer.WriteObjectValue(CorsPolicy);
+                writer.WriteObjectValue<ContainerAppCorsPolicy>(CorsPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -306,7 +305,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppIngressConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

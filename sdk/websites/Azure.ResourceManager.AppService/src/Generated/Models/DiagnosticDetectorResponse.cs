@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppService.Models
@@ -86,22 +85,30 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Start time of the period. </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> End time of the period. </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; set; }
         /// <summary> Flag representing Issue was detected. </summary>
+        [WirePath("properties.issueDetected")]
         public bool? IssueDetected { get; set; }
         /// <summary> Detector's definition. </summary>
+        [WirePath("properties.detectorDefinition")]
         public DetectorDefinition DetectorDefinition { get; set; }
         /// <summary> Metrics provided by the detector. </summary>
+        [WirePath("properties.metrics")]
         public IList<DiagnosticMetricSet> Metrics { get; }
         /// <summary> List of Correlated events found by the detector. </summary>
+        [WirePath("properties.abnormalTimePeriods")]
         public IList<DetectorAbnormalTimePeriod> AbnormalTimePeriods { get; }
         /// <summary> Additional Data that detector wants to send. </summary>
+        [WirePath("properties.data")]
         public IList<IList<AppServiceNameValuePair>> Data { get; }
         /// <summary> Meta Data. </summary>
         internal DetectorMetadata ResponseMetaData { get; set; }
         /// <summary> Source of the Data. </summary>
+        [WirePath("properties.responseMetaData.dataSource")]
         public DetectorDataSource DataSource
         {
             get => ResponseMetaData is null ? default : ResponseMetaData.DataSource;
@@ -114,6 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

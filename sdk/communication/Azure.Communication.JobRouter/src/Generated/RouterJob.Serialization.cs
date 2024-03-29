@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -23,7 +22,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +82,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in RequestedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -93,7 +92,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in AttachedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -127,7 +126,7 @@ namespace Azure.Communication.JobRouter
                 foreach (var item in Assignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RouterJobAssignment>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -160,7 +159,7 @@ namespace Azure.Communication.JobRouter
                 writer.WriteStartArray();
                 foreach (var item in Notes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterJobNote>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +171,7 @@ namespace Azure.Communication.JobRouter
             if (Optional.IsDefined(MatchingMode))
             {
                 writer.WritePropertyName("matchingMode"u8);
-                writer.WriteObjectValue(MatchingMode);
+                writer.WriteObjectValue<JobMatchingMode>(MatchingMode, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -197,7 +196,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -449,7 +448,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouterJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -465,7 +464,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeRouterJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterJob)} does not support reading '{options.Format}' format.");
             }
         }
 

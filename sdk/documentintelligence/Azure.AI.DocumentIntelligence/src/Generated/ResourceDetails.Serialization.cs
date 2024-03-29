@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,14 +22,14 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<ResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("customDocumentModels"u8);
-            writer.WriteObjectValue(CustomDocumentModels);
+            writer.WriteObjectValue<CustomDocumentModelsDetails>(CustomDocumentModels, options);
             writer.WritePropertyName("customNeuralDocumentModelBuilds"u8);
-            writer.WriteObjectValue(CustomNeuralDocumentModelBuilds);
+            writer.WriteObjectValue<QuotaDetails>(CustomNeuralDocumentModelBuilds, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +53,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<ResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +102,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +118,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeResourceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -137,7 +136,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ResourceDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

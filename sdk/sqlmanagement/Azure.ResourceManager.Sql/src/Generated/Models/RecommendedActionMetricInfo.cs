@@ -68,14 +68,19 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the name of the metric. e.g., CPU, Number of Queries. </summary>
+        [WirePath("metricName")]
         public string MetricName { get; }
         /// <summary> Gets the unit in which metric is measured. e.g., DTU, Frequency. </summary>
+        [WirePath("unit")]
         public string Unit { get; }
         /// <summary> Gets the duration of time interval for the value given by this MetricInfo. e.g., PT1H (1 hour). </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
         /// <summary> Gets the start time of time interval given by this MetricInfo. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> Gets the value of the metric in the time interval given by this MetricInfo. </summary>
+        [WirePath("value")]
         public double? Value { get; }
     }
 }

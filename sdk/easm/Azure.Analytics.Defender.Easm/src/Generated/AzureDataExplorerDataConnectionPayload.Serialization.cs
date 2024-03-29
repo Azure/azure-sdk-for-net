@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Defender.Easm
@@ -23,12 +22,12 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionPayload)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<AzureDataExplorerDataConnectionProperties>(Properties, options);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Name))
@@ -74,7 +73,7 @@ namespace Azure.Analytics.Defender.Easm
             var format = options.Format == "W" ? ((IPersistableModel<AzureDataExplorerDataConnectionPayload>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionPayload)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionPayload)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +165,7 @@ namespace Azure.Analytics.Defender.Easm
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionPayload)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +181,7 @@ namespace Azure.Analytics.Defender.Easm
                         return DeserializeAzureDataExplorerDataConnectionPayload(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionPayload)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDataExplorerDataConnectionPayload)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -200,7 +199,7 @@ namespace Azure.Analytics.Defender.Easm
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureDataExplorerDataConnectionPayload>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.KeyVault;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.KeyVault.Models
@@ -79,10 +78,12 @@ namespace Azure.ResourceManager.KeyVault.Models
         }
 
         /// <summary> The resource type of the access policy. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; }
         /// <summary> Properties of the access policy. </summary>
         internal KeyVaultAccessPolicyProperties Properties { get; set; }
         /// <summary> An array of 0 to 16 identities that have access to the key vault. All identities in the array must use the same tenant ID as the key vault's tenant ID. </summary>
+        [WirePath("properties.accessPolicies")]
         public IList<KeyVaultAccessPolicy> AccessPolicies
         {
             get => Properties is null ? default : Properties.AccessPolicies;

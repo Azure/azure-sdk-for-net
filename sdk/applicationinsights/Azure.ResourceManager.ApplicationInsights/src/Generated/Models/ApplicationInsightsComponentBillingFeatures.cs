@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> An Application Insights component daily data volume cap. </summary>
+        [WirePath("DataVolumeCap")]
         public ApplicationInsightsComponentDataVolumeCap DataVolumeCap { get; set; }
         /// <summary> Current enabled pricing plan. When the component is in the Enterprise plan, this will list both 'Basic' and 'Application Insights Enterprise'. </summary>
+        [WirePath("CurrentBillingFeatures")]
         public IList<string> CurrentBillingFeatures { get; }
     }
 }

@@ -7,7 +7,6 @@
 
 using System.Text.Json;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.Exporter;
 
 namespace Azure.Monitor.OpenTelemetry.Exporter.Models
 {
@@ -49,7 +48,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
                 writer.WriteStartArray();
                 foreach (var item in ParsedStack)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StackFrame>(item);
                 }
                 writer.WriteEndArray();
             }

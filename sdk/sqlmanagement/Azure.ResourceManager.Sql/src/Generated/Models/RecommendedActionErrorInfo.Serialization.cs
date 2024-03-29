@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,6 +104,57 @@ namespace Azure.ResourceManager.Sql.Models
             return new RecommendedActionErrorInfo(errorCode, isRetryable, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ErrorCode), out propertyOverride);
+            if (Optional.IsDefined(ErrorCode) || hasPropertyOverride)
+            {
+                builder.Append("  errorCode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ErrorCode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ErrorCode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ErrorCode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRetryable), out propertyOverride);
+            if (Optional.IsDefined(IsRetryable) || hasPropertyOverride)
+            {
+                builder.Append("  isRetryable: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{IsRetryable.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RecommendedActionErrorInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RecommendedActionErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -112,8 +163,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +182,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeRecommendedActionErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendedActionErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

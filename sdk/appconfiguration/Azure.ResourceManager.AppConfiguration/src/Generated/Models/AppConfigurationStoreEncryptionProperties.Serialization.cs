@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppConfiguration;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationStoreEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationStoreEncryptionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 if (KeyVaultProperties != null)
                 {
                     writer.WritePropertyName("keyVaultProperties"u8);
-                    writer.WriteObjectValue(KeyVaultProperties);
+                    writer.WriteObjectValue<AppConfigurationKeyVaultProperties>(KeyVaultProperties, options);
                 }
                 else
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppConfigurationStoreEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppConfigurationStoreEncryptionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,6 +101,35 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             return new AppConfigurationStoreEncryptionProperties(keyVaultProperties, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyVaultProperties), out propertyOverride);
+            if (Optional.IsDefined(KeyVaultProperties) || hasPropertyOverride)
+            {
+                builder.Append("  keyVaultProperties: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, KeyVaultProperties, options, 2, false, "  keyVaultProperties: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppConfigurationStoreEncryptionProperties>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppConfigurationStoreEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
@@ -109,8 +138,10 @@ namespace Azure.ResourceManager.AppConfiguration.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationStoreEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationStoreEncryptionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +157,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                         return DeserializeAppConfigurationStoreEncryptionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppConfigurationStoreEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppConfigurationStoreEncryptionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCorsRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCorsRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCorsRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +81,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCorsRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCorsRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCorsRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,6 +165,159 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedOrigins), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedOrigins) || hasPropertyOverride)
+            {
+                if (AllowedOrigins.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedOrigins: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedOrigins)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedMethods), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedMethods) || hasPropertyOverride)
+            {
+                if (AllowedMethods.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedMethods: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedMethods)
+                        {
+                            builder.AppendLine($"    '{item.ToString()}'");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaxAgeInSeconds), out propertyOverride);
+            builder.Append("  maxAgeInSeconds: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"{MaxAgeInSeconds}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExposedHeaders), out propertyOverride);
+            if (Optional.IsCollectionDefined(ExposedHeaders) || hasPropertyOverride)
+            {
+                if (ExposedHeaders.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  exposedHeaders: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ExposedHeaders)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedHeaders), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedHeaders) || hasPropertyOverride)
+            {
+                if (AllowedHeaders.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedHeaders: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedHeaders)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StorageCorsRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageCorsRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -171,8 +326,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCorsRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCorsRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +345,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageCorsRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCorsRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCorsRule)} does not support reading '{options.Format}' format.");
             }
         }
 

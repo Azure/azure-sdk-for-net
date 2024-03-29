@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestsBasedTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestsBasedTrigger)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestsBasedTrigger)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestsBasedTrigger)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,6 +104,57 @@ namespace Azure.ResourceManager.AppService.Models
             return new RequestsBasedTrigger(count, timeInterval, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Count), out propertyOverride);
+            if (Optional.IsDefined(Count) || hasPropertyOverride)
+            {
+                builder.Append("  count: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Count.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeInterval), out propertyOverride);
+            if (Optional.IsDefined(TimeInterval) || hasPropertyOverride)
+            {
+                builder.Append("  timeInterval: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TimeInterval.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TimeInterval}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TimeInterval}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RequestsBasedTrigger>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RequestsBasedTrigger>)this).GetFormatFromOptions(options) : options.Format;
@@ -112,8 +163,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestsBasedTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestsBasedTrigger)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +182,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeRequestsBasedTrigger(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestsBasedTrigger)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestsBasedTrigger)} does not support reading '{options.Format}' format.");
             }
         }
 

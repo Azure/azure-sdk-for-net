@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<GeoReplicationStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<GeoReplicationStatistics>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,6 +123,65 @@ namespace Azure.ResourceManager.Storage.Models
             return new GeoReplicationStatistics(status, lastSyncTime, canFailover, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastSyncOn), out propertyOverride);
+            if (Optional.IsDefined(LastSyncOn) || hasPropertyOverride)
+            {
+                builder.Append("  lastSyncTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastSyncOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CanFailover), out propertyOverride);
+            if (Optional.IsDefined(CanFailover) || hasPropertyOverride)
+            {
+                builder.Append("  canFailover: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = CanFailover.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GeoReplicationStatistics>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GeoReplicationStatistics>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,8 +190,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +209,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeGeoReplicationStatistics(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GeoReplicationStatistics)} does not support reading '{options.Format}' format.");
             }
         }
 

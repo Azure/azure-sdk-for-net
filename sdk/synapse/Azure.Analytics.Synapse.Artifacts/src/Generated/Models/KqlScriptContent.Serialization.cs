@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -24,12 +23,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<KqlScriptContentMetadata>(Metadata);
             }
             if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
-                writer.WriteObjectValue(CurrentConnection);
+                writer.WriteObjectValue<KqlScriptContentCurrentConnection>(CurrentConnection);
             }
             writer.WriteEndObject();
         }

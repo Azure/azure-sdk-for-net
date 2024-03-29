@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PublicIPAddressSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
@@ -100,17 +99,17 @@ namespace Azure.ResourceManager.Network
             if (options.Format != "W" && Optional.IsDefined(IPConfiguration))
             {
                 writer.WritePropertyName("ipConfiguration"u8);
-                writer.WriteObjectValue(IPConfiguration);
+                writer.WriteObjectValue<NetworkIPConfiguration>(IPConfiguration, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                writer.WriteObjectValue<PublicIPAddressDnsSettings>(DnsSettings, options);
             }
             if (Optional.IsDefined(DdosSettings))
             {
                 writer.WritePropertyName("ddosSettings"u8);
-                writer.WriteObjectValue(DdosSettings);
+                writer.WriteObjectValue<DdosSettings>(DdosSettings, options);
             }
             if (Optional.IsCollectionDefined(IPTags))
             {
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.Network
                 writer.WriteStartArray();
                 foreach (var item in IPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPTag>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -150,12 +149,12 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(ServicePublicIPAddress))
             {
                 writer.WritePropertyName("servicePublicIPAddress"u8);
-                writer.WriteObjectValue(ServicePublicIPAddress);
+                writer.WriteObjectValue<PublicIPAddressData>(ServicePublicIPAddress, options);
             }
             if (Optional.IsDefined(NatGateway))
             {
                 writer.WritePropertyName("natGateway"u8);
-                writer.WriteObjectValue(NatGateway);
+                writer.WriteObjectValue<NatGatewayData>(NatGateway, options);
             }
             if (Optional.IsDefined(MigrationPhase))
             {
@@ -165,7 +164,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(LinkedPublicIPAddress))
             {
                 writer.WritePropertyName("linkedPublicIPAddress"u8);
-                writer.WriteObjectValue(LinkedPublicIPAddress);
+                writer.WriteObjectValue<PublicIPAddressData>(LinkedPublicIPAddress, options);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -196,7 +195,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -528,7 +527,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -544,7 +543,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializePublicIPAddressData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressData)} does not support reading '{options.Format}' format.");
             }
         }
 

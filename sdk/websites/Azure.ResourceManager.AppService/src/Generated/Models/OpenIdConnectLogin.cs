@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -64,8 +63,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The name of the claim that contains the users name. </summary>
+        [WirePath("nameClaimType")]
         public string NameClaimType { get; set; }
         /// <summary> A list of the scopes that should be requested while authenticating. </summary>
+        [WirePath("scopes")]
         public IList<string> Scopes { get; }
     }
 }

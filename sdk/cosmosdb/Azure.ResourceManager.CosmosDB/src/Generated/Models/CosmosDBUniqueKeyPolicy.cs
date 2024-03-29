@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -62,6 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> List of unique keys on that enforces uniqueness constraint on documents in the collection in the Azure Cosmos DB service. </summary>
+        [WirePath("uniqueKeys")]
         public IList<CosmosDBUniqueKey> UniqueKeys { get; }
     }
 }

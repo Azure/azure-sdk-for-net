@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("metricTrigger"u8);
-            writer.WriteObjectValue(MetricTrigger);
+            writer.WriteObjectValue<MetricTrigger>(MetricTrigger, options);
             writer.WritePropertyName("scaleAction"u8);
-            writer.WriteObjectValue(ScaleAction);
+            writer.WriteObjectValue<MonitorScaleAction>(ScaleAction, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAutoscaleRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleRule)} does not support reading '{options.Format}' format.");
             }
         }
 

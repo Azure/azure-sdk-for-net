@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StampCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StampCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StampCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StampCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,6 +243,202 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AvailableCapacity), out propertyOverride);
+            if (Optional.IsDefined(AvailableCapacity) || hasPropertyOverride)
+            {
+                builder.Append("  availableCapacity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AvailableCapacity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TotalCapacity), out propertyOverride);
+            if (Optional.IsDefined(TotalCapacity) || hasPropertyOverride)
+            {
+                builder.Append("  totalCapacity: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TotalCapacity.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Unit), out propertyOverride);
+            if (Optional.IsDefined(Unit) || hasPropertyOverride)
+            {
+                builder.Append("  unit: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Unit.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Unit}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Unit}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeMode), out propertyOverride);
+            if (Optional.IsDefined(ComputeMode) || hasPropertyOverride)
+            {
+                builder.Append("  computeMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ComputeMode.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkerSize), out propertyOverride);
+            if (Optional.IsDefined(WorkerSize) || hasPropertyOverride)
+            {
+                builder.Append("  workerSize: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{WorkerSize.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkerSizeId), out propertyOverride);
+            if (Optional.IsDefined(WorkerSizeId) || hasPropertyOverride)
+            {
+                builder.Append("  workerSizeId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{WorkerSizeId.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludeFromCapacityAllocation), out propertyOverride);
+            if (Optional.IsDefined(ExcludeFromCapacityAllocation) || hasPropertyOverride)
+            {
+                builder.Append("  excludeFromCapacityAllocation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = ExcludeFromCapacityAllocation.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsApplicableForAllComputeModes), out propertyOverride);
+            if (Optional.IsDefined(IsApplicableForAllComputeModes) || hasPropertyOverride)
+            {
+                builder.Append("  isApplicableForAllComputeModes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsApplicableForAllComputeModes.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SiteMode), out propertyOverride);
+            if (Optional.IsDefined(SiteMode) || hasPropertyOverride)
+            {
+                builder.Append("  siteMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SiteMode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SiteMode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SiteMode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsLinux), out propertyOverride);
+            if (Optional.IsDefined(IsLinux) || hasPropertyOverride)
+            {
+                builder.Append("  isLinux: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsLinux.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StampCapacity>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StampCapacity>)this).GetFormatFromOptions(options) : options.Format;
@@ -251,8 +447,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StampCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StampCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -268,7 +466,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeStampCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StampCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StampCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

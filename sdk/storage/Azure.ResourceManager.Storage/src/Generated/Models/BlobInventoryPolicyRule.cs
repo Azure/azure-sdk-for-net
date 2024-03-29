@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -85,12 +84,16 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Rule is enabled when set to true. </summary>
+        [WirePath("enabled")]
         public bool IsEnabled { get; set; }
         /// <summary> A rule name can contain any combination of alpha numeric characters. Rule name is case-sensitive. It must be unique within a policy. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Container name where blob inventory files are stored. Must be pre-created. </summary>
+        [WirePath("destination")]
         public string Destination { get; set; }
         /// <summary> An object that defines the blob inventory policy rule. </summary>
+        [WirePath("definition")]
         public BlobInventoryPolicyDefinition Definition { get; set; }
     }
 }

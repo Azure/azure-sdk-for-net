@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
@@ -23,7 +22,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<ImagingProcedureRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImagingProcedureRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImagingProcedureRecommendation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ProcedureCodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -41,7 +40,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             writer.WriteStartArray();
             foreach (var item in ImagingProcedures)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ImagingProcedure>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("kind"u8);
@@ -69,7 +68,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<ImagingProcedureRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImagingProcedureRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImagingProcedureRecommendation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +137,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImagingProcedureRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImagingProcedureRecommendation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +153,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializeImagingProcedureRecommendation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImagingProcedureRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImagingProcedureRecommendation)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -172,7 +171,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ImagingProcedureRecommendation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

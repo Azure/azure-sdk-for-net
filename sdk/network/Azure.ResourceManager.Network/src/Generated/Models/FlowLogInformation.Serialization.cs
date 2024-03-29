@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowLogInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowLogInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowLogInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(FlowAnalyticsConfiguration))
             {
                 writer.WritePropertyName("flowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(FlowAnalyticsConfiguration);
+                writer.WriteObjectValue<TrafficAnalyticsProperties>(FlowAnalyticsConfiguration, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
@@ -43,12 +42,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<RetentionPolicyParameters>(RetentionPolicy, options);
             }
             if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
-                writer.WriteObjectValue(Format);
+                writer.WriteObjectValue<FlowLogProperties>(Format, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FlowLogInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FlowLogInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FlowLogInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FlowLogInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowLogInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFlowLogInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FlowLogInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FlowLogInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

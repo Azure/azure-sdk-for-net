@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -37,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime);
+                writer.WriteObjectValue<IntegrationRuntimeDebugResource>(IntegrationRuntime);
             }
             writer.WriteEndObject();
         }
@@ -94,7 +93,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, CreateDataFlowDebugSessionRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CreateDataFlowDebugSessionRequest>(model);
             }
             public override CreateDataFlowDebugSessionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

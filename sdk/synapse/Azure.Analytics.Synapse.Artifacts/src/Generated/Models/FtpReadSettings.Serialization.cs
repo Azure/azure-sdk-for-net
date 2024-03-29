@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,59 +22,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
-                writer.WriteObjectValue(Recursive);
+                writer.WriteObjectValue<object>(Recursive);
             }
             if (Optional.IsDefined(WildcardFolderPath))
             {
                 writer.WritePropertyName("wildcardFolderPath"u8);
-                writer.WriteObjectValue(WildcardFolderPath);
+                writer.WriteObjectValue<object>(WildcardFolderPath);
             }
             if (Optional.IsDefined(WildcardFileName))
             {
                 writer.WritePropertyName("wildcardFileName"u8);
-                writer.WriteObjectValue(WildcardFileName);
+                writer.WriteObjectValue<object>(WildcardFileName);
             }
             if (Optional.IsDefined(EnablePartitionDiscovery))
             {
                 writer.WritePropertyName("enablePartitionDiscovery"u8);
-                writer.WriteObjectValue(EnablePartitionDiscovery);
+                writer.WriteObjectValue<object>(EnablePartitionDiscovery);
             }
             if (Optional.IsDefined(PartitionRootPath))
             {
                 writer.WritePropertyName("partitionRootPath"u8);
-                writer.WriteObjectValue(PartitionRootPath);
+                writer.WriteObjectValue<object>(PartitionRootPath);
             }
             if (Optional.IsDefined(DeleteFilesAfterCompletion))
             {
                 writer.WritePropertyName("deleteFilesAfterCompletion"u8);
-                writer.WriteObjectValue(DeleteFilesAfterCompletion);
+                writer.WriteObjectValue<object>(DeleteFilesAfterCompletion);
             }
             if (Optional.IsDefined(FileListPath))
             {
                 writer.WritePropertyName("fileListPath"u8);
-                writer.WriteObjectValue(FileListPath);
+                writer.WriteObjectValue<object>(FileListPath);
             }
             if (Optional.IsDefined(UseBinaryTransfer))
             {
                 writer.WritePropertyName("useBinaryTransfer"u8);
-                writer.WriteObjectValue(UseBinaryTransfer);
+                writer.WriteObjectValue<object>(UseBinaryTransfer);
             }
             if (Optional.IsDefined(DisableChunking))
             {
                 writer.WritePropertyName("disableChunking"u8);
-                writer.WriteObjectValue(DisableChunking);
+                writer.WriteObjectValue<object>(DisableChunking);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -218,7 +217,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, FtpReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<FtpReadSettings>(model);
             }
             public override FtpReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

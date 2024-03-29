@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationDraData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationDraData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationDraData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<DataReplicationDraProperties>(Properties, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationDraData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationDraData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationDraData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationDraData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationDraData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication
                         return DeserializeDataReplicationDraData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationDraData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationDraData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,24 +23,24 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(BaseBlob))
             {
                 writer.WritePropertyName("baseBlob"u8);
-                writer.WriteObjectValue(BaseBlob);
+                writer.WriteObjectValue<ManagementPolicyBaseBlob>(BaseBlob, options);
             }
             if (Optional.IsDefined(Snapshot))
             {
                 writer.WritePropertyName("snapshot"u8);
-                writer.WriteObjectValue(Snapshot);
+                writer.WriteObjectValue<ManagementPolicySnapShot>(Snapshot, options);
             }
             if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
-                writer.WriteObjectValue(Version);
+                writer.WriteObjectValue<ManagementPolicyVersion>(Version, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,6 +123,63 @@ namespace Azure.ResourceManager.Storage.Models
             return new ManagementPolicyAction(baseBlob, snapshot, version, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BaseBlob), out propertyOverride);
+            if (Optional.IsDefined(BaseBlob) || hasPropertyOverride)
+            {
+                builder.Append("  baseBlob: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, BaseBlob, options, 2, false, "  baseBlob: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Snapshot), out propertyOverride);
+            if (Optional.IsDefined(Snapshot) || hasPropertyOverride)
+            {
+                builder.Append("  snapshot: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Snapshot, options, 2, false, "  snapshot: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Version), out propertyOverride);
+            if (Optional.IsDefined(Version) || hasPropertyOverride)
+            {
+                builder.Append("  version: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Version, options, 2, false, "  version: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ManagementPolicyAction>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ManagementPolicyAction>)this).GetFormatFromOptions(options) : options.Format;
@@ -131,8 +188,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +207,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeManagementPolicyAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementPolicyAction)} does not support reading '{options.Format}' format.");
             }
         }
 

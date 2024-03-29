@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -43,7 +42,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(DefaultDataLakeStorage))
             {
                 writer.WritePropertyName("defaultDataLakeStorage"u8);
-                writer.WriteObjectValue(DefaultDataLakeStorage);
+                writer.WriteObjectValue<DataLakeStorageAccountDetails>(DefaultDataLakeStorage);
             }
             if (Optional.IsDefined(SqlAdministratorLoginPassword))
             {
@@ -63,7 +62,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile);
+                writer.WriteObjectValue<VirtualNetworkProfile>(VirtualNetworkProfile);
             }
             if (Optional.IsCollectionDefined(ConnectivityEndpoints))
             {
@@ -87,29 +86,29 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateEndpointConnection>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EncryptionDetails>(Encryption);
             }
             if (Optional.IsDefined(ManagedVirtualNetworkSettings))
             {
                 writer.WritePropertyName("managedVirtualNetworkSettings"u8);
-                writer.WriteObjectValue(ManagedVirtualNetworkSettings);
+                writer.WriteObjectValue<ManagedVirtualNetworkSettings>(ManagedVirtualNetworkSettings);
             }
             if (Optional.IsDefined(WorkspaceRepositoryConfiguration))
             {
                 writer.WritePropertyName("workspaceRepositoryConfiguration"u8);
-                writer.WriteObjectValue(WorkspaceRepositoryConfiguration);
+                writer.WriteObjectValue<WorkspaceRepositoryConfiguration>(WorkspaceRepositoryConfiguration);
             }
             if (Optional.IsDefined(PurviewConfiguration))
             {
                 writer.WritePropertyName("purviewConfiguration"u8);
-                writer.WriteObjectValue(PurviewConfiguration);
+                writer.WriteObjectValue<PurviewConfiguration>(PurviewConfiguration);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();
@@ -372,7 +371,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, Workspace model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<Workspace>(model);
             }
             public override Workspace Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
