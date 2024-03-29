@@ -10,6 +10,8 @@
 
 ### Other Changes
 
+* Removed the experimental suffix from the profile_id attribute. The profile_id attribute is added to spans when a profiling session is in progress.
+
 ## 1.2.0-beta.2 (2024-03-12)
 
 ### Features Added
