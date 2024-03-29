@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
-    public partial class ThroughputPoolResourcePatch : IUtf8JsonSerializable, IJsonModel<ThroughputPoolResourcePatch>
+    public partial class CosmosDBThroughputPoolPatch : IUtf8JsonSerializable, IJsonModel<CosmosDBThroughputPoolPatch>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ThroughputPoolResourcePatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CosmosDBThroughputPoolPatch>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<ThroughputPoolResourcePatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CosmosDBThroughputPoolPatch>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputPoolResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBThroughputPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputPoolResourcePatch)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBThroughputPoolPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             writer.WriteEndObject();
         }
 
-        ThroughputPoolResourcePatch IJsonModel<ThroughputPoolResourcePatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CosmosDBThroughputPoolPatch IJsonModel<CosmosDBThroughputPoolPatch>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputPoolResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBThroughputPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThroughputPoolResourcePatch)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBThroughputPoolPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeThroughputPoolResourcePatch(document.RootElement, options);
+            return DeserializeCosmosDBThroughputPoolPatch(document.RootElement, options);
         }
 
-        internal static ThroughputPoolResourcePatch DeserializeThroughputPoolResourcePatch(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CosmosDBThroughputPoolPatch DeserializeCosmosDBThroughputPoolPatch(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -119,38 +119,38 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputPoolResourcePatch(provisioningState, maxThroughput, serializedAdditionalRawData);
+            return new CosmosDBThroughputPoolPatch(provisioningState, maxThroughput, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<ThroughputPoolResourcePatch>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CosmosDBThroughputPoolPatch>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputPoolResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBThroughputPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputPoolResourcePatch)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBThroughputPoolPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
-        ThroughputPoolResourcePatch IPersistableModel<ThroughputPoolResourcePatch>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CosmosDBThroughputPoolPatch IPersistableModel<CosmosDBThroughputPoolPatch>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<ThroughputPoolResourcePatch>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CosmosDBThroughputPoolPatch>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeThroughputPoolResourcePatch(document.RootElement, options);
+                        return DeserializeCosmosDBThroughputPoolPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThroughputPoolResourcePatch)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBThroughputPoolPatch)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<ThroughputPoolResourcePatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CosmosDBThroughputPoolPatch>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

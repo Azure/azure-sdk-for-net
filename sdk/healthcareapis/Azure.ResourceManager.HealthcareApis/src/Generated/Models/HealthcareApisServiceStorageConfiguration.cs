@@ -7,11 +7,12 @@
 
 using System;
 using System.Collections.Generic;
+using Azure.Core;
 
 namespace Azure.ResourceManager.HealthcareApis.Models
 {
     /// <summary> The configuration of connected storage. </summary>
-    public partial class StorageConfiguration
+    public partial class HealthcareApisServiceStorageConfiguration
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,16 +46,16 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="StorageConfiguration"/>. </summary>
-        public StorageConfiguration()
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceStorageConfiguration"/>. </summary>
+        public HealthcareApisServiceStorageConfiguration()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="StorageConfiguration"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="HealthcareApisServiceStorageConfiguration"/>. </summary>
         /// <param name="storageResourceId"> The resource id of connected storage account. </param>
         /// <param name="fileSystemName"> The filesystem name of connected storage account. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal StorageConfiguration(string storageResourceId, string fileSystemName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal HealthcareApisServiceStorageConfiguration(ResourceIdentifier storageResourceId, string fileSystemName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StorageResourceId = storageResourceId;
             FileSystemName = fileSystemName;
@@ -62,7 +63,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         }
 
         /// <summary> The resource id of connected storage account. </summary>
-        public string StorageResourceId { get; set; }
+        public ResourceIdentifier StorageResourceId { get; set; }
         /// <summary> The filesystem name of connected storage account. </summary>
         public string FileSystemName { get; set; }
     }

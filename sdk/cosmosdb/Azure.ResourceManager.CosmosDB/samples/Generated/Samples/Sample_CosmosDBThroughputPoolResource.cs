@@ -14,12 +14,12 @@ using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.CosmosDB.Samples
 {
-    public partial class Sample_ThroughputPoolResource
+    public partial class Sample_CosmosDBThroughputPoolResource
     {
         // CosmosDB ThroughputPool List
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetThroughputPoolResources_CosmosDBThroughputPoolList()
+        public async Task GetCosmosDBThroughputPools_CosmosDBThroughputPoolList()
         {
             // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/throughputPool/CosmosDBThroughputPoolList.json
             // this example is just showing the usage of "ThroughputPools_List" operation, for the dependent resources, they will have to be created separately.
@@ -36,11 +36,11 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
 
             // invoke the operation and iterate over the result
-            await foreach (ThroughputPoolResource item in subscriptionResource.GetThroughputPoolResourcesAsync())
+            await foreach (CosmosDBThroughputPoolResource item in subscriptionResource.GetCosmosDBThroughputPoolsAsync())
             {
                 // the variable item is a resource, you could call other operations on this instance as well
                 // but just for demo, we get its data from this resource instance
-                ThroughputPoolResourceData resourceData = item.Data;
+                CosmosDBThroughputPoolData resourceData = item.Data;
                 // for demo we just print out the id
                 Console.WriteLine($"Succeeded on id: {resourceData.Id}");
             }
@@ -61,20 +61,20 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ThroughputPoolResource created on azure
-            // for more information of creating ThroughputPoolResource, please refer to the document of ThroughputPoolResource
+            // this example assumes you already have this CosmosDBThroughputPoolResource created on azure
+            // for more information of creating CosmosDBThroughputPoolResource, please refer to the document of CosmosDBThroughputPoolResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rgName";
             string throughputPoolName = "tp1";
-            ResourceIdentifier throughputPoolResourceId = ThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);
-            ThroughputPoolResource throughputPoolResource = client.GetThroughputPoolResource(throughputPoolResourceId);
+            ResourceIdentifier cosmosDBThroughputPoolResourceId = CosmosDBThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);
+            CosmosDBThroughputPoolResource cosmosDBThroughputPool = client.GetCosmosDBThroughputPoolResource(cosmosDBThroughputPoolResourceId);
 
             // invoke the operation
-            ThroughputPoolResource result = await throughputPoolResource.GetAsync();
+            CosmosDBThroughputPoolResource result = await cosmosDBThroughputPool.GetAsync();
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ThroughputPoolResourceData resourceData = result.Data;
+            CosmosDBThroughputPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -92,25 +92,25 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ThroughputPoolResource created on azure
-            // for more information of creating ThroughputPoolResource, please refer to the document of ThroughputPoolResource
+            // this example assumes you already have this CosmosDBThroughputPoolResource created on azure
+            // for more information of creating CosmosDBThroughputPoolResource, please refer to the document of CosmosDBThroughputPoolResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rg1";
             string throughputPoolName = "tp1";
-            ResourceIdentifier throughputPoolResourceId = ThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);
-            ThroughputPoolResource throughputPoolResource = client.GetThroughputPoolResource(throughputPoolResourceId);
+            ResourceIdentifier cosmosDBThroughputPoolResourceId = CosmosDBThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);
+            CosmosDBThroughputPoolResource cosmosDBThroughputPool = client.GetCosmosDBThroughputPoolResource(cosmosDBThroughputPoolResourceId);
 
             // invoke the operation
-            ThroughputPoolResourcePatch patch = new ThroughputPoolResourcePatch()
+            CosmosDBThroughputPoolPatch patch = new CosmosDBThroughputPoolPatch()
             {
                 MaxThroughput = 10000,
             };
-            ArmOperation<ThroughputPoolResource> lro = await throughputPoolResource.UpdateAsync(WaitUntil.Completed, patch);
-            ThroughputPoolResource result = lro.Value;
+            ArmOperation<CosmosDBThroughputPoolResource> lro = await cosmosDBThroughputPool.UpdateAsync(WaitUntil.Completed, patch);
+            CosmosDBThroughputPoolResource result = lro.Value;
 
             // the variable result is a resource, you could call other operations on this instance as well
             // but just for demo, we get its data from this resource instance
-            ThroughputPoolResourceData resourceData = result.Data;
+            CosmosDBThroughputPoolData resourceData = result.Data;
             // for demo we just print out the id
             Console.WriteLine($"Succeeded on id: {resourceData.Id}");
         }
@@ -128,16 +128,16 @@ namespace Azure.ResourceManager.CosmosDB.Samples
             // authenticate your client
             ArmClient client = new ArmClient(cred);
 
-            // this example assumes you already have this ThroughputPoolResource created on azure
-            // for more information of creating ThroughputPoolResource, please refer to the document of ThroughputPoolResource
+            // this example assumes you already have this CosmosDBThroughputPoolResource created on azure
+            // for more information of creating CosmosDBThroughputPoolResource, please refer to the document of CosmosDBThroughputPoolResource
             string subscriptionId = "ffffffff-ffff-ffff-ffff-ffffffffffff";
             string resourceGroupName = "rgName";
             string throughputPoolName = "tp1";
-            ResourceIdentifier throughputPoolResourceId = ThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);
-            ThroughputPoolResource throughputPoolResource = client.GetThroughputPoolResource(throughputPoolResourceId);
+            ResourceIdentifier cosmosDBThroughputPoolResourceId = CosmosDBThroughputPoolResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, throughputPoolName);
+            CosmosDBThroughputPoolResource cosmosDBThroughputPool = client.GetCosmosDBThroughputPoolResource(cosmosDBThroughputPoolResourceId);
 
             // invoke the operation
-            await throughputPoolResource.DeleteAsync(WaitUntil.Completed);
+            await cosmosDBThroughputPool.DeleteAsync(WaitUntil.Completed);
 
             Console.WriteLine($"Succeeded");
         }

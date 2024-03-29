@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool? cassandraStopStart = default;
             bool? readWrite = default;
             string result = default;
-            CommandStatus? status = default;
+            CassandraClusterCommandStatus? status = default;
             string outputFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    status = new CommandStatus(property.Value.GetString());
+                    status = new CassandraClusterCommandStatus(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("outputFile"u8))

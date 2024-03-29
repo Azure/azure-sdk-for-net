@@ -14,10 +14,10 @@ using Azure.ResourceManager.Models;
 namespace Azure.ResourceManager.CosmosDB
 {
     /// <summary>
-    /// A class representing the ThroughputPoolAccountResource data model.
+    /// A class representing the CosmosDBThroughputPoolAccount data model.
     /// An Azure Cosmos DB Throughputpool Account
     /// </summary>
-    public partial class ThroughputPoolAccountResourceData : ResourceData
+    public partial class CosmosDBThroughputPoolAccountData : ResourceData
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,12 +51,12 @@ namespace Azure.ResourceManager.CosmosDB
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="ThroughputPoolAccountResourceData"/>. </summary>
-        public ThroughputPoolAccountResourceData()
+        /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolAccountData"/>. </summary>
+        public CosmosDBThroughputPoolAccountData()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="ThroughputPoolAccountResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDBThroughputPoolAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <param name="accountLocation"> The location of  global database account in the throughputPool. </param>
         /// <param name="accountInstanceId"> The instance id of global database account in the throughputPool. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ThroughputPoolAccountResourceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBStatus? provisioningState, string accountResourceIdentifier, string accountLocation, string accountInstanceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal CosmosDBThroughputPoolAccountData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, CosmosDBStatus? provisioningState, ResourceIdentifier accountResourceIdentifier, AzureLocation? accountLocation, string accountInstanceId, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ProvisioningState = provisioningState;
             AccountResourceIdentifier = accountResourceIdentifier;
@@ -80,10 +80,10 @@ namespace Azure.ResourceManager.CosmosDB
         public CosmosDBStatus? ProvisioningState { get; set; }
         /// <summary> The resource identifier of global database account in the throughputPool. </summary>
         [WirePath("properties.accountResourceIdentifier")]
-        public string AccountResourceIdentifier { get; set; }
+        public ResourceIdentifier AccountResourceIdentifier { get; set; }
         /// <summary> The location of  global database account in the throughputPool. </summary>
         [WirePath("properties.accountLocation")]
-        public string AccountLocation { get; set; }
+        public AzureLocation? AccountLocation { get; set; }
         /// <summary> The instance id of global database account in the throughputPool. </summary>
         [WirePath("properties.accountInstanceId")]
         public string AccountInstanceId { get; }

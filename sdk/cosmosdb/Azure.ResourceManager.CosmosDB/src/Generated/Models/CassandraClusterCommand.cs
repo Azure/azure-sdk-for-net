@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Status of the command. </param>
         /// <param name="outputFile"> The name of the file where the result is written. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CassandraClusterCommand(string command, string commandId, BinaryData arguments, string host, bool? isAdmin, bool? shouldStopCassandraBeforeStart, bool? isReadWrite, string result, CommandStatus? status, string outputFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CassandraClusterCommand(string command, string commandId, BinaryData arguments, string host, bool? isAdmin, bool? shouldStopCassandraBeforeStart, bool? isReadWrite, string result, CassandraClusterCommandStatus? status, string outputFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Command = command;
             CommandId = commandId;
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         public string Result { get; }
         /// <summary> Status of the command. </summary>
         [WirePath("status")]
-        public CommandStatus? Status { get; }
+        public CassandraClusterCommandStatus? Status { get; }
         /// <summary> The name of the file where the result is written. </summary>
         [WirePath("outputFile")]
         public string OutputFile { get; }
