@@ -20,7 +20,7 @@ namespace Azure.Communication.Messages
         {
             Argument.AssertNotNull(name, nameof(name));
 
-            Kind = "quickAction";
+            Kind = MessageTemplateValueKind.QuickAction;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateQuickAction"/>. </summary>
@@ -29,7 +29,7 @@ namespace Azure.Communication.Messages
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The [Optional] quick action text. </param>
         /// <param name="payload"> The [Optional] quick action payload. </param>
-        internal MessageTemplateQuickAction(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text, string payload) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateQuickAction(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text, string payload) : base(name, kind, serializedAdditionalRawData)
         {
             Text = text;
             Payload = payload;
