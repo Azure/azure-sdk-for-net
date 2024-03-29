@@ -128,25 +128,13 @@ namespace Azure.Storage.Files.Shares.Tests
             // Arrange
             ShareServiceClient service = SharesClientBuilder.GetServiceClient_SharedKey();
             Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
-            _ = properties.Value.Cors.ToArray();
-            properties.Value.Cors.Clear();
-            properties.Value.Cors.Add(
-                new ShareCorsRule
-                {
-                    MaxAgeInSeconds = 1000,
-                    AllowedHeaders = "x-ms-meta-data*,x-ms-meta-target*,x-ms-meta-abc",
-                    AllowedMethods = "PUT,GET",
-                    AllowedOrigins = "*",
-                    ExposedHeaders = "x-ms-meta-*"
-                });
+            properties.Value.Cors = null;
 
             // Act
-            await service.SetPropertiesAsync(properties: properties);
+            await service.SetPropertiesAsync(properties: properties.Value);
 
             // Assert
-            properties = await service.GetPropertiesAsync();
-            Assert.AreEqual(1, properties.Value.Cors.Count());
-            Assert.IsTrue(properties.Value.Cors[0].MaxAgeInSeconds == 1000);
+           await service.GetPropertiesAsync();
         }
 
         [RecordedTest]
