@@ -13,7 +13,7 @@
     <PackageReference Include="Apache.Avro" />
     <PackageReference Include="Azure.Data.SchemaRegistry" />
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Newtonsoft.Json"/>
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.3"/>
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
