@@ -676,9 +676,6 @@
 # ServiceLabel: %Network - Firewall
 # ServiceOwners:                                                   @fwsuppgithub
 
-# ServiceLabel: %Network - Front Door
-# ServiceOwners:                                                   @cdnfdsuppgithub
-
 # ServiceLabel: %Network - Virtual Network
 # ServiceOwners:                                                   @vnetsuppgithub
 
@@ -929,6 +926,12 @@
 
 # PRLabel: %Network - CDN
 /sdk/cdn/                                                          @ptnan7
+
+# ServiceLabel: %Network - Front Door %Mgmt
+# ServiceOwners:                                                   @cdnfdsuppgithub
+
+# PRLabel: %Network - Front Door
+/sdk/frontdoor/                                                          @ptnan7
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
