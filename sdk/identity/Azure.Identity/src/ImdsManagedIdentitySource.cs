@@ -12,7 +12,7 @@ namespace Azure.Identity
     internal class ImdsManagedIdentitySource : ManagedIdentitySource
     {
         // IMDS constants. Docs for IMDS are available at https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
-        private static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
+        internal static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
         internal const string imddsTokenPath = "/metadata/identity/oauth2/token";
 
         private const string ImdsApiVersion = "2018-02-01";
@@ -26,7 +26,7 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly string _resourceId;
         private readonly Uri _imdsEndpoint;
-
+        private bool _firstTokenAcquired;
         private TimeSpan? _imdsNetworkTimeout;
 
         internal ImdsManagedIdentitySource(ManagedIdentityClientOptions options) : base(options.Pipeline)
@@ -35,15 +35,22 @@ namespace Azure.Identity
             _resourceId = options.ResourceIdentifier?.ToString();
             _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
 
+            _imdsEndpoint = GetImdsUri();
+        }
+
+        internal static Uri GetImdsUri()
+        {
             if (!string.IsNullOrEmpty(EnvironmentVariables.PodIdentityEndpoint))
             {
-                var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint);
-                builder.Path = imddsTokenPath;
-                _imdsEndpoint = builder.Uri;
+                var builder = new UriBuilder(EnvironmentVariables.PodIdentityEndpoint)
+                {
+                    Path = imddsTokenPath
+                };
+                return builder.Uri;
             }
             else
             {
-                _imdsEndpoint = s_imdsEndpoint;
+                return s_imdsEndpoint;
             }
         }
 
@@ -76,7 +83,10 @@ namespace Azure.Identity
         {
             HttpMessage message = base.CreateHttpMessage(request);
 
-            message.NetworkTimeout = _imdsNetworkTimeout;
+            if (!_firstTokenAcquired)
+            {
+                message.NetworkTimeout = _imdsNetworkTimeout;
+            }
 
             return message;
         }
@@ -140,7 +150,9 @@ namespace Azure.Identity
                 throw new CredentialUnavailableException(message);
             }
 
-            return await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+            var token = await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
+            _firstTokenAcquired = true;
+            return token;
         }
 
         private class ImdsRequestFailedDetailsParser : RequestFailedDetailsParser
