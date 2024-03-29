@@ -216,7 +216,7 @@ namespace Azure.Core.Pipeline
                 }
             }
 
-            private IEnumerable<Activity> GetDiagnosticSourceLinkCollection()
+            private IReadOnlyList<Activity> GetDiagnosticSourceLinkCollection()
             {
                 if (_links == null)
                 {

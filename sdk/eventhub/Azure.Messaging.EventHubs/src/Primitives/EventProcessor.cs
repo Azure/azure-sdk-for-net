@@ -81,13 +81,6 @@ namespace Azure.Messaging.EventHubs.Primitives
         private CancellationTokenSource _runningProcessorCancellationSource;
 
         /// <summary>
-        ///   Indicates whether or not this event processor should instrument processor calls with distributed tracing.
-        ///   Implementations that instrumentation processing themselves should set it to false.
-        /// </summary>
-        ///
-        protected virtual bool? IsBatchTracingEnabled { get; set; } = null;
-
-        /// <summary>
         ///   The fully qualified Event Hubs namespace that the processor is associated with.  This is likely
         ///   to be similar to <c>{yournamespace}.servicebus.windows.net</c>.
         /// </summary>
@@ -212,6 +205,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </summary>
         ///
         protected EventHubsRetryPolicy RetryPolicy { get; }
+
+        /// <summary>
+        ///   Indicates whether or not this event processor should instrument batch event processing calls with distributed tracing.
+        ///   Implementations that instrument event processing themselves should set this to <c>false</c>.
+        /// </summary>
+        ///
+        protected virtual bool? IsBatchTracingEnabled { get; set; }
 
         /// <summary>
         ///   The set of currently active partition processing tasks issued by this event processor and their associated
@@ -679,7 +679,6 @@ namespace Azure.Messaging.EventHubs.Primitives
             finally
             {
                 Logger.EventProcessorProcessingHandlerComplete(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, watch.GetElapsedTime().TotalSeconds, eventBatch.Count);
-                diagnosticScope?.Dispose();
             }
         }
 

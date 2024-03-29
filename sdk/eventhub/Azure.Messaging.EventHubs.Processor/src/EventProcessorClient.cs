@@ -348,16 +348,16 @@ namespace Azure.Messaging.EventHubs
         public new string Identifier => base.Identifier;
 
         /// <summary>
+        ///   Indicates whether or not this processor should instrument batch event processing calls with distributed tracing.
+        /// </summary>
+        ///
+        protected override bool? IsBatchTracingEnabled { get => false; }
+
+        /// <summary>
         ///   The instance of <see cref="EventProcessorClientEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
         internal EventProcessorClientEventSource Logger { get; set; } = EventProcessorClientEventSource.Log;
-
-        /// <summary>
-        ///   Responsible for creation of checkpoints and for ownership claim.
-        /// </summary>
-        ///
-        private CheckpointStore CheckpointStore { get; }
 
         /// <summary>
         ///   The client diagnostics for this processor.
@@ -366,11 +366,10 @@ namespace Azure.Messaging.EventHubs
         internal MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        ///   Indicates whether or not this processor should instrument event processing calls with distributed tracing.
-        ///   Implementations that instrument event processing themselves should set this to <c>false</c>.
+        ///   Responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
-        protected override bool? IsBatchTracingEnabled { get => false; }
+        private CheckpointStore CheckpointStore { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
@@ -1408,6 +1407,44 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
+        ///    Creates, starts, and enriches a processing diagnostics scope.
+        /// </summary>
+        ///
+        /// <param name="eventData">The instance of <see cref="EventData"/> which is being processed.</param>
+        ///
+        /// <returns>The instance of <see cref="DiagnosticScope"/>.</returns>
+        ///
+        private DiagnosticScope StartProcessorScope(EventData eventData)
+        {
+            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+            if (!diagnosticScope.IsEnabled)
+            {
+                return diagnosticScope;
+            }
+
+            if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
+            {
+                // Set link in all cases.
+
+                diagnosticScope.AddLink(traceparent, tracestate);
+
+                // Parent is not required, but allowed and helps to correlate producer and consumers.
+
+                diagnosticScope.SetTraceContext(traceparent, tracestate);
+            }
+
+            if (eventData.EnqueuedTime != default)
+            {
+                diagnosticScope.AddLongAttribute(
+                    DiagnosticProperty.EnqueuedTimeAttribute,
+                    eventData.EnqueuedTime.ToUnixTimeMilliseconds());
+            }
+
+            diagnosticScope.Start();
+            return diagnosticScope;
+        }
+
+        /// <summary>
         ///   Creates the set of options to pass to the base <see cref="EventProcessorClient" />.
         /// </summary>
         ///
@@ -1432,42 +1469,6 @@ namespace Azure.Messaging.EventHubs
                 LoadBalancingUpdateInterval = clientOptions.LoadBalancingUpdateInterval,
                 PartitionOwnershipExpirationInterval = clientOptions.PartitionOwnershipExpirationInterval
             };
-        }
-
-        /// <summary>
-        ///    Creates, starts, and enriches a processing diagnostics scope.
-        /// </summary>
-        ///
-        /// <param name="eventData">The instance of <see cref="EventData"/> which is being processed.</param>
-        ///
-        /// <returns>The instance of <see cref="DiagnosticScope"/>.</returns>
-        ///
-        private DiagnosticScope StartProcessorScope(EventData eventData)
-        {
-            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
-            if (diagnosticScope.IsEnabled)
-            {
-                if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
-                {
-                    // Set link in all cases.
-                    
-                    diagnosticScope.AddLink(traceparent, tracestate);
-
-                    // Parent is not required, but allowed and helps to correlate producer and consumers.
-                    
-                    diagnosticScope.SetTraceContext(traceparent, tracestate);
-                }
-
-                if (eventData.EnqueuedTime != default)
-                {
-                    diagnosticScope.AddLongAttribute(
-                        DiagnosticProperty.EnqueuedTimeAttribute,
-                        eventData.EnqueuedTime.ToUnixTimeMilliseconds());
-                }
-            }
-
-            diagnosticScope.Start();
-            return diagnosticScope;
         }
 
         /// <summary>
