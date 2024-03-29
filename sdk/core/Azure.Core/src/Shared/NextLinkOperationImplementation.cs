@@ -193,26 +193,14 @@ namespace Azure.Core
             RequestMethod requestMethod,
             Uri startRequestUri,
             Response response,
-            OperationFinalStateVia finalStateVia,
-            bool skipApiVersionOverride = false,
-            string? apiVersionOverrideValue = null)
+            OperationFinalStateVia finalStateVia)
         {
             AssertNotNull(requestMethod, nameof(requestMethod));
             AssertNotNull(startRequestUri, nameof(startRequestUri));
             AssertNotNull(response, nameof(response));
             AssertNotNull(finalStateVia, nameof(finalStateVia));
 
-            string? apiVersionStr;
-            if (apiVersionOverrideValue is not null)
-            {
-                apiVersionStr = apiVersionOverrideValue;
-            }
-            else
-            {
-                apiVersionStr = !skipApiVersionOverride && TryGetApiVersion(startRequestUri, out ReadOnlySpan<char> apiVersion) ? apiVersion.ToString() : null;
-            }
-
-            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, apiVersionStr, out var nextRequestUri);
+            var headerSource = GetHeaderSource(requestMethod, startRequestUri, response, null, out var nextRequestUri);
             string? lastKnownLocation;
             if (!response.Headers.TryGetValue("Location", out lastKnownLocation))
             {
