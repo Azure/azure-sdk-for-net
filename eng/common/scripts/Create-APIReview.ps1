@@ -241,7 +241,7 @@ function ProcessPackage($packageName)
                     # Check if package name is approved. Preview version cannot be released without package name approval
                     if (!$pkgNameStatus.IsApproved) 
                     {
-                        if (IsApiviewStatusCheckRequired($pkgInfo))
+                        if (IsApiviewStatusCheckRequired $pkgInfo)
                         {
                             Write-Error $($pkgNameStatus.Details)
                             return 1
