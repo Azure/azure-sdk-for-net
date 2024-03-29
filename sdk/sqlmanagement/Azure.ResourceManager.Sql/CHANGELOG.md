@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.6 (Unreleased)
+## 1.3.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,12 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.6 (2024-03-26)
+
+### Features Added
+
+- Added experimental Bicep serialization.
 
 ## 1.3.0-beta.5 (2024-02-08)
 

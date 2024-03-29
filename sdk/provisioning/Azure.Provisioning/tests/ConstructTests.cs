@@ -28,7 +28,7 @@ namespace Azure.Provisioning.Tests
         public void GetConstructsChildConstructs(bool recursive)
         {
             var infra = new TestInfrastructure();
-            infra.AddFrontEndWebSite();
+            infra.AddCommonSqlDatabase();
             var constructs = infra.GetConstructs(recursive);
 
             Assert.AreEqual(1, constructs.Count());
@@ -73,10 +73,10 @@ namespace Azure.Provisioning.Tests
             var infra = new TestInfrastructure();
             var rg1 = new ResourceGroup(infra, "rg1");
 
-            var childScope = infra.AddFrontEndWebSite(resourceGroup: rg1);
+            var childScope = infra.AddCommonSqlDatabase();
             _ = new ResourceGroup(childScope, "rg2");
 
-            var expected = recursive ? 10 : 6;
+            var expected = recursive ? 12 : 4;
             var resources = infra.GetResources(recursive);
 
             Assert.AreEqual(expected, resources.Count());
@@ -106,7 +106,7 @@ namespace Azure.Provisioning.Tests
             var rg1 = new ResourceGroup(infra, "rg1");
             rg1.AssignProperty(r => r.Location, new Parameter("location"));
 
-            var childScope = infra.AddFrontEndWebSite();
+            var childScope = infra.AddAppInsightsConstruct();
             var rg2 = new ResourceGroup(childScope, "rg2");
             rg2.AssignProperty(r => r.Location, new Parameter("location"));
 
@@ -139,12 +139,12 @@ namespace Azure.Provisioning.Tests
             var rg1 = new ResourceGroup(infra, "rg1");
             rg1.AddOutput("location", r => r.Location);
 
-            var childScope = infra.AddFrontEndWebSite();
+            var childScope = infra.AddAppInsightsConstruct();
             var rg2 = new ResourceGroup(childScope, "rg2");
             rg2.AddOutput("location", r => r.Location);
 
-            // front end website has an output
-            var expected = recursive ? 4 : 2;
+            // appinsights construct has an output
+            var expected = recursive ? 3 : 2;
             var outputs = infra.GetOutputs(recursive);
 
             Assert.AreEqual(expected, outputs.Count());

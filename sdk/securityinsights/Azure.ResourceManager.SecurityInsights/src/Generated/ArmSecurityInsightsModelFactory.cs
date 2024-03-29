@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The alert rule kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleData"/> instance for mocking. </returns>
-        public static SecurityInsightsAlertRuleData SecurityInsightsAlertRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static SecurityInsightsAlertRuleData SecurityInsightsAlertRuleData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new SecurityInsightsAlertRuleData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new AlertRuleKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -88,14 +88,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The alert rule kind. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsAlertRuleTemplateData"/> instance for mocking. </returns>
-        public static SecurityInsightsAlertRuleTemplateData SecurityInsightsAlertRuleTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static SecurityInsightsAlertRuleTemplateData SecurityInsightsAlertRuleTemplateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new SecurityInsightsAlertRuleTemplateData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new AlertRuleKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -214,14 +214,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The data connector kind. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsDataConnectorData"/> instance for mocking. </returns>
-        public static SecurityInsightsDataConnectorData SecurityInsightsDataConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static SecurityInsightsDataConnectorData SecurityInsightsDataConnectorData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new SecurityInsightsDataConnectorData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new DataConnectorKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -404,14 +404,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="systemData"> The systemData. </param>
         /// <param name="kind"> The kind of the entity. </param>
         /// <returns> A new <see cref="Models.SecurityInsightsEntity"/> instance for mocking. </returns>
-        public static SecurityInsightsEntity SecurityInsightsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown")
+        public static SecurityInsightsEntity SecurityInsightsEntity(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null)
         {
             return new SecurityInsightsEntity(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new SecurityInsightsEntityKind(kind),
                 serializedAdditionalRawData: null);
         }
 
@@ -566,14 +566,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The kind of security ML Analytics Settings. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityMLAnalyticsSettingData"/> instance for mocking. </returns>
-        public static SecurityMLAnalyticsSettingData SecurityMLAnalyticsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static SecurityMLAnalyticsSettingData SecurityMLAnalyticsSettingData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new SecurityMLAnalyticsSettingData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new SecurityMLAnalyticsSettingsKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -586,14 +586,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
         /// <param name="kind"> The kind of the entity. </param>
         /// <param name="etag"> Etag of the azure resource. </param>
         /// <returns> A new <see cref="SecurityInsights.SecurityInsightsThreatIntelligenceIndicatorBaseData"/> instance for mocking. </returns>
-        public static SecurityInsightsThreatIntelligenceIndicatorBaseData SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static SecurityInsightsThreatIntelligenceIndicatorBaseData SecurityInsightsThreatIntelligenceIndicatorBaseData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new SecurityInsightsThreatIntelligenceIndicatorBaseData(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new ThreatIntelligenceResourceInnerKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
         }

@@ -1504,10 +1504,8 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
 
         #endregion
 
-        //TODO: Removed TelemetryContext related tests. Confirm they are not needed.
-
         #region Custom dimensions
-        [Fact(Skip = "CustomDimensions not working yet.")]
+        [Fact]
         public void FilterCustomDimensions()
         {
             // ARRANGE
@@ -1638,7 +1636,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.True(result9);
         }
 
-        [Fact(Skip = "Asterisk CustomDimensions not working yet.")]
+        [Fact]
         public void FilterAsteriskCustomDimensionContains()
         {
             // ARRANGE
@@ -1676,7 +1674,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             Assert.False(result3);
         }
 
-        [Fact(Skip = "Asterisk CustomDimensions not working yet.")]
+        [Fact]
         public void FilterAsteriskCustomDimensionDoesNotContain()
         {
             // ARRANGE

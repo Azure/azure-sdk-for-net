@@ -15,20 +15,20 @@ namespace Azure.Containers.ContainerRegistry
         /// <summary> Initializes a new instance of <see cref="Repositories"/>. </summary>
         internal Repositories()
         {
-            RepositoriesValue = new ChangeTrackingList<string>();
+            RepositoriesProperty = new ChangeTrackingList<string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="Repositories"/>. </summary>
-        /// <param name="repositoriesValue"> Repository names. </param>
+        /// <param name="repositoriesProperty"> Repository names. </param>
         /// <param name="link"></param>
-        internal Repositories(IReadOnlyList<string> repositoriesValue, string link)
+        internal Repositories(IReadOnlyList<string> repositoriesProperty, string link)
         {
-            RepositoriesValue = repositoriesValue;
+            RepositoriesProperty = repositoriesProperty;
             Link = link;
         }
 
         /// <summary> Repository names. </summary>
-        public IReadOnlyList<string> RepositoriesValue { get; }
+        public IReadOnlyList<string> RepositoriesProperty { get; }
         /// <summary> Gets the link. </summary>
         public string Link { get; }
     }

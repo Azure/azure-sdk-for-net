@@ -2207,7 +2207,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="azureConnectionMethod"> How to connect to the azure services needed for running the cluster. </param>
         /// <param name="privateLinkResourceId"> If the Connection Method is Vpn, this is the Id of the private link resource that the datacenters need to connect to. </param>
         /// <returns> A new <see cref="Models.CassandraClusterProperties"/> instance for mocking. </returns>
-        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState = null, string restoreFromBackupId = null, ResourceIdentifier delegatedManagementSubnetId = null, string cassandraVersion = null, string clusterNameOverride = null, CassandraAuthenticationMethod? authenticationMethod = null, string initialCassandraAdminPassword = null, string prometheusEndpointIPAddress = null, bool? isRepairEnabled = null, AutoReplicate? autoReplicate = null, IEnumerable<CassandraCertificate> clientCertificates = null, IEnumerable<CassandraCertificate> externalGossipCertificates = null, IEnumerable<CassandraCertificate> gossipCertificates = null, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, IEnumerable<string> externalDataCenters = null, int? hoursBetweenBackups = null, bool? isDeallocated = null, bool? isCassandraAuditLoggingEnabled = null, CassandraClusterType? clusterType = null, CassandraError provisionError = null, IEnumerable<string> extensions = null, IEnumerable<CassandraClusterBackupSchedule> backupSchedules = null, ScheduledEventStrategy? scheduledEventStrategy = null, AzureConnectionType? azureConnectionMethod = null, string privateLinkResourceId = null)
+        public static CassandraClusterProperties CassandraClusterProperties(CassandraProvisioningState? provisioningState = null, string restoreFromBackupId = null, ResourceIdentifier delegatedManagementSubnetId = null, string cassandraVersion = null, string clusterNameOverride = null, CassandraAuthenticationMethod? authenticationMethod = null, string initialCassandraAdminPassword = null, string prometheusEndpointIPAddress = null, bool? isRepairEnabled = null, CassandraAutoReplicateForm? autoReplicate = null, IEnumerable<CassandraCertificate> clientCertificates = null, IEnumerable<CassandraCertificate> externalGossipCertificates = null, IEnumerable<CassandraCertificate> gossipCertificates = null, IEnumerable<CassandraDataCenterSeedNode> externalSeedNodes = null, IEnumerable<CassandraDataCenterSeedNode> seedNodes = null, IEnumerable<string> externalDataCenters = null, int? hoursBetweenBackups = null, bool? isDeallocated = null, bool? isCassandraAuditLoggingEnabled = null, CassandraClusterType? clusterType = null, CassandraError provisionError = null, IEnumerable<string> extensions = null, IEnumerable<CassandraClusterBackupSchedule> backupSchedules = null, ScheduledEventStrategy? scheduledEventStrategy = null, ServiceConnectionType? azureConnectionMethod = null, ResourceIdentifier privateLinkResourceId = null)
         {
             clientCertificates ??= new List<CassandraCertificate>();
             externalGossipCertificates ??= new List<CassandraCertificate>();
@@ -2288,7 +2288,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Status of the command. </param>
         /// <param name="outputFile"> The name of the file where the result is written. </param>
         /// <returns> A new <see cref="Models.CassandraClusterCommand"/> instance for mocking. </returns>
-        public static CassandraClusterCommand CassandraClusterCommand(string command = null, string commandId = null, BinaryData arguments = null, string host = null, bool? isAdmin = null, bool? shouldStopCassandraBeforeStart = null, bool? isReadWrite = null, string result = null, CommandStatus? status = null, string outputFile = null)
+        public static CassandraClusterCommand CassandraClusterCommand(string command = null, string commandId = null, BinaryData arguments = null, string host = null, bool? isAdmin = null, bool? shouldStopCassandraBeforeStart = null, bool? isReadWrite = null, string result = null, CassandraClusterCommandStatus? status = null, string outputFile = null)
         {
             return new CassandraClusterCommand(
                 command,
@@ -3264,7 +3264,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.CosmosDBServiceProperties"/> instance for mocking. </returns>
-        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = "Unknown", CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -3272,12 +3272,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createdOn,
                 instanceSize,
                 instanceCount,
-                serviceType,
+                serviceType == null ? default : new CosmosDBServiceType(serviceType),
                 status,
                 additionalProperties);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.ThroughputPoolResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBThroughputPoolData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3286,12 +3286,12 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="location"> The location. </param>
         /// <param name="provisioningState"> A provisioning state of the ThroughputPool. </param>
         /// <param name="maxThroughput"> Value for throughput to be shared among CosmosDB resources in the pool. </param>
-        /// <returns> A new <see cref="CosmosDB.ThroughputPoolResourceData"/> instance for mocking. </returns>
-        public static ThroughputPoolResourceData ThroughputPoolResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBStatus? provisioningState = null, int? maxThroughput = null)
+        /// <returns> A new <see cref="CosmosDB.CosmosDBThroughputPoolData"/> instance for mocking. </returns>
+        public static CosmosDBThroughputPoolData CosmosDBThroughputPoolData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, CosmosDBStatus? provisioningState = null, int? maxThroughput = null)
         {
             tags ??= new Dictionary<string, string>();
 
-            return new ThroughputPoolResourceData(
+            return new CosmosDBThroughputPoolData(
                 id,
                 name,
                 resourceType,
@@ -3303,7 +3303,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="CosmosDB.ThroughputPoolAccountResourceData"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="CosmosDB.CosmosDBThroughputPoolAccountData"/>. </summary>
         /// <param name="id"> The id. </param>
         /// <param name="name"> The name. </param>
         /// <param name="resourceType"> The resourceType. </param>
@@ -3312,10 +3312,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="accountResourceIdentifier"> The resource identifier of global database account in the throughputPool. </param>
         /// <param name="accountLocation"> The location of  global database account in the throughputPool. </param>
         /// <param name="accountInstanceId"> The instance id of global database account in the throughputPool. </param>
-        /// <returns> A new <see cref="CosmosDB.ThroughputPoolAccountResourceData"/> instance for mocking. </returns>
-        public static ThroughputPoolAccountResourceData ThroughputPoolAccountResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, string accountResourceIdentifier = null, string accountLocation = null, string accountInstanceId = null)
+        /// <returns> A new <see cref="CosmosDB.CosmosDBThroughputPoolAccountData"/> instance for mocking. </returns>
+        public static CosmosDBThroughputPoolAccountData CosmosDBThroughputPoolAccountData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, CosmosDBStatus? provisioningState = null, ResourceIdentifier accountResourceIdentifier = null, AzureLocation? accountLocation = null, string accountInstanceId = null)
         {
-            return new ThroughputPoolAccountResourceData(
+            return new CosmosDBThroughputPoolAccountData(
                 id,
                 name,
                 resourceType,

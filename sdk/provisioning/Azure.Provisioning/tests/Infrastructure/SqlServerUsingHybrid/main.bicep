@@ -24,7 +24,6 @@ resource sqlServer_DLIjdcaKF 'Microsoft.Sql/servers@2020-11-01-preview' = {
     administratorLogin: adminLogin
     administratorLoginPassword: adminPassword
     version: '12.0'
-    minimalTlsVersion: '1.2'
     publicNetworkAccess: 'Enabled'
     administrators: {
       administratorType: 'ActiveDirectory'
