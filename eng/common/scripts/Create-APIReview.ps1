@@ -155,7 +155,6 @@ function Submit-APIReview($packageInfo, $packagePath)
 
 function IsApiviewStatusCheckRequired($packageInfo)
 {
-    # This function can be modified to control this check by individual language function
     if (($packageInfo.SdkType -eq "client" -or $packageInfo.SdkType -eq "spring") -and $packageInfo.IsNewSdk) {
         return $true
     }
