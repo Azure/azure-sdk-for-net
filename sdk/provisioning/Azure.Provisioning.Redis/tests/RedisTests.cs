@@ -4,6 +4,7 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Provisioning.KeyVaults;
+using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.ResourceManager;
 using Azure.Provisioning.Tests;
 
@@ -20,6 +21,7 @@ namespace Azure.Provisioning.Redis.Tests
         {
             TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
             var cache = new RedisCache(infrastructure);
+            _ = new RedisFirewallRule(infrastructure, parent: cache);
             _ = infrastructure.AddKeyVault();
             _ = new KeyVaultSecret(infrastructure, name: "connectionString", connectionString: cache.GetConnectionString());
 
@@ -34,7 +36,9 @@ namespace Azure.Provisioning.Redis.Tests
             var infra = new TestInfrastructure();
             var rg = infra.AddResourceGroup();
 
-            infra.AddResource(RedisCache.FromExisting(infra, "'existingRedisCache'", rg));
+            var cache = RedisCache.FromExisting(infra, "'existingRedisCache'", rg);
+            infra.AddResource(cache);
+            infra.AddResource(RedisFirewallRule.FromExisting(infra, "'existingRedisFirewallRule'", cache));
 
             infra.Build(GetOutputPath());
 

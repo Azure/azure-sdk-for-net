@@ -17,7 +17,7 @@ namespace Azure.Provisioning.Redis
         // https://learn.microsoft.com/azure/templates/microsoft.cache/2023-08-01/redis?pivots=deployment-language-bicep
         private const string ResourceTypeName = "Microsoft.Cache/Redis";
         // https://github.com/Azure/azure-sdk-for-net/blob/main/sdk/redis/Azure.ResourceManager.Redis/src/Generated/RestOperations/RedisRestOperations.cs#L36
-        private const string DefaultVersion = "2023-08-01";
+        internal const string DefaultVersion = "2023-08-01";
 
         private static RedisData Empty(string name) => ArmRedisModelFactory.RedisData(updateChannel: null);
 

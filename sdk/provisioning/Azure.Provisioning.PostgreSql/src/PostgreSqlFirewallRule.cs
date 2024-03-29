@@ -9,7 +9,7 @@ using Azure.ResourceManager.PostgreSql.Models;
 namespace Azure.Provisioning.PostgreSql
 {
     /// <summary>
-    /// Represents a SQL firewall rule.
+    /// Represents a PostgreSQL firewall rule.
     /// </summary>
     public class PostgreSqlFirewallRule : Resource<PostgreSqlFirewallRuleData>
     {
