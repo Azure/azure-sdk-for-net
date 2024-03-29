@@ -646,7 +646,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
 
             // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
-            DiagnosticScope? diagnosticScope = StartProcessorScope(eventBatch);
+            using var diagnosticScope = StartProcessorScope(eventBatch);
 
             // Dispatch the batch to the handler for processing.  Exceptions in the handler code are intended to be
             // unhandled by the processor; explicitly signal that the exception was observed in developer-provided
@@ -2254,10 +2254,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         private static int CalculateMaximumAdvisedOwnedPartitions() => (Environment.ProcessorCount * 2);
 
         /// <summary>
-        /// Creates, starts, and enriches processing diagnostics scope in case batch tracing is enabled.
+        ///   Creates, starts, and enriches s processing diagnostics scope in case batch tracing is enabled.
         /// </summary>
+        ///
         /// <param name="eventBatch">A collection of <see cref="EventData"/> which is being processed.</param>
-        /// <returns>An instance of scope if tracing is enabled, null otherwise.</returns>
+        ///
+        /// <returns>An instance of <see cref="DiagnosticScope" />, if tracing is enabled; otherwise, <c>null</c>.</returns>
+        ///
         private DiagnosticScope? StartProcessorScope(IReadOnlyList<EventData> eventBatch)
         {
             if (IsBatchTracingEnabled != null && !IsBatchTracingEnabled.Value)
@@ -2266,6 +2269,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
 
             var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+
             if ((diagnosticScope.IsEnabled) && (eventBatch.Count > 0))
             {
                 var isBatch = (EventBatchMaximumCount > 1);
@@ -2278,12 +2282,13 @@ namespace Azure.Messaging.EventHubs.Primitives
                 foreach (var eventData in eventBatch)
                 {
                     Dictionary<string, object> linkAttributes = null;
+
                     if (isBatch)
                     {
                         linkAttributes = new Dictionary<string, object>(1)
-                            {
-                                { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds() }
-                            };
+                        {
+                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds() }
+                        };
                     }
                     else if (eventData.EnqueuedTime != default)
                     {
@@ -2294,13 +2299,15 @@ namespace Azure.Messaging.EventHubs.Primitives
 
                     if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
                     {
-                        // set link in all cases
+                        // Set link in all cases.
+                        
                         diagnosticScope.AddLink(traceparent, tracestate, linkAttributes);
 
                         if (!isBatch)
                         {
-                            // parent is not required, but allowed when there is just one message.
-                            // It helps to correlate producer and consumers
+                            // Parent is not required, but allowed when there is just one message.
+                            // It helps to correlate producer and consumers.
+                            
                             diagnosticScope.SetTraceContext(traceparent, tracestate);
                         }
                     }

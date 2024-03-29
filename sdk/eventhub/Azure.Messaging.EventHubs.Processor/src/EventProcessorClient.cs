@@ -365,7 +365,11 @@ namespace Azure.Messaging.EventHubs
         ///
         internal MessagingClientDiagnostics ClientDiagnostics { get; }
 
-        /// <inheritdoc />
+        /// <summary>
+        ///   Indicates whether or not this processor should instrument event processing calls with distributed tracing.
+        ///   Implementations that instrument event processing themselves should set this to <c>false</c>.
+        /// </summary>
+        ///
         protected override bool? IsBatchTracingEnabled { get => false; }
 
         /// <summary>
@@ -1118,6 +1122,7 @@ namespace Azure.Messaging.EventHubs
                     emptyBatch = false;
 
                     using var scope = StartProcessorScope(eventData);
+                    
                     try
                     {
                         Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
@@ -1430,10 +1435,13 @@ namespace Azure.Messaging.EventHubs
         }
 
         /// <summary>
-        /// Creates, starts, and enriches processing diagnostics scope.
+        ///    Creates, starts, and enriches a processing diagnostics scope.
         /// </summary>
+        ///
         /// <param name="eventData">The instance of <see cref="EventData"/> which is being processed.</param>
-        /// <returns>The instance of scope.</returns>
+        ///
+        /// <returns>The instance of <see cref="DiagnosticScope"/>.</returns>
+        ///
         private DiagnosticScope StartProcessorScope(EventData eventData)
         {
             var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
@@ -1441,11 +1449,15 @@ namespace Azure.Messaging.EventHubs
             {
                 if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
                 {
-                    // set link in all cases
+                    // Set link in all cases.
+                    
                     diagnosticScope.AddLink(traceparent, tracestate);
-                    // parent is not required, but allowed and helps to correlate producer and consumers
+
+                    // Parent is not required, but allowed and helps to correlate producer and consumers.
+                    
                     diagnosticScope.SetTraceContext(traceparent, tracestate);
                 }
+
                 if (eventData.EnqueuedTime != default)
                 {
                     diagnosticScope.AddLongAttribute(

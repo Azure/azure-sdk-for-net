@@ -160,6 +160,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             // Validate the diagnostics.
+            
             var expectedTags = new List<KeyValuePair<string, object>>()
             {
                 new KeyValuePair<string, object>(MessagingClientDiagnostics.DestinationName, "eventHub"),
@@ -212,6 +213,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             // Validate the diagnostics.
+            
             var expectedTags = new List<KeyValuePair<string, object>>()
             {
                 new KeyValuePair<string, object>(MessagingClientDiagnostics.DestinationName, "eventHub"),
@@ -264,6 +266,7 @@ namespace Azure.Messaging.EventHubs.Tests
             Assert.That(cancellationSource.IsCancellationRequested, Is.False, "The cancellation token should not have been signaled.");
 
             // Validate the diagnostics.
+            
             var expectedTags = new List<KeyValuePair<string, object>>()
             {
                 new KeyValuePair<string, object>(MessagingClientDiagnostics.DestinationName, "eventHub"),
