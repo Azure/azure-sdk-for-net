@@ -32,6 +32,36 @@ public partial class ChatWithVision
         };
         #endregion
 
+        await PrintResponse(client, chatCompletionsOptions);
+    }
+
+    [Test]
+    [Ignore("Only verifying that the sample builds")]
+    public async Task ChatWithVisionWithDataUriPreview()
+    {
+        string endpoint = "https://myaccount.openai.azure.com/";
+        var client = new OpenAIClient(new Uri(endpoint), new DefaultAzureCredential());
+
+        #region Snippet:AddImageAsDataUriToChat
+        const string rawImageUri = "data:content/type;base64,<base64 string of image bytes>";
+        ChatCompletionsOptions chatCompletionsOptions = new()
+        {
+            DeploymentName = "gpt-4-vision-preview",
+            Messages =
+            {
+                new ChatRequestSystemMessage("You are a helpful assistant that describes images."),
+                new ChatRequestUserMessage(
+                    new ChatMessageTextContentItem("Hi! Please describe this image"),
+                    new ChatMessageImageContentItem(rawImageUri)),
+            },
+        };
+        #endregion
+
+        await PrintResponse(client, chatCompletionsOptions);
+    }
+
+    private async Task PrintResponse(OpenAIClient client, ChatCompletionsOptions chatCompletionsOptions)
+    {
         #region Snippet:GetResponseFromImages
         Response<ChatCompletions> chatResponse = await client.GetChatCompletionsAsync(chatCompletionsOptions);
         ChatChoice choice = chatResponse.Value.Choices[0];

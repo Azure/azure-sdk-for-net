@@ -27,4 +27,21 @@ public partial class ChatMessageImageContentItem : ChatMessageContentItem
     {
         ImageUrl.Detail = detailLevel;
     }
+
+    /// <summary> Initializes a new instance of ChatMessageImageContentItem using default detail. </summary>
+    /// <param name="imageDataUri"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="imageDataUri"/> is null. </exception>
+    public ChatMessageImageContentItem(string imageDataUri)
+        : this(new ChatMessageImageUrl(imageDataUri))
+    { }
+
+    /// <summary> Initializes a new instance of ChatMessageImageContentItem. </summary>
+    /// <param name="imageDataUri"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
+    /// <param name="detailLevel"> The image detail level the model should use when evaluating the image. </param>
+    /// <exception cref="ArgumentNullException"> <paramref name="imageDataUri"/> is null. </exception>
+    public ChatMessageImageContentItem(string imageDataUri, ChatMessageImageDetailLevel detailLevel)
+        : this(imageDataUri)
+    {
+        ImageUrl.Detail = detailLevel;
+    }
 }

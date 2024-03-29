@@ -357,6 +357,7 @@ namespace Azure.AI.OpenAI
         public static Azure.AI.OpenAI.ChatCompletions ChatCompletions(string id = null, System.DateTimeOffset created = default(System.DateTimeOffset), System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatChoice> choices = null, string model = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ContentFilterResultsForPrompt> promptFilterResults = null, string systemFingerprint = null, Azure.AI.OpenAI.CompletionsUsage usage = null) { throw null; }
         public static Azure.AI.OpenAI.ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(Azure.AI.OpenAI.FunctionDefinition function = null) { throw null; }
         public static Azure.AI.OpenAI.ChatMessageImageContentItem ChatMessageImageContentItem(Azure.AI.OpenAI.ChatMessageImageUrl imageUrl = null) { throw null; }
+        public static Azure.AI.OpenAI.ChatMessageImageUrl ChatMessageImageUrl(string dataUri = null, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detail = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { throw null; }
         public static Azure.AI.OpenAI.ChatMessageImageUrl ChatMessageImageUrl(System.Uri url = null, Azure.AI.OpenAI.ChatMessageImageDetailLevel? detail = default(Azure.AI.OpenAI.ChatMessageImageDetailLevel?)) { throw null; }
         public static Azure.AI.OpenAI.ChatMessageTextContentItem ChatMessageTextContentItem(string text = null) { throw null; }
         public static Azure.AI.OpenAI.ChatRequestAssistantMessage ChatRequestAssistantMessage(string content = null, string name = null, System.Collections.Generic.IEnumerable<Azure.AI.OpenAI.ChatCompletionsToolCall> toolCalls = null, Azure.AI.OpenAI.FunctionCall functionCall = null) { throw null; }
@@ -614,6 +615,8 @@ namespace Azure.AI.OpenAI
     public partial class ChatMessageImageContentItem : Azure.AI.OpenAI.ChatMessageContentItem, System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageContentItem>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageImageContentItem>
     {
         public ChatMessageImageContentItem(Azure.AI.OpenAI.ChatMessageImageUrl imageUrl) { }
+        public ChatMessageImageContentItem(string imageDataUri) { }
+        public ChatMessageImageContentItem(string imageDataUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
         public ChatMessageImageContentItem(System.Uri imageUri) { }
         public ChatMessageImageContentItem(System.Uri imageUri, Azure.AI.OpenAI.ChatMessageImageDetailLevel detailLevel) { }
         public Azure.AI.OpenAI.ChatMessageImageUrl ImageUrl { get { throw null; } }
@@ -644,7 +647,9 @@ namespace Azure.AI.OpenAI
     }
     public partial class ChatMessageImageUrl : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageUrl>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.ChatMessageImageUrl>
     {
+        public ChatMessageImageUrl(string dataUri) { }
         public ChatMessageImageUrl(System.Uri url) { }
+        public string DataUri { get { throw null; } }
         public Azure.AI.OpenAI.ChatMessageImageDetailLevel? Detail { get { throw null; } set { } }
         public System.Uri Url { get { throw null; } }
         Azure.AI.OpenAI.ChatMessageImageUrl System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.ChatMessageImageUrl>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }

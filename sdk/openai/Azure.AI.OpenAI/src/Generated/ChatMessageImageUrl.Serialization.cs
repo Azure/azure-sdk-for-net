@@ -7,7 +7,6 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
@@ -16,40 +15,6 @@ namespace Azure.AI.OpenAI
     public partial class ChatMessageImageUrl : IUtf8JsonSerializable, IJsonModel<ChatMessageImageUrl>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatMessageImageUrl>)this).Write(writer, ModelSerializationExtensions.WireOptions);
-
-        void IJsonModel<ChatMessageImageUrl>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
-        {
-            var format = options.Format == "W" ? ((IPersistableModel<ChatMessageImageUrl>)this).GetFormatFromOptions(options) : options.Format;
-            if (format != "J")
-            {
-                throw new FormatException($"The model {nameof(ChatMessageImageUrl)} does not support writing '{format}' format.");
-            }
-
-            writer.WriteStartObject();
-            writer.WritePropertyName("url"u8);
-            writer.WriteStringValue(Url.AbsoluteUri);
-            if (Optional.IsDefined(Detail))
-            {
-                writer.WritePropertyName("detail"u8);
-                writer.WriteStringValue(Detail.Value.ToString());
-            }
-            if (options.Format != "W" && _serializedAdditionalRawData != null)
-            {
-                foreach (var item in _serializedAdditionalRawData)
-                {
-                    writer.WritePropertyName(item.Key);
-#if NET6_0_OR_GREATER
-				writer.WriteRawValue(item.Value);
-#else
-                    using (JsonDocument document = JsonDocument.Parse(item.Value))
-                    {
-                        JsonSerializer.Serialize(writer, document.RootElement);
-                    }
-#endif
-                }
-            }
-            writer.WriteEndObject();
-        }
 
         ChatMessageImageUrl IJsonModel<ChatMessageImageUrl>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
@@ -61,43 +26,6 @@ namespace Azure.AI.OpenAI
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
             return DeserializeChatMessageImageUrl(document.RootElement, options);
-        }
-
-        internal static ChatMessageImageUrl DeserializeChatMessageImageUrl(JsonElement element, ModelReaderWriterOptions options = null)
-        {
-            options ??= ModelSerializationExtensions.WireOptions;
-
-            if (element.ValueKind == JsonValueKind.Null)
-            {
-                return null;
-            }
-            Uri url = default;
-            ChatMessageImageDetailLevel? detail = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
-            {
-                if (property.NameEquals("url"u8))
-                {
-                    url = new Uri(property.Value.GetString());
-                    continue;
-                }
-                if (property.NameEquals("detail"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    detail = new ChatMessageImageDetailLevel(property.Value.GetString());
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
-                }
-            }
-            serializedAdditionalRawData = rawDataDictionary;
-            return new ChatMessageImageUrl(url, detail, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ChatMessageImageUrl>.Write(ModelReaderWriterOptions options)

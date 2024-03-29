@@ -739,7 +739,7 @@ File.WriteAllBytes("myAudioFile.mp3", response.Value.ToArray());
 
 The `gpt-4-vision-preview` model allows you to use images as input components into chat completions.
 
-To do this, provide distinct content items on the user message(s) for the chat completions request:
+To do this with an Url to the image, provide distinct content items on the user message(s) for the chat completions request:
 
 ```C# Snippet:AddImageToChat
 const string rawImageUri = "<URI to your image>";
@@ -752,6 +752,23 @@ ChatCompletionsOptions chatCompletionsOptions = new()
         new ChatRequestUserMessage(
             new ChatMessageTextContentItem("Hi! Please describe this image"),
             new ChatMessageImageContentItem(new Uri(rawImageUri))),
+    },
+};
+```
+
+To do this with DataUris instead of a Url to the image, provide distinct content items on the user message(s) for the chat completions request:
+
+```C# Snippet:AddImageAsDataUriToChat
+const string rawImageUri = "data:content/type;base64,<base64 string of image bytes>";
+ChatCompletionsOptions chatCompletionsOptions = new()
+{
+    DeploymentName = "gpt-4-vision-preview",
+    Messages =
+    {
+        new ChatRequestSystemMessage("You are a helpful assistant that describes images."),
+        new ChatRequestUserMessage(
+            new ChatMessageTextContentItem("Hi! Please describe this image"),
+            new ChatMessageImageContentItem(rawImageUri)),
     },
 };
 ```

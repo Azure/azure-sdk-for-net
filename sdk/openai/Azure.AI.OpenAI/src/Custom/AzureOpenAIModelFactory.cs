@@ -112,4 +112,16 @@ public static partial class AzureOpenAIModelFactory
     {
         return new AudioTranslation(text, default, language, duration, segments, serializedAdditionalRawData: null);
     }
+
+    /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageImageUrl"/>. </summary>
+    /// <param name="dataUri"> The DataUri of the image. </param>
+    /// <param name="detail">
+    /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
+    /// accuracy.
+    /// </param>
+    /// <returns> A new <see cref="OpenAI.ChatMessageImageUrl"/> instance for mocking. </returns>
+    public static ChatMessageImageUrl ChatMessageImageUrl(string dataUri = null, ChatMessageImageDetailLevel? detail = null)
+    {
+        return new ChatMessageImageUrl(dataUri, detail, serializedAdditionalRawData: null);
+    }
 }
