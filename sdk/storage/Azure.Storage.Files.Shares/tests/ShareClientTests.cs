@@ -1988,6 +1988,38 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task AcquireLeaseAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            ShareClient shareClient = InstrumentClient(service.GetShareClient(GetNewShareName()));
+            await shareClient.CreateAsync();
+            string id = Recording.Random.NewGuid().ToString();
+            TimeSpan duration = TimeSpan.FromSeconds(15);
+            ShareLeaseClient leaseClient = InstrumentClient(shareClient.GetShareLeaseClient(id));
+
+            // Act
+            Response<ShareFileLease> response = await leaseClient.AcquireAsync(duration);
+
+            // Assert
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
+            Assert.AreEqual(id, response.Value.LeaseId);
+            Assert.AreEqual(response.Value.LeaseId, leaseClient.LeaseId);
+
+            // Cleanup
+            ShareDeleteOptions options = new ShareDeleteOptions
+            {
+                Conditions = new ShareFileRequestConditions
+                {
+                    LeaseId = response.Value.LeaseId
+                }
+            };
+            await shareClient.DeleteAsync(options: options);
+        }
+
+        [RecordedTest]
         [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2020_02_10)]
         public async Task ReleaseLeaseAsync()
         {
