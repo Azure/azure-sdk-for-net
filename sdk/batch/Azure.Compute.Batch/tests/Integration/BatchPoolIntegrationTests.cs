@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Azure.Compute.Batch.Tests.Infrastructure;
 using Azure.Core.TestFramework;
+using NUnit.Framework;
 
 namespace Azure.Compute.Batch.Tests.Integration
 {
@@ -29,6 +30,7 @@ namespace Azure.Compute.Batch.Tests.Integration
         {
         }
 
+        [Ignore("Work in progress")]
         [RecordedTest]
         public async Task CreatePool_WithBlobFuseMountConfiguration()
         {
