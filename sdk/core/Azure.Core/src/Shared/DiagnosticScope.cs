@@ -260,6 +260,9 @@ namespace Azure.Core.Pipeline
 
             public void AddLink(string traceparent, string? tracestate, IDictionary<string, object?>? attributes)
             {
+                // if context is invalid, we should still add a link since it contains attributes
+                // so we let ActivityLink deal with the default context.
+                // This is otel spec requirement and default context is allowed on links.
                 ActivityContext.TryParse(traceparent, tracestate, out var context);
                 var linkedActivity = new ActivityLink(context, attributes == null ? null : new ActivityTagsCollection(attributes));
                 _links ??= new List<ActivityLink>();
