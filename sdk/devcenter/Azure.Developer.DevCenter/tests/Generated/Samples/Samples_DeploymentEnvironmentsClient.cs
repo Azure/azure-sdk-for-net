@@ -1179,12 +1179,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                environmentType = "<environmentType>",
-                catalogName = "<catalogName>",
-                environmentDefinitionName = "<environmentDefinitionName>",
-            });
+            using RequestContent content = RequestContent.Create(new object());
             Operation<BinaryData> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", content);
             BinaryData responseData = operation.Value;
 
@@ -1203,12 +1198,7 @@ namespace Azure.Developer.DevCenter.Samples
             TokenCredential credential = new DefaultAzureCredential();
             DeploymentEnvironmentsClient client = new DeploymentEnvironmentsClient(endpoint, credential);
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                environmentType = "<environmentType>",
-                catalogName = "<catalogName>",
-                environmentDefinitionName = "<environmentDefinitionName>",
-            });
+            using RequestContent content = RequestContent.Create(new object());
             Operation<BinaryData> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", content);
             BinaryData responseData = operation.Value;
 
@@ -1233,9 +1223,6 @@ namespace Azure.Developer.DevCenter.Samples
                 {
                     key = new object(),
                 },
-                environmentType = "<environmentType>",
-                catalogName = "<catalogName>",
-                environmentDefinitionName = "<environmentDefinitionName>",
             });
             Operation<BinaryData> operation = client.CreateOrUpdateEnvironment(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", content);
             BinaryData responseData = operation.Value;
@@ -1269,9 +1256,6 @@ namespace Azure.Developer.DevCenter.Samples
                 {
                     key = new object(),
                 },
-                environmentType = "<environmentType>",
-                catalogName = "<catalogName>",
-                environmentDefinitionName = "<environmentDefinitionName>",
             });
             Operation<BinaryData> operation = await client.CreateOrUpdateEnvironmentAsync(WaitUntil.Completed, "<projectName>", "<userId>", "<environmentName>", content);
             BinaryData responseData = operation.Value;

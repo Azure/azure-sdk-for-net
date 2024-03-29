@@ -46,14 +46,9 @@ namespace Azure.AI.DocumentIntelligence
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="DocumentModelDetails"/>. </summary>
-        /// <param name="modelId"> Unique document model name. </param>
         /// <param name="createdOn"> Date and time (UTC) when the document model was created. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="modelId"/> is null. </exception>
-        internal DocumentModelDetails(string modelId, DateTimeOffset createdOn)
+        internal DocumentModelDetails(DateTimeOffset createdOn)
         {
-            Argument.AssertNotNull(modelId, nameof(modelId));
-
-            ModelId = modelId;
             CreatedOn = createdOn;
             Tags = new ChangeTrackingDictionary<string, string>();
             DocTypes = new ChangeTrackingDictionary<string, DocumentTypeDetails>();

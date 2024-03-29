@@ -54,8 +54,11 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            writer.WritePropertyName("environmentType"u8);
-            writer.WriteStringValue(EnvironmentTypeName);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("environmentType"u8);
+                writer.WriteStringValue(EnvironmentTypeName);
+            }
             if (options.Format != "W" && Optional.IsDefined(UserId))
             {
                 writer.WritePropertyName("user"u8);
@@ -71,10 +74,16 @@ namespace Azure.Developer.DevCenter.Models
                 writer.WritePropertyName("resourceGroupId"u8);
                 writer.WriteStringValue(ResourceGroupId);
             }
-            writer.WritePropertyName("catalogName"u8);
-            writer.WriteStringValue(CatalogName);
-            writer.WritePropertyName("environmentDefinitionName"u8);
-            writer.WriteStringValue(EnvironmentDefinitionName);
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("catalogName"u8);
+                writer.WriteStringValue(CatalogName);
+            }
+            if (options.Format != "W")
+            {
+                writer.WritePropertyName("environmentDefinitionName"u8);
+                writer.WriteStringValue(EnvironmentDefinitionName);
+            }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
