@@ -204,5 +204,17 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics
 
         [Event(15, Message = "Calculated Cpu Counter: Period: {0}. DiffValue: {1}. CalculatedValue: {2}. ProcessorCount: {3}. NormalizedValue: {4}", Level = EventLevel.Verbose)]
         public void ProcessCountersCpuCounter(long period, long diffValue, double calculatedValue, int processorCount, double normalizedValue) => WriteEvent(15, period, diffValue, calculatedValue, processorCount, normalizedValue);
+
+        [NonEvent]
+        public void FailedToCreateTelemetryDocument(string documentTypeName, System.Exception ex)
+        {
+            if (IsEnabled(EventLevel.Error))
+            {
+                FailedToCreateTelemetryDocument(documentTypeName, ex.ToInvariantString());
+            }
+        }
+
+        [Event(16, Message = "Failed to create telemetry document due to an exception. DocumentType: {0}. Exception: {1}", Level = EventLevel.Error)]
+        public void FailedToCreateTelemetryDocument(string documentTypeName, string exceptionMessage) => WriteEvent(16, documentTypeName, exceptionMessage);
     }
 }

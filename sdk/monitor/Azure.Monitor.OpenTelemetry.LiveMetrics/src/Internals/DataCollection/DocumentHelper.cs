@@ -7,7 +7,9 @@ using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
 using Azure.Monitor.OpenTelemetry.Exporter.Internals;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
+using OpenTelemetry.Logs;
 using ExceptionDocument = Azure.Monitor.OpenTelemetry.LiveMetrics.Models.Exception;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
@@ -19,7 +21,87 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
     {
         // TODO: NEED TO HANDLE UNIQUE MAXLENGTH VALUES FOR DOCUMENT TYPES. SEE SWAGGER FOR MAXLENGTH VALUES.
 
-        internal static RemoteDependency ConvertToRemoteDependency(Activity activity)
+        #region Document Buffer Extension Methods
+        public static void AddExceptionDocument(this DoubleBuffer buffer, ActivityEvent activityEvent)
+        {
+            try
+            {
+                var exceptionDocument = ConvertToExceptionDocument(activityEvent);
+                buffer.WriteDocument(exceptionDocument);
+            }
+            catch (System.Exception ex)
+            {
+                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
+            }
+        }
+
+        public static void AddExceptionDocument(this DoubleBuffer buffer, System.Exception exception)
+        {
+            try
+            {
+                var exceptionDocument = ConvertToExceptionDocument(exception);
+                buffer.WriteDocument(exceptionDocument);
+            }
+            catch (System.Exception ex)
+            {
+                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("ExceptionDocument", ex);
+            }
+        }
+
+        public static void AddLogDocument(this DoubleBuffer buffer, ActivityEvent activityEvent)
+        {
+            try
+            {
+                var logDocument = ConvertToLogDocument(activityEvent);
+                buffer.WriteDocument(logDocument);
+            }
+            catch (System.Exception ex)
+            {
+                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
+            }
+        }
+
+        public static void AddLogDocument(this DoubleBuffer buffer, LogRecord logRecord)
+        {
+            try
+            {
+                var logDocument = ConvertToLogDocument(logRecord);
+                buffer.WriteDocument(logDocument);
+            }
+            catch (System.Exception ex)
+            {
+                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("LogDocument", ex);
+            }
+        }
+
+        public static void AddDependencyDocument(this DoubleBuffer buffer, Activity activity)
+        {
+            try
+            {
+                var dependencyDocument = ConvertToDependencyDocument(activity);
+                buffer.WriteDocument(dependencyDocument);
+            }
+            catch (System.Exception ex)
+            {
+                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("DependencyDocument", ex);
+            }
+        }
+
+        public static void AddRequestDocument(this DoubleBuffer buffer, Activity activity)
+        {
+            try
+            {
+                var requestDocument = ConvertToRequestDocument(activity);
+                buffer.WriteDocument(requestDocument);
+            }
+            catch (System.Exception ex)
+            {
+                LiveMetricsExporterEventSource.Log.FailedToCreateTelemetryDocument("RequestDocument", ex);
+            }
+        }
+        #endregion
+
+        internal static RemoteDependency ConvertToDependencyDocument(Activity activity)
         {
             // TODO: Investigate if we can have a minimal/optimized version of ActivityTagsProcessor for LiveMetric.
             var atp = new ActivityTagsProcessor();
@@ -86,7 +168,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             return remoteDependencyDocumentIngress;
         }
 
-        internal static Request ConvertToRequest(Activity activity)
+        internal static Request ConvertToRequestDocument(Activity activity)
         {
             string httpResponseStatusCode = string.Empty;
             string urlScheme = string.Empty;
@@ -157,8 +239,29 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             return requestDocumentIngress;
         }
 
-        internal static ExceptionDocument CreateException(string exceptionType, string exceptionMessage)
+        internal static ExceptionDocument ConvertToExceptionDocument(ActivityEvent activityEvent)
         {
+            string exceptionType = string.Empty;
+            string exceptionMessage = string.Empty;
+
+            foreach (ref readonly var tag in activityEvent.EnumerateTagObjects())
+            {
+                if (tag.Value == null)
+                {
+                    continue;
+                }
+                else if (tag.Key == SemanticConventions.AttributeExceptionType)
+                {
+                    exceptionType = tag.Value.ToString()!;
+                    continue;
+                }
+                else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
+                {
+                    exceptionMessage = tag.Value.ToString()!;
+                    continue;
+                }
+            }
+
             ExceptionDocument exceptionDocumentIngress = new()
             {
                 DocumentType = DocumentIngressDocumentType.Exception,
@@ -168,6 +271,38 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             };
 
             return exceptionDocumentIngress;
+        }
+
+        internal static ExceptionDocument ConvertToExceptionDocument(System.Exception exception)
+        {
+            ExceptionDocument exceptionDocumentIngress = new()
+            {
+                DocumentType = DocumentIngressDocumentType.Exception,
+                ExceptionType = exception.GetType().FullName,
+                ExceptionMessage = exception.Message,
+            };
+
+            return exceptionDocumentIngress;
+        }
+
+        internal static Models.Trace ConvertToLogDocument(LogRecord logRecord)
+        {
+            return new Models.Trace()
+            {
+                DocumentType = DocumentIngressDocumentType.Trace,
+                Message = logRecord.FormattedMessage ?? logRecord.Body, // TODO: MAY NEED TO BUILD THE FORMATTED MESSAGE IF NOT AVAILABLE
+                // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
+            };
+        }
+
+        internal static Models.Trace ConvertToLogDocument(ActivityEvent activityEvent)
+        {
+            return new Models.Trace()
+            {
+                DocumentType = DocumentIngressDocumentType.Trace,
+                Message = activityEvent.Name,
+                // TODO: Properties = new Dictionary<string, string>(), - UX supports up to 10 custom properties
+            };
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

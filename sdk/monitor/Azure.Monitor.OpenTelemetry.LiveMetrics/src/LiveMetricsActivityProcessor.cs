@@ -38,39 +38,25 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
 
             if (activity.Kind == ActivityKind.Server || activity.Kind == ActivityKind.Consumer)
             {
-                AddRequestDocument(activity);
+                _manager._documentBuffer.AddRequestDocument(activity);
             }
             else
             {
-                AddRemoteDependencyDocument(activity);
+                _manager._documentBuffer.AddDependencyDocument(activity);
             }
 
             if (activity.Events != null)
             {
                 foreach (ref readonly var @event in activity.EnumerateEvents())
                 {
-                    string exceptionType = string.Empty;
-                    string exceptionMessage = string.Empty;
-
-                    foreach (ref readonly var tag in @event.EnumerateTagObjects())
+                    if (@event.Name == SemanticConventions.AttributeExceptionEventName)
                     {
-                        if (tag.Value == null)
-                        {
-                            continue;
-                        }
-                        else if (tag.Key == SemanticConventions.AttributeExceptionType)
-                        {
-                            exceptionType = tag.Value.ToString()!;
-                            continue;
-                        }
-                        else if (tag.Key == SemanticConventions.AttributeExceptionMessage)
-                        {
-                            exceptionMessage = tag.Value.ToString()!;
-                            continue;
-                        }
+                        _manager._documentBuffer.AddExceptionDocument(@event);
                     }
-
-                    AddExceptionDocument(exceptionType, exceptionMessage);
+                    else
+                    {
+                        _manager._documentBuffer.AddLogDocument(@event);
+                    }
                 }
             }
         }
@@ -94,24 +80,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
             }
 
             base.Dispose(disposing);
-        }
-
-        private void AddExceptionDocument(string exceptionType, string exceptionMessage)
-        {
-            var exceptionDocumentIngress = DocumentHelper.CreateException(exceptionType, exceptionMessage);
-            _manager._documentBuffer.WriteDocument(exceptionDocumentIngress);
-        }
-
-        private void AddRemoteDependencyDocument(Activity activity)
-        {
-            var remoteDependencyDocumentIngress = DocumentHelper.ConvertToRemoteDependency(activity);
-            _manager._documentBuffer.WriteDocument(remoteDependencyDocumentIngress);
-        }
-
-        private void AddRequestDocument(Activity activity)
-        {
-            var requestDocumentIngress = DocumentHelper.ConvertToRequest(activity);
-            _manager._documentBuffer.WriteDocument(requestDocumentIngress);
         }
     }
 }

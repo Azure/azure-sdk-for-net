@@ -50,7 +50,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             dependencyActivity.SetTag("http.response.status_code", 200);
             dependencyActivity.Stop();
 
-            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+            var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
 
             // ASSERT
             Assert.Equal("http://bing.com", dependencyDocument.CommandName);
@@ -102,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Tests.DocumentTests
             // Assert
             var dependencyActivity = exportedActivities.Last();
             PrintActivity(dependencyActivity);
-            var dependencyDocument = DocumentHelper.ConvertToRemoteDependency(dependencyActivity);
+            var dependencyDocument = DocumentHelper.ConvertToDependencyDocument(dependencyActivity);
 
             Assert.Equal(requestUrl, dependencyDocument.CommandName);
             Assert.Equal(DocumentIngressDocumentType.RemoteDependency, dependencyDocument.DocumentType);
