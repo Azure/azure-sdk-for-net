@@ -3264,7 +3264,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <param name="status"> Describes the status of a service. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="Models.CosmosDBServiceProperties"/> instance for mocking. </returns>
-        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = "Unknown", CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
+        public static CosmosDBServiceProperties CosmosDBServiceProperties(DateTimeOffset? createdOn = null, CosmosDBServiceSize? instanceSize = null, int? instanceCount = null, string serviceType = null, CosmosDBServiceStatus? status = null, IDictionary<string, BinaryData> additionalProperties = null)
         {
             additionalProperties ??= new Dictionary<string, BinaryData>();
 
@@ -3272,7 +3272,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 createdOn,
                 instanceSize,
                 instanceCount,
-                serviceType,
+                serviceType == null ? default : new CosmosDBServiceType(serviceType),
                 status,
                 additionalProperties);
         }

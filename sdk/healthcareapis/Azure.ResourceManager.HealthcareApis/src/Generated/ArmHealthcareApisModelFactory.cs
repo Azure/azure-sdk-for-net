@@ -188,10 +188,12 @@ namespace Azure.ResourceManager.HealthcareApis.Models
         /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
         /// <param name="eventState"> DICOM Service event support status. </param>
         /// <param name="keyEncryptionKeyUri"> The encryption settings of the DICOM service. </param>
+        /// <param name="storageConfiguration"> The configuration of external storage account. </param>
+        /// <param name="enableDataPartitions"> If data partitions is enabled or not. </param>
         /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
         /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
         /// <returns> A new <see cref="HealthcareApis.DicomServiceData"/> instance for mocking. </returns>
-        public static DicomServiceData DicomServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = null, DicomServiceAuthenticationConfiguration authenticationConfiguration = null, DicomServiceCorsConfiguration corsConfiguration = null, Uri serviceUri = null, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, HealthcareApisPublicNetworkAccess? publicNetworkAccess = null, FhirServiceEventState? eventState = null, Uri keyEncryptionKeyUri = null, ManagedServiceIdentity identity = null, ETag? etag = null)
+        public static DicomServiceData DicomServiceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, HealthcareApisProvisioningState? provisioningState = null, DicomServiceAuthenticationConfiguration authenticationConfiguration = null, DicomServiceCorsConfiguration corsConfiguration = null, Uri serviceUri = null, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections = null, HealthcareApisPublicNetworkAccess? publicNetworkAccess = null, FhirServiceEventState? eventState = null, Uri keyEncryptionKeyUri = null, StorageConfiguration storageConfiguration = null, bool? enableDataPartitions = null, ManagedServiceIdentity identity = null, ETag? etag = null)
         {
             tags ??= new Dictionary<string, string>();
             privateEndpointConnections ??= new List<HealthcareApisPrivateEndpointConnectionData>();
@@ -211,6 +213,8 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 publicNetworkAccess,
                 eventState,
                 keyEncryptionKeyUri != null ? new Encryption(new EncryptionCustomerManagedKeyEncryption(keyEncryptionKeyUri, serializedAdditionalRawData: null), serializedAdditionalRawData: null) : null,
+                storageConfiguration,
+                enableDataPartitions,
                 identity,
                 etag,
                 serializedAdditionalRawData: null);
@@ -338,6 +342,30 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 identity,
                 etag,
                 serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="T:Azure.ResourceManager.HealthcareApis.DicomServiceData" />. </summary>
+        /// <param name="id"> The id. </param>
+        /// <param name="name"> The name. </param>
+        /// <param name="resourceType"> The resourceType. </param>
+        /// <param name="systemData"> The systemData. </param>
+        /// <param name="tags"> The tags. </param>
+        /// <param name="location"> The location. </param>
+        /// <param name="provisioningState"> The provisioning state. </param>
+        /// <param name="authenticationConfiguration"> Dicom Service authentication configuration. </param>
+        /// <param name="corsConfiguration"> Dicom Service Cors configuration. </param>
+        /// <param name="serviceUri"> The url of the Dicom Services. </param>
+        /// <param name="privateEndpointConnections"> The list of private endpoint connections that are set up for this resource. </param>
+        /// <param name="publicNetworkAccess"> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </param>
+        /// <param name="eventState"> DICOM Service event support status. </param>
+        /// <param name="keyEncryptionKeyUri"> The encryption settings of the DICOM service. </param>
+        /// <param name="identity"> Setting indicating whether the service has a managed identity associated with it. </param>
+        /// <param name="etag"> An etag associated with the resource, used for optimistic concurrency when editing it. </param>
+        /// <returns> A new <see cref="T:Azure.ResourceManager.HealthcareApis.DicomServiceData" /> instance for mocking. </returns>
+        [EditorBrowsable(EditorBrowsableState.Never)]
+        public static DicomServiceData DicomServiceData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, HealthcareApisProvisioningState? provisioningState, DicomServiceAuthenticationConfiguration authenticationConfiguration, DicomServiceCorsConfiguration corsConfiguration, Uri serviceUri, IEnumerable<HealthcareApisPrivateEndpointConnectionData> privateEndpointConnections, HealthcareApisPublicNetworkAccess? publicNetworkAccess, FhirServiceEventState? eventState, Uri keyEncryptionKeyUri, ManagedServiceIdentity identity, ETag? etag)
+        {
+            return DicomServiceData(id: id, name: name, resourceType: resourceType, systemData: systemData, tags: tags, location: location, provisioningState: provisioningState, authenticationConfiguration: authenticationConfiguration, corsConfiguration: corsConfiguration, serviceUri: serviceUri, privateEndpointConnections: privateEndpointConnections, publicNetworkAccess: publicNetworkAccess, eventState: eventState, keyEncryptionKeyUri: keyEncryptionKeyUri, storageConfiguration: default, enableDataPartitions: default, identity: identity, etag: etag);
         }
     }
 }

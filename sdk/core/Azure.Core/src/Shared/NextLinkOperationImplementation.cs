@@ -92,7 +92,9 @@ namespace Azure.Core
 
         public async ValueTask<OperationState> UpdateStateAsync(bool async, CancellationToken cancellationToken)
         {
-            Response response = await GetResponseAsync(async, _nextRequestUri, cancellationToken).ConfigureAwait(false);
+            Response response = async
+                ? await GetResponseAsync(_nextRequestUri, cancellationToken).ConfigureAwait(false)
+                : GetResponse(_nextRequestUri, cancellationToken);
 
             var hasCompleted = IsFinalState(response, _headerSource, out var failureState, out var resourceLocation);
             if (failureState != null)
@@ -103,10 +105,17 @@ namespace Azure.Core
             if (hasCompleted)
             {
                 string? finalUri = GetFinalUri(resourceLocation);
-                var finalResponse = finalUri != null
-                    ? await GetResponseAsync(async, finalUri, cancellationToken).ConfigureAwait(false)
-                    : response;
-
+                Response finalResponse;
+                if (finalUri != null)
+                {
+                    finalResponse = async
+                        ? await GetResponseAsync(finalUri, cancellationToken).ConfigureAwait(false)
+                        : GetResponse(finalUri, cancellationToken);
+                }
+                else
+                {
+                    finalResponse = response;
+                }
                 return GetOperationStateFromFinalResponse(_requestMethod, finalResponse);
             }
 
@@ -263,17 +272,17 @@ namespace Azure.Core
             return null;
         }
 
-        private async ValueTask<Response> GetResponseAsync(bool async, string uri, CancellationToken cancellationToken)
+        private Response GetResponse(string uri, CancellationToken cancellationToken)
         {
             using HttpMessage message = CreateRequest(uri);
-            if (async)
-            {
-                await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
-            }
-            else
-            {
-                _pipeline.Send(message, cancellationToken);
-            }
+            _pipeline.Send(message, cancellationToken);
+            return message.Response;
+        }
+
+        private async ValueTask<Response> GetResponseAsync(string uri, CancellationToken cancellationToken)
+        {
+            using HttpMessage message = CreateRequest(uri);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             return message.Response;
         }
 

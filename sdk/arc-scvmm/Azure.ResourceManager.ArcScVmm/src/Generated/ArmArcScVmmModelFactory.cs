@@ -423,10 +423,10 @@ namespace Azure.ResourceManager.ArcScVmm.Models
         /// <param name="inventoryItemName"> Gets the Managed Object name in VMM for the inventory item. </param>
         /// <param name="provisioningState"> Gets the provisioning state. </param>
         /// <returns> A new <see cref="Models.InventoryItemProperties"/> instance for mocking. </returns>
-        public static InventoryItemProperties InventoryItemProperties(string inventoryType = "Unknown", string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
+        public static InventoryItemProperties InventoryItemProperties(string inventoryType = null, string managedResourceId = null, string uuid = null, string inventoryItemName = null, string provisioningState = null)
         {
             return new UnknownInventoryItemProperties(
-                inventoryType,
+                inventoryType == null ? default : new InventoryType(inventoryType),
                 managedResourceId,
                 uuid,
                 inventoryItemName,
