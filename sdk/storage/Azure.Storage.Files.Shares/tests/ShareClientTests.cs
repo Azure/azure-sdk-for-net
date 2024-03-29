@@ -1489,6 +1489,22 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task GetStatisticsAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // Act
+            Response<ShareStatistics> response = await share.GetStatisticsAsync();
+
+            // Assert
+            Assert.IsNotNull(response);
+        }
+
+        [RecordedTest]
         public async Task CreateSnapshotAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
