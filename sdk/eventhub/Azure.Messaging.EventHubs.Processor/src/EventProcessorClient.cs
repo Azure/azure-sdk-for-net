@@ -348,12 +348,6 @@ namespace Azure.Messaging.EventHubs
         public new string Identifier => base.Identifier;
 
         /// <summary>
-        ///   Indicates whether or not this processor should instrument batch event processing calls with distributed tracing.
-        /// </summary>
-        ///
-        protected override bool? IsBatchTracingEnabled { get => false; }
-
-        /// <summary>
         ///   The instance of <see cref="EventProcessorClientEventSource" /> which can be mocked for testing.
         /// </summary>
         ///
@@ -364,6 +358,12 @@ namespace Azure.Messaging.EventHubs
         /// </summary>
         ///
         internal MessagingClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        ///   Indicates whether or not this processor should instrument batch event processing calls with distributed tracing.
+        /// </summary>
+        ///
+        protected override bool? IsBatchTracingEnabled { get => false; }
 
         /// <summary>
         ///   Responsible for creation of checkpoints and for ownership claim.
