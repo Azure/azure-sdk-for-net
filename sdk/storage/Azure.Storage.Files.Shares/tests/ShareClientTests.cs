@@ -1122,6 +1122,31 @@ namespace Azure.Storage.Files.Shares.Tests
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task GetAccessPolicyAsync_OAuth()
+        {
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // Arrange
+            ShareSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+            await share.SetAccessPolicyAsync(signedIdentifiers);
+
+            // Act
+            Response<IEnumerable<ShareSignedIdentifier>> response = await share.GetAccessPolicyAsync();
+
+            // Assert
+            ShareSignedIdentifier acl = response.Value.First();
+
+            Assert.AreEqual(1, response.Value.Count());
+            Assert.AreEqual(signedIdentifiers[0].Id, acl.Id);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyStartsOn, acl.AccessPolicy.PolicyStartsOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.PolicyExpiresOn, acl.AccessPolicy.PolicyExpiresOn);
+            Assert.AreEqual(signedIdentifiers[0].AccessPolicy.Permissions, acl.AccessPolicy.Permissions);
+        }
+
+        [RecordedTest]
         public async Task SetAccessPolicyAsync()
         {
             await using DisposingShare test = await GetTestShareAsync();
@@ -1330,6 +1355,26 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 share.SetAccessPolicyAsync(signedIdentifiers),
                 e => Assert.AreEqual("ShareNotFound", e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task SetAccessPolicyAsync_OAuth()
+        {
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            await using DisposingShare test = await GetTestShareAsync(service);
+            ShareClient share = test.Share;
+
+            // Arrange
+            ShareSignedIdentifier[] signedIdentifiers = BuildSignedIdentifiers();
+
+            // Act
+            Response<ShareInfo> response = await share.SetAccessPolicyAsync(signedIdentifiers);
+
+            // Assert
+            Assert.IsNotNull(response.GetRawResponse().Headers.RequestId);
+            // Ensure that we grab the whole ETag value from the service without removing the quotes
+            Assert.AreEqual(response.Value.ETag.ToString(), $"\"{response.GetRawResponse().Headers.ETag}\"");
         }
 
         [RecordedTest]
