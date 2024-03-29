@@ -88,6 +88,7 @@ rename-mapping:
   AzureActiveDirectoryValidation: ContainerAppAzureActiveDirectoryValidationConfiguration
   AzureCredentials: ContainerAppCredentials
   AzureFileProperties: ContainerAppAzureFileProperties
+  NfsAzureFileProperties: ContainerAppNfsAzureFileProperties
   BaseContainer: ContainerAppBaseContainer
   BillingMeter: ContainerAppBillingMeter
   BillingMeterProperties: ContainerAppBillingMeterProperties

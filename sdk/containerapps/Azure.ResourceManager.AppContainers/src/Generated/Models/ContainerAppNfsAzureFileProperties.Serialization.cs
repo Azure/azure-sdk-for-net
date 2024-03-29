@@ -13,16 +13,16 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.AppContainers.Models
 {
-    public partial class NfsAzureFileProperties : IUtf8JsonSerializable, IJsonModel<NfsAzureFileProperties>
+    public partial class ContainerAppNfsAzureFileProperties : IUtf8JsonSerializable, IJsonModel<ContainerAppNfsAzureFileProperties>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<NfsAzureFileProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ContainerAppNfsAzureFileProperties>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<NfsAzureFileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<ContainerAppNfsAzureFileProperties>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NfsAzureFileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppNfsAzureFileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsAzureFileProperties)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppNfsAzureFileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,19 +59,19 @@ namespace Azure.ResourceManager.AppContainers.Models
             writer.WriteEndObject();
         }
 
-        NfsAzureFileProperties IJsonModel<NfsAzureFileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        ContainerAppNfsAzureFileProperties IJsonModel<ContainerAppNfsAzureFileProperties>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NfsAzureFileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppNfsAzureFileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsAzureFileProperties)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppNfsAzureFileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeNfsAzureFileProperties(document.RootElement, options);
+            return DeserializeContainerAppNfsAzureFileProperties(document.RootElement, options);
         }
 
-        internal static NfsAzureFileProperties DeserializeNfsAzureFileProperties(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static ContainerAppNfsAzureFileProperties DeserializeContainerAppNfsAzureFileProperties(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -111,38 +111,38 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NfsAzureFileProperties(server, accessMode, shareName, serializedAdditionalRawData);
+            return new ContainerAppNfsAzureFileProperties(server, accessMode, shareName, serializedAdditionalRawData);
         }
 
-        BinaryData IPersistableModel<NfsAzureFileProperties>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<ContainerAppNfsAzureFileProperties>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NfsAzureFileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppNfsAzureFileProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NfsAzureFileProperties)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppNfsAzureFileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
-        NfsAzureFileProperties IPersistableModel<NfsAzureFileProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
+        ContainerAppNfsAzureFileProperties IPersistableModel<ContainerAppNfsAzureFileProperties>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<NfsAzureFileProperties>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<ContainerAppNfsAzureFileProperties>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeNfsAzureFileProperties(document.RootElement, options);
+                        return DeserializeContainerAppNfsAzureFileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NfsAzureFileProperties)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppNfsAzureFileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<NfsAzureFileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<ContainerAppNfsAzureFileProperties>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

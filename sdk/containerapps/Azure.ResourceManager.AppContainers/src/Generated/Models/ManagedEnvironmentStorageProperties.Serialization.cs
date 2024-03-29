@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(NfsAzureFile))
             {
                 writer.WritePropertyName("nfsAzureFile"u8);
-                writer.WriteObjectValue<NfsAzureFileProperties>(NfsAzureFile, options);
+                writer.WriteObjectValue<ContainerAppNfsAzureFileProperties>(NfsAzureFile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             ContainerAppAzureFileProperties azureFile = default;
-            NfsAzureFileProperties nfsAzureFile = default;
+            ContainerAppNfsAzureFileProperties nfsAzureFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    nfsAzureFile = NfsAzureFileProperties.DeserializeNfsAzureFileProperties(property.Value, options);
+                    nfsAzureFile = ContainerAppNfsAzureFileProperties.DeserializeContainerAppNfsAzureFileProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")

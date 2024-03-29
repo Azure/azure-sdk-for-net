@@ -962,6 +962,7 @@ namespace Azure.ResourceManager.AppContainers
     {
         public ContainerAppManagedEnvironmentStorageData() { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAzureFileProperties ManagedEnvironmentStorageAzureFile { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties ManagedEnvironmentStorageNfsAzureFile { get { throw null; } set { } }
         public Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties Properties { get { throw null; } set { } }
         Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentStorageData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentStorageData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.ContainerAppManagedEnvironmentStorageData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
@@ -3230,6 +3231,18 @@ namespace Azure.ResourceManager.AppContainers.Models
         public static bool operator !=(Azure.ResourceManager.AppContainers.Models.ContainerAppNameUnavailableReason left, Azure.ResourceManager.AppContainers.Models.ContainerAppNameUnavailableReason right) { throw null; }
         public override string ToString() { throw null; }
     }
+    public partial class ContainerAppNfsAzureFileProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties>
+    {
+        public ContainerAppNfsAzureFileProperties() { }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppAccessMode? AccessMode { get { throw null; } set { } }
+        public string Server { get { throw null; } set { } }
+        public string ShareName { get { throw null; } set { } }
+        Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
     public partial class ContainerAppOpenIdConnectClientCredential : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ContainerAppOpenIdConnectClientCredential>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ContainerAppOpenIdConnectClientCredential>
     {
         public ContainerAppOpenIdConnectClientCredential() { }
@@ -4332,7 +4345,7 @@ namespace Azure.ResourceManager.AppContainers.Models
     {
         public ManagedEnvironmentStorageProperties() { }
         public Azure.ResourceManager.AppContainers.Models.ContainerAppAzureFileProperties AzureFile { get { throw null; } set { } }
-        public Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties NfsAzureFile { get { throw null; } set { } }
+        public Azure.ResourceManager.AppContainers.Models.ContainerAppNfsAzureFileProperties NfsAzureFile { get { throw null; } set { } }
         Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
         Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.ManagedEnvironmentStorageProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
@@ -4348,18 +4361,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         Azure.ResourceManager.AppContainers.Models.NacosComponent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.NacosComponent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.NacosComponent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.NacosComponent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-    }
-    public partial class NfsAzureFileProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties>
-    {
-        public NfsAzureFileProperties() { }
-        public Azure.ResourceManager.AppContainers.Models.ContainerAppAccessMode? AccessMode { get { throw null; } set { } }
-        public string Server { get { throw null; } set { } }
-        public string ShareName { get { throw null; } set { } }
-        Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.NfsAzureFileProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class OpenTelemetryConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.AppContainers.Models.OpenTelemetryConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.AppContainers.Models.OpenTelemetryConfiguration>
     {

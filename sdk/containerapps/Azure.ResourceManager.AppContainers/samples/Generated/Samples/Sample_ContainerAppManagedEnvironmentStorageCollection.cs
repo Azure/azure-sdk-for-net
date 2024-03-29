@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.AppContainers.Samples
             {
                 Properties = new ManagedEnvironmentStorageProperties()
                 {
-                    NfsAzureFile = new NfsAzureFileProperties()
+                    NfsAzureFile = new ContainerAppNfsAzureFileProperties()
                     {
                         Server = "server1",
                         AccessMode = ContainerAppAccessMode.ReadOnly,

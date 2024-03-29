@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.AppContainers.Models
 {
     /// <summary> NFS Azure File Properties. </summary>
-    public partial class NfsAzureFileProperties
+    public partial class ContainerAppNfsAzureFileProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,17 +45,17 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="NfsAzureFileProperties"/>. </summary>
-        public NfsAzureFileProperties()
+        /// <summary> Initializes a new instance of <see cref="ContainerAppNfsAzureFileProperties"/>. </summary>
+        public ContainerAppNfsAzureFileProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="NfsAzureFileProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="ContainerAppNfsAzureFileProperties"/>. </summary>
         /// <param name="server"> Server for NFS azure file. </param>
         /// <param name="accessMode"> Access mode for storage. </param>
         /// <param name="shareName"> NFS Azure file share name. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal NfsAzureFileProperties(string server, ContainerAppAccessMode? accessMode, string shareName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ContainerAppNfsAzureFileProperties(string server, ContainerAppAccessMode? accessMode, string shareName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Server = server;
             AccessMode = accessMode;

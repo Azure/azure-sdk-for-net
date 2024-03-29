@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <param name="azureFile"> Azure file properties. </param>
         /// <param name="nfsAzureFile"> NFS Azure file properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, NfsAzureFileProperties nfsAzureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal ManagedEnvironmentStorageProperties(ContainerAppAzureFileProperties azureFile, ContainerAppNfsAzureFileProperties nfsAzureFile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AzureFile = azureFile;
             NfsAzureFile = nfsAzureFile;
@@ -64,6 +64,6 @@ namespace Azure.ResourceManager.AppContainers.Models
         /// <summary> Azure file properties. </summary>
         public ContainerAppAzureFileProperties AzureFile { get; set; }
         /// <summary> NFS Azure file properties. </summary>
-        public NfsAzureFileProperties NfsAzureFile { get; set; }
+        public ContainerAppNfsAzureFileProperties NfsAzureFile { get; set; }
     }
 }
