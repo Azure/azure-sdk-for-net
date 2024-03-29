@@ -6626,7 +6626,7 @@ namespace Azure.ResourceManager.AppService
             }
         }
 
-        internal HttpMessage CreateListFunctionKeysRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
+        internal HttpMessage CreateListFunctionKeysAsDictionaryRequest(string subscriptionId, string resourceGroupName, string name, string functionName)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -6657,22 +6657,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public async Task<Response<AppServiceConfigurationDictionary>> ListFunctionKeysAsync(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
+        public async Task<Response<IReadOnlyDictionary<string, string>>> ListFunctionKeysAsDictionaryAsync(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
-            using var message = CreateListFunctionKeysRequest(subscriptionId, resourceGroupName, name, functionName);
+            using var message = CreateListFunctionKeysAsDictionaryRequest(subscriptionId, resourceGroupName, name, functionName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AppServiceConfigurationDictionary value = default;
+                        IReadOnlyDictionary<string, string> value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
+                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetString());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -6688,22 +6693,27 @@ namespace Azure.ResourceManager.AppService
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="name"/> or <paramref name="functionName"/> is an empty string, and was expected to be non-empty. </exception>
-        public Response<AppServiceConfigurationDictionary> ListFunctionKeys(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
+        public Response<IReadOnlyDictionary<string, string>> ListFunctionKeysAsDictionary(string subscriptionId, string resourceGroupName, string name, string functionName, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
             Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
             Argument.AssertNotNullOrEmpty(name, nameof(name));
             Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
-            using var message = CreateListFunctionKeysRequest(subscriptionId, resourceGroupName, name, functionName);
+            using var message = CreateListFunctionKeysAsDictionaryRequest(subscriptionId, resourceGroupName, name, functionName);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
                 case 200:
                     {
-                        AppServiceConfigurationDictionary value = default;
+                        IReadOnlyDictionary<string, string> value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = AppServiceConfigurationDictionary.DeserializeAppServiceConfigurationDictionary(document.RootElement);
+                        Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                        foreach (var property in document.RootElement.EnumerateObject())
+                        {
+                            dictionary.Add(property.Name, property.Value.GetString());
+                        }
+                        value = dictionary;
                         return Response.FromValue(value, message.Response);
                     }
                 default:

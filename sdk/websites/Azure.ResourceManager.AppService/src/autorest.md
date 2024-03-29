@@ -838,4 +838,32 @@ directive:
                 }
             }
         };
+  - from: CommonDefinitions.json
+    where: $.definitions
+    transform: >
+        $["StringDictionaryType2"] = {
+          "description": "String dictionary resource.",
+          "type": "object",
+          "additionalProperties": {
+                "type": "string"
+              }
+          };
+  - from: WebApps.json
+    where: $.paths['/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Web/sites/{name}/functions/{functionName}/listkeys'].post
+    transform: >
+        $['operationId'] = "WebApps_ListFunctionKeysAsDictionary";
+        $['responses'] = {
+          "200": {
+            "description": "Function keys returned.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/StringDictionaryType2"
+            }
+          },
+          "default": {
+            "description": "App Service error response.",
+            "schema": {
+              "$ref": "./CommonDefinitions.json#/definitions/DefaultErrorResponse"
+            }
+          }
+        };
 ```

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -514,7 +515,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_ListFunctionKeys</description>
+        /// <description>WebApps_ListFunctionKeysAsDictionary</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -527,13 +528,13 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<AppServiceConfigurationDictionary>> GetFunctionKeysAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<IReadOnlyDictionary<string, string>>> GetFunctionKeysAsDictionaryAsync(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionKeys");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionKeysAsDictionary");
             scope.Start();
             try
             {
-                var response = await _siteFunctionWebAppsRestClient.ListFunctionKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
+                var response = await _siteFunctionWebAppsRestClient.ListFunctionKeysAsDictionaryAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken).ConfigureAwait(false);
                 return response;
             }
             catch (Exception e)
@@ -552,7 +553,7 @@ namespace Azure.ResourceManager.AppService
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
-        /// <description>WebApps_ListFunctionKeys</description>
+        /// <description>WebApps_ListFunctionKeysAsDictionary</description>
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
@@ -565,13 +566,13 @@ namespace Azure.ResourceManager.AppService
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<AppServiceConfigurationDictionary> GetFunctionKeys(CancellationToken cancellationToken = default)
+        public virtual Response<IReadOnlyDictionary<string, string>> GetFunctionKeysAsDictionary(CancellationToken cancellationToken = default)
         {
-            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionKeys");
+            using var scope = _siteFunctionWebAppsClientDiagnostics.CreateScope("SiteFunctionResource.GetFunctionKeysAsDictionary");
             scope.Start();
             try
             {
-                var response = _siteFunctionWebAppsRestClient.ListFunctionKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
+                var response = _siteFunctionWebAppsRestClient.ListFunctionKeysAsDictionary(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Name, Id.Name, cancellationToken);
                 return response;
             }
             catch (Exception e)
