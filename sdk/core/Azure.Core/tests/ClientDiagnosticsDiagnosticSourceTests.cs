@@ -213,7 +213,7 @@ namespace Azure.Core.Tests
 
             DiagnosticScope scope = clientDiagnostics.CreateScope("ActivityName");
 
-            var expectedTags = new Dictionary<string, string>()
+            var expectedTags = new Dictionary<string, object>()
             {
                 {"key1", "value1"},
                 {"key2", "value2"}

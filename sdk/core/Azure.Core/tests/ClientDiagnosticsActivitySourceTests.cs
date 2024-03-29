@@ -73,7 +73,7 @@ namespace Azure.Core.Tests
             scope.AddIntegerAttribute("Attribute3", 3);
 
             scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b1-2899ebfdbdce904b-00", "foo=bar");
-            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null, new Dictionary<string, string>()
+            scope.AddLink("00-6e76af18746bae4eadc3581338bbe8b2-2899ebfdbdce904b-00", null, new Dictionary<string, object>()
             {
                 {"linkAttribute", "linkAttributeValue"}
             });

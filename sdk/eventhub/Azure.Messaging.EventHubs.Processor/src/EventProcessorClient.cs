@@ -365,6 +365,9 @@ namespace Azure.Messaging.EventHubs
         ///
         internal MessagingClientDiagnostics ClientDiagnostics { get; }
 
+        /// <inheritdoc />
+        protected override bool? IsBatchTracingEnabled { get => false; }
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
         /// </summary>
@@ -1114,6 +1117,7 @@ namespace Azure.Messaging.EventHubs
 
                     emptyBatch = false;
 
+                    using var scope = StartProcessorScope(eventData);
                     try
                     {
                         Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
@@ -1132,6 +1136,12 @@ namespace Azure.Messaging.EventHubs
 
                         caughtExceptions ??= new List<Exception>();
                         caughtExceptions.Add(ex);
+                        scope.Failed(ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
                     }
                 }
 
@@ -1171,6 +1181,30 @@ namespace Azure.Messaging.EventHubs
 
                 throw new AggregateException(Resources.AggregateEventProcessingExceptionMessage, caughtExceptions);
             }
+        }
+
+        private DiagnosticScope StartProcessorScope(EventData eventData)
+        {
+            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+            if (diagnosticScope.IsEnabled)
+            {
+                if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
+                {
+                    // set link in all cases
+                    diagnosticScope.AddLink(traceparent, tracestate);
+                    // parent is not required, but allowed and helps to correlated producer and consumers
+                    diagnosticScope.SetTraceContext(traceparent, tracestate);
+                }
+                if (eventData.EnqueuedTime != default)
+                {
+                    diagnosticScope.AddLongAttribute(
+                        DiagnosticProperty.EnqueuedTimeAttribute,
+                        eventData.EnqueuedTime.ToUnixTimeMilliseconds());
+                }
+            }
+
+            diagnosticScope.Start();
+            return diagnosticScope;
         }
 
         /// <summary>
