@@ -931,7 +931,7 @@
 # ServiceOwners:                                                   @cdnfdsuppgithub
 
 # PRLabel: %Network - Front Door
-/sdk/frontdoor/                                                          @ptnan7
+/sdk/frontdoor/                                                    @ptnan7
 
 # PRLabel: %Communication - Resource Manager
 /sdk/communication/Azure.ResourceManager.Communication/            @archerzz @ArcturusZhang @ArthurMa1978
