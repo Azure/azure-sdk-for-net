@@ -1,4 +1,4 @@
-# Azure.Compute.Batch client library for .NET
+# Azure Compute.Batch client library for .NET
 
 Azure.Compute.Batch is a managed service that helps developers get secret simply and securely.
 
