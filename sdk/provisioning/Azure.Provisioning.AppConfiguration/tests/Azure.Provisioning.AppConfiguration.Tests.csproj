@@ -10,15 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\core\Azure.Core.TestFramework\src\Azure.Core.TestFramework.csproj" />
     <ProjectReference Include="..\..\Azure.Provisioning.Authorization\src\Azure.Provisioning.Authorization.csproj" />
-<!--    <ProjectReference Include="..\..\Azure.Provisioning\tests\Azure.Provisioning.Tests.csproj" />-->
     <ProjectReference Include="..\src\Azure.Provisioning.AppConfiguration.csproj" />
   </ItemGroup>
-
-
-<!--  <ItemGroup>-->
-<!--    <Compile Include="..\..\Azure.Provisioning\tests\ProvisioningTestBase.cs" LinkBase="ProvisioningShared" />-->
-<!--    <Compile Include="..\..\Azure.Provisioning\tests\ProvisioningTestEnvironment.cs" LinkBase="ProvisioningShared" />-->
-<!--    <Compile Include="..\..\Azure.Provisioning\tests\TestInfrastructure.cs" LinkBase="ProvisioningShared" />-->
-<!--  </ItemGroup>-->
 
 </Project>
