@@ -328,6 +328,33 @@ namespace Azure.Storage.Queues.Test
         }
 
         [RecordedTest]
+        [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2021_06_08)]
+        public async Task CreateAsync_WithOauthBearerChallenge()
+        {
+            // Arrange
+            var queueName = GetNewQueueName();
+            QueueClientOptions options = new QueueClientOptions
+            {
+                Audience = QueueAudience.CreateQueueServiceAccountAudience("account"),
+            };
+            QueueServiceClient service = QueuesClientBuilder.GetServiceClient_OAuth(options);
+            QueueClient queue = InstrumentClient(service.GetQueueClient(queueName));
+
+            try
+            {
+                // Act
+                Response result = await queue.CreateAsync();
+
+                // Assert
+                Assert.IsNotNull(result.Headers.RequestId, $"{nameof(result)} may not be populated");
+            }
+            finally
+            {
+                await queue.DeleteIfExistsAsync();
+            }
+        }
+
+        [RecordedTest]
         public async Task CreateAsync_WithAccountSas()
         {
             // Arrange
