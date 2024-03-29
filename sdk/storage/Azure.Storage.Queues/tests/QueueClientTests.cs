@@ -327,7 +327,8 @@ namespace Azure.Storage.Queues.Test
             }
         }
 
-        [RecordedTest]
+        // Not possible to record
+        [LiveOnly]
         [ServiceVersion(Min = QueueClientOptions.ServiceVersion.V2021_06_08)]
         public async Task CreateAsync_WithOauthBearerChallenge()
         {
