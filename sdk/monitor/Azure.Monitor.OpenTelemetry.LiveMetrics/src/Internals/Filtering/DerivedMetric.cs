@@ -192,7 +192,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     // special case - for TimeSpan values ToString() will not result in a value convertable to double, so we must take care of that ourselves
                     if (fieldType == typeof(TimeSpan))
                     {
-                        fieldExpression = Expression.Property(fieldExpression, "TotalMilliseconds");
+                        MethodInfo? parseMethod = typeof(TimeSpan).GetMethod("Parse", new[] { typeof(string) });
+                        Expression fieldConvertedExpression = Expression.Call(parseMethod!, fieldExpression);
+                        fieldExpression = Expression.Property(fieldConvertedExpression, "TotalMilliseconds");
                     }
                 }
 

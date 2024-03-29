@@ -286,6 +286,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                         typeof(TTelemetry),
                         (type, propertyName) => type.GetProperty(propertyName, BindingFlags.Instance | BindingFlags.Public).PropertyType);
 
+                if (fieldName == "Duration")
+                {
+                    propertyType = typeof(TimeSpan);
+                }
+
                 if (propertyType == null)
                 {
                     string propertyNotFoundMessage = string.Format(
@@ -555,27 +560,29 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
                     if (fieldType == typeof(TimeSpan))
                     {
                         this.ThrowOnInvalidFilter(fieldType, !this.comparandTimeSpan.HasValue);
+                        MethodInfo parseMethod = typeof(TimeSpan).GetMethod("Parse", new[] { typeof(string) });
+                        Expression fieldConvertedExpression = Expression.Call(parseMethod, fieldExpression);
 
                         switch (this.predicate)
                         {
                             case Predicate.Equal:
                                 Func<TimeSpan, bool> comparator = fieldValue => fieldValue == this.comparandTimeSpan.Value;
-                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
+                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldConvertedExpression);
                             case Predicate.NotEqual:
                                 comparator = fieldValue => fieldValue != this.comparandTimeSpan.Value;
-                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
+                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldConvertedExpression);
                             case Predicate.LessThan:
                                 comparator = fieldValue => fieldValue < this.comparandTimeSpan.Value;
-                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
+                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldConvertedExpression);
                             case Predicate.GreaterThan:
                                 comparator = fieldValue => fieldValue > this.comparandTimeSpan.Value;
-                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
+                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldConvertedExpression);
                             case Predicate.LessThanOrEqual:
                                 comparator = fieldValue => fieldValue <= this.comparandTimeSpan.Value;
-                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
+                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldConvertedExpression);
                             case Predicate.GreaterThanOrEqual:
                                 comparator = fieldValue => fieldValue >= this.comparandTimeSpan.Value;
-                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldExpression);
+                                return Expression.Call(Expression.Constant(comparator.Target), comparator.GetMethodInfo(), fieldConvertedExpression);
                             default:
                                 this.ThrowOnInvalidFilter(fieldType);
                                 break;
