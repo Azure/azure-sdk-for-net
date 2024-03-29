@@ -82,6 +82,25 @@ public static class ModelReaderWriter
     }
 
     /// <summary>
+    /// Converts the value of a model into a <see cref="BinaryData"/>.
+    /// </summary>
+    /// <typeparam name="T">The type of the value to write.</typeparam>
+    /// <param name="model">The model to convert.</param>
+    /// <param name="options">The <see cref="ModelReaderWriterOptions"/> to use.</param>
+    /// <returns>A <see cref="BinaryData"/> representation of the model in the <see cref="ModelReaderWriterOptions.Format"/> specified by the <paramref name="options"/>.</returns>
+    /// <exception cref="FormatException">If the model does not support the requested <see cref="ModelReaderWriterOptions.Format"/>.</exception>
+    /// <exception cref="ArgumentNullException">If <paramref name="model"/> is null.</exception>
+    public static BinaryData Write<T>(T? model, ModelReaderWriterOptions? options = default)
+        where T : struct, IPersistableModel<T>
+    {
+        if (!model.HasValue)
+        {
+            throw new ArgumentNullException(nameof(model));
+        }
+        return Write<T>(model!, options);
+    }
+
+    /// <summary>
     /// Converts the <see cref="BinaryData"/> into a <typeparamref name="T"/>.
     /// </summary>
     /// <param name="data">The <see cref="BinaryData"/> to convert.</param>
