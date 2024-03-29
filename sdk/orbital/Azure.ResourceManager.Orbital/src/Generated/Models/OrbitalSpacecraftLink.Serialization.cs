@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Orbital.Models
                 writer.WriteStartArray();
                 foreach (var item in Authorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AuthorizedGroundStation>(item, options);
                 }
                 writer.WriteEndArray();
             }

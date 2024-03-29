@@ -67,10 +67,13 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The related categories for the function. </summary>
+        [WirePath("categories")]
         public IList<string> Categories { get; }
         /// <summary> The related resource types for the function. </summary>
+        [WirePath("resourceTypes")]
         public IList<string> ResourceTypes { get; }
         /// <summary> The related Log Analytics solutions for the function. </summary>
+        [WirePath("solutions")]
         public IList<string> Solutions { get; }
     }
 }

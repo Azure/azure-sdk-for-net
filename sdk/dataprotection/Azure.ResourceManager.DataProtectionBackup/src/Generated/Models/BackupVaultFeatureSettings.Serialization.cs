@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(CrossSubscriptionRestoreSettings))
             {
                 writer.WritePropertyName("crossSubscriptionRestoreSettings"u8);
-                writer.WriteObjectValue(CrossSubscriptionRestoreSettings);
+                writer.WriteObjectValue<CrossSubscriptionRestoreSettings>(CrossSubscriptionRestoreSettings, options);
             }
             if (Optional.IsDefined(CrossRegionRestoreSettings))
             {
                 writer.WritePropertyName("crossRegionRestoreSettings"u8);
-                writer.WriteObjectValue(CrossRegionRestoreSettings);
+                writer.WriteObjectValue<CrossRegionRestoreSettings>(CrossRegionRestoreSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

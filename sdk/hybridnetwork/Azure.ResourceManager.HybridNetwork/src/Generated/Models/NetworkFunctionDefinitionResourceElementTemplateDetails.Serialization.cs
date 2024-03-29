@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(Configuration))
             {
                 writer.WritePropertyName("configuration"u8);
-                writer.WriteObjectValue(Configuration);
+                writer.WriteObjectValue<ArmResourceDefinitionResourceElementTemplate>(Configuration, options);
             }
             if (Optional.IsDefined(Name))
             {
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(DependsOnProfile))
             {
                 writer.WritePropertyName("dependsOnProfile"u8);
-                writer.WriteObjectValue(DependsOnProfile);
+                writer.WriteObjectValue<DependsOnProfile>(DependsOnProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

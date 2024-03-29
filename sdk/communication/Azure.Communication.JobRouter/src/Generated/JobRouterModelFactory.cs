@@ -110,9 +110,9 @@ namespace Azure.Communication.JobRouter
         /// <param name="id"> Unique Id of the exception action. </param>
         /// <param name="kind"> The type discriminator describing a sub-type of ExceptionAction. </param>
         /// <returns> A new <see cref="JobRouter.ExceptionAction"/> instance for mocking. </returns>
-        public static ExceptionAction ExceptionAction(string id = null, string kind = "Unknown")
+        public static ExceptionAction ExceptionAction(string id = null, string kind = null)
         {
-            return new UnknownExceptionAction(id, kind, serializedAdditionalRawData: null);
+            return new UnknownExceptionAction(id, kind == null ? default : new ExceptionActionKind(kind), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterJobAssignment"/>. </summary>
@@ -195,7 +195,7 @@ namespace Azure.Communication.JobRouter
         /// <summary> Initializes a new instance of <see cref="JobRouter.RouterChannel"/>. </summary>
         /// <param name="channelId"> Id of a channel. </param>
         /// <param name="capacityCostPerJob"> The amount of capacity that an instance of a job of this channel will consume of the total worker capacity. </param>
-        /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. </param>
+        /// <param name="maxNumberOfJobs"> The maximum number of jobs that can be supported concurrently for this channel. Value must be greater than zero. </param>
         /// <returns> A new <see cref="JobRouter.RouterChannel"/> instance for mocking. </returns>
         public static RouterChannel RouterChannel(string channelId = null, int capacityCostPerJob = default, int? maxNumberOfJobs = null)
         {

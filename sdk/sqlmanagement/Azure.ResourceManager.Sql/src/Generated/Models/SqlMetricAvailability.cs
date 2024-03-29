@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The length of retention for the database metric. </summary>
+        [WirePath("retention")]
         public string Retention { get; }
         /// <summary> The granularity of the database metric. </summary>
+        [WirePath("timeGrain")]
         public string TimeGrain { get; }
     }
 }

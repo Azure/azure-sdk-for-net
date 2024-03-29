@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ResourceHealth
             if (Optional.IsDefined(Article))
             {
                 writer.WritePropertyName("article"u8);
-                writer.WriteObjectValue(Article);
+                writer.WriteObjectValue<ResourceHealthEventArticle>(Article, options);
             }
             if (Optional.IsCollectionDefined(Links))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthEventLink>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -136,14 +136,14 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Impact)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthEventImpact>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
-                writer.WriteObjectValue(RecommendedActions);
+                writer.WriteObjectValue<ResourceHealthEventRecommendedActions>(RecommendedActions, options);
             }
             if (Optional.IsCollectionDefined(Faqs))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ResourceHealth
                 writer.WriteStartArray();
                 foreach (var item in Faqs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthEventFaq>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.ResourceHealth
             if (Optional.IsDefined(AdditionalInformation))
             {
                 writer.WritePropertyName("additionalInformation"u8);
-                writer.WriteObjectValue(AdditionalInformation);
+                writer.WriteObjectValue<ResourceHealthEventAdditionalInformation>(AdditionalInformation, options);
             }
             if (Optional.IsDefined(Duration))
             {

@@ -33,12 +33,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                writer.WriteObjectValue<ExportTimePeriod>(TimePeriod, options);
             }
             if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
-                writer.WriteObjectValue(DataSet);
+                writer.WriteObjectValue<ExportDataset>(DataSet, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

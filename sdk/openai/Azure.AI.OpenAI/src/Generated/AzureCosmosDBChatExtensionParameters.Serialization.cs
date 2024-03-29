@@ -29,7 +29,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -58,9 +58,9 @@ namespace Azure.AI.OpenAI
             writer.WritePropertyName("index_name"u8);
             writer.WriteStringValue(IndexName);
             writer.WritePropertyName("fields_mapping"u8);
-            writer.WriteObjectValue(FieldMappingOptions);
+            writer.WriteObjectValue<AzureCosmosDBFieldMappingOptions>(FieldMappingOptions, options);
             writer.WritePropertyName("embedding_dependency"u8);
-            writer.WriteObjectValue(EmbeddingDependency);
+            writer.WriteObjectValue<OnYourDataVectorizationSource>(EmbeddingDependency, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -242,7 +242,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureCosmosDBChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

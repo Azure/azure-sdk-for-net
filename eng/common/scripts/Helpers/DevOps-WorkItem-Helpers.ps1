@@ -986,3 +986,45 @@ function UpdatePackageVersions($pkgWorkItem, $plannedVersions, $shippedVersions)
     -Headers (Get-DevOpsRestHeaders) -Body $body -ContentType "application/json-patch+json" | ConvertTo-Json -Depth 10 | ConvertFrom-Json -AsHashTable
   return $response
 }
+
+function UpdateValidationStatus($pkgvalidationDetails, $BuildDefinition, $PipelineUrl)
+{
+    $pkgName = $pkgValidationDetails.Name
+    $versionString = $pkgValidationDetails.Version
+
+    $parsedNewVersion = [AzureEngSemanticVersion]::new($versionString)
+    $versionMajorMinor = "" + $parsedNewVersion.Major + "." + $parsedNewVersion.Minor
+    $workItem = FindPackageWorkItem -lang $LanguageDisplayName -packageName $pkgName -version $versionMajorMinor -includeClosed $true -outputCommand $false
+
+    if (!$workItem)
+    {
+        Write-Host"No work item found for package [$pkgName]."
+        return $false
+    }
+
+    $changeLogStatus = $pkgValidationDetails.ChangeLogValidation.Status
+    $changeLogDetails  = $pkgValidationDetails.ChangeLogValidation.Message
+    $apiReviewStatus = $pkgValidationDetails.APIReviewValidation.Status
+    $apiReviewDetails = $pkgValidationDetails.APIReviewValidation.Message
+    $packageNameStatus = $pkgValidationDetails.PackageNameValidation.Status
+    $packageNameDetails = $pkgValidationDetails.PackageNameValidation.Message
+
+    $fields = @()
+    $fields += "`"PackageVersion=${versionString}`""
+    $fields += "`"ChangeLogStatus=${changeLogStatus}`""
+    $fields += "`"ChangeLogValidationDetails=${changeLogDetails}`""
+    $fields += "`"APIReviewStatus=${apiReviewStatus}`""
+    $fields += "`"APIReviewStatusDetails=${apiReviewDetails}`""
+    $fields += "`"PackageNameApprovalStatus=${packageNameStatus}`""
+    $fields += "`"PackageNameApprovalDetails=${packageNameDetails}`""
+    if ($BuildDefinition) {
+        $fields += "`"PipelineDefinition=$BuildDefinition`""
+    }
+    if ($PipelineUrl) {
+        $fields += "`"LatestPipelineRun=$PipelineUrl`""
+    }
+
+    $workItem = UpdateWorkItem -id $workItem.id -fields $fields
+    Write-Host "[$($workItem.id)]$LanguageDisplayName - $pkgName($versionMajorMinor) - Updated"
+    return $true
+}

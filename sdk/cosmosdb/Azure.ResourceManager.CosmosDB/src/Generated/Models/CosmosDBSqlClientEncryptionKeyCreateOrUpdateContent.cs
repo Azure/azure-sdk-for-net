@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The standard JSON format of a ClientEncryptionKey. </summary>
+        [WirePath("properties.resource")]
         public CosmosDBSqlClientEncryptionKeyResourceInfo Resource { get; }
     }
 }

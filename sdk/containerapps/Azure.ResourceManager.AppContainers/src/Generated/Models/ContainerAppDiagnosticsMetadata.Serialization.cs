@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportTopicList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppDiagnosticSupportTopic>(item, options);
                 }
                 writer.WriteEndArray();
             }

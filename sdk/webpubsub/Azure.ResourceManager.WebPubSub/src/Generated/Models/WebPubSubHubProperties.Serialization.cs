@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHandlers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebPubSubEventHandler>(item, options);
                 }
                 writer.WriteEndArray();
             }

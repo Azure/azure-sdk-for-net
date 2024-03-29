@@ -80,8 +80,10 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> A provisioning state of the ThroughputPool. </summary>
+        [WirePath("properties.provisioningState")]
         public CosmosDBStatus? ProvisioningState { get; set; }
         /// <summary> Value for throughput to be shared among CosmosDB resources in the pool. </summary>
+        [WirePath("properties.maxThroughput")]
         public int? MaxThroughput { get; set; }
     }
 }

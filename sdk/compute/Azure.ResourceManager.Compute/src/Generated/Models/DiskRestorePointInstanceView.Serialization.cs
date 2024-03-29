@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus);
+                writer.WriteObjectValue<DiskRestorePointReplicationStatus>(ReplicationStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

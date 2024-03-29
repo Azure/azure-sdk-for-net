@@ -49,22 +49,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(AutoScaleConfiguration))
             {
                 writer.WritePropertyName("autoscale"u8);
-                writer.WriteObjectValue(AutoScaleConfiguration);
+                writer.WriteObjectValue<HDInsightAutoScaleConfiguration>(AutoScaleConfiguration, options);
             }
             if (Optional.IsDefined(HardwareProfile))
             {
                 writer.WritePropertyName("hardwareProfile"u8);
-                writer.WriteObjectValue(HardwareProfile);
+                writer.WriteObjectValue<HardwareProfile>(HardwareProfile, options);
             }
             if (Optional.IsDefined(OSProfile))
             {
                 writer.WritePropertyName("osProfile"u8);
-                writer.WriteObjectValue(OSProfile);
+                writer.WriteObjectValue<OSProfile>(OSProfile, options);
             }
             if (Optional.IsDefined(VirtualNetworkProfile))
             {
                 writer.WritePropertyName("virtualNetworkProfile"u8);
-                writer.WriteObjectValue(VirtualNetworkProfile);
+                writer.WriteObjectValue<HDInsightVirtualNetworkProfile>(VirtualNetworkProfile, options);
             }
             if (Optional.IsCollectionDefined(DataDisksGroups))
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightClusterDataDiskGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptAction>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.NotificationHubs
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<NotificationHubSku>(Sku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -133,12 +133,12 @@ namespace Azure.ResourceManager.NotificationHubs
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue<NotificationHubNetworkAcls>(NetworkAcls, options);
             }
             if (Optional.IsDefined(PnsCredentials))
             {
                 writer.WritePropertyName("pnsCredentials"u8);
-                writer.WriteObjectValue(PnsCredentials);
+                writer.WriteObjectValue<PnsCredentials>(PnsCredentials, options);
             }
             if (Optional.IsDefined(ServiceBusEndpoint))
             {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NotificationHubs
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationHubPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

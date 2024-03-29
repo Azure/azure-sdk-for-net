@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksToAttach)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataDisksToAttach>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksToDetach)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataDisksToDetach>(item, options);
                 }
                 writer.WriteEndArray();
             }

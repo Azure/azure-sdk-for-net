@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> The HA mode for the server. </summary>
+        [WirePath("mode")]
         public PostgreSqlFlexibleServerHighAvailabilityMode? Mode { get; set; }
         /// <summary> A state of a HA server that is visible to user. </summary>
+        [WirePath("state")]
         public PostgreSqlFlexibleServerHAState? State { get; }
         /// <summary> availability zone information of the standby. </summary>
+        [WirePath("standbyAvailabilityZone")]
         public string StandbyAvailabilityZone { get; set; }
     }
 }

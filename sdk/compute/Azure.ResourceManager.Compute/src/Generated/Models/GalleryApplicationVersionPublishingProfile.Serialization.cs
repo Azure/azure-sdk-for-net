@@ -27,16 +27,16 @@ namespace Azure.ResourceManager.Compute.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<UserArtifactSource>(Source, options);
             if (Optional.IsDefined(ManageActions))
             {
                 writer.WritePropertyName("manageActions"u8);
-                writer.WriteObjectValue(ManageActions);
+                writer.WriteObjectValue<UserArtifactManagement>(ManageActions, options);
             }
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<UserArtifactSettings>(Settings, options);
             }
             if (Optional.IsCollectionDefined(AdvancedSettings))
             {
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryApplicationCustomAction>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TargetRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in TargetExtendedLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryTargetExtendedLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }

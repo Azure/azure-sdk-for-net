@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<AmlFileSystemHsmSettings>(Settings, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ArchiveStatus))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 writer.WriteStartArray();
                 foreach (var item in ArchiveStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AmlFileSystemArchive>(item, options);
                 }
                 writer.WriteEndArray();
             }

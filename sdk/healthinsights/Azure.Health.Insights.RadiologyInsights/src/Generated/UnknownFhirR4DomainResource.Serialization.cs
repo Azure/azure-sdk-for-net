@@ -29,7 +29,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
-                writer.WriteObjectValue(Text);
+                writer.WriteObjectValue<FhirR4Narrative>(Text, options);
             }
             if (Optional.IsCollectionDefined(Contained))
             {
@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Contained)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4Resource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in Extension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4Extension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -57,7 +57,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in ModifierExtension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4Extension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta);
+                writer.WriteObjectValue<FhirR4Meta>(Meta, options);
             }
             if (Optional.IsDefined(ImplicitRules))
             {
@@ -270,7 +270,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnknownFhirR4DomainResource>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

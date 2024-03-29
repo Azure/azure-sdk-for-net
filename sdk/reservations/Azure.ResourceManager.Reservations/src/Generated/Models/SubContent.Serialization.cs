@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<ReservationResourceName>(Name, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {

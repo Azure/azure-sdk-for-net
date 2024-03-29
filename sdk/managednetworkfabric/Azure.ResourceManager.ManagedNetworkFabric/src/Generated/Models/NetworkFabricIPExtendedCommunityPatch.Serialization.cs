@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in IPExtendedCommunityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPExtendedCommunityRule>(item, options);
                 }
                 writer.WriteEndArray();
             }

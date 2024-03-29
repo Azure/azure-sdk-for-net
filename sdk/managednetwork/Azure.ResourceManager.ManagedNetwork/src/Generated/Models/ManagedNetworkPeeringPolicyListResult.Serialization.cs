@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedNetworkPeeringPolicyData>(item, options);
                 }
                 writer.WriteEndArray();
             }

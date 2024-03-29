@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SynapseSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

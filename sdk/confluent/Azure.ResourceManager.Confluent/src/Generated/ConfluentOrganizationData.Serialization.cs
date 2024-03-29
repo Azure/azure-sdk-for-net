@@ -84,13 +84,13 @@ namespace Azure.ResourceManager.Confluent
                 writer.WriteStringValue(SsoUri.AbsoluteUri);
             }
             writer.WritePropertyName("offerDetail"u8);
-            writer.WriteObjectValue(OfferDetail);
+            writer.WriteObjectValue<ConfluentOfferDetail>(OfferDetail, options);
             writer.WritePropertyName("userDetail"u8);
-            writer.WriteObjectValue(UserDetail);
+            writer.WriteObjectValue<ConfluentUserDetail>(UserDetail, options);
             if (Optional.IsDefined(LinkOrganization))
             {
                 writer.WritePropertyName("linkOrganization"u8);
-                writer.WriteObjectValue(LinkOrganization);
+                writer.WriteObjectValue<LinkOrganization>(LinkOrganization, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

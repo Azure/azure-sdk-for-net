@@ -19,7 +19,7 @@ namespace Azure.DigitalTwins.Core
             if (Optional.IsDefined(Innererror))
             {
                 writer.WritePropertyName("innererror"u8);
-                writer.WriteObjectValue(Innererror);
+                writer.WriteObjectValue<InnerError>(Innererror);
             }
             writer.WriteEndObject();
         }

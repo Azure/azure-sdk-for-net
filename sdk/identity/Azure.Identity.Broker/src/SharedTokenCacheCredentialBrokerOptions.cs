@@ -21,7 +21,7 @@ namespace Azure.Identity.Broker
         /// <summary>
         /// Gets or sets whether to authenticate with the currently signed in user instead of prompting the user with a login dialog.
         /// </summary>
-        public bool UseOperatingSystemAccount { get; set; }
+        public bool UseDefaultBrokerAccount { get; set; }
 
         /// <summary>
         /// Initializes a new instance of <see cref="SharedTokenCacheCredentialBrokerOptions"/>.

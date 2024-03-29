@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirServiceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

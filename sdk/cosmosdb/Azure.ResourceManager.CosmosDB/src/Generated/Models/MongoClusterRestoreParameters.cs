@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> UTC point in time to restore a mongo cluster. </summary>
+        [WirePath("pointInTimeUTC")]
         public DateTimeOffset? PointInTimeUTC { get; set; }
         /// <summary> Resource ID to locate the source cluster to restore. </summary>
+        [WirePath("sourceResourceId")]
         public string SourceResourceId { get; set; }
     }
 }

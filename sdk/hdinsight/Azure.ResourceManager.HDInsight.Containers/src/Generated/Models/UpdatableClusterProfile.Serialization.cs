@@ -32,34 +32,44 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ServiceConfigsProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterServiceConfigsProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                writer.WriteObjectValue<ClusterSshProfile>(SshProfile, options);
             }
             if (Optional.IsDefined(AutoscaleProfile))
             {
                 writer.WritePropertyName("autoscaleProfile"u8);
-                writer.WriteObjectValue(AutoscaleProfile);
+                writer.WriteObjectValue<ClusterAutoscaleProfile>(AutoscaleProfile, options);
             }
             if (Optional.IsDefined(AuthorizationProfile))
             {
                 writer.WritePropertyName("authorizationProfile"u8);
-                writer.WriteObjectValue(AuthorizationProfile);
+                writer.WriteObjectValue<AuthorizationProfile>(AuthorizationProfile, options);
             }
             if (Optional.IsDefined(LogAnalyticsProfile))
             {
                 writer.WritePropertyName("logAnalyticsProfile"u8);
-                writer.WriteObjectValue(LogAnalyticsProfile);
+                writer.WriteObjectValue<ClusterLogAnalyticsProfile>(LogAnalyticsProfile, options);
             }
             if (Optional.IsDefined(PrometheusProfile))
             {
                 writer.WritePropertyName("prometheusProfile"u8);
-                writer.WriteObjectValue(PrometheusProfile);
+                writer.WriteObjectValue<ClusterPrometheusProfile>(PrometheusProfile, options);
+            }
+            if (Optional.IsDefined(RangerPluginProfile))
+            {
+                writer.WritePropertyName("rangerPluginProfile"u8);
+                writer.WriteObjectValue<ClusterRangerPluginProfile>(RangerPluginProfile, options);
+            }
+            if (Optional.IsDefined(RangerProfile))
+            {
+                writer.WritePropertyName("rangerProfile"u8);
+                writer.WriteObjectValue<RangerProfile>(RangerProfile, options);
             }
             if (Optional.IsCollectionDefined(ScriptActionProfiles))
             {
@@ -67,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActionProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptActionProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -115,6 +125,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             AuthorizationProfile authorizationProfile = default;
             ClusterLogAnalyticsProfile logAnalyticsProfile = default;
             ClusterPrometheusProfile prometheusProfile = default;
+            ClusterRangerPluginProfile rangerPluginProfile = default;
+            RangerProfile rangerProfile = default;
             IList<ScriptActionProfile> scriptActionProfiles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -179,6 +191,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                     prometheusProfile = ClusterPrometheusProfile.DeserializeClusterPrometheusProfile(property.Value, options);
                     continue;
                 }
+                if (property.NameEquals("rangerPluginProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerPluginProfile = ClusterRangerPluginProfile.DeserializeClusterRangerPluginProfile(property.Value, options);
+                    continue;
+                }
+                if (property.NameEquals("rangerProfile"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    rangerProfile = RangerProfile.DeserializeRangerProfile(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("scriptActionProfiles"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -206,6 +236,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 authorizationProfile,
                 logAnalyticsProfile,
                 prometheusProfile,
+                rangerPluginProfile,
+                rangerProfile,
                 scriptActionProfiles ?? new ChangeTrackingList<ScriptActionProfile>(),
                 serializedAdditionalRawData);
         }

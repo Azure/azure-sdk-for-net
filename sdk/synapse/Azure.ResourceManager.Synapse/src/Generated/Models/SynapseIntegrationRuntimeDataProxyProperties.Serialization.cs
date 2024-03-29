@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.Synapse.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<SynapseEntityReference>(ConnectVia, options);
             }
             if (Optional.IsDefined(StagingLinkedService))
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
-                writer.WriteObjectValue(StagingLinkedService);
+                writer.WriteObjectValue<SynapseEntityReference>(StagingLinkedService, options);
             }
             if (Optional.IsDefined(Path))
             {

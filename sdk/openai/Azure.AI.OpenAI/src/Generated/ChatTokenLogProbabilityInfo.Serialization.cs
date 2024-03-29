@@ -166,7 +166,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ChatTokenLogProbabilityInfo>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

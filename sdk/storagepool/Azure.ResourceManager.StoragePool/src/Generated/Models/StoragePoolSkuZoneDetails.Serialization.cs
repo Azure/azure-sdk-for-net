@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StoragePoolSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }

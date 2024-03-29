@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.WebPubSub.Models
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<BillingInfoSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<WebPubSubSkuCapacity>(Capacity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

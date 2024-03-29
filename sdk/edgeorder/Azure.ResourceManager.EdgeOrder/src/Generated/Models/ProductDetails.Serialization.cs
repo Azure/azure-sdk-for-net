@@ -29,10 +29,10 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             if (Optional.IsDefined(DisplayInfo))
             {
                 writer.WritePropertyName("displayInfo"u8);
-                writer.WriteObjectValue(DisplayInfo);
+                writer.WriteObjectValue<ProductDisplayInfo>(DisplayInfo, options);
             }
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue(HierarchyInformation);
+            writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
             if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 writer.WriteStartArray();
                 foreach (var item in DeviceDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdgeOrderProductDeviceDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }

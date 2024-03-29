@@ -37,8 +37,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The start IP address of the firewall rule. Must be IPv4 format. Use value '0.0.0.0' for all Azure-internal IP addresses. </summary>
+        [WirePath("properties.startIpAddress")]
         public string StartIPAddress { get; set; }
         /// <summary> The end IP address of the firewall rule. Must be IPv4 format. Must be greater than or equal to startIpAddress. Use value '0.0.0.0' for all Azure-internal IP addresses. </summary>
+        [WirePath("properties.endIpAddress")]
         public string EndIPAddress { get; set; }
     }
 }

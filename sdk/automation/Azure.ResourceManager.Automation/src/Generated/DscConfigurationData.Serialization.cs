@@ -85,14 +85,14 @@ namespace Azure.ResourceManager.Automation
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DscConfigurationParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<AutomationContentSource>(Source, options);
             }
             if (Optional.IsDefined(State))
             {

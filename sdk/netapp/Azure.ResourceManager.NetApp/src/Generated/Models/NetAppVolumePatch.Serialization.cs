@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(ExportPolicy))
             {
                 writer.WritePropertyName("exportPolicy"u8);
-                writer.WriteObjectValue(ExportPolicy);
+                writer.WriteObjectValue<VolumePatchPropertiesExportPolicy>(ExportPolicy, options);
             }
             if (Optional.IsDefined(ThroughputMibps))
             {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.NetApp.Models
             if (Optional.IsDefined(DataProtection))
             {
                 writer.WritePropertyName("dataProtection"u8);
-                writer.WriteObjectValue(DataProtection);
+                writer.WriteObjectValue<NetAppVolumePatchDataProtection>(DataProtection, options);
             }
             if (Optional.IsDefined(IsDefaultQuotaEnabled))
             {

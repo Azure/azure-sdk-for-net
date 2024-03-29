@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (options.Format != "W" && Optional.IsDefined(ApplicableSchedule))
             {
                 writer.WritePropertyName("applicableSchedule"u8);
-                writer.WriteObjectValue(ApplicableSchedule);
+                writer.WriteObjectValue<DevTestLabApplicableSchedule>(ApplicableSchedule, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

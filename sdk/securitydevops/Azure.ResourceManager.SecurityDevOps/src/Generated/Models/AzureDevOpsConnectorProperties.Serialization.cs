@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             if (Optional.IsDefined(Authorization))
             {
                 writer.WritePropertyName("authorization"u8);
-                writer.WriteObjectValue(Authorization);
+                writer.WriteObjectValue<AuthorizationInfo>(Authorization, options);
             }
             if (Optional.IsCollectionDefined(Orgs))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 writer.WriteStartArray();
                 foreach (var item in Orgs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureDevOpsOrgMetadata>(item, options);
                 }
                 writer.WriteEndArray();
             }

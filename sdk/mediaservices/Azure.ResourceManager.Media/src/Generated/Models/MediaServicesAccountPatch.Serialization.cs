@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaServicesStorageAccount>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<AccountEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(KeyDelivery))
             {
                 writer.WritePropertyName("keyDelivery"u8);
-                writer.WriteObjectValue(KeyDelivery);
+                writer.WriteObjectValue<MediaKeyDelivery>(KeyDelivery, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaServicesPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

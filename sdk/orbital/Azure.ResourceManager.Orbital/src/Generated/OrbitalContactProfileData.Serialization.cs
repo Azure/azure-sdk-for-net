@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Orbital
             if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue<ContactProfilesPropertiesNetworkConfiguration>(NetworkConfiguration, options);
             }
             if (Optional.IsCollectionDefined(Links))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Orbital
                 writer.WriteStartArray();
                 foreach (var item in Links)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OrbitalContactProfileLink>(item, options);
                 }
                 writer.WriteEndArray();
             }

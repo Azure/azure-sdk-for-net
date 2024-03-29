@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Associations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TopologyAssociation>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBForPostgreSqlPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }

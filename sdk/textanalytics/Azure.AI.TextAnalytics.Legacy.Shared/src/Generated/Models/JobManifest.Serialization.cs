@@ -16,7 +16,7 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
             writer.WriteStartObject();
             writer.WritePropertyName("tasks"u8);
-            writer.WriteObjectValue(Tasks);
+            writer.WriteObjectValue<JobManifestTasks>(Tasks);
             writer.WriteEndObject();
         }
     }

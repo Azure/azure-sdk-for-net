@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (DeploymentConfiguration != null)
                 {
                     writer.WritePropertyName("deploymentConfiguration"u8);
-                    writer.WriteObjectValue(DeploymentConfiguration);
+                    writer.WriteObjectValue<BatchDeploymentConfiguration>(DeploymentConfiguration, options);
                 }
                 else
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Model != null)
                 {
                     writer.WritePropertyName("model"u8);
-                    writer.WriteObjectValue(Model);
+                    writer.WriteObjectValue<MachineLearningAssetReferenceBase>(Model, options);
                 }
                 else
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (Resources != null)
                 {
                     writer.WritePropertyName("resources"u8);
-                    writer.WriteObjectValue(Resources);
+                    writer.WriteObjectValue<MachineLearningDeploymentResourceConfiguration>(Resources, options);
                 }
                 else
                 {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (RetrySettings != null)
                 {
                     writer.WritePropertyName("retrySettings"u8);
-                    writer.WriteObjectValue(RetrySettings);
+                    writer.WriteObjectValue<MachineLearningBatchRetrySettings>(RetrySettings, options);
                 }
                 else
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    writer.WriteObjectValue<MachineLearningCodeConfiguration>(CodeConfiguration, options);
                 }
                 else
                 {

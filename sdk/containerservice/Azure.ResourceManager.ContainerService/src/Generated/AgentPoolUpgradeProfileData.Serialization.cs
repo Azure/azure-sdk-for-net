@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.ContainerService
                 writer.WriteStartArray();
                 foreach (var item in Upgrades)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AgentPoolUpgradeProfilePropertiesUpgradesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }

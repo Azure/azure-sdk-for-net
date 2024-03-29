@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Avs.Models
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvsClusterZone>(item, options);
                 }
                 writer.WriteEndArray();
             }

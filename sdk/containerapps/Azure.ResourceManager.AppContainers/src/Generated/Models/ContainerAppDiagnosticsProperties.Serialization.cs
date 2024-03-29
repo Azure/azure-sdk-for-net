@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<ContainerAppDiagnosticsMetadata>(Metadata, options);
             }
             if (Optional.IsCollectionDefined(Dataset))
             {
@@ -37,19 +37,19 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Dataset)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppDiagnosticsDataApiResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ContainerAppDiagnosticsStatus>(Status, options);
             }
             if (Optional.IsDefined(DataProviderMetadata))
             {
                 writer.WritePropertyName("dataProviderMetadata"u8);
-                writer.WriteObjectValue(DataProviderMetadata);
+                writer.WriteObjectValue<ContainerAppDiagnosticDataProviderMetadata>(DataProviderMetadata, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

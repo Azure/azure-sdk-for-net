@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             if (Optional.IsDefined(HelmArtifactProfile))
             {
                 writer.WritePropertyName("helmArtifactProfile"u8);
-                writer.WriteObjectValue(HelmArtifactProfile);
+                writer.WriteObjectValue<HelmArtifactProfile>(HelmArtifactProfile, options);
             }
             if (Optional.IsDefined(ArtifactStore))
             {

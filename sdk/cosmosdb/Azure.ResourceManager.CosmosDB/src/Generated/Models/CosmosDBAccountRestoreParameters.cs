@@ -41,14 +41,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Describes the mode of the restore. </summary>
+        [WirePath("restoreMode")]
         public CosmosDBAccountRestoreMode? RestoreMode { get; set; }
         /// <summary> List of specific databases available for restore. </summary>
+        [WirePath("databasesToRestore")]
         public IList<DatabaseRestoreResourceInfo> DatabasesToRestore { get; }
         /// <summary> List of specific gremlin databases available for restore. </summary>
+        [WirePath("gremlinDatabasesToRestore")]
         public IList<GremlinDatabaseRestoreResourceInfo> GremlinDatabasesToRestore { get; }
         /// <summary> List of specific tables available for restore. </summary>
+        [WirePath("tablesToRestore")]
         public IList<string> TablesToRestore { get; }
         /// <summary> The source backup location for restore. </summary>
+        [WirePath("sourceBackupLocation")]
         public string SourceBackupLocation { get; set; }
     }
 }

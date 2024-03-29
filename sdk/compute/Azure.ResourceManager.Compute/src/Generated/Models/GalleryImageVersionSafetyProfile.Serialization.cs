@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in PolicyViolations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryImageVersionPolicyViolation>(item, options);
                 }
                 writer.WriteEndArray();
             }

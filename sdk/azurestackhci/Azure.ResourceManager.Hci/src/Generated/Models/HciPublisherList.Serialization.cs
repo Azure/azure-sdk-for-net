@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Hci.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PublisherData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PredictiveValue>(item, options);
                 }
                 writer.WriteEndArray();
             }

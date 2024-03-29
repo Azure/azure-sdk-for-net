@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in AzureQueries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureQueryProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Automation.Models
                 writer.WriteStartArray();
                 foreach (var item in NonAzureQueries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NonAzureQueryProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

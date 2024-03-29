@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AmlComputeNodeInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }

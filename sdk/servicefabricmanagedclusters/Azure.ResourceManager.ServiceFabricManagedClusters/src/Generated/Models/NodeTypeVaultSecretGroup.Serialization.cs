@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             writer.WriteStartArray();
             foreach (var item in VaultCertificates)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeTypeVaultCertificate>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

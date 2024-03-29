@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Billing.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BillingSubscriptionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

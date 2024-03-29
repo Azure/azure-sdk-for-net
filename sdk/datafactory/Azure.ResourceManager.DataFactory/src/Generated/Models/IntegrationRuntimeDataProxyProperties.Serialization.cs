@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<EntityReference>(ConnectVia, options);
             }
             if (Optional.IsDefined(StagingLinkedService))
             {
                 writer.WritePropertyName("stagingLinkedService"u8);
-                writer.WriteObjectValue(StagingLinkedService);
+                writer.WriteObjectValue<EntityReference>(StagingLinkedService, options);
             }
             if (Optional.IsDefined(Path))
             {

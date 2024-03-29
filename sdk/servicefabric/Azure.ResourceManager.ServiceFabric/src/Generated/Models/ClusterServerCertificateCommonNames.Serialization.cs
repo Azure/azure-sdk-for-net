@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 writer.WriteStartArray();
                 foreach (var item in CommonNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClusterServerCertificateCommonName>(item, options);
                 }
                 writer.WriteEndArray();
             }

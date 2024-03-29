@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CapacitySku>(item, options);
                 }
                 writer.WriteEndArray();
             }

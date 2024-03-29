@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols);
+                writer.WriteObjectValue<MediaEnabledProtocols>(EnabledProtocols, options);
             }
             if (Optional.IsCollectionDefined(ClearTracks))
             {
@@ -37,14 +37,14 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaTrackSelection>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
-                writer.WriteObjectValue(ContentKeys);
+                writer.WriteObjectValue<StreamingPolicyContentKeys>(ContentKeys, options);
             }
             if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {

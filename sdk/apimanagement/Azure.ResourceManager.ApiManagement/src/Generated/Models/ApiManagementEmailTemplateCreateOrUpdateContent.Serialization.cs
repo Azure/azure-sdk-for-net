@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmailTemplateParametersContractProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }

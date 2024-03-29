@@ -37,7 +37,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 writer.WriteBooleanValue(IncludeEvidence.Value);
             }
             writer.WritePropertyName("clinicalTrials"u8);
-            writer.WriteObjectValue(ClinicalTrials);
+            writer.WriteObjectValue<ClinicalTrials>(ClinicalTrials, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -158,7 +158,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<TrialMatcherModelConfiguration>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

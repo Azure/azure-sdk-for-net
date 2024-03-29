@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in OutgoingIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FlowEndpointIPAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Logic.Models
                 writer.WriteStartArray();
                 foreach (var item in AccessEndpointIPAddresses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FlowEndpointIPAddress>(item, options);
                 }
                 writer.WriteEndArray();
             }

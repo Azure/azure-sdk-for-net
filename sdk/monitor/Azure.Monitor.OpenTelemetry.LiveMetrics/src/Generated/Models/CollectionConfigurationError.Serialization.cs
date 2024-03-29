@@ -36,7 +36,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyValuePairString>(item);
                 }
                 writer.WriteEndArray();
             }

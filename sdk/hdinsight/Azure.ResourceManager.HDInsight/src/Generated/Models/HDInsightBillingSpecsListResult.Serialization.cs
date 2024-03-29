@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in VmSizeFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightVmSizeCompatibilityFilterV2>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in VmSizeProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightVmSizeProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in BillingResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightBillingResources>(item, options);
                 }
                 writer.WriteEndArray();
             }

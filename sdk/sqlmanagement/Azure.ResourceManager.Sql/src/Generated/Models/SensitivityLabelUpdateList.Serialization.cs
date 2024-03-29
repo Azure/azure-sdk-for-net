@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SensitivityLabelUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }

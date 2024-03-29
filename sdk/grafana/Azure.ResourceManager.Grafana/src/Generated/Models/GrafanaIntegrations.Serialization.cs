@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitorWorkspaceIntegrations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorWorkspaceIntegration>(item, options);
                 }
                 writer.WriteEndArray();
             }

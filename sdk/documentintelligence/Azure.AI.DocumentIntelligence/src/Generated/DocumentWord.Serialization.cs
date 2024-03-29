@@ -39,7 +39,7 @@ namespace Azure.AI.DocumentIntelligence
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("span"u8);
-            writer.WriteObjectValue(Span);
+            writer.WriteObjectValue<DocumentSpan>(Span, options);
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -169,7 +169,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentWord>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

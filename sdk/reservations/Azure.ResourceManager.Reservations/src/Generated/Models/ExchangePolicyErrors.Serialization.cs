@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Reservations.Models
                     writer.WriteStartArray();
                     foreach (var item in PolicyErrors)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<ExchangePolicyError>(item, options);
                     }
                     writer.WriteEndArray();
                 }

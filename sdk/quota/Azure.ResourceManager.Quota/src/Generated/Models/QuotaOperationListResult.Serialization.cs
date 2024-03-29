@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Quota.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<QuotaOperationResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

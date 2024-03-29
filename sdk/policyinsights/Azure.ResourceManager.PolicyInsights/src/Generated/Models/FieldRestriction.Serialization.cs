@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             if (options.Format != "W" && Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<PolicyReference>(Policy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

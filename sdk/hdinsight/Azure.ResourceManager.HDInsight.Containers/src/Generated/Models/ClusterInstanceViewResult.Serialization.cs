@@ -31,12 +31,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("status"u8);
-            writer.WriteObjectValue(Status);
+            writer.WriteObjectValue<ClusterInstanceViewStatus>(Status, options);
             writer.WritePropertyName("serviceStatuses"u8);
             writer.WriteStartArray();
             foreach (var item in ServiceStatuses)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<HDInsightServiceStatus>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

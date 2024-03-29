@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
-                writer.WriteObjectValue(VmImageRepositoryCredentials);
+                writer.WriteObjectValue<ImageRepositoryCredentials>(VmImageRepositoryCredentials, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)

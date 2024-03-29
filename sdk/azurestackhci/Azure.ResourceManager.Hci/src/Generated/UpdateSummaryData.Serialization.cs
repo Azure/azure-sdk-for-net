@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in PackageVersions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciPackageVersionInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Hci
                 writer.WriteStartArray();
                 foreach (var item in HealthCheckResult)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HciPrecheckResult>(item, options);
                 }
                 writer.WriteEndArray();
             }

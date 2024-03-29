@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(PolicyParameters))
             {
                 writer.WritePropertyName("policyParameters"u8);
-                writer.WriteObjectValue(PolicyParameters);
+                writer.WriteObjectValue<BackupInstancePolicySettings>(PolicyParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

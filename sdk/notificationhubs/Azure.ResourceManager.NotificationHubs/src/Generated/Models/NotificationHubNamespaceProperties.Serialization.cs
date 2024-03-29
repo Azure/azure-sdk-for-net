@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(NetworkAcls))
             {
                 writer.WritePropertyName("networkAcls"u8);
-                writer.WriteObjectValue(NetworkAcls);
+                writer.WriteObjectValue<NotificationHubNetworkAcls>(NetworkAcls, options);
             }
             if (Optional.IsDefined(PnsCredentials))
             {
                 writer.WritePropertyName("pnsCredentials"u8);
-                writer.WriteObjectValue(PnsCredentials);
+                writer.WriteObjectValue<PnsCredentials>(PnsCredentials, options);
             }
             if (Optional.IsDefined(ServiceBusEndpoint))
             {
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NotificationHubPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             if (Optional.IsDefined(Hci))
             {
                 writer.WritePropertyName("hci"u8);
-                writer.WriteObjectValue(Hci);
+                writer.WriteObjectValue<HciInfraVnetProfile>(Hci, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

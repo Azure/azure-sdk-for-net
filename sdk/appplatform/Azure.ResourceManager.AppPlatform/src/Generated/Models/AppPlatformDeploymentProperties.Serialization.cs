@@ -29,12 +29,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<AppPlatformUserSourceInfo>(Source, options);
             }
             if (Optional.IsDefined(DeploymentSettings))
             {
                 writer.WritePropertyName("deploymentSettings"u8);
-                writer.WriteObjectValue(DeploymentSettings);
+                writer.WriteObjectValue<AppPlatformDeploymentSettings>(DeploymentSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformDeploymentInstance>(item, options);
                 }
                 writer.WriteEndArray();
             }

@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedCcfData>(item, options);
                 }
                 writer.WriteEndArray();
             }

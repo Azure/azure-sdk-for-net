@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ListOfBackupFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BackupFileInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }

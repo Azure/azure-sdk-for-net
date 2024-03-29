@@ -146,7 +146,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AreaGeometry>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

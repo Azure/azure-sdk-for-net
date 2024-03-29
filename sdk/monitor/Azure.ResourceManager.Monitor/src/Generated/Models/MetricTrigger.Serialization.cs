@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Monitor.Models
                     writer.WriteStartArray();
                     foreach (var item in Dimensions)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<AutoscaleRuleMetricDimension>(item, options);
                     }
                     writer.WriteEndArray();
                 }

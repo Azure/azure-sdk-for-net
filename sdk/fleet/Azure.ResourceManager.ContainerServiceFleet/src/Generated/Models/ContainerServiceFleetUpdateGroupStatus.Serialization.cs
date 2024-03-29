@@ -29,7 +29,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<ContainerServiceFleetUpdateStatus>(Status, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
                 writer.WriteStartArray();
                 foreach (var item in Members)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MemberUpdateStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }

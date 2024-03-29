@@ -27,12 +27,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            writer.WriteObjectValue<DataProtectionBackupSchedule>(Schedule, options);
             writer.WritePropertyName("taggingCriteria"u8);
             writer.WriteStartArray();
             foreach (var item in TaggingCriteriaList)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataProtectionBackupTaggingCriteria>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("objectType"u8);

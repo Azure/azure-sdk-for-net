@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CollectorPolicyData>(item, options);
                 }
                 writer.WriteEndArray();
             }

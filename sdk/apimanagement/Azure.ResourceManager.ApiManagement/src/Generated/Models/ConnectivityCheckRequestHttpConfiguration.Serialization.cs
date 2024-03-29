@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HttpHeaderConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }

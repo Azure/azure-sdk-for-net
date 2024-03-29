@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<RemotePrivateLinkServiceConnectionState>(ConnectionState, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 writer.WriteStartArray();
                 foreach (var item in Regions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmergingIssueImpactedRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }

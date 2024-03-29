@@ -36,7 +36,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartArray();
             foreach (var item in Polygon)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AzureGroundingEnhancementCoordinatePoint>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -162,7 +162,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureGroundingEnhancementLineSpan>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

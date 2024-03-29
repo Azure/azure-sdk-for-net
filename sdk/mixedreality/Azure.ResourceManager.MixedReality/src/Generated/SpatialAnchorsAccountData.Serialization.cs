@@ -41,12 +41,12 @@ namespace Azure.ResourceManager.MixedReality
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MixedRealitySku>(Sku, options);
             }
             if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
-                writer.WriteObjectValue(Kind);
+                writer.WriteObjectValue<MixedRealitySku>(Kind, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {

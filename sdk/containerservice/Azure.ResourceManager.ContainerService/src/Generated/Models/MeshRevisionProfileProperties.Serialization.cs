@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in MeshRevisions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MeshRevision>(item, options);
                 }
                 writer.WriteEndArray();
             }

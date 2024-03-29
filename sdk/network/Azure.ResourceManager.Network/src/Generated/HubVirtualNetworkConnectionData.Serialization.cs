@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network
             if (Optional.IsDefined(RoutingConfiguration))
             {
                 writer.WritePropertyName("routingConfiguration"u8);
-                writer.WriteObjectValue(RoutingConfiguration);
+                writer.WriteObjectValue<RoutingConfiguration>(RoutingConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {

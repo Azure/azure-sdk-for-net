@@ -28,7 +28,7 @@ namespace Azure.Communication.Messages
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -120,7 +120,7 @@ namespace Azure.Communication.Messages
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTemplateBindings>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

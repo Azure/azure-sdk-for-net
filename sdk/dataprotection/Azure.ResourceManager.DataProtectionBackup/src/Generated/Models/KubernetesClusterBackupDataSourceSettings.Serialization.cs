@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupHookReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NamespacedName>(item, options);
                 }
                 writer.WriteEndArray();
             }
