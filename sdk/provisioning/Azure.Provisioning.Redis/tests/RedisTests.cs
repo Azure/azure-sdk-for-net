@@ -4,7 +4,6 @@
 using System.Threading.Tasks;
 using Azure.Core.TestFramework;
 using Azure.Provisioning.KeyVaults;
-using Azure.Provisioning.PostgreSql;
 using Azure.Provisioning.ResourceManager;
 using Azure.Provisioning.Tests;
 

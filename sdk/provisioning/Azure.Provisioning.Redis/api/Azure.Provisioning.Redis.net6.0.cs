@@ -1,12 +1,3 @@
-namespace Azure.Provisioning.PostgreSql
-{
-    public partial class RedisFirewallRule : Azure.Provisioning.Resource<Azure.ResourceManager.Redis.RedisFirewallRuleData>
-    {
-        public RedisFirewallRule(Azure.Provisioning.IConstruct scope, string? startIpAddress = null, string? endIpAddress = null, Azure.Provisioning.Redis.RedisCache? parent = null, string name = "fw", string version = "2023-08-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Redis.RedisFirewallRuleData>), default(bool)) { }
-        protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
-        public static Azure.Provisioning.PostgreSql.RedisFirewallRule FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Redis.RedisCache parent) { throw null; }
-    }
-}
 namespace Azure.Provisioning.Redis
 {
     public partial class RedisCache : Azure.Provisioning.Resource<Azure.ResourceManager.Redis.RedisData>
@@ -19,5 +10,11 @@ namespace Azure.Provisioning.Redis
     public partial class RedisCacheConnectionString : Azure.Provisioning.ConnectionString
     {
         internal RedisCacheConnectionString() : base (default(string)) { }
+    }
+    public partial class RedisFirewallRule : Azure.Provisioning.Resource<Azure.ResourceManager.Redis.RedisFirewallRuleData>
+    {
+        public RedisFirewallRule(Azure.Provisioning.IConstruct scope, string? startIpAddress = null, string? endIpAddress = null, Azure.Provisioning.Redis.RedisCache? parent = null, string name = "fw", string version = "2023-08-01") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Redis.RedisFirewallRuleData>), default(bool)) { }
+        protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+        public static Azure.Provisioning.Redis.RedisFirewallRule FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Redis.RedisCache parent) { throw null; }
     }
 }

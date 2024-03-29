@@ -3,13 +3,10 @@
 
 using System;
 using System.Net;
-using Azure.Provisioning.Redis;
-using Azure.ResourceManager.PostgreSql;
-using Azure.ResourceManager.PostgreSql.Models;
 using Azure.ResourceManager.Redis;
 using Azure.ResourceManager.Redis.Models;
 
-namespace Azure.Provisioning.PostgreSql
+namespace Azure.Provisioning.Redis
 {
     /// <summary>
     /// Represents a Redis firewall rule.
