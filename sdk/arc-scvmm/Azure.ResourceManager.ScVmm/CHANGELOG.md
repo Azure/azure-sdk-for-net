@@ -1,18 +1,13 @@
 # Release History
 
-## 1.0.0-beta.5 (Unreleased)
+## 1.0.0-beta.5 (2024-03-29)
 
 Changed the namespace to Azure.ResourceManager.ScVmm.
 
 ### Features Added
 
+- Upgraded api-version tag from 'package-2020-06-05-preview' to 'package-2023-10'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/1f0722d117a66ec48674c9644f786972d57a29b5/specification/scvmm/resource-manager/readme.md.
 - Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
-### Breaking Changes
-
-### Bugs Fixed
-
-### Other Changes
 
 ## 1.0.0-beta.4 (2023-11-27)
 
