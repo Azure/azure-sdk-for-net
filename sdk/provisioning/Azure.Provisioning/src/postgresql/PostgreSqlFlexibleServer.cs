@@ -31,10 +31,10 @@ namespace Azure.Provisioning.PostgreSql
         /// <param name="sku">The Sku.</param>
         /// <param name="serverVersion">The version.</param>
         /// <param name="highAvailability">The high availability.</param>
-        /// <param name="storage">The storage.</param>
         /// <param name="encryption"></param>
         /// <param name="backup">The backup.</param>
         /// <param name="network">The network.</param>
+        /// <param name="storageSizeInGB">The storage size in GB.</param>
         /// <param name="availabilityZone">The availability zone.</param>
         /// <param name="parent">The parent.</param>
         /// <param name="name">The name.</param>
@@ -47,26 +47,44 @@ namespace Azure.Provisioning.PostgreSql
             PostgreSqlFlexibleServerSku? sku = default,
             PostgreSqlFlexibleServerVersion? serverVersion = default,
             PostgreSqlFlexibleServerHighAvailability? highAvailability = default,
-            PostgreSqlFlexibleServerStorage? storage = default,
             PostgreSqlFlexibleServerDataEncryption? encryption = default,
             PostgreSqlFlexibleServerBackupProperties? backup = default,
             PostgreSqlFlexibleServerNetwork? network = default,
+            int? storageSizeInGB = default,
             string? availabilityZone = default,
             ResourceGroup? parent = default,
             string name = "postgres",
             string version = DefaultVersion,
             AzureLocation? location = default)
         : this(scope, parent, name, version, false, (name) => ArmPostgreSqlFlexibleServersModelFactory.PostgreSqlFlexibleServerData(
+                // need to pass all arguments in order to use the overloaded factory method with the storageSizeInGB parameter
+                id: default,
                 name: name,
+                resourceType: default,
+                systemData: default,
+                tags: default,
+                identity: default,
+                administratorLogin: default,
+                administratorLoginPassword: default,
                 // create new instances so the properties can be overriden by user if needed
                 version: serverVersion ?? new PostgreSqlFlexibleServerVersion(),
+                minorVersion: default,
                 highAvailability: highAvailability ?? new PostgreSqlFlexibleServerHighAvailability(),
-                storage: storage ?? new PostgreSqlFlexibleServerStorage(),
                 backup: backup ?? new PostgreSqlFlexibleServerBackupProperties(),
                 network: network ?? new PostgreSqlFlexibleServerNetwork(),
                 sku: sku ?? new PostgreSqlFlexibleServerSku("Standard_D4s_v3", PostgreSqlFlexibleServerSkuTier.GeneralPurpose),
                 dataEncryption: encryption ?? new PostgreSqlFlexibleServerDataEncryption(),
                 availabilityZone: availabilityZone,
+                fullyQualifiedDomainName: default,
+                authConfig: default,
+                maintenanceWindow: default,
+                sourceServerResourceId: default,
+                pointInTimeUtc: default,
+                replicationRole: default,
+                replicaCapacity: default,
+                createMode: default,
+                state: default,
+                storageSizeInGB: storageSizeInGB,
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));

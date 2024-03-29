@@ -45,7 +45,6 @@ namespace Azure.Provisioning.Sql
                 location: location ?? Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 resourceType: ResourceTypeName,
                 version: "12.0",
-                minTlsVersion: "1.2",
                 publicNetworkAccess: ServerNetworkAccessFlag.Enabled,
                 administrators: new ServerExternalAdministrator()))
         {

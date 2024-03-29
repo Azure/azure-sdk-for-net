@@ -12,7 +12,6 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Core.Tests.TestFramework;
-using Azure.Provisioning.AppService;
 using Azure.Provisioning.KeyVaults;
 using Azure.Provisioning.Sql;
 using Azure.Provisioning.Resources;
@@ -52,83 +51,6 @@ namespace Azure.Provisioning.Tests
         }
 
         private static readonly string _infrastructureRoot = Path.Combine(GetGitRoot(), "sdk", "provisioning", "Azure.Provisioning", "tests", "Infrastructure");
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
-        public async Task WebSiteUsingL1()
-        {
-            var infra = new TestInfrastructure();
-
-            Parameter sqlAdminPasswordParam = new Parameter("sqlAdminPassword", "SQL Server administrator password", isSecure: true);
-            infra.AddParameter(sqlAdminPasswordParam);
-            Parameter appUserPasswordParam = new Parameter("appUserPassword", "Application user password", isSecure: true);
-            infra.AddParameter(appUserPasswordParam);
-
-            infra.AddResourceGroup();
-            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
-
-            AppServicePlan appServicePlan = infra.AddAppServicePlan();
-            Assert.True(appServicePlan.Properties.Name.EndsWith(infra.EnvironmentName));
-
-            WebSite frontEnd = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts");
-            Assert.True(frontEnd.Properties.Name.EndsWith(infra.EnvironmentName));
-
-            Assert.AreEqual(Guid.Empty.ToString(), frontEnd.Properties.AppServicePlanId.SubscriptionId);
-
-            var frontEndPrincipalId = frontEnd.AddOutput(//Identity.PrincipalId
-                "SERVICE_API_IDENTITY_PRINCIPAL_ID",
-                website => website.Identity.PrincipalId, isSecure: true);
-
-            var kv = infra.AddKeyVault();
-            kv.AddAccessPolicy(frontEndPrincipalId); // frontEnd.properties.identity.principalId
-            kv.AssignRole(RoleDefinition.KeyVaultAdministrator, Guid.Empty);
-            kv.AddOutput("vaultUri", data => data.Properties.VaultUri);
-
-            KeyVaultSecret sqlAdminSecret = new KeyVaultSecret(infra, name: "sqlAdminPassword");
-            Assert.False(sqlAdminSecret.Properties.Name.EndsWith(infra.EnvironmentName));
-            sqlAdminSecret.AssignProperty(secret => secret.Properties.Value, sqlAdminPasswordParam);
-
-            KeyVaultSecret appUserSecret = new KeyVaultSecret(infra, name: "appUserPassword");
-            Assert.False(appUserSecret.Properties.Name.EndsWith(infra.EnvironmentName));
-            appUserSecret.AssignProperty(secret => secret.Properties.Value, appUserPasswordParam);
-
-            SqlServer sqlServer = new SqlServer(infra, "sqlserver");
-            sqlServer.AssignProperty(sql => sql.AdministratorLogin, "'sqladmin'");
-            sqlServer.AssignProperty(sql => sql.AdministratorLoginPassword, sqlAdminPasswordParam);
-            Output sqlServerName = sqlServer.AddOutput("sqlServerName", sql => sql.FullyQualifiedDomainName);
-
-            SqlDatabase sqlDatabase = new SqlDatabase(infra, sqlServer);
-            Assert.False(sqlDatabase.Properties.Name.EndsWith(infra.EnvironmentName));
-
-            KeyVaultSecret sqlAzureConnectionStringSecret = new KeyVaultSecret(infra, "connectionString", sqlDatabase.GetConnectionString(appUserPasswordParam));
-            Assert.False(sqlAzureConnectionStringSecret.Properties.Name.EndsWith(infra.EnvironmentName));
-
-            SqlFirewallRule sqlFirewallRule = new SqlFirewallRule(infra, name: "firewallRule");
-            Assert.False(sqlFirewallRule.Properties.Name.EndsWith(infra.EnvironmentName));
-
-            DeploymentScript deploymentScript = new DeploymentScript(
-                infra,
-                "cliScript",
-                sqlDatabase,
-                new Parameter(sqlServerName),
-                appUserPasswordParam,
-                sqlAdminPasswordParam);
-
-            WebSite backEnd = new WebSite(infra, "backEnd", appServicePlan, WebSiteRuntime.Dotnetcore, "6.0");
-            Assert.True(backEnd.Properties.Name.EndsWith(infra.EnvironmentName));
-
-            WebSiteConfigLogs logs = new WebSiteConfigLogs(infra, "logs", frontEnd);
-            Assert.False(logs.Properties.Name.EndsWith(infra.EnvironmentName));
-
-            infra.Build(GetOutputPath());
-
-            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
-                new
-                {
-                    sqlAdminPassword = new { value = "password" },
-                    appUserPassword = new { value = "password" }
-                }));
-        }
 
         [RecordedTest]
         public async Task ResourceGroupOnly()
@@ -465,104 +387,6 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
-        public async Task WebSiteUsingL2()
-        {
-            var infra = new TestInfrastructure();
-            infra.AddFrontEndWebSite();
-
-            Assert.AreEqual(Guid.Empty.ToString(), infra.GetSingleResourceInScope<WebSite>()!.Properties.AppServicePlanId.SubscriptionId);
-
-            infra.AddCommonSqlDatabase();
-            infra.AddBackEndWebSite();
-
-            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
-            infra.Build(GetOutputPath());
-
-            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
-                new
-                {
-                    sqlAdminPassword = new { value = "password" },
-                    appUserPassword = new { value = "password" }
-                }));
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
-        public async Task WebSiteUsingL3()
-        {
-            var infra = new TestInfrastructure();
-            infra.AddWebSiteWithSqlBackEnd();
-
-            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
-            infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
-
-            foreach (var website in infra.GetResources().Where(r => r is WebSite))
-            {
-                Assert.AreEqual(Guid.Empty.ToString(), ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
-            }
-
-            infra.Build(GetOutputPath());
-
-            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
-                new
-                {
-                    sqlAdminPassword = new { value = "password" },
-                    appUserPassword = new { value = "password" }
-                }));
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
-        public async Task WebSiteUsingL3SpecificSubscription()
-        {
-            var infra = new TestInfrastructure();
-            infra.AddWebSiteWithSqlBackEnd();
-
-            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
-            infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
-            foreach (var website in infra.GetResources().Where(r => r is WebSite))
-            {
-                Assert.AreEqual(Guid.Empty.ToString(), ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
-            }
-
-            infra.Build(GetOutputPath());
-
-            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
-                new
-                {
-                    sqlAdminPassword = new { value = "password" },
-                    appUserPassword = new { value = "password" }
-                }));
-        }
-
-        [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
-        public async Task WebSiteUsingL3ResourceGroupScope()
-        {
-            var infra = new TestInfrastructure(scope: ConstructScope.ResourceGroup, configuration: new Configuration { UseInteractiveMode = true });
-            infra.AddWebSiteWithSqlBackEnd();
-
-            infra.GetSingleResource<ResourceGroup>()!.Properties.Tags.Add("key", "value");
-            infra.GetSingleResourceInScope<KeyVault>()!.Properties.Tags.Add("key", "value");
-
-            foreach (var website in infra.GetResources().Where(r => r is WebSite))
-            {
-                Assert.AreEqual("subscription()", ((WebSite)website).Properties.AppServicePlanId.SubscriptionId);
-                Assert.AreEqual("resourceGroup()", ((WebSite)website).Properties.AppServicePlanId.ResourceGroupName);
-            }
-
-            infra.Build(GetOutputPath());
-
-            await ValidateBicepAsync(BinaryData.FromObjectAsJson(
-                new
-                {
-                    sqlAdminPassword = new { value = "password" },
-                    appUserPassword = new { value = "password" }
-                }), interactiveMode: true);
-        }
-
-        [RecordedTest]
         public async Task StorageBlobDefaults()
         {
             var infra = new TestInfrastructure();
@@ -726,34 +550,28 @@ namespace Azure.Provisioning.Tests
         }
 
         [RecordedTest]
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/42921")]
         public async Task OutputsSpanningModules()
         {
             var infra = new TestInfrastructure();
             var rg1 = new ResourceGroup(infra, "rg1");
             var rg2 = new ResourceGroup(infra, "rg2");
             var rg3 = new ResourceGroup(infra, "rg3");
-            var appServicePlan = infra.AddAppServicePlan(parent: rg1);
-            WebSite frontEnd1 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg1);
+            var storageAccount1 = infra.AddStorageAccount(kind: StorageKind.Storage, sku: StorageSkuName.StandardGrs, parent: rg1);
 
-            var output1 = frontEnd1.AddOutput("STORAGE_PRINCIPAL_ID", data => data.Identity.PrincipalId);
-            var output2 = frontEnd1.AddOutput("LOCATION", data => data.Location);
+            var output1 = storageAccount1.AddOutput("STORAGE_KIND", data => data.Kind);
 
             KeyVault keyVault = infra.AddKeyVault(resourceGroup: rg1);
             keyVault.AssignProperty(data => data.Properties.EnableSoftDelete, new Parameter("enableSoftDelete", "Enable soft delete", defaultValue: true, isSecure: false));
 
-            WebSite frontEnd2 = new WebSite(infra, "frontEnd", appServicePlan, WebSiteRuntime.Node, "18-lts", parent: rg2);
+            var storageAccount2 = infra.AddStorageAccount(kind: StorageKind.Storage, sku: StorageSkuName.StandardGrs, parent: rg2);
 
-            frontEnd2.AssignProperty(data => data.Identity.PrincipalId, new Parameter(output1));
+            storageAccount2.AssignProperty(data => data.Kind, new Parameter(output1));
 
-            var testFrontEndWebSite = new TestFrontEndWebSite(infra, parent: rg3);
+            infra.AddStorageAccount(kind: StorageKind.Storage, sku: StorageSkuName.StandardGrs, parent: rg3);
             infra.Build(GetOutputPath());
 
-            Assert.AreEqual(3, infra.GetParameters().Count());
-            Assert.AreEqual(4, infra.GetOutputs().Count());
-
-            Assert.AreEqual(0, testFrontEndWebSite.GetParameters().Count());
-            Assert.AreEqual(1, testFrontEndWebSite.GetOutputs().Count());
+            Assert.AreEqual(2, infra.GetParameters().Count());
+            Assert.AreEqual(1, infra.GetOutputs().Count());
 
             await ValidateBicepAsync();
         }
@@ -769,8 +587,7 @@ namespace Azure.Provisioning.Tests
             infra.AddResource(kv);
             var sa = StorageAccount.FromExisting(infra, "'existingStorage'", rg);
             infra.AddResource(sa);
-            var web = WebSite.FromExisting(infra, "'existingWebSite'", rg);
-            infra.AddResource(web);
+
             infra.AddResource(KeyVaultSecret.FromExisting(infra, "'existingSecret'", kv));
             infra.AddResource(PostgreSqlFlexibleServer.FromExisting(infra, "'existingPostgreSql'", rg));
             var sql = SqlServer.FromExisting(infra, "'existingSqlServer'", rg);
@@ -784,9 +601,6 @@ namespace Azure.Provisioning.Tests
             infra.AddResource(SqlDatabase.FromExisting(infra, "existingSqlDatabase", sql));
             infra.AddResource(SqlFirewallRule.FromExisting(infra, "'existingSqlFirewallRule'", sql));
             infra.AddResource(BlobService.FromExisting(infra, "'existingBlobService'", sa));
-            infra.AddResource(AppServicePlan.FromExisting(infra, "'existingAppServicePlan'", rg));
-            infra.AddResource(WebSiteConfigLogs.FromExisting(infra, "'existingWebSiteConfigLogs'", web));
-            infra.AddResource(WebSitePublishingCredentialPolicy.FromExisting(infra, "'existingWebSitePublishingCredentialPolicy'", web));
 
             var sb = ServiceBusNamespace.FromExisting(infra, "'existingSbNamespace'", rg);
             infra.AddResource(ServiceBusQueue.FromExisting(infra, "'existingSbQueue'", sb));
