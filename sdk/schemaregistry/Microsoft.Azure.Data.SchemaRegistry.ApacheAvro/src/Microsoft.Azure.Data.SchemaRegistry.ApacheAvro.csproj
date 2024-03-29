@@ -1,10 +1,10 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Description>Microsoft Azure Schema Registry Apache Avro SDK</Description>
     <AssemblyTitle>Microsoft Azure Schema Registry Apache Avro SDK</AssemblyTitle>
-    <Version>1.0.1</Version>
+    <Version>1.1.0-beta.1</Version>
     <!--The ApiCompatVersion is managed automatically and should not generally be modified manually.-->
-    <ApiCompatVersion>1.0.0</ApiCompatVersion>
+    <ApiCompatVersion>1.0.1</ApiCompatVersion>
     <PackageTags>Azure;Schema Registry;SchemaRegistry;.NET;Data;Apache;Avro;$(PackageCommonTags)</PackageTags>
     <TargetFrameworks>$(RequiredTargetFrameworks)</TargetFrameworks>
   </PropertyGroup>
@@ -13,7 +13,7 @@
     <PackageReference Include="Apache.Avro" />
     <PackageReference Include="Azure.Data.SchemaRegistry" />
     <PackageReference Include="Azure.Core" />
-    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.3"/>
+    <PackageReference Include="Newtonsoft.Json" VersionOverride="13.0.3" />
   </ItemGroup>
 
   <!-- Shared source from Azure.Core -->
