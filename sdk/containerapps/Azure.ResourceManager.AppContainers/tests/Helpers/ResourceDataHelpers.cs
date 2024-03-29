@@ -288,7 +288,7 @@ SecretRef = "masterkey",
                     AccountKey = "key",
                     AccessMode = ContainerAppAccessMode.ReadOnly,
                     ShareName = "share1",
-                }
+                },
             };
             return data;
         }
