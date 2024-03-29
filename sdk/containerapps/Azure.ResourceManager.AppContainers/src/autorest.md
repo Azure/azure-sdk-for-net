@@ -228,6 +228,7 @@ rename-mapping:
   JobsCollection: ContainerAppJobsCollection
   ManagedCertificate: ContainerAppManagedCertificate
   Mtls.enabled: IsMtlsEnabled
+  ManagedEnvironmentPropertiesPeerTrafficConfigurationEncryption.enabled: IsPeerToPeerEncryptionEnabled
   ServiceBind: ContainerAppServiceBind
   JobScale: ContainerAppJobScale
   JobScale.pollingInterval: PollingIntervalInSeconds

@@ -347,7 +347,7 @@ MaximumNodeCount = 6,
 },new ContainerAppWorkloadProfile("My-consumption-01","Consumption")
 },
                 IsMtlsEnabled = true,
-                IsEnabled = true,
+                IsPeerToPeerEncryptionEnabled = true,
             };
             ArmOperation<ContainerAppManagedEnvironmentResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, environmentName, data);
             ContainerAppManagedEnvironmentResource result = lro.Value;

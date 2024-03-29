@@ -26,10 +26,10 @@ namespace Azure.ResourceManager.AppContainers.Models
             }
 
             writer.WriteStartObject();
-            if (Optional.IsDefined(IsEnabled))
+            if (Optional.IsDefined(IsPeerToPeerEncryptionEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
-                writer.WriteBooleanValue(IsEnabled.Value);
+                writer.WriteBooleanValue(IsPeerToPeerEncryptionEnabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {

@@ -206,14 +206,14 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary> Peer traffic settings for the Managed Environment. </summary>
         internal ManagedEnvironmentPropertiesPeerTrafficConfiguration PeerTrafficConfiguration { get; set; }
         /// <summary> Boolean indicating whether the peer traffic encryption is enabled. </summary>
-        public bool? IsEnabled
+        public bool? IsPeerToPeerEncryptionEnabled
         {
-            get => PeerTrafficConfiguration is null ? default : PeerTrafficConfiguration.IsEnabled;
+            get => PeerTrafficConfiguration is null ? default : PeerTrafficConfiguration.IsPeerToPeerEncryptionEnabled;
             set
             {
                 if (PeerTrafficConfiguration is null)
                     PeerTrafficConfiguration = new ManagedEnvironmentPropertiesPeerTrafficConfiguration();
-                PeerTrafficConfiguration.IsEnabled = value;
+                PeerTrafficConfiguration.IsPeerToPeerEncryptionEnabled = value;
             }
         }
     }
