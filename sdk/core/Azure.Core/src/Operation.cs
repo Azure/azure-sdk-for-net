@@ -33,7 +33,7 @@ namespace Azure
             IOperationSource<T> source = new GenericOperationSource<T>();
             var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
             var operation = NextLinkOperationImplementation.Create(source, nextLinkOperation);
-            var operationState = operation.UpdateStateAsync(false, default).EnsureCompleted();
+            var operationState = operation.UpdateStateAsync(async: false, default).EnsureCompleted();
             return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
         }
 
@@ -50,7 +50,7 @@ namespace Azure
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
             var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
-            var operationState = nextLinkOperation.UpdateStateAsync(false, default).EnsureCompleted();
+            var operationState = nextLinkOperation.UpdateStateAsync(async: false, default).EnsureCompleted();
             return new RehydrationOperation(nextLinkOperation, operationState);
         }
 
@@ -69,7 +69,7 @@ namespace Azure
             IOperationSource<T> source = new GenericOperationSource<T>();
             var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
             var operation = NextLinkOperationImplementation.Create(source, nextLinkOperation);
-            var operationState = await operation.UpdateStateAsync(true, default).ConfigureAwait(false);
+            var operationState = await operation.UpdateStateAsync(async: true, default).ConfigureAwait(false);
             return new RehydrationOperation<T>(nextLinkOperation, operationState, operation, options);
         }
 
@@ -86,7 +86,7 @@ namespace Azure
             Argument.AssertNotNull(rehydrationToken, nameof(rehydrationToken));
 
             var nextLinkOperation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(pipeline, rehydrationToken);
-            var operationState = await nextLinkOperation.UpdateStateAsync(true, default).ConfigureAwait(false);
+            var operationState = await nextLinkOperation.UpdateStateAsync(async: true, default).ConfigureAwait(false);
             return new RehydrationOperation(nextLinkOperation, operationState);
         }
 

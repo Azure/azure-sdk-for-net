@@ -66,7 +66,7 @@ namespace Azure.Core.Tests
             var operation = (NextLinkOperationImplementation)NextLinkOperationImplementation.Create(CreateMockHttpPipeline(HttpStatusCode.NotFound), rehydrationToken);
             Assert.NotNull(operation);
 
-            var result = await operation.UpdateStateAsync(true, default);
+            var result = await operation.UpdateStateAsync(async: true, default);
             Assert.AreEqual(204, result.RawResponse.Status);
         }
 
