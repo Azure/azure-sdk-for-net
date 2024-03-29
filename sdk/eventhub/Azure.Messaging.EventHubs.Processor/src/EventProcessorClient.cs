@@ -1183,30 +1183,6 @@ namespace Azure.Messaging.EventHubs
             }
         }
 
-        private DiagnosticScope StartProcessorScope(EventData eventData)
-        {
-            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
-            if (diagnosticScope.IsEnabled)
-            {
-                if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
-                {
-                    // set link in all cases
-                    diagnosticScope.AddLink(traceparent, tracestate);
-                    // parent is not required, but allowed and helps to correlated producer and consumers
-                    diagnosticScope.SetTraceContext(traceparent, tracestate);
-                }
-                if (eventData.EnqueuedTime != default)
-                {
-                    diagnosticScope.AddLongAttribute(
-                        DiagnosticProperty.EnqueuedTimeAttribute,
-                        eventData.EnqueuedTime.ToUnixTimeMilliseconds());
-                }
-            }
-
-            diagnosticScope.Start();
-            return diagnosticScope;
-        }
-
         /// <summary>
         ///   Performs the tasks needed when an unexpected exception occurs within the operation of the
         ///   event processor infrastructure.
@@ -1451,6 +1427,35 @@ namespace Azure.Messaging.EventHubs
                 LoadBalancingUpdateInterval = clientOptions.LoadBalancingUpdateInterval,
                 PartitionOwnershipExpirationInterval = clientOptions.PartitionOwnershipExpirationInterval
             };
+        }
+
+        /// <summary>
+        /// Creates, starts, and enriches processing diagnostics scope.
+        /// </summary>
+        /// <param name="eventData">The instance of <see cref="EventData"/> which is being processed.</param>
+        /// <returns>The instance of scope.</returns>
+        private DiagnosticScope StartProcessorScope(EventData eventData)
+        {
+            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+            if (diagnosticScope.IsEnabled)
+            {
+                if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
+                {
+                    // set link in all cases
+                    diagnosticScope.AddLink(traceparent, tracestate);
+                    // parent is not required, but allowed and helps to correlate producer and consumers
+                    diagnosticScope.SetTraceContext(traceparent, tracestate);
+                }
+                if (eventData.EnqueuedTime != default)
+                {
+                    diagnosticScope.AddLongAttribute(
+                        DiagnosticProperty.EnqueuedTimeAttribute,
+                        eventData.EnqueuedTime.ToUnixTimeMilliseconds());
+                }
+            }
+
+            diagnosticScope.Start();
+            return diagnosticScope;
         }
 
         /// <summary>
