@@ -105,7 +105,22 @@ namespace Azure.Storage.Files.Shares.Tests
                 e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
         }
 
-        [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/25266")]
+        [RecordedTest]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task GetPropertiesAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+
+            // Act
+            Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
+
+            // Assert
+            Assert.IsNotNull(properties);
+            var accountName = new ShareUriBuilder(service.Uri).AccountName;
+            TestHelper.AssertCacheableProperty(accountName, () => service.AccountName);
+        }
+
         [RecordedTest]
         [NonParallelizable]
         public async Task SetPropertiesAsync()
@@ -182,6 +197,20 @@ namespace Azure.Storage.Files.Shares.Tests
             await TestHelper.AssertExpectedExceptionAsync<RequestFailedException>(
                 fakeService.SetPropertiesAsync(properties),
                 e => Assert.AreEqual(ShareErrorCode.AuthenticationFailed.ToString(), e.ErrorCode));
+        }
+
+        [RecordedTest]
+        [NonParallelizable]
+        [ServiceVersion(Min = ShareClientOptions.ServiceVersion.V2024_08_04)]
+        public async Task SetPropertiesAsync_OAuth()
+        {
+            // Arrange
+            ShareServiceClient service = SharesClientBuilder.GetServiceClient_OAuth();
+            Response<ShareServiceProperties> properties = await service.GetPropertiesAsync();
+            properties.Value.Cors = null;
+
+            // Act
+            await service.SetPropertiesAsync(properties: properties.Value);
         }
 
         [RecordedTest]
