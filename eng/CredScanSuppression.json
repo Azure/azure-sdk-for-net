@@ -109,6 +109,6 @@
                 "secret_password"
             ],
             "_justification": "These are possible test secrets that are not actually used. They are placeholders."
-        },
+        }
     ]
 }
