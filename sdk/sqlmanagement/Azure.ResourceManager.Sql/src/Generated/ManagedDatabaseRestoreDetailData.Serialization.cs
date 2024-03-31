@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -552,7 +552,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -604,7 +604,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -626,7 +626,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    blockReason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    lastUploadedFileName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -670,7 +670,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    lastUploadedFileTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    lastRestoredFileName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    lastRestoredFileTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    percentCompleted: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -736,7 +736,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    currentRestoredSizeMB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -750,7 +750,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    currentRestorePlanSizeMB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    currentBackupType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -786,7 +786,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    currentRestoringFileName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -808,7 +808,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    numberOfFilesDetected: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -822,7 +822,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    numberOfFilesQueued: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -836,7 +836,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    numberOfFilesSkipped: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -850,7 +850,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    numberOfFilesRestoring: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    numberOfFilesRestored: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    numberOfFilesUnrestorable: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -894,7 +894,7 @@ namespace Azure.ResourceManager.Sql
                     builder.Append("    fullBackupSets: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -916,7 +916,7 @@ namespace Azure.ResourceManager.Sql
                     builder.Append("    diffBackupSets: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -938,7 +938,7 @@ namespace Azure.ResourceManager.Sql
                     builder.Append("    logBackupSets: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -960,7 +960,7 @@ namespace Azure.ResourceManager.Sql
                     builder.Append("    unrestorableFiles: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

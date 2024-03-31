@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  allowedOrigins: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  allowedMethods: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.Storage.Models
             builder.Append("  maxAgeInSeconds: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  exposedHeaders: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  allowedHeaders: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

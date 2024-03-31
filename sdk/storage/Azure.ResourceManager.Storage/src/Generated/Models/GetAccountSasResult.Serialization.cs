@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  accountSasToken: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

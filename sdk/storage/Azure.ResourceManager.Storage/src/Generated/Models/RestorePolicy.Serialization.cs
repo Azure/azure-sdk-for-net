@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Storage.Models
             builder.Append("  enabled: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  days: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  lastEnabledTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  minRestoreTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

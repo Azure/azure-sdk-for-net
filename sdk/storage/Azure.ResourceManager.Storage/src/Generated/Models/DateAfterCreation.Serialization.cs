@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
             builder.Append("  daysAfterCreationGreaterThan: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  daysAfterLastTierChangeGreaterThan: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

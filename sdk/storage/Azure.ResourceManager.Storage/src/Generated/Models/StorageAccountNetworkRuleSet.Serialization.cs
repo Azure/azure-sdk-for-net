@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  bypass: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  resourceAccessRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  virtualNetworkRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  ipRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Storage.Models
             builder.Append("  defaultAction: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {

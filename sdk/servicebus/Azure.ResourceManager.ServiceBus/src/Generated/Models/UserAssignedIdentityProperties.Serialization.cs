@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  userAssignedIdentity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

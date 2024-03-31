@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  startRange: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  endRange: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

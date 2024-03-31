@@ -556,11 +556,6 @@ namespace Azure.ResourceManager.SignalR
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -569,7 +564,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -589,7 +584,7 @@ namespace Azure.ResourceManager.SignalR
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -604,7 +599,7 @@ namespace Azure.ResourceManager.SignalR
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -638,7 +633,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("  sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -652,7 +647,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -666,7 +661,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -680,7 +675,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -694,7 +689,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -710,7 +705,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -724,7 +719,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    externalIP: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -746,7 +741,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    hostName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -768,7 +763,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    publicPort: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -782,7 +777,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    serverPort: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -796,7 +791,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -820,7 +815,7 @@ namespace Azure.ResourceManager.SignalR
                     builder.Append("    privateEndpointConnections: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -842,7 +837,7 @@ namespace Azure.ResourceManager.SignalR
                     builder.Append("    sharedPrivateLinkResources: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -856,13 +851,18 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Tls), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("IsClientCertEnabled", out propertyOverride);
             if (Optional.IsDefined(Tls) || hasPropertyOverride)
             {
                 builder.Append("    tls: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      tls: {");
+                    builder.Append("        clientCertEnabled: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -876,7 +876,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    hostNamePrefix: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -900,7 +900,7 @@ namespace Azure.ResourceManager.SignalR
                     builder.Append("    features: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    liveTraceConfiguration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -928,13 +928,18 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceLogConfiguration), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ResourceLogCategories", out propertyOverride);
             if (Optional.IsDefined(ResourceLogConfiguration) || hasPropertyOverride)
             {
                 builder.Append("    resourceLogConfiguration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      resourceLogConfiguration: {");
+                    builder.Append("        categories: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -942,13 +947,18 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Cors), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("CorsAllowedOrigins", out propertyOverride);
             if (Optional.IsDefined(Cors) || hasPropertyOverride)
             {
                 builder.Append("    cors: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      cors: {");
+                    builder.Append("        allowedOrigins: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -956,13 +966,18 @@ namespace Azure.ResourceManager.SignalR
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Upstream), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("UpstreamTemplates", out propertyOverride);
             if (Optional.IsDefined(Upstream) || hasPropertyOverride)
             {
                 builder.Append("    upstream: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      upstream: {");
+                    builder.Append("        templates: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -976,7 +991,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    networkACLs: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -990,7 +1005,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    publicNetworkAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1012,7 +1027,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    disableLocalAuth: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1027,7 +1042,7 @@ namespace Azure.ResourceManager.SignalR
                 builder.Append("    disableAadAuth: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1039,38 +1054,6 @@ namespace Azure.ResourceManager.SignalR
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "IsClientCertEnabled":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("IsClientCertEnabled", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Tls, propertyDictionary);
-                        break;
-                    case "ResourceLogCategories":
-                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
-                        propertyDictionary0.Add("Categories", item.Value);
-                        bicepOptions.PropertyOverrides.Add(ResourceLogConfiguration, propertyDictionary0);
-                        break;
-                    case "CorsAllowedOrigins":
-                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
-                        propertyDictionary1.Add("AllowedOrigins", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Cors, propertyDictionary1);
-                        break;
-                    case "UpstreamTemplates":
-                        Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
-                        propertyDictionary2.Add("Templates", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Upstream, propertyDictionary2);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<SignalRData>.Write(ModelReaderWriterOptions options)

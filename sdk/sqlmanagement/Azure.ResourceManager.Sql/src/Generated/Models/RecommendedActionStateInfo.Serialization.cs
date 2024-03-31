@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Sql.Models
             builder.Append("  currentValue: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  actionInitiatedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  lastModified: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

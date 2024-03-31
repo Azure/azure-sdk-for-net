@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  prefixMatch: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  minCreationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

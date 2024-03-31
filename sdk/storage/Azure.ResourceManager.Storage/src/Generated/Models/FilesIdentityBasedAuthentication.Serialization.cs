@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Storage.Models
             builder.Append("  directoryServiceOptions: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  activeDirectoryProperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  defaultSharePermission: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

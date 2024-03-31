@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  ruleId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  sourceContainer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  destinationContainer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  filters: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

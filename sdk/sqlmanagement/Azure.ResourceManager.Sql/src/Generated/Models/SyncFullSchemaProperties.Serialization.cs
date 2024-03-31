@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  tables: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  lastUpdateTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

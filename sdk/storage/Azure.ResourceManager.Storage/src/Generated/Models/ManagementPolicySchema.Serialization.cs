@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  rules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  clientCertEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

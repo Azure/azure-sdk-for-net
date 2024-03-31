@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  smb: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
