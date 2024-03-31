@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  primaryConnectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  secondaryConnectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  aliasPrimaryConnectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  aliasSecondaryConnectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  primaryKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  secondaryKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  keyName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

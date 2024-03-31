@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  ipMask: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  action: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

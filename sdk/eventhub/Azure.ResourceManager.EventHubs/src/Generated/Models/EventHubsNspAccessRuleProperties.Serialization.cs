@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  direction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     builder.Append("  addressPrefixes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     builder.Append("  subscriptions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     builder.Append("  networkSecurityPerimeters: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     builder.Append("  fullyQualifiedDomainNames: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     builder.Append("  settings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
