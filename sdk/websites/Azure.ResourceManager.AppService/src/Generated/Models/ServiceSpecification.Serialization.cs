@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  metricSpecifications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  logSpecifications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

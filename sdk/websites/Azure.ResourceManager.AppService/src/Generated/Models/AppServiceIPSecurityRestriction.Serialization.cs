@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  ipAddress: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  subnetMask: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  vnetSubnetResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  vnetTrafficTag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  subnetTrafficTag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  action: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  tag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  priority: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -422,7 +422,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -444,7 +444,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  headers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  sslState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  virtualIP: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  thumbprint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  toUpdate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  hostType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

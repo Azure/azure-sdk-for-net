@@ -512,7 +512,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -586,7 +586,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    workerTierName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    subscription: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    hostingEnvironmentProfile: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    maximumNumberOfWorkers: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    geoRegion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    perSiteScaling: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -709,7 +709,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    elasticScaleEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -724,7 +724,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    maximumElasticWorkerCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    numberOfSites: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -752,7 +752,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    isSpot: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -767,7 +767,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    spotExpirationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -782,7 +782,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    freeOfferExpirationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -797,7 +797,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    resourceGroup: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    reserved: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -834,7 +834,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    isXenon: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -849,7 +849,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    hyperV: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -864,7 +864,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    targetWorkerCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    targetWorkerSizeId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -892,7 +892,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -906,7 +906,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    kubeEnvironmentProfile: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -920,7 +920,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    zoneRedundant: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  level: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  sasUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

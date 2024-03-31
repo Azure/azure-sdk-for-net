@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  timestampUtc: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  sourceSlotName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  destinationSlotName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  html: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

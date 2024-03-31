@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  endpoints: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  ports: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

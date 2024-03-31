@@ -396,7 +396,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -484,7 +484,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    storageAccountUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    blobName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    sizeInBytes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    created: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -585,7 +585,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    log: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -609,7 +609,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    databases: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    scheduled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    lastRestoreTimeStamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    finishedTimeStamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -674,7 +674,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    correlationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    websiteSizeInBytes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  requireAuthentication: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  unauthenticatedClientAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  redirectToProvider: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  excludedPaths: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  jwtClaimChecks: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  allowedAudiences: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  defaultAuthorizationPolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

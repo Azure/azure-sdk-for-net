@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  allowedAudiences: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

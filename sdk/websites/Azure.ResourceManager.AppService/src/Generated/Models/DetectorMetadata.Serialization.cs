@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  dataSource: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

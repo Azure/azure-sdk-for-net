@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  runtimeVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  remoteDebuggingSupported: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  appInsightsSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  gitHubActionSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  appSettingsDictionary: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  siteConfigPropertiesDictionary: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  supportedFunctionsExtensionVersions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  isPreview: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  isDeprecated: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  isHidden: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  endOfLifeDate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  isAutoUpdate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -563,7 +563,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  isEarlyAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  isDefault: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

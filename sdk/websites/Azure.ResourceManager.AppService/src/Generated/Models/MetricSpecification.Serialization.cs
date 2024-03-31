@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  displayDescription: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  unit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  aggregationType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  supportsInstanceLevelAggregation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  enableRegionalMdmAccount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  sourceMdmAccount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -535,7 +535,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  sourceMdmNamespace: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -557,7 +557,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  metricFilterPattern: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  fillGapWithZero: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  isInternal: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  dimensions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -631,7 +631,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  category: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  availabilities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -677,7 +677,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  supportedTimeGrainTypes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  supportedAggregationTypes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  timeGrain: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  blobDuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

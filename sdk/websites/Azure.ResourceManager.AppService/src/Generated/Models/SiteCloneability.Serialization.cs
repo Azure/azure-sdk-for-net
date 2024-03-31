@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  result: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  blockingFeatures: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  unsupportedFeatures: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  blockingCharacteristics: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

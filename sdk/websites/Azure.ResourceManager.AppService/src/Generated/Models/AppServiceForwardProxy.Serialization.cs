@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  convention: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  customHostHeaderName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  customProtoHeaderName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

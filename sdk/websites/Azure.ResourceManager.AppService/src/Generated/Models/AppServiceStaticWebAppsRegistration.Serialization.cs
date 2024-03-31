@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  clientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

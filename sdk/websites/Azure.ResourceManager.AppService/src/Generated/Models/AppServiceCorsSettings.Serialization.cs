@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  allowedOrigins: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  supportCredentials: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

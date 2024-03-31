@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  correlationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  overwrite: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  cloneCustomHostNames: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  cloneSourceControl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  sourceWebAppId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  sourceWebAppLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  hostingEnvironment: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  appSettingsOverrides: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  configureLoadBalancing: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  trafficManagerProfileId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  trafficManagerProfileName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

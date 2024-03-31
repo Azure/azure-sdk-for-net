@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  tableName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  columns: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  rows: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
