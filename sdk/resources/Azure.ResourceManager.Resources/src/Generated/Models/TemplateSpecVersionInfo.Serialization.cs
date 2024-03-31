@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  timeCreated: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  timeModified: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  rdb-backup-enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  rdb-backup-frequency: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  rdb-backup-max-snapshot-count: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  rdb-storage-connection-string: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  aof-backup-enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  aof-storage-connection-string-0: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  aof-storage-connection-string-1: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -438,7 +438,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  maxfragmentationmemory-reserved: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  maxmemory-policy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -482,7 +482,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  maxmemory-reserved: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  maxmemory-delta: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  maxclients: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -548,7 +548,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  preferred-data-archive-auth-method: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -570,7 +570,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  preferred-data-persistence-auth-method: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -592,7 +592,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  zonal-configuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  authnotrequired: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  storage-subscription-id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -658,7 +658,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  aad-enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

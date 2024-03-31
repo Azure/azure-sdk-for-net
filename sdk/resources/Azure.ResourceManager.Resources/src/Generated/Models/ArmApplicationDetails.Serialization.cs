@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  oid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  puid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  applicationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  path: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  propertyChangeType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  before: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  after: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  children: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  regionType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  regionCategory: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  geography: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  geographyGroup: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  longitude: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  latitude: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  physicalLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  pairedRegion: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  homeLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

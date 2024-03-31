@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  in: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  notIn: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

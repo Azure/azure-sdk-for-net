@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  principalId: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  roleDefinitionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

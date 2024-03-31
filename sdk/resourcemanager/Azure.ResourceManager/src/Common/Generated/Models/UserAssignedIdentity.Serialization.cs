@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Models
                 builder.Append("  principalId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Models
                 builder.Append("  clientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

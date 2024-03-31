@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  message: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  policyDefinitionReferenceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

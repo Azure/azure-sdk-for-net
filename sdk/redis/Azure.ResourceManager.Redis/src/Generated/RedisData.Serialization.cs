@@ -616,7 +616,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Redis
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.Redis
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -687,7 +687,7 @@ namespace Azure.ResourceManager.Redis
                     builder.Append("  zones: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -720,7 +720,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    redisConfiguration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    redisVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -800,7 +800,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    enableNonSslPort: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    replicasPerMaster: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    replicasPerPrimary: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -845,7 +845,7 @@ namespace Azure.ResourceManager.Redis
                     builder.Append("    tenantSettings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -879,7 +879,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    shardCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    minimumTlsVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -907,7 +907,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    publicNetworkAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -921,7 +921,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    updateChannel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -935,7 +935,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -949,7 +949,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    subnetId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -963,7 +963,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    staticIP: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -977,7 +977,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -991,7 +991,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    hostName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1013,7 +1013,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    port: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1027,7 +1027,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    sslPort: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1041,7 +1041,7 @@ namespace Azure.ResourceManager.Redis
                 builder.Append("    accessKeys: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1057,7 +1057,7 @@ namespace Azure.ResourceManager.Redis
                     builder.Append("    linkedServers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -1079,7 +1079,7 @@ namespace Azure.ResourceManager.Redis
                     builder.Append("    instances: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -1101,7 +1101,7 @@ namespace Azure.ResourceManager.Redis
                     builder.Append("    privateEndpointConnections: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  name: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  uri: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  type: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {

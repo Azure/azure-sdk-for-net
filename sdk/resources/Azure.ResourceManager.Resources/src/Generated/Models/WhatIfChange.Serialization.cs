@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  resourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  changeType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  unsupportedReason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  before: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  after: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  delta: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

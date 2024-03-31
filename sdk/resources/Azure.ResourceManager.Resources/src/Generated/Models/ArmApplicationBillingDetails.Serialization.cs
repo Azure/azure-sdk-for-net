@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  resourceUsageId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

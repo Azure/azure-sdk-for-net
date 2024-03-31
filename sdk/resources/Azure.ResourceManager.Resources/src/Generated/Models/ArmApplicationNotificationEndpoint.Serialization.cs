@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  uri: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
