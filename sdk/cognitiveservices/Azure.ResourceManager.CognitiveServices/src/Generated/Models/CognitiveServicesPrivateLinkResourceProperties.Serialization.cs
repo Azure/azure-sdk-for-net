@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  groupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     builder.Append("  requiredMembers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     builder.Append("  requiredZoneNames: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

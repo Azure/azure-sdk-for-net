@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  qnaRuntimeEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  qnaAzureSearchEndpointKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  qnaAzureSearchEndpointId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  statisticsEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  eventHubConnectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  storageAccountConnectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  aadClientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  aadTenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  superUser: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  websiteName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

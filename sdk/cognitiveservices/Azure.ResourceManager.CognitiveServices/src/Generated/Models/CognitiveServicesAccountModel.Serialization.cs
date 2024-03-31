@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  baseModel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  isDefaultVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     builder.Append("  skus: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  maxCapacity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     builder.Append("  capabilities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -441,7 +441,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     builder.Append("  finetuneCapabilities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  deprecation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  lifecycleStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  format: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -561,7 +561,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  source: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  callRateLimit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
