@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.Append("  status: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {

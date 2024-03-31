@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  requestId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  resultType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  total: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  top: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     builder.Append("  coreSummaries: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  startTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  lastUpdated: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  eTag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     builder.Append("  sort: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  requestTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  aggregatedValueField: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  aggregatedGroupingFields: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  sum: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  max: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  schema: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

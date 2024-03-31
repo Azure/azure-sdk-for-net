@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  enableDataExport: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  immediatePurgeDataOn30Days: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  enableLogAccessUsingOnlyResourcePermissions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  clusterResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  disableLocalAuth: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
