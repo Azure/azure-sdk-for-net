@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  commitmentPlanId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  commitmentPlanLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

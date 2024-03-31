@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  state: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  ignoreMissingVnetServiceEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

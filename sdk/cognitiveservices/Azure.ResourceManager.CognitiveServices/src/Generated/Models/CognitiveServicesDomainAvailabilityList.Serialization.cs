@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  isSubdomainAvailable: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  reason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  subdomainName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

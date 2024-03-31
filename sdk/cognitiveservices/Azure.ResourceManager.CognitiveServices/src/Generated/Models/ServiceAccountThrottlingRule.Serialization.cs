@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  key: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  renewalPeriod: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  count: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  minCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  dynamicThrottlingEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     builder.Append("  matchPatterns: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

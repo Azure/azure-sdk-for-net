@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     builder.Append("  values: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  restrictionInfo: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  reasonCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

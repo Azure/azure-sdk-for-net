@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  fineTune: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  inference: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

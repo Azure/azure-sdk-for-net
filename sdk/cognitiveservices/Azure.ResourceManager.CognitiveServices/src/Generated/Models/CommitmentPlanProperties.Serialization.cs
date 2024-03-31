@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  commitmentPlanGuid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  hostingModel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  planType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  current: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  autoRenew: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  next: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 builder.Append("  last: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -370,7 +370,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     builder.Append("  provisioningIssues: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
