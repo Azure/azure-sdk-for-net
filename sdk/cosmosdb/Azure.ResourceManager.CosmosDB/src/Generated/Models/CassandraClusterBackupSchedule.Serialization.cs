@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  scheduleName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  cronExpression: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  retentionInHours: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

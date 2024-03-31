@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  pointInTimeUTC: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  sourceResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

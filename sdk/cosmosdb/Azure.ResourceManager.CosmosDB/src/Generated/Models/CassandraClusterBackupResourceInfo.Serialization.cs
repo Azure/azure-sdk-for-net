@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  backupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  backupState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  backupStartTimestamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  backupStopTimestamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  backupExpiryTimestamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  locationName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  regionalDatabaseAccountInstanceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  creationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  deletionTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

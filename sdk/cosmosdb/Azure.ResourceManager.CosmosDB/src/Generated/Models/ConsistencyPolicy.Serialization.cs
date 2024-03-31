@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.Append("  defaultConsistencyLevel: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  maxStalenessPrefix: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  maxIntervalInSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

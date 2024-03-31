@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  mode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  conflictResolutionPath: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  conflictResolutionProcedure: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

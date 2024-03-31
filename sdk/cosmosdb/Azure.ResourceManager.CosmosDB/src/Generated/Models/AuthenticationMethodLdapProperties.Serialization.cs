@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  serverHostname: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  serverPort: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  serviceUserDistinguishedName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  serviceUserPassword: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  searchBaseDistinguishedName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  searchFilterTemplate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -341,7 +341,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  serverCertificates: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -361,7 +361,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  connectionTimeoutInMs: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

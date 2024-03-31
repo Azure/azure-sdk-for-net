@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  healthy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  repairRunIds: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  repairSchedules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

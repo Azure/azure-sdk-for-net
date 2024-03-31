@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  primaryMasterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  secondaryMasterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  primaryReadonlyMasterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  secondaryReadonlyMasterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

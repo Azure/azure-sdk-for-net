@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  supportsAvailabilityZone: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  isResidencyRestricted: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  backupStorageRedundancies: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  isSubscriptionRegionAccessAllowedForRegular: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  isSubscriptionRegionAccessAllowedForAz: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

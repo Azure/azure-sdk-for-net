@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  automatic: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  indexingMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  includedPaths: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  excludedPaths: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  compositeIndexes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  spatialIndexes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
