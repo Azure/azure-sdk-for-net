@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppConfiguration.Models
                 builder.Append("  keyVaultProperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

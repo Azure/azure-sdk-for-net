@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  FeatureName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  MeterId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  MeterRateFrequency: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ResouceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IsHidden: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     builder.Append("  Capabilities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Title: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IsMainFeature: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  SupportedAddonFeatures: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

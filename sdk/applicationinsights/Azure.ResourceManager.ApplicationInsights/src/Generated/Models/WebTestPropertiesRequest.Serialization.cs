@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  RequestUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     builder.Append("  Headers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  HttpVerb: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  RequestBody: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ParseDependentRequests: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  FollowRedirects: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

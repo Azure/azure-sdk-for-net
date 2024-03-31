@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -477,7 +477,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    scope: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    roleDefinitionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    principalId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    principalType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -541,7 +541,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    roleAssignmentScheduleId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    originRoleAssignmentId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    startDateTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    endDateTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    linkedRoleEligibilityScheduleId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -627,7 +627,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    linkedRoleEligibilityScheduleInstanceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -641,7 +641,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    assignmentType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -655,7 +655,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    memberType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -669,7 +669,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    condition: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -691,7 +691,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    conditionVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -713,7 +713,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    createdOn: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    expandedProperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

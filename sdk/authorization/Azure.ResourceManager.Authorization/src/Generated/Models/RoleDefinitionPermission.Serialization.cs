@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  actions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  notActions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  dataActions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  notDataActions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

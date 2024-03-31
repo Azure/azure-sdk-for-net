@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  templateData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     builder.Append("  galleries: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

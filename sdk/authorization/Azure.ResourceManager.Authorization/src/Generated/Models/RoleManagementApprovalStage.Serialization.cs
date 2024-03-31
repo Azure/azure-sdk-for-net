@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  approvalStageTimeOutInDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  isApproverJustificationRequired: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  escalationTimeInMinutes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  primaryApprovers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  isEscalationEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  escalationApprovers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

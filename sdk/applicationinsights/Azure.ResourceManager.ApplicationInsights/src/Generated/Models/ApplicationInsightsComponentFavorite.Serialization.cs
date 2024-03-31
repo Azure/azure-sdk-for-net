@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Config: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  FavoriteId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  FavoriteType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  SourceType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  TimeModified: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     builder.Append("  Tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -432,7 +432,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Category: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -454,7 +454,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IsGeneratedFromTemplate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  UserId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

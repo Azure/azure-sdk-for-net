@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  functionAlias: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

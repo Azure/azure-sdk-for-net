@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  liveToken: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

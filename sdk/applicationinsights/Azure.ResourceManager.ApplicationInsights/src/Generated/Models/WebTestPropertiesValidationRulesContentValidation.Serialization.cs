@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ContentMatch: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IgnoreCase: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  PassIfTextFound: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Cap: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ResetTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  WarningThreshold: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  StopSendNotificationWhenHitThreshold: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  StopSendNotificationWhenHitCap: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  MaxHistoryCap: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
