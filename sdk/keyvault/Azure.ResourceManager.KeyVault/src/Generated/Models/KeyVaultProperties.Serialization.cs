@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.Append("  tenantId: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     builder.Append("  accessPolicies: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -414,7 +414,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  vaultUri: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  hsmPoolResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  enabledForDeployment: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  enabledForDiskEncryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  enabledForTemplateDeployment: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  enableSoftDelete: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  softDeleteRetentionInDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  enableRbacAuthorization: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  createMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  enablePurgeProtection: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  networkAcls: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -582,7 +582,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -598,7 +598,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     builder.Append("  privateEndpointConnections: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -618,7 +618,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  publicNetworkAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  activationStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  activationStatusMessage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

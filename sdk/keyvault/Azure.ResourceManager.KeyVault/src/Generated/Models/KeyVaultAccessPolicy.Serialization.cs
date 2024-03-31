@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             builder.Append("  tenantId: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  objectId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  applicationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  permissions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

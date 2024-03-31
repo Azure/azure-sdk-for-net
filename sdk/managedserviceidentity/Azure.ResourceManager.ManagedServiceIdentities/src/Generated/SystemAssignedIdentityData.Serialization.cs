@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 builder.Append("    tenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 builder.Append("    principalId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -392,7 +392,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 builder.Append("    clientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.ManagedServiceIdentities
                 builder.Append("    clientSecretUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
