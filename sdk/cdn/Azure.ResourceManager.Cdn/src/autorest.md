@@ -7,7 +7,7 @@ azure-arm: true
 library-name: Cdn
 namespace: Azure.ResourceManager.Cdn
 title: CdnManagementClient
-require: https://github.com/Azure/azure-rest-api-specs/blob/236c7ce93e9bcb875e1fbe1db8602a3a159ee2ae/specification/cdn/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/2d973fccf9f28681a481e9760fa12b2334216e21/specification/cdn/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -21,6 +21,9 @@ modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
+
+# mgmt-debug:
+#  show-serialized-names: true
 
 operation-id-mappings:
   CdnEndpoint:
@@ -98,6 +101,7 @@ rename-mapping:
   CacheLevel: CdnCacheLevel
   SslProtocol: DeliveryRuleSslProtocol
   SslProtocolMatchCondition: DeliveryRuleSslProtocolMatchCondition
+  CdnEndpoint.properties.customDomains: DeepCreatedCustomDomains
 
 directive:
   - from: swagger-document
@@ -375,5 +379,42 @@ directive:
       $.MatchCondition.properties.operator['x-ms-enum'].name = 'matchOperator';
       $.policySettings.properties.defaultCustomBlockResponseStatusCode['x-nullable'] = true;
       $.policySettings.properties.defaultCustomBlockResponseBody['x-nullable'] = true;
+  - from: afdx.json
+    where: $.definitions.MetricsResponse.properties
+    transform: > 
+      $.granularity={
+          "type": "string",
+          "enum": [
+            "PT5M",
+            "PT1H",
+            "P1D"
+          ]
+        }
+      $.series.items.properties.unit={
+        "type": "string",
+                "enum": [
+                  "count",
+                  "bytes",
+                  "bitsPerSecond",
+                  "milliSeconds"
+                ]  
+      }
+  - from: afdx.json
+    where: $.definitions.WafMetricsResponse.properties
+    transform: > 
+      $.granularity={
+          "type": "string",
+          "enum": [
+            "PT5M",
+            "PT1H",
+            "P1D"
+          ]
+        }
+      $.series.items.properties.unit={
+                "type": "string",
+                "enum": [
+                  "count"
+                ]
+              }
   - remove-operation: Validate_Secret
 ```
