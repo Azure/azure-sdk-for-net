@@ -142,7 +142,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
             {
                 DocumentType = DocumentType.Request,
                 Name = activity.DisplayName,
-                //Url = new Uri(url), // TODO: THIS COULD THROW. NEED TO HANDLE EXCEPTION.
+                //Url = TODO: I'M TRYING TO GET THE TYPE OF Url CHANGED BACK TO string. THIS IS A TEMPORARY FIX.
                 ResponseCode = httpResponseStatusCode,
                 Duration = activity.Duration < SchemaConstants.RequestData_Duration_LessThanDays
                                                 ? activity.Duration.ToString("c", CultureInfo.InvariantCulture)
@@ -153,6 +153,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.DataCollection
                 Extension_IsSuccess = IsHttpSuccess(activity, httpResponseStatusCode),
                 Extension_Duration = activity.Duration.TotalMilliseconds,
             };
+
+            // TODO: I'M TRYING TO GET THE TYPE OF Url CHANGED BACK TO string. THIS IS A TEMPORARY FIX.
+            if (Uri.TryCreate(url, UriKind.Absolute, out Uri? uri))
+            {
+                requestDocumentIngress.Url = uri;
+            }
 
             return requestDocumentIngress;
         }

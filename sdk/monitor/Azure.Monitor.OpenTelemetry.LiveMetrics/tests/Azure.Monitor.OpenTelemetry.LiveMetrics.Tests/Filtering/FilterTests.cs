@@ -1646,13 +1646,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ACT
             bool result1 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", "1234") }));
             bool result2 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", "12234") }));
-            bool result3 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", null) }));
+            // bool result3 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", null) })); // null is not supported in the new models.
             bool result4 = filter.Check(new DocumentMock());
 
             // ASSERT
             Assert.True(result1);
             Assert.False(result2);
-            Assert.False(result3);
+            //Assert.False(result3);
             Assert.False(result4);
         }
 
@@ -1684,13 +1684,13 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering.Tests
             // ACT
             bool result1 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", "1234") }));
             bool result2 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", "12234") }));
-            bool result3 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", null) }));
+            //bool result3 = filter.Check(new DocumentMock(new List<KeyValuePairString>() { new KeyValuePairString("Prop1", null) })); // null is not supported in the new models.
             bool result4 = filter.Check(new DocumentMock());
 
             // ASSERT
             Assert.False(result1);
             Assert.True(result2);
-            Assert.True(result3);
+            //Assert.True(result3);
             Assert.True(result4);
         }
 

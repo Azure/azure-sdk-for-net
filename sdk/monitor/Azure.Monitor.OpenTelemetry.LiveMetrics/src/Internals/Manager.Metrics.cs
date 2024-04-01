@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
                 version: SdkVersionUtils.s_sdkVersion.Truncate(SchemaConstants.Tags_AiInternalSdkVersion_MaxLength),
                 invariantVersion: 5,
                 instance: LiveMetricsResource?.RoleInstance ?? "UNKNOWN_INSTANCE",
-                roleName: LiveMetricsResource?.RoleName,
+                roleName: LiveMetricsResource?.RoleName ?? "UNKNOWN_NAME",
                 machineName: Environment.MachineName, // TODO: MOVE TO PLATFORM
                 streamId: _streamId,
                 isWebApp: _isAzureWebApp,
