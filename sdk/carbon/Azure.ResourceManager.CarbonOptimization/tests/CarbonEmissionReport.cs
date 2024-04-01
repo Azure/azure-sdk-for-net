@@ -1,8 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.ResourceManager.CarbonOptimization.Models;
 using Azure.ResourceManager.Resources;
@@ -25,14 +25,28 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
 
         [TestCase]
         [RecordedTest]
+        public async Task QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync()
+        {
+            CarbonEmissionAvailableDateRange availableDateRange = await CarbonOptimizationExtensions.QueryCarbonEmissionAvailableDateRangeAsync(DefaultTenant).ConfigureAwait(false);
+            Assert.AreNotEqual(availableDateRange, null);
+        }
+
+        [TestCase]
+        [RecordedTest]
         public async Task DetailItemsReportAsync()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
-            ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.WestUS);
-            string resourceName = Recording.GenerateAssetName("resource");
-            CarbonEmissionAvailableDateRange availableDateRange = await CarbonOptimizationExtensions.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(DefaultTenant).ConfigureAwait(false);
+            OverallSummaryReportQueryContent filter = new OverallSummaryReportQueryContent(
+                new CarbonEmissionQueryDateRange(),
+                new List<string>() { subscription.Id.SubscriptionId },
+                new List<CarbonEmissionQueryScope>() { CarbonEmissionQueryScope.Scope1, CarbonEmissionQueryScope.Scope2, CarbonEmissionQueryScope.Scope3 }
+            );
+            AsyncPageable<CarbonEmission> carbonEmissionDatas = CarbonOptimizationExtensions.GetCarbonEmissionReportsAsync(DefaultTenant, filter);
 
-            Assert.IsTrue(true);
+            await foreach (CarbonEmission data in carbonEmissionDatas)
+            {
+                Assert.AreNotEqual(data, null);
+            }
         }
     }
 }

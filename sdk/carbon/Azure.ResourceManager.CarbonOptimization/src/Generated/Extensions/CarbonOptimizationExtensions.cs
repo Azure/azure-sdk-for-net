@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.GetCarbonEmissionReportsCarbonServices(CarbonEmissionQueryContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.GetCarbonEmissionReports(CarbonEmissionQueryContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -48,11 +48,11 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         /// <returns> An async collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<CarbonEmission> GetCarbonEmissionReportsCarbonServicesAsync(this TenantResource tenantResource, CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
+        public static AsyncPageable<CarbonEmission> GetCarbonEmissionReportsAsync(this TenantResource tenantResource, CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCarbonOptimizationTenantResource(tenantResource).GetCarbonEmissionReportsCarbonServicesAsync(content, cancellationToken);
+            return GetMockableCarbonOptimizationTenantResource(tenantResource).GetCarbonEmissionReportsAsync(content, cancellationToken);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.GetCarbonEmissionReportsCarbonServices(CarbonEmissionQueryContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.GetCarbonEmissionReports(CarbonEmissionQueryContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
@@ -81,11 +81,11 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> or <paramref name="content"/> is null. </exception>
         /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<CarbonEmission> GetCarbonEmissionReportsCarbonServices(this TenantResource tenantResource, CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
+        public static Pageable<CarbonEmission> GetCarbonEmissionReports(this TenantResource tenantResource, CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCarbonOptimizationTenantResource(tenantResource).GetCarbonEmissionReportsCarbonServices(content, cancellationToken);
+            return GetMockableCarbonOptimizationTenantResource(tenantResource).GetCarbonEmissionReports(content, cancellationToken);
         }
 
         /// <summary>
@@ -106,17 +106,17 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonService(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.QueryCarbonEmissionAvailableDateRange(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionAvailableDateRangeAsync(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return await GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(cancellationToken).ConfigureAwait(false);
+            return await GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionAvailableDateRangeAsync(cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -137,17 +137,17 @@ namespace Azure.ResourceManager.CarbonOptimization
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonService(CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableCarbonOptimizationTenantResource.QueryCarbonEmissionAvailableDateRange(CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="tenantResource"> The <see cref="TenantResource" /> instance the method will execute against. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="tenantResource"/> is null. </exception>
-        public static Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionDataAvailableDateRangeCarbonService(this TenantResource tenantResource, CancellationToken cancellationToken = default)
+        public static Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionAvailableDateRange(this TenantResource tenantResource, CancellationToken cancellationToken = default)
         {
             Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
-            return GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionDataAvailableDateRangeCarbonService(cancellationToken);
+            return GetMockableCarbonOptimizationTenantResource(tenantResource).QueryCarbonEmissionAvailableDateRange(cancellationToken);
         }
     }
 }

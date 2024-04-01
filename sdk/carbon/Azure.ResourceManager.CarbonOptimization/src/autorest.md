@@ -54,6 +54,10 @@ rename-mapping:
   TopItemsMonthlySummaryReportQueryFilter: TopItemsMonthlySummaryReportQueryContent
   TopItemsSummaryReportQueryFilter: TopItemsSummaryReportQueryContent
 
+override-operation-name:
+  CarbonService_QueryCarbonEmissionDataAvailableDateRange: QueryCarbonEmissionAvailableDateRange
+  CarbonService_ListCarbonEmissionReports: GetCarbonEmissionReports
+
 format-by-name-rules:
   'tenantId': 'uuid'
   'ETag': 'etag'

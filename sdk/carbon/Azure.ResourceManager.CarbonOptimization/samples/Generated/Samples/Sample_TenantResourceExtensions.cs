@@ -18,7 +18,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
         // CarbonService_ListCarbonEmissionReports
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task GetCarbonEmissionReportsCarbonServices_CarbonServiceListCarbonEmissionReports()
+        public async Task GetCarbonEmissionReports_CarbonServiceListCarbonEmissionReports()
         {
             // Generated from example definition: specification/carbon/resource-manager/Microsoft.Carbon/preview/2024-02-01-preview/examples/carbonEmissionsReport.json
             // this example is just showing the usage of "CarbonService_ListCarbonEmissionReports" operation, for the dependent resources, they will have to be created separately.
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             {
 CarbonEmissionQueryScope.Scope1
             });
-            await foreach (CarbonEmission item in tenantResource.GetCarbonEmissionReportsCarbonServicesAsync(content))
+            await foreach (CarbonEmission item in tenantResource.GetCarbonEmissionReportsAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -51,7 +51,7 @@ CarbonEmissionQueryScope.Scope1
         // CarbonService_QueryCarbonEmissionDataAvailableDateRange
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
-        public async Task QueryCarbonEmissionDataAvailableDateRangeCarbonService_CarbonServiceQueryCarbonEmissionDataAvailableDateRange()
+        public async Task QueryCarbonEmissionAvailableDateRange_CarbonServiceQueryCarbonEmissionDataAvailableDateRange()
         {
             // Generated from example definition: specification/carbon/resource-manager/Microsoft.Carbon/preview/2024-02-01-preview/examples/carbonEmissionsDataAvailableDateRange.json
             // this example is just showing the usage of "CarbonService_QueryCarbonEmissionDataAvailableDateRange" operation, for the dependent resources, they will have to be created separately.
@@ -66,7 +66,7 @@ CarbonEmissionQueryScope.Scope1
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            CarbonEmissionAvailableDateRange result = await tenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync();
+            CarbonEmissionAvailableDateRange result = await tenantResource.QueryCarbonEmissionAvailableDateRangeAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }
