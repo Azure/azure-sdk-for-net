@@ -105,6 +105,22 @@ namespace Azure.Containers.ContainerRegistry
             return new OciImageManifest(config, layers ?? new ChangeTrackingList<OciDescriptor>(), annotations, schemaVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OciImageManifest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOciImageManifest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OciImageManifest>(this);
+            return content;
+        }
+
         internal partial class OciImageManifestConverter : JsonConverter<OciImageManifest>
         {
             public override void Write(Utf8JsonWriter writer, OciImageManifest model, JsonSerializerOptions options)
