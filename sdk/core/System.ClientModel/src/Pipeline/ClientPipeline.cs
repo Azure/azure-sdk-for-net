@@ -2,9 +2,11 @@
 // Licensed under the MIT License.
 
 using System.ClientModel.Internal;
+using System.ClientModel.Pipeline;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace System.ClientModel.Primitives;
@@ -102,8 +104,12 @@ public sealed partial class ClientPipeline
 
         options.Freeze();
 
+        var diagnostics = options.Diagnostics ?? new Options.ClientDiagnosticsOptions();
+        var sanitizer = new PipelineMessageSanitizer(diagnostics.LoggedQueryParameters.ToArray(), diagnostics.LoggedHeaderNames.ToArray());
+        var diagnosticsPolicies = diagnostics.IsLoggingEnabled ? 1 : 0;
+
         // Add length of client-specific policies.
-        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length;
+        int pipelineLength = perCallPolicies.Length + perTryPolicies.Length + beforeTransportPolicies.Length + diagnosticsPolicies;
 
         // Add length of end-user provided policies.
         pipelineLength += options.PerTryPolicies?.Length ?? 0;
@@ -143,6 +149,12 @@ public sealed partial class ClientPipeline
         }
 
         int perTryIndex = index;
+
+        if (diagnostics.IsLoggingEnabled)
+        {
+            string assemblyName = options.GetType().Assembly!.GetName().Name!;
+            policies[index++] = new ClientLoggingPolicy(diagnostics.IsLoggingContentEnabled, diagnostics.LoggedContentSizeLimit, sanitizer, assemblyName, diagnostics.ClientRequestIdHeaderName);
+        }
 
         // Before transport policies come before the transport.
         beforeTransportPolicies.CopyTo(policies.AsSpan(index));

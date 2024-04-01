@@ -14,7 +14,7 @@ namespace System.ClientModel.Diagnostics;
 [EventSource(Name = EventSourceName)]
 internal sealed class ClientModelEventSource : ClientEventSource
 {
-    private const string EventSourceName = "Azure-Core";
+    private const string EventSourceName = "System-ClientModel";
 
     private const int RequestEvent = 1;
     private const int RequestContentEvent = 2;
