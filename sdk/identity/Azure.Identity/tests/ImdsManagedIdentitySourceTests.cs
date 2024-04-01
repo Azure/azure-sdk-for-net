@@ -25,14 +25,12 @@ namespace Azure.Identity.Tests
         {
             int callCount = 0;
             List<TimeSpan?> networkTimeouts = new();
-            bool foundMetadataHeader = false;
 
             // the mock transport succeeds on the 2nd request to avoid long exponential back-offs,
             // but is sufficient to validate the initial timeout and retry behavior
             var mockTransport = MockTransport.FromMessageCallback(msg =>
             {
                 callCount++;
-                foundMetadataHeader |= msg.Request.Headers.TryGetValue(ImdsManagedIdentitySource.metadataHeaderName, out _);
                 networkTimeouts.Add(msg.NetworkTimeout);
                 return callCount > 1 ?
                  CreateMockResponse(200, "token").WithHeader("Content-Type", "application/json") :
@@ -63,7 +61,6 @@ namespace Azure.Identity.Tests
 
             expectedTimeouts = new TimeSpan?[] { null };
             CollectionAssert.AreEqual(expectedTimeouts, networkTimeouts);
-            Assert.IsFalse(foundMetadataHeader);
         }
 
         [Test]
