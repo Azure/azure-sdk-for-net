@@ -38,5 +38,13 @@ namespace Azure.Security.KeyVault.Administration
             }
             return new GetSettingsResult(settings ?? new ChangeTrackingList<KeyVaultSetting>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GetSettingsResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGetSettingsResult(document.RootElement);
+        }
     }
 }
