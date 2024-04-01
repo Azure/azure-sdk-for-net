@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> A structured chat content item containing plain text. </summary>
-    public partial class ChatMessageTextContentItem : ChatMessageContentItem
+    internal partial class ChatMessageTextContentItem : ChatMessageContentItem
     {
         /// <summary> Initializes a new instance of <see cref="ChatMessageTextContentItem"/>. </summary>
         /// <param name="text"> The content of the message. </param>

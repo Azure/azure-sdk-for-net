@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> An internet location from which the model may retrieve an image. </summary>
-    public partial class ChatMessageImageUrl
+    internal partial class ChatMessageImageUrl
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

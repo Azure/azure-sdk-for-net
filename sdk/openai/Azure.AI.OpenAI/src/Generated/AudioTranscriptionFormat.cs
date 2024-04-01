@@ -35,6 +35,8 @@ namespace Azure.AI.OpenAI
         /// metadata.
         /// </summary>
         public static AudioTranscriptionFormat Verbose { get; } = new AudioTranscriptionFormat(VerboseValue);
+        /// <summary> Use a response body that is plain text containing the raw, unannotated transcription. </summary>
+        public static AudioTranscriptionFormat InternalPlainText { get; } = new AudioTranscriptionFormat(InternalPlainTextValue);
         /// <summary> Use a response body that is plain text in SubRip (SRT) format that also includes timing information. </summary>
         public static AudioTranscriptionFormat Srt { get; } = new AudioTranscriptionFormat(SrtValue);
         /// <summary> Use a response body that is plain text in Web Video Text Tracks (VTT) format that also includes timing information. </summary>

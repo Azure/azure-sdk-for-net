@@ -13,7 +13,8 @@ namespace Azure.AI.OpenAI
     /// <summary>
     /// An abstract representation of a response format configuration usable by Chat Completions. Can be used to enable JSON
     /// mode.
-    /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes..
+    /// Please note <see cref="ChatCompletionsResponseFormat"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+    /// The available derived classes include <see cref="ChatCompletionsJsonResponseFormat"/> and <see cref="ChatCompletionsTextResponseFormat"/>.
     /// </summary>
     public abstract partial class ChatCompletionsResponseFormat
     {

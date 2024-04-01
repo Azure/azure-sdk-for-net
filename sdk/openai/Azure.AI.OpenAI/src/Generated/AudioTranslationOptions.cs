@@ -50,6 +50,19 @@ namespace Azure.AI.OpenAI
         /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
         ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
         /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="audioData"/> is null. </exception>
+        public AudioTranslationOptions(BinaryData audioData)
+        {
+            Argument.AssertNotNull(audioData, nameof(audioData));
+
+            AudioData = audioData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AudioTranslationOptions"/>. </summary>
+        /// <param name="audioData">
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
         /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
         /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
         /// <param name="prompt">
@@ -73,6 +86,30 @@ namespace Azure.AI.OpenAI
             DeploymentName = deploymentName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="AudioTranslationOptions"/> for deserialization. </summary>
+        internal AudioTranslationOptions()
+        {
+        }
+
+        /// <summary>
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// <para>
+        /// To assign a byte[] to this property use <see cref="BinaryData.FromBytes(byte[])"/>.
+        /// The byte[] will be serialized to a Base64 encoded string.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromBytes(new byte[] { 1, 2, 3 })</term>
+        /// <description>Creates a payload of "AQID".</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public BinaryData AudioData { get; }
         /// <summary> The optional filename or descriptive identifier to associate with with the audio data. </summary>
         public string Filename { get; set; }
         /// <summary> The requested format of the translation response data, which will influence the content and detail of the result. </summary>
@@ -88,5 +125,7 @@ namespace Azure.AI.OpenAI
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </summary>
         public float? Temperature { get; set; }
+        /// <summary> The model to use for this translation request. </summary>
+        public string DeploymentName { get; set; }
     }
 }

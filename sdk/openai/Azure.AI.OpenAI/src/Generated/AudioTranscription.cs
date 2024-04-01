@@ -83,6 +83,8 @@ namespace Azure.AI.OpenAI
 
         /// <summary> The transcribed text for the provided audio data. </summary>
         public string Text { get; }
+        /// <summary> The label that describes which operation type generated the accompanying response data. </summary>
+        public AudioTaskLabel? InternalAudioTaskLabel { get; }
         /// <summary>
         /// The spoken language that was detected in the transcribed audio data.
         /// This is expressed as a two-letter ISO-639-1 language code like 'en' or 'fr'.

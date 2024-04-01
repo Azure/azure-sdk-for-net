@@ -17,6 +17,17 @@ namespace Azure.AI.OpenAI
     public partial class AzureSearchChatExtensionConfiguration : AzureChatExtensionConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="AzureSearchChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters to use when configuring Azure Search. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public AzureSearchChatExtensionConfiguration(AzureSearchChatExtensionParameters parameters)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            Type = AzureChatExtensionType.AzureSearch;
+            Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSearchChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
@@ -27,5 +38,13 @@ namespace Azure.AI.OpenAI
         {
             Parameters = parameters;
         }
+
+        /// <summary> Initializes a new instance of <see cref="AzureSearchChatExtensionConfiguration"/> for deserialization. </summary>
+        internal AzureSearchChatExtensionConfiguration()
+        {
+        }
+
+        /// <summary> The parameters to use when configuring Azure Search. </summary>
+        public AzureSearchChatExtensionParameters Parameters { get; }
     }
 }

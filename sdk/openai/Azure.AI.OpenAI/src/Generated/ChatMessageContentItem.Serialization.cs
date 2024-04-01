@@ -13,7 +13,7 @@ using Azure.Core;
 namespace Azure.AI.OpenAI
 {
     [PersistableModelProxy(typeof(UnknownChatMessageContentItem))]
-    public partial class ChatMessageContentItem : IUtf8JsonSerializable, IJsonModel<ChatMessageContentItem>
+    internal partial class ChatMessageContentItem : IUtf8JsonSerializable, IJsonModel<ChatMessageContentItem>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatMessageContentItem>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

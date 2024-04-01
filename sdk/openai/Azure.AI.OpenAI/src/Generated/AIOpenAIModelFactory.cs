@@ -12,8 +12,44 @@ using System.Linq;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Model factory for models. </summary>
-    public static partial class AzureOpenAIModelFactory
+    public static partial class AIOpenAIModelFactory
     {
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranscriptionOptions"/>. </summary>
+        /// <param name="audioData">
+        /// The audio data to transcribe. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the transcription response data, which will influence the content and detail of the result. </param>
+        /// <param name="language">
+        /// The primary spoken language of the audio data to be transcribed, supplied as a two-letter ISO-639-1 language code
+        /// such as 'en' or 'fr'.
+        /// Providing this known input language is optional but may improve the accuracy and/or latency of transcription.
+        /// </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this transcription request. </param>
+        /// <returns> A new <see cref="OpenAI.AudioTranscriptionOptions"/> instance for mocking. </returns>
+        public static AudioTranscriptionOptions AudioTranscriptionOptions(BinaryData audioData = null, string filename = null, AudioTranscriptionFormat? responseFormat = null, string language = null, string prompt = null, float? temperature = null, string deploymentName = null)
+        {
+            return new AudioTranscriptionOptions(
+                audioData,
+                filename,
+                responseFormat,
+                language,
+                prompt,
+                temperature,
+                deploymentName,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranscriptionSegment"/>. </summary>
         /// <param name="id"> The 0-based index of this segment within a transcription. </param>
         /// <param name="start"> The time at which this segment started relative to the beginning of the transcribed audio. </param>
@@ -47,6 +83,36 @@ namespace Azure.AI.OpenAI
                 noSpeechProbability,
                 tokens?.ToList(),
                 seek,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AudioTranslationOptions"/>. </summary>
+        /// <param name="audioData">
+        /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
+        ///  flac, mp3, mp4, mpeg, mpga, m4a, ogg, wav, webm.
+        /// </param>
+        /// <param name="filename"> The optional filename or descriptive identifier to associate with with the audio data. </param>
+        /// <param name="responseFormat"> The requested format of the translation response data, which will influence the content and detail of the result. </param>
+        /// <param name="prompt">
+        /// An optional hint to guide the model's style or continue from a prior audio segment. The written language of the
+        /// prompt should match the primary spoken language of the audio data.
+        /// </param>
+        /// <param name="temperature">
+        /// The sampling temperature, between 0 and 1.
+        /// Higher values like 0.8 will make the output more random, while lower values like 0.2 will make it more focused and deterministic.
+        /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
+        /// </param>
+        /// <param name="deploymentName"> The model to use for this translation request. </param>
+        /// <returns> A new <see cref="OpenAI.AudioTranslationOptions"/> instance for mocking. </returns>
+        public static AudioTranslationOptions AudioTranslationOptions(BinaryData audioData = null, string filename = null, AudioTranslationFormat? responseFormat = null, string prompt = null, float? temperature = null, string deploymentName = null)
+        {
+            return new AudioTranslationOptions(
+                audioData,
+                filename,
+                responseFormat,
+                prompt,
+                temperature,
+                deploymentName,
                 serializedAdditionalRawData: null);
         }
 
@@ -306,6 +372,19 @@ namespace Azure.AI.OpenAI
             return new CompletionsUsage(completionTokens, promptTokens, totalTokens, serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.FunctionDefinition"/>. </summary>
+        /// <param name="name"> The name of the function to be called. </param>
+        /// <param name="description">
+        /// A description of what the function does. The model will use this description when selecting the function and
+        /// interpreting its parameters.
+        /// </param>
+        /// <param name="parameters"> The parameters the function accepts, described as a JSON Schema object. </param>
+        /// <returns> A new <see cref="OpenAI.FunctionDefinition"/> instance for mocking. </returns>
+        public static FunctionDefinition FunctionDefinition(string name = null, string description = null, BinaryData parameters = null)
+        {
+            return new FunctionDefinition(name, description, parameters, serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatCompletions"/>. </summary>
         /// <param name="id"> A unique identifier associated with this chat completions response. </param>
         /// <param name="created">
@@ -339,6 +418,43 @@ namespace Azure.AI.OpenAI
                 promptFilterResults?.ToList(),
                 systemFingerprint,
                 usage,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatChoice"/>. </summary>
+        /// <param name="message"> The chat message for a given chat completions prompt. </param>
+        /// <param name="logProbabilityInfo"> The log probability information for this choice, as enabled via the 'logprobs' request option. </param>
+        /// <param name="index"> The ordered index associated with this chat completions choice. </param>
+        /// <param name="finishReason"> The reason that this chat completions choice completed its generated. </param>
+        /// <param name="finishDetails">
+        /// The reason the model stopped generating tokens, together with any applicable details.
+        /// This structured representation replaces 'finish_reason' for some models.
+        /// Please note <see cref="ChatFinishDetails"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="MaxTokensFinishDetails"/> and <see cref="OpenAI.StopFinishDetails"/>.
+        /// </param>
+        /// <param name="internalStreamingDeltaMessage"> The delta message content for a streaming response. </param>
+        /// <param name="contentFilterResults">
+        /// Information about the content filtering category (hate, sexual, violence, self_harm), if it
+        /// has been detected, as well as the severity level (very_low, low, medium, high-scale that
+        /// determines the intensity and risk level of harmful content) and if it has been filtered or not.
+        /// </param>
+        /// <param name="enhancements">
+        /// Represents the output results of Azure OpenAI enhancements to chat completions, as configured via the matching input
+        /// provided in the request. This supplementary information is only available when using Azure OpenAI and only when the
+        /// request is configured to use enhancements.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ChatChoice"/> instance for mocking. </returns>
+        public static ChatChoice ChatChoice(ChatResponseMessage message = null, ChatChoiceLogProbabilityInfo logProbabilityInfo = null, int index = default, CompletionsFinishReason? finishReason = null, ChatFinishDetails finishDetails = null, ChatResponseMessage internalStreamingDeltaMessage = null, ContentFilterResultsForChoice contentFilterResults = null, AzureChatEnhancements enhancements = null)
+        {
+            return new ChatChoice(
+                message,
+                logProbabilityInfo,
+                index,
+                finishReason,
+                finishDetails,
+                internalStreamingDeltaMessage,
+                contentFilterResults,
+                enhancements,
                 serializedAdditionalRawData: null);
         }
 
@@ -604,6 +720,24 @@ namespace Azure.AI.OpenAI
                 serializedAdditionalRawData: null);
         }
 
+        /// <summary> Initializes a new instance of <see cref="OpenAI.SpeechGenerationOptions"/>. </summary>
+        /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
+        /// <param name="voice"> The voice to use for text-to-speech. </param>
+        /// <param name="responseFormat"> The audio output format for the spoken text. By default, the MP3 format will be used. </param>
+        /// <param name="speed"> The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the default and higher values corresponding to faster speech. </param>
+        /// <param name="deploymentName"> The model to use for this text-to-speech request. </param>
+        /// <returns> A new <see cref="OpenAI.SpeechGenerationOptions"/> instance for mocking. </returns>
+        public static SpeechGenerationOptions SpeechGenerationOptions(string input = null, SpeechVoice voice = default, SpeechGenerationResponseFormat? responseFormat = null, float? speed = null, string deploymentName = null)
+        {
+            return new SpeechGenerationOptions(
+                input,
+                voice,
+                responseFormat,
+                speed,
+                deploymentName,
+                serializedAdditionalRawData: null);
+        }
+
         /// <summary> Initializes a new instance of <see cref="OpenAI.Embeddings"/>. </summary>
         /// <param name="data"> Embedding values for the prompts submitted in the request. </param>
         /// <param name="usage"> Usage counts for tokens input using the embeddings API. </param>
@@ -622,9 +756,11 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
         /// <returns> A new <see cref="OpenAI.EmbeddingItem"/> instance for mocking. </returns>
-        public static EmbeddingItem EmbeddingItem(ReadOnlyMemory<float> embedding = default, int index = default)
+        public static EmbeddingItem EmbeddingItem(IEnumerable<float> embedding = null, int index = default)
         {
-            return new EmbeddingItem(embedding, index, serializedAdditionalRawData: null);
+            embedding ??= new List<float>();
+
+            return new EmbeddingItem(embedding?.ToList(), index, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.EmbeddingsUsage"/>. </summary>
@@ -644,34 +780,6 @@ namespace Azure.AI.OpenAI
             return new StopFinishDetails("stop", serializedAdditionalRawData: null, stop);
         }
 
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageTextContentItem"/>. </summary>
-        /// <param name="text"> The content of the message. </param>
-        /// <returns> A new <see cref="OpenAI.ChatMessageTextContentItem"/> instance for mocking. </returns>
-        public static ChatMessageTextContentItem ChatMessageTextContentItem(string text = null)
-        {
-            return new ChatMessageTextContentItem("text", serializedAdditionalRawData: null, text);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageImageContentItem"/>. </summary>
-        /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>
-        /// <returns> A new <see cref="OpenAI.ChatMessageImageContentItem"/> instance for mocking. </returns>
-        public static ChatMessageImageContentItem ChatMessageImageContentItem(ChatMessageImageUrl imageUrl = null)
-        {
-            return new ChatMessageImageContentItem("image_url", serializedAdditionalRawData: null, imageUrl);
-        }
-
-        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatMessageImageUrl"/>. </summary>
-        /// <param name="url"> The URL of the image. </param>
-        /// <param name="detail">
-        /// The evaluation quality setting to use, which controls relative prioritization of speed, token consumption, and
-        /// accuracy.
-        /// </param>
-        /// <returns> A new <see cref="OpenAI.ChatMessageImageUrl"/> instance for mocking. </returns>
-        public static ChatMessageImageUrl ChatMessageImageUrl(Uri url = null, ChatMessageImageDetailLevel? detail = null)
-        {
-            return new ChatMessageImageUrl(url, detail, serializedAdditionalRawData: null);
-        }
-
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestSystemMessage"/>. </summary>
         /// <param name="content"> The contents of the system message. </param>
         /// <param name="name"> An optional name for the participant. </param>
@@ -679,6 +787,15 @@ namespace Azure.AI.OpenAI
         public static ChatRequestSystemMessage ChatRequestSystemMessage(string content = null, string name = null)
         {
             return new ChatRequestSystemMessage(ChatRole.System, serializedAdditionalRawData: null, content, name);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestUserMessage"/>. </summary>
+        /// <param name="content"> The contents of the user message, with available input types varying by selected model. </param>
+        /// <param name="name"> An optional name for the participant. </param>
+        /// <returns> A new <see cref="OpenAI.ChatRequestUserMessage"/> instance for mocking. </returns>
+        public static ChatRequestUserMessage ChatRequestUserMessage(BinaryData content = null, string name = null)
+        {
+            return new ChatRequestUserMessage(ChatRole.User, serializedAdditionalRawData: null, content, name);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.ChatRequestAssistantMessage"/>. </summary>
@@ -732,6 +849,58 @@ namespace Azure.AI.OpenAI
         public static ChatCompletionsFunctionToolDefinition ChatCompletionsFunctionToolDefinition(FunctionDefinition function = null)
         {
             return new ChatCompletionsFunctionToolDefinition("function", serializedAdditionalRawData: null, function);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureSearchChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters to use when configuring Azure Search. </param>
+        /// <returns> A new <see cref="OpenAI.AzureSearchChatExtensionConfiguration"/> instance for mocking. </returns>
+        public static AzureSearchChatExtensionConfiguration AzureSearchChatExtensionConfiguration(AzureSearchChatExtensionParameters parameters = null)
+        {
+            return new AzureSearchChatExtensionConfiguration(AzureChatExtensionType.AzureSearch, serializedAdditionalRawData: null, parameters);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureSearchChatExtensionParameters"/>. </summary>
+        /// <param name="authentication">
+        /// The authentication method to use when accessing the defined data source.
+        /// Each data source type supports a specific set of available authentication methods; please see the documentation of
+        /// the data source for supported mechanisms.
+        /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
+        /// authentication.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
+        /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
+        /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
+        /// <param name="strictness"> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </param>
+        /// <param name="roleInformation"> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </param>
+        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
+        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
+        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
+        /// <param name="queryType"> The query type to use with Azure Cognitive Search. </param>
+        /// <param name="semanticConfiguration"> The additional semantic configuration for the query. </param>
+        /// <param name="filter"> Search filter. </param>
+        /// <param name="embeddingDependency">
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> and <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/>.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.AzureSearchChatExtensionParameters"/> instance for mocking. </returns>
+        public static AzureSearchChatExtensionParameters AzureSearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication = null, int? documentCount = null, bool? shouldRestrictResultScope = null, int? strictness = null, string roleInformation = null, Uri searchEndpoint = null, string indexName = null, AzureSearchIndexFieldMappingOptions fieldMappingOptions = null, AzureSearchQueryType? queryType = null, string semanticConfiguration = null, string filter = null, OnYourDataVectorizationSource embeddingDependency = null)
+        {
+            return new AzureSearchChatExtensionParameters(
+                authentication,
+                documentCount,
+                shouldRestrictResultScope,
+                strictness,
+                roleInformation,
+                searchEndpoint,
+                indexName,
+                fieldMappingOptions,
+                queryType,
+                semanticConfiguration,
+                filter,
+                embeddingDependency,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>. </summary>
@@ -810,6 +979,190 @@ namespace Azure.AI.OpenAI
         public static OnYourDataModelIdVectorizationSource OnYourDataModelIdVectorizationSource(string modelId = null)
         {
             return new OnYourDataModelIdVectorizationSource(OnYourDataVectorizationSourceType.ModelId, serializedAdditionalRawData: null, modelId);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureMachineLearningIndexChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters for the Azure Machine Learning vector index chat extension. </param>
+        /// <returns> A new <see cref="OpenAI.AzureMachineLearningIndexChatExtensionConfiguration"/> instance for mocking. </returns>
+        public static AzureMachineLearningIndexChatExtensionConfiguration AzureMachineLearningIndexChatExtensionConfiguration(AzureMachineLearningIndexChatExtensionParameters parameters = null)
+        {
+            return new AzureMachineLearningIndexChatExtensionConfiguration(AzureChatExtensionType.AzureMachineLearningIndex, serializedAdditionalRawData: null, parameters);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureMachineLearningIndexChatExtensionParameters"/>. </summary>
+        /// <param name="authentication">
+        /// The authentication method to use when accessing the defined data source.
+        /// Each data source type supports a specific set of available authentication methods; please see the documentation of
+        /// the data source for supported mechanisms.
+        /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
+        /// authentication.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
+        /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
+        /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
+        /// <param name="strictness"> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </param>
+        /// <param name="roleInformation"> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </param>
+        /// <param name="projectResourceId"> The resource ID of the Azure Machine Learning project. </param>
+        /// <param name="name"> The Azure Machine Learning vector index name. </param>
+        /// <param name="version"> The version of the Azure Machine Learning vector index. </param>
+        /// <param name="filter"> Search filter. Only supported if the Azure Machine Learning vector index is of type AzureSearch. </param>
+        /// <returns> A new <see cref="OpenAI.AzureMachineLearningIndexChatExtensionParameters"/> instance for mocking. </returns>
+        public static AzureMachineLearningIndexChatExtensionParameters AzureMachineLearningIndexChatExtensionParameters(OnYourDataAuthenticationOptions authentication = null, int? documentCount = null, bool? shouldRestrictResultScope = null, int? strictness = null, string roleInformation = null, string projectResourceId = null, string name = null, string version = null, string filter = null)
+        {
+            return new AzureMachineLearningIndexChatExtensionParameters(
+                authentication,
+                documentCount,
+                shouldRestrictResultScope,
+                strictness,
+                roleInformation,
+                projectResourceId,
+                name,
+                version,
+                filter,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureCosmosDBChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters to use when configuring Azure OpenAI CosmosDB chat extensions. </param>
+        /// <returns> A new <see cref="OpenAI.AzureCosmosDBChatExtensionConfiguration"/> instance for mocking. </returns>
+        public static AzureCosmosDBChatExtensionConfiguration AzureCosmosDBChatExtensionConfiguration(AzureCosmosDBChatExtensionParameters parameters = null)
+        {
+            return new AzureCosmosDBChatExtensionConfiguration(AzureChatExtensionType.AzureCosmosDB, serializedAdditionalRawData: null, parameters);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.AzureCosmosDBChatExtensionParameters"/>. </summary>
+        /// <param name="authentication">
+        /// The authentication method to use when accessing the defined data source.
+        /// Each data source type supports a specific set of available authentication methods; please see the documentation of
+        /// the data source for supported mechanisms.
+        /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
+        /// authentication.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
+        /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
+        /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
+        /// <param name="strictness"> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </param>
+        /// <param name="roleInformation"> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </param>
+        /// <param name="databaseName"> The MongoDB vCore database name to use with Azure Cosmos DB. </param>
+        /// <param name="containerName"> The name of the Azure Cosmos DB resource container. </param>
+        /// <param name="indexName"> The MongoDB vCore index name to use with Azure Cosmos DB. </param>
+        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
+        /// <param name="embeddingDependency">
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> and <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/>.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.AzureCosmosDBChatExtensionParameters"/> instance for mocking. </returns>
+        public static AzureCosmosDBChatExtensionParameters AzureCosmosDBChatExtensionParameters(OnYourDataAuthenticationOptions authentication = null, int? documentCount = null, bool? shouldRestrictResultScope = null, int? strictness = null, string roleInformation = null, string databaseName = null, string containerName = null, string indexName = null, AzureCosmosDBFieldMappingOptions fieldMappingOptions = null, OnYourDataVectorizationSource embeddingDependency = null)
+        {
+            return new AzureCosmosDBChatExtensionParameters(
+                authentication,
+                documentCount,
+                shouldRestrictResultScope,
+                strictness,
+                roleInformation,
+                databaseName,
+                containerName,
+                indexName,
+                fieldMappingOptions,
+                embeddingDependency,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ElasticsearchChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters to use when configuring Elasticsearch®. </param>
+        /// <returns> A new <see cref="OpenAI.ElasticsearchChatExtensionConfiguration"/> instance for mocking. </returns>
+        public static ElasticsearchChatExtensionConfiguration ElasticsearchChatExtensionConfiguration(ElasticsearchChatExtensionParameters parameters = null)
+        {
+            return new ElasticsearchChatExtensionConfiguration(AzureChatExtensionType.Elasticsearch, serializedAdditionalRawData: null, parameters);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.ElasticsearchChatExtensionParameters"/>. </summary>
+        /// <param name="authentication">
+        /// The authentication method to use when accessing the defined data source.
+        /// Each data source type supports a specific set of available authentication methods; please see the documentation of
+        /// the data source for supported mechanisms.
+        /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
+        /// authentication.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
+        /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
+        /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
+        /// <param name="strictness"> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </param>
+        /// <param name="roleInformation"> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </param>
+        /// <param name="endpoint"> The endpoint of Elasticsearch®. </param>
+        /// <param name="indexName"> The index name of Elasticsearch®. </param>
+        /// <param name="fieldMappingOptions"> The index field mapping options of Elasticsearch®. </param>
+        /// <param name="queryType"> The query type of Elasticsearch®. </param>
+        /// <param name="embeddingDependency">
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> and <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/>.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.ElasticsearchChatExtensionParameters"/> instance for mocking. </returns>
+        public static ElasticsearchChatExtensionParameters ElasticsearchChatExtensionParameters(OnYourDataAuthenticationOptions authentication = null, int? documentCount = null, bool? shouldRestrictResultScope = null, int? strictness = null, string roleInformation = null, Uri endpoint = null, string indexName = null, ElasticsearchIndexFieldMappingOptions fieldMappingOptions = null, ElasticsearchQueryType? queryType = null, OnYourDataVectorizationSource embeddingDependency = null)
+        {
+            return new ElasticsearchChatExtensionParameters(
+                authentication,
+                documentCount,
+                shouldRestrictResultScope,
+                strictness,
+                roleInformation,
+                endpoint,
+                indexName,
+                fieldMappingOptions,
+                queryType,
+                embeddingDependency,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.PineconeChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters to use when configuring Azure OpenAI chat extensions. </param>
+        /// <returns> A new <see cref="OpenAI.PineconeChatExtensionConfiguration"/> instance for mocking. </returns>
+        public static PineconeChatExtensionConfiguration PineconeChatExtensionConfiguration(PineconeChatExtensionParameters parameters = null)
+        {
+            return new PineconeChatExtensionConfiguration(AzureChatExtensionType.Pinecone, serializedAdditionalRawData: null, parameters);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OpenAI.PineconeChatExtensionParameters"/>. </summary>
+        /// <param name="authentication">
+        /// The authentication method to use when accessing the defined data source.
+        /// Each data source type supports a specific set of available authentication methods; please see the documentation of
+        /// the data source for supported mechanisms.
+        /// If not otherwise provided, On Your Data will attempt to use System Managed Identity (default credential)
+        /// authentication.
+        /// Please note <see cref="OnYourDataAuthenticationOptions"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataAccessTokenAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataConnectionStringAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataEncodedApiKeyAuthenticationOptions"/>, <see cref="OpenAI.OnYourDataKeyAndKeyIdAuthenticationOptions"/>, <see cref="OnYourDataSystemAssignedManagedIdentityAuthenticationOptions"/> and <see cref="OpenAI.OnYourDataUserAssignedManagedIdentityAuthenticationOptions"/>.
+        /// </param>
+        /// <param name="documentCount"> The configured top number of documents to feature for the configured query. </param>
+        /// <param name="shouldRestrictResultScope"> Whether queries should be restricted to use of indexed data. </param>
+        /// <param name="strictness"> The configured strictness of the search relevance filtering. The higher of strictness, the higher of the precision but lower recall of the answer. </param>
+        /// <param name="roleInformation"> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </param>
+        /// <param name="environmentName"> The environment name of Pinecone. </param>
+        /// <param name="indexName"> The name of the Pinecone database index. </param>
+        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
+        /// <param name="embeddingDependency">
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OpenAI.OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OpenAI.OnYourDataEndpointVectorizationSource"/> and <see cref="OpenAI.OnYourDataModelIdVectorizationSource"/>.
+        /// </param>
+        /// <returns> A new <see cref="OpenAI.PineconeChatExtensionParameters"/> instance for mocking. </returns>
+        public static PineconeChatExtensionParameters PineconeChatExtensionParameters(OnYourDataAuthenticationOptions authentication = null, int? documentCount = null, bool? shouldRestrictResultScope = null, int? strictness = null, string roleInformation = null, string environmentName = null, string indexName = null, PineconeFieldMappingOptions fieldMappingOptions = null, OnYourDataVectorizationSource embeddingDependency = null)
+        {
+            return new PineconeChatExtensionParameters(
+                authentication,
+                documentCount,
+                shouldRestrictResultScope,
+                strictness,
+                roleInformation,
+                environmentName,
+                indexName,
+                fieldMappingOptions,
+                embeddingDependency,
+                serializedAdditionalRawData: null);
         }
     }
 }

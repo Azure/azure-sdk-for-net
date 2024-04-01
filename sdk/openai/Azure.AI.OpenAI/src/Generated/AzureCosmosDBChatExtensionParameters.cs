@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
     /// Parameters to use when configuring Azure OpenAI On Your Data chat extensions when using Azure Cosmos DB for
     /// MongoDB vCore. The supported authentication type is ConnectionString.
     /// </summary>
-    internal partial class AzureCosmosDBChatExtensionParameters
+    public partial class AzureCosmosDBChatExtensionParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -113,6 +113,11 @@ namespace Azure.AI.OpenAI
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureCosmosDBChatExtensionParameters"/> for deserialization. </summary>
+        internal AzureCosmosDBChatExtensionParameters()
+        {
+        }
+
         /// <summary>
         /// The authentication method to use when accessing the defined data source.
         /// Each data source type supports a specific set of available authentication methods; please see the documentation of
@@ -131,5 +136,19 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
+        /// <summary> The MongoDB vCore database name to use with Azure Cosmos DB. </summary>
+        public string DatabaseName { get; }
+        /// <summary> The name of the Azure Cosmos DB resource container. </summary>
+        public string ContainerName { get; }
+        /// <summary> The MongoDB vCore index name to use with Azure Cosmos DB. </summary>
+        public string IndexName { get; }
+        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
+        public AzureCosmosDBFieldMappingOptions FieldMappingOptions { get; }
+        /// <summary>
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OnYourDataEndpointVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
+        /// </summary>
+        public OnYourDataVectorizationSource EmbeddingDependency { get; }
     }
 }

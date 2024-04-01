@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Parameters for Azure Cognitive Search when used as an Azure OpenAI chat extension. The supported authentication types are APIKey, SystemAssignedManagedIdentity and UserAssignedManagedIdentity. </summary>
-    internal partial class AzureSearchChatExtensionParameters
+    public partial class AzureSearchChatExtensionParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,6 +44,19 @@ namespace Azure.AI.OpenAI
         /// </para>
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="AzureSearchChatExtensionParameters"/>. </summary>
+        /// <param name="searchEndpoint"> The absolute endpoint path for the Azure Cognitive Search resource to use. </param>
+        /// <param name="indexName"> The name of the index to use as available in the referenced Azure Cognitive Search resource. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="searchEndpoint"/> or <paramref name="indexName"/> is null. </exception>
+        public AzureSearchChatExtensionParameters(Uri searchEndpoint, string indexName)
+        {
+            Argument.AssertNotNull(searchEndpoint, nameof(searchEndpoint));
+            Argument.AssertNotNull(indexName, nameof(indexName));
+
+            SearchEndpoint = searchEndpoint;
+            IndexName = indexName;
+        }
 
         /// <summary> Initializes a new instance of <see cref="AzureSearchChatExtensionParameters"/>. </summary>
         /// <param name="authentication">
@@ -88,6 +101,11 @@ namespace Azure.AI.OpenAI
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureSearchChatExtensionParameters"/> for deserialization. </summary>
+        internal AzureSearchChatExtensionParameters()
+        {
+        }
+
         /// <summary>
         /// The authentication method to use when accessing the defined data source.
         /// Each data source type supports a specific set of available authentication methods; please see the documentation of
@@ -106,6 +124,10 @@ namespace Azure.AI.OpenAI
         public int? Strictness { get; set; }
         /// <summary> Give the model instructions about how it should behave and any context it should reference when generating a response. You can describe the assistant's personality and tell it how to format responses. There's a 100 token limit for it, and it counts against the overall token limit. </summary>
         public string RoleInformation { get; set; }
+        /// <summary> The absolute endpoint path for the Azure Cognitive Search resource to use. </summary>
+        public Uri SearchEndpoint { get; }
+        /// <summary> The name of the index to use as available in the referenced Azure Cognitive Search resource. </summary>
+        public string IndexName { get; }
         /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
         public AzureSearchIndexFieldMappingOptions FieldMappingOptions { get; set; }
         /// <summary> The query type to use with Azure Cognitive Search. </summary>

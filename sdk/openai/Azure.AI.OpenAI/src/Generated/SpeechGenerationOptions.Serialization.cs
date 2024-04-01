@@ -17,6 +17,52 @@ namespace Azure.AI.OpenAI
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<SpeechGenerationOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
+        void IJsonModel<SpeechGenerationOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(SpeechGenerationOptions)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("input"u8);
+            writer.WriteStringValue(Input);
+            writer.WritePropertyName("voice"u8);
+            writer.WriteStringValue(Voice.ToString());
+            if (Optional.IsDefined(ResponseFormat))
+            {
+                writer.WritePropertyName("response_format"u8);
+                writer.WriteStringValue(ResponseFormat.Value.ToString());
+            }
+            if (Optional.IsDefined(Speed))
+            {
+                writer.WritePropertyName("speed"u8);
+                writer.WriteNumberValue(Speed.Value);
+            }
+            if (Optional.IsDefined(DeploymentName))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
         SpeechGenerationOptions IJsonModel<SpeechGenerationOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SpeechGenerationOptions>)this).GetFormatFromOptions(options) : options.Format;

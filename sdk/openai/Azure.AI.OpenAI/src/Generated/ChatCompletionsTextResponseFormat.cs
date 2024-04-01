@@ -14,7 +14,7 @@ namespace Azure.AI.OpenAI
     /// The standard Chat Completions response format that can freely generate text and is not guaranteed to produce response
     /// content that adheres to a specific schema.
     /// </summary>
-    internal partial class ChatCompletionsTextResponseFormat : ChatCompletionsResponseFormat
+    public partial class ChatCompletionsTextResponseFormat : ChatCompletionsResponseFormat
     {
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsTextResponseFormat"/>. </summary>
         public ChatCompletionsTextResponseFormat()

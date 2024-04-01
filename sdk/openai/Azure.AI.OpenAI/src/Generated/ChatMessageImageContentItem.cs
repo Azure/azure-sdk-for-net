@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> A structured chat content item containing an image reference. </summary>
-    public partial class ChatMessageImageContentItem : ChatMessageContentItem
+    internal partial class ChatMessageImageContentItem : ChatMessageContentItem
     {
         /// <summary> Initializes a new instance of <see cref="ChatMessageImageContentItem"/>. </summary>
         /// <param name="imageUrl"> An internet location, which must be accessible to the model,from which the image may be retrieved. </param>

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class PineconeChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<PineconeChatExtensionParameters>
+    public partial class PineconeChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<PineconeChatExtensionParameters>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<PineconeChatExtensionParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

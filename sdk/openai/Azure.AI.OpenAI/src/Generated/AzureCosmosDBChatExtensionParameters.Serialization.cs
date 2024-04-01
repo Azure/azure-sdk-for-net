@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class AzureCosmosDBChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<AzureCosmosDBChatExtensionParameters>
+    public partial class AzureCosmosDBChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<AzureCosmosDBChatExtensionParameters>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureCosmosDBChatExtensionParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

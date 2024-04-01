@@ -48,6 +48,18 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="SpeechGenerationOptions"/>. </summary>
         /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
         /// <param name="voice"> The voice to use for text-to-speech. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
+        public SpeechGenerationOptions(string input, SpeechVoice voice)
+        {
+            Argument.AssertNotNull(input, nameof(input));
+
+            Input = input;
+            Voice = voice;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SpeechGenerationOptions"/>. </summary>
+        /// <param name="input"> The text to generate audio for. The maximum length is 4096 characters. </param>
+        /// <param name="voice"> The voice to use for text-to-speech. </param>
         /// <param name="responseFormat"> The audio output format for the spoken text. By default, the MP3 format will be used. </param>
         /// <param name="speed"> The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the default and higher values corresponding to faster speech. </param>
         /// <param name="deploymentName"> The model to use for this text-to-speech request. </param>
@@ -61,5 +73,21 @@ namespace Azure.AI.OpenAI
             DeploymentName = deploymentName;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
+
+        /// <summary> Initializes a new instance of <see cref="SpeechGenerationOptions"/> for deserialization. </summary>
+        internal SpeechGenerationOptions()
+        {
+        }
+
+        /// <summary> The text to generate audio for. The maximum length is 4096 characters. </summary>
+        public string Input { get; }
+        /// <summary> The voice to use for text-to-speech. </summary>
+        public SpeechVoice Voice { get; }
+        /// <summary> The audio output format for the spoken text. By default, the MP3 format will be used. </summary>
+        public SpeechGenerationResponseFormat? ResponseFormat { get; set; }
+        /// <summary> The speed of speech for generated audio. Values are valid in the range from 0.25 to 4.0, with 1.0 the default and higher values corresponding to faster speech. </summary>
+        public float? Speed { get; set; }
+        /// <summary> The model to use for this text-to-speech request. </summary>
+        public string DeploymentName { get; set; }
     }
 }

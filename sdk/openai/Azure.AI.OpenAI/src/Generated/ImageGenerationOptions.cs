@@ -95,11 +95,18 @@ namespace Azure.AI.OpenAI
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ImageGenerationOptions"/> for deserialization. </summary>
+        internal ImageGenerationOptions()
+        {
+        }
+
         /// <summary>
         /// The model name or Azure OpenAI model deployment name to use for image generation. If not specified, dall-e-2 will be
         /// inferred as a default.
         /// </summary>
         public string DeploymentName { get; set; }
+        /// <summary> A description of the desired images. </summary>
+        public string Prompt { get; set; }
         /// <summary>
         /// The number of images to generate.
         /// Dall-e-2 models support values between 1 and 10.
@@ -112,6 +119,8 @@ namespace Azure.AI.OpenAI
         /// Dall-e-3 models support 1024x1024, 1792x1024, or 1024x1792.
         /// </summary>
         public ImageSize? Size { get; set; }
+        /// <summary> The format in which image generation response items should be presented. </summary>
+        public ImageGenerationResponseFormat? ResponseFormat { get; set; }
         /// <summary>
         /// The desired image generation quality level to use.
         /// Only configurable with dall-e-3 models.

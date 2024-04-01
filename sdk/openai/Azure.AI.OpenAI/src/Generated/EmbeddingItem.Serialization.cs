@@ -28,7 +28,7 @@ namespace Azure.AI.OpenAI
             writer.WriteStartObject();
             writer.WritePropertyName("embedding"u8);
             writer.WriteStartArray();
-            foreach (var item in Embedding.Span)
+            foreach (var item in Embedding)
             {
                 writer.WriteNumberValue(item);
             }
@@ -73,7 +73,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            ReadOnlyMemory<float> embedding = default;
+            IReadOnlyList<float> embedding = default;
             int index = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -81,18 +81,12 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("embedding"u8))
                 {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    int index0 = 0;
-                    float[] array = new float[property.Value.GetArrayLength()];
+                    List<float> array = new List<float>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array[index0] = item.GetSingle();
-                        index0++;
+                        array.Add(item.GetSingle());
                     }
-                    embedding = new ReadOnlyMemory<float>(array);
+                    embedding = array;
                     continue;
                 }
                 if (property.NameEquals("index"u8))

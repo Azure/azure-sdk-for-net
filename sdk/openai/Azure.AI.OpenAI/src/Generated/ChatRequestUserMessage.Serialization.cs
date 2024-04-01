@@ -27,7 +27,14 @@ namespace Azure.AI.OpenAI
 
             writer.WriteStartObject();
             writer.WritePropertyName("content"u8);
-            SerializeContent(writer);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(Content);
+#else
+            using (JsonDocument document = JsonDocument.Parse(Content))
+            {
+                JsonSerializer.Serialize(writer, document.RootElement);
+            }
+#endif
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -73,7 +80,7 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            string content = default;
+            BinaryData content = default;
             string name = default;
             ChatRole role = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -82,7 +89,7 @@ namespace Azure.AI.OpenAI
             {
                 if (property.NameEquals("content"u8))
                 {
-                    content = property.Value.GetString();
+                    content = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("name"u8))
