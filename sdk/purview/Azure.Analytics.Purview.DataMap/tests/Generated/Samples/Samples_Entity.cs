@@ -6029,139 +6029,139 @@ Status = EntityStatus.Active,
             Response<BinaryData> response = await client.GetBusinessMetadataTemplateAsync();
         }
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Entity_ImportBusinessMetadata_ShortVersion()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+        //[Test]
+        //[Ignore("Only validating compilation of examples")]
+        //public void Example_Entity_ImportBusinessMetadata_ShortVersion()
+        //{
+        //    Uri endpoint = new Uri("<https://my-service.azure.com>");
+        //    TokenCredential credential = new DefaultAzureCredential();
+        //    Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                file = new object(),
-            });
-            Response response = client.ImportBusinessMetadata(content);
+        //    using RequestContent content = RequestContent.Create(new
+        //    {
+        //        file = new object(),
+        //    });
+        //    Response response = client.ImportBusinessMetadata(content);
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
+        //    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        //    Console.WriteLine(result.ToString());
+        //}
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Entity_ImportBusinessMetadata_ShortVersion_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+        //[Test]
+        //[Ignore("Only validating compilation of examples")]
+        //public async Task Example_Entity_ImportBusinessMetadata_ShortVersion_Async()
+        //{
+        //    Uri endpoint = new Uri("<https://my-service.azure.com>");
+        //    TokenCredential credential = new DefaultAzureCredential();
+        //    Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                file = new object(),
-            });
-            Response response = await client.ImportBusinessMetadataAsync(content);
+        //    using RequestContent content = RequestContent.Create(new
+        //    {
+        //        file = new object(),
+        //    });
+        //    Response response = await client.ImportBusinessMetadataAsync(content);
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.ToString());
-        }
+        //    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        //    Console.WriteLine(result.ToString());
+        //}
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Entity_ImportBusinessMetadata_ShortVersion_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+        //[Test]
+        //[Ignore("Only validating compilation of examples")]
+        //public void Example_Entity_ImportBusinessMetadata_ShortVersion_Convenience()
+        //{
+        //    Uri endpoint = new Uri("<https://my-service.azure.com>");
+        //    TokenCredential credential = new DefaultAzureCredential();
+        //    Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
-            Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
-        }
+        //    BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+        //    Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
+        //}
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Entity_ImportBusinessMetadata_ShortVersion_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+        //[Test]
+        //[Ignore("Only validating compilation of examples")]
+        //public async Task Example_Entity_ImportBusinessMetadata_ShortVersion_Convenience_Async()
+        //{
+        //    Uri endpoint = new Uri("<https://my-service.azure.com>");
+        //    TokenCredential credential = new DefaultAzureCredential();
+        //    Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
-            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
-        }
+        //    BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+        //    Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
+        //}
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Entity_ImportBusinessMetadata_AllParameters()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+        //[Test]
+        //[Ignore("Only validating compilation of examples")]
+        //public void Example_Entity_ImportBusinessMetadata_AllParameters()
+        //{
+        //    Uri endpoint = new Uri("<https://my-service.azure.com>");
+        //    TokenCredential credential = new DefaultAzureCredential();
+        //    Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                file = new object(),
-            });
-            Response response = client.ImportBusinessMetadata(content);
+        //    using RequestContent content = RequestContent.Create(new
+        //    {
+        //        file = new object(),
+        //    });
+        //    Response response = client.ImportBusinessMetadata(content);
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("importStatus").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("parentObjectName").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("remarks").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("childObjectName").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("importStatus").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("parentObjectName").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
-        }
+        //    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        //    Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
+        //    Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("importStatus").ToString());
+        //    Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("parentObjectName").ToString());
+        //    Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("remarks").ToString());
+        //    Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("childObjectName").ToString());
+        //    Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("importStatus").ToString());
+        //    Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("parentObjectName").ToString());
+        //    Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
+        //}
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Entity_ImportBusinessMetadata_AllParameters_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+        //[Test]
+        //[Ignore("Only validating compilation of examples")]
+        //public async Task Example_Entity_ImportBusinessMetadata_AllParameters_Async()
+        //{
+        //    Uri endpoint = new Uri("<https://my-service.azure.com>");
+        //    TokenCredential credential = new DefaultAzureCredential();
+        //    Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            using RequestContent content = RequestContent.Create(new
-            {
-                file = new object(),
-            });
-            Response response = await client.ImportBusinessMetadataAsync(content);
+        //    using RequestContent content = RequestContent.Create(new
+        //    {
+        //        file = new object(),
+        //    });
+        //    Response response = await client.ImportBusinessMetadataAsync(content);
 
-            JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("importStatus").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("parentObjectName").ToString());
-            Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("remarks").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("childObjectName").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("importStatus").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("parentObjectName").ToString());
-            Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
-        }
+        //    JsonElement result = JsonDocument.Parse(response.ContentStream).RootElement;
+        //    Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("childObjectName").ToString());
+        //    Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("importStatus").ToString());
+        //    Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("parentObjectName").ToString());
+        //    Console.WriteLine(result.GetProperty("failedImportInfoList")[0].GetProperty("remarks").ToString());
+        //    Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("childObjectName").ToString());
+        //    Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("importStatus").ToString());
+        //    Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("parentObjectName").ToString());
+        //    Console.WriteLine(result.GetProperty("successImportInfoList")[0].GetProperty("remarks").ToString());
+        //}
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public void Example_Entity_ImportBusinessMetadata_AllParameters_Convenience()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+        //[Test]
+        //[Ignore("Only validating compilation of examples")]
+        //public void Example_Entity_ImportBusinessMetadata_AllParameters_Convenience()
+        //{
+        //    Uri endpoint = new Uri("<https://my-service.azure.com>");
+        //    TokenCredential credential = new DefaultAzureCredential();
+        //    Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
-            Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
-        }
+        //    BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+        //    Response<BulkImportResult> response = client.ImportBusinessMetadata(businessMetadataOptions);
+        //}
 
-        [Test]
-        [Ignore("Only validating compilation of examples")]
-        public async Task Example_Entity_ImportBusinessMetadata_AllParameters_Convenience_Async()
-        {
-            Uri endpoint = new Uri("<https://my-service.azure.com>");
-            TokenCredential credential = new DefaultAzureCredential();
-            Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
+        //[Test]
+        //[Ignore("Only validating compilation of examples")]
+        //public async Task Example_Entity_ImportBusinessMetadata_AllParameters_Convenience_Async()
+        //{
+        //    Uri endpoint = new Uri("<https://my-service.azure.com>");
+        //    TokenCredential credential = new DefaultAzureCredential();
+        //    Entity client = new DataMapClient(endpoint, credential).GetEntityClient();
 
-            BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
-            Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
-        }
+        //    BusinessMetadataOptions businessMetadataOptions = new BusinessMetadataOptions(BinaryData.FromObjectAsJson(new object()));
+        //    Response<BulkImportResult> response = await client.ImportBusinessMetadataAsync(businessMetadataOptions);
+        //}
 
         [Test]
         [Ignore("Only validating compilation of examples")]

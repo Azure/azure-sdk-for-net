@@ -3643,8 +3643,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = businessMetadataOptions.ToRequestContent();
-            Response response = await ImportBusinessMetadataAsync(content, context).ConfigureAwait(false);
+            using MultipartFormDataBinaryContent content = businessMetadataOptions.ToMultipartContent();
+            Response response = await ImportBusinessMetadataAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(BulkImportResult.FromResponse(response), response);
         }
 
@@ -3658,8 +3658,8 @@ namespace Azure.Analytics.Purview.DataMap
             Argument.AssertNotNull(businessMetadataOptions, nameof(businessMetadataOptions));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            using RequestContent content = businessMetadataOptions.ToRequestContent();
-            Response response = ImportBusinessMetadata(content, context);
+            using MultipartFormDataBinaryContent content = businessMetadataOptions.ToMultipartContent();
+            Response response = ImportBusinessMetadata(content, content.ContentType, context);
             return Response.FromValue(BulkImportResult.FromResponse(response), response);
         }
 
@@ -3679,12 +3679,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType">The content type of the request content.</param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadataAsync(RequestContent,RequestContext)']/*" />
-        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, RequestContext context = null)
+        public virtual async Task<Response> ImportBusinessMetadataAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3692,7 +3693,7 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3718,12 +3719,13 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType">The content type of the request content.</param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
         /// <include file="Docs/Entity.xml" path="doc/members/member[@name='ImportBusinessMetadata(RequestContent,RequestContext)']/*" />
-        public virtual Response ImportBusinessMetadata(RequestContent content, RequestContext context = null)
+        public virtual Response ImportBusinessMetadata(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3731,7 +3733,7 @@ namespace Azure.Analytics.Purview.DataMap
             scope.Start();
             try
             {
-                using HttpMessage message = CreateImportBusinessMetadataRequest(content, context);
+                using HttpMessage message = CreateImportBusinessMetadataRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)

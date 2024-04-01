@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Azure.Analytics.Purview.DataMap
 {
@@ -48,7 +49,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="file"/> is null. </exception>
-        public BusinessMetadataOptions(BinaryData file)
+        public BusinessMetadataOptions(Stream file)
         {
             Argument.AssertNotNull(file, nameof(file));
 
@@ -58,7 +59,7 @@ namespace Azure.Analytics.Purview.DataMap
         /// <summary> Initializes a new instance of <see cref="BusinessMetadataOptions"/>. </summary>
         /// <param name="file"> InputStream of file. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal BusinessMetadataOptions(BinaryData file, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal BusinessMetadataOptions(Stream file, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             File = file;
             _serializedAdditionalRawData = serializedAdditionalRawData;
@@ -85,6 +86,6 @@ namespace Azure.Analytics.Purview.DataMap
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData File { get; }
+        public Stream File { get; }
     }
 }
