@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  encoding: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  intervalInSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  sizeLimitInBytes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  destination: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  skipEmptyArchives: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

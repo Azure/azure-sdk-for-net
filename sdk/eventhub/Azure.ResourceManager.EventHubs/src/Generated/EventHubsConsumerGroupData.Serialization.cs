@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  location: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    createdAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    updatedAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    userMetadata: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

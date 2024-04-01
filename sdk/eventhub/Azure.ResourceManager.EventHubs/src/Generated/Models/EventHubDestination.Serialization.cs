@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("    storageAccountResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("    blobContainer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("    archiveNameFormat: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("    dataLakeSubscriptionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("    dataLakeAccountName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("    dataLakeFolderPath: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

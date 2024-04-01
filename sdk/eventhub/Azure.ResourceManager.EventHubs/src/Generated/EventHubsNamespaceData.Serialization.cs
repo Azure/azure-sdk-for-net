@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.EventHubs
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.EventHubs
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -565,7 +565,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -593,7 +593,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -607,7 +607,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -623,7 +623,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    minimumTlsVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -637,7 +637,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -659,7 +659,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -681,7 +681,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    createdAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -696,7 +696,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    updatedAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    serviceBusEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    clusterArmId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -747,7 +747,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    metricId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -769,7 +769,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    isAutoInflateEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -784,7 +784,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    publicNetworkAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -798,7 +798,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    maximumThroughputUnits: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -812,7 +812,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    kafkaEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -827,7 +827,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    zoneRedundant: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -842,7 +842,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    encryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -858,7 +858,7 @@ namespace Azure.ResourceManager.EventHubs
                     builder.Append("    privateEndpointConnections: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -878,7 +878,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    disableLocalAuth: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -893,7 +893,7 @@ namespace Azure.ResourceManager.EventHubs
                 builder.Append("    alternateName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

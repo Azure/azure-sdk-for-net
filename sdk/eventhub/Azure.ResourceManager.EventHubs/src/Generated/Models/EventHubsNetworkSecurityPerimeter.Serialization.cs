@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  perimeterGuid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  location: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

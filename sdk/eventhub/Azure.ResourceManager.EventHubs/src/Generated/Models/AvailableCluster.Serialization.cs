@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  location: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

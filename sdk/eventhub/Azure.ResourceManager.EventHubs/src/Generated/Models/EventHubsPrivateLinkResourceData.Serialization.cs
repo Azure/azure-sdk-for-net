@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                 builder.Append("    groupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     builder.Append("    requiredMembers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                     builder.Append("    requiredZoneNames: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
