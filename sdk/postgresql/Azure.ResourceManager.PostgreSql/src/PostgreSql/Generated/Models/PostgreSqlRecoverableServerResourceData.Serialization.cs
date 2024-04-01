@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("    lastAvailableBackupDateTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("    serviceLevelObjective: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("    edition: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("    vCore: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("    hardwareGeneration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("    version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     builder.Append("  supportedServerEditions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     builder.Append("  supportedServerVersions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  fastProvisioningSupported: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     builder.Append("  supportedFastProvisioningEditions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  geoBackupSupported: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  zoneRedundantHaSupported: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -457,7 +457,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  zoneRedundantHaAndGeoBackupSupported: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -471,7 +471,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  storageAutoGrowthSupported: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  onlineResizeSupported: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -499,7 +499,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  restricted: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -513,7 +513,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -527,7 +527,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  reason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

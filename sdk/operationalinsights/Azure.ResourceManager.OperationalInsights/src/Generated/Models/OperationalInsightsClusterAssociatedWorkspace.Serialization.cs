@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  workspaceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  workspaceName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  resourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  associateDate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -277,7 +277,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  properties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -291,7 +291,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  etag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.OperationalInsights
             builder.Append("  kind: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                     builder.Append("  userAssignedIdentities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
             builder.Append("  type: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
                 builder.Append("  tenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

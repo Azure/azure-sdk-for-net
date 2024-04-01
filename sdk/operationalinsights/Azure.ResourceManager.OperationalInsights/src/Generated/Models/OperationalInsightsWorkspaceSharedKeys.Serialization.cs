@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  primarySharedKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  secondarySharedKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

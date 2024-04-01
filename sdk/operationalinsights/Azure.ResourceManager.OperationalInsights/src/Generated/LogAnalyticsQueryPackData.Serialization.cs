@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.OperationalInsights
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.OperationalInsights
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    queryPackId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -374,7 +374,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    timeCreated: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    timeModified: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

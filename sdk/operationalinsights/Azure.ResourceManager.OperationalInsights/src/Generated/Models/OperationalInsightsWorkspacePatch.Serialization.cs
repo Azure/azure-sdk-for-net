@@ -450,7 +450,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -508,7 +508,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  etag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -550,7 +550,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    customerId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -594,7 +594,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    retentionInDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    workspaceCapping: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    createdDate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -651,7 +651,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    modifiedDate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -666,7 +666,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    publicNetworkAccessForIngestion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -680,7 +680,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    publicNetworkAccessForQuery: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    forceCmkForQuery: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -711,7 +711,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                     builder.Append("    privateLinkScopedResources: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -731,7 +731,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    features: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -745,7 +745,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("    defaultDataCollectionRuleResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

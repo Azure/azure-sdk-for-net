@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  query: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  limit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  startSearchTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  endSearchTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  sourceTable: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -306,7 +306,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  azureAsyncOperationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

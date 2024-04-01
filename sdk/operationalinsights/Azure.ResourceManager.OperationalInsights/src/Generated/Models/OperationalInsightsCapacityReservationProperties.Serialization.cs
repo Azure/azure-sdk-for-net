@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  lastSkuUpdate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  minCapacity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

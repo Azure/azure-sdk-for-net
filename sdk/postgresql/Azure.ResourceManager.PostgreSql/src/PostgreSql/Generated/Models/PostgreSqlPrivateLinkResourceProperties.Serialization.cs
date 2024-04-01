@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  groupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     builder.Append("  requiredMembers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

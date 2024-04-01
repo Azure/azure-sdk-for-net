@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.Append("  numberOfDocuments: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {

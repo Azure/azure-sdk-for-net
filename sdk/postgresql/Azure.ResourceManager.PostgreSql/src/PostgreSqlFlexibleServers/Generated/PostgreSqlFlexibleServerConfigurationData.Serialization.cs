@@ -313,7 +313,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    value: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -409,7 +409,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    defaultValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    dataType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    allowedValues: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    source: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    isDynamicConfig: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    isReadOnly: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    isConfigPendingRestart: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -534,7 +534,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    unit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -556,7 +556,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers
                 builder.Append("    documentationLink: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

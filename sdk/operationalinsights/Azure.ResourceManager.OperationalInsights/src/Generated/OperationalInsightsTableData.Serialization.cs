@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    retentionInDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    totalRetentionInDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -433,7 +433,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    archiveRetentionInDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -447,7 +447,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    searchResults: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -461,7 +461,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    restoredLogs: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    resultStatistics: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -489,7 +489,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    plan: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    lastPlanModifiedDate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -525,7 +525,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    schema: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -553,7 +553,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    retentionInDaysAsDefault: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.OperationalInsights
                 builder.Append("    totalRetentionInDaysAsDefault: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

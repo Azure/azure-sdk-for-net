@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
             builder.Append("  state: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

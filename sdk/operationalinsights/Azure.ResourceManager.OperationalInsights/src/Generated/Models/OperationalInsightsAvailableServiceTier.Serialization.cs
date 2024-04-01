@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  serviceTier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  minimumRetention: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  maximumRetention: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -265,7 +265,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  defaultRetention: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -279,7 +279,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  capacityReservationLevel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.OperationalInsights.Models
                 builder.Append("  lastSkuUpdate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

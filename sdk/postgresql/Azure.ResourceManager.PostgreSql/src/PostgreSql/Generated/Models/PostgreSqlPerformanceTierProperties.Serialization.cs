@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  maxBackupRetentionDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  minBackupRetentionDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  maxStorageMB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  minLargeStorageMB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -309,7 +309,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  maxLargeStorageMB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                 builder.Append("  minStorageMB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
                     builder.Append("  serviceLevelObjectives: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
