@@ -14,6 +14,7 @@ namespace Azure.Messaging.EventHubs
         public new string EventHubName { get { throw null; } }
         public new string FullyQualifiedNamespace { get { throw null; } }
         public new string Identifier { get { throw null; } }
+        protected override bool? IsBatchTracingEnabled { get { throw null; } }
         public new bool IsRunning { get { throw null; } protected set { } }
         public event System.Func<Azure.Messaging.EventHubs.Processor.PartitionClosingEventArgs, System.Threading.Tasks.Task> PartitionClosingAsync { add { } remove { } }
         public event System.Func<Azure.Messaging.EventHubs.Processor.PartitionInitializingEventArgs, System.Threading.Tasks.Task> PartitionInitializingAsync { add { } remove { } }
