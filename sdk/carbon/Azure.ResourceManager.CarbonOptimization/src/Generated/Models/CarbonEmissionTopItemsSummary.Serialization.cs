@@ -13,19 +13,23 @@ using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    internal partial class UnknownCarbonEmissionData : IUtf8JsonSerializable, IJsonModel<CarbonEmission>
+    public partial class CarbonEmissionTopItemsSummary : IUtf8JsonSerializable, IJsonModel<CarbonEmissionTopItemsSummary>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CarbonEmission>)this).Write(writer, new ModelReaderWriterOptions("W"));
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CarbonEmissionTopItemsSummary>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
-        void IJsonModel<CarbonEmission>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        void IJsonModel<CarbonEmissionTopItemsSummary>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmission>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CarbonEmission)} does not support writing '{format}' format.");
+                throw new FormatException($"The model {nameof(CarbonEmissionTopItemsSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
+            writer.WritePropertyName("itemName"u8);
+            writer.WriteStringValue(ItemName);
+            writer.WritePropertyName("categoryType"u8);
+            writer.WriteStringValue(CategoryType.ToString());
             writer.WritePropertyName("dataType"u8);
             writer.WriteStringValue(DataType);
             writer.WritePropertyName("totalCarbonEmission"u8);
@@ -61,19 +65,19 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             writer.WriteEndObject();
         }
 
-        CarbonEmission IJsonModel<CarbonEmission>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
+        CarbonEmissionTopItemsSummary IJsonModel<CarbonEmissionTopItemsSummary>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmission>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CarbonEmission)} does not support reading '{format}' format.");
+                throw new FormatException($"The model {nameof(CarbonEmissionTopItemsSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
-            return DeserializeCarbonEmission(document.RootElement, options);
+            return DeserializeCarbonEmissionTopItemsSummary(document.RootElement, options);
         }
 
-        internal static UnknownCarbonEmissionData DeserializeUnknownCarbonEmissionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CarbonEmissionTopItemsSummary DeserializeCarbonEmissionTopItemsSummary(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -81,7 +85,9 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            string dataType = "Unknown";
+            string itemName = default;
+            CarbonEmissionCategoryType categoryType = default;
+            string dataType = default;
             double totalCarbonEmission = default;
             double totalCarbonEmissionLastMonth = default;
             double changeRatioForLastMonth = default;
@@ -92,6 +98,16 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("itemName"u8))
+                {
+                    itemName = property.Value.GetString();
+                    continue;
+                }
+                if (property.NameEquals("categoryType"u8))
+                {
+                    categoryType = new CarbonEmissionCategoryType(property.Value.GetString());
+                    continue;
+                }
                 if (property.NameEquals("dataType"u8))
                 {
                     dataType = property.Value.GetString();
@@ -137,7 +153,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCarbonEmissionData(
+            return new CarbonEmissionTopItemsSummary(
                 dataType,
                 totalCarbonEmission,
                 totalCarbonEmissionLastMonth,
@@ -145,38 +161,40 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 totalCarbonEmission12MonthsAgo,
                 changeRatioFor12Months,
                 changeValueMonthOverMonth,
-                serializedAdditionalRawData);
+                serializedAdditionalRawData,
+                itemName,
+                categoryType);
         }
 
-        BinaryData IPersistableModel<CarbonEmission>.Write(ModelReaderWriterOptions options)
+        BinaryData IPersistableModel<CarbonEmissionTopItemsSummary>.Write(ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmission>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CarbonEmission)} does not support writing '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CarbonEmissionTopItemsSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
-        CarbonEmission IPersistableModel<CarbonEmission>.Create(BinaryData data, ModelReaderWriterOptions options)
+        CarbonEmissionTopItemsSummary IPersistableModel<CarbonEmissionTopItemsSummary>.Create(BinaryData data, ModelReaderWriterOptions options)
         {
-            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmission>)this).GetFormatFromOptions(options) : options.Format;
+            var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionTopItemsSummary>)this).GetFormatFromOptions(options) : options.Format;
 
             switch (format)
             {
                 case "J":
                     {
                         using JsonDocument document = JsonDocument.Parse(data);
-                        return DeserializeCarbonEmission(document.RootElement, options);
+                        return DeserializeCarbonEmissionTopItemsSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CarbonEmission)} does not support reading '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CarbonEmissionTopItemsSummary)} does not support reading '{options.Format}' format.");
             }
         }
 
-        string IPersistableModel<CarbonEmission>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
+        string IPersistableModel<CarbonEmissionTopItemsSummary>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

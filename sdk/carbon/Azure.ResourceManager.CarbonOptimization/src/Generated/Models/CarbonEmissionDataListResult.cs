@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
@@ -50,16 +49,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionDataListResult"/>. </summary>
         /// <param name="value">
         /// The CarbonEmissionData items on this page
-        /// Please note <see cref="CarbonEmissionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CarbonEmissionItemDetailData"/>, <see cref="CarbonEmissionMonthlySummaryData"/>, <see cref="CarbonEmissionOverallSummaryData"/>, <see cref="ResourceGroupCarbonEmissionItemDetailData"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummaryData"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummaryData"/>, <see cref="ResourceCarbonEmissionItemDetailData"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummaryData"/>, <see cref="ResourceCarbonEmissionTopItemsSummaryData"/>, <see cref="ResourceTypeCarbonEmissionItemDetailData"/>, <see cref="CarbonEmissionTopItemMonthlySummaryData"/> and <see cref="CarbonEmissionTopItemsSummaryData"/>.
+        /// Please note <see cref="CarbonEmission"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CarbonEmissionItemDetail"/>, <see cref="CarbonEmissionMonthlySummary"/>, <see cref="CarbonEmissionOverallSummary"/>, <see cref="ResourceGroupCarbonEmissionItemDetail"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummary"/>, <see cref="ResourceCarbonEmissionItemDetail"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceCarbonEmissionTopItemsSummary"/>, <see cref="ResourceTypeCarbonEmissionItemDetail"/>, <see cref="CarbonEmissionTopItemMonthlySummary"/> and <see cref="CarbonEmissionTopItemsSummary"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
-        internal CarbonEmissionDataListResult(IEnumerable<CarbonEmissionData> value)
+        internal CarbonEmissionDataListResult(IEnumerable<CarbonEmission> value)
         {
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(value, nameof(value));
 
             Value = value.ToList();
             SubscriptionAccessDecisionList = new ChangeTrackingList<SubscriptionAccessDecision>();
@@ -68,14 +64,14 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <summary> Initializes a new instance of <see cref="CarbonEmissionDataListResult"/>. </summary>
         /// <param name="value">
         /// The CarbonEmissionData items on this page
-        /// Please note <see cref="CarbonEmissionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CarbonEmissionItemDetailData"/>, <see cref="CarbonEmissionMonthlySummaryData"/>, <see cref="CarbonEmissionOverallSummaryData"/>, <see cref="ResourceGroupCarbonEmissionItemDetailData"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummaryData"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummaryData"/>, <see cref="ResourceCarbonEmissionItemDetailData"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummaryData"/>, <see cref="ResourceCarbonEmissionTopItemsSummaryData"/>, <see cref="ResourceTypeCarbonEmissionItemDetailData"/>, <see cref="CarbonEmissionTopItemMonthlySummaryData"/> and <see cref="CarbonEmissionTopItemsSummaryData"/>.
+        /// Please note <see cref="CarbonEmission"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CarbonEmissionItemDetail"/>, <see cref="CarbonEmissionMonthlySummary"/>, <see cref="CarbonEmissionOverallSummary"/>, <see cref="ResourceGroupCarbonEmissionItemDetail"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummary"/>, <see cref="ResourceCarbonEmissionItemDetail"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceCarbonEmissionTopItemsSummary"/>, <see cref="ResourceTypeCarbonEmissionItemDetail"/>, <see cref="CarbonEmissionTopItemMonthlySummary"/> and <see cref="CarbonEmissionTopItemsSummary"/>.
         /// </param>
         /// <param name="skipToken"> The number of result items to skip for next page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
         /// <param name="subscriptionAccessDecisionList"> The access decision list for each input subscription. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal CarbonEmissionDataListResult(IReadOnlyList<CarbonEmissionData> value, string skipToken, string nextLink, IReadOnlyList<SubscriptionAccessDecision> subscriptionAccessDecisionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CarbonEmissionDataListResult(IReadOnlyList<CarbonEmission> value, string skipToken, string nextLink, IReadOnlyList<SubscriptionAccessDecision> subscriptionAccessDecisionList, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             SkipToken = skipToken;
@@ -91,10 +87,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
 
         /// <summary>
         /// The CarbonEmissionData items on this page
-        /// Please note <see cref="CarbonEmissionData"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CarbonEmissionItemDetailData"/>, <see cref="CarbonEmissionMonthlySummaryData"/>, <see cref="CarbonEmissionOverallSummaryData"/>, <see cref="ResourceGroupCarbonEmissionItemDetailData"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummaryData"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummaryData"/>, <see cref="ResourceCarbonEmissionItemDetailData"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummaryData"/>, <see cref="ResourceCarbonEmissionTopItemsSummaryData"/>, <see cref="ResourceTypeCarbonEmissionItemDetailData"/>, <see cref="CarbonEmissionTopItemMonthlySummaryData"/> and <see cref="CarbonEmissionTopItemsSummaryData"/>.
+        /// Please note <see cref="CarbonEmission"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="CarbonEmissionItemDetail"/>, <see cref="CarbonEmissionMonthlySummary"/>, <see cref="CarbonEmissionOverallSummary"/>, <see cref="ResourceGroupCarbonEmissionItemDetail"/>, <see cref="ResourceGroupCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceGroupCarbonEmissionTopItemsSummary"/>, <see cref="ResourceCarbonEmissionItemDetail"/>, <see cref="ResourceCarbonEmissionTopItemMonthlySummary"/>, <see cref="ResourceCarbonEmissionTopItemsSummary"/>, <see cref="ResourceTypeCarbonEmissionItemDetail"/>, <see cref="CarbonEmissionTopItemMonthlySummary"/> and <see cref="CarbonEmissionTopItemsSummary"/>.
         /// </summary>
-        public IReadOnlyList<CarbonEmissionData> Value { get; }
+        public IReadOnlyList<CarbonEmission> Value { get; }
         /// <summary> The number of result items to skip for next page. </summary>
         public string SkipToken { get; }
         /// <summary> The link to the next page of items. </summary>

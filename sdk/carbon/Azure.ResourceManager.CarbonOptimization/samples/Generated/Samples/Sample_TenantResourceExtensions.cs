@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CarbonOptimization;
 using Azure.ResourceManager.CarbonOptimization.Models;
 
 namespace Azure.ResourceManager.CarbonOptimization.Samples
@@ -35,14 +33,14 @@ namespace Azure.ResourceManager.CarbonOptimization.Samples
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation and iterate over the result
-            QueryFilter queryParameters = new OverallSummaryReportQueryFilter(new DateRange(DateTimeOffset.Parse("2023-06-01"), DateTimeOffset.Parse("2023-06-15")), new string[]
+            CarbonEmissionQueryContent content = new OverallSummaryReportQueryContent(new CarbonEmissionQueryDateRange(DateTimeOffset.Parse("2023-06-01"), DateTimeOffset.Parse("2023-06-15")), new string[]
             {
 "00000000-0000-0000-0000-000000000000"
-            }, new EmissionScopeEnum[]
+            }, new CarbonEmissionQueryScope[]
             {
-EmissionScopeEnum.Scope1
+CarbonEmissionQueryScope.Scope1
             });
-            await foreach (CarbonEmissionData item in tenantResource.GetCarbonEmissionReportsCarbonServicesAsync(queryParameters))
+            await foreach (CarbonEmission item in tenantResource.GetCarbonEmissionReportsCarbonServicesAsync(content))
             {
                 Console.WriteLine($"Succeeded: {item}");
             }
@@ -68,7 +66,7 @@ EmissionScopeEnum.Scope1
             var tenantResource = client.GetTenants().GetAllAsync().GetAsyncEnumerator().Current;
 
             // invoke the operation
-            CarbonEmissionDataAvailableDateRange result = await tenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync();
+            CarbonEmissionAvailableDateRange result = await tenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync();
 
             Console.WriteLine($"Succeeded: {result}");
         }

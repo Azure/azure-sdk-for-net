@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    /// <summary> Access Decision for each Subscription. </summary>
-    internal partial class SubscriptionAccessDecision
+    /// <summary> Date range to be used with QueryParameter. </summary>
+    public partial class CarbonEmissionQueryDateRange
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -45,37 +45,34 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionAccessDecision"/>. </summary>
-        /// <param name="subscriptionId"> Id of Subscription. </param>
-        /// <param name="decision"> Access decision to subscription. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
-        internal SubscriptionAccessDecision(string subscriptionId, SubscriptionAccessDecisionType decision)
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryDateRange"/>. </summary>
+        /// <param name="startOn"> Start date parameter, format is yyyy-MM-dd. </param>
+        /// <param name="endOn"> End date parameter, format is yyyy-MM-dd. </param>
+        public CarbonEmissionQueryDateRange(DateTimeOffset startOn, DateTimeOffset endOn)
         {
-            Argument.AssertNotNull(subscriptionId, nameof(subscriptionId));
-
-            SubscriptionId = subscriptionId;
-            Decision = decision;
+            StartOn = startOn;
+            EndOn = endOn;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionAccessDecision"/>. </summary>
-        /// <param name="subscriptionId"> Id of Subscription. </param>
-        /// <param name="decision"> Access decision to subscription. </param>
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryDateRange"/>. </summary>
+        /// <param name="startOn"> Start date parameter, format is yyyy-MM-dd. </param>
+        /// <param name="endOn"> End date parameter, format is yyyy-MM-dd. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal SubscriptionAccessDecision(string subscriptionId, SubscriptionAccessDecisionType decision, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal CarbonEmissionQueryDateRange(DateTimeOffset startOn, DateTimeOffset endOn, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            SubscriptionId = subscriptionId;
-            Decision = decision;
+            StartOn = startOn;
+            EndOn = endOn;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="SubscriptionAccessDecision"/> for deserialization. </summary>
-        internal SubscriptionAccessDecision()
+        /// <summary> Initializes a new instance of <see cref="CarbonEmissionQueryDateRange"/> for deserialization. </summary>
+        internal CarbonEmissionQueryDateRange()
         {
         }
 
-        /// <summary> Id of Subscription. </summary>
-        public string SubscriptionId { get; }
-        /// <summary> Access decision to subscription. </summary>
-        public SubscriptionAccessDecisionType Decision { get; }
+        /// <summary> Start date parameter, format is yyyy-MM-dd. </summary>
+        public DateTimeOffset StartOn { get; }
+        /// <summary> End date parameter, format is yyyy-MM-dd. </summary>
+        public DateTimeOffset EndOn { get; }
     }
 }

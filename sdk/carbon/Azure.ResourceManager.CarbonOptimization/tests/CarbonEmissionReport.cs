@@ -24,12 +24,13 @@ namespace Azure.ResourceManager.CarbonOptimization.Tests
         }
 
         [TestCase]
+        [RecordedTest]
         public async Task DetailItemsReportAsync()
         {
             SubscriptionResource subscription = await Client.GetDefaultSubscriptionAsync();
             ResourceGroupResource rg = await CreateResourceGroup(subscription, "testRg", AzureLocation.WestUS);
             string resourceName = Recording.GenerateAssetName("resource");
-            CarbonEmissionDataAvailableDateRange availableDateRange = await CarbonOptimizationExtensions.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(DefaultTenant).ConfigureAwait(false);
+            CarbonEmissionAvailableDateRange availableDateRange = await CarbonOptimizationExtensions.QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(DefaultTenant).ConfigureAwait(false);
 
             Assert.IsTrue(true);
         }

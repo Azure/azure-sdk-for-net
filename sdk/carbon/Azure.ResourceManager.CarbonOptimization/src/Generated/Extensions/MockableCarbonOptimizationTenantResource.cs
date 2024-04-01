@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CarbonOptimization;
 using Azure.ResourceManager.CarbonOptimization.Models;
 
 namespace Azure.ResourceManager.CarbonOptimization.Mocking
@@ -62,20 +59,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queryParameters"> Query parameters. </param>
+        /// <param name="content"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
-        /// <returns> An async collection of <see cref="CarbonEmissionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual AsyncPageable<CarbonEmissionData> GetCarbonEmissionReportsCarbonServicesAsync(QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> An async collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual AsyncPageable<CarbonEmission> GetCarbonEmissionReportsCarbonServicesAsync(CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CarbonServiceRestClient.CreateListCarbonEmissionReportsRequest(queryParameters);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CarbonServiceRestClient.CreateListCarbonEmissionReportsNextPageRequest(nextLink, queryParameters);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CarbonEmissionData.DeserializeCarbonEmissionData(e), CarbonServiceClientDiagnostics, Pipeline, "MockableCarbonOptimizationTenantResource.GetCarbonEmissionReportsCarbonServices", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CarbonServiceRestClient.CreateListCarbonEmissionReportsRequest(content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CarbonServiceRestClient.CreateListCarbonEmissionReportsNextPageRequest(nextLink, content);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => CarbonEmission.DeserializeCarbonEmission(e), CarbonServiceClientDiagnostics, Pipeline, "MockableCarbonOptimizationTenantResource.GetCarbonEmissionReportsCarbonServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -95,20 +89,17 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </item>
         /// </list>
         /// </summary>
-        /// <param name="queryParameters"> Query parameters. </param>
+        /// <param name="content"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
-        /// <returns> A collection of <see cref="CarbonEmissionData"/> that may take multiple service requests to iterate over. </returns>
-        public virtual Pageable<CarbonEmissionData> GetCarbonEmissionReportsCarbonServices(QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        /// <returns> A collection of <see cref="CarbonEmission"/> that may take multiple service requests to iterate over. </returns>
+        public virtual Pageable<CarbonEmission> GetCarbonEmissionReportsCarbonServices(CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CarbonServiceRestClient.CreateListCarbonEmissionReportsRequest(queryParameters);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CarbonServiceRestClient.CreateListCarbonEmissionReportsNextPageRequest(nextLink, queryParameters);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CarbonEmissionData.DeserializeCarbonEmissionData(e), CarbonServiceClientDiagnostics, Pipeline, "MockableCarbonOptimizationTenantResource.GetCarbonEmissionReportsCarbonServices", "value", "nextLink", cancellationToken);
+            HttpMessage FirstPageRequest(int? pageSizeHint) => CarbonServiceRestClient.CreateListCarbonEmissionReportsRequest(content);
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CarbonServiceRestClient.CreateListCarbonEmissionReportsNextPageRequest(nextLink, content);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => CarbonEmission.DeserializeCarbonEmission(e), CarbonServiceClientDiagnostics, Pipeline, "MockableCarbonOptimizationTenantResource.GetCarbonEmissionReportsCarbonServices", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -129,7 +120,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual async Task<Response<CarbonEmissionDataAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(CancellationToken cancellationToken = default)
+        public virtual async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeCarbonServiceAsync(CancellationToken cancellationToken = default)
         {
             using var scope = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationTenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonService");
             scope.Start();
@@ -163,7 +154,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Mocking
         /// </list>
         /// </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public virtual Response<CarbonEmissionDataAvailableDateRange> QueryCarbonEmissionDataAvailableDateRangeCarbonService(CancellationToken cancellationToken = default)
+        public virtual Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionDataAvailableDateRangeCarbonService(CancellationToken cancellationToken = default)
         {
             using var scope = CarbonServiceClientDiagnostics.CreateScope("MockableCarbonOptimizationTenantResource.QueryCarbonEmissionDataAvailableDateRangeCarbonService");
             scope.Start();

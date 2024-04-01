@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAccessDecision>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionAccessDecision>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 return null;
             }
             string subscriptionId = default;
-            AccessDecisionEnum decision = default;
+            SubscriptionAccessDecisionType decision = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
                 if (property.NameEquals("decision"u8))
                 {
-                    decision = new AccessDecisionEnum(property.Value.GetString());
+                    decision = new SubscriptionAccessDecisionType(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                         return DeserializeSubscriptionAccessDecision(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionAccessDecision)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    internal partial class UnknownCarbonEmissionData : IUtf8JsonSerializable, IJsonModel<CarbonEmission>
+    [PersistableModelProxy(typeof(UnknownCarbonEmissionData))]
+    public partial class CarbonEmission : IUtf8JsonSerializable, IJsonModel<CarbonEmission>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CarbonEmission>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             return DeserializeCarbonEmission(document.RootElement, options);
         }
 
-        internal static UnknownCarbonEmissionData DeserializeUnknownCarbonEmissionData(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CarbonEmission DeserializeCarbonEmission(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -81,71 +81,25 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            string dataType = "Unknown";
-            double totalCarbonEmission = default;
-            double totalCarbonEmissionLastMonth = default;
-            double changeRatioForLastMonth = default;
-            double totalCarbonEmission12MonthsAgo = default;
-            double changeRatioFor12Months = default;
-            double? changeValueMonthOverMonth = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("dataType", out JsonElement discriminator))
             {
-                if (property.NameEquals("dataType"u8))
+                switch (discriminator.GetString())
                 {
-                    dataType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("totalCarbonEmission"u8))
-                {
-                    totalCarbonEmission = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("totalCarbonEmissionLastMonth"u8))
-                {
-                    totalCarbonEmissionLastMonth = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("changeRatioForLastMonth"u8))
-                {
-                    changeRatioForLastMonth = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("totalCarbonEmission12MonthsAgo"u8))
-                {
-                    totalCarbonEmission12MonthsAgo = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("changeRatioFor12Months"u8))
-                {
-                    changeRatioFor12Months = property.Value.GetDouble();
-                    continue;
-                }
-                if (property.NameEquals("changeValueMonthOverMonth"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    changeValueMonthOverMonth = property.Value.GetDouble();
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    case "ItemDetailsData": return CarbonEmissionItemDetail.DeserializeCarbonEmissionItemDetail(element, options);
+                    case "MonthlySummaryData": return CarbonEmissionMonthlySummary.DeserializeCarbonEmissionMonthlySummary(element, options);
+                    case "OverallSummaryData": return CarbonEmissionOverallSummary.DeserializeCarbonEmissionOverallSummary(element, options);
+                    case "ResourceGroupItemDetailsData": return ResourceGroupCarbonEmissionItemDetail.DeserializeResourceGroupCarbonEmissionItemDetail(element, options);
+                    case "ResourceGroupTopItemsMonthlySummaryData": return ResourceGroupCarbonEmissionTopItemMonthlySummary.DeserializeResourceGroupCarbonEmissionTopItemMonthlySummary(element, options);
+                    case "ResourceGroupTopItemsSummaryData": return ResourceGroupCarbonEmissionTopItemsSummary.DeserializeResourceGroupCarbonEmissionTopItemsSummary(element, options);
+                    case "ResourceItemDetailsData": return ResourceCarbonEmissionItemDetail.DeserializeResourceCarbonEmissionItemDetail(element, options);
+                    case "ResourceTopItemsMonthlySummaryData": return ResourceCarbonEmissionTopItemMonthlySummary.DeserializeResourceCarbonEmissionTopItemMonthlySummary(element, options);
+                    case "ResourceTopItemsSummaryData": return ResourceCarbonEmissionTopItemsSummary.DeserializeResourceCarbonEmissionTopItemsSummary(element, options);
+                    case "ResourceTypeItemDetailsData": return ResourceTypeCarbonEmissionItemDetail.DeserializeResourceTypeCarbonEmissionItemDetail(element, options);
+                    case "TopItemsMonthlySummaryData": return CarbonEmissionTopItemMonthlySummary.DeserializeCarbonEmissionTopItemMonthlySummary(element, options);
+                    case "TopItemsSummaryData": return CarbonEmissionTopItemsSummary.DeserializeCarbonEmissionTopItemsSummary(element, options);
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownCarbonEmissionData(
-                dataType,
-                totalCarbonEmission,
-                totalCarbonEmissionLastMonth,
-                changeRatioForLastMonth,
-                totalCarbonEmission12MonthsAgo,
-                changeRatioFor12Months,
-                changeValueMonthOverMonth,
-                serializedAdditionalRawData);
+            return UnknownCarbonEmissionData.DeserializeUnknownCarbonEmissionData(element, options);
         }
 
         BinaryData IPersistableModel<CarbonEmission>.Write(ModelReaderWriterOptions options)

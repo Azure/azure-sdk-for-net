@@ -10,8 +10,8 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    /// <summary> The UnknownQueryFilter. </summary>
-    internal partial class UnknownQueryFilter : QueryFilter
+    /// <summary> Unknown version of QueryFilter. </summary>
+    internal partial class UnknownQueryFilter : CarbonEmissionQueryContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownQueryFilter"/>. </summary>
         /// <param name="reportType"> Report type. </param>
@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
         /// <param name="locationList"> Location list for carbon emissions data. </param>
         /// <param name="carbonScopeList"> Carbon emission scope for carbon emissions data. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal UnknownQueryFilter(string reportType, DateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<EmissionScopeEnum> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
+        internal UnknownQueryFilter(string reportType, CarbonEmissionQueryDateRange dateRange, IList<string> subscriptionList, IList<string> resourceGroupUrlList, IList<string> resourceTypeList, IList<string> locationList, IList<CarbonEmissionQueryScope> carbonScopeList, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(reportType, dateRange, subscriptionList, resourceGroupUrlList, resourceTypeList, locationList, carbonScopeList, serializedAdditionalRawData)
         {
             ReportType = reportType ?? "Unknown";
         }

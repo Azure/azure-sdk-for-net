@@ -7,13 +7,13 @@
 
 using System;
 using System.ClientModel.Primitives;
-using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.CarbonOptimization.Models
 {
-    internal partial class UnknownQueryFilter : IUtf8JsonSerializable, IJsonModel<CarbonEmissionQueryContent>
+    [PersistableModelProxy(typeof(UnknownQueryFilter))]
+    public partial class CarbonEmissionQueryContent : IUtf8JsonSerializable, IJsonModel<CarbonEmissionQueryContent>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<CarbonEmissionQueryContent>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             return DeserializeCarbonEmissionQueryContent(document.RootElement, options);
         }
 
-        internal static UnknownQueryFilter DeserializeUnknownQueryFilter(JsonElement element, ModelReaderWriterOptions options = null)
+        internal static CarbonEmissionQueryContent DeserializeCarbonEmissionQueryContent(JsonElement element, ModelReaderWriterOptions options = null)
         {
             options ??= new ModelReaderWriterOptions("W");
 
@@ -112,104 +112,18 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            string reportType = "Unknown";
-            CarbonEmissionQueryDateRange dateRange = default;
-            IList<string> subscriptionList = default;
-            IList<string> resourceGroupUrlList = default;
-            IList<string> resourceTypeList = default;
-            IList<string> locationList = default;
-            IList<CarbonEmissionQueryScope> carbonScopeList = default;
-            IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
-            foreach (var property in element.EnumerateObject())
+            if (element.TryGetProperty("reportType", out JsonElement discriminator))
             {
-                if (property.NameEquals("reportType"u8))
+                switch (discriminator.GetString())
                 {
-                    reportType = property.Value.GetString();
-                    continue;
-                }
-                if (property.NameEquals("dateRange"u8))
-                {
-                    dateRange = CarbonEmissionQueryDateRange.DeserializeCarbonEmissionQueryDateRange(property.Value, options);
-                    continue;
-                }
-                if (property.NameEquals("subscriptionList"u8))
-                {
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    subscriptionList = array;
-                    continue;
-                }
-                if (property.NameEquals("resourceGroupUrlList"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    resourceGroupUrlList = array;
-                    continue;
-                }
-                if (property.NameEquals("resourceTypeList"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    resourceTypeList = array;
-                    continue;
-                }
-                if (property.NameEquals("locationList"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        continue;
-                    }
-                    List<string> array = new List<string>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(item.GetString());
-                    }
-                    locationList = array;
-                    continue;
-                }
-                if (property.NameEquals("carbonScopeList"u8))
-                {
-                    List<CarbonEmissionQueryScope> array = new List<CarbonEmissionQueryScope>();
-                    foreach (var item in property.Value.EnumerateArray())
-                    {
-                        array.Add(new CarbonEmissionQueryScope(item.GetString()));
-                    }
-                    carbonScopeList = array;
-                    continue;
-                }
-                if (options.Format != "W")
-                {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    case "ItemDetailsReport": return ItemDetailsQueryContent.DeserializeItemDetailsQueryContent(element, options);
+                    case "MonthlySummaryReport": return MonthlySummaryReportQueryContent.DeserializeMonthlySummaryReportQueryContent(element, options);
+                    case "OverallSummaryReport": return OverallSummaryReportQueryContent.DeserializeOverallSummaryReportQueryContent(element, options);
+                    case "TopItemsMonthlySummaryReport": return TopItemsMonthlySummaryReportQueryContent.DeserializeTopItemsMonthlySummaryReportQueryContent(element, options);
+                    case "TopItemsSummaryReport": return TopItemsSummaryReportQueryContent.DeserializeTopItemsSummaryReportQueryContent(element, options);
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UnknownQueryFilter(
-                reportType,
-                dateRange,
-                subscriptionList,
-                resourceGroupUrlList ?? new ChangeTrackingList<string>(),
-                resourceTypeList ?? new ChangeTrackingList<string>(),
-                locationList ?? new ChangeTrackingList<string>(),
-                carbonScopeList,
-                serializedAdditionalRawData);
+            return UnknownQueryFilter.DeserializeUnknownQueryFilter(element, options);
         }
 
         BinaryData IPersistableModel<CarbonEmissionQueryContent>.Write(ModelReaderWriterOptions options)

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionDataListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CarbonEmissionDataListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CarbonEmissionDataListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,26 +30,26 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CarbonEmission>(item, options);
             }
             writer.WriteEndArray();
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (!(SubscriptionAccessDecisionList is ChangeTrackingList<SubscriptionAccessDecision> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionAccessDecisionList))
             {
                 writer.WritePropertyName("subscriptionAccessDecisionList"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubscriptionAccessDecisionList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubscriptionAccessDecision>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             var format = options.Format == "W" ? ((IPersistableModel<CarbonEmissionDataListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CarbonEmissionDataListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CarbonEmissionDataListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 return null;
             }
-            IReadOnlyList<CarbonEmissionData> value = default;
-            Optional<string> skipToken = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<CarbonEmission> value = default;
+            string skipToken = default;
+            string nextLink = default;
             IReadOnlyList<SubscriptionAccessDecision> subscriptionAccessDecisionList = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -101,10 +101,10 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
             {
                 if (property.NameEquals("value"u8))
                 {
-                    List<CarbonEmissionData> array = new List<CarbonEmissionData>();
+                    List<CarbonEmission> array = new List<CarbonEmission>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CarbonEmissionData.DeserializeCarbonEmissionData(item, options));
+                        array.Add(CarbonEmission.DeserializeCarbonEmission(item, options));
                     }
                     value = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CarbonEmissionDataListResult(value, skipToken.Value, nextLink.Value, subscriptionAccessDecisionList ?? new ChangeTrackingList<SubscriptionAccessDecision>(), serializedAdditionalRawData);
+            return new CarbonEmissionDataListResult(value, skipToken, nextLink, subscriptionAccessDecisionList ?? new ChangeTrackingList<SubscriptionAccessDecision>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CarbonEmissionDataListResult>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CarbonEmissionDataListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CarbonEmissionDataListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.CarbonOptimization.Models
                         return DeserializeCarbonEmissionDataListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CarbonEmissionDataListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CarbonEmissionDataListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

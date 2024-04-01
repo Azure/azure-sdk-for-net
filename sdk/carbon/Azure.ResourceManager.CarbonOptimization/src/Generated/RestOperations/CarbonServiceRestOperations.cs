@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CarbonOptimization.Models;
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.CarbonOptimization
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
-        internal HttpMessage CreateListCarbonEmissionReportsRequest(QueryFilter queryParameters)
+        internal HttpMessage CreateListCarbonEmissionReportsRequest(CarbonEmissionQueryContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -49,25 +49,22 @@ namespace Azure.ResourceManager.CarbonOptimization
             request.Uri = uri;
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(queryParameters);
-            request.Content = content;
+            var content0 = new Utf8JsonRequestContent();
+            content0.JsonWriter.WriteObjectValue<CarbonEmissionQueryContent>(content, new ModelReaderWriterOptions("W"));
+            request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> API for Carbon Emissions Reports. </summary>
-        /// <param name="queryParameters"> Query parameters. </param>
+        /// <param name="content"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
-        public async Task<Response<CarbonEmissionDataListResult>> ListCarbonEmissionReportsAsync(QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public async Task<Response<CarbonEmissionDataListResult>> ListCarbonEmissionReportsAsync(CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListCarbonEmissionReportsRequest(queryParameters);
+            using var message = CreateListCarbonEmissionReportsRequest(content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -84,17 +81,14 @@ namespace Azure.ResourceManager.CarbonOptimization
         }
 
         /// <summary> API for Carbon Emissions Reports. </summary>
-        /// <param name="queryParameters"> Query parameters. </param>
+        /// <param name="content"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="queryParameters"/> is null. </exception>
-        public Response<CarbonEmissionDataListResult> ListCarbonEmissionReports(QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
+        public Response<CarbonEmissionDataListResult> ListCarbonEmissionReports(CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListCarbonEmissionReportsRequest(queryParameters);
+            using var message = CreateListCarbonEmissionReportsRequest(content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -127,7 +121,7 @@ namespace Azure.ResourceManager.CarbonOptimization
 
         /// <summary> API for query carbon emission data available date range. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<Response<CarbonEmissionDataAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeAsync(CancellationToken cancellationToken = default)
+        public async Task<Response<CarbonEmissionAvailableDateRange>> QueryCarbonEmissionDataAvailableDateRangeAsync(CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryCarbonEmissionDataAvailableDateRangeRequest();
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -135,9 +129,9 @@ namespace Azure.ResourceManager.CarbonOptimization
             {
                 case 200:
                     {
-                        CarbonEmissionDataAvailableDateRange value = default;
+                        CarbonEmissionAvailableDateRange value = default;
                         using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
-                        value = CarbonEmissionDataAvailableDateRange.DeserializeCarbonEmissionDataAvailableDateRange(document.RootElement);
+                        value = CarbonEmissionAvailableDateRange.DeserializeCarbonEmissionAvailableDateRange(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -147,7 +141,7 @@ namespace Azure.ResourceManager.CarbonOptimization
 
         /// <summary> API for query carbon emission data available date range. </summary>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public Response<CarbonEmissionDataAvailableDateRange> QueryCarbonEmissionDataAvailableDateRange(CancellationToken cancellationToken = default)
+        public Response<CarbonEmissionAvailableDateRange> QueryCarbonEmissionDataAvailableDateRange(CancellationToken cancellationToken = default)
         {
             using var message = CreateQueryCarbonEmissionDataAvailableDateRangeRequest();
             _pipeline.Send(message, cancellationToken);
@@ -155,9 +149,9 @@ namespace Azure.ResourceManager.CarbonOptimization
             {
                 case 200:
                     {
-                        CarbonEmissionDataAvailableDateRange value = default;
+                        CarbonEmissionAvailableDateRange value = default;
                         using var document = JsonDocument.Parse(message.Response.ContentStream);
-                        value = CarbonEmissionDataAvailableDateRange.DeserializeCarbonEmissionDataAvailableDateRange(document.RootElement);
+                        value = CarbonEmissionAvailableDateRange.DeserializeCarbonEmissionAvailableDateRange(document.RootElement);
                         return Response.FromValue(value, message.Response);
                     }
                 default:
@@ -165,7 +159,7 @@ namespace Azure.ResourceManager.CarbonOptimization
             }
         }
 
-        internal HttpMessage CreateListCarbonEmissionReportsNextPageRequest(string nextLink, QueryFilter queryParameters)
+        internal HttpMessage CreateListCarbonEmissionReportsNextPageRequest(string nextLink, CarbonEmissionQueryContent content)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -181,21 +175,15 @@ namespace Azure.ResourceManager.CarbonOptimization
 
         /// <summary> API for Carbon Emissions Reports. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="queryParameters"> Query parameters. </param>
+        /// <param name="content"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="queryParameters"/> is null. </exception>
-        public async Task<Response<CarbonEmissionDataListResult>> ListCarbonEmissionReportsNextPageAsync(string nextLink, QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="content"/> is null. </exception>
+        public async Task<Response<CarbonEmissionDataListResult>> ListCarbonEmissionReportsNextPageAsync(string nextLink, CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListCarbonEmissionReportsNextPageRequest(nextLink, queryParameters);
+            using var message = CreateListCarbonEmissionReportsNextPageRequest(nextLink, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -213,21 +201,15 @@ namespace Azure.ResourceManager.CarbonOptimization
 
         /// <summary> API for Carbon Emissions Reports. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="queryParameters"> Query parameters. </param>
+        /// <param name="content"> Query parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="queryParameters"/> is null. </exception>
-        public Response<CarbonEmissionDataListResult> ListCarbonEmissionReportsNextPage(string nextLink, QueryFilter queryParameters, CancellationToken cancellationToken = default)
+        /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="content"/> is null. </exception>
+        public Response<CarbonEmissionDataListResult> ListCarbonEmissionReportsNextPage(string nextLink, CarbonEmissionQueryContent content, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (queryParameters == null)
-            {
-                throw new ArgumentNullException(nameof(queryParameters));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(content, nameof(content));
 
-            using var message = CreateListCarbonEmissionReportsNextPageRequest(nextLink, queryParameters);
+            using var message = CreateListCarbonEmissionReportsNextPageRequest(nextLink, content);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
