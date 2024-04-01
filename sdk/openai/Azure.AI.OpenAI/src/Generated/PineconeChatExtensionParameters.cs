@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> Parameters for configuring Azure OpenAI Pinecone chat extensions. The supported authentication type is APIKey. </summary>
-    internal partial class PineconeChatExtensionParameters
+    public partial class PineconeChatExtensionParameters
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -44,6 +44,29 @@ namespace Azure.AI.OpenAI
         /// </para>
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionParameters"/>. </summary>
+        /// <param name="environmentName"> The environment name of Pinecone. </param>
+        /// <param name="indexName"> The name of the Pinecone database index. </param>
+        /// <param name="fieldMappingOptions"> Customized field mapping behavior to use when interacting with the search index. </param>
+        /// <param name="embeddingDependency">
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OnYourDataEndpointVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
+        /// </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="environmentName"/>, <paramref name="indexName"/>, <paramref name="fieldMappingOptions"/> or <paramref name="embeddingDependency"/> is null. </exception>
+        public PineconeChatExtensionParameters(string environmentName, string indexName, PineconeFieldMappingOptions fieldMappingOptions, OnYourDataVectorizationSource embeddingDependency)
+        {
+            Argument.AssertNotNull(environmentName, nameof(environmentName));
+            Argument.AssertNotNull(indexName, nameof(indexName));
+            Argument.AssertNotNull(fieldMappingOptions, nameof(fieldMappingOptions));
+            Argument.AssertNotNull(embeddingDependency, nameof(embeddingDependency));
+
+            EnvironmentName = environmentName;
+            IndexName = indexName;
+            FieldMappingOptions = fieldMappingOptions;
+            EmbeddingDependency = embeddingDependency;
+        }
 
         /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionParameters"/>. </summary>
         /// <param name="authentication">
@@ -82,6 +105,11 @@ namespace Azure.AI.OpenAI
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
+        /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionParameters"/> for deserialization. </summary>
+        internal PineconeChatExtensionParameters()
+        {
+        }
+
         /// <summary>
         /// The authentication method to use when accessing the defined data source.
         /// Each data source type supports a specific set of available authentication methods; please see the documentation of
@@ -102,5 +130,15 @@ namespace Azure.AI.OpenAI
         public string RoleInformation { get; set; }
         /// <summary> The environment name of Pinecone. </summary>
         public string EnvironmentName { get; }
+        /// <summary> The name of the Pinecone database index. </summary>
+        public string IndexName { get; }
+        /// <summary> Customized field mapping behavior to use when interacting with the search index. </summary>
+        public PineconeFieldMappingOptions FieldMappingOptions { get; }
+        /// <summary>
+        /// The embedding dependency for vector search.
+        /// Please note <see cref="OnYourDataVectorizationSource"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="OnYourDataDeploymentNameVectorizationSource"/>, <see cref="OnYourDataEndpointVectorizationSource"/> and <see cref="OnYourDataModelIdVectorizationSource"/>.
+        /// </summary>
+        public OnYourDataVectorizationSource EmbeddingDependency { get; }
     }
 }

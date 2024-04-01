@@ -17,6 +17,199 @@ namespace Azure.AI.OpenAI
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ChatCompletionsOptions>)this).Write(writer, new ModelReaderWriterOptions("W"));
 
+        void IJsonModel<ChatCompletionsOptions>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ChatCompletionsOptions)} does not support writing '{format}' format.");
+            }
+
+            writer.WriteStartObject();
+            writer.WritePropertyName("messages"u8);
+            writer.WriteStartArray();
+            foreach (var item in Messages)
+            {
+                writer.WriteObjectValue<ChatRequestMessage>(item, options);
+            }
+            writer.WriteEndArray();
+            if (Optional.IsCollectionDefined(Functions))
+            {
+                writer.WritePropertyName("functions"u8);
+                writer.WriteStartArray();
+                foreach (var item in Functions)
+                {
+                    writer.WriteObjectValue<FunctionDefinition>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(FunctionCall))
+            {
+                writer.WritePropertyName("function_call"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(FunctionCall);
+#else
+                using (JsonDocument document = JsonDocument.Parse(FunctionCall))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (Optional.IsDefined(MaxTokens))
+            {
+                writer.WritePropertyName("max_tokens"u8);
+                writer.WriteNumberValue(MaxTokens.Value);
+            }
+            if (Optional.IsDefined(Temperature))
+            {
+                writer.WritePropertyName("temperature"u8);
+                writer.WriteNumberValue(Temperature.Value);
+            }
+            if (Optional.IsDefined(NucleusSamplingFactor))
+            {
+                writer.WritePropertyName("top_p"u8);
+                writer.WriteNumberValue(NucleusSamplingFactor.Value);
+            }
+            if (Optional.IsCollectionDefined(TokenSelectionBiases))
+            {
+                writer.WritePropertyName("logit_bias"u8);
+                writer.WriteStartObject();
+                foreach (var item in TokenSelectionBiases)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
+            }
+            if (Optional.IsDefined(User))
+            {
+                writer.WritePropertyName("user"u8);
+                writer.WriteStringValue(User);
+            }
+            if (Optional.IsDefined(ChoiceCount))
+            {
+                writer.WritePropertyName("n"u8);
+                writer.WriteNumberValue(ChoiceCount.Value);
+            }
+            if (Optional.IsCollectionDefined(StopSequences))
+            {
+                writer.WritePropertyName("stop"u8);
+                writer.WriteStartArray();
+                foreach (var item in StopSequences)
+                {
+                    writer.WriteStringValue(item);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(PresencePenalty))
+            {
+                writer.WritePropertyName("presence_penalty"u8);
+                writer.WriteNumberValue(PresencePenalty.Value);
+            }
+            if (Optional.IsDefined(FrequencyPenalty))
+            {
+                writer.WritePropertyName("frequency_penalty"u8);
+                writer.WriteNumberValue(FrequencyPenalty.Value);
+            }
+            if (Optional.IsDefined(InternalShouldStreamResponse))
+            {
+                writer.WritePropertyName("stream"u8);
+                writer.WriteBooleanValue(InternalShouldStreamResponse.Value);
+            }
+            if (Optional.IsDefined(DeploymentName))
+            {
+                writer.WritePropertyName("model"u8);
+                writer.WriteStringValue(DeploymentName);
+            }
+            if (Optional.IsCollectionDefined(InternalAzureExtensionsDataSources))
+            {
+                writer.WritePropertyName("data_sources"u8);
+                writer.WriteStartArray();
+                foreach (var item in InternalAzureExtensionsDataSources)
+                {
+                    writer.WriteObjectValue<AzureChatExtensionConfiguration>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Enhancements))
+            {
+                writer.WritePropertyName("enhancements"u8);
+                writer.WriteObjectValue<AzureChatEnhancementConfiguration>(Enhancements, options);
+            }
+            if (Optional.IsDefined(Seed))
+            {
+                writer.WritePropertyName("seed"u8);
+                writer.WriteNumberValue(Seed.Value);
+            }
+            if (Optional.IsDefined(EnableLogProbabilities))
+            {
+                if (EnableLogProbabilities != null)
+                {
+                    writer.WritePropertyName("logprobs"u8);
+                    writer.WriteBooleanValue(EnableLogProbabilities.Value);
+                }
+                else
+                {
+                    writer.WriteNull("logprobs");
+                }
+            }
+            if (Optional.IsDefined(LogProbabilitiesPerToken))
+            {
+                if (LogProbabilitiesPerToken != null)
+                {
+                    writer.WritePropertyName("top_logprobs"u8);
+                    writer.WriteNumberValue(LogProbabilitiesPerToken.Value);
+                }
+                else
+                {
+                    writer.WriteNull("top_logprobs");
+                }
+            }
+            if (Optional.IsDefined(ResponseFormat))
+            {
+                writer.WritePropertyName("response_format"u8);
+                writer.WriteObjectValue<ChatCompletionsResponseFormat>(ResponseFormat, options);
+            }
+            if (Optional.IsCollectionDefined(Tools))
+            {
+                writer.WritePropertyName("tools"u8);
+                writer.WriteStartArray();
+                foreach (var item in Tools)
+                {
+                    writer.WriteObjectValue<ChatCompletionsToolDefinition>(item, options);
+                }
+                writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(ToolChoice))
+            {
+                writer.WritePropertyName("tool_choice"u8);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(ToolChoice);
+#else
+                using (JsonDocument document = JsonDocument.Parse(ToolChoice))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
+            }
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
+            writer.WriteEndObject();
+        }
+
         ChatCompletionsOptions IJsonModel<ChatCompletionsOptions>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ChatCompletionsOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -39,11 +232,11 @@ namespace Azure.AI.OpenAI
             }
             IList<ChatRequestMessage> messages = default;
             IList<FunctionDefinition> functions = default;
-            FunctionDefinition functionCall = default;
+            BinaryData functionCall = default;
             int? maxTokens = default;
             float? temperature = default;
             float? topP = default;
-            IDictionary<int, int> logitBias = default;
+            IDictionary<string, int> logitBias = default;
             string user = default;
             int? n = default;
             IList<string> stop = default;
@@ -93,7 +286,7 @@ namespace Azure.AI.OpenAI
                     {
                         continue;
                     }
-                    functionCall = FunctionDefinition.DeserializeFunctionDefinition(property.Value, options);
+                    functionCall = BinaryData.FromString(property.Value.GetRawText());
                     continue;
                 }
                 if (property.NameEquals("max_tokens"u8))
@@ -125,7 +318,16 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("logit_bias"u8))
                 {
-                    DeserializeTokenSelectionBiases(property, ref logitBias);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    logitBias = dictionary;
                     continue;
                 }
                 if (property.NameEquals("user"u8))
@@ -285,7 +487,7 @@ namespace Azure.AI.OpenAI
                 maxTokens,
                 temperature,
                 topP,
-                logitBias ?? new ChangeTrackingDictionary<int, int>(),
+                logitBias ?? new ChangeTrackingDictionary<string, int>(),
                 user,
                 n,
                 stop ?? new ChangeTrackingList<string>(),

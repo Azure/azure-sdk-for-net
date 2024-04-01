@@ -15,7 +15,7 @@ namespace Azure.AI.OpenAI
     /// Please note <see cref="ChatMessageContentItem"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
     /// The available derived classes include <see cref="ChatMessageImageContentItem"/> and <see cref="ChatMessageTextContentItem"/>.
     /// </summary>
-    public abstract partial class ChatMessageContentItem
+    internal abstract partial class ChatMessageContentItem
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.

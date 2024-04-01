@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Azure.AI.OpenAI
 {
@@ -51,8 +52,23 @@ namespace Azure.AI.OpenAI
         /// vector-based relatedness of the provided input.
         /// </param>
         /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="embedding"/> is null. </exception>
+        internal EmbeddingItem(IEnumerable<float> embedding, int index)
+        {
+            Argument.AssertNotNull(embedding, nameof(embedding));
+
+            Embedding = embedding.ToList();
+            Index = index;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EmbeddingItem"/>. </summary>
+        /// <param name="embedding">
+        /// List of embeddings value for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input.
+        /// </param>
+        /// <param name="index"> Index of the prompt to which the EmbeddingItem corresponds. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal EmbeddingItem(ReadOnlyMemory<float> embedding, int index, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal EmbeddingItem(IReadOnlyList<float> embedding, int index, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Embedding = embedding;
             Index = index;
@@ -63,6 +79,12 @@ namespace Azure.AI.OpenAI
         internal EmbeddingItem()
         {
         }
+
+        /// <summary>
+        /// List of embeddings value for the input prompt. These represent a measurement of the
+        /// vector-based relatedness of the provided input.
+        /// </summary>
+        public IReadOnlyList<float> Embedding { get; }
         /// <summary> Index of the prompt to which the EmbeddingItem corresponds. </summary>
         public int Index { get; }
     }

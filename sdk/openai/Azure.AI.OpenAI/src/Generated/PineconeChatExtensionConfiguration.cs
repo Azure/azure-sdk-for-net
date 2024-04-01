@@ -17,6 +17,17 @@ namespace Azure.AI.OpenAI
     public partial class PineconeChatExtensionConfiguration : AzureChatExtensionConfiguration
     {
         /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionConfiguration"/>. </summary>
+        /// <param name="parameters"> The parameters to use when configuring Azure OpenAI chat extensions. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="parameters"/> is null. </exception>
+        public PineconeChatExtensionConfiguration(PineconeChatExtensionParameters parameters)
+        {
+            Argument.AssertNotNull(parameters, nameof(parameters));
+
+            Type = AzureChatExtensionType.Pinecone;
+            Parameters = parameters;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionConfiguration"/>. </summary>
         /// <param name="type">
         ///   The label for the type of an Azure chat extension. This typically corresponds to a matching Azure resource.
         ///   Azure chat extensions are only compatible with Azure OpenAI.
@@ -27,5 +38,13 @@ namespace Azure.AI.OpenAI
         {
             Parameters = parameters;
         }
+
+        /// <summary> Initializes a new instance of <see cref="PineconeChatExtensionConfiguration"/> for deserialization. </summary>
+        internal PineconeChatExtensionConfiguration()
+        {
+        }
+
+        /// <summary> The parameters to use when configuring Azure OpenAI chat extensions. </summary>
+        public PineconeChatExtensionParameters Parameters { get; }
     }
 }

@@ -13,7 +13,7 @@ using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
-    internal partial class AzureSearchChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<AzureSearchChatExtensionParameters>
+    public partial class AzureSearchChatExtensionParameters : IUtf8JsonSerializable, IJsonModel<AzureSearchChatExtensionParameters>
     {
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AzureSearchChatExtensionParameters>)this).Write(writer, new ModelReaderWriterOptions("W"));
 

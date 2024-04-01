@@ -188,6 +188,14 @@ namespace Azure.AI.OpenAI
 
         string IPersistableModel<AudioTranslation>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AudioTranslation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAudioTranslation(document.RootElement);
+        }
+
         /// <summary> Convert into a Utf8JsonRequestContent. </summary>
         internal virtual RequestContent ToRequestContent()
         {

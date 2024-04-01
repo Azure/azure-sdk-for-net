@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.AI.OpenAI
 {
     /// <summary> A response format for Chat Completions that restricts responses to emitting valid JSON objects. </summary>
-    internal partial class ChatCompletionsJsonResponseFormat : ChatCompletionsResponseFormat
+    public partial class ChatCompletionsJsonResponseFormat : ChatCompletionsResponseFormat
     {
         /// <summary> Initializes a new instance of <see cref="ChatCompletionsJsonResponseFormat"/>. </summary>
         public ChatCompletionsJsonResponseFormat()

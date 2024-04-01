@@ -51,7 +51,13 @@ namespace Azure.AI.OpenAI
             if (Optional.IsCollectionDefined(TokenSelectionBiases))
             {
                 writer.WritePropertyName("logit_bias"u8);
-                SerializeTokenSelectionBiases(writer);
+                writer.WriteStartObject();
+                foreach (var item in TokenSelectionBiases)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteNumberValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             if (Optional.IsDefined(User))
             {
@@ -155,7 +161,7 @@ namespace Azure.AI.OpenAI
             int? maxTokens = default;
             float? temperature = default;
             float? topP = default;
-            IDictionary<int, int> logitBias = default;
+            IDictionary<string, int> logitBias = default;
             string user = default;
             int? n = default;
             int? logprobs = default;
@@ -210,7 +216,16 @@ namespace Azure.AI.OpenAI
                 }
                 if (property.NameEquals("logit_bias"u8))
                 {
-                    DeserializeTokenSelectionBiases(property, ref logitBias);
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    Dictionary<string, int> dictionary = new Dictionary<string, int>();
+                    foreach (var property0 in property.Value.EnumerateObject())
+                    {
+                        dictionary.Add(property0.Name, property0.Value.GetInt32());
+                    }
+                    logitBias = dictionary;
                     continue;
                 }
                 if (property.NameEquals("user"u8))
@@ -316,7 +331,7 @@ namespace Azure.AI.OpenAI
                 maxTokens,
                 temperature,
                 topP,
-                logitBias ?? new ChangeTrackingDictionary<int, int>(),
+                logitBias ?? new ChangeTrackingDictionary<string, int>(),
                 user,
                 n,
                 logprobs,
