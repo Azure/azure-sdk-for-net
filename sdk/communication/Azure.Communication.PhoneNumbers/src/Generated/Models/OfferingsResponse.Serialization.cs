@@ -12,12 +12,5 @@ namespace Azure.Communication.PhoneNumbers
 {
     internal partial class OfferingsResponse
     {
-        /// <summary> Deserializes the model from a raw response. </summary>
-        /// <param name="response"> The response to deserialize the model from. </param>
-        internal static OfferingsResponse FromResponse(Response response)
-        {
-            using var document = JsonDocument.Parse(response.Content);
-            return OfferingsResponse.DeserializeOfferingsResponse(document.RootElement);
-        }
     }
 }
