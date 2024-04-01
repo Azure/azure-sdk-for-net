@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.Json;
 using System.Threading;
@@ -33,7 +34,7 @@ namespace Azure.Communication.Chat
         /// <param name="endpoint"> The endpoint of the Azure Communication resource. </param>
         /// <param name="apiVersion"> Api Version. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="clientDiagnostics"/>, <paramref name="pipeline"/>, <paramref name="endpoint"/> or <paramref name="apiVersion"/> is null. </exception>
-        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2023-11-15-preview")
+        public ChatThreadRestClient(ClientDiagnostics clientDiagnostics, HttpPipeline pipeline, string endpoint, string apiVersion = "2024-03-15-preview")
         {
             ClientDiagnostics = clientDiagnostics ?? throw new ArgumentNullException(nameof(clientDiagnostics));
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
@@ -198,7 +199,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateSendChatMessageRequest(string chatThreadId, string content, string senderDisplayName, ChatMessageType? type, IDictionary<string, string> metadata)
+        internal HttpMessage CreateSendChatMessageRequest(string chatThreadId, string content, string senderDisplayName, ChatMessageType? type, IDictionary<string, string> metadata, IEnumerable<ChatAttachmentInternal> attachments)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -224,6 +225,13 @@ namespace Azure.Communication.Chat
                     sendChatMessageRequest.Metadata.Add(value);
                 }
             }
+            if (attachments != null)
+            {
+                foreach (var value in attachments)
+                {
+                    sendChatMessageRequest.Attachments.Add(value);
+                }
+            }
             var model = sendChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(model);
@@ -237,9 +245,10 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="type"> The chat message type. </param>
         /// <param name="metadata"> Message metadata. </param>
+        /// <param name="attachments"> The array of attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="content"/> is null. </exception>
-        public async Task<Response<SendChatMessageResultInternal>> SendChatMessageAsync(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<Response<SendChatMessageResultInternal>> SendChatMessageAsync(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, IDictionary<string, string> metadata = null, IEnumerable<ChatAttachmentInternal> attachments = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -250,7 +259,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateSendChatMessageRequest(chatThreadId, content, senderDisplayName, type, metadata);
+            using var message = CreateSendChatMessageRequest(chatThreadId, content, senderDisplayName, type, metadata, attachments);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -272,9 +281,10 @@ namespace Azure.Communication.Chat
         /// <param name="senderDisplayName"> The display name of the chat message sender. This property is used to populate sender name for push notifications. </param>
         /// <param name="type"> The chat message type. </param>
         /// <param name="metadata"> Message metadata. </param>
+        /// <param name="attachments"> The array of attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="content"/> is null. </exception>
-        public Response<SendChatMessageResultInternal> SendChatMessage(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public Response<SendChatMessageResultInternal> SendChatMessage(string chatThreadId, string content, string senderDisplayName = null, ChatMessageType? type = null, IDictionary<string, string> metadata = null, IEnumerable<ChatAttachmentInternal> attachments = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -285,7 +295,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(content));
             }
 
-            using var message = CreateSendChatMessageRequest(chatThreadId, content, senderDisplayName, type, metadata);
+            using var message = CreateSendChatMessageRequest(chatThreadId, content, senderDisplayName, type, metadata, attachments);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -328,7 +338,7 @@ namespace Azure.Communication.Chat
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="chatThreadId"> The thread id of the message. </param>
         /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
-        /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="startTime"> The earliest point in time to get messages after. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
         public async Task<Response<ChatMessagesCollection>> ListChatMessagesAsync(string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
@@ -357,7 +367,7 @@ namespace Azure.Communication.Chat
         /// <summary> Gets a list of messages from a thread. </summary>
         /// <param name="chatThreadId"> The thread id of the message. </param>
         /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
-        /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="startTime"> The earliest point in time to get messages after. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
         public Response<ChatMessagesCollection> ListChatMessages(string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
@@ -464,7 +474,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateUpdateChatMessageRequest(string chatThreadId, string chatMessageId, string content, IDictionary<string, string> metadata)
+        internal HttpMessage CreateUpdateChatMessageRequest(string chatThreadId, string chatMessageId, string content, IDictionary<string, string> metadata, IEnumerable<ChatAttachmentInternal> attachments)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -490,6 +500,13 @@ namespace Azure.Communication.Chat
                     updateChatMessageRequest.Metadata.Add(value);
                 }
             }
+            if (attachments != null)
+            {
+                foreach (var value in attachments)
+                {
+                    updateChatMessageRequest.Attachments.Add(value);
+                }
+            }
             var model = updateChatMessageRequest;
             var content0 = new Utf8JsonRequestContent();
             content0.JsonWriter.WriteObjectValue(model);
@@ -502,9 +519,10 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="content"> Chat message content. </param>
         /// <param name="metadata"> Message metadata. </param>
+        /// <param name="attachments"> The array of attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
-        public async Task<Response> UpdateChatMessageAsync(string chatThreadId, string chatMessageId, string content = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateChatMessageAsync(string chatThreadId, string chatMessageId, string content = null, IDictionary<string, string> metadata = null, IEnumerable<ChatAttachmentInternal> attachments = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -515,7 +533,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(chatMessageId));
             }
 
-            using var message = CreateUpdateChatMessageRequest(chatThreadId, chatMessageId, content, metadata);
+            using var message = CreateUpdateChatMessageRequest(chatThreadId, chatMessageId, content, metadata, attachments);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -531,9 +549,10 @@ namespace Azure.Communication.Chat
         /// <param name="chatMessageId"> The message id. </param>
         /// <param name="content"> Chat message content. </param>
         /// <param name="metadata"> Message metadata. </param>
+        /// <param name="attachments"> The array of attachments. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatMessageId"/> is null. </exception>
-        public Response UpdateChatMessage(string chatThreadId, string chatMessageId, string content = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public Response UpdateChatMessage(string chatThreadId, string chatMessageId, string content = null, IDictionary<string, string> metadata = null, IEnumerable<ChatAttachmentInternal> attachments = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
@@ -544,7 +563,7 @@ namespace Azure.Communication.Chat
                 throw new ArgumentNullException(nameof(chatMessageId));
             }
 
-            using var message = CreateUpdateChatMessageRequest(chatThreadId, chatMessageId, content, metadata);
+            using var message = CreateUpdateChatMessageRequest(chatThreadId, chatMessageId, content, metadata, attachments);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -708,7 +727,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateRemoveChatParticipantRequest(string chatThreadId, CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser)
+        internal HttpMessage CreateRemoveChatParticipantRequest(string chatThreadId, CommunicationIdentifierModelKind? kind, string rawId, CommunicationUserIdentifierModel communicationUser, PhoneNumberIdentifierModel phoneNumber, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -728,7 +747,8 @@ namespace Azure.Communication.Chat
                 RawId = rawId,
                 CommunicationUser = communicationUser,
                 PhoneNumber = phoneNumber,
-                MicrosoftTeamsUser = microsoftTeamsUser
+                MicrosoftTeamsUser = microsoftTeamsUser,
+                MicrosoftTeamsApp = microsoftTeamsApp
             };
             var content = new Utf8JsonRequestContent();
             content.JsonWriter.WriteObjectValue(model);
@@ -743,16 +763,17 @@ namespace Azure.Communication.Chat
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
+        /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> RemoveChatParticipantAsync(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, CancellationToken cancellationToken = default)
+        public async Task<Response> RemoveChatParticipantAsync(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser, microsoftTeamsApp);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -770,16 +791,17 @@ namespace Azure.Communication.Chat
         /// <param name="communicationUser"> The communication user. </param>
         /// <param name="phoneNumber"> The phone number. </param>
         /// <param name="microsoftTeamsUser"> The Microsoft Teams user. </param>
+        /// <param name="microsoftTeamsApp"> The Microsoft Teams application. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response RemoveChatParticipant(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, CancellationToken cancellationToken = default)
+        public Response RemoveChatParticipant(string chatThreadId, CommunicationIdentifierModelKind? kind = null, string rawId = null, CommunicationUserIdentifierModel communicationUser = null, PhoneNumberIdentifierModel phoneNumber = null, MicrosoftTeamsUserIdentifierModel microsoftTeamsUser = null, MicrosoftTeamsAppIdentifierModel microsoftTeamsApp = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser);
+            using var message = CreateRemoveChatParticipantRequest(chatThreadId, kind, rawId, communicationUser, phoneNumber, microsoftTeamsUser, microsoftTeamsApp);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -875,7 +897,7 @@ namespace Azure.Communication.Chat
             }
         }
 
-        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic, IDictionary<string, string> metadata)
+        internal HttpMessage CreateUpdateChatThreadPropertiesRequest(string chatThreadId, string topic, IDictionary<string, string> metadata, ChatRetentionPolicy retentionPolicy)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -890,7 +912,8 @@ namespace Azure.Communication.Chat
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             UpdateChatThreadRequest updateChatThreadRequest = new UpdateChatThreadRequest()
             {
-                Topic = topic
+                Topic = topic,
+                RetentionPolicy = retentionPolicy
             };
             if (metadata != null)
             {
@@ -910,16 +933,17 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
+        /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public async Task<Response> UpdateChatThreadPropertiesAsync(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, ChatRetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic, metadata);
+            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic, metadata, retentionPolicy);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             switch (message.Response.Status)
             {
@@ -934,16 +958,17 @@ namespace Azure.Communication.Chat
         /// <param name="chatThreadId"> The id of the thread to update. </param>
         /// <param name="topic"> Chat thread topic. </param>
         /// <param name="metadata"> Contextual metadata for the thread. The metadata consists of name/value pairs. The total size of all metadata pairs can be up to 1KB in size. </param>
+        /// <param name="retentionPolicy"> Data retention policy for auto deletion. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> is null. </exception>
-        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, CancellationToken cancellationToken = default)
+        public Response UpdateChatThreadProperties(string chatThreadId, string topic = null, IDictionary<string, string> metadata = null, ChatRetentionPolicy retentionPolicy = null, CancellationToken cancellationToken = default)
         {
             if (chatThreadId == null)
             {
                 throw new ArgumentNullException(nameof(chatThreadId));
             }
 
-            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic, metadata);
+            using var message = CreateUpdateChatThreadPropertiesRequest(chatThreadId, topic, metadata, retentionPolicy);
             _pipeline.Send(message, cancellationToken);
             switch (message.Response.Status)
             {
@@ -1093,6 +1118,246 @@ namespace Azure.Communication.Chat
             }
         }
 
+        internal HttpMessage CreateUploadChatImageRequest(string chatThreadId, Stream chatImageFile, string imageFilename)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Post;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/images", false);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            if (imageFilename != null)
+            {
+                request.Headers.Add("image-filename", imageFilename);
+            }
+            request.Headers.Add("Accept", "application/json");
+            request.Headers.Add("Content-Type", "application/octet-stream");
+            request.Content = RequestContent.Create(chatImageFile);
+            return message;
+        }
+
+        /// <summary> Upload an image in a thread, on behalf of a user. </summary>
+        /// <param name="chatThreadId"> Thread id where the uploaded image belongs to. (Teams meeting only). </param>
+        /// <param name="chatImageFile"> Image binary data, allowed image formats: jpeg, png, gif, heic, webp. </param>
+        /// <param name="imageFilename"> The file name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatImageFile"/> is null. </exception>
+        public async Task<Response<UploadChatImageResult>> UploadChatImageAsync(string chatThreadId, Stream chatImageFile, string imageFilename = null, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (chatImageFile == null)
+            {
+                throw new ArgumentNullException(nameof(chatImageFile));
+            }
+
+            using var message = CreateUploadChatImageRequest(chatThreadId, chatImageFile, imageFilename);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        UploadChatImageResult value = default;
+                        using var document = await JsonDocument.ParseAsync(message.Response.ContentStream, default, cancellationToken).ConfigureAwait(false);
+                        value = UploadChatImageResult.DeserializeUploadChatImageResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Upload an image in a thread, on behalf of a user. </summary>
+        /// <param name="chatThreadId"> Thread id where the uploaded image belongs to. (Teams meeting only). </param>
+        /// <param name="chatImageFile"> Image binary data, allowed image formats: jpeg, png, gif, heic, webp. </param>
+        /// <param name="imageFilename"> The file name of the image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="chatImageFile"/> is null. </exception>
+        public Response<UploadChatImageResult> UploadChatImage(string chatThreadId, Stream chatImageFile, string imageFilename = null, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (chatImageFile == null)
+            {
+                throw new ArgumentNullException(nameof(chatImageFile));
+            }
+
+            using var message = CreateUploadChatImageRequest(chatThreadId, chatImageFile, imageFilename);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 201:
+                    {
+                        UploadChatImageResult value = default;
+                        using var document = JsonDocument.Parse(message.Response.ContentStream);
+                        value = UploadChatImageResult.DeserializeUploadChatImageResult(document.RootElement);
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateGetChatImageRequest(string chatThreadId, string imageId, ImageViewType imageViewType)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Get;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(imageId, true);
+            uri.AppendPath("/view/", false);
+            uri.AppendPath(imageViewType.ToString(), true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json, image/gif, image/jpeg, image/png, image/bmp, image/tiff");
+            return message;
+        }
+
+        /// <summary> Get an image by view type. </summary>
+        /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
+        /// <param name="imageId"> The image id. </param>
+        /// <param name="imageViewType"> The view type of image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="imageId"/> is null. </exception>
+        public async Task<Response<Stream>> GetChatImageAsync(string chatThreadId, string imageId, ImageViewType imageViewType, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (imageId == null)
+            {
+                throw new ArgumentNullException(nameof(imageId));
+            }
+
+            using var message = CreateGetChatImageRequest(chatThreadId, imageId, imageViewType);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Get an image by view type. </summary>
+        /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
+        /// <param name="imageId"> The image id. </param>
+        /// <param name="imageViewType"> The view type of image. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="imageId"/> is null. </exception>
+        public Response<Stream> GetChatImage(string chatThreadId, string imageId, ImageViewType imageViewType, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (imageId == null)
+            {
+                throw new ArgumentNullException(nameof(imageId));
+            }
+
+            using var message = CreateGetChatImageRequest(chatThreadId, imageId, imageViewType);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 200:
+                    {
+                        var value = message.ExtractResponseContent();
+                        return Response.FromValue(value, message.Response);
+                    }
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        internal HttpMessage CreateDeleteChatImageRequest(string chatThreadId, string imageId)
+        {
+            var message = _pipeline.CreateMessage();
+            var request = message.Request;
+            request.Method = RequestMethod.Delete;
+            var uri = new RawRequestUriBuilder();
+            uri.AppendRaw(_endpoint, false);
+            uri.AppendPath("/chat/threads/", false);
+            uri.AppendPath(chatThreadId, true);
+            uri.AppendPath("/images/", false);
+            uri.AppendPath(imageId, true);
+            uri.AppendQuery("api-version", _apiVersion, true);
+            request.Uri = uri;
+            request.Headers.Add("Accept", "application/json");
+            return message;
+        }
+
+        /// <summary> Deletes a image. </summary>
+        /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
+        /// <param name="imageId"> The image id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="imageId"/> is null. </exception>
+        public async Task<Response> DeleteChatImageAsync(string chatThreadId, string imageId, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (imageId == null)
+            {
+                throw new ArgumentNullException(nameof(imageId));
+            }
+
+            using var message = CreateDeleteChatImageRequest(chatThreadId, imageId);
+            await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
+        /// <summary> Deletes a image. </summary>
+        /// <param name="chatThreadId"> The thread id to which the message was sent. </param>
+        /// <param name="imageId"> The image id. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="chatThreadId"/> or <paramref name="imageId"/> is null. </exception>
+        public Response DeleteChatImage(string chatThreadId, string imageId, CancellationToken cancellationToken = default)
+        {
+            if (chatThreadId == null)
+            {
+                throw new ArgumentNullException(nameof(chatThreadId));
+            }
+            if (imageId == null)
+            {
+                throw new ArgumentNullException(nameof(imageId));
+            }
+
+            using var message = CreateDeleteChatImageRequest(chatThreadId, imageId);
+            _pipeline.Send(message, cancellationToken);
+            switch (message.Response.Status)
+            {
+                case 204:
+                    return message.Response;
+                default:
+                    throw new RequestFailedException(message.Response);
+            }
+        }
+
         internal HttpMessage CreateListChatReadReceiptsNextPageRequest(string nextLink, string chatThreadId, int? maxPageSize, int? skip)
         {
             var message = _pipeline.CreateMessage();
@@ -1191,7 +1456,7 @@ namespace Azure.Communication.Chat
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="chatThreadId"> The thread id of the message. </param>
         /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
-        /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="startTime"> The earliest point in time to get messages after. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
         public async Task<Response<ChatMessagesCollection>> ListChatMessagesNextPageAsync(string nextLink, string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)
@@ -1225,7 +1490,7 @@ namespace Azure.Communication.Chat
         /// <param name="nextLink"> The URL to the next page of results. </param>
         /// <param name="chatThreadId"> The thread id of the message. </param>
         /// <param name="maxPageSize"> The maximum number of messages to be returned per page. </param>
-        /// <param name="startTime"> The earliest point in time to get messages up to. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
+        /// <param name="startTime"> The earliest point in time to get messages after. The timestamp should be in RFC3339 format: `yyyy-MM-ddTHH:mm:ssZ`. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="chatThreadId"/> is null. </exception>
         public Response<ChatMessagesCollection> ListChatMessagesNextPage(string nextLink, string chatThreadId, int? maxPageSize = null, DateTimeOffset? startTime = null, CancellationToken cancellationToken = default)

@@ -138,13 +138,23 @@ namespace Azure.Communication.Chat
         public static ChatAttachment ChatAttachment(string id, ChatAttachmentType attachmentType, string name, Uri uri, Uri previewUri) => new ChatAttachment(id, attachmentType, name, uri, previewUri);
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ChatParticipant"/> class.
+        /// Initializes a new instance of the <see cref="Chat.ChatParticipant"/> class.
         /// </summary>
         /// <param name="user"> User </param>
         /// <param name="displayName">Display name for the chat thread member.</param>
         /// <param name="shareHistoryTime"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
         /// <returns>A new <see cref="Chat.ChatParticipant"/> instance for mocking.</returns>
-        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => new ChatParticipant(user, displayName, shareHistoryTime, null);
+        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime) => new ChatParticipant(user, displayName, shareHistoryTime);
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Chat.ChatParticipant"/> class.
+        /// </summary>
+        /// <param name="user"> User </param>
+        /// <param name="displayName">Display name for the chat thread member.</param>
+        /// <param name="shareHistoryTime"> Time from which the chat history is shared with the member. The timestamp is in ISO8601 format: `yyyy-MM-ddTHH:mm:ssZ`.</param>
+        /// <param name="metadata"> Property bag of participant metadata key - value pairs. </param>
+        /// <returns>A new <see cref="Chat.ChatParticipant"/> instance for mocking.</returns>
+        public static ChatParticipant ChatParticipant(CommunicationIdentifier user, string displayName, DateTimeOffset? shareHistoryTime, IDictionary<string, string> metadata) => new ChatParticipant(user, displayName, shareHistoryTime, metadata);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SendChatMessageResult"/> class.
