@@ -930,7 +930,7 @@
 # PRLabel: %Astronomer
 /sdk/astronomer/Azure.ResourceManager.Astro/                       @banggaurav
 
-# ServiceLabel: %Astronomer
+# ServiceLabel: %Astronomer %Mgmt
 # ServiceOwners:                                                   @banggaurav
 
 # PRLabel: %Large Instance
