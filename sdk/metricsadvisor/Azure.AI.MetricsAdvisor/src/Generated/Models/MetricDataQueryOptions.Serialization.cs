@@ -39,5 +39,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteEndArray();
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MetricDataQueryOptions>(this);
+            return content;
+        }
     }
 }
