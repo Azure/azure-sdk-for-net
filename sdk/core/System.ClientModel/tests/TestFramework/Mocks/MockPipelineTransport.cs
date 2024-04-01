@@ -120,12 +120,14 @@ public class MockPipelineTransport : PipelineTransport
     private class TransportRequest : PipelineRequest
     {
         private Uri? _uri;
+        private string _method;
         private readonly PipelineRequestHeaders _headers;
 
         public TransportRequest()
         {
             _headers = new MockRequestHeaders();
             _uri = new Uri("https://www.example.com");
+            _method = string.Empty;
         }
 
         public override void Dispose() { }
@@ -141,8 +143,8 @@ public class MockPipelineTransport : PipelineTransport
 
         protected override string MethodCore
         {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            get => _method;
+            set => _method = value;
         }
 
         protected override Uri? UriCore
