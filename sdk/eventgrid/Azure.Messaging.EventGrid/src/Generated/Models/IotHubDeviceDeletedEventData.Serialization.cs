@@ -48,6 +48,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new IotHubDeviceDeletedEventData(deviceId, hubName, twin);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new IotHubDeviceDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIotHubDeviceDeletedEventData(document.RootElement);
+        }
+
         internal partial class IotHubDeviceDeletedEventDataConverter : JsonConverter<IotHubDeviceDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, IotHubDeviceDeletedEventData model, JsonSerializerOptions options)

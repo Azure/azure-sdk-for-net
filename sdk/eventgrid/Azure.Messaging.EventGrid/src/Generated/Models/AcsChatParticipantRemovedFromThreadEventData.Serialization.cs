@@ -84,6 +84,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 version);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsChatParticipantRemovedFromThreadEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsChatParticipantRemovedFromThreadEventData(document.RootElement);
+        }
+
         internal partial class AcsChatParticipantRemovedFromThreadEventDataConverter : JsonConverter<AcsChatParticipantRemovedFromThreadEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatParticipantRemovedFromThreadEventData model, JsonSerializerOptions options)

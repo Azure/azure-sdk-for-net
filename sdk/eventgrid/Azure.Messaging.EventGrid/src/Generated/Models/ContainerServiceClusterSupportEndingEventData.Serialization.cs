@@ -32,6 +32,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ContainerServiceClusterSupportEndingEventData(kubernetesVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ContainerServiceClusterSupportEndingEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerServiceClusterSupportEndingEventData(document.RootElement);
+        }
+
         internal partial class ContainerServiceClusterSupportEndingEventDataConverter : JsonConverter<ContainerServiceClusterSupportEndingEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceClusterSupportEndingEventData model, JsonSerializerOptions options)

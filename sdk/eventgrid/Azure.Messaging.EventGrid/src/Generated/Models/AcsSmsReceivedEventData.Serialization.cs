@@ -60,6 +60,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AcsSmsReceivedEventData(messageId, @from, to, message, receivedTimestamp);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsSmsReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsSmsReceivedEventData(document.RootElement);
+        }
+
         internal partial class AcsSmsReceivedEventDataConverter : JsonConverter<AcsSmsReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsSmsReceivedEventData model, JsonSerializerOptions options)

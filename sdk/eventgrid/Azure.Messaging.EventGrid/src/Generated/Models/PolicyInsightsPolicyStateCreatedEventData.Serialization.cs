@@ -79,6 +79,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 complianceReasonCode);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PolicyInsightsPolicyStateCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePolicyInsightsPolicyStateCreatedEventData(document.RootElement);
+        }
+
         internal partial class PolicyInsightsPolicyStateCreatedEventDataConverter : JsonConverter<PolicyInsightsPolicyStateCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, PolicyInsightsPolicyStateCreatedEventData model, JsonSerializerOptions options)

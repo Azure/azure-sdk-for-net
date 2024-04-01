@@ -103,6 +103,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 httpRequest);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceDeleteFailureEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceDeleteFailureEventData(document.RootElement);
+        }
+
         internal partial class ResourceDeleteFailureEventDataConverter : JsonConverter<ResourceDeleteFailureEventData>
         {
             public override void Write(Utf8JsonWriter writer, ResourceDeleteFailureEventData model, JsonSerializerOptions options)

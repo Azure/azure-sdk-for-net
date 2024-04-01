@@ -150,6 +150,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 unavailableForMatching);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterJobReceivedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterJobReceivedEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterJobReceivedEventDataConverter : JsonConverter<AcsRouterJobReceivedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobReceivedEventData model, JsonSerializerOptions options)

@@ -79,6 +79,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 verb);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebSlotSwapCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebSlotSwapCompletedEventData(document.RootElement);
+        }
+
         internal partial class WebSlotSwapCompletedEventDataConverter : JsonConverter<WebSlotSwapCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, WebSlotSwapCompletedEventData model, JsonSerializerOptions options)

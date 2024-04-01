@@ -67,6 +67,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new IotHubDeviceTelemetryEventData(body, properties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new IotHubDeviceTelemetryEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIotHubDeviceTelemetryEventData(document.RootElement);
+        }
+
         internal partial class IotHubDeviceTelemetryEventDataConverter : JsonConverter<IotHubDeviceTelemetryEventData>
         {
             public override void Write(Utf8JsonWriter writer, IotHubDeviceTelemetryEventData model, JsonSerializerOptions options)

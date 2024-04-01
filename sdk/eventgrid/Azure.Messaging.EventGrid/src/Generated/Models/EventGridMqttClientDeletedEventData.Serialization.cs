@@ -44,6 +44,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new EventGridMqttClientDeletedEventData(clientAuthenticationName, clientName, namespaceName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EventGridMqttClientDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventGridMqttClientDeletedEventData(document.RootElement);
+        }
+
         internal partial class EventGridMqttClientDeletedEventDataConverter : JsonConverter<EventGridMqttClientDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, EventGridMqttClientDeletedEventData model, JsonSerializerOptions options)

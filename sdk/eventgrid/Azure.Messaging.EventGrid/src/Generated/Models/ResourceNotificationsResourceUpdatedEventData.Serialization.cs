@@ -52,6 +52,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ResourceNotificationsResourceUpdatedEventData(resourceInfo, operationalInfo, apiVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceNotificationsResourceUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceNotificationsResourceUpdatedEventData(document.RootElement);
+        }
+
         internal partial class ResourceNotificationsResourceUpdatedEventDataConverter : JsonConverter<ResourceNotificationsResourceUpdatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ResourceNotificationsResourceUpdatedEventData model, JsonSerializerOptions options)

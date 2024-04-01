@@ -32,6 +32,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AvsPrivateCloudUpdatingEventData(operationId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvsPrivateCloudUpdatingEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvsPrivateCloudUpdatingEventData(document.RootElement);
+        }
+
         internal partial class AvsPrivateCloudUpdatingEventDataConverter : JsonConverter<AvsPrivateCloudUpdatingEventData>
         {
             public override void Write(Utf8JsonWriter writer, AvsPrivateCloudUpdatingEventData model, JsonSerializerOptions options)

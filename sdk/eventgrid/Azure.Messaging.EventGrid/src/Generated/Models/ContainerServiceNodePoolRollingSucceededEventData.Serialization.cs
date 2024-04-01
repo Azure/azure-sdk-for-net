@@ -32,6 +32,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ContainerServiceNodePoolRollingSucceededEventData(nodePoolName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ContainerServiceNodePoolRollingSucceededEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerServiceNodePoolRollingSucceededEventData(document.RootElement);
+        }
+
         internal partial class ContainerServiceNodePoolRollingSucceededEventDataConverter : JsonConverter<ContainerServiceNodePoolRollingSucceededEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerServiceNodePoolRollingSucceededEventData model, JsonSerializerOptions options)

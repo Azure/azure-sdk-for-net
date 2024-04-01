@@ -50,6 +50,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AppConfigurationKeyValueDeletedEventData(key, label, etag, syncToken);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AppConfigurationKeyValueDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppConfigurationKeyValueDeletedEventData(document.RootElement);
+        }
+
         internal partial class AppConfigurationKeyValueDeletedEventDataConverter : JsonConverter<AppConfigurationKeyValueDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AppConfigurationKeyValueDeletedEventData model, JsonSerializerOptions options)
