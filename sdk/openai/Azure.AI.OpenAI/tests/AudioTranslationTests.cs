@@ -39,7 +39,7 @@ public class AudioTranslationTests : OpenAITestBase
         var requestOptions = new AudioTranslationOptions()
         {
             DeploymentName = deploymentOrModelName,
-            AudioData = BinaryData.FromStream(audioFileStream),
+            AudioData = audioFileStream,
             Temperature = (float)0.25,
         };
 

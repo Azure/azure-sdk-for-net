@@ -7,6 +7,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace Azure.AI.OpenAI
 {
@@ -68,7 +69,7 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="deploymentName"> The model to use for this transcription request. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal AudioTranscriptionOptions(BinaryData audioData, string filename, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal AudioTranscriptionOptions(Stream audioData, string filename, AudioTranscriptionFormat? responseFormat, string language, string prompt, float? temperature, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AudioData = audioData;
             Filename = filename;

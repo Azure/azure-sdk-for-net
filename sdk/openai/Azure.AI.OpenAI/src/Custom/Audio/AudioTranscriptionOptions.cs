@@ -4,6 +4,7 @@
 #nullable disable
 
 using System;
+using System.IO;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI;
@@ -35,7 +36,7 @@ public partial class AudioTranscriptionOptions
     /// </list>
     /// </para>
     /// </summary>
-    public BinaryData AudioData { get; set; }
+    public Stream AudioData { get; set; }
 
     // CUSTOM CODE NOTE:
     // Add custom doc comment.
@@ -77,7 +78,7 @@ public partial class AudioTranscriptionOptions
     /// <exception cref="ArgumentException">
     ///     <paramref name="deploymentName"/> is an empty string.
     /// </exception>
-    public AudioTranscriptionOptions(string deploymentName, BinaryData audioData)
+    public AudioTranscriptionOptions(string deploymentName, Stream audioData)
     {
         Argument.AssertNotNullOrEmpty(deploymentName, nameof(deploymentName));
         Argument.AssertNotNull(audioData, nameof(audioData));

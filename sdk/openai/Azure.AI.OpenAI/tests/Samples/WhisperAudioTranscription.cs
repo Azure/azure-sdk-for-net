@@ -24,7 +24,7 @@ public partial class WhisperAudioTranscription
         var transcriptionOptions = new AudioTranscriptionOptions()
         {
             DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
-            AudioData = BinaryData.FromStream(audioStreamFromFile),
+            AudioData = audioStreamFromFile,
             ResponseFormat = AudioTranscriptionFormat.Verbose,
         };
 
@@ -51,7 +51,7 @@ public partial class WhisperAudioTranscription
         var translationOptions = new AudioTranslationOptions()
         {
             DeploymentName = "my-whisper-deployment", // whisper-1 as model name for non-Azure OpenAI
-            AudioData = BinaryData.FromStream(audioStreamFromFile),
+            AudioData = audioStreamFromFile,
             ResponseFormat = AudioTranslationFormat.Verbose,
         };
 

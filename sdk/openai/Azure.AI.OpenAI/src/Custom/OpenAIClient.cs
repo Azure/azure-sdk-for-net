@@ -701,13 +701,13 @@ public partial class OpenAIClient
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
         scope.Start();
 
-        RequestContent content = audioTranscriptionOptions.ToRequestContent();
+        using MultipartFormDataBinaryContent content = audioTranscriptionOptions.ToMultipartContent();
         RequestContext context = FromCancellationToken(cancellationToken);
         Response rawResponse = default;
 
         try
         {
-            using HttpMessage message = CreateGetAudioTranscriptionRequest(audioTranscriptionOptions, content, context);
+            using HttpMessage message = CreateGetAudioTranscriptionRequest(audioTranscriptionOptions.DeploymentName, content, content.ContentType, context);
             rawResponse = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
         catch (Exception e)
@@ -742,13 +742,13 @@ public partial class OpenAIClient
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranscription");
         scope.Start();
 
-        RequestContent content = audioTranscriptionOptions.ToRequestContent();
+        using MultipartFormDataBinaryContent content = audioTranscriptionOptions.ToMultipartContent();
         RequestContext context = FromCancellationToken(cancellationToken);
         Response rawResponse = default;
 
         try
         {
-            using HttpMessage message = CreateGetAudioTranscriptionRequest(audioTranscriptionOptions, content, context);
+            using HttpMessage message = CreateGetAudioTranscriptionRequest(audioTranscriptionOptions.DeploymentName, content, content.ContentType, context);
             rawResponse = _pipeline.ProcessMessage(message, context);
         }
         catch (Exception e)
@@ -783,13 +783,13 @@ public partial class OpenAIClient
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
         scope.Start();
 
-        RequestContent content = audioTranslationOptions.ToRequestContent();
+        using MultipartFormDataBinaryContent content = audioTranslationOptions.ToMultipartContent();
         RequestContext context = FromCancellationToken(cancellationToken);
         Response rawResponse = default;
 
         try
         {
-            using HttpMessage message = CreateGetAudioTranslationRequest(audioTranslationOptions, content, context);
+            using HttpMessage message = CreateGetAudioTranslationRequest(audioTranslationOptions.DeploymentName, content, content.ContentType, context);
             rawResponse = await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
         }
         catch (Exception e)
@@ -824,13 +824,13 @@ public partial class OpenAIClient
         using DiagnosticScope scope = ClientDiagnostics.CreateScope("OpenAIClient.GetAudioTranslation");
         scope.Start();
 
-        RequestContent content = audioTranslationOptions.ToRequestContent();
+        using MultipartFormDataBinaryContent content = audioTranslationOptions.ToMultipartContent();
         RequestContext context = FromCancellationToken(cancellationToken);
         Response rawResponse = default;
 
         try
         {
-            using HttpMessage message = CreateGetAudioTranslationRequest(audioTranslationOptions, content, context);
+            using HttpMessage message = CreateGetAudioTranslationRequest(audioTranslationOptions.DeploymentName, content, content.ContentType, context);
             rawResponse = _pipeline.ProcessMessage(message, context);
         }
         catch (Exception e)
@@ -987,30 +987,36 @@ public partial class OpenAIClient
     }
 
     internal HttpMessage CreateGetAudioTranscriptionRequest(
-        AudioTranscriptionOptions audioTranscriptionOptions,
+        string deploymentName,
         RequestContent content,
+        string contentType,
         RequestContext context)
     {
         HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
         Request request = message.Request;
         request.Method = RequestMethod.Post;
-        request.Uri = GetUri(audioTranscriptionOptions.DeploymentName, "audio/transcriptions");
+        request.Uri = GetUri(deploymentName, "audio/transcriptions");
+
+        request.Headers.Add("Content-Type", contentType);
         request.Content = content;
-        (content as MultipartFormDataContent).ApplyToRequest(request);
+
         return message;
     }
 
     internal HttpMessage CreateGetAudioTranslationRequest(
-        AudioTranslationOptions audioTranslationOptions,
+        string deploymentName,
         RequestContent content,
+        string contentType,
         RequestContext context)
     {
         HttpMessage message = _pipeline.CreateMessage(context, ResponseClassifier200);
         Request request = message.Request;
         request.Method = RequestMethod.Post;
-        request.Uri = GetUri(audioTranslationOptions.DeploymentName, "audio/translations");
+        request.Uri = GetUri(deploymentName, "audio/translations");
+
+        request.Headers.Add("Content-Type", contentType);
         request.Content = content;
-        (content as MultipartFormDataContent).ApplyToRequest(request);
+
         return message;
     }
 }
