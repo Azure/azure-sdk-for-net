@@ -63,10 +63,10 @@ namespace Azure.Identity
             Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
             // dont add the Metadata endpoint for the probe request
-            if (_isFirstRequest && _isChainedCredential)
-            {
+            // if (_isFirstRequest && _isChainedCredential)
+            // {
                 request.Headers.Add(metadataHeaderName, "true");
-            }
+            // }
             request.Uri.Reset(_imdsEndpoint);
             request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
