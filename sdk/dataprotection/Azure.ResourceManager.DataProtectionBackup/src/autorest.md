@@ -8,13 +8,14 @@ azure-arm: true
 csharp: true
 library-name: DataProtectionBackup
 namespace: Azure.ResourceManager.DataProtectionBackup
-require: https://github.com/Azure/azure-rest-api-specs/blob/1fead771fdafa41ccaa1e43750bab608b951ca80/specification/dataprotection/resource-manager/readme.md
+require: https://github.com/Azure/azure-rest-api-specs/blob/82f3d9571517966992eaf97b1db73f0a821cd06b/specification/dataprotection/resource-manager/readme.md
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+tag: package-2023-12
 
 format-by-name-rules:
   'tenantId': 'uuid'
