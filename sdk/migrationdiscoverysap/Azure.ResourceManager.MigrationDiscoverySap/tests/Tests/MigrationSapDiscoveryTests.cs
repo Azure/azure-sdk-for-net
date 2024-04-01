@@ -28,7 +28,6 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
 
     [TestCase]
     [RecordedTest]
-    [Ignore("https://github.com/Azure/azure-sdk-for-net/issues/43073")]
     public async Task TestDiscoveryOperations()
     {
         AzureLocation targetRegion = AzureLocation.SoutheastAsia;
@@ -146,13 +145,16 @@ public class MigrationSapDiscoveryTests : MigrationDiscoverySapManagementTestBas
         var operationStatusObj = JObject.Parse(opStatus.Content.ToString());
         var inputExcelSasUri = operationStatusObj?["properties"]?["discoveryExcelSasUri"].ToString();
 
-        //Upload here
-        using (FileStream stream = File.OpenRead(excelPathToImport))
+        if (SessionEnvironment.Mode != RecordedTestMode.Playback)
         {
-            // Construct the blob client with a sas token.
-            var blobClient = GetBlobContentClient(inputExcelSasUri);
+            //Upload here
+            using (FileStream stream = File.OpenRead(excelPathToImport))
+            {
+                // Construct the blob client with a sas token.
+                var blobClient = GetBlobContentClient(inputExcelSasUri);
 
-            await blobClient.UploadAsync(stream, overwrite: true);
+                await blobClient.UploadAsync(stream, overwrite: true);
+            }
         }
 
         Assert.IsTrue(await SapDiscoveryTestsHelpers.TrackTillConditionReachedForAsyncOperationAsync(
