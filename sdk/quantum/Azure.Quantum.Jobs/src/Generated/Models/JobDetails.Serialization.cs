@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Quantum.Jobs;
 
 namespace Azure.Quantum.Jobs.Models
 {
@@ -40,7 +39,7 @@ namespace Azure.Quantum.Jobs.Models
             if (Optional.IsDefined(InputParams))
             {
                 writer.WritePropertyName("inputParams"u8);
-                writer.WriteObjectValue(InputParams);
+                writer.WriteObjectValue<object>(InputParams);
             }
             writer.WritePropertyName("providerId"u8);
             writer.WriteStringValue(ProviderId);

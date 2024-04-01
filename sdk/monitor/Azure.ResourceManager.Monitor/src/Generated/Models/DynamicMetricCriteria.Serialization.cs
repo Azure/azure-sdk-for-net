@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynamicMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.Monitor.Models
             writer.WritePropertyName("alertSensitivity"u8);
             writer.WriteStringValue(AlertSensitivity.ToString());
             writer.WritePropertyName("failingPeriods"u8);
-            writer.WriteObjectValue(FailingPeriods);
+            writer.WriteObjectValue<DynamicThresholdFailingPeriods>(FailingPeriods, options);
             if (Optional.IsDefined(IgnoreDataBefore))
             {
                 writer.WritePropertyName("ignoreDataBefore"u8);
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynamicMetricCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,7 +214,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +230,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDynamicMetricCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynamicMetricCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

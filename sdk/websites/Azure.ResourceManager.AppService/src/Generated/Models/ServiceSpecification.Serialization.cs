@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +34,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricSpecifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MetricSpecification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in LogSpecifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogSpecification>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSpecification>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceSpecification)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,6 +129,65 @@ namespace Azure.ResourceManager.AppService.Models
             return new ServiceSpecification(metricSpecifications ?? new ChangeTrackingList<MetricSpecification>(), logSpecifications ?? new ChangeTrackingList<LogSpecification>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MetricSpecifications), out propertyOverride);
+            if (Optional.IsCollectionDefined(MetricSpecifications) || hasPropertyOverride)
+            {
+                if (MetricSpecifications.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  metricSpecifications: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in MetricSpecifications)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  metricSpecifications: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LogSpecifications), out propertyOverride);
+            if (Optional.IsCollectionDefined(LogSpecifications) || hasPropertyOverride)
+            {
+                if (LogSpecifications.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  logSpecifications: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in LogSpecifications)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  logSpecifications: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceSpecification>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceSpecification>)this).GetFormatFromOptions(options) : options.Format;
@@ -136,8 +196,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceSpecification)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +215,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeServiceSpecification(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceSpecification)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceSpecification)} does not support reading '{options.Format}' format.");
             }
         }
 

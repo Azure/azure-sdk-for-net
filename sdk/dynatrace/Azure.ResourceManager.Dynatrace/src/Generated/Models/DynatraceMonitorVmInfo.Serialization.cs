@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Dynatrace;
 
 namespace Azure.ResourceManager.Dynatrace.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorVmInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceMonitorVmInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +235,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceMonitorVmInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceMonitorVmInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

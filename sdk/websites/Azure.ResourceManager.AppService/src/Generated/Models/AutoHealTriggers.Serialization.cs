@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,14 +24,14 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Requests))
             {
                 writer.WritePropertyName("requests"u8);
-                writer.WriteObjectValue(Requests);
+                writer.WriteObjectValue<RequestsBasedTrigger>(Requests, options);
             }
             if (Optional.IsDefined(PrivateBytesInKB))
             {
@@ -43,14 +44,14 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StatusCodesBasedTrigger>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SlowRequests))
             {
                 writer.WritePropertyName("slowRequests"u8);
-                writer.WriteObjectValue(SlowRequests);
+                writer.WriteObjectValue<SlowRequestsBasedTrigger>(SlowRequests, options);
             }
             if (Optional.IsCollectionDefined(SlowRequestsWithPath))
             {
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in SlowRequestsWithPath)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SlowRequestsBasedTrigger>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +69,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in StatusCodesRange)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<StatusCodesRangeBasedTrigger>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +96,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,6 +206,129 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Requests), out propertyOverride);
+            if (Optional.IsDefined(Requests) || hasPropertyOverride)
+            {
+                builder.Append("  requests: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Requests, options, 2, false, "  requests: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateBytesInKB), out propertyOverride);
+            if (Optional.IsDefined(PrivateBytesInKB) || hasPropertyOverride)
+            {
+                builder.Append("  privateBytesInKB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{PrivateBytesInKB.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodes), out propertyOverride);
+            if (Optional.IsCollectionDefined(StatusCodes) || hasPropertyOverride)
+            {
+                if (StatusCodes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  statusCodes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in StatusCodes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  statusCodes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequests), out propertyOverride);
+            if (Optional.IsDefined(SlowRequests) || hasPropertyOverride)
+            {
+                builder.Append("  slowRequests: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SlowRequests, options, 2, false, "  slowRequests: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SlowRequestsWithPath), out propertyOverride);
+            if (Optional.IsCollectionDefined(SlowRequestsWithPath) || hasPropertyOverride)
+            {
+                if (SlowRequestsWithPath.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  slowRequestsWithPath: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SlowRequestsWithPath)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  slowRequestsWithPath: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StatusCodesRange), out propertyOverride);
+            if (Optional.IsCollectionDefined(StatusCodesRange) || hasPropertyOverride)
+            {
+                if (StatusCodesRange.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  statusCodesRange: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in StatusCodesRange)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  statusCodesRange: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutoHealTriggers>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealTriggers>)this).GetFormatFromOptions(options) : options.Format;
@@ -213,8 +337,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +356,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAutoHealTriggers(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealTriggers)} does not support reading '{options.Format}' format.");
             }
         }
 

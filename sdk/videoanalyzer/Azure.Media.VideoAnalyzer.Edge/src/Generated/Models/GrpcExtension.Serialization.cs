@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -18,20 +17,20 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataTransfer"u8);
-            writer.WriteObjectValue(DataTransfer);
+            writer.WriteObjectValue<GrpcExtensionDataTransfer>(DataTransfer);
             if (Optional.IsDefined(ExtensionConfiguration))
             {
                 writer.WritePropertyName("extensionConfiguration"u8);
                 writer.WriteStringValue(ExtensionConfiguration);
             }
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
+            writer.WriteObjectValue<EndpointBase>(Endpoint);
             writer.WritePropertyName("image"u8);
-            writer.WriteObjectValue(Image);
+            writer.WriteObjectValue<ImageProperties>(Image);
             if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
-                writer.WriteObjectValue(SamplingOptions);
+                writer.WriteObjectValue<SamplingOptions>(SamplingOptions);
             }
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
@@ -41,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

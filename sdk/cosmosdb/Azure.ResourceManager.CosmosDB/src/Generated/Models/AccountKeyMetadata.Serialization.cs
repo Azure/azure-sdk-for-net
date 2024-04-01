@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccountKeyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccountKeyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -93,6 +93,36 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new AccountKeyMetadata(generationTime, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeneratedOn), out propertyOverride);
+            if (Optional.IsDefined(GeneratedOn) || hasPropertyOverride)
+            {
+                builder.Append("  generationTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(GeneratedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AccountKeyMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AccountKeyMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -101,8 +131,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +150,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeAccountKeyMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountKeyMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(ActiveKey))
             {
                 writer.WritePropertyName("activeKey"u8);
-                writer.WriteObjectValue(ActiveKey);
+                writer.WriteObjectValue<KeyForDiskEncryptionSet>(ActiveKey, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PreviousKeys))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in PreviousKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyForDiskEncryptionSet>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(AutoKeyRotationError))
             {
                 writer.WritePropertyName("autoKeyRotationError"u8);
-                writer.WriteObjectValue(AutoKeyRotationError);
+                writer.WriteObjectValue<ComputeApiError>(AutoKeyRotationError, options);
             }
             if (Optional.IsDefined(FederatedClientId))
             {
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<DiskEncryptionSetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeDiskEncryptionSetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskEncryptionSetData)} does not support reading '{options.Format}' format.");
             }
         }
 

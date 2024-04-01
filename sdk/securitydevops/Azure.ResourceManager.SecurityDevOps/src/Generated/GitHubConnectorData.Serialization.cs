@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.SecurityDevOps
             var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubConnectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubConnectorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<GitHubConnectorProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             var format = options.Format == "W" ? ((IPersistableModel<GitHubConnectorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GitHubConnectorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GitHubConnectorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GitHubConnectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubConnectorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.SecurityDevOps
                         return DeserializeGitHubConnectorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GitHubConnectorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GitHubConnectorData)} does not support reading '{options.Format}' format.");
             }
         }
 

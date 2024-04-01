@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -23,7 +22,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateQuickAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateQuickAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateQuickAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +39,7 @@ namespace Azure.Communication.Messages
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +63,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateQuickAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateQuickAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateQuickAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,7 +81,7 @@ namespace Azure.Communication.Messages
             string text = default;
             string payload = default;
             string name = default;
-            string kind = default;
+            MessageTemplateValueKind kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +103,7 @@ namespace Azure.Communication.Messages
                 }
                 if (property.NameEquals("kind"u8))
                 {
-                    kind = property.Value.GetString();
+                    kind = new MessageTemplateValueKind(property.Value.GetString());
                     continue;
                 }
                 if (options.Format != "W")
@@ -125,7 +124,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateQuickAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateQuickAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +140,7 @@ namespace Azure.Communication.Messages
                         return DeserializeMessageTemplateQuickAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateQuickAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateQuickAction)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -159,7 +158,7 @@ namespace Azure.Communication.Messages
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTemplateQuickAction>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

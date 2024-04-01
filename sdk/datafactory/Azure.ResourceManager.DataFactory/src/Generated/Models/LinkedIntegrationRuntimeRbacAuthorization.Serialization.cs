@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                writer.WriteObjectValue<DataFactoryCredentialReference>(Credential, options);
             }
             writer.WritePropertyName("authorizationType"u8);
             writer.WriteStringValue(AuthorizationType);
@@ -59,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkedIntegrationRuntimeRbacAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeLinkedIntegrationRuntimeRbacAuthorization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkedIntegrationRuntimeRbacAuthorization)} does not support reading '{options.Format}' format.");
             }
         }
 

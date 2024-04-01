@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -67,10 +66,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The name of this Datacenter. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> A list of all seed nodes in the cluster, managed and unmanaged. </summary>
+        [WirePath("seedNodes")]
         public IReadOnlyList<string> SeedNodes { get; }
         /// <summary> Gets the nodes. </summary>
+        [WirePath("nodes")]
         public IReadOnlyList<CassandraClusterDataCenterNodeItem> Nodes { get; }
     }
 }

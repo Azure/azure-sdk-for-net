@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,22 +66,22 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<RollingUpgradePolicy>(Policy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(RunningStatus))
             {
                 writer.WritePropertyName("runningStatus"u8);
-                writer.WriteObjectValue(RunningStatus);
+                writer.WriteObjectValue<RollingUpgradeRunningStatus>(RunningStatus, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Progress))
             {
                 writer.WritePropertyName("progress"u8);
-                writer.WriteObjectValue(Progress);
+                writer.WriteObjectValue<RollingUpgradeProgressInfo>(Progress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ComputeApiError>(Error, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetRollingUpgradeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeVirtualMachineScaleSetRollingUpgradeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetRollingUpgradeData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -158,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedInstancePecProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -195,12 +194,12 @@ namespace Azure.ResourceManager.Sql.Models
             if (Optional.IsDefined(Administrators))
             {
                 writer.WritePropertyName("administrators"u8);
-                writer.WriteObjectValue(Administrators);
+                writer.WriteObjectValue<ManagedInstanceExternalAdministrator>(Administrators, options);
             }
             if (Optional.IsDefined(ServicePrincipal))
             {
                 writer.WritePropertyName("servicePrincipal"u8);
-                writer.WriteObjectValue(ServicePrincipal);
+                writer.WriteObjectValue<SqlServicePrincipal>(ServicePrincipal, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -226,7 +225,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedInstancePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -607,7 +606,7 @@ namespace Azure.ResourceManager.Sql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -623,7 +622,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeManagedInstancePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedInstancePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

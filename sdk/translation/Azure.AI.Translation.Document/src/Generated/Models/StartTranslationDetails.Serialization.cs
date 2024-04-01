@@ -19,7 +19,7 @@ namespace Azure.AI.Translation.Document.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentTranslationInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

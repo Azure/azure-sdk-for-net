@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,9 +104,9 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             writer.WritePropertyName("fabricASN"u8);
             writer.WriteNumberValue(FabricAsn);
             writer.WritePropertyName("terminalServerConfiguration"u8);
-            writer.WriteObjectValue(TerminalServerConfiguration);
+            writer.WriteObjectValue<TerminalServerConfiguration>(TerminalServerConfiguration, options);
             writer.WritePropertyName("managementNetworkConfiguration"u8);
-            writer.WriteObjectValue(ManagementNetworkConfiguration);
+            writer.WriteObjectValue<ManagementNetworkConfigurationProperties>(ManagementNetworkConfiguration, options);
             if (options.Format != "W" && Optional.IsCollectionDefined(Racks))
             {
                 writer.WritePropertyName("racks"u8);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -475,7 +475,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkFabricData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricData)} does not support reading '{options.Format}' format.");
             }
         }
 

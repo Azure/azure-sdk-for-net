@@ -206,7 +206,7 @@ namespace Azure.Core.TestFramework
                 }
                 else
                 {
-                    var clientSecret = ClientSecret;
+                    var clientSecret = GetOptionalVariable("CLIENT_SECRET");
                     if (string.IsNullOrWhiteSpace(clientSecret))
                     {
                         _credential = new DefaultAzureCredential(
@@ -303,12 +303,12 @@ namespace Azure.Core.TestFramework
 
         private async Task ExtendResourceGroupExpirationAsync()
         {
-            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping)
+            string resourceGroup = GetOptionalVariable("RESOURCE_GROUP");
+
+            if (Mode is not (RecordedTestMode.Live or RecordedTestMode.Record) || DisableBootstrapping || string.IsNullOrEmpty(resourceGroup))
             {
                 return;
             }
-
-            string resourceGroup = GetVariable("RESOURCE_GROUP");
 
             string subscription = GetVariable("SUBSCRIPTION_ID");
 
@@ -656,14 +656,14 @@ namespace Azure.Core.TestFramework
         }
 
         /// <summary>
-        /// Determines whether to enable proxy logging beyond errors.
+        /// Determines whether to enable debug level proxy logging. Errors are logged by default.
         /// </summary>
-        internal static bool EnableProxyLogging
+        internal static bool EnableTestProxyDebugLogs
         {
             get
             {
-                string switchString = TestContext.Parameters["EnableProxyLogging"] ??
-                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_PROXY_LOGGING");
+                string switchString = TestContext.Parameters[nameof(EnableTestProxyDebugLogs)] ??
+                                      Environment.GetEnvironmentVariable("AZURE_ENABLE_TEST_PROXY_DEBUG_LOGS");
 
                 bool.TryParse(switchString, out bool enableProxyLogging);
 

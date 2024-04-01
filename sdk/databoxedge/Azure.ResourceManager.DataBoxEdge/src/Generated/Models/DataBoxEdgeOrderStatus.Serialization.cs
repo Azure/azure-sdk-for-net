@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBoxEdge;
 
 namespace Azure.ResourceManager.DataBoxEdge.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeOrderStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(TrackingInformation))
             {
                 writer.WritePropertyName("trackingInformation"u8);
-                writer.WriteObjectValue(TrackingInformation);
+                writer.WriteObjectValue<DataBoxEdgeTrackingInfo>(TrackingInformation, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalOrderDetails))
             {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeOrderStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +167,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +183,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeOrderStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeOrderStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

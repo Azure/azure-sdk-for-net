@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,17 +34,17 @@ namespace Azure.ResourceManager.Workloads.Models
             if (Optional.IsDefined(InfrastructureConfiguration))
             {
                 writer.WritePropertyName("infrastructureConfiguration"u8);
-                writer.WriteObjectValue(InfrastructureConfiguration);
+                writer.WriteObjectValue<InfrastructureConfiguration>(InfrastructureConfiguration, options);
             }
             if (Optional.IsDefined(SoftwareConfiguration))
             {
                 writer.WritePropertyName("softwareConfiguration"u8);
-                writer.WriteObjectValue(SoftwareConfiguration);
+                writer.WriteObjectValue<SapSoftwareConfiguration>(SoftwareConfiguration, options);
             }
             if (Optional.IsDefined(OSSapConfiguration))
             {
                 writer.WritePropertyName("osSapConfiguration"u8);
-                writer.WriteObjectValue(OSSapConfiguration);
+                writer.WriteObjectValue<OSSapConfiguration>(OSSapConfiguration, options);
             }
             writer.WritePropertyName("configurationType"u8);
             writer.WriteStringValue(ConfigurationType.ToString());
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeploymentWithOSConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +160,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +176,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeDeploymentWithOSConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeploymentWithOSConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

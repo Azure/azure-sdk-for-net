@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,22 +43,22 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(HttpConfiguration))
             {
                 writer.WritePropertyName("httpConfiguration"u8);
-                writer.WriteObjectValue(HttpConfiguration);
+                writer.WriteObjectValue<ConnectionMonitorHttpConfiguration>(HttpConfiguration, options);
             }
             if (Optional.IsDefined(TcpConfiguration))
             {
                 writer.WritePropertyName("tcpConfiguration"u8);
-                writer.WriteObjectValue(TcpConfiguration);
+                writer.WriteObjectValue<ConnectionMonitorTcpConfiguration>(TcpConfiguration, options);
             }
             if (Optional.IsDefined(IcmpConfiguration))
             {
                 writer.WritePropertyName("icmpConfiguration"u8);
-                writer.WriteObjectValue(IcmpConfiguration);
+                writer.WriteObjectValue<ConnectionMonitorIcmpConfiguration>(IcmpConfiguration, options);
             }
             if (Optional.IsDefined(SuccessThreshold))
             {
                 writer.WritePropertyName("successThreshold"u8);
-                writer.WriteObjectValue(SuccessThreshold);
+                writer.WriteObjectValue<ConnectionMonitorSuccessThreshold>(SuccessThreshold, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +83,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorTestConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorTestConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

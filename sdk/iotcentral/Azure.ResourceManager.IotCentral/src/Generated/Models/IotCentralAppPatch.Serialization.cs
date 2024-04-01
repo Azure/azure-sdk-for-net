@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.IotCentral;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.IotCentral.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +41,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<IotCentralAppSkuInfo>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             if (Optional.IsDefined(NetworkRuleSets))
             {
                 writer.WritePropertyName("networkRuleSets"u8);
-                writer.WriteObjectValue(NetworkRuleSets);
+                writer.WriteObjectValue<IotCentralNetworkRuleSets>(NetworkRuleSets, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
@@ -97,7 +96,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IotCentralPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -305,7 +304,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -321,7 +320,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                         return DeserializeIotCentralAppPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

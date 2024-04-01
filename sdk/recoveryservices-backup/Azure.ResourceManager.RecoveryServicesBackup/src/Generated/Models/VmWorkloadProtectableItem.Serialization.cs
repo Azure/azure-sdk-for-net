@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(PreBackupValidation))
             {
                 writer.WritePropertyName("prebackupvalidation"u8);
-                writer.WriteObjectValue(PreBackupValidation);
+                writer.WriteObjectValue<PreBackupValidation>(PreBackupValidation, options);
             }
             if (Optional.IsDefined(IsProtectable))
             {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectableItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,8 +137,8 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 {
                     case "HanaHSRContainer": return VmWorkloadSapHanaHsrProtectableItem.DeserializeVmWorkloadSapHanaHsrProtectableItem(element, options);
                     case "SAPAseSystem": return VmWorkloadSapAseSystemProtectableItem.DeserializeVmWorkloadSapAseSystemProtectableItem(element, options);
-                    case "SAPHanaDBInstance": return VmWorkloadSapHanaDBInstance.DeserializeVmWorkloadSapHanaDBInstance(element, options);
                     case "SAPHanaDatabase": return VmWorkloadSapHanaDatabaseProtectableItem.DeserializeVmWorkloadSapHanaDatabaseProtectableItem(element, options);
+                    case "SAPHanaDBInstance": return VmWorkloadSapHanaDBInstance.DeserializeVmWorkloadSapHanaDBInstance(element, options);
                     case "SAPHanaSystem": return VmWorkloadSapHanaSystemProtectableItem.DeserializeVmWorkloadSapHanaSystemProtectableItem(element, options);
                     case "SQLAvailabilityGroupContainer": return VmWorkloadSqlAvailabilityGroupProtectableItem.DeserializeVmWorkloadSqlAvailabilityGroupProtectableItem(element, options);
                     case "SQLDataBase": return VmWorkloadSqlDatabaseProtectableItem.DeserializeVmWorkloadSqlDatabaseProtectableItem(element, options);
@@ -295,7 +294,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -311,7 +310,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmWorkloadProtectableItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectableItem)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -124,7 +125,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -283,6 +284,262 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetDatabase), out propertyOverride);
+            if (Optional.IsDefined(TargetDatabase) || hasPropertyOverride)
+            {
+                builder.Append("    targetDatabase: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (TargetDatabase.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{TargetDatabase}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{TargetDatabase}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceEndpoint), out propertyOverride);
+            if (Optional.IsDefined(SourceEndpoint) || hasPropertyOverride)
+            {
+                builder.Append("    sourceEndpoint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceEndpoint.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceEndpoint}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceEndpoint}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryAvailabilityGroupName), out propertyOverride);
+            if (Optional.IsDefined(PrimaryAvailabilityGroupName) || hasPropertyOverride)
+            {
+                builder.Append("    primaryAvailabilityGroupName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrimaryAvailabilityGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryAvailabilityGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryAvailabilityGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryAvailabilityGroupName), out propertyOverride);
+            if (Optional.IsDefined(SecondaryAvailabilityGroupName) || hasPropertyOverride)
+            {
+                builder.Append("    secondaryAvailabilityGroupName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SecondaryAvailabilityGroupName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SecondaryAvailabilityGroupName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SecondaryAvailabilityGroupName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ReplicationMode), out propertyOverride);
+            if (Optional.IsDefined(ReplicationMode) || hasPropertyOverride)
+            {
+                builder.Append("    replicationMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ReplicationMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DistributedAvailabilityGroupId), out propertyOverride);
+            if (Optional.IsDefined(DistributedAvailabilityGroupId) || hasPropertyOverride)
+            {
+                builder.Append("    distributedAvailabilityGroupId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DistributedAvailabilityGroupId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceReplicaId), out propertyOverride);
+            if (Optional.IsDefined(SourceReplicaId) || hasPropertyOverride)
+            {
+                builder.Append("    sourceReplicaId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SourceReplicaId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetReplicaId), out propertyOverride);
+            if (Optional.IsDefined(TargetReplicaId) || hasPropertyOverride)
+            {
+                builder.Append("    targetReplicaId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TargetReplicaId.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkState), out propertyOverride);
+            if (Optional.IsDefined(LinkState) || hasPropertyOverride)
+            {
+                builder.Append("    linkState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LinkState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LinkState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LinkState}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastHardenedLsn), out propertyOverride);
+            if (Optional.IsDefined(LastHardenedLsn) || hasPropertyOverride)
+            {
+                builder.Append("    lastHardenedLsn: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (LastHardenedLsn.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{LastHardenedLsn}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{LastHardenedLsn}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DistributedAvailabilityGroupData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DistributedAvailabilityGroupData>)this).GetFormatFromOptions(options) : options.Format;
@@ -291,8 +548,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +567,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeDistributedAvailabilityGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DistributedAvailabilityGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

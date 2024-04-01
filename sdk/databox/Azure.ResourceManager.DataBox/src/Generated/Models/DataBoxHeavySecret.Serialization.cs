@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataBox;
 
 namespace Azure.ResourceManager.DataBox.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxHeavySecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxHeavySecret)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxHeavySecret)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplianceNetworkConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in AccountCredentialDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxAccountCredentialDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxHeavySecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxHeavySecret)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxHeavySecret)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxHeavySecret)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxHeavySecret)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +191,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxHeavySecret(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxHeavySecret)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxHeavySecret)} does not support reading '{options.Format}' format.");
             }
         }
 

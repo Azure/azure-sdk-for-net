@@ -122,6 +122,11 @@ namespace Azure.ResourceManager
     {
         Profile20200901Hybrid = 0,
     }
+    public partial class BicepModelReaderWriterOptions : System.ClientModel.Primitives.ModelReaderWriterOptions
+    {
+        public BicepModelReaderWriterOptions() : base (default(string)) { }
+        public System.Collections.Generic.IDictionary<object, System.Collections.Generic.IDictionary<string, string>> PropertyOverrides { get { throw null; } }
+    }
 }
 namespace Azure.ResourceManager.ManagementGroups
 {
@@ -2346,11 +2351,16 @@ namespace Azure.ResourceManager.Resources.Models
         Off = 1,
         CurrentPeriodOff = 2,
     }
-    public partial class SubResource
+    public partial class SubResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.SubResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.SubResource>
     {
         public SubResource() { }
         protected internal SubResource(Azure.Core.ResourceIdentifier id) { }
         public virtual Azure.Core.ResourceIdentifier Id { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.SubResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.SubResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.SubResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.SubResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.SubResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.SubResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.SubResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class SubscriptionPolicies : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.SubscriptionPolicies>
     {
@@ -2439,11 +2449,16 @@ namespace Azure.ResourceManager.Resources.Models
         string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
         System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TrackedResourceExtendedData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WritableSubResource
+    public partial class WritableSubResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WritableSubResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WritableSubResource>
     {
         public WritableSubResource() { }
         protected internal WritableSubResource(Azure.Core.ResourceIdentifier id) { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.WritableSubResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WritableSubResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WritableSubResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.WritableSubResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WritableSubResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WritableSubResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WritableSubResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ZoneMapping : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ZoneMapping>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ZoneMapping>
     {

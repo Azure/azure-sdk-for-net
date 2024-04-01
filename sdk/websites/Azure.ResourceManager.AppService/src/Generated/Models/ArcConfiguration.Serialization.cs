@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArcConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +56,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(FrontEndServiceConfiguration))
             {
                 writer.WritePropertyName("frontEndServiceConfiguration"u8);
-                writer.WriteObjectValue(FrontEndServiceConfiguration);
+                writer.WriteObjectValue<FrontEndConfiguration>(FrontEndServiceConfiguration, options);
             }
             if (Optional.IsDefined(KubeConfig))
             {
@@ -85,7 +86,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArcConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,6 +172,181 @@ namespace Azure.ResourceManager.AppService.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactsStorageType), out propertyOverride);
+            if (Optional.IsDefined(ArtifactsStorageType) || hasPropertyOverride)
+            {
+                builder.Append("  artifactsStorageType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ArtifactsStorageType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageClassName), out propertyOverride);
+            if (Optional.IsDefined(ArtifactStorageClassName) || hasPropertyOverride)
+            {
+                builder.Append("  artifactStorageClassName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ArtifactStorageClassName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ArtifactStorageClassName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ArtifactStorageClassName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageMountPath), out propertyOverride);
+            if (Optional.IsDefined(ArtifactStorageMountPath) || hasPropertyOverride)
+            {
+                builder.Append("  artifactStorageMountPath: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ArtifactStorageMountPath.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ArtifactStorageMountPath}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ArtifactStorageMountPath}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageNodeName), out propertyOverride);
+            if (Optional.IsDefined(ArtifactStorageNodeName) || hasPropertyOverride)
+            {
+                builder.Append("  artifactStorageNodeName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ArtifactStorageNodeName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ArtifactStorageNodeName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ArtifactStorageNodeName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ArtifactStorageAccessMode), out propertyOverride);
+            if (Optional.IsDefined(ArtifactStorageAccessMode) || hasPropertyOverride)
+            {
+                builder.Append("  artifactStorageAccessMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ArtifactStorageAccessMode.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ArtifactStorageAccessMode}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ArtifactStorageAccessMode}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FrontEndServiceConfiguration), out propertyOverride);
+            if (Optional.IsDefined(FrontEndServiceConfiguration) || hasPropertyOverride)
+            {
+                builder.Append("  frontEndServiceConfiguration: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, FrontEndServiceConfiguration, options, 2, false, "  frontEndServiceConfiguration: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KubeConfig), out propertyOverride);
+            if (Optional.IsDefined(KubeConfig) || hasPropertyOverride)
+            {
+                builder.Append("  kubeConfig: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (KubeConfig.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{KubeConfig}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{KubeConfig}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "FrontEndServiceKind":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("Kind", item.Value);
+                        bicepOptions.PropertyOverrides.Add(FrontEndServiceConfiguration, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ArcConfiguration>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ArcConfiguration>)this).GetFormatFromOptions(options) : options.Format;
@@ -179,8 +355,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ArcConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +374,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeArcConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArcConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

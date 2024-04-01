@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageMover
             var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobRunData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.StorageMover
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<JobRunError>(Error, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.StorageMover
             var format = options.Format == "W" ? ((IPersistableModel<JobRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobRunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -613,7 +613,7 @@ namespace Azure.ResourceManager.StorageMover
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobRunData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -629,7 +629,7 @@ namespace Azure.ResourceManager.StorageMover
                         return DeserializeJobRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobRunData)} does not support reading '{options.Format}' format.");
             }
         }
 

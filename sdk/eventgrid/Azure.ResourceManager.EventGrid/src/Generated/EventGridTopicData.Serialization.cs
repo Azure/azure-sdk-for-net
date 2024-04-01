@@ -25,14 +25,14 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridTopicData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridTopicData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ResourceSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(EventTypeInfo))
             {
                 writer.WritePropertyName("eventTypeInfo"u8);
-                writer.WriteObjectValue(EventTypeInfo);
+                writer.WriteObjectValue<PartnerTopicEventTypeInfo>(EventTypeInfo, options);
             }
             if (Optional.IsDefined(MinimumTlsVersionAllowed))
             {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(InputSchemaMapping))
             {
                 writer.WritePropertyName("inputSchemaMapping"u8);
-                writer.WriteObjectValue(InputSchemaMapping);
+                writer.WriteObjectValue<EventGridInputSchemaMapping>(InputSchemaMapping, options);
             }
             if (options.Format != "W" && Optional.IsDefined(MetricResourceId))
             {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridInboundIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridTopicData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridTopicData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -465,7 +465,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridTopicData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializeEventGridTopicData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridTopicData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridTopicData)} does not support reading '{options.Format}' format.");
             }
         }
 

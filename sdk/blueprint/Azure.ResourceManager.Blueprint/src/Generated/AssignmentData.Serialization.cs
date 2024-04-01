@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Blueprint
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("identity"u8);
-            writer.WriteObjectValue(Identity);
+            writer.WriteObjectValue<Models.ManagedServiceIdentity>(Identity, options);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
             if (options.Format != "W")
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Blueprint
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<ParameterValue>(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("resourceGroups"u8);
@@ -87,18 +87,18 @@ namespace Azure.ResourceManager.Blueprint
             foreach (var item in ResourceGroups)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<ResourceGroupValue>(item.Value, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<AssignmentStatus>(Status, options);
             }
             if (Optional.IsDefined(Locks))
             {
                 writer.WritePropertyName("locks"u8);
-                writer.WriteObjectValue(Locks);
+                writer.WriteObjectValue<AssignmentLockSettings>(Locks, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Blueprint
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.Blueprint
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Blueprint
                         return DeserializeAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

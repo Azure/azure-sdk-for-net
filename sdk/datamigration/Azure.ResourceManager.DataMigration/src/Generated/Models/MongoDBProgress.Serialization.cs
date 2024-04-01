@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBProgress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             foreach (var item in Errors)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<MongoDBError>(item.Value, options);
             }
             writer.WriteEndObject();
             writer.WritePropertyName("eventsPending"u8);
@@ -96,7 +95,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBProgress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,9 +114,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 switch (discriminator.GetString())
                 {
+                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element, options);
                     case "Database": return MongoDBDatabaseProgress.DeserializeMongoDBDatabaseProgress(element, options);
                     case "Migration": return MongoDBMigrationProgress.DeserializeMongoDBMigrationProgress(element, options);
-                    case "Collection": return MongoDBCollectionProgress.DeserializeMongoDBCollectionProgress(element, options);
                 }
             }
             return UnknownMongoDBProgress.DeserializeUnknownMongoDBProgress(element, options);
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBProgress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMongoDBProgress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBProgress)} does not support reading '{options.Format}' format.");
             }
         }
 

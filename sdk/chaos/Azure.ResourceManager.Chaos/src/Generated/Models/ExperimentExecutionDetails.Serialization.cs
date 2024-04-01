@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Chaos;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Chaos.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Chaos.Models
             if (options.Format != "W" && Optional.IsDefined(RunInformation))
             {
                 writer.WritePropertyName("runInformation"u8);
-                writer.WriteObjectValue(RunInformation);
+                writer.WriteObjectValue<ChaosExperimentRunInformation>(RunInformation, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExperimentExecutionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -244,7 +243,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +259,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeExperimentExecutionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExperimentExecutionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

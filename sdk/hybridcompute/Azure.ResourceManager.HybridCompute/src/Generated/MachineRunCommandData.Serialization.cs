@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridCompute
             var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<MachineRunCommandScriptSource>(Source, options);
             }
             if (Optional.IsCollectionDefined(Parameters))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -121,12 +121,12 @@ namespace Azure.ResourceManager.HybridCompute
             if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue(OutputBlobManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(OutputBlobManagedIdentity, options);
             }
             if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue(ErrorBlobManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(ErrorBlobManagedIdentity, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.HybridCompute
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<MachineRunCommandInstanceView>(InstanceView, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HybridCompute
             var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.HybridCompute
                         return DeserializeMachineRunCommandData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support reading '{options.Format}' format.");
             }
         }
 

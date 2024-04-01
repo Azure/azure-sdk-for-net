@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<GalleryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                writer.WriteObjectValue<GalleryIdentifier>(Identifier, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -81,17 +81,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SharingProfile))
             {
                 writer.WritePropertyName("sharingProfile"u8);
-                writer.WriteObjectValue(SharingProfile);
+                writer.WriteObjectValue<SharingProfile>(SharingProfile, options);
             }
             if (Optional.IsDefined(SoftDeletePolicy))
             {
                 writer.WritePropertyName("softDeletePolicy"u8);
-                writer.WriteObjectValue(SoftDeletePolicy);
+                writer.WriteObjectValue<SoftDeletePolicy>(SoftDeletePolicy, options);
             }
             if (options.Format != "W" && Optional.IsDefined(SharingStatus))
             {
                 writer.WritePropertyName("sharingStatus"u8);
-                writer.WriteObjectValue(SharingStatus);
+                writer.WriteObjectValue<SharingStatus>(SharingStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<GalleryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeGalleryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryData)} does not support reading '{options.Format}' format.");
             }
         }
 

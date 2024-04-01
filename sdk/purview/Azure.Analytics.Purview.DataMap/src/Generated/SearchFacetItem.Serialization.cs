@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Analytics.Purview.DataMap
@@ -23,7 +22,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<SearchFacetItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchFacetItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchFacetItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +39,7 @@ namespace Azure.Analytics.Purview.DataMap
             if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue(Sort);
+                writer.WriteObjectValue<SearchFacetSort>(Sort, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -65,7 +64,7 @@ namespace Azure.Analytics.Purview.DataMap
             var format = options.Format == "W" ? ((IPersistableModel<SearchFacetItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchFacetItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchFacetItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +127,7 @@ namespace Azure.Analytics.Purview.DataMap
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchFacetItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchFacetItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +143,7 @@ namespace Azure.Analytics.Purview.DataMap
                         return DeserializeSearchFacetItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchFacetItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchFacetItem)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -162,7 +161,7 @@ namespace Azure.Analytics.Purview.DataMap
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<SearchFacetItem>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

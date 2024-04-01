@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeviceUpdatePrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DeviceUpdateEncryption>(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 writer.WriteStartArray();
                 foreach (var item in Locations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeviceUpdateAccountLocationDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdateAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                         return DeserializeDeviceUpdateAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdateAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

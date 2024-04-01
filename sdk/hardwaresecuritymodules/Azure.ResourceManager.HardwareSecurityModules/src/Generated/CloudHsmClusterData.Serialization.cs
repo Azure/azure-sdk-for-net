@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<CloudHsmClusterSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(SecurityDomain))
             {
                 writer.WritePropertyName("securityDomain"u8);
-                writer.WriteObjectValue(SecurityDomain);
+                writer.WriteObjectValue<CloudHsmClusterSecurityDomainProperties>(SecurityDomain, options);
             }
             if (Optional.IsCollectionDefined(Hsms))
             {
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WriteStartArray();
                 foreach (var item in Hsms)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CloudHsmProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HardwareSecurityModulesPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             if (Optional.IsDefined(RestoreProperties))
             {
                 writer.WritePropertyName("restoreProperties"u8);
-                writer.WriteObjectValue(RestoreProperties);
+                writer.WriteObjectValue<RestoreProperties>(RestoreProperties, options);
             }
             if (Optional.IsDefined(BackupProperties))
             {
                 writer.WritePropertyName("backupProperties"u8);
-                writer.WriteObjectValue(BackupProperties);
+                writer.WriteObjectValue<BackupProperties>(BackupProperties, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
             var format = options.Format == "W" ? ((IPersistableModel<CloudHsmClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
                         return DeserializeCloudHsmClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudHsmClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Media.VideoAnalyzer.Edge;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -22,12 +21,12 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             if (Optional.IsDefined(VideoCreationProperties))
             {
                 writer.WritePropertyName("videoCreationProperties"u8);
-                writer.WriteObjectValue(VideoCreationProperties);
+                writer.WriteObjectValue<VideoCreationProperties>(VideoCreationProperties);
             }
             if (Optional.IsDefined(VideoPublishingOptions))
             {
                 writer.WritePropertyName("videoPublishingOptions"u8);
-                writer.WriteObjectValue(VideoPublishingOptions);
+                writer.WriteObjectValue<VideoPublishingOptions>(VideoPublishingOptions);
             }
             writer.WritePropertyName("localMediaCachePath"u8);
             writer.WriteStringValue(LocalMediaCachePath);
@@ -41,7 +40,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

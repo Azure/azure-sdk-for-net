@@ -70,6 +70,7 @@ namespace Azure.ResourceManager.CosmosDB
         }
 
         /// <summary> Gets or sets the resource. </summary>
+        [WirePath("properties.resource")]
         public CosmosDBSqlClientEncryptionKeyProperties Resource { get; set; }
     }
 }

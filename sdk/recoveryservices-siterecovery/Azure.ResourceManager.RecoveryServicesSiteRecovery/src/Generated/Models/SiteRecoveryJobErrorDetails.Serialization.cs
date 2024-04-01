@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -23,19 +22,19 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ServiceErrorDetails))
             {
                 writer.WritePropertyName("serviceErrorDetails"u8);
-                writer.WriteObjectValue(ServiceErrorDetails);
+                writer.WriteObjectValue<SiteRecoveryServiceError>(ServiceErrorDetails, options);
             }
             if (Optional.IsDefined(ProviderErrorDetails))
             {
                 writer.WritePropertyName("providerErrorDetails"u8);
-                writer.WriteObjectValue(ProviderErrorDetails);
+                writer.WriteObjectValue<SiteRecoveryJobProviderError>(ProviderErrorDetails, options);
             }
             if (Optional.IsDefined(ErrorLevel))
             {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryJobErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +175,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryJobErrorDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryJobErrorDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

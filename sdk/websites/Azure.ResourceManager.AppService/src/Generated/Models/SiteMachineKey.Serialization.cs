@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteMachineKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,6 +122,109 @@ namespace Azure.ResourceManager.AppService.Models
             return new SiteMachineKey(validation, validationKey, decryption, decryptionKey, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Validation), out propertyOverride);
+            if (Optional.IsDefined(Validation) || hasPropertyOverride)
+            {
+                builder.Append("  validation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Validation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Validation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Validation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ValidationKey), out propertyOverride);
+            if (Optional.IsDefined(ValidationKey) || hasPropertyOverride)
+            {
+                builder.Append("  validationKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ValidationKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ValidationKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ValidationKey}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Decryption), out propertyOverride);
+            if (Optional.IsDefined(Decryption) || hasPropertyOverride)
+            {
+                builder.Append("  decryption: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Decryption.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Decryption}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Decryption}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DecryptionKey), out propertyOverride);
+            if (Optional.IsDefined(DecryptionKey) || hasPropertyOverride)
+            {
+                builder.Append("  decryptionKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DecryptionKey.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DecryptionKey}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DecryptionKey}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SiteMachineKey>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SiteMachineKey>)this).GetFormatFromOptions(options) : options.Format;
@@ -130,8 +233,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +252,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSiteMachineKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteMachineKey)} does not support reading '{options.Format}' format.");
             }
         }
 

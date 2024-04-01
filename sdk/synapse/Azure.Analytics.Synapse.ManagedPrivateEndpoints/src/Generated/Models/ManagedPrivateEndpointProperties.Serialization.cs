@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Analytics.Synapse.ManagedPrivateEndpoints;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
@@ -35,7 +34,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("connectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<ManagedPrivateEndpointConnectionState>(ConnectionState);
             }
             if (Optional.IsCollectionDefined(Fqdns))
             {

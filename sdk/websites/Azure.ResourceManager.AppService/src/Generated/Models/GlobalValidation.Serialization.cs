@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalValidation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +76,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GlobalValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GlobalValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GlobalValidation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,6 +145,107 @@ namespace Azure.ResourceManager.AppService.Models
             return new GlobalValidation(requireAuthentication, unauthenticatedClientAction, redirectToProvider, excludedPaths ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsAuthenticationRequired), out propertyOverride);
+            if (Optional.IsDefined(IsAuthenticationRequired) || hasPropertyOverride)
+            {
+                builder.Append("  requireAuthentication: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsAuthenticationRequired.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(UnauthenticatedClientAction), out propertyOverride);
+            if (Optional.IsDefined(UnauthenticatedClientAction) || hasPropertyOverride)
+            {
+                builder.Append("  unauthenticatedClientAction: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{UnauthenticatedClientAction.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RedirectToProvider), out propertyOverride);
+            if (Optional.IsDefined(RedirectToProvider) || hasPropertyOverride)
+            {
+                builder.Append("  redirectToProvider: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RedirectToProvider.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RedirectToProvider}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RedirectToProvider}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ExcludedPaths), out propertyOverride);
+            if (Optional.IsCollectionDefined(ExcludedPaths) || hasPropertyOverride)
+            {
+                if (ExcludedPaths.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  excludedPaths: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ExcludedPaths)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<GlobalValidation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<GlobalValidation>)this).GetFormatFromOptions(options) : options.Format;
@@ -152,8 +254,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(GlobalValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalValidation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +273,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeGlobalValidation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GlobalValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GlobalValidation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,10 +7,8 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.OperationalInsights;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
 {
@@ -100,36 +98,52 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> Resource tags. Optional. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The provisioning state of the workspace. </summary>
+        [WirePath("properties.provisioningState")]
         public OperationalInsightsWorkspaceEntityStatus? ProvisioningState { get; }
         /// <summary> This is a read-only property. Represents the ID associated with the workspace. </summary>
+        [WirePath("properties.customerId")]
         public Guid? CustomerId { get; }
         /// <summary> The SKU of the workspace. </summary>
+        [WirePath("properties.sku")]
         public OperationalInsightsWorkspaceSku Sku { get; set; }
         /// <summary> The workspace data retention in days. Allowed values are per pricing plan. See pricing tiers documentation for details. </summary>
+        [WirePath("properties.retentionInDays")]
         public int? RetentionInDays { get; set; }
         /// <summary> The daily volume cap for ingestion. </summary>
+        [WirePath("properties.workspaceCapping")]
         public OperationalInsightsWorkspaceCapping WorkspaceCapping { get; set; }
         /// <summary> Workspace creation date. </summary>
+        [WirePath("properties.createdDate")]
         public DateTimeOffset? CreatedOn { get; }
         /// <summary> Workspace modification date. </summary>
+        [WirePath("properties.modifiedDate")]
         public DateTimeOffset? ModifiedOn { get; }
         /// <summary> The network access type for accessing Log Analytics ingestion. </summary>
+        [WirePath("properties.publicNetworkAccessForIngestion")]
         public OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForIngestion { get; set; }
         /// <summary> The network access type for accessing Log Analytics query. </summary>
+        [WirePath("properties.publicNetworkAccessForQuery")]
         public OperationalInsightsPublicNetworkAccessType? PublicNetworkAccessForQuery { get; set; }
         /// <summary> Indicates whether customer managed storage is mandatory for query management. </summary>
+        [WirePath("properties.forceCmkForQuery")]
         public bool? ForceCmkForQuery { get; set; }
         /// <summary> List of linked private link scope resources. </summary>
+        [WirePath("properties.privateLinkScopedResources")]
         public IReadOnlyList<OperationalInsightsPrivateLinkScopedResourceInfo> PrivateLinkScopedResources { get; }
         /// <summary> Workspace features. </summary>
+        [WirePath("properties.features")]
         public OperationalInsightsWorkspaceFeatures Features { get; set; }
         /// <summary> The resource ID of the default Data Collection Rule to use for this workspace. Expected format is - /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Insights/dataCollectionRules/{dcrName}. </summary>
+        [WirePath("properties.defaultDataCollectionRuleResourceId")]
         public ResourceIdentifier DefaultDataCollectionRuleResourceId { get; set; }
         /// <summary> Resource Etag. </summary>
+        [WirePath("etag")]
         public ETag? ETag { get; }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             if (Optional.IsDefined(RemotePrivateEndpoint))
             {
                 writer.WritePropertyName("remotePrivateEndpoint"u8);
-                writer.WriteObjectValue(RemotePrivateEndpoint);
+                writer.WriteObjectValue<DeviceUpdateRemotePrivateEndpoint>(RemotePrivateEndpoint, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DeviceUpdate
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointConnectionProxyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.DeviceUpdate
                         return DeserializeDeviceUpdatePrivateEndpointConnectionProxyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointConnectionProxyData)} does not support reading '{options.Format}' format.");
             }
         }
 

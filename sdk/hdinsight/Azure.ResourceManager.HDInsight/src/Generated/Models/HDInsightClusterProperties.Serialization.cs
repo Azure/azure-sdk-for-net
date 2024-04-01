@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.HDInsight;
 
 namespace Azure.ResourceManager.HDInsight.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,21 +52,21 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStringValue(ClusterId);
             }
             writer.WritePropertyName("clusterDefinition"u8);
-            writer.WriteObjectValue(ClusterDefinition);
+            writer.WriteObjectValue<HDInsightClusterDefinition>(ClusterDefinition, options);
             if (Optional.IsDefined(KafkaRestProperties))
             {
                 writer.WritePropertyName("kafkaRestProperties"u8);
-                writer.WriteObjectValue(KafkaRestProperties);
+                writer.WriteObjectValue<KafkaRestProperties>(KafkaRestProperties, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<HDInsightSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(ComputeProfile))
             {
                 writer.WritePropertyName("computeProfile"u8);
-                writer.WriteObjectValue(ComputeProfile);
+                writer.WriteObjectValue<ComputeProfile>(ComputeProfile, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -88,7 +86,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(QuotaInfo))
             {
                 writer.WritePropertyName("quotaInfo"u8);
-                writer.WriteObjectValue(QuotaInfo);
+                writer.WriteObjectValue<QuotaInfo>(QuotaInfo, options);
             }
             if (Optional.IsCollectionDefined(Errors))
             {
@@ -106,24 +104,24 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in ConnectivityEndpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DiskEncryptionProperties))
             {
                 writer.WritePropertyName("diskEncryptionProperties"u8);
-                writer.WriteObjectValue(DiskEncryptionProperties);
+                writer.WriteObjectValue<HDInsightDiskEncryptionProperties>(DiskEncryptionProperties, options);
             }
             if (Optional.IsDefined(EncryptionInTransitProperties))
             {
                 writer.WritePropertyName("encryptionInTransitProperties"u8);
-                writer.WriteObjectValue(EncryptionInTransitProperties);
+                writer.WriteObjectValue<EncryptionInTransitProperties>(EncryptionInTransitProperties, options);
             }
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<StorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(MinSupportedTlsVersion))
             {
@@ -133,17 +131,17 @@ namespace Azure.ResourceManager.HDInsight.Models
             if (Optional.IsDefined(ExcludedServicesConfig))
             {
                 writer.WritePropertyName("excludedServicesConfig"u8);
-                writer.WriteObjectValue(ExcludedServicesConfig);
+                writer.WriteObjectValue<ExcludedServicesConfig>(ExcludedServicesConfig, options);
             }
             if (Optional.IsDefined(NetworkProperties))
             {
                 writer.WritePropertyName("networkProperties"u8);
-                writer.WriteObjectValue(NetworkProperties);
+                writer.WriteObjectValue<HDInsightClusterNetworkProperties>(NetworkProperties, options);
             }
             if (Optional.IsDefined(ComputeIsolationProperties))
             {
                 writer.WritePropertyName("computeIsolationProperties"u8);
-                writer.WriteObjectValue(ComputeIsolationProperties);
+                writer.WriteObjectValue<HDInsightComputeIsolationProperties>(ComputeIsolationProperties, options);
             }
             if (Optional.IsCollectionDefined(PrivateLinkConfigurations))
             {
@@ -151,7 +149,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateLinkConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightPrivateLinkConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -161,7 +159,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -188,7 +186,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -486,7 +484,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -502,7 +500,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

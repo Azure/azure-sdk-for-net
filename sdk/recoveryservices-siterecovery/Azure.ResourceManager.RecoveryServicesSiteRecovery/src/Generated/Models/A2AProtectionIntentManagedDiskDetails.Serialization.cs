@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesSiteRecovery;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionIntentManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,12 +31,12 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(PrimaryStagingStorageAccountCustomContent))
             {
                 writer.WritePropertyName("primaryStagingStorageAccountCustomInput"u8);
-                writer.WriteObjectValue(PrimaryStagingStorageAccountCustomContent);
+                writer.WriteObjectValue<StorageAccountCustomDetails>(PrimaryStagingStorageAccountCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryResourceGroupCustomContent))
             {
                 writer.WritePropertyName("recoveryResourceGroupCustomInput"u8);
-                writer.WriteObjectValue(RecoveryResourceGroupCustomContent);
+                writer.WriteObjectValue<RecoveryResourceGroupCustomDetails>(RecoveryResourceGroupCustomContent, options);
             }
             if (Optional.IsDefined(RecoveryReplicaDiskAccountType))
             {
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             if (Optional.IsDefined(DiskEncryptionInfo))
             {
                 writer.WritePropertyName("diskEncryptionInfo"u8);
-                writer.WriteObjectValue(DiskEncryptionInfo);
+                writer.WriteObjectValue<SiteRecoveryDiskEncryptionInfo>(DiskEncryptionInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -82,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AProtectionIntentManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +200,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AProtectionIntentManagedDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AProtectionIntentManagedDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

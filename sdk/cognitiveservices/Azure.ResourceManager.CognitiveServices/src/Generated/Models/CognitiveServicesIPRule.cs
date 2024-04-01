@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -71,6 +70,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> An IPv4 address range in CIDR notation, such as '124.56.78.91' (simple IP address) or '124.56.78.0/24' (all addresses that start with 124.56.78). </summary>
+        [WirePath("value")]
         public string Value { get; set; }
     }
 }

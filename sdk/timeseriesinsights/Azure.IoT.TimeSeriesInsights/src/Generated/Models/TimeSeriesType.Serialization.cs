@@ -33,7 +33,7 @@ namespace Azure.IoT.TimeSeriesInsights
             foreach (var item in Variables)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<TimeSeriesVariable>(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

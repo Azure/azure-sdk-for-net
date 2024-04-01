@@ -42,13 +42,13 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(ValueInternal);
+            writer.WriteObjectValue<CommentFeedbackValue>(ValueInternal);
             writer.WritePropertyName("feedbackType"u8);
             writer.WriteStringValue(FeedbackKind.ToString());
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
+            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
             writer.WriteEndObject();
         }
 

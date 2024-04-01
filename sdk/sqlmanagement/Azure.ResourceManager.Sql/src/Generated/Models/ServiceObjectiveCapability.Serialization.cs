@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Sql;
 
 namespace Azure.ResourceManager.Sql.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +44,19 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaxSizes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaxSizeRangeCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(PerformanceLevel))
             {
                 writer.WritePropertyName("performanceLevel"u8);
-                writer.WriteObjectValue(PerformanceLevel);
+                writer.WriteObjectValue<PerformanceLevelCapability>(PerformanceLevel, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SqlSku>(Sku, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedLicenseTypes))
             {
@@ -63,14 +64,14 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedLicenseTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LicenseTypeCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(IncludedMaxSize))
             {
                 writer.WritePropertyName("includedMaxSize"u8);
-                writer.WriteObjectValue(IncludedMaxSize);
+                writer.WriteObjectValue<MaxSizeCapability>(IncludedMaxSize, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsZoneRedundant))
             {
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.Sql.Models
             if (options.Format != "W" && Optional.IsDefined(SupportedAutoPauseDelay))
             {
                 writer.WritePropertyName("supportedAutoPauseDelay"u8);
-                writer.WriteObjectValue(SupportedAutoPauseDelay);
+                writer.WriteObjectValue<AutoPauseDelayTimeRange>(SupportedAutoPauseDelay, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(SupportedMinCapacities))
             {
@@ -88,7 +89,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMinCapacities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MinCapacityCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +104,7 @@ namespace Azure.ResourceManager.Sql.Models
                 writer.WriteStartArray();
                 foreach (var item in SupportedMaintenanceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MaintenanceConfigurationCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -140,7 +141,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveCapability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -331,6 +332,274 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaxSizes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedMaxSizes) || hasPropertyOverride)
+            {
+                if (SupportedMaxSizes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedMaxSizes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedMaxSizes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedMaxSizes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PerformanceLevel), out propertyOverride);
+            if (Optional.IsDefined(PerformanceLevel) || hasPropertyOverride)
+            {
+                builder.Append("  performanceLevel: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, PerformanceLevel, options, 2, false, "  performanceLevel: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Sku), out propertyOverride);
+            if (Optional.IsDefined(Sku) || hasPropertyOverride)
+            {
+                builder.Append("  sku: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Sku, options, 2, false, "  sku: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedLicenseTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedLicenseTypes) || hasPropertyOverride)
+            {
+                if (SupportedLicenseTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedLicenseTypes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedLicenseTypes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedLicenseTypes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IncludedMaxSize), out propertyOverride);
+            if (Optional.IsDefined(IncludedMaxSize) || hasPropertyOverride)
+            {
+                builder.Append("  includedMaxSize: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, IncludedMaxSize, options, 2, false, "  includedMaxSize: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsZoneRedundant), out propertyOverride);
+            if (Optional.IsDefined(IsZoneRedundant) || hasPropertyOverride)
+            {
+                builder.Append("  zoneRedundant: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsZoneRedundant.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedAutoPauseDelay), out propertyOverride);
+            if (Optional.IsDefined(SupportedAutoPauseDelay) || hasPropertyOverride)
+            {
+                builder.Append("  supportedAutoPauseDelay: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, SupportedAutoPauseDelay, options, 2, false, "  supportedAutoPauseDelay: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMinCapacities), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedMinCapacities) || hasPropertyOverride)
+            {
+                if (SupportedMinCapacities.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedMinCapacities: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedMinCapacities)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedMinCapacities: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ComputeModel), out propertyOverride);
+            if (Optional.IsDefined(ComputeModel) || hasPropertyOverride)
+            {
+                builder.Append("  computeModel: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ComputeModel.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ComputeModel}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ComputeModel}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SupportedMaintenanceConfigurations), out propertyOverride);
+            if (Optional.IsCollectionDefined(SupportedMaintenanceConfigurations) || hasPropertyOverride)
+            {
+                if (SupportedMaintenanceConfigurations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  supportedMaintenanceConfigurations: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in SupportedMaintenanceConfigurations)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  supportedMaintenanceConfigurations: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Status), out propertyOverride);
+            if (Optional.IsDefined(Status) || hasPropertyOverride)
+            {
+                builder.Append("  status: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Status.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Reason), out propertyOverride);
+            if (Optional.IsDefined(Reason) || hasPropertyOverride)
+            {
+                builder.Append("  reason: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Reason.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Reason}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Reason}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ServiceObjectiveCapability>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceObjectiveCapability>)this).GetFormatFromOptions(options) : options.Format;
@@ -339,8 +608,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -356,7 +627,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeServiceObjectiveCapability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceObjectiveCapability)} does not support reading '{options.Format}' format.");
             }
         }
 

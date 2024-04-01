@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<UserAssignedServiceIdentity>(Identity, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -73,11 +73,11 @@ namespace Azure.ResourceManager.Workloads
             writer.WritePropertyName("sapProduct"u8);
             writer.WriteStringValue(SapProduct.ToString());
             writer.WritePropertyName("configuration"u8);
-            writer.WriteObjectValue(Configuration);
+            writer.WriteObjectValue<SapConfiguration>(Configuration, options);
             if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<ManagedRGConfiguration>(ManagedResourceGroupConfiguration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Status))
             {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Workloads
             if (options.Format != "W" && Optional.IsDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
-                writer.WriteObjectValue(Errors);
+                writer.WriteObjectValue<SapVirtualInstanceError>(Errors, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads
             var format = options.Format == "W" ? ((IPersistableModel<SapVirtualInstanceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -331,7 +331,7 @@ namespace Azure.ResourceManager.Workloads
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Workloads
                         return DeserializeSapVirtualInstanceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapVirtualInstanceData)} does not support reading '{options.Format}' format.");
             }
         }
 

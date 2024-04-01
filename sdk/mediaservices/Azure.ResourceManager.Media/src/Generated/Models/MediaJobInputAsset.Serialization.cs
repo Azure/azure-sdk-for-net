@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Media;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobInputAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobInputAsset)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,12 +41,12 @@ namespace Azure.ResourceManager.Media.Models
             if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
-                writer.WriteObjectValue(Start);
+                writer.WriteObjectValue<ClipTime>(Start, options);
             }
             if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
-                writer.WriteObjectValue(End);
+                writer.WriteObjectValue<ClipTime>(End, options);
             }
             if (Optional.IsDefined(Label))
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
                 writer.WriteStartArray();
                 foreach (var item in InputDefinitions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaJobInputDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaJobInputAsset>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaJobInputAsset)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaJobInputAsset)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -202,7 +201,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobInputAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobInputAsset)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaJobInputAsset(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaJobInputAsset)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaJobInputAsset)} does not support reading '{options.Format}' format.");
             }
         }
 

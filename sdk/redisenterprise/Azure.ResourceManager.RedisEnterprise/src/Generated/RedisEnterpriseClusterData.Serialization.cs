@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.RedisEnterprise
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<RedisEnterpriseSku>(Sku, options);
             if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<ClusterPropertiesEncryption>(Encryption, options);
             }
             if (options.Format != "W" && Optional.IsDefined(HostName))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RedisEnterprisePrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RedisEnterprise
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -357,7 +357,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.RedisEnterprise
                         return DeserializeRedisEnterpriseClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

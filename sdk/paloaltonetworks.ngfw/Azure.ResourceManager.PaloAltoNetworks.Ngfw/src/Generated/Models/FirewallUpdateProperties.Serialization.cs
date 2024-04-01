@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.PaloAltoNetworks.Ngfw;
 
 namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(NetworkProfile))
             {
                 writer.WritePropertyName("networkProfile"u8);
-                writer.WriteObjectValue(NetworkProfile);
+                writer.WriteObjectValue<FirewallNetworkProfile>(NetworkProfile, options);
             }
             if (Optional.IsDefined(IsPanoramaManaged))
             {
@@ -46,17 +44,17 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             if (Optional.IsDefined(PanoramaConfig))
             {
                 writer.WritePropertyName("panoramaConfig"u8);
-                writer.WriteObjectValue(PanoramaConfig);
+                writer.WriteObjectValue<FirewallPanoramaConfiguration>(PanoramaConfig, options);
             }
             if (Optional.IsDefined(AssociatedRulestack))
             {
                 writer.WritePropertyName("associatedRulestack"u8);
-                writer.WriteObjectValue(AssociatedRulestack);
+                writer.WriteObjectValue<RulestackDetails>(AssociatedRulestack, options);
             }
             if (Optional.IsDefined(DnsSettings))
             {
                 writer.WritePropertyName("dnsSettings"u8);
-                writer.WriteObjectValue(DnsSettings);
+                writer.WriteObjectValue<FirewallDnsSettings>(DnsSettings, options);
             }
             if (Optional.IsCollectionDefined(FrontEndSettings))
             {
@@ -64,19 +62,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontEndSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallFrontendSetting>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(PlanData))
             {
                 writer.WritePropertyName("planData"u8);
-                writer.WriteObjectValue(PlanData);
+                writer.WriteObjectValue<FirewallBillingPlanInfo>(PlanData, options);
             }
             if (Optional.IsDefined(MarketplaceDetails))
             {
                 writer.WritePropertyName("marketplaceDetails"u8);
-                writer.WriteObjectValue(MarketplaceDetails);
+                writer.WriteObjectValue<PanFirewallMarketplaceDetails>(MarketplaceDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -101,7 +99,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -243,7 +241,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +257,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

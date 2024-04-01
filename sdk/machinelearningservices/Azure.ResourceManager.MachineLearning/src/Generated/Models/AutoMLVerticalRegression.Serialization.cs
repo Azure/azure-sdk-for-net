@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoMLVerticalRegression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoMLVerticalRegression)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoMLVerticalRegression)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +36,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TrainingSettings != null)
                 {
                     writer.WritePropertyName("trainingSettings"u8);
-                    writer.WriteObjectValue(TrainingSettings);
+                    writer.WriteObjectValue<RegressionTrainingSettings>(TrainingSettings, options);
                 }
                 else
                 {
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FeaturizationSettings != null)
                 {
                     writer.WritePropertyName("featurizationSettings"u8);
-                    writer.WriteObjectValue(FeaturizationSettings);
+                    writer.WriteObjectValue<TableVerticalFeaturizationSettings>(FeaturizationSettings, options);
                 }
                 else
                 {
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (FixedParameters != null)
                 {
                     writer.WritePropertyName("fixedParameters"u8);
-                    writer.WriteObjectValue(FixedParameters);
+                    writer.WriteObjectValue<TableFixedParameters>(FixedParameters, options);
                 }
                 else
                 {
@@ -90,7 +89,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LimitSettings != null)
                 {
                     writer.WritePropertyName("limitSettings"u8);
-                    writer.WriteObjectValue(LimitSettings);
+                    writer.WriteObjectValue<TableVerticalLimitSettings>(LimitSettings, options);
                 }
                 else
                 {
@@ -102,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (NCrossValidations != null)
                 {
                     writer.WritePropertyName("nCrossValidations"u8);
-                    writer.WriteObjectValue(NCrossValidations);
+                    writer.WriteObjectValue<NCrossValidations>(NCrossValidations, options);
                 }
                 else
                 {
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteStartArray();
                     foreach (var item in SearchSpace)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<TableParameterSubspace>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (SweepSettings != null)
                 {
                     writer.WritePropertyName("sweepSettings"u8);
-                    writer.WriteObjectValue(SweepSettings);
+                    writer.WriteObjectValue<TableSweepSettings>(SweepSettings, options);
                 }
                 else
                 {
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (TestData != null)
                 {
                     writer.WritePropertyName("testData"u8);
-                    writer.WriteObjectValue(TestData);
+                    writer.WriteObjectValue<MachineLearningTableJobInput>(TestData, options);
                 }
                 else
                 {
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ValidationData != null)
                 {
                     writer.WritePropertyName("validationData"u8);
-                    writer.WriteObjectValue(ValidationData);
+                    writer.WriteObjectValue<MachineLearningTableJobInput>(ValidationData, options);
                 }
                 else
                 {
@@ -218,7 +217,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             writer.WritePropertyName("taskType"u8);
             writer.WriteStringValue(TaskType.ToString());
             writer.WritePropertyName("trainingData"u8);
-            writer.WriteObjectValue(TrainingData);
+            writer.WriteObjectValue<MachineLearningTableJobInput>(TrainingData, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -242,7 +241,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoMLVerticalRegression>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoMLVerticalRegression)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoMLVerticalRegression)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -494,7 +493,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoMLVerticalRegression)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoMLVerticalRegression)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -510,7 +509,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeAutoMLVerticalRegression(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoMLVerticalRegression)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoMLVerticalRegression)} does not support reading '{options.Format}' format.");
             }
         }
 

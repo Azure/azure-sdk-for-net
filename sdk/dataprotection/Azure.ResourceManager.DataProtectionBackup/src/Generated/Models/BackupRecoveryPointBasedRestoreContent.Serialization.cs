@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataProtectionBackup;
 
 namespace Azure.ResourceManager.DataProtectionBackup.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryPointBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             writer.WritePropertyName("objectType"u8);
             writer.WriteStringValue(ObjectType);
             writer.WritePropertyName("restoreTargetInfo"u8);
-            writer.WriteObjectValue(RestoreTargetInfo);
+            writer.WriteObjectValue<RestoreTargetInfoBase>(RestoreTargetInfo, options);
             writer.WritePropertyName("sourceDataStoreType"u8);
             writer.WriteStringValue(SourceDataStoreType.ToString());
             if (Optional.IsDefined(SourceResourceId))
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             if (Optional.IsDefined(IdentityDetails))
             {
                 writer.WritePropertyName("identityDetails"u8);
-                writer.WriteObjectValue(IdentityDetails);
+                writer.WriteObjectValue<DataProtectionIdentityDetails>(IdentityDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupRecoveryPointBasedRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +178,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupRecoveryPointBasedRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupRecoveryPointBasedRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

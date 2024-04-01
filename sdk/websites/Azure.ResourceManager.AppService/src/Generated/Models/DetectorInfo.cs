@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -79,22 +78,31 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Id of detector. </summary>
+        [WirePath("id")]
         public string Id { get; }
         /// <summary> Name of detector. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Short description of the detector and its purpose. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> Author of the detector. </summary>
+        [WirePath("author")]
         public string Author { get; }
         /// <summary> Problem category. This serves for organizing group for detectors. </summary>
+        [WirePath("category")]
         public string Category { get; }
         /// <summary> List of Support Topics for which this detector is enabled. </summary>
+        [WirePath("supportTopicList")]
         public IReadOnlyList<DetectorSupportTopic> SupportTopicList { get; }
         /// <summary> Analysis Types for which this detector should apply to. </summary>
+        [WirePath("analysisType")]
         public IReadOnlyList<string> AnalysisType { get; }
         /// <summary> Whether this detector is an Analysis Detector or not. </summary>
+        [WirePath("type")]
         public DetectorType? DetectorType { get; }
         /// <summary> Defines score of a detector to power ML based matching. </summary>
+        [WirePath("score")]
         public float? Score { get; }
     }
 }

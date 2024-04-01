@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsApplicationGroupPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +55,7 @@ namespace Azure.ResourceManager.EventHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsApplicationGroupPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,6 +80,54 @@ namespace Azure.ResourceManager.EventHubs.Models
             return UnknownEventHubsApplicationGroupPolicy.DeserializeUnknownEventHubsApplicationGroupPolicy(element, options);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApplicationGroupPolicyType), out propertyOverride);
+            builder.Append("  type: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{ApplicationGroupPolicyType.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<EventHubsApplicationGroupPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<EventHubsApplicationGroupPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -86,8 +136,10 @@ namespace Azure.ResourceManager.EventHubs.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +155,7 @@ namespace Azure.ResourceManager.EventHubs.Models
                         return DeserializeEventHubsApplicationGroupPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventHubsApplicationGroupPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

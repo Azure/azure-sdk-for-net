@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.FluidRelay
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (options.Format != "W" && Optional.IsDefined(FluidRelayEndpoints))
             {
                 writer.WritePropertyName("fluidRelayEndpoints"u8);
-                writer.WriteObjectValue(FluidRelayEndpoints);
+                writer.WriteObjectValue<FluidRelayEndpoints>(FluidRelayEndpoints, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.FluidRelay
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<Models.EncryptionProperties>(Encryption, options);
             }
             if (Optional.IsDefined(StorageSku))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.FluidRelay
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.FluidRelay
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.FluidRelay
                         return DeserializeFluidRelayServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ResourceMover;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (ResourceSettings != null)
                 {
                     writer.WritePropertyName("resourceSettings"u8);
-                    writer.WriteObjectValue(ResourceSettings);
+                    writer.WriteObjectValue<MoverResourceSettings>(ResourceSettings, options);
                 }
                 else
                 {
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (SourceResourceSettings != null)
                 {
                     writer.WritePropertyName("sourceResourceSettings"u8);
-                    writer.WriteObjectValue(SourceResourceSettings);
+                    writer.WriteObjectValue<MoverResourceSettings>(SourceResourceSettings, options);
                 }
                 else
                 {
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             if (options.Format != "W" && Optional.IsDefined(MoveStatus))
             {
                 writer.WritePropertyName("moveStatus"u8);
-                writer.WriteObjectValue(MoveStatus);
+                writer.WriteObjectValue<MoverResourcePropertiesMoveStatus>(MoveStatus, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(DependsOn))
             {
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverResourceDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOnOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MoverResourceDependencyOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 if (Errors != null)
                 {
                     writer.WritePropertyName("errors"u8);
-                    writer.WriteObjectValue(Errors);
+                    writer.WriteObjectValue<MoveResourcePropertiesErrors>(Errors, options);
                 }
                 else
                 {
@@ -147,7 +146,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -317,7 +316,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

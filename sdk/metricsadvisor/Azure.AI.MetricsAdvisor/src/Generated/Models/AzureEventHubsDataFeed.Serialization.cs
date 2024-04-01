@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.AI.MetricsAdvisor;
 using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
@@ -19,7 +18,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("dataSourceParameter"u8);
-            writer.WriteObjectValue(DataSourceParameter);
+            writer.WriteObjectValue<AzureEventHubsParameter>(DataSourceParameter);
             writer.WritePropertyName("dataSourceType"u8);
             writer.WriteStringValue(DataSourceType.ToString());
             writer.WritePropertyName("dataFeedName"u8);
@@ -47,7 +46,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DataFeedMetric>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsCollectionDefined(Dimension))
@@ -56,7 +55,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimension)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFeedDimension>(item);
                 }
                 writer.WriteEndArray();
             }

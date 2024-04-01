@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +44,7 @@ namespace Azure.ResourceManager.Monitor.Models
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<MonitorLocalizableString>(Name, options);
             }
             if (Optional.IsDefined(DisplayDescription))
             {
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MetricAvailabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetricAvailability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorLocalizableString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -130,7 +129,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorMetricDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -306,7 +305,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorMetricDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorMetricDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

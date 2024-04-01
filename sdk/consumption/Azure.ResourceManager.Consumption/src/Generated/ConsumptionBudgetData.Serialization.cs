@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Consumption.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.Consumption
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,17 +73,17 @@ namespace Azure.ResourceManager.Consumption
             if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                writer.WriteObjectValue<BudgetTimePeriod>(TimePeriod, options);
             }
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<ConsumptionBudgetFilter>(Filter, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentSpend))
             {
                 writer.WritePropertyName("currentSpend"u8);
-                writer.WriteObjectValue(CurrentSpend);
+                writer.WriteObjectValue<BudgetCurrentSpend>(CurrentSpend, options);
             }
             if (Optional.IsCollectionDefined(Notifications))
             {
@@ -93,14 +92,14 @@ namespace Azure.ResourceManager.Consumption
                 foreach (var item in Notifications)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<BudgetAssociatedNotification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
             if (options.Format != "W" && Optional.IsDefined(ForecastSpend))
             {
                 writer.WritePropertyName("forecastSpend"u8);
-                writer.WriteObjectValue(ForecastSpend);
+                writer.WriteObjectValue<BudgetForecastSpend>(ForecastSpend, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -126,7 +125,7 @@ namespace Azure.ResourceManager.Consumption
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionBudgetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.Consumption
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -328,7 +327,7 @@ namespace Azure.ResourceManager.Consumption
                         return DeserializeConsumptionBudgetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionBudgetData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseBigDataPoolInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                writer.WriteObjectValue<BigDataPoolAutoScaleProperties>(AutoScale, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(AutoPause))
             {
                 writer.WritePropertyName("autoPause"u8);
-                writer.WriteObjectValue(AutoPause);
+                writer.WriteObjectValue<BigDataPoolAutoPauseProperties>(AutoPause, options);
             }
             if (Optional.IsDefined(IsComputeIsolationEnabled))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(DynamicExecutorAllocation))
             {
                 writer.WritePropertyName("dynamicExecutorAllocation"u8);
-                writer.WriteObjectValue(DynamicExecutorAllocation);
+                writer.WriteObjectValue<SynapseDynamicExecutorAllocation>(DynamicExecutorAllocation, options);
             }
             if (Optional.IsDefined(SparkEventsFolder))
             {
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(LibraryRequirements))
             {
                 writer.WritePropertyName("libraryRequirements"u8);
-                writer.WriteObjectValue(LibraryRequirements);
+                writer.WriteObjectValue<BigDataPoolLibraryRequirements>(LibraryRequirements, options);
             }
             if (Optional.IsCollectionDefined(CustomLibraries))
             {
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.Synapse
                 writer.WriteStartArray();
                 foreach (var item in CustomLibraries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BigDataPoolLibraryInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SparkConfigProperties))
             {
                 writer.WritePropertyName("sparkConfigProperties"u8);
-                writer.WriteObjectValue(SparkConfigProperties);
+                writer.WriteObjectValue<BigDataPoolSparkConfigProperties>(SparkConfigProperties, options);
             }
             if (Optional.IsDefined(SparkVersion))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseBigDataPoolInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -506,7 +506,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseBigDataPoolInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseBigDataPoolInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -25,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -39,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -54,60 +53,60 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("clusterSize"u8);
-            writer.WriteObjectValue(ClusterSize);
+            writer.WriteObjectValue<object>(ClusterSize);
             writer.WritePropertyName("timeToLive"u8);
-            writer.WriteObjectValue(TimeToLive);
+            writer.WriteObjectValue<object>(TimeToLive);
             writer.WritePropertyName("version"u8);
-            writer.WriteObjectValue(Version);
+            writer.WriteObjectValue<object>(Version);
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             writer.WritePropertyName("hostSubscriptionId"u8);
-            writer.WriteObjectValue(HostSubscriptionId);
+            writer.WriteObjectValue<object>(HostSubscriptionId);
             if (Optional.IsDefined(ServicePrincipalId))
             {
                 writer.WritePropertyName("servicePrincipalId"u8);
-                writer.WriteObjectValue(ServicePrincipalId);
+                writer.WriteObjectValue<object>(ServicePrincipalId);
             }
             if (Optional.IsDefined(ServicePrincipalKey))
             {
                 writer.WritePropertyName("servicePrincipalKey"u8);
-                writer.WriteObjectValue(ServicePrincipalKey);
+                writer.WriteObjectValue<SecretBase>(ServicePrincipalKey);
             }
             writer.WritePropertyName("tenant"u8);
-            writer.WriteObjectValue(Tenant);
+            writer.WriteObjectValue<object>(Tenant);
             writer.WritePropertyName("clusterResourceGroup"u8);
-            writer.WriteObjectValue(ClusterResourceGroup);
+            writer.WriteObjectValue<object>(ClusterResourceGroup);
             if (Optional.IsDefined(ClusterNamePrefix))
             {
                 writer.WritePropertyName("clusterNamePrefix"u8);
-                writer.WriteObjectValue(ClusterNamePrefix);
+                writer.WriteObjectValue<object>(ClusterNamePrefix);
             }
             if (Optional.IsDefined(ClusterUserName))
             {
                 writer.WritePropertyName("clusterUserName"u8);
-                writer.WriteObjectValue(ClusterUserName);
+                writer.WriteObjectValue<object>(ClusterUserName);
             }
             if (Optional.IsDefined(ClusterPassword))
             {
                 writer.WritePropertyName("clusterPassword"u8);
-                writer.WriteObjectValue(ClusterPassword);
+                writer.WriteObjectValue<SecretBase>(ClusterPassword);
             }
             if (Optional.IsDefined(ClusterSshUserName))
             {
                 writer.WritePropertyName("clusterSshUserName"u8);
-                writer.WriteObjectValue(ClusterSshUserName);
+                writer.WriteObjectValue<object>(ClusterSshUserName);
             }
             if (Optional.IsDefined(ClusterSshPassword))
             {
                 writer.WritePropertyName("clusterSshPassword"u8);
-                writer.WriteObjectValue(ClusterSshPassword);
+                writer.WriteObjectValue<SecretBase>(ClusterSshPassword);
             }
             if (Optional.IsCollectionDefined(AdditionalLinkedServiceNames))
             {
@@ -115,84 +114,84 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLinkedServiceNames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkedServiceReference>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(HcatalogLinkedServiceName))
             {
                 writer.WritePropertyName("hcatalogLinkedServiceName"u8);
-                writer.WriteObjectValue(HcatalogLinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(HcatalogLinkedServiceName);
             }
             if (Optional.IsDefined(ClusterType))
             {
                 writer.WritePropertyName("clusterType"u8);
-                writer.WriteObjectValue(ClusterType);
+                writer.WriteObjectValue<object>(ClusterType);
             }
             if (Optional.IsDefined(SparkVersion))
             {
                 writer.WritePropertyName("sparkVersion"u8);
-                writer.WriteObjectValue(SparkVersion);
+                writer.WriteObjectValue<object>(SparkVersion);
             }
             if (Optional.IsDefined(CoreConfiguration))
             {
                 writer.WritePropertyName("coreConfiguration"u8);
-                writer.WriteObjectValue(CoreConfiguration);
+                writer.WriteObjectValue<object>(CoreConfiguration);
             }
             if (Optional.IsDefined(HBaseConfiguration))
             {
                 writer.WritePropertyName("hBaseConfiguration"u8);
-                writer.WriteObjectValue(HBaseConfiguration);
+                writer.WriteObjectValue<object>(HBaseConfiguration);
             }
             if (Optional.IsDefined(HdfsConfiguration))
             {
                 writer.WritePropertyName("hdfsConfiguration"u8);
-                writer.WriteObjectValue(HdfsConfiguration);
+                writer.WriteObjectValue<object>(HdfsConfiguration);
             }
             if (Optional.IsDefined(HiveConfiguration))
             {
                 writer.WritePropertyName("hiveConfiguration"u8);
-                writer.WriteObjectValue(HiveConfiguration);
+                writer.WriteObjectValue<object>(HiveConfiguration);
             }
             if (Optional.IsDefined(MapReduceConfiguration))
             {
                 writer.WritePropertyName("mapReduceConfiguration"u8);
-                writer.WriteObjectValue(MapReduceConfiguration);
+                writer.WriteObjectValue<object>(MapReduceConfiguration);
             }
             if (Optional.IsDefined(OozieConfiguration))
             {
                 writer.WritePropertyName("oozieConfiguration"u8);
-                writer.WriteObjectValue(OozieConfiguration);
+                writer.WriteObjectValue<object>(OozieConfiguration);
             }
             if (Optional.IsDefined(StormConfiguration))
             {
                 writer.WritePropertyName("stormConfiguration"u8);
-                writer.WriteObjectValue(StormConfiguration);
+                writer.WriteObjectValue<object>(StormConfiguration);
             }
             if (Optional.IsDefined(YarnConfiguration))
             {
                 writer.WritePropertyName("yarnConfiguration"u8);
-                writer.WriteObjectValue(YarnConfiguration);
+                writer.WriteObjectValue<object>(YarnConfiguration);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             if (Optional.IsDefined(HeadNodeSize))
             {
                 writer.WritePropertyName("headNodeSize"u8);
-                writer.WriteObjectValue(HeadNodeSize);
+                writer.WriteObjectValue<object>(HeadNodeSize);
             }
             if (Optional.IsDefined(DataNodeSize))
             {
                 writer.WritePropertyName("dataNodeSize"u8);
-                writer.WriteObjectValue(DataNodeSize);
+                writer.WriteObjectValue<object>(DataNodeSize);
             }
             if (Optional.IsDefined(ZookeeperNodeSize))
             {
                 writer.WritePropertyName("zookeeperNodeSize"u8);
-                writer.WriteObjectValue(ZookeeperNodeSize);
+                writer.WriteObjectValue<object>(ZookeeperNodeSize);
             }
             if (Optional.IsCollectionDefined(ScriptActions))
             {
@@ -200,30 +199,30 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in ScriptActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptAction>(item);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(VirtualNetworkId))
             {
                 writer.WritePropertyName("virtualNetworkId"u8);
-                writer.WriteObjectValue(VirtualNetworkId);
+                writer.WriteObjectValue<object>(VirtualNetworkId);
             }
             if (Optional.IsDefined(SubnetName))
             {
                 writer.WritePropertyName("subnetName"u8);
-                writer.WriteObjectValue(SubnetName);
+                writer.WriteObjectValue<object>(SubnetName);
             }
             if (Optional.IsDefined(Credential))
             {
                 writer.WritePropertyName("credential"u8);
-                writer.WriteObjectValue(Credential);
+                writer.WriteObjectValue<CredentialReference>(Credential);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -681,7 +680,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, HDInsightOnDemandLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<HDInsightOnDemandLinkedService>(model);
             }
             public override HDInsightOnDemandLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

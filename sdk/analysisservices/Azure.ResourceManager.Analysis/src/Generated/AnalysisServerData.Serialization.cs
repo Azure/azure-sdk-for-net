@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Analysis
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(AnalysisSku);
+            writer.WriteObjectValue<AnalysisResourceSku>(AnalysisSku, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue(AsAdministrators);
+                writer.WriteObjectValue<ServerAdministrators>(AsAdministrators, options);
             }
             if (Optional.IsDefined(BackupBlobContainerUri))
             {
@@ -78,12 +78,12 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue(GatewayDetails);
+                writer.WriteObjectValue<AnalysisGatewayDetails>(GatewayDetails, options);
             }
             if (Optional.IsDefined(IPv4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue(IPv4FirewallSettings);
+                writer.WriteObjectValue<AnalysisIPv4FirewallSettings>(IPv4FirewallSettings, options);
             }
             if (Optional.IsDefined(QueryPoolConnectionMode))
             {
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Analysis
             if (Optional.IsDefined(AnalysisServerSku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(AnalysisServerSku);
+                writer.WriteObjectValue<AnalysisResourceSku>(AnalysisServerSku, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Analysis
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Analysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Analysis
                         return DeserializeAnalysisServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

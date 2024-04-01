@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Synapse.Models;
@@ -25,12 +24,12 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseKustoPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<SynapseDataSourceSku>(Sku, options);
             if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Synapse
             if (Optional.IsDefined(OptimizedAutoscale))
             {
                 writer.WritePropertyName("optimizedAutoscale"u8);
-                writer.WriteObjectValue(OptimizedAutoscale);
+                writer.WriteObjectValue<SynapseOptimizedAutoscale>(OptimizedAutoscale, options);
             }
             if (Optional.IsDefined(EnableStreamingIngest))
             {
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Synapse
             if (options.Format != "W" && Optional.IsDefined(LanguageExtensions))
             {
                 writer.WritePropertyName("languageExtensions"u8);
-                writer.WriteObjectValue(LanguageExtensions);
+                writer.WriteObjectValue<SynapseLanguageExtensionsList>(LanguageExtensions, options);
             }
             if (Optional.IsDefined(WorkspaceUid))
             {
@@ -145,7 +144,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseKustoPoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -374,7 +373,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -390,7 +389,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseKustoPoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseKustoPoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

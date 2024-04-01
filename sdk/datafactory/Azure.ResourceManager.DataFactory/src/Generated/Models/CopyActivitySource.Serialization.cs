@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopyActivitySource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyActivitySource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopyActivitySource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyActivitySource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,9 +93,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                     case "AmazonRedshiftSource": return AmazonRedshiftSource.DeserializeAmazonRedshiftSource(element, options);
                     case "AvroSource": return AvroSource.DeserializeAvroSource(element, options);
                     case "AzureBlobFSSource": return AzureBlobFSSource.DeserializeAzureBlobFSSource(element, options);
+                    case "AzureDatabricksDeltaLakeSource": return AzureDatabricksDeltaLakeSource.DeserializeAzureDatabricksDeltaLakeSource(element, options);
                     case "AzureDataExplorerSource": return AzureDataExplorerSource.DeserializeAzureDataExplorerSource(element, options);
                     case "AzureDataLakeStoreSource": return AzureDataLakeStoreSource.DeserializeAzureDataLakeStoreSource(element, options);
-                    case "AzureDatabricksDeltaLakeSource": return AzureDatabricksDeltaLakeSource.DeserializeAzureDatabricksDeltaLakeSource(element, options);
                     case "AzureMariaDBSource": return AzureMariaDBSource.DeserializeAzureMariaDBSource(element, options);
                     case "AzureMySqlSource": return AzureMySqlSource.DeserializeAzureMySqlSource(element, options);
                     case "AzurePostgreSqlSource": return AzurePostgreSqlSource.DeserializeAzurePostgreSqlSource(element, options);
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyActivitySource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeCopyActivitySource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyActivitySource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyActivitySource)} does not support reading '{options.Format}' format.");
             }
         }
 

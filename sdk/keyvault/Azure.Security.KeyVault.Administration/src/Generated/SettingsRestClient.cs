@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Security.KeyVault.Administration.Models;
@@ -51,7 +50,7 @@ namespace Azure.Security.KeyVault.Administration
             request.Headers.Add("Content-Type", "application/json");
             var model = new UpdateSettingRequest(value);
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<UpdateSettingRequest>(model);
             request.Content = content;
             return message;
         }

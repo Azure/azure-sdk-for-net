@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceRestoreParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,6 +36,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
+            }
+            if (Optional.IsDefined(IsRestoreWithTtlDisabled))
+            {
+                writer.WritePropertyName("restoreWithTtlDisabled"u8);
+                writer.WriteBooleanValue(IsRestoreWithTtlDisabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceRestoreParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,6 +82,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             }
             string restoreSource = default;
             DateTimeOffset? restoreTimestampInUtc = default;
+            bool? restoreWithTtlDisabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,13 +101,89 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("restoreWithTtlDisabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreWithTtlDisabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceRestoreParameters(restoreSource, restoreTimestampInUtc, serializedAdditionalRawData);
+            return new ResourceRestoreParameters(restoreSource, restoreTimestampInUtc, restoreWithTtlDisabled, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreSource), out propertyOverride);
+            if (Optional.IsDefined(RestoreSource) || hasPropertyOverride)
+            {
+                builder.Append("  restoreSource: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RestoreSource.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RestoreSource}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RestoreSource}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreTimestampInUtc), out propertyOverride);
+            if (Optional.IsDefined(RestoreTimestampInUtc) || hasPropertyOverride)
+            {
+                builder.Append("  restoreTimestampInUtc: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(RestoreTimestampInUtc.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRestoreWithTtlDisabled), out propertyOverride);
+            if (Optional.IsDefined(IsRestoreWithTtlDisabled) || hasPropertyOverride)
+            {
+                builder.Append("  restoreWithTtlDisabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsRestoreWithTtlDisabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<ResourceRestoreParameters>.Write(ModelReaderWriterOptions options)
@@ -112,8 +194,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceRestoreParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +213,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeResourceRestoreParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceRestoreParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

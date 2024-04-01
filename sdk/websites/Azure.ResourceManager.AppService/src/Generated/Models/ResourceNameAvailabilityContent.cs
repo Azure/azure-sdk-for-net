@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -77,10 +76,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Resource name to verify. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type used for verification. </summary>
+        [WirePath("type")]
         public CheckNameResourceType ResourceType { get; }
         /// <summary> Is fully qualified domain name. </summary>
+        [WirePath("isFqdn")]
         public bool? IsFqdn { get; set; }
     }
 }

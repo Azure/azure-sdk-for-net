@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +39,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in DatabasesToRestore)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatabaseRestoreResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +49,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in GremlinDatabasesToRestore)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GremlinDatabaseRestoreResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,6 +78,11 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
+            if (Optional.IsDefined(IsRestoreWithTtlDisabled))
+            {
+                writer.WritePropertyName("restoreWithTtlDisabled"u8);
+                writer.WriteBooleanValue(IsRestoreWithTtlDisabled.Value);
+            }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -100,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBAccountRestoreParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,6 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             string sourceBackupLocation = default;
             string restoreSource = default;
             DateTimeOffset? restoreTimestampInUtc = default;
+            bool? restoreWithTtlDisabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -196,6 +203,15 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     restoreTimestampInUtc = property.Value.GetDateTimeOffset("O");
                     continue;
                 }
+                if (property.NameEquals("restoreWithTtlDisabled"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    restoreWithTtlDisabled = property.Value.GetBoolean();
+                    continue;
+                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -205,12 +221,195 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new CosmosDBAccountRestoreParameters(
                 restoreSource,
                 restoreTimestampInUtc,
+                restoreWithTtlDisabled,
                 serializedAdditionalRawData,
                 restoreMode,
                 databasesToRestore ?? new ChangeTrackingList<DatabaseRestoreResourceInfo>(),
                 gremlinDatabasesToRestore ?? new ChangeTrackingList<GremlinDatabaseRestoreResourceInfo>(),
                 tablesToRestore ?? new ChangeTrackingList<string>(),
                 sourceBackupLocation);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreMode), out propertyOverride);
+            if (Optional.IsDefined(RestoreMode) || hasPropertyOverride)
+            {
+                builder.Append("  restoreMode: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RestoreMode.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DatabasesToRestore), out propertyOverride);
+            if (Optional.IsCollectionDefined(DatabasesToRestore) || hasPropertyOverride)
+            {
+                if (DatabasesToRestore.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  databasesToRestore: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in DatabasesToRestore)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  databasesToRestore: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GremlinDatabasesToRestore), out propertyOverride);
+            if (Optional.IsCollectionDefined(GremlinDatabasesToRestore) || hasPropertyOverride)
+            {
+                if (GremlinDatabasesToRestore.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  gremlinDatabasesToRestore: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in GremlinDatabasesToRestore)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  gremlinDatabasesToRestore: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TablesToRestore), out propertyOverride);
+            if (Optional.IsCollectionDefined(TablesToRestore) || hasPropertyOverride)
+            {
+                if (TablesToRestore.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  tablesToRestore: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in TablesToRestore)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SourceBackupLocation), out propertyOverride);
+            if (Optional.IsDefined(SourceBackupLocation) || hasPropertyOverride)
+            {
+                builder.Append("  sourceBackupLocation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SourceBackupLocation.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SourceBackupLocation}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SourceBackupLocation}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreSource), out propertyOverride);
+            if (Optional.IsDefined(RestoreSource) || hasPropertyOverride)
+            {
+                builder.Append("  restoreSource: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RestoreSource.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RestoreSource}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RestoreSource}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreTimestampInUtc), out propertyOverride);
+            if (Optional.IsDefined(RestoreTimestampInUtc) || hasPropertyOverride)
+            {
+                builder.Append("  restoreTimestampInUtc: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(RestoreTimestampInUtc.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRestoreWithTtlDisabled), out propertyOverride);
+            if (Optional.IsDefined(IsRestoreWithTtlDisabled) || hasPropertyOverride)
+            {
+                builder.Append("  restoreWithTtlDisabled: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsRestoreWithTtlDisabled.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CosmosDBAccountRestoreParameters>.Write(ModelReaderWriterOptions options)
@@ -221,8 +420,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -238,7 +439,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBAccountRestoreParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBAccountRestoreParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

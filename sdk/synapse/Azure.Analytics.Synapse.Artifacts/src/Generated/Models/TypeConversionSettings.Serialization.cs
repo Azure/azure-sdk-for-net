@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,32 +21,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(AllowDataTruncation))
             {
                 writer.WritePropertyName("allowDataTruncation"u8);
-                writer.WriteObjectValue(AllowDataTruncation);
+                writer.WriteObjectValue<object>(AllowDataTruncation);
             }
             if (Optional.IsDefined(TreatBooleanAsNumber))
             {
                 writer.WritePropertyName("treatBooleanAsNumber"u8);
-                writer.WriteObjectValue(TreatBooleanAsNumber);
+                writer.WriteObjectValue<object>(TreatBooleanAsNumber);
             }
             if (Optional.IsDefined(DateTimeFormat))
             {
                 writer.WritePropertyName("dateTimeFormat"u8);
-                writer.WriteObjectValue(DateTimeFormat);
+                writer.WriteObjectValue<object>(DateTimeFormat);
             }
             if (Optional.IsDefined(DateTimeOffsetFormat))
             {
                 writer.WritePropertyName("dateTimeOffsetFormat"u8);
-                writer.WriteObjectValue(DateTimeOffsetFormat);
+                writer.WriteObjectValue<object>(DateTimeOffsetFormat);
             }
             if (Optional.IsDefined(TimeSpanFormat))
             {
                 writer.WritePropertyName("timeSpanFormat"u8);
-                writer.WriteObjectValue(TimeSpanFormat);
+                writer.WriteObjectValue<object>(TimeSpanFormat);
             }
             if (Optional.IsDefined(Culture))
             {
                 writer.WritePropertyName("culture"u8);
-                writer.WriteObjectValue(Culture);
+                writer.WriteObjectValue<object>(Culture);
             }
             writer.WriteEndObject();
         }
@@ -134,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, TypeConversionSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<TypeConversionSettings>(model);
             }
             public override TypeConversionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

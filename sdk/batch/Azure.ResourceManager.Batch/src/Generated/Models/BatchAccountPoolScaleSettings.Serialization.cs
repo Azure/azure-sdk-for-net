@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Batch;
 
 namespace Azure.ResourceManager.Batch.Models
 {
@@ -23,19 +22,19 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(FixedScale))
             {
                 writer.WritePropertyName("fixedScale"u8);
-                writer.WriteObjectValue(FixedScale);
+                writer.WriteObjectValue<BatchAccountFixedScaleSettings>(FixedScale, options);
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                writer.WriteObjectValue<BatchAccountAutoScaleSettings>(AutoScale, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountPoolScaleSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

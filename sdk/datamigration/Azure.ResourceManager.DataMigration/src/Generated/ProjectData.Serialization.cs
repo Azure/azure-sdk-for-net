@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Models;
@@ -25,7 +24,7 @@ namespace Azure.ResourceManager.DataMigration
             var format = options.Format == "W" ? ((IPersistableModel<ProjectData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(AzureAuthenticationInfo))
             {
                 writer.WritePropertyName("azureAuthenticationInfo"u8);
-                writer.WriteObjectValue(AzureAuthenticationInfo);
+                writer.WriteObjectValue<AzureActiveDirectoryApp>(AzureAuthenticationInfo, options);
             }
             if (Optional.IsDefined(TargetPlatform))
             {
@@ -92,12 +91,12 @@ namespace Azure.ResourceManager.DataMigration
             if (Optional.IsDefined(SourceConnectionInfo))
             {
                 writer.WritePropertyName("sourceConnectionInfo"u8);
-                writer.WriteObjectValue(SourceConnectionInfo);
+                writer.WriteObjectValue<ConnectionInfo>(SourceConnectionInfo, options);
             }
             if (Optional.IsDefined(TargetConnectionInfo))
             {
                 writer.WritePropertyName("targetConnectionInfo"u8);
-                writer.WriteObjectValue(TargetConnectionInfo);
+                writer.WriteObjectValue<ConnectionInfo>(TargetConnectionInfo, options);
             }
             if (Optional.IsCollectionDefined(DatabasesInfo))
             {
@@ -105,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration
                 writer.WriteStartArray();
                 foreach (var item in DatabasesInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DatabaseInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -138,7 +137,7 @@ namespace Azure.ResourceManager.DataMigration
             var format = options.Format == "W" ? ((IPersistableModel<ProjectData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProjectData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProjectData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -347,7 +346,7 @@ namespace Azure.ResourceManager.DataMigration
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProjectData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -363,7 +362,7 @@ namespace Azure.ResourceManager.DataMigration
                         return DeserializeProjectData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProjectData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProjectData)} does not support reading '{options.Format}' format.");
             }
         }
 

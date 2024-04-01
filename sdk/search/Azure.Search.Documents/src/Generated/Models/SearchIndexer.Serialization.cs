@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -38,7 +37,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Schedule != null)
                 {
                     writer.WritePropertyName("schedule"u8);
-                    writer.WriteObjectValue(Schedule);
+                    writer.WriteObjectValue<IndexingSchedule>(Schedule);
                 }
                 else
                 {
@@ -50,7 +49,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Parameters != null)
                 {
                     writer.WritePropertyName("parameters"u8);
-                    writer.WriteObjectValue(Parameters);
+                    writer.WriteObjectValue<IndexingParameters>(Parameters);
                 }
                 else
                 {
@@ -63,7 +62,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in FieldMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FieldMapping>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +72,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 writer.WriteStartArray();
                 foreach (var item in OutputFieldMappings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FieldMapping>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +98,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {
@@ -111,7 +110,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (Cache != null)
                 {
                     writer.WritePropertyName("cache"u8);
-                    writer.WriteObjectValue(Cache);
+                    writer.WriteObjectValue<SearchIndexerCache>(Cache);
                 }
                 else
                 {

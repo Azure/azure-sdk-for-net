@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 writer.WriteStartArray();
                 foreach (var item in OutputImages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryImageDescriptor>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,27 +108,27 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (Optional.IsDefined(ImageUpdateTrigger))
             {
                 writer.WritePropertyName("imageUpdateTrigger"u8);
-                writer.WriteObjectValue(ImageUpdateTrigger);
+                writer.WriteObjectValue<ContainerRegistryImageUpdateTrigger>(ImageUpdateTrigger, options);
             }
             if (Optional.IsDefined(SourceTrigger))
             {
                 writer.WritePropertyName("sourceTrigger"u8);
-                writer.WriteObjectValue(SourceTrigger);
+                writer.WriteObjectValue<ContainerRegistrySourceTriggerDescriptor>(SourceTrigger, options);
             }
             if (Optional.IsDefined(TimerTrigger))
             {
                 writer.WritePropertyName("timerTrigger"u8);
-                writer.WriteObjectValue(TimerTrigger);
+                writer.WriteObjectValue<ContainerRegistryTimerTriggerDescriptor>(TimerTrigger, options);
             }
             if (Optional.IsDefined(Platform))
             {
                 writer.WritePropertyName("platform"u8);
-                writer.WriteObjectValue(Platform);
+                writer.WriteObjectValue<ContainerRegistryPlatformProperties>(Platform, options);
             }
             if (Optional.IsDefined(AgentConfiguration))
             {
                 writer.WritePropertyName("agentConfiguration"u8);
-                writer.WriteObjectValue(AgentConfiguration);
+                writer.WriteObjectValue<ContainerRegistryAgentProperties>(AgentConfiguration, options);
             }
             if (Optional.IsDefined(SourceRegistryAuth))
             {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             if (options.Format != "W" && Optional.IsDefined(LogArtifact))
             {
                 writer.WritePropertyName("logArtifact"u8);
-                writer.WriteObjectValue(LogArtifact);
+                writer.WriteObjectValue<ContainerRegistryImageDescriptor>(LogArtifact, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerRegistry
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -504,7 +504,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -520,7 +520,7 @@ namespace Azure.ResourceManager.ContainerRegistry
                         return DeserializeContainerRegistryRunData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -57,7 +56,7 @@ namespace Azure.Communication.NetworkTraversal
                 Ttl = ttl
             };
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<CommunicationRelayConfigurationRequest>(model);
             request.Content = content;
             return message;
         }

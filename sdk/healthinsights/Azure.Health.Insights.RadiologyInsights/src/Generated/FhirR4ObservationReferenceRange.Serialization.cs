@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.RadiologyInsights
@@ -23,24 +22,24 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4ObservationReferenceRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4ObservationReferenceRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4ObservationReferenceRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Low))
             {
                 writer.WritePropertyName("low"u8);
-                writer.WriteObjectValue(Low);
+                writer.WriteObjectValue<FhirR4Quantity>(Low, options);
             }
             if (Optional.IsDefined(High))
             {
                 writer.WritePropertyName("high"u8);
-                writer.WriteObjectValue(High);
+                writer.WriteObjectValue<FhirR4Quantity>(High, options);
             }
             if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
-                writer.WriteObjectValue(Type);
+                writer.WriteObjectValue<FhirR4CodeableConcept>(Type, options);
             }
             if (Optional.IsCollectionDefined(AppliesTo))
             {
@@ -48,14 +47,14 @@ namespace Azure.Health.Insights.RadiologyInsights
                 writer.WriteStartArray();
                 foreach (var item in AppliesTo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FhirR4CodeableConcept>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Age))
             {
                 writer.WritePropertyName("age"u8);
-                writer.WriteObjectValue(Age);
+                writer.WriteObjectValue<FhirR4Range>(Age, options);
             }
             if (Optional.IsDefined(Text))
             {
@@ -85,7 +84,7 @@ namespace Azure.Health.Insights.RadiologyInsights
             var format = options.Format == "W" ? ((IPersistableModel<FhirR4ObservationReferenceRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FhirR4ObservationReferenceRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FhirR4ObservationReferenceRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -190,7 +189,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4ObservationReferenceRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4ObservationReferenceRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +205,7 @@ namespace Azure.Health.Insights.RadiologyInsights
                         return DeserializeFhirR4ObservationReferenceRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FhirR4ObservationReferenceRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FhirR4ObservationReferenceRange)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -224,7 +223,7 @@ namespace Azure.Health.Insights.RadiologyInsights
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<FhirR4ObservationReferenceRange>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

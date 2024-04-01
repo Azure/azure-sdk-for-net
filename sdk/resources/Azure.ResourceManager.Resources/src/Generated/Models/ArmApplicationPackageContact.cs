@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -78,10 +77,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The contact name. </summary>
+        [WirePath("contactName")]
         public string ContactName { get; }
         /// <summary> The contact email. </summary>
+        [WirePath("email")]
         public string Email { get; }
         /// <summary> The contact phone number. </summary>
+        [WirePath("phone")]
         public string Phone { get; }
     }
 }

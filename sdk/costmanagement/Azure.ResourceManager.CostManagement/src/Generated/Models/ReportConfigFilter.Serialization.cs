@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CostManagement;
 
 namespace Azure.ResourceManager.CostManagement.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportConfigFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,19 +42,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportConfigFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue<ReportConfigComparisonExpression>(Dimensions, options);
             }
             if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue<ReportConfigComparisonExpression>(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportConfigFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +182,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeReportConfigFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportConfigFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

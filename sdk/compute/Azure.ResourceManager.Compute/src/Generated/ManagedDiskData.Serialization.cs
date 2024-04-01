@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DiskSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Zones))
             {
@@ -122,17 +122,17 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<DiskPurchasePlan>(PurchasePlan, options);
             }
             if (Optional.IsDefined(SupportedCapabilities))
             {
                 writer.WritePropertyName("supportedCapabilities"u8);
-                writer.WriteObjectValue(SupportedCapabilities);
+                writer.WriteObjectValue<SupportedCapabilities>(SupportedCapabilities, options);
             }
             if (Optional.IsDefined(CreationData))
             {
                 writer.WritePropertyName("creationData"u8);
-                writer.WriteObjectValue(CreationData);
+                writer.WriteObjectValue<DiskCreationData>(CreationData, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(EncryptionSettingsGroup))
             {
                 writer.WritePropertyName("encryptionSettingsCollection"u8);
-                writer.WriteObjectValue(EncryptionSettingsGroup);
+                writer.WriteObjectValue<EncryptionSettingsGroup>(EncryptionSettingsGroup, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<DiskEncryption>(Encryption, options);
             }
             if (Optional.IsDefined(MaxShares))
             {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.Compute
                 writer.WriteStartArray();
                 foreach (var item in ShareInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ShareInfoElement>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Compute
             if (options.Format != "W" && Optional.IsDefined(PropertyUpdatesInProgress))
             {
                 writer.WritePropertyName("propertyUpdatesInProgress"u8);
-                writer.WriteObjectValue(PropertyUpdatesInProgress);
+                writer.WriteObjectValue<PropertyUpdatesInProgress>(PropertyUpdatesInProgress, options);
             }
             if (Optional.IsDefined(SupportsHibernation))
             {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<DiskSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(CompletionPercent))
             {
@@ -293,7 +293,7 @@ namespace Azure.ResourceManager.Compute
             var format = options.Format == "W" ? ((IPersistableModel<ManagedDiskData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedDiskData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -815,7 +815,7 @@ namespace Azure.ResourceManager.Compute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -831,7 +831,7 @@ namespace Azure.ResourceManager.Compute
                         return DeserializeManagedDiskData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedDiskData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedDiskData)} does not support reading '{options.Format}' format.");
             }
         }
 

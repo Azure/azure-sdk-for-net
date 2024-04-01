@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Search;
 
 namespace Azure.ResourceManager.Search.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchAadAuthDataPlaneAuthOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +43,7 @@ namespace Azure.ResourceManager.Search.Models
             if (Optional.IsDefined(AadOrApiKey))
             {
                 writer.WritePropertyName("aadOrApiKey"u8);
-                writer.WriteObjectValue(AadOrApiKey);
+                writer.WriteObjectValue<DataPlaneAadOrApiKeyAuthOption>(AadOrApiKey, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +68,7 @@ namespace Azure.ResourceManager.Search.Models
             var format = options.Format == "W" ? ((IPersistableModel<SearchAadAuthDataPlaneAuthOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,6 +116,71 @@ namespace Azure.ResourceManager.Search.Models
             return new SearchAadAuthDataPlaneAuthOptions(apiKeyOnly, aadOrApiKey, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiKeyOnly), out propertyOverride);
+            if (Optional.IsDefined(ApiKeyOnly) || hasPropertyOverride)
+            {
+                builder.Append("  apiKeyOnly: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ApiKeyOnly.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AadOrApiKey), out propertyOverride);
+            if (Optional.IsDefined(AadOrApiKey) || hasPropertyOverride)
+            {
+                builder.Append("  aadOrApiKey: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, AadOrApiKey, options, 2, false, "  aadOrApiKey: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "AadAuthFailureMode":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("AadAuthFailureMode", item.Value);
+                        bicepOptions.PropertyOverrides.Add(AadOrApiKey, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
+
         BinaryData IPersistableModel<SearchAadAuthDataPlaneAuthOptions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SearchAadAuthDataPlaneAuthOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -123,8 +189,10 @@ namespace Azure.ResourceManager.Search.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +208,7 @@ namespace Azure.ResourceManager.Search.Models
                         return DeserializeSearchAadAuthDataPlaneAuthOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SearchAadAuthDataPlaneAuthOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

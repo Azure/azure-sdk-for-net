@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaDBInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadSapHanaDBInstanceProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadSapHanaDBInstanceProtectedItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(LastBackupErrorDetail))
             {
                 writer.WritePropertyName("lastBackupErrorDetail"u8);
-                writer.WriteObjectValue(LastBackupErrorDetail);
+                writer.WriteObjectValue<BackupErrorDetail>(LastBackupErrorDetail, options);
             }
             if (Optional.IsDefined(ProtectedItemDataSourceId))
             {
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(ExtendedInfo))
             {
                 writer.WritePropertyName("extendedInfo"u8);
-                writer.WriteObjectValue(ExtendedInfo);
+                writer.WriteObjectValue<VmWorkloadProtectedItemExtendedInfo>(ExtendedInfo, options);
             }
             if (Optional.IsCollectionDefined(KpisHealths))
             {
@@ -94,7 +93,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 foreach (var item in KpisHealths)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<KpiResourceHealthDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in NodesList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DistributedNodesInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -228,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadSapHanaDBInstanceProtectedItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadSapHanaDBInstanceProtectedItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadSapHanaDBInstanceProtectedItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -596,7 +595,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadSapHanaDBInstanceProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadSapHanaDBInstanceProtectedItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -612,7 +611,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmWorkloadSapHanaDBInstanceProtectedItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadSapHanaDBInstanceProtectedItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadSapHanaDBInstanceProtectedItem)} does not support reading '{options.Format}' format.");
             }
         }
 

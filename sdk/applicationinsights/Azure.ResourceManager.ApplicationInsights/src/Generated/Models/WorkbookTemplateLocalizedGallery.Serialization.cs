@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ApplicationInsights;
 
 namespace Azure.ResourceManager.ApplicationInsights.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateLocalizedGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -45,7 +46,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Galleries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WorkbookTemplateGallery>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateLocalizedGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,6 +126,57 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             return new WorkbookTemplateLocalizedGallery(templateData, galleries ?? new ChangeTrackingList<WorkbookTemplateGallery>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TemplateData), out propertyOverride);
+            if (Optional.IsDefined(TemplateData) || hasPropertyOverride)
+            {
+                builder.Append("  templateData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TemplateData.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Galleries), out propertyOverride);
+            if (Optional.IsCollectionDefined(Galleries) || hasPropertyOverride)
+            {
+                if (Galleries.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  galleries: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Galleries)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  galleries: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<WorkbookTemplateLocalizedGallery>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateLocalizedGallery>)this).GetFormatFromOptions(options) : options.Format;
@@ -133,8 +185,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +204,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWorkbookTemplateLocalizedGallery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplateLocalizedGallery)} does not support reading '{options.Format}' format.");
             }
         }
 

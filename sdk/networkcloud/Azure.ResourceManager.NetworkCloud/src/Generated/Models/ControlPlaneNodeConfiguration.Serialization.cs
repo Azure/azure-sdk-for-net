@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneNodeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlPlaneNodeConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlPlaneNodeConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AdministratorConfiguration))
             {
                 writer.WritePropertyName("administratorConfiguration"u8);
-                writer.WriteObjectValue(AdministratorConfiguration);
+                writer.WriteObjectValue<AdministratorConfiguration>(AdministratorConfiguration, options);
             }
             if (Optional.IsCollectionDefined(AvailabilityZones))
             {
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneNodeConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlPlaneNodeConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlPlaneNodeConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ControlPlaneNodeConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlPlaneNodeConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeControlPlaneNodeConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControlPlaneNodeConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlPlaneNodeConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

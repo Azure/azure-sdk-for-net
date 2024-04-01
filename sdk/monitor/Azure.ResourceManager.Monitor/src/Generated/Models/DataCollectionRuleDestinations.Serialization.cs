@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDestinations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in LogAnalytics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LogAnalyticsDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,14 +42,14 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in MonitoringAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitoringAccountDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(AzureMonitorMetrics))
             {
                 writer.WritePropertyName("azureMonitorMetrics"u8);
-                writer.WriteObjectValue(AzureMonitorMetrics);
+                writer.WriteObjectValue<DestinationsSpecAzureMonitorMetrics>(AzureMonitorMetrics, options);
             }
             if (Optional.IsCollectionDefined(EventHubs))
             {
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleEventHubDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in EventHubsDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleEventHubDirectDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageBlobsDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleStorageBlobDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageTablesDirect)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleStorageTableDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageAccounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataCollectionRuleStorageBlobDestination>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionRuleDestinations>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -286,7 +285,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -302,7 +301,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeDataCollectionRuleDestinations(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionRuleDestinations)} does not support reading '{options.Format}' format.");
             }
         }
 

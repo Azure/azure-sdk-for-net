@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ServiceLinker
             var format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,12 +53,12 @@ namespace Azure.ResourceManager.ServiceLinker
             if (Optional.IsDefined(TargetService))
             {
                 writer.WritePropertyName("targetService"u8);
-                writer.WriteObjectValue(TargetService);
+                writer.WriteObjectValue<TargetServiceBaseInfo>(TargetService, options);
             }
             if (Optional.IsDefined(AuthInfo))
             {
                 writer.WritePropertyName("authInfo"u8);
-                writer.WriteObjectValue(AuthInfo);
+                writer.WriteObjectValue<AuthBaseInfo>(AuthInfo, options);
             }
             if (Optional.IsDefined(ClientType))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 if (VnetSolution != null)
                 {
                     writer.WritePropertyName("vNetSolution"u8);
-                    writer.WriteObjectValue(VnetSolution);
+                    writer.WriteObjectValue<VnetSolution>(VnetSolution, options);
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 if (SecretStore != null)
                 {
                     writer.WritePropertyName("secretStore"u8);
-                    writer.WriteObjectValue(SecretStore);
+                    writer.WriteObjectValue<LinkerSecretStore>(SecretStore, options);
                 }
                 else
                 {
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ServiceLinker
             var format = options.Format == "W" ? ((IPersistableModel<LinkerResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ServiceLinker
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkerResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ServiceLinker
                         return DeserializeLinkerResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkerResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

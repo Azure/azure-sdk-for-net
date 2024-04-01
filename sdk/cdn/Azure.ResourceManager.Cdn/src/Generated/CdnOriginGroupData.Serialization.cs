@@ -25,7 +25,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<CdnOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Cdn
                 if (HealthProbeSettings != null)
                 {
                     writer.WritePropertyName("healthProbeSettings"u8);
-                    writer.WriteObjectValue(HealthProbeSettings);
+                    writer.WriteObjectValue<HealthProbeSettings>(HealthProbeSettings, options);
                 }
                 else
                 {
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.Cdn
                 if (ResponseBasedOriginErrorDetectionSettings != null)
                 {
                     writer.WritePropertyName("responseBasedOriginErrorDetectionSettings"u8);
-                    writer.WriteObjectValue(ResponseBasedOriginErrorDetectionSettings);
+                    writer.WriteObjectValue<ResponseBasedOriginErrorDetectionSettings>(ResponseBasedOriginErrorDetectionSettings, options);
                 }
                 else
                 {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<CdnOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Cdn
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.Cdn
                         return DeserializeCdnOriginGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnOriginGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

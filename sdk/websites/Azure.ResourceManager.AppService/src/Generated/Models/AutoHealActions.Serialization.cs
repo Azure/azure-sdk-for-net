@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealActions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealActions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.AppService.Models
             if (Optional.IsDefined(CustomAction))
             {
                 writer.WritePropertyName("customAction"u8);
-                writer.WriteObjectValue(CustomAction);
+                writer.WriteObjectValue<AutoHealCustomAction>(CustomAction, options);
             }
             if (Optional.IsDefined(MinProcessExecutionTime))
             {
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoHealActions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoHealActions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,6 +119,71 @@ namespace Azure.ResourceManager.AppService.Models
             return new AutoHealActions(actionType, customAction, minProcessExecutionTime, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ActionType), out propertyOverride);
+            if (Optional.IsDefined(ActionType) || hasPropertyOverride)
+            {
+                builder.Append("  actionType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ActionType.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CustomAction), out propertyOverride);
+            if (Optional.IsDefined(CustomAction) || hasPropertyOverride)
+            {
+                builder.Append("  customAction: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, CustomAction, options, 2, false, "  customAction: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MinProcessExecutionTime), out propertyOverride);
+            if (Optional.IsDefined(MinProcessExecutionTime) || hasPropertyOverride)
+            {
+                builder.Append("  minProcessExecutionTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (MinProcessExecutionTime.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{MinProcessExecutionTime}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{MinProcessExecutionTime}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AutoHealActions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AutoHealActions>)this).GetFormatFromOptions(options) : options.Format;
@@ -127,8 +192,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +211,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAutoHealActions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoHealActions)} does not support reading '{options.Format}' format.");
             }
         }
 

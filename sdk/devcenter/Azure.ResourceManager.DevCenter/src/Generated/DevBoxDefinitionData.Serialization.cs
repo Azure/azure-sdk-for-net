@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevBoxDefinitionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,12 +66,12 @@ namespace Azure.ResourceManager.DevCenter
             if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                writer.WriteObjectValue<DevCenterImageReference>(ImageReference, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DevCenterSku>(Sku, options);
             }
             if (Optional.IsDefined(OSStorageType))
             {
@@ -96,12 +96,12 @@ namespace Azure.ResourceManager.DevCenter
             if (options.Format != "W" && Optional.IsDefined(ImageValidationErrorDetails))
             {
                 writer.WritePropertyName("imageValidationErrorDetails"u8);
-                writer.WriteObjectValue(ImageValidationErrorDetails);
+                writer.WriteObjectValue<ImageValidationErrorDetails>(ImageValidationErrorDetails, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ActiveImageReference))
             {
                 writer.WritePropertyName("activeImageReference"u8);
-                writer.WriteObjectValue(ActiveImageReference);
+                writer.WriteObjectValue<DevCenterImageReference>(ActiveImageReference, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxDefinitionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxDefinitionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevBoxDefinitionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevBoxDefinitionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeDevBoxDefinitionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxDefinitionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevBoxDefinitionData)} does not support reading '{options.Format}' format.");
             }
         }
 

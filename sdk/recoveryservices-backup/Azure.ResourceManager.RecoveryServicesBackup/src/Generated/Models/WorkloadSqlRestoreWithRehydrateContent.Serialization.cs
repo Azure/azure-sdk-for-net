@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RecoveryServicesBackup;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(RecoveryPointRehydrationInfo))
             {
                 writer.WritePropertyName("recoveryPointRehydrationInfo"u8);
-                writer.WriteObjectValue(RecoveryPointRehydrationInfo);
+                writer.WriteObjectValue<RecoveryPointRehydrationInfo>(RecoveryPointRehydrationInfo, options);
             }
             if (Optional.IsDefined(ShouldUseAlternateTargetLocation))
             {
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in AlternateDirectoryPaths)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SqlDataDirectoryMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(TargetInfo))
             {
                 writer.WritePropertyName("targetInfo"u8);
-                writer.WriteObjectValue(TargetInfo);
+                writer.WriteObjectValue<TargetRestoreInfo>(TargetInfo, options);
             }
             if (Optional.IsDefined(RecoveryMode))
             {
@@ -91,12 +90,12 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             if (Optional.IsDefined(UserAssignedManagedIdentityDetails))
             {
                 writer.WritePropertyName("userAssignedManagedIdentityDetails"u8);
-                writer.WriteObjectValue(UserAssignedManagedIdentityDetails);
+                writer.WriteObjectValue<UserAssignedManagedIdentityDetails>(UserAssignedManagedIdentityDetails, options);
             }
             if (Optional.IsDefined(SnapshotRestoreParameters))
             {
                 writer.WritePropertyName("snapshotRestoreParameters"u8);
-                writer.WriteObjectValue(SnapshotRestoreParameters);
+                writer.WriteObjectValue<SnapshotRestoreContent>(SnapshotRestoreParameters, options);
             }
             if (Optional.IsDefined(TargetVirtualMachineId))
             {
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadSqlRestoreWithRehydrateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -322,7 +321,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -338,7 +337,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadSqlRestoreWithRehydrateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadSqlRestoreWithRehydrateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

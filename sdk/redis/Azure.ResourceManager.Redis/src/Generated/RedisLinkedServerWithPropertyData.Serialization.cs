@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.Redis
             var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,7 +105,7 @@ namespace Azure.ResourceManager.Redis
             var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -231,6 +232,182 @@ namespace Azure.ResourceManager.Redis
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheId), out propertyOverride);
+            if (Optional.IsDefined(LinkedRedisCacheId) || hasPropertyOverride)
+            {
+                builder.Append("    linkedRedisCacheId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{LinkedRedisCacheId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LinkedRedisCacheLocation), out propertyOverride);
+            if (Optional.IsDefined(LinkedRedisCacheLocation) || hasPropertyOverride)
+            {
+                builder.Append("    linkedRedisCacheLocation: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{LinkedRedisCacheLocation.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ServerRole), out propertyOverride);
+            if (Optional.IsDefined(ServerRole) || hasPropertyOverride)
+            {
+                builder.Append("    serverRole: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ServerRole.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(GeoReplicatedPrimaryHostName), out propertyOverride);
+            if (Optional.IsDefined(GeoReplicatedPrimaryHostName) || hasPropertyOverride)
+            {
+                builder.Append("    geoReplicatedPrimaryHostName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (GeoReplicatedPrimaryHostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{GeoReplicatedPrimaryHostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{GeoReplicatedPrimaryHostName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryHostName), out propertyOverride);
+            if (Optional.IsDefined(PrimaryHostName) || hasPropertyOverride)
+            {
+                builder.Append("    primaryHostName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (PrimaryHostName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{PrimaryHostName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{PrimaryHostName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ProvisioningState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ProvisioningState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ProvisioningState}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<RedisLinkedServerWithPropertyData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<RedisLinkedServerWithPropertyData>)this).GetFormatFromOptions(options) : options.Format;
@@ -239,8 +416,10 @@ namespace Azure.ResourceManager.Redis
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +435,7 @@ namespace Azure.ResourceManager.Redis
                         return DeserializeRedisLinkedServerWithPropertyData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisLinkedServerWithPropertyData)} does not support reading '{options.Format}' format.");
             }
         }
 

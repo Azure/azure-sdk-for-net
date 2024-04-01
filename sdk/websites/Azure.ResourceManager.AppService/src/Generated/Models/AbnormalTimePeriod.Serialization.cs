@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AbnormalTimePeriod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +44,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DetectorAbnormalTimePeriod>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +54,7 @@ namespace Azure.ResourceManager.AppService.Models
                 writer.WriteStartArray();
                 foreach (var item in Solutions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DiagnosticSolution>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -80,7 +81,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AbnormalTimePeriod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,6 +159,95 @@ namespace Azure.ResourceManager.AppService.Models
             return new AbnormalTimePeriod(startTime, endTime, events ?? new ChangeTrackingList<DetectorAbnormalTimePeriod>(), solutions ?? new ChangeTrackingList<DiagnosticSolution>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StartOn), out propertyOverride);
+            if (Optional.IsDefined(StartOn) || hasPropertyOverride)
+            {
+                builder.Append("  startTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(StartOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndOn), out propertyOverride);
+            if (Optional.IsDefined(EndOn) || hasPropertyOverride)
+            {
+                builder.Append("  endTime: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(EndOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Events), out propertyOverride);
+            if (Optional.IsCollectionDefined(Events) || hasPropertyOverride)
+            {
+                if (Events.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  events: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Events)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  events: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Solutions), out propertyOverride);
+            if (Optional.IsCollectionDefined(Solutions) || hasPropertyOverride)
+            {
+                if (Solutions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  solutions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Solutions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  solutions: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AbnormalTimePeriod>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AbnormalTimePeriod>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,8 +256,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +275,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAbnormalTimePeriod(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AbnormalTimePeriod)} does not support reading '{options.Format}' format.");
             }
         }
 

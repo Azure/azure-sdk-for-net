@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -22,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LogLevel))
             {
                 writer.WritePropertyName("logLevel"u8);
-                writer.WriteObjectValue(LogLevel);
+                writer.WriteObjectValue<object>(LogLevel);
             }
             if (Optional.IsDefined(EnableReliableLogging))
             {
                 writer.WritePropertyName("enableReliableLogging"u8);
-                writer.WriteObjectValue(EnableReliableLogging);
+                writer.WriteObjectValue<object>(EnableReliableLogging);
             }
             writer.WriteEndObject();
         }
@@ -68,7 +67,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, CopyActivityLogSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CopyActivityLogSettings>(model);
             }
             public override CopyActivityLogSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

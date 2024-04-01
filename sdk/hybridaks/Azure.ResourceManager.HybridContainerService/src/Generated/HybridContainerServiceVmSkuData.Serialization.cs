@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.HybridContainerService
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVmSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
-                writer.WriteObjectValue(ExtendedLocation);
+                writer.WriteObjectValue<HybridContainerServiceExtendedLocation>(ExtendedLocation, options);
             }
             if (options.Format != "W")
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HybridContainerServiceVmSkuProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.HybridContainerService
             var format = options.Format == "W" ? ((IPersistableModel<HybridContainerServiceVmSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.HybridContainerService
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.HybridContainerService
                         return DeserializeHybridContainerServiceVmSkuData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridContainerServiceVmSkuData)} does not support reading '{options.Format}' format.");
             }
         }
 

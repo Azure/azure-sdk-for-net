@@ -8,10 +8,11 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
-using Azure.ResourceManager.ServiceBus;
 
 namespace Azure.ResourceManager.ServiceBus.Models
 {
@@ -24,7 +25,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetVirtualNetworkRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetVirtualNetworkRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetVirtualNetworkRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +62,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetVirtualNetworkRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetVirtualNetworkRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetVirtualNetworkRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,6 +110,72 @@ namespace Azure.ResourceManager.ServiceBus.Models
             return new ServiceBusNetworkRuleSetVirtualNetworkRules(subnet, ignoreMissingVnetServiceEndpoint, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Subnet), out propertyOverride);
+            if (Optional.IsDefined(Subnet) || hasPropertyOverride)
+            {
+                builder.Append("  subnet: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Subnet, options, 2, false, "  subnet: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IgnoreMissingVnetServiceEndpoint), out propertyOverride);
+            if (Optional.IsDefined(IgnoreMissingVnetServiceEndpoint) || hasPropertyOverride)
+            {
+                builder.Append("  ignoreMissingVnetServiceEndpoint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IgnoreMissingVnetServiceEndpoint.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "SubnetId":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("Id", item.Value);
+                        bicepOptions.PropertyOverrides.Add(Subnet, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
+
         BinaryData IPersistableModel<ServiceBusNetworkRuleSetVirtualNetworkRules>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ServiceBusNetworkRuleSetVirtualNetworkRules>)this).GetFormatFromOptions(options) : options.Format;
@@ -117,8 +184,10 @@ namespace Azure.ResourceManager.ServiceBus.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetVirtualNetworkRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetVirtualNetworkRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +203,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                         return DeserializeServiceBusNetworkRuleSetVirtualNetworkRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetVirtualNetworkRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceBusNetworkRuleSetVirtualNetworkRules)} does not support reading '{options.Format}' format.");
             }
         }
 

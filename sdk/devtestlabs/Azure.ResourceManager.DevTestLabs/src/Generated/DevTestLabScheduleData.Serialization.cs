@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabScheduleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabScheduleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabScheduleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,17 +76,17 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(WeeklyRecurrence))
             {
                 writer.WritePropertyName("weeklyRecurrence"u8);
-                writer.WriteObjectValue(WeeklyRecurrence);
+                writer.WriteObjectValue<DevTestLabWeekDetails>(WeeklyRecurrence, options);
             }
             if (Optional.IsDefined(DailyRecurrence))
             {
                 writer.WritePropertyName("dailyRecurrence"u8);
-                writer.WriteObjectValue(DailyRecurrence);
+                writer.WriteObjectValue<DayDetails>(DailyRecurrence, options);
             }
             if (Optional.IsDefined(HourlyRecurrence))
             {
                 writer.WritePropertyName("hourlyRecurrence"u8);
-                writer.WriteObjectValue(HourlyRecurrence);
+                writer.WriteObjectValue<HourDetails>(HourlyRecurrence, options);
             }
             if (Optional.IsDefined(TimeZoneId))
             {
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DevTestLabs
             if (Optional.IsDefined(NotificationSettings))
             {
                 writer.WritePropertyName("notificationSettings"u8);
-                writer.WriteObjectValue(NotificationSettings);
+                writer.WriteObjectValue<DevTestLabNotificationSettings>(NotificationSettings, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DevTestLabs
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabScheduleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabScheduleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabScheduleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.DevTestLabs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabScheduleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabScheduleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.DevTestLabs
                         return DeserializeDevTestLabScheduleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabScheduleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabScheduleData)} does not support reading '{options.Format}' format.");
             }
         }
 

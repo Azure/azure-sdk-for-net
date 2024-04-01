@@ -68,6 +68,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The metadata related to the Primary Read-Write Key for the given Cosmos DB database account. </summary>
         internal AccountKeyMetadata PrimaryMasterKey { get; }
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("primaryMasterKey.generationTime")]
         public DateTimeOffset? PrimaryMasterKeyGeneratedOn
         {
             get => PrimaryMasterKey?.GeneratedOn;
@@ -76,6 +77,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The metadata related to the Secondary Read-Write Key for the given Cosmos DB database account. </summary>
         internal AccountKeyMetadata SecondaryMasterKey { get; }
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("secondaryMasterKey.generationTime")]
         public DateTimeOffset? SecondaryMasterKeyGeneratedOn
         {
             get => SecondaryMasterKey?.GeneratedOn;
@@ -84,6 +86,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The metadata related to the Primary Read-Only Key for the given Cosmos DB database account. </summary>
         internal AccountKeyMetadata PrimaryReadonlyMasterKey { get; }
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("primaryReadonlyMasterKey.generationTime")]
         public DateTimeOffset? PrimaryReadonlyMasterKeyGeneratedOn
         {
             get => PrimaryReadonlyMasterKey?.GeneratedOn;
@@ -92,6 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> The metadata related to the Secondary Read-Only Key for the given Cosmos DB database account. </summary>
         internal AccountKeyMetadata SecondaryReadonlyMasterKey { get; }
         /// <summary> Generation time in UTC of the key in ISO-8601 format. If the value is missing from the object, it means that the last key regeneration was triggered before 2022-06-18. </summary>
+        [WirePath("secondaryReadonlyMasterKey.generationTime")]
         public DateTimeOffset? SecondaryReadonlyMasterKeyGeneratedOn
         {
             get => SecondaryReadonlyMasterKey?.GeneratedOn;

@@ -8,9 +8,10 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Storage;
 
 namespace Azure.ResourceManager.Storage.Models
 {
@@ -23,7 +24,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LastAccessTimeTrackingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +73,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<LastAccessTimeTrackingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,6 +142,96 @@ namespace Azure.ResourceManager.Storage.Models
             return new LastAccessTimeTrackingPolicy(enable, name, trackingGranularityInDays, blobType ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsEnabled), out propertyOverride);
+            builder.Append("  enable: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                var boolValue = IsEnabled == true ? "true" : "false";
+                builder.AppendLine($"{boolValue}");
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Name.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TrackingGranularityInDays), out propertyOverride);
+            if (Optional.IsDefined(TrackingGranularityInDays) || hasPropertyOverride)
+            {
+                builder.Append("  trackingGranularityInDays: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{TrackingGranularityInDays.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobType), out propertyOverride);
+            if (Optional.IsCollectionDefined(BlobType) || hasPropertyOverride)
+            {
+                if (BlobType.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  blobType: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in BlobType)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<LastAccessTimeTrackingPolicy>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<LastAccessTimeTrackingPolicy>)this).GetFormatFromOptions(options) : options.Format;
@@ -149,8 +240,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -166,7 +259,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeLastAccessTimeTrackingPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LastAccessTimeTrackingPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

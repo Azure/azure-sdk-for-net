@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.FrontDoor;
 
 namespace Azure.ResourceManager.FrontDoor.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulesEngineRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulesEngineRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulesEngineRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +31,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             writer.WritePropertyName("priority"u8);
             writer.WriteNumberValue(Priority);
             writer.WritePropertyName("action"u8);
-            writer.WriteObjectValue(Action);
+            writer.WriteObjectValue<RulesEngineAction>(Action, options);
             if (Optional.IsCollectionDefined(MatchConditions))
             {
                 if (MatchConditions != null)
@@ -41,7 +40,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                     writer.WriteStartArray();
                     foreach (var item in MatchConditions)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<RulesEngineMatchCondition>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -85,7 +84,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulesEngineRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulesEngineRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulesEngineRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RulesEngineRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulesEngineRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +188,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeRulesEngineRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RulesEngineRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulesEngineRule)} does not support reading '{options.Format}' format.");
             }
         }
 

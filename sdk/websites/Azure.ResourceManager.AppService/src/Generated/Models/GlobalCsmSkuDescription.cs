@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.AppService;
 
 namespace Azure.ResourceManager.AppService.Models
 {
@@ -76,18 +75,25 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Name of the resource SKU. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Service Tier of the resource SKU. </summary>
+        [WirePath("tier")]
         public string Tier { get; }
         /// <summary> Size specifier of the resource SKU. </summary>
+        [WirePath("size")]
         public string Size { get; }
         /// <summary> Family code of the resource SKU. </summary>
+        [WirePath("family")]
         public string Family { get; }
         /// <summary> Min, max, and default scale values of the SKU. </summary>
+        [WirePath("capacity")]
         public AppServiceSkuCapacity Capacity { get; }
         /// <summary> Locations of the SKU. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<AzureLocation> Locations { get; }
         /// <summary> Capabilities of the SKU, e.g., is traffic manager enabled?. </summary>
+        [WirePath("capabilities")]
         public IReadOnlyList<AppServiceSkuCapability> Capabilities { get; }
     }
 }

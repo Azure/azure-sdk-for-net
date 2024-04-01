@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Monitor;
 
 namespace Azure.ResourceManager.Monitor.Models
 {
@@ -23,30 +22,30 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("capacity"u8);
-            writer.WriteObjectValue(Capacity);
+            writer.WriteObjectValue<MonitorScaleCapacity>(Capacity, options);
             writer.WritePropertyName("rules"u8);
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<AutoscaleRule>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(FixedDate))
             {
                 writer.WritePropertyName("fixedDate"u8);
-                writer.WriteObjectValue(FixedDate);
+                writer.WriteObjectValue<MonitorTimeWindow>(FixedDate, options);
             }
             if (Optional.IsDefined(Recurrence))
             {
                 writer.WritePropertyName("recurrence"u8);
-                writer.WriteObjectValue(Recurrence);
+                writer.WriteObjectValue<MonitorRecurrence>(Recurrence, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -71,7 +70,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeAutoscaleProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

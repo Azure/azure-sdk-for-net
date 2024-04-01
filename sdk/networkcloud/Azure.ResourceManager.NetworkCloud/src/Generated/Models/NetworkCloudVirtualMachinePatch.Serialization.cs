@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.NetworkCloud;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachinePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachinePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachinePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             if (Optional.IsDefined(VmImageRepositoryCredentials))
             {
                 writer.WritePropertyName("vmImageRepositoryCredentials"u8);
-                writer.WriteObjectValue(VmImageRepositoryCredentials);
+                writer.WriteObjectValue<ImageRepositoryCredentials>(VmImageRepositoryCredentials, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -69,7 +68,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudVirtualMachinePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachinePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudVirtualMachinePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +142,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachinePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachinePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +158,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeNetworkCloudVirtualMachinePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachinePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudVirtualMachinePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

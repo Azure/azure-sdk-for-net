@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CognitiveServices;
 
 namespace Azure.ResourceManager.CognitiveServices.Models
 {
@@ -69,12 +68,16 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> The private link resource group id. </summary>
+        [WirePath("groupId")]
         public string GroupId { get; }
         /// <summary> The private link resource required member names. </summary>
+        [WirePath("requiredMembers")]
         public IReadOnlyList<string> RequiredMembers { get; }
         /// <summary> The private link resource Private link DNS zone name. </summary>
+        [WirePath("requiredZoneNames")]
         public IList<string> RequiredZoneNames { get; }
         /// <summary> The private link resource display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; }
     }
 }

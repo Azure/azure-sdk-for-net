@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.BotService;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -25,19 +23,19 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelGetWithKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Resource))
             {
                 writer.WritePropertyName("resource"u8);
-                writer.WriteObjectValue(Resource);
+                writer.WriteObjectValue<BotChannelProperties>(Resource, options);
             }
             if (Optional.IsDefined(Setting))
             {
                 writer.WritePropertyName("setting"u8);
-                writer.WriteObjectValue(Setting);
+                writer.WriteObjectValue<BotChannelSettings>(Setting, options);
             }
             if (Optional.IsDefined(ProvisioningState))
             {
@@ -57,12 +55,12 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BotChannelProperties>(Properties, options);
             }
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<BotServiceSku>(Sku, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -147,7 +145,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotChannelGetWithKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -344,7 +342,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -360,7 +358,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotChannelGetWithKeysResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotChannelGetWithKeysResult)} does not support reading '{options.Format}' format.");
             }
         }
 

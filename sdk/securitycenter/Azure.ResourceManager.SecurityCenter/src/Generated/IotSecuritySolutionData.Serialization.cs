@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter
             if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
-                writer.WriteObjectValue(UserDefinedResources);
+                writer.WriteObjectValue<UserDefinedResourcesProperties>(UserDefinedResources, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AutoDiscoveredResources))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendationConfigurationProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WriteStartArray();
                 foreach (var item in AdditionalWorkspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdditionalWorkspacesProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeIotSecuritySolutionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewAccountData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<PurviewAccountSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Purview
             if (options.Format != "W" && Optional.IsDefined(AccountStatus))
             {
                 writer.WritePropertyName("accountStatus"u8);
-                writer.WriteObjectValue(AccountStatus);
+                writer.WriteObjectValue<PurviewAccountStatus>(AccountStatus, options);
             }
             if (Optional.IsDefined(CloudConnectors))
             {
                 writer.WritePropertyName("cloudConnectors"u8);
-                writer.WriteObjectValue(CloudConnectors);
+                writer.WriteObjectValue<CloudConnectors>(CloudConnectors, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Purview
             if (options.Format != "W" && Optional.IsDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
-                writer.WriteObjectValue(Endpoints);
+                writer.WriteObjectValue<PurviewAccountEndpoint>(Endpoints, options);
             }
             if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Purview
             if (Optional.IsDefined(IngestionStorage))
             {
                 writer.WritePropertyName("ingestionStorage"u8);
-                writer.WriteObjectValue(IngestionStorage);
+                writer.WriteObjectValue<PurviewIngestionStorage>(IngestionStorage, options);
             }
             if (Optional.IsDefined(ManagedEventHubState))
             {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Purview
             if (options.Format != "W" && Optional.IsDefined(ManagedResources))
             {
                 writer.WritePropertyName("managedResources"u8);
-                writer.WriteObjectValue(ManagedResources);
+                writer.WriteObjectValue<PurviewManagedResource>(ManagedResources, options);
             }
             if (Optional.IsDefined(ManagedResourcesPublicNetworkAccess))
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Purview
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PurviewPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewAccountData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewAccountData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Purview
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewAccountData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Purview
                         return DeserializePurviewAccountData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewAccountData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewAccountData)} does not support reading '{options.Format}' format.");
             }
         }
 

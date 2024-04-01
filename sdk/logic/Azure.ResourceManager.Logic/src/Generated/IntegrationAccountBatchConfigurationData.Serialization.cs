@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountBatchConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<IntegrationAccountBatchConfigurationProperties>(Properties, options);
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountBatchConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeIntegrationAccountBatchConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountBatchConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

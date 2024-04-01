@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,7 +22,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<Assistant>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Assistant)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Assistant)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +65,7 @@ namespace Azure.AI.OpenAI.Assistants
             writer.WriteStartArray();
             foreach (var item in Tools)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ToolDefinition>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("file_ids"u8);
@@ -114,7 +113,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<Assistant>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Assistant)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Assistant)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -257,7 +256,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Assistant)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Assistant)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +272,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeAssistant(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Assistant)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Assistant)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -291,7 +290,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<Assistant>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

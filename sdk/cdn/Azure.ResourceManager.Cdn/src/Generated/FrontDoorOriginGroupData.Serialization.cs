@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,12 +58,12 @@ namespace Azure.ResourceManager.Cdn
             if (Optional.IsDefined(LoadBalancingSettings))
             {
                 writer.WritePropertyName("loadBalancingSettings"u8);
-                writer.WriteObjectValue(LoadBalancingSettings);
+                writer.WriteObjectValue<LoadBalancingSettings>(LoadBalancingSettings, options);
             }
             if (Optional.IsDefined(HealthProbeSettings))
             {
                 writer.WritePropertyName("healthProbeSettings"u8);
-                writer.WriteObjectValue(HealthProbeSettings);
+                writer.WriteObjectValue<HealthProbeSettings>(HealthProbeSettings, options);
             }
             if (Optional.IsDefined(TrafficRestorationTimeInMinutes))
             {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorOriginGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.Cdn
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.Cdn
                         return DeserializeFrontDoorOriginGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorOriginGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

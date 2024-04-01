@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,14 +22,14 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ElasticsearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
             }
             if (Optional.IsDefined(DocumentCount))
             {
@@ -59,7 +58,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(FieldMappingOptions))
             {
                 writer.WritePropertyName("fields_mapping"u8);
-                writer.WriteObjectValue(FieldMappingOptions);
+                writer.WriteObjectValue<ElasticsearchIndexFieldMappingOptions>(FieldMappingOptions, options);
             }
             if (Optional.IsDefined(QueryType))
             {
@@ -69,7 +68,7 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(EmbeddingDependency))
             {
                 writer.WritePropertyName("embedding_dependency"u8);
-                writer.WriteObjectValue(EmbeddingDependency);
+                writer.WriteObjectValue<OnYourDataVectorizationSource>(EmbeddingDependency, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +93,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ElasticsearchChatExtensionParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -230,7 +229,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -246,7 +245,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeElasticsearchChatExtensionParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticsearchChatExtensionParameters)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -264,7 +263,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ElasticsearchChatExtensionParameters>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

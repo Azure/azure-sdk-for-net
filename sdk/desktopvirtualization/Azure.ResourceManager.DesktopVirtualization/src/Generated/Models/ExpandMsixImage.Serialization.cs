@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DesktopVirtualization;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.DesktopVirtualization.Models
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpandMsixImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     writer.WriteStartArray();
                     foreach (var item in PackageDependencies)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<MsixPackageDependencies>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -135,7 +134,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in PackageApplications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MsixPackageApplications>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpandMsixImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -372,7 +371,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -388,7 +387,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeExpandMsixImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpandMsixImage)} does not support reading '{options.Format}' format.");
             }
         }
 

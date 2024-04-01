@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.Monitor
             if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
-                writer.WriteObjectValue(Condition);
+                writer.WriteObjectValue<AlertRuleAllOfCondition>(Condition, options);
             }
             if (Optional.IsDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
-                writer.WriteObjectValue(Actions);
+                writer.WriteObjectValue<ActionList>(Actions, options);
             }
             if (Optional.IsDefined(IsEnabled))
             {
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<ActivityLogAlertData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeActivityLogAlertData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActivityLogAlertData)} does not support reading '{options.Format}' format.");
             }
         }
 

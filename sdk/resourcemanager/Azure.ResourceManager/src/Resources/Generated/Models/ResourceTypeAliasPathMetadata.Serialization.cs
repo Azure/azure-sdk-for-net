@@ -8,9 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPathMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeAliasPathMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeAliasPathMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPathMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeAliasPathMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeAliasPathMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,6 +108,49 @@ namespace Azure.ResourceManager.Resources.Models
             return new ResourceTypeAliasPathMetadata(type, attributes, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TokenType), out propertyOverride);
+            if (Optional.IsDefined(TokenType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TokenType.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Attributes), out propertyOverride);
+            if (Optional.IsDefined(Attributes) || hasPropertyOverride)
+            {
+                builder.Append("  attributes: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Attributes.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ResourceTypeAliasPathMetadata>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPathMetadata>)this).GetFormatFromOptions(options) : options.Format;
@@ -116,8 +159,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeAliasPathMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeAliasPathMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +178,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeResourceTypeAliasPathMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeAliasPathMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeAliasPathMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

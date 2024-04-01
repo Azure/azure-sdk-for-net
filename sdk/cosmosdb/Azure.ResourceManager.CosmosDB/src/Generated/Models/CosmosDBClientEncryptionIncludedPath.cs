@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.ResourceManager.CosmosDB;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -86,12 +85,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Path that needs to be encrypted. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> The identifier of the Client Encryption Key to be used to encrypt the path. </summary>
+        [WirePath("clientEncryptionKeyId")]
         public string ClientEncryptionKeyId { get; set; }
         /// <summary> The type of encryption to be performed. Eg - Deterministic, Randomized. </summary>
+        [WirePath("encryptionType")]
         public string EncryptionType { get; set; }
         /// <summary> The encryption algorithm which will be used. Eg - AEAD_AES_256_CBC_HMAC_SHA256. </summary>
+        [WirePath("encryptionAlgorithm")]
         public string EncryptionAlgorithm { get; set; }
     }
 }

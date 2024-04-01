@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Workloads;
 
 namespace Azure.ResourceManager.Workloads.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrometheusOSProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +71,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrometheusOSProviderInstanceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +156,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializePrometheusOSProviderInstanceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrometheusOSProviderInstanceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

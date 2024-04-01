@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NamespaceSku>(Sku, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridPrivateEndpointConnectionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.EventGrid
             if (Optional.IsDefined(TopicsConfiguration))
             {
                 writer.WritePropertyName("topicsConfiguration"u8);
-                writer.WriteObjectValue(TopicsConfiguration);
+                writer.WriteObjectValue<TopicsConfiguration>(TopicsConfiguration, options);
             }
             if (Optional.IsDefined(TopicSpacesConfiguration))
             {
                 writer.WritePropertyName("topicSpacesConfiguration"u8);
-                writer.WriteObjectValue(TopicSpacesConfiguration);
+                writer.WriteObjectValue<TopicSpacesConfiguration>(TopicSpacesConfiguration, options);
             }
             if (Optional.IsDefined(IsZoneRedundant))
             {
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.EventGrid
                 writer.WriteStartArray();
                 foreach (var item in InboundIPRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EventGridInboundIPRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.EventGrid
             var format = options.Format == "W" ? ((IPersistableModel<EventGridNamespaceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.EventGrid
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.EventGrid
                         return DeserializeEventGridNamespaceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridNamespaceData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilterActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilterActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilterActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -52,7 +51,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,16 +61,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("items"u8);
-            writer.WriteObjectValue(Items);
+            writer.WriteObjectValue<DataFactoryExpression>(Items, options);
             writer.WritePropertyName("condition"u8);
-            writer.WriteObjectValue(Condition);
+            writer.WriteObjectValue<DataFactoryExpression>(Condition, options);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
@@ -93,7 +92,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilterActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilterActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilterActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FilterActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilterActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +244,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeFilterActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilterActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilterActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

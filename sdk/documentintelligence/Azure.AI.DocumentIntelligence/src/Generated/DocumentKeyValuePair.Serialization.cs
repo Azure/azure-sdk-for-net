@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,16 +22,16 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentKeyValuePair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentKeyValuePair)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentKeyValuePair)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("key"u8);
-            writer.WriteObjectValue(Key);
+            writer.WriteObjectValue<DocumentKeyValueElement>(Key, options);
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue<DocumentKeyValueElement>(Value, options);
             }
             writer.WritePropertyName("confidence"u8);
             writer.WriteNumberValue(Confidence);
@@ -59,7 +58,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentKeyValuePair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentKeyValuePair)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentKeyValuePair)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +117,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentKeyValuePair)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentKeyValuePair)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +133,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentKeyValuePair(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentKeyValuePair)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentKeyValuePair)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -152,7 +151,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentKeyValuePair>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

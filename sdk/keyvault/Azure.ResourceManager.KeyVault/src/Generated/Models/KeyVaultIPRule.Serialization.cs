@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultIPRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultIPRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +52,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultIPRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultIPRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,6 +86,43 @@ namespace Azure.ResourceManager.KeyVault.Models
             return new KeyVaultIPRule(value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AddressRange), out propertyOverride);
+            if (Optional.IsDefined(AddressRange) || hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AddressRange.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AddressRange}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AddressRange}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<KeyVaultIPRule>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultIPRule>)this).GetFormatFromOptions(options) : options.Format;
@@ -93,8 +131,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultIPRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultIPRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +150,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeKeyVaultIPRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultIPRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultIPRule)} does not support reading '{options.Format}' format.");
             }
         }
 

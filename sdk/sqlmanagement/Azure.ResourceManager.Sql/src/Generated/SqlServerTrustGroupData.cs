@@ -74,8 +74,10 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> Group members information for the server trust group. </summary>
+        [WirePath("properties.groupMembers")]
         public IList<ServerTrustGroupServerInfo> GroupMembers { get; }
         /// <summary> Trust scope of the server trust group. </summary>
+        [WirePath("properties.trustScopes")]
         public IList<ServerTrustGroupPropertiesTrustScopesItem> TrustScopes { get; }
     }
 }

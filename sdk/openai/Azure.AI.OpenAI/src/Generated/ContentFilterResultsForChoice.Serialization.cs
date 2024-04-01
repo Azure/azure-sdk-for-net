@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,34 +22,34 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultsForChoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sexual))
             {
                 writer.WritePropertyName("sexual"u8);
-                writer.WriteObjectValue(Sexual);
+                writer.WriteObjectValue<ContentFilterResult>(Sexual, options);
             }
             if (Optional.IsDefined(Violence))
             {
                 writer.WritePropertyName("violence"u8);
-                writer.WriteObjectValue(Violence);
+                writer.WriteObjectValue<ContentFilterResult>(Violence, options);
             }
             if (Optional.IsDefined(Hate))
             {
                 writer.WritePropertyName("hate"u8);
-                writer.WriteObjectValue(Hate);
+                writer.WriteObjectValue<ContentFilterResult>(Hate, options);
             }
             if (Optional.IsDefined(SelfHarm))
             {
                 writer.WritePropertyName("self_harm"u8);
-                writer.WriteObjectValue(SelfHarm);
+                writer.WriteObjectValue<ContentFilterResult>(SelfHarm, options);
             }
             if (Optional.IsDefined(Profanity))
             {
                 writer.WritePropertyName("profanity"u8);
-                writer.WriteObjectValue(Profanity);
+                writer.WriteObjectValue<ContentFilterDetectionResult>(Profanity, options);
             }
             if (Optional.IsCollectionDefined(CustomBlocklists))
             {
@@ -58,7 +57,7 @@ namespace Azure.AI.OpenAI
                 writer.WriteStartArray();
                 foreach (var item in CustomBlocklists)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContentFilterBlocklistIdResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,12 +69,12 @@ namespace Azure.AI.OpenAI
             if (Optional.IsDefined(ProtectedMaterialText))
             {
                 writer.WritePropertyName("protected_material_text"u8);
-                writer.WriteObjectValue(ProtectedMaterialText);
+                writer.WriteObjectValue<ContentFilterDetectionResult>(ProtectedMaterialText, options);
             }
             if (Optional.IsDefined(ProtectedMaterialCode))
             {
                 writer.WritePropertyName("protected_material_code"u8);
-                writer.WriteObjectValue(ProtectedMaterialCode);
+                writer.WriteObjectValue<ContentFilterCitedDetectionResult>(ProtectedMaterialCode, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +99,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<ContentFilterResultsForChoice>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -242,7 +241,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +257,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeContentFilterResultsForChoice(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentFilterResultsForChoice)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -276,7 +275,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ContentFilterResultsForChoice>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

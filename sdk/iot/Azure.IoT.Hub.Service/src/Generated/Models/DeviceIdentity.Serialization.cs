@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using Azure.Core;
-using Azure.IoT.Hub.Service;
 
 namespace Azure.IoT.Hub.Service.Models
 {
@@ -70,12 +69,12 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
-                writer.WriteObjectValue(Authentication);
+                writer.WriteObjectValue<AuthenticationMechanism>(Authentication);
             }
             if (Optional.IsDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
-                writer.WriteObjectValue(Capabilities);
+                writer.WriteObjectValue<DeviceCapabilities>(Capabilities);
             }
             if (Optional.IsDefined(DeviceScope))
             {

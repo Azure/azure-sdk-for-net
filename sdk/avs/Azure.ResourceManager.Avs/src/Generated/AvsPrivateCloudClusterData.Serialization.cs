@@ -24,12 +24,12 @@ namespace Azure.ResourceManager.Avs
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
+            writer.WriteObjectValue<AvsSku>(Sku, options);
             if (options.Format != "W")
             {
                 writer.WritePropertyName("id"u8);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Avs
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudClusterData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Avs
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.Avs
                         return DeserializeAvsPrivateCloudClusterData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudClusterData)} does not support reading '{options.Format}' format.");
             }
         }
 

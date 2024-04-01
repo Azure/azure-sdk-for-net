@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearning;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<OnlineInferenceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (LivenessRoute != null)
                 {
                     writer.WritePropertyName("livenessRoute"u8);
-                    writer.WriteObjectValue(LivenessRoute);
+                    writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(LivenessRoute, options);
                 }
                 else
                 {
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ReadinessRoute != null)
                 {
                     writer.WritePropertyName("readinessRoute"u8);
-                    writer.WriteObjectValue(ReadinessRoute);
+                    writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(ReadinessRoute, options);
                 }
                 else
                 {
@@ -86,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 if (ScoringRoute != null)
                 {
                     writer.WritePropertyName("scoringRoute"u8);
-                    writer.WriteObjectValue(ScoringRoute);
+                    writer.WriteObjectValue<MachineLearningInferenceContainerRoute>(ScoringRoute, options);
                 }
                 else
                 {
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<OnlineInferenceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +218,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +234,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeOnlineInferenceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnlineInferenceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

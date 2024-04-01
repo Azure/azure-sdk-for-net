@@ -70,16 +70,22 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Name of annotation. </summary>
+        [WirePath("AnnotationName")]
         public string AnnotationName { get; set; }
         /// <summary> Category of annotation, free form. </summary>
+        [WirePath("Category")]
         public string Category { get; set; }
         /// <summary> Time when event occurred. </summary>
+        [WirePath("EventTime")]
         public DateTimeOffset? EventOn { get; set; }
         /// <summary> Unique Id for annotation. </summary>
+        [WirePath("Id")]
         public string Id { get; set; }
         /// <summary> Serialized JSON object for detailed properties. </summary>
+        [WirePath("Properties")]
         public string Properties { get; set; }
         /// <summary> Related parent annotation if any. </summary>
+        [WirePath("RelatedAnnotation")]
         public string RelatedAnnotation { get; set; }
     }
 }

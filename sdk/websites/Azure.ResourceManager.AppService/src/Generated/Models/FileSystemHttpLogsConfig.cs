@@ -76,14 +76,17 @@ namespace Azure.ResourceManager.AppService.Models
         /// When reached old log files will be removed to make space for new ones.
         /// Value can range between 25 and 100.
         /// </summary>
+        [WirePath("retentionInMb")]
         public int? RetentionInMb { get; set; }
         /// <summary>
         /// Retention in days.
         /// Remove files older than X days.
         /// 0 or lower means no retention.
         /// </summary>
+        [WirePath("retentionInDays")]
         public int? RetentionInDays { get; set; }
         /// <summary> True if configuration is enabled, false if it is disabled and null if configuration is not set. </summary>
+        [WirePath("enabled")]
         public bool? IsEnabled { get; set; }
     }
 }

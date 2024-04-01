@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,12 +36,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters);
+                writer.WriteObjectValue<WindowsParameters>(WindowsParameters, options);
             }
             if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters);
+                writer.WriteObjectValue<LinuxParameters>(LinuxParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineInstallPatchesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstallPatchesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

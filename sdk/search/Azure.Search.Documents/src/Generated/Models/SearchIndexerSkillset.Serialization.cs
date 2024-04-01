@@ -8,7 +8,6 @@
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.Search.Documents;
 
 namespace Azure.Search.Documents.Indexes.Models
 {
@@ -28,23 +27,23 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Skills)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchIndexerSkill>(item);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(CognitiveServicesAccount))
             {
                 writer.WritePropertyName("cognitiveServices"u8);
-                writer.WriteObjectValue(CognitiveServicesAccount);
+                writer.WriteObjectValue<CognitiveServicesAccount>(CognitiveServicesAccount);
             }
             if (Optional.IsDefined(KnowledgeStore))
             {
                 writer.WritePropertyName("knowledgeStore"u8);
-                writer.WriteObjectValue(KnowledgeStore);
+                writer.WriteObjectValue<KnowledgeStore>(KnowledgeStore);
             }
             if (Optional.IsDefined(IndexProjections))
             {
                 writer.WritePropertyName("indexProjections"u8);
-                writer.WriteObjectValue(IndexProjections);
+                writer.WriteObjectValue<SearchIndexerIndexProjections>(IndexProjections);
             }
             if (Optional.IsDefined(_etag))
             {
@@ -56,7 +55,7 @@ namespace Azure.Search.Documents.Indexes.Models
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {

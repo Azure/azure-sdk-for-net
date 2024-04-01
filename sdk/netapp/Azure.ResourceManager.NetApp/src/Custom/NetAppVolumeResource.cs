@@ -4,11 +4,16 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using Autorest.CSharp.Core;
+using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.ResourceManager;
 using Azure.ResourceManager.NetApp.Models;
 
 namespace Azure.ResourceManager.NetApp
@@ -21,12 +26,23 @@ namespace Azure.ResourceManager.NetApp
     /// </summary>
     public partial class NetAppVolumeResource : ArmResource
     {
+        private VaultsRestOperations _vaultsRestClient;
+        private ClientDiagnostics _vaultsClientDiagnostics;
+
+        private ClientDiagnostics VaultsClientDiagnostics => _vaultsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
+        private VaultsRestOperations VaultsRestClient => _vaultsRestClient ??= new VaultsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppAccountResource.ResourceType));
+
+        private string GetApiVersionOrNull(ResourceType resourceType)
+        {
+            TryGetApiVersion(resourceType, out string apiVersion);
+            return apiVersion;
+        }
+
         private BackupsRestOperations _netAppVolumeBackupBackupsRestClient;
         private ClientDiagnostics _netAppVolumeBackupBackupsClientDiagnostics;
 
         private ClientDiagnostics NetAppVolumeBackupBackupsClientDiagnostics => _netAppVolumeBackupBackupsClientDiagnostics ??= new ClientDiagnostics("Azure.ResourceManager.NetApp", NetAppAccountResource.ResourceType.Namespace, Diagnostics);
-        // The Backups_GetStatus operation was removed after 2022-11-01
-        private BackupsRestOperations NetAppVolumeBackupBackupsRestClient => _netAppVolumeBackupBackupsRestClient ??= new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, "2022-11-01");
+        private BackupsRestOperations NetAppVolumeBackupBackupsRestClient => _netAppVolumeBackupBackupsRestClient ??= new BackupsRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, GetApiVersionOrNull(NetAppAccountResource.ResourceType));
 
         /// <summary> Gets a collection of NetAppVolumeBackupResources in the NetAppVolume. </summary>
         /// <returns> An object representing collection of NetAppVolumeBackupResources and their operations over a NetAppVolumeBackupResource. </returns>

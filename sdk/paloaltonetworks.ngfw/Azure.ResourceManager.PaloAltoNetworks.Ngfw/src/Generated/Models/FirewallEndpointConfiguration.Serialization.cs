@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallEndpointConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallEndpointConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("port"u8);
             writer.WriteStringValue(Port);
             writer.WritePropertyName("address"u8);
-            writer.WriteObjectValue(Address);
+            writer.WriteObjectValue<IPAddressInfo>(Address, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallEndpointConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallEndpointConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallEndpointConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallEndpointConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallEndpointConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallEndpointConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallEndpointConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallEndpointConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -24,14 +23,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteWranglingDataflowActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -58,7 +57,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,28 +67,28 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("dataFlow"u8);
-            writer.WriteObjectValue(DataFlow);
+            writer.WriteObjectValue<DataFlowReference>(DataFlow, options);
             if (Optional.IsDefined(Staging))
             {
                 writer.WritePropertyName("staging"u8);
-                writer.WriteObjectValue(Staging);
+                writer.WriteObjectValue<DataFlowStagingInfo>(Staging, options);
             }
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(IntegrationRuntime, options);
             }
             if (Optional.IsDefined(Compute))
             {
                 writer.WritePropertyName("compute"u8);
-                writer.WriteObjectValue(Compute);
+                writer.WriteObjectValue<ExecuteDataFlowActivityComputeType>(Compute, options);
             }
             if (Optional.IsDefined(TraceLevel))
             {
@@ -118,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 foreach (var item in Sinks)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<PowerQuerySink>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Queries)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PowerQuerySinkMapping>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteWranglingDataflowActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -402,7 +401,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -418,7 +417,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeExecuteWranglingDataflowActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteWranglingDataflowActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

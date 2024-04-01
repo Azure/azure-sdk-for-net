@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopySink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopySink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopySink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopySink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopySink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -100,9 +99,9 @@ namespace Azure.ResourceManager.DataFactory.Models
                 {
                     case "AvroSink": return AvroSink.DeserializeAvroSink(element, options);
                     case "AzureBlobFSSink": return AzureBlobFSSink.DeserializeAzureBlobFSSink(element, options);
+                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element, options);
                     case "AzureDataExplorerSink": return AzureDataExplorerSink.DeserializeAzureDataExplorerSink(element, options);
                     case "AzureDataLakeStoreSink": return AzureDataLakeStoreSink.DeserializeAzureDataLakeStoreSink(element, options);
-                    case "AzureDatabricksDeltaLakeSink": return AzureDatabricksDeltaLakeSink.DeserializeAzureDatabricksDeltaLakeSink(element, options);
                     case "AzureMySqlSink": return AzureMySqlSink.DeserializeAzureMySqlSink(element, options);
                     case "AzurePostgreSqlSink": return AzurePostgreSqlSink.DeserializeAzurePostgreSqlSink(element, options);
                     case "AzureQueueSink": return AzureQueueSink.DeserializeAzureQueueSink(element, options);
@@ -156,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CopySink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopySink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeCopySink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopySink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopySink)} does not support reading '{options.Format}' format.");
             }
         }
 

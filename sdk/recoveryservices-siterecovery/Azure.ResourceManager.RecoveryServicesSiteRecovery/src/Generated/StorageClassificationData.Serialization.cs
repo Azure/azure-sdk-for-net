@@ -24,14 +24,14 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             var format = options.Format == "W" ? ((IPersistableModel<StorageClassificationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageClassificationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageClassificationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<StorageClassificationProperties>(Properties, options);
             }
             if (Optional.IsDefined(Location))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
             var format = options.Format == "W" ? ((IPersistableModel<StorageClassificationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageClassificationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageClassificationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageClassificationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageClassificationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery
                         return DeserializeStorageClassificationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageClassificationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageClassificationData)} does not support reading '{options.Format}' format.");
             }
         }
 

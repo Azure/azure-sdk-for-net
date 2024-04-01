@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.RedisEnterprise;
 
 namespace Azure.ResourceManager.RedisEnterprise.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             if (Optional.IsDefined(Persistence))
             {
                 writer.WritePropertyName("persistence"u8);
-                writer.WriteObjectValue(Persistence);
+                writer.WriteObjectValue<RedisPersistenceSettings>(Persistence, options);
             }
             if (Optional.IsCollectionDefined(Modules))
             {
@@ -70,14 +69,14 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 writer.WriteStartArray();
                 foreach (var item in Modules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RedisEnterpriseModule>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(GeoReplication))
             {
                 writer.WritePropertyName("geoReplication"u8);
-                writer.WriteObjectValue(GeoReplication);
+                writer.WriteObjectValue<RedisEnterpriseDatabaseGeoReplication>(GeoReplication, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisEnterpriseDatabasePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -257,7 +256,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +272,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         return DeserializeRedisEnterpriseDatabasePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisEnterpriseDatabasePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

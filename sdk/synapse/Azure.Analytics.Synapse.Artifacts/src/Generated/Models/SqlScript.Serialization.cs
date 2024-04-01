@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Analytics.Synapse.Artifacts;
 using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
@@ -31,13 +30,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(Type.Value.ToString());
             }
             writer.WritePropertyName("content"u8);
-            writer.WriteObjectValue(Content);
+            writer.WriteObjectValue<SqlScriptContent>(Content);
             if (Optional.IsDefined(Folder))
             {
                 if (Folder != null)
                 {
                     writer.WritePropertyName("folder"u8);
-                    writer.WriteObjectValue(Folder);
+                    writer.WriteObjectValue<SqlScriptFolder>(Folder);
                 }
                 else
                 {
@@ -47,7 +46,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -105,7 +104,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SqlScript model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SqlScript>(model);
             }
             public override SqlScript Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

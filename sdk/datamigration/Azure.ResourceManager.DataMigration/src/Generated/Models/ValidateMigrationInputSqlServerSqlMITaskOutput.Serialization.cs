@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DataMigration;
 
 namespace Azure.ResourceManager.DataMigration.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in RestoreDatabaseNameErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupFolderErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupShareCredentialsErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -73,7 +72,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in BackupStorageAccountErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -83,14 +82,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExistingBackupErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(DatabaseBackupInfo))
             {
                 writer.WritePropertyName("databaseBackupInfo"u8);
-                writer.WriteObjectValue(DatabaseBackupInfo);
+                writer.WriteObjectValue<DatabaseBackupInfo>(DatabaseBackupInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -115,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ValidateMigrationInputSqlServerSqlMITaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -258,7 +257,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +273,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeValidateMigrationInputSqlServerSqlMITaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ValidateMigrationInputSqlServerSqlMITaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 
