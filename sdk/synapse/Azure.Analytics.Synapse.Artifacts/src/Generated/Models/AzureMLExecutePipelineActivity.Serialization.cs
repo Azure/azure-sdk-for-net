@@ -278,6 +278,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 continueOnStepFailure);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureMLExecutePipelineActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureMLExecutePipelineActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureMLExecutePipelineActivity>(this);
+            return content;
+        }
+
         internal partial class AzureMLExecutePipelineActivityConverter : JsonConverter<AzureMLExecutePipelineActivity>
         {
             public override void Write(Utf8JsonWriter writer, AzureMLExecutePipelineActivity model, JsonSerializerOptions options)

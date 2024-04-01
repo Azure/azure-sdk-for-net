@@ -218,6 +218,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 entityName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CommonDataServiceForAppsEntityDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCommonDataServiceForAppsEntityDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CommonDataServiceForAppsEntityDataset>(this);
+            return content;
+        }
+
         internal partial class CommonDataServiceForAppsEntityDatasetConverter : JsonConverter<CommonDataServiceForAppsEntityDataset>
         {
             public override void Write(Utf8JsonWriter writer, CommonDataServiceForAppsEntityDataset model, JsonSerializerOptions options)

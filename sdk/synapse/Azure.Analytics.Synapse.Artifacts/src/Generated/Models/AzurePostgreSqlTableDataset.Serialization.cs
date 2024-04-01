@@ -250,6 +250,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 schema0);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzurePostgreSqlTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzurePostgreSqlTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzurePostgreSqlTableDataset>(this);
+            return content;
+        }
+
         internal partial class AzurePostgreSqlTableDatasetConverter : JsonConverter<AzurePostgreSqlTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, AzurePostgreSqlTableDataset model, JsonSerializerOptions options)

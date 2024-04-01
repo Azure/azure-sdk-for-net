@@ -42,6 +42,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkTableListResponse(value ?? new ChangeTrackingList<LinkTableResource>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkTableListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkTableListResponse(document.RootElement);
+        }
+
         internal partial class LinkTableListResponseConverter : JsonConverter<LinkTableListResponse>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableListResponse model, JsonSerializerOptions options)

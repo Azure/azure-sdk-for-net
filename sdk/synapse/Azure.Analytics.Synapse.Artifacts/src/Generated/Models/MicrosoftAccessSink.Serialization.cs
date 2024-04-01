@@ -149,6 +149,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 preCopyScript);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MicrosoftAccessSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMicrosoftAccessSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MicrosoftAccessSink>(this);
+            return content;
+        }
+
         internal partial class MicrosoftAccessSinkConverter : JsonConverter<MicrosoftAccessSink>
         {
             public override void Write(Utf8JsonWriter writer, MicrosoftAccessSink model, JsonSerializerOptions options)

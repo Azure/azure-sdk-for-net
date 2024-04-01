@@ -234,6 +234,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 keyspace);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CassandraTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCassandraTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CassandraTableDataset>(this);
+            return content;
+        }
+
         internal partial class CassandraTableDatasetConverter : JsonConverter<CassandraTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, CassandraTableDataset model, JsonSerializerOptions options)

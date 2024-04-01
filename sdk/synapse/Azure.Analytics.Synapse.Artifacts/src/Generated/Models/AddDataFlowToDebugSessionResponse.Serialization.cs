@@ -32,6 +32,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AddDataFlowToDebugSessionResponse(jobVersion);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AddDataFlowToDebugSessionResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAddDataFlowToDebugSessionResponse(document.RootElement);
+        }
+
         internal partial class AddDataFlowToDebugSessionResponseConverter : JsonConverter<AddDataFlowToDebugSessionResponse>
         {
             public override void Write(Utf8JsonWriter writer, AddDataFlowToDebugSessionResponse model, JsonSerializerOptions options)

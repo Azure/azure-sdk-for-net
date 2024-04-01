@@ -162,5 +162,13 @@ namespace Azure.Analytics.Synapse.Monitoring.Models
                 runningDuration,
                 totalDuration);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkJob FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkJob(document.RootElement);
+        }
     }
 }

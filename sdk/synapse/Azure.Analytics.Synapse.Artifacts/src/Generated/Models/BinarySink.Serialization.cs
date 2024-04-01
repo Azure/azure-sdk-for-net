@@ -149,6 +149,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 storeSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new BinarySink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBinarySink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<BinarySink>(this);
+            return content;
+        }
+
         internal partial class BinarySinkConverter : JsonConverter<BinarySink>
         {
             public override void Write(Utf8JsonWriter writer, BinarySink model, JsonSerializerOptions options)

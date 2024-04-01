@@ -62,6 +62,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new NotebookLanguageInfo(name, codemirrorMode, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookLanguageInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebookLanguageInfo(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<NotebookLanguageInfo>(this);
+            return content;
+        }
+
         internal partial class NotebookLanguageInfoConverter : JsonConverter<NotebookLanguageInfo>
         {
             public override void Write(Utf8JsonWriter writer, NotebookLanguageInfo model, JsonSerializerOptions options)

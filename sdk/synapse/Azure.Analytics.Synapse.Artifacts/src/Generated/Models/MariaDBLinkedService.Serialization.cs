@@ -209,6 +209,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MariaDBLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMariaDBLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MariaDBLinkedService>(this);
+            return content;
+        }
+
         internal partial class MariaDBLinkedServiceConverter : JsonConverter<MariaDBLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, MariaDBLinkedService model, JsonSerializerOptions options)

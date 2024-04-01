@@ -66,6 +66,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new TarReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new TarReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTarReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TarReadSettings>(this);
+            return content;
+        }
+
         internal partial class TarReadSettingsConverter : JsonConverter<TarReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, TarReadSettings model, JsonSerializerOptions options)

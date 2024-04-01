@@ -149,6 +149,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 query);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AmazonMWSSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAmazonMWSSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AmazonMWSSource>(this);
+            return content;
+        }
+
         internal partial class AmazonMWSSourceConverter : JsonConverter<AmazonMWSSource>
         {
             public override void Write(Utf8JsonWriter writer, AmazonMWSSource model, JsonSerializerOptions options)

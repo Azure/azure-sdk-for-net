@@ -245,6 +245,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 modifiedDatetimeEnd);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureDataLakeStoreReadSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDataLakeStoreReadSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureDataLakeStoreReadSettings>(this);
+            return content;
+        }
+
         internal partial class AzureDataLakeStoreReadSettingsConverter : JsonConverter<AzureDataLakeStoreReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, AzureDataLakeStoreReadSettings model, JsonSerializerOptions options)

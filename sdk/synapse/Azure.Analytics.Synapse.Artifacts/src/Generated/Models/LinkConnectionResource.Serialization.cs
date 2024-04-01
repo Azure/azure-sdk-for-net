@@ -85,6 +85,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkConnectionResource(id, name, type, properties, description);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionResource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionResource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LinkConnectionResource>(this);
+            return content;
+        }
+
         internal partial class LinkConnectionResourceConverter : JsonConverter<LinkConnectionResource>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionResource model, JsonSerializerOptions options)
