@@ -13,7 +13,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
     /// <summary>
     /// Base class of the specific document types.
     /// Please note <see cref="DocumentIngress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-    /// The available derived classes include <see cref="Request"/>, <see cref="RemoteDependency"/>, <see cref="Exception"/>, <see cref="Event"/> and <see cref="Trace"/>.
+    /// The available derived classes include <see cref="Event"/>, <see cref="Exception"/>, <see cref="RemoteDependency"/>, <see cref="Request"/> and <see cref="Trace"/>.
     /// </summary>
     internal abstract partial class DocumentIngress
     {

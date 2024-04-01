@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +59,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +132,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +148,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                         return DeserializeServiceError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceError)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -168,7 +166,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ServiceError>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

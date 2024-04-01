@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CollectionConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectionConfigurationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CollectionConfigurationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,20 +32,20 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DerivedMetricInfo>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("DocumentStreams"u8);
             writer.WriteStartArray();
             foreach (var item in DocumentStreams)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentStreamInfo>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(QuotaInfo))
             {
                 writer.WritePropertyName("QuotaInfo"u8);
-                writer.WriteObjectValue(QuotaInfo);
+                writer.WriteObjectValue<QuotaConfigurationInfo>(QuotaInfo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +70,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<CollectionConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectionConfigurationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CollectionConfigurationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +145,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CollectionConfigurationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CollectionConfigurationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +161,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                         return DeserializeCollectionConfigurationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CollectionConfigurationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CollectionConfigurationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -181,7 +179,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CollectionConfigurationInfo>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
@@ -23,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<Exception>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Exception)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Exception)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -55,7 +54,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 writer.WriteStartArray();
                 foreach (var item in Properties)
                 {
-                    writer.WriteObjectValue<KeyValuePairString>(item);
+                    writer.WriteObjectValue<KeyValuePairStringString>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,7 +81,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<Exception>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Exception)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Exception)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +172,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Exception)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Exception)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +188,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                         return DeserializeException(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Exception)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Exception)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -207,7 +206,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<Exception>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

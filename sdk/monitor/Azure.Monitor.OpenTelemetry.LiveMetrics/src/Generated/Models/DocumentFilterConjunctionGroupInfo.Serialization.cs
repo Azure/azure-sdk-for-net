@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -24,14 +22,14 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFilterConjunctionGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("TelemetryType"u8);
             writer.WriteStringValue(TelemetryType.ToString());
             writer.WritePropertyName("Filters"u8);
-            writer.WriteObjectValue(Filters);
+            writer.WriteObjectValue<FilterConjunctionGroupInfo>(Filters, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -55,7 +53,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DocumentFilterConjunctionGroupInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +102,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -120,7 +118,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                         return DeserializeDocumentFilterConjunctionGroupInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentFilterConjunctionGroupInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -138,7 +136,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentFilterConjunctionGroupInfo>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

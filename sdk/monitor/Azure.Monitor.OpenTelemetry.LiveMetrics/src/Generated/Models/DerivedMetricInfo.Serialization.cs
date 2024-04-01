@@ -9,9 +9,7 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
 {
@@ -24,7 +22,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DerivedMetricInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DerivedMetricInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DerivedMetricInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +34,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             writer.WriteStartArray();
             foreach (var item in FilterGroups)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<FilterConjunctionGroupInfo>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("Projection"u8);
@@ -68,7 +66,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DerivedMetricInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DerivedMetricInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DerivedMetricInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +151,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DerivedMetricInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DerivedMetricInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +167,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
                         return DeserializeDerivedMetricInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DerivedMetricInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DerivedMetricInfo)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -187,7 +185,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DerivedMetricInfo>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

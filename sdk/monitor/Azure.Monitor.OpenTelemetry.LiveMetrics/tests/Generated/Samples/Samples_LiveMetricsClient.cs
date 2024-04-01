@@ -8,10 +8,8 @@
 using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.Monitor.OpenTelemetry.LiveMetrics;
 using Azure.Monitor.OpenTelemetry.LiveMetrics.Models;
 using NUnit.Framework;
 

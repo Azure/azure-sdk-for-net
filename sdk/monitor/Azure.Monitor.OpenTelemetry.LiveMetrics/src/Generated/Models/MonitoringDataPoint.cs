@@ -89,7 +89,11 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <param name="isWebApp"> True if the current application is an Azure Web App. </param>
         /// <param name="performanceCollectionSupported"> True if performance counters collection is supported. </param>
         /// <param name="metrics"> An array of metric data points. </param>
-        /// <param name="documents"> An array of documents of a specific type {Request}, {RemoteDependency}, {Exception}, {Event}, or {Trace}. </param>
+        /// <param name="documents">
+        /// An array of documents of a specific type {Request}, {RemoteDependency}, {Exception}, {Event}, or {Trace}
+        /// Please note <see cref="DocumentIngress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
+        /// The available derived classes include <see cref="Event"/>, <see cref="Exception"/>, <see cref="RemoteDependency"/>, <see cref="Request"/> and <see cref="Trace"/>.
+        /// </param>
         /// <param name="topCpuProcesses"> An array of top cpu consumption data point. </param>
         /// <param name="collectionConfigurationErrors"> An array of error while SDK parses and applies the {CollectionConfigurationInfo} provided by Live Metrics. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
@@ -142,7 +146,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         /// <summary>
         /// An array of documents of a specific type {Request}, {RemoteDependency}, {Exception}, {Event}, or {Trace}
         /// Please note <see cref="DocumentIngress"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="Request"/>, <see cref="RemoteDependency"/>, <see cref="Exception"/>, <see cref="Event"/> and <see cref="Trace"/>.
+        /// The available derived classes include <see cref="Event"/>, <see cref="Exception"/>, <see cref="RemoteDependency"/>, <see cref="Request"/> and <see cref="Trace"/>.
         /// </summary>
         public IList<DocumentIngress> Documents { get; }
         /// <summary> An array of top cpu consumption data point. </summary>
