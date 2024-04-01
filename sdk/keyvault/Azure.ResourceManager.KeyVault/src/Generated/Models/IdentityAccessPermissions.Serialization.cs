@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     builder.Append("  keys: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     builder.Append("  secrets: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     builder.Append("  certificates: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     builder.Append("  storage: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

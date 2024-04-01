@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  value: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  contentType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  attributes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  secretUri: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  secretUriWithVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

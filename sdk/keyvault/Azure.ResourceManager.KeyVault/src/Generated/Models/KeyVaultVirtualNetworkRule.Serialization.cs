@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                 builder.Append("  ignoreMissingVnetServiceEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

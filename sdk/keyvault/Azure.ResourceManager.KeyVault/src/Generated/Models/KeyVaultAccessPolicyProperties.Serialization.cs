@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                     builder.Append("  accessPolicies: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
