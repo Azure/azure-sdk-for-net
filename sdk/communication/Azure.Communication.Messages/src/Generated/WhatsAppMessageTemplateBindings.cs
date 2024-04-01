@@ -16,7 +16,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <summary> Initializes a new instance of <see cref="WhatsAppMessageTemplateBindings"/>. </summary>
         public WhatsAppMessageTemplateBindings()
         {
-            Kind = "whatsApp";
+            Kind = MessageTemplateBindingsKind.WhatsApp;
             Header = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
             Body = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
             Footer = new ChangeTrackingList<WhatsAppMessageTemplateBindingsComponent>();
@@ -30,7 +30,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <param name="body"> The body template bindings. </param>
         /// <param name="footer"> The footer template bindings. </param>
         /// <param name="buttons"> The button template bindings. </param>
-        internal WhatsAppMessageTemplateBindings(string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> buttons) : base(kind, serializedAdditionalRawData)
+        internal WhatsAppMessageTemplateBindings(MessageTemplateBindingsKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, IList<WhatsAppMessageTemplateBindingsComponent> header, IList<WhatsAppMessageTemplateBindingsComponent> body, IList<WhatsAppMessageTemplateBindingsComponent> footer, IList<WhatsAppMessageTemplateBindingsButton> buttons) : base(kind, serializedAdditionalRawData)
         {
             Header = header;
             Body = body;
