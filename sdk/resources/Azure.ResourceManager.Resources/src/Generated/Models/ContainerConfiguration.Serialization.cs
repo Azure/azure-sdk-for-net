@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  containerGroupName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

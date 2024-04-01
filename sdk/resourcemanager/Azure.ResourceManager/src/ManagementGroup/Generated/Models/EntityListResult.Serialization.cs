@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     builder.Append("  value: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 builder.Append("  count: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 builder.Append("  nextLink: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  notificationEndpoints: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -471,11 +471,6 @@ namespace Azure.ResourceManager.Resources.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -484,7 +479,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -504,7 +499,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -519,7 +514,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -553,7 +548,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -565,7 +560,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  kind: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -578,7 +573,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -592,7 +587,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -602,13 +597,18 @@ namespace Azure.ResourceManager.Resources.Models
 
             builder.Append("  properties:");
             builder.AppendLine(" {");
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerSettings), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ContainerGroupName", out propertyOverride);
             if (Optional.IsDefined(ContainerSettings) || hasPropertyOverride)
             {
                 builder.Append("    containerSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      containerSettings: {");
+                    builder.Append("        containerGroupName: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -622,7 +622,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    storageAccountSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -636,7 +636,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    cleanupPreference: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -678,7 +678,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    outputs: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -692,7 +692,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    primaryScriptUri: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("    supportingScriptUris: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -733,7 +733,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    scriptContent: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -755,7 +755,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    arguments: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -779,7 +779,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("    environmentVariables: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -799,7 +799,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    forceUpdateTag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -819,7 +819,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("    retentionInterval: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -833,7 +833,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    timeout: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -848,7 +848,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("    azPowerShellVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -867,23 +867,6 @@ namespace Azure.ResourceManager.Resources.Models
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "ContainerGroupName":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("ContainerGroupName", item.Value);
-                        bicepOptions.PropertyOverrides.Add(ContainerSettings, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<AzurePowerShellScript>.Write(ModelReaderWriterOptions options)

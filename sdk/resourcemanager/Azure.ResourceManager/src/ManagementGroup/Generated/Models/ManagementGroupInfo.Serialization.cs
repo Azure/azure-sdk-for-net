@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 builder.Append("  version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 builder.Append("  updatedTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 builder.Append("  updatedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                 builder.Append("  parent: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     builder.Append("  path: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     builder.Append("  managementGroupAncestors: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ManagementGroups.Models
                     builder.Append("  managementGroupAncestorsChain: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

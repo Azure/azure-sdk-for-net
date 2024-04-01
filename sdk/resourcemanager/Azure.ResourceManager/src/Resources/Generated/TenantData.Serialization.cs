@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  tenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  tenantCategory: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  country: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  countryCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Resources
                     builder.Append("  domains: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  defaultDomain: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  tenantType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.Resources
                 builder.Append("  tenantBrandingLogoUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

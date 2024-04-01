@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Models
                 builder.Append("  createdBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Models
                 builder.Append("  createdByType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Models
                 builder.Append("  createdAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Models
                 builder.Append("  lastModifiedBy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.Models
                 builder.Append("  lastModifiedByType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.Models
                 builder.Append("  lastModifiedAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

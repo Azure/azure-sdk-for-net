@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  strongType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  assignPermissions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

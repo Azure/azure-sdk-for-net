@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  message: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  allowedActions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  allowedDataActions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

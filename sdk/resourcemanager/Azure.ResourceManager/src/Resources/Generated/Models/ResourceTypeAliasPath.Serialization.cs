@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  path: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  apiVersions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  pattern: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  metadata: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

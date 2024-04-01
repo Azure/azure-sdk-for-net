@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Redis.Models
             builder.Append("  dayOfWeek: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Redis.Models
             builder.Append("  startHourUtc: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  maintenanceWindow: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

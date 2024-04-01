@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Redis.Models
             builder.Append("  name: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Redis.Models
             builder.Append("  family: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Redis.Models
             builder.Append("  capacity: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {

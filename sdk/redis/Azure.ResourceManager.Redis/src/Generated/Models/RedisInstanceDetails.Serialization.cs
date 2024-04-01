@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  sslPort: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  nonSslPort: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  zone: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  shardId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  isMaster: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Redis.Models
                 builder.Append("  isPrimary: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

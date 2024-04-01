@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Resources.Models
             builder.Append("  jitAccessEnabled: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  jitApprovalMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  jitApprovers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  maximumJitAccessDuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

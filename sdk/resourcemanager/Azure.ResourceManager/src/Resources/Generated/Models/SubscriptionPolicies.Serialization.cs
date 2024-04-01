@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  locationPlacementId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  quotaId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  spendingLimit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

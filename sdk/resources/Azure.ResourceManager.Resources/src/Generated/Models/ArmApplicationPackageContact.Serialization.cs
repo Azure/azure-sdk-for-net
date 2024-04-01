@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  contactName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  email: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  phone: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  resourceType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  locations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -375,7 +375,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  locationMappings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -397,7 +397,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  aliases: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -419,7 +419,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  apiVersions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  defaultApiVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -476,7 +476,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  zoneMappings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -498,7 +498,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  apiProfiles: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -518,7 +518,7 @@ namespace Azure.ResourceManager.Resources.Models
                 builder.Append("  capabilities: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -542,7 +542,7 @@ namespace Azure.ResourceManager.Resources.Models
                     builder.Append("  properties: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
