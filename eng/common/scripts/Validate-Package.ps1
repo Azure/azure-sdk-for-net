@@ -213,9 +213,14 @@ ValidateChangeLog $changeLogPath $versionString $changeLogStatus
 
 # API review and package name validation
 $fulPackageName = $pkgName
-if ($pkgInfo.Group){
-    $fulPackageName = "$($pkgInfo.Group):$pkgName"
+$groupId = $null
+if ($pkgInfo.PSObject.Members.Name -contains "Group") {
+    $groupId = $pkgInfo.Group
 }
+if ($groupId){
+    $fulPackageName = "${groupId}:${pkgName}"
+}
+Write-Host "Checking API review status for package $fulPackageName"
 $apireviewDetails = VerifyAPIReview $fulPackageName $pkgInfo.Version $Language
 
 $pkgValidationDetails= [PSCustomObject]@{
