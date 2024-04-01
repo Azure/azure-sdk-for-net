@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceLoadBalancerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceLoadBalancerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in FrontendIPConfigurations)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LoadBalancerFrontendIPConfiguration>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceLoadBalancerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceLoadBalancerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
+            ResourceIdentifier id = default;
             string name = default;
             IList<LoadBalancerFrontendIPConfiguration> frontendIPConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<LoadBalancerFrontendIPConfiguration> array = new List<LoadBalancerFrontendIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(LoadBalancerFrontendIPConfiguration.DeserializeLoadBalancerFrontendIPConfiguration(item));
+                                array.Add(LoadBalancerFrontendIPConfiguration.DeserializeLoadBalancerFrontendIPConfiguration(item, options));
                             }
                             frontendIPConfigurations = array;
                             continue;
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceLoadBalancerConfiguration(id.Value, name, frontendIPConfigurations, serializedAdditionalRawData);
+            return new CloudServiceLoadBalancerConfiguration(id, name, frontendIPConfigurations, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceLoadBalancerConfiguration>.Write(ModelReaderWriterOptions options)
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceLoadBalancerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceLoadBalancerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCloudServiceLoadBalancerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceLoadBalancerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceLoadBalancerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,12 +18,12 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<string> type = default;
-            Optional<string> location = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<IReadOnlyDictionary<string, object>> properties = default;
+            string id = default;
+            string name = default;
+            string type = default;
+            string location = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            IReadOnlyDictionary<string, object> properties = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -83,7 +82,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new ResourceNotificationsResourceUpdatedDetails(id.Value, name.Value, type.Value, location.Value, Optional.ToDictionary(tags), Optional.ToDictionary(properties));
+            return new ResourceNotificationsResourceUpdatedDetails(
+                id,
+                name,
+                type,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                properties ?? new ChangeTrackingDictionary<string, object>());
         }
     }
 }

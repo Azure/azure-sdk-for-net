@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -22,8 +22,9 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="ConsistencyCheckTaskDetails"/>. </summary>
         /// <param name="instanceType"> The type of task details. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="vmDetails"> The list of inconsistent Vm details. </param>
-        internal ConsistencyCheckTaskDetails(string instanceType, IReadOnlyList<InconsistentVmDetails> vmDetails) : base(instanceType)
+        internal ConsistencyCheckTaskDetails(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<InconsistentVmDetails> vmDetails) : base(instanceType, serializedAdditionalRawData)
         {
             VmDetails = vmDetails;
             InstanceType = instanceType ?? "ConsistencyCheckTaskDetails";

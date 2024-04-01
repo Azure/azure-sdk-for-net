@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceSecret)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceSecret)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(EncryptedSecret))
             {
                 writer.WritePropertyName("encryptedSecret"u8);
-                writer.WriteObjectValue(EncryptedSecret);
+                writer.WriteObjectValue<AsymmetricEncryptedSecret>(EncryptedSecret, options);
             }
             if (Optional.IsDefined(KeyVaultId))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDeviceSecret>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceSecret)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDeviceSecret)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<AsymmetricEncryptedSecret> encryptedSecret = default;
-            Optional<string> keyVaultId = default;
+            AsymmetricEncryptedSecret encryptedSecret = default;
+            string keyVaultId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    encryptedSecret = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value);
+                    encryptedSecret = AsymmetricEncryptedSecret.DeserializeAsymmetricEncryptedSecret(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keyVaultId"u8))
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDeviceSecret(encryptedSecret.Value, keyVaultId.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeDeviceSecret(encryptedSecret, keyVaultId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDeviceSecret>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceSecret)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceSecret)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeDeviceSecret(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceSecret)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDeviceSecret)} does not support reading '{options.Format}' format.");
             }
         }
 

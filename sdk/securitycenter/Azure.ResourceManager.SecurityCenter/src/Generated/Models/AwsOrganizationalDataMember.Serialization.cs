@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalDataMember>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsOrganizationalDataMember)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsOrganizationalDataMember)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalDataMember>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsOrganizationalDataMember)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsOrganizationalDataMember)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> parentHierarchyId = default;
+            string parentHierarchyId = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsOrganizationalDataMember(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId.Value);
+            return new AwsOrganizationalDataMember(organizationMembershipType, serializedAdditionalRawData, parentHierarchyId);
         }
 
         BinaryData IPersistableModel<AwsOrganizationalDataMember>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AwsOrganizationalDataMember)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsOrganizationalDataMember)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAwsOrganizationalDataMember(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AwsOrganizationalDataMember)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsOrganizationalDataMember)} does not support reading '{options.Format}' format.");
             }
         }
 

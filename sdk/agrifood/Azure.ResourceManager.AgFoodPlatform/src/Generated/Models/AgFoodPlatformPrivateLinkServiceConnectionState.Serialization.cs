@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgFoodPlatformPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgFoodPlatformPrivateLinkServiceConnectionState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgFoodPlatformPrivateLinkServiceConnectionState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgFoodPlatformPrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgFoodPlatformPrivateLinkServiceConnectionState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgFoodPlatformPrivateLinkServiceConnectionState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<AgFoodPlatformPrivateEndpointServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            AgFoodPlatformPrivateEndpointServiceConnectionStatus? status = default;
+            string description = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgFoodPlatformPrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, serializedAdditionalRawData);
+            return new AgFoodPlatformPrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgFoodPlatformPrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgFoodPlatformPrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgFoodPlatformPrivateLinkServiceConnectionState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                         return DeserializeAgFoodPlatformPrivateLinkServiceConnectionState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgFoodPlatformPrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgFoodPlatformPrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
             }
         }
 

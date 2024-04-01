@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationVersionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationVersionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,12 +63,12 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile"u8);
-                writer.WriteObjectValue(PublishingProfile);
+                writer.WriteObjectValue<GalleryApplicationVersionPublishingProfile>(PublishingProfile, options);
             }
             if (Optional.IsDefined(SafetyProfile))
             {
                 writer.WritePropertyName("safetyProfile"u8);
-                writer.WriteObjectValue(SafetyProfile);
+                writer.WriteObjectValue<GalleryApplicationVersionSafetyProfile>(SafetyProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus);
+                writer.WriteObjectValue<ReplicationStatus>(ReplicationStatus, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationVersionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationVersionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,15 +119,15 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GalleryApplicationVersionPublishingProfile> publishingProfile = default;
-            Optional<GalleryApplicationVersionSafetyProfile> safetyProfile = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<ReplicationStatus> replicationStatus = default;
+            SystemData systemData = default;
+            GalleryApplicationVersionPublishingProfile publishingProfile = default;
+            GalleryApplicationVersionSafetyProfile safetyProfile = default;
+            GalleryProvisioningState? provisioningState = default;
+            ReplicationStatus replicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value);
+                            publishingProfile = GalleryApplicationVersionPublishingProfile.DeserializeGalleryApplicationVersionPublishingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("safetyProfile"u8))
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            safetyProfile = GalleryApplicationVersionSafetyProfile.DeserializeGalleryApplicationVersionSafetyProfile(property0.Value);
+                            safetyProfile = GalleryApplicationVersionSafetyProfile.DeserializeGalleryApplicationVersionSafetyProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value);
+                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value, options);
                             continue;
                         }
                     }
@@ -224,7 +224,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryApplicationVersionPatch(id, name, type, systemData.Value, publishingProfile.Value, safetyProfile.Value, Optional.ToNullable(provisioningState), replicationStatus.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryApplicationVersionPatch(
+                id,
+                name,
+                type,
+                systemData,
+                publishingProfile,
+                safetyProfile,
+                provisioningState,
+                replicationStatus,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryApplicationVersionPatch>.Write(ModelReaderWriterOptions options)
@@ -236,7 +246,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +262,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryApplicationVersionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

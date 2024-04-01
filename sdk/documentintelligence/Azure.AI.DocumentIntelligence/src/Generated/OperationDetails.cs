@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
 {
@@ -18,58 +17,100 @@ namespace Azure.AI.DocumentIntelligence
     /// </summary>
     public abstract partial class OperationDetails
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="operationId"/> or <paramref name="resourceLocation"/> is null. </exception>
-        protected OperationDetails(string operationId, OperationStatus status, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, Uri resourceLocation)
+        protected OperationDetails(string operationId, OperationStatus status, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, Uri resourceLocation)
         {
             Argument.AssertNotNull(operationId, nameof(operationId));
             Argument.AssertNotNull(resourceLocation, nameof(resourceLocation));
 
             OperationId = operationId;
             Status = status;
-            CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             ResourceLocation = resourceLocation;
             Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="OperationDetails"/>. </summary>
         /// <param name="operationId"> Operation ID. </param>
-        /// <param name="status"> Operation status. </param>
+        /// <param name="status"> Operation status.  notStarted, running, completed, or failed. </param>
         /// <param name="percentCompleted"> Operation progress (0-100). </param>
-        /// <param name="createdDateTime"> Date and time (UTC) when the operation was created. </param>
-        /// <param name="lastUpdatedDateTime"> Date and time (UTC) when the status was last updated. </param>
+        /// <param name="createdOn"> Date and time (UTC) when the operation was created. </param>
+        /// <param name="lastUpdatedOn"> Date and time (UTC) when the status was last updated. </param>
         /// <param name="kind"> Type of operation. </param>
         /// <param name="resourceLocation"> URL of the resource targeted by this operation. </param>
         /// <param name="apiVersion"> API version used to create this operation. </param>
         /// <param name="tags"> List of key-value tag attributes associated with the document model. </param>
         /// <param name="error"> Encountered error. </param>
-        internal OperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdDateTime, DateTimeOffset lastUpdatedDateTime, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal OperationDetails(string operationId, OperationStatus status, int? percentCompleted, DateTimeOffset createdOn, DateTimeOffset lastUpdatedOn, OperationKind kind, Uri resourceLocation, string apiVersion, IReadOnlyDictionary<string, string> tags, DocumentIntelligenceError error, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             OperationId = operationId;
             Status = status;
             PercentCompleted = percentCompleted;
-            CreatedDateTime = createdDateTime;
-            LastUpdatedDateTime = lastUpdatedDateTime;
+            CreatedOn = createdOn;
+            LastUpdatedOn = lastUpdatedOn;
             Kind = kind;
             ResourceLocation = resourceLocation;
             ApiVersion = apiVersion;
             Tags = tags;
             Error = error;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
-        /// <summary> Operation status. </summary>
+
+        /// <summary> Initializes a new instance of <see cref="OperationDetails"/> for deserialization. </summary>
+        internal OperationDetails()
+        {
+        }
+
+        /// <summary> Operation ID. </summary>
+        public string OperationId { get; }
+        /// <summary> Operation status.  notStarted, running, completed, or failed. </summary>
         public OperationStatus Status { get; }
         /// <summary> Operation progress (0-100). </summary>
         public int? PercentCompleted { get; }
         /// <summary> Date and time (UTC) when the operation was created. </summary>
-        public DateTimeOffset CreatedDateTime { get; }
+        public DateTimeOffset CreatedOn { get; }
         /// <summary> Date and time (UTC) when the status was last updated. </summary>
-        public DateTimeOffset LastUpdatedDateTime { get; }
+        public DateTimeOffset LastUpdatedOn { get; }
         /// <summary> Type of operation. </summary>
         internal OperationKind Kind { get; set; }
         /// <summary> URL of the resource targeted by this operation. </summary>

@@ -22,59 +22,59 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(RequestMethod))
             {
                 writer.WritePropertyName("requestMethod"u8);
-                writer.WriteObjectValue(RequestMethod);
+                writer.WriteObjectValue<object>(RequestMethod);
             }
             if (Optional.IsDefined(AdditionalHeaders))
             {
                 writer.WritePropertyName("additionalHeaders"u8);
-                writer.WriteObjectValue(AdditionalHeaders);
+                writer.WriteObjectValue<object>(AdditionalHeaders);
             }
             if (Optional.IsDefined(HttpRequestTimeout))
             {
                 writer.WritePropertyName("httpRequestTimeout"u8);
-                writer.WriteObjectValue(HttpRequestTimeout);
+                writer.WriteObjectValue<object>(HttpRequestTimeout);
             }
             if (Optional.IsDefined(RequestInterval))
             {
                 writer.WritePropertyName("requestInterval"u8);
-                writer.WriteObjectValue(RequestInterval);
+                writer.WriteObjectValue<object>(RequestInterval);
             }
             if (Optional.IsDefined(HttpCompressionType))
             {
                 writer.WritePropertyName("httpCompressionType"u8);
-                writer.WriteObjectValue(HttpCompressionType);
+                writer.WriteObjectValue<object>(HttpCompressionType);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -85,17 +85,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> requestMethod = default;
-            Optional<object> additionalHeaders = default;
-            Optional<object> httpRequestTimeout = default;
-            Optional<object> requestInterval = default;
-            Optional<object> httpCompressionType = default;
+            object requestMethod = default;
+            object additionalHeaders = default;
+            object httpRequestTimeout = default;
+            object requestInterval = default;
+            object httpCompressionType = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -198,14 +198,26 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new RestSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, requestMethod.Value, additionalHeaders.Value, httpRequestTimeout.Value, requestInterval.Value, httpCompressionType.Value);
+            return new RestSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                requestMethod,
+                additionalHeaders,
+                httpRequestTimeout,
+                requestInterval,
+                httpCompressionType);
         }
 
         internal partial class RestSinkConverter : JsonConverter<RestSink>
         {
             public override void Write(Utf8JsonWriter writer, RestSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RestSink>(model);
             }
             public override RestSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

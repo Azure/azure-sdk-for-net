@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationConnectionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationConnectionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationConnectionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationConnectionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationConnectionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, string>> fieldDefinitionValues = default;
+            string name = default;
+            string description = default;
+            IDictionary<string, string> fieldDefinitionValues = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationConnectionPatch(name.Value, description.Value, Optional.ToDictionary(fieldDefinitionValues), serializedAdditionalRawData);
+            return new AutomationConnectionPatch(name, description, fieldDefinitionValues ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationConnectionPatch>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationConnectionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationConnectionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationConnectionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationConnectionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationConnectionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

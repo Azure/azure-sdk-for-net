@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -373,35 +372,35 @@ namespace Azure.Verticals.AgriFood.Farming
             {
                 uri.AppendQuery("maxEndDateTime", maxEndDateTime.Value, "O", true);
             }
-            if (years != null && Optional.IsCollectionDefined(years))
+            if (years != null && !(years is ChangeTrackingList<int> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in years)
                 {
                     uri.AppendQuery("years", param, true);
                 }
             }
-            if (seasonIds != null && Optional.IsCollectionDefined(seasonIds))
+            if (seasonIds != null && !(seasonIds is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in seasonIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList3 && changeTrackingList3.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

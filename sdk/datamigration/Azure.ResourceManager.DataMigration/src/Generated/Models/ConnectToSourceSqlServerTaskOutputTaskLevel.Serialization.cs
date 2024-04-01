@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,14 +111,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> databases = default;
-            Optional<string> logins = default;
-            Optional<string> agentJobs = default;
-            Optional<string> databaseTdeCertificateMapping = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
-            Optional<string> id = default;
+            string databases = default;
+            string logins = default;
+            string agentJobs = default;
+            string databaseTdeCertificateMapping = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -184,7 +184,17 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceSqlServerTaskOutputTaskLevel(id.Value, resultType, serializedAdditionalRawData, databases.Value, logins.Value, agentJobs.Value, databaseTdeCertificateMapping.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, Optional.ToList(validationErrors));
+            return new ConnectToSourceSqlServerTaskOutputTaskLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databases,
+                logins,
+                agentJobs,
+                databaseTdeCertificateMapping,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                validationErrors ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<ConnectToSourceSqlServerTaskOutputTaskLevel>.Write(ModelReaderWriterOptions options)
@@ -196,7 +206,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -212,7 +222,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToSourceSqlServerTaskOutputTaskLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceSqlServerTaskOutputTaskLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

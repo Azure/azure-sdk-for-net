@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<FarmBeatsUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FarmBeatsUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FarmBeatsUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SensorIntegration))
             {
                 writer.WritePropertyName("sensorIntegration"u8);
-                writer.WriteObjectValue(SensorIntegration);
+                writer.WriteObjectValue<SensorIntegration>(SensorIntegration, options);
             }
             if (Optional.IsDefined(PublicNetworkAccess))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<FarmBeatsUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FarmBeatsUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FarmBeatsUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<SensorIntegration> sensorIntegration = default;
-            Optional<PublicNetworkAccess> publicNetworkAccess = default;
+            SensorIntegration sensorIntegration = default;
+            PublicNetworkAccess? publicNetworkAccess = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property.Value);
+                    sensorIntegration = SensorIntegration.DeserializeSensorIntegration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("publicNetworkAccess"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatsUpdateProperties(sensorIntegration.Value, Optional.ToNullable(publicNetworkAccess), serializedAdditionalRawData);
+            return new FarmBeatsUpdateProperties(sensorIntegration, publicNetworkAccess, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatsUpdateProperties>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FarmBeatsUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FarmBeatsUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                         return DeserializeFarmBeatsUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FarmBeatsUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FarmBeatsUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

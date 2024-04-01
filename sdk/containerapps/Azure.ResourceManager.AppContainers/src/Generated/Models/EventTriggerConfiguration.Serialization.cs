@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventTriggerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Scale))
             {
                 writer.WritePropertyName("scale"u8);
-                writer.WriteObjectValue(Scale);
+                writer.WriteObjectValue<ContainerAppJobScale>(Scale, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventTriggerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<int> replicaCompletionCount = default;
-            Optional<int> parallelism = default;
-            Optional<ContainerAppJobScale> scale = default;
+            int? replicaCompletionCount = default;
+            int? parallelism = default;
+            ContainerAppJobScale scale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value);
+                    scale = ContainerAppJobScale.DeserializeContainerAppJobScale(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EventTriggerConfiguration(Optional.ToNullable(replicaCompletionCount), Optional.ToNullable(parallelism), scale.Value, serializedAdditionalRawData);
+            return new EventTriggerConfiguration(replicaCompletionCount, parallelism, scale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EventTriggerConfiguration>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeEventTriggerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventTriggerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

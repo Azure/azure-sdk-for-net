@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AllowedConnectionsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllowedConnectionsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AllowedConnectionsList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityCenterAllowedConnection>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AllowedConnectionsList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AllowedConnectionsList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AllowedConnectionsList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<SecurityCenterAllowedConnection>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<SecurityCenterAllowedConnection> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityCenterAllowedConnection> array = new List<SecurityCenterAllowedConnection>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(item));
+                        array.Add(SecurityCenterAllowedConnection.DeserializeSecurityCenterAllowedConnection(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AllowedConnectionsList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AllowedConnectionsList(value ?? new ChangeTrackingList<SecurityCenterAllowedConnection>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AllowedConnectionsList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AllowedConnectionsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AllowedConnectionsList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAllowedConnectionsList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AllowedConnectionsList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AllowedConnectionsList)} does not support reading '{options.Format}' format.");
             }
         }
 

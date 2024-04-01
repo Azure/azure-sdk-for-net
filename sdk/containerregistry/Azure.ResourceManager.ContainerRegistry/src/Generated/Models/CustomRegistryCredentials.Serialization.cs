@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<ContainerRegistrySecretObject>(UserName, options);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<ContainerRegistrySecretObject>(Password, options);
             }
             if (Optional.IsDefined(Identity))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<ContainerRegistrySecretObject> userName = default;
-            Optional<ContainerRegistrySecretObject> password = default;
-            Optional<string> identity = default;
+            ContainerRegistrySecretObject userName = default;
+            ContainerRegistrySecretObject password = default;
+            string identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
+                    userName = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("password"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value);
+                    password = ContainerRegistrySecretObject.DeserializeContainerRegistrySecretObject(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("identity"u8))
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomRegistryCredentials(userName.Value, password.Value, identity.Value, serializedAdditionalRawData);
+            return new CustomRegistryCredentials(userName, password, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CustomRegistryCredentials>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeCustomRegistryCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomRegistryCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxJobStage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,11 +96,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxStageName> stageName = default;
-            Optional<string> displayName = default;
-            Optional<DataBoxStageStatus> stageStatus = default;
-            Optional<DateTimeOffset> stageTime = default;
-            Optional<BinaryData> jobStageDetails = default;
+            DataBoxStageName? stageName = default;
+            string displayName = default;
+            DataBoxStageStatus? stageStatus = default;
+            DateTimeOffset? stageTime = default;
+            BinaryData jobStageDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxJobStage(Optional.ToNullable(stageName), displayName.Value, Optional.ToNullable(stageStatus), Optional.ToNullable(stageTime), jobStageDetails.Value, serializedAdditionalRawData);
+            return new DataBoxJobStage(
+                stageName,
+                displayName,
+                stageStatus,
+                stageTime,
+                jobStageDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxJobStage>.Write(ModelReaderWriterOptions options)
@@ -164,7 +170,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +186,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxJobStage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxJobStage)} does not support reading '{options.Format}' format.");
             }
         }
 

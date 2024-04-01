@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformConfigServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformConfigServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<AppPlatformErrorInfo>(Error, options);
             }
             if (Optional.IsDefined(ConfigServer))
             {
                 writer.WritePropertyName("configServer"u8);
-                writer.WriteObjectValue(ConfigServer);
+                writer.WriteObjectValue<ConfigServerSettings>(ConfigServer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformConfigServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformConfigServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformConfigServerState> provisioningState = default;
-            Optional<AppPlatformErrorInfo> error = default;
-            Optional<ConfigServerSettings> configServer = default;
+            AppPlatformConfigServerState? provisioningState = default;
+            AppPlatformErrorInfo error = default;
+            ConfigServerSettings configServer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value);
+                    error = AppPlatformErrorInfo.DeserializeAppPlatformErrorInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configServer"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    configServer = ConfigServerSettings.DeserializeConfigServerSettings(property.Value);
+                    configServer = ConfigServerSettings.DeserializeConfigServerSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformConfigServerProperties(Optional.ToNullable(provisioningState), error.Value, configServer.Value, serializedAdditionalRawData);
+            return new AppPlatformConfigServerProperties(provisioningState, error, configServer, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformConfigServerProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformConfigServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformConfigServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformConfigServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformConfigServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformConfigServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

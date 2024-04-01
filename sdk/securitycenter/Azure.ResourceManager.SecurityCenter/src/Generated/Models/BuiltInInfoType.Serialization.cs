@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<BuiltInInfoType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuiltInInfoType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BuiltInInfoType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<BuiltInInfoType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BuiltInInfoType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BuiltInInfoType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Guid> id = default;
-            Optional<string> type = default;
+            string name = default;
+            Guid? id = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BuiltInInfoType(name.Value, Optional.ToNullable(id), type.Value, serializedAdditionalRawData);
+            return new BuiltInInfoType(name, id, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BuiltInInfoType>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BuiltInInfoType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuiltInInfoType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeBuiltInInfoType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BuiltInInfoType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BuiltInInfoType)} does not support reading '{options.Format}' format.");
             }
         }
 

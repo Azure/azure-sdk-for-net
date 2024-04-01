@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAddonProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             if (options.Format != "W" && Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedClusterAddonProfileIdentity>(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAddonProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,8 +83,8 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             bool enabled = default;
-            Optional<IDictionary<string, string>> config = default;
-            Optional<ManagedClusterAddonProfileIdentity> identity = default;
+            IDictionary<string, string> config = default;
+            ManagedClusterAddonProfileIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    identity = ManagedClusterAddonProfileIdentity.DeserializeManagedClusterAddonProfileIdentity(property.Value);
+                    identity = ManagedClusterAddonProfileIdentity.DeserializeManagedClusterAddonProfileIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAddonProfile(enabled, Optional.ToDictionary(config), identity.Value, serializedAdditionalRawData);
+            return new ManagedClusterAddonProfile(enabled, config ?? new ChangeTrackingDictionary<string, string>(), identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAddonProfile>.Write(ModelReaderWriterOptions options)
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterAddonProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAddonProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

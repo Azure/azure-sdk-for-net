@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<BaselineAdjustedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Baseline))
             {
                 writer.WritePropertyName("baseline"u8);
-                writer.WriteObjectValue(Baseline);
+                writer.WriteObjectValue<SqlVulnerabilityAssessmentBaseline>(Baseline, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<BaselineAdjustedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,10 +114,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SqlVulnerabilityAssessmentBaseline> baseline = default;
-            Optional<SqlVulnerabilityAssessmentScanResultRuleStatus> status = default;
-            Optional<IList<IList<string>>> resultsNotInBaseline = default;
-            Optional<IList<IList<string>>> resultsOnlyInBaseline = default;
+            SqlVulnerabilityAssessmentBaseline baseline = default;
+            SqlVulnerabilityAssessmentScanResultRuleStatus? status = default;
+            IList<IList<string>> resultsNotInBaseline = default;
+            IList<IList<string>> resultsOnlyInBaseline = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    baseline = SqlVulnerabilityAssessmentBaseline.DeserializeSqlVulnerabilityAssessmentBaseline(property.Value);
+                    baseline = SqlVulnerabilityAssessmentBaseline.DeserializeSqlVulnerabilityAssessmentBaseline(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BaselineAdjustedResult(baseline.Value, Optional.ToNullable(status), Optional.ToList(resultsNotInBaseline), Optional.ToList(resultsOnlyInBaseline), serializedAdditionalRawData);
+            return new BaselineAdjustedResult(baseline, status, resultsNotInBaseline ?? new ChangeTrackingList<IList<string>>(), resultsOnlyInBaseline ?? new ChangeTrackingList<IList<string>>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BaselineAdjustedResult>.Write(ModelReaderWriterOptions options)
@@ -210,7 +210,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeBaselineAdjustedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BaselineAdjustedResult)} does not support reading '{options.Format}' format.");
             }
         }
 

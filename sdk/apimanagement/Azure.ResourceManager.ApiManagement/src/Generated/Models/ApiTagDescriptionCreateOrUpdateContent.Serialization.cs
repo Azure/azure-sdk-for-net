@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiTagDescriptionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiTagDescriptionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiTagDescriptionCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiTagDescriptionCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiTagDescriptionCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiTagDescriptionCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> description = default;
-            Optional<Uri> externalDocsUri = default;
-            Optional<string> externalDocsDescription = default;
+            string description = default;
+            Uri externalDocsUri = default;
+            string externalDocsDescription = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiTagDescriptionCreateOrUpdateContent(description.Value, externalDocsUri.Value, externalDocsDescription.Value, serializedAdditionalRawData);
+            return new ApiTagDescriptionCreateOrUpdateContent(description, externalDocsUri, externalDocsDescription, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiTagDescriptionCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiTagDescriptionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiTagDescriptionCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiTagDescriptionCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiTagDescriptionCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiTagDescriptionCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

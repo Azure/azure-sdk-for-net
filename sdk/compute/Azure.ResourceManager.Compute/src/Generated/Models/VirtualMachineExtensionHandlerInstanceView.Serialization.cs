@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionHandlerInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
-                writer.WriteObjectValue(Status);
+                writer.WriteObjectValue<InstanceViewStatus>(Status, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionHandlerInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<InstanceViewStatus> status = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            InstanceViewStatus status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value);
+                    status = InstanceViewStatus.DeserializeInstanceViewStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineExtensionHandlerInstanceView(type.Value, typeHandlerVersion.Value, status.Value, serializedAdditionalRawData);
+            return new VirtualMachineExtensionHandlerInstanceView(type, typeHandlerVersion, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineExtensionHandlerInstanceView>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineExtensionHandlerInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineExtensionHandlerInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

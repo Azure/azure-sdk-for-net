@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubDefinitionDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubDefinitionDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -83,9 +83,9 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<bool> applyAllocationPolicy = default;
-            Optional<int> allocationWeight = default;
-            Optional<string> name = default;
+            bool? applyAllocationPolicy = default;
+            int? allocationWeight = default;
+            string name = default;
             string connectionString = default;
             AzureLocation location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -131,7 +131,13 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IotHubDefinitionDescription(Optional.ToNullable(applyAllocationPolicy), Optional.ToNullable(allocationWeight), name.Value, connectionString, location, serializedAdditionalRawData);
+            return new IotHubDefinitionDescription(
+                applyAllocationPolicy,
+                allocationWeight,
+                name,
+                connectionString,
+                location,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IotHubDefinitionDescription>.Write(ModelReaderWriterOptions options)
@@ -143,7 +149,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeIotHubDefinitionDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

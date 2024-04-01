@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebChatSite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebChatSite)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebChatSite)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -151,7 +150,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebChatSite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebChatSite)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebChatSite)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,25 +165,25 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<Guid> tenantId = default;
-            Optional<string> siteId = default;
+            Guid? tenantId = default;
+            string siteId = default;
             string siteName = default;
-            Optional<string> key = default;
-            Optional<string> key2 = default;
+            string key = default;
+            string key2 = default;
             bool isEnabled = default;
-            Optional<bool> isTokenEnabled = default;
-            Optional<bool> isEndpointParametersEnabled = default;
-            Optional<bool> isDetailedLoggingEnabled = default;
-            Optional<bool?> isBlockUserUploadEnabled = default;
-            Optional<bool> isNoStorageEnabled = default;
-            Optional<ETag> eTag = default;
-            Optional<string> appId = default;
-            Optional<bool> isV1Enabled = default;
-            Optional<bool> isV3Enabled = default;
-            Optional<bool> isSecureSiteEnabled = default;
-            Optional<IList<string>> trustedOrigins = default;
-            Optional<bool> isWebChatSpeechEnabled = default;
-            Optional<bool> isWebchatPreviewEnabled = default;
+            bool? isTokenEnabled = default;
+            bool? isEndpointParametersEnabled = default;
+            bool? isDetailedLoggingEnabled = default;
+            bool? isBlockUserUploadEnabled = default;
+            bool? isNoStorageEnabled = default;
+            ETag? eTag = default;
+            string appId = default;
+            bool? isV1Enabled = default;
+            bool? isV3Enabled = default;
+            bool? isSecureSiteEnabled = default;
+            IList<string> trustedOrigins = default;
+            bool? isWebChatSpeechEnabled = default;
+            bool? isWebchatPreviewEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -348,7 +347,27 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebChatSite(Optional.ToNullable(tenantId), siteId.Value, siteName, key.Value, key2.Value, isEnabled, Optional.ToNullable(isTokenEnabled), Optional.ToNullable(isEndpointParametersEnabled), Optional.ToNullable(isDetailedLoggingEnabled), Optional.ToNullable(isBlockUserUploadEnabled), Optional.ToNullable(isNoStorageEnabled), Optional.ToNullable(eTag), appId.Value, Optional.ToNullable(isV1Enabled), Optional.ToNullable(isV3Enabled), Optional.ToNullable(isSecureSiteEnabled), Optional.ToList(trustedOrigins), Optional.ToNullable(isWebChatSpeechEnabled), Optional.ToNullable(isWebchatPreviewEnabled), serializedAdditionalRawData);
+            return new WebChatSite(
+                tenantId,
+                siteId,
+                siteName,
+                key,
+                key2,
+                isEnabled,
+                isTokenEnabled,
+                isEndpointParametersEnabled,
+                isDetailedLoggingEnabled,
+                isBlockUserUploadEnabled,
+                isNoStorageEnabled,
+                eTag,
+                appId,
+                isV1Enabled,
+                isV3Enabled,
+                isSecureSiteEnabled,
+                trustedOrigins ?? new ChangeTrackingList<string>(),
+                isWebChatSpeechEnabled,
+                isWebchatPreviewEnabled,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebChatSite>.Write(ModelReaderWriterOptions options)
@@ -360,7 +379,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebChatSite)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebChatSite)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -376,7 +395,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeWebChatSite(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebChatSite)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebChatSite)} does not support reading '{options.Format}' format.");
             }
         }
 

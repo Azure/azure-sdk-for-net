@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputePrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePrivateLinkServiceConnectionState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputePrivateLinkServiceConnectionState)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputePrivateLinkServiceConnectionState>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputePrivateLinkServiceConnectionState)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputePrivateLinkServiceConnectionState)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputePrivateEndpointServiceConnectionStatus> status = default;
-            Optional<string> description = default;
-            Optional<string> actionsRequired = default;
+            ComputePrivateEndpointServiceConnectionStatus? status = default;
+            string description = default;
+            string actionsRequired = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputePrivateLinkServiceConnectionState(Optional.ToNullable(status), description.Value, actionsRequired.Value, serializedAdditionalRawData);
+            return new ComputePrivateLinkServiceConnectionState(status, description, actionsRequired, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputePrivateLinkServiceConnectionState>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputePrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputePrivateLinkServiceConnectionState)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputePrivateLinkServiceConnectionState(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputePrivateLinkServiceConnectionState)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputePrivateLinkServiceConnectionState)} does not support reading '{options.Format}' format.");
             }
         }
 

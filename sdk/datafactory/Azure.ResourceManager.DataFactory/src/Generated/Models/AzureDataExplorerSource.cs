@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -44,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             QueryTimeout = queryTimeout;
             AdditionalColumns = additionalColumns;
             CopySourceType = copySourceType ?? "AzureDataExplorerSource";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureDataExplorerSource"/> for deserialization. </summary>
+        internal AzureDataExplorerSource()
+        {
         }
 
         /// <summary> Database query. Should be a Kusto Query Language (KQL) query. Type: string (or Expression with resultType string). </summary>

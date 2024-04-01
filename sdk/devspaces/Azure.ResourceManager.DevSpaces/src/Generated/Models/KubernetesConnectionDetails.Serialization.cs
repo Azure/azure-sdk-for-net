@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesConnectionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConnectionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,11 +31,8 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 writer.WritePropertyName("kubeConfig"u8);
                 writer.WriteStringValue(KubeConfig);
             }
-            if (options.Format != "W")
-            {
-                writer.WritePropertyName("instanceType"u8);
-                writer.WriteStringValue(InstanceType);
-            }
+            writer.WritePropertyName("instanceType"u8);
+            writer.WriteStringValue(InstanceType);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -59,7 +56,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesConnectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesConnectionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConnectionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +71,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
             {
                 return null;
             }
-            Optional<string> kubeConfig = default;
+            string kubeConfig = default;
             string instanceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -96,7 +93,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KubernetesConnectionDetails(instanceType, serializedAdditionalRawData, kubeConfig.Value);
+            return new KubernetesConnectionDetails(instanceType, serializedAdditionalRawData, kubeConfig);
         }
 
         BinaryData IPersistableModel<KubernetesConnectionDetails>.Write(ModelReaderWriterOptions options)
@@ -108,7 +105,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesConnectionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConnectionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +121,7 @@ namespace Azure.ResourceManager.DevSpaces.Models
                         return DeserializeKubernetesConnectionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesConnectionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConnectionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Analysis.Models
             {
                 return null;
             }
-            Optional<string> firewallRuleName = default;
-            Optional<string> rangeStart = default;
-            Optional<string> rangeEnd = default;
+            string firewallRuleName = default;
+            string rangeStart = default;
+            string rangeEnd = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AnalysisIPv4FirewallRule(firewallRuleName.Value, rangeStart.Value, rangeEnd.Value, serializedAdditionalRawData);
+            return new AnalysisIPv4FirewallRule(firewallRuleName, rangeStart, rangeEnd, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AnalysisIPv4FirewallRule>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         return DeserializeAnalysisIPv4FirewallRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support reading '{options.Format}' format.");
             }
         }
 

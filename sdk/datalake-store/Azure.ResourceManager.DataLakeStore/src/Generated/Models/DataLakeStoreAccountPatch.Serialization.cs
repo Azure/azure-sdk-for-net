@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             if (Optional.IsDefined(EncryptionConfig))
             {
                 writer.WritePropertyName("encryptionConfig"u8);
-                writer.WriteObjectValue(EncryptionConfig);
+                writer.WriteObjectValue<UpdateEncryptionConfig>(EncryptionConfig, options);
             }
             if (Optional.IsCollectionDefined(FirewallRules))
             {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in FirewallRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallRuleForDataLakeStoreAccountUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in VirtualNetworkRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 writer.WriteStartArray();
                 foreach (var item in TrustedIdProviders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrustedIdProviderForDataLakeStoreAccountUpdateContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreAccountPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreAccountPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreAccountPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,16 +138,16 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> defaultGroup = default;
-            Optional<UpdateEncryptionConfig> encryptionConfig = default;
-            Optional<IList<FirewallRuleForDataLakeStoreAccountUpdateContent>> firewallRules = default;
-            Optional<IList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>> virtualNetworkRules = default;
-            Optional<DataLakeStoreFirewallState> firewallState = default;
-            Optional<DataLakeStoreFirewallAllowAzureIPsState> firewallAllowAzureIPs = default;
-            Optional<IList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>> trustedIdProviders = default;
-            Optional<DataLakeStoreTrustedIdProviderState> trustedIdProviderState = default;
-            Optional<DataLakeStoreCommitmentTierType> newTier = default;
+            IDictionary<string, string> tags = default;
+            string defaultGroup = default;
+            UpdateEncryptionConfig encryptionConfig = default;
+            IList<FirewallRuleForDataLakeStoreAccountUpdateContent> firewallRules = default;
+            IList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent> virtualNetworkRules = default;
+            DataLakeStoreFirewallState? firewallState = default;
+            DataLakeStoreFirewallAllowAzureIPsState? firewallAllowAzureIPs = default;
+            IList<TrustedIdProviderForDataLakeStoreAccountUpdateContent> trustedIdProviders = default;
+            DataLakeStoreTrustedIdProviderState? trustedIdProviderState = default;
+            DataLakeStoreCommitmentTierType? newTier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             {
                                 continue;
                             }
-                            encryptionConfig = UpdateEncryptionConfig.DeserializeUpdateEncryptionConfig(property0.Value);
+                            encryptionConfig = UpdateEncryptionConfig.DeserializeUpdateEncryptionConfig(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("firewallRules"u8))
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             List<FirewallRuleForDataLakeStoreAccountUpdateContent> array = new List<FirewallRuleForDataLakeStoreAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(FirewallRuleForDataLakeStoreAccountUpdateContent.DeserializeFirewallRuleForDataLakeStoreAccountUpdateContent(item));
+                                array.Add(FirewallRuleForDataLakeStoreAccountUpdateContent.DeserializeFirewallRuleForDataLakeStoreAccountUpdateContent(item, options));
                             }
                             firewallRules = array;
                             continue;
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             List<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent> array = new List<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(VirtualNetworkRuleForDataLakeStoreAccountUpdateContent.DeserializeVirtualNetworkRuleForDataLakeStoreAccountUpdateContent(item));
+                                array.Add(VirtualNetworkRuleForDataLakeStoreAccountUpdateContent.DeserializeVirtualNetworkRuleForDataLakeStoreAccountUpdateContent(item, options));
                             }
                             virtualNetworkRules = array;
                             continue;
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                             List<TrustedIdProviderForDataLakeStoreAccountUpdateContent> array = new List<TrustedIdProviderForDataLakeStoreAccountUpdateContent>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(TrustedIdProviderForDataLakeStoreAccountUpdateContent.DeserializeTrustedIdProviderForDataLakeStoreAccountUpdateContent(item));
+                                array.Add(TrustedIdProviderForDataLakeStoreAccountUpdateContent.DeserializeTrustedIdProviderForDataLakeStoreAccountUpdateContent(item, options));
                             }
                             trustedIdProviders = array;
                             continue;
@@ -276,7 +276,18 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreAccountPatch(Optional.ToDictionary(tags), defaultGroup.Value, encryptionConfig.Value, Optional.ToList(firewallRules), Optional.ToList(virtualNetworkRules), Optional.ToNullable(firewallState), Optional.ToNullable(firewallAllowAzureIPs), Optional.ToList(trustedIdProviders), Optional.ToNullable(trustedIdProviderState), Optional.ToNullable(newTier), serializedAdditionalRawData);
+            return new DataLakeStoreAccountPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                defaultGroup,
+                encryptionConfig,
+                firewallRules ?? new ChangeTrackingList<FirewallRuleForDataLakeStoreAccountUpdateContent>(),
+                virtualNetworkRules ?? new ChangeTrackingList<VirtualNetworkRuleForDataLakeStoreAccountUpdateContent>(),
+                firewallState,
+                firewallAllowAzureIPs,
+                trustedIdProviders ?? new ChangeTrackingList<TrustedIdProviderForDataLakeStoreAccountUpdateContent>(),
+                trustedIdProviderState,
+                newTier,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreAccountPatch>.Write(ModelReaderWriterOptions options)
@@ -288,7 +299,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreAccountPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +315,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeDataLakeStoreAccountPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreAccountPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreAccountPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

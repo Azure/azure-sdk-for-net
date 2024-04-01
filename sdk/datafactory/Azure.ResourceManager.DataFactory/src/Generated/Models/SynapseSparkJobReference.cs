@@ -6,31 +6,18 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
+using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Synapse spark job reference type. </summary>
     public partial class SynapseSparkJobReference
     {
-        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/>. </summary>
-        /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
-        /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
-        public SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, BinaryData referenceName)
-        {
-            Argument.AssertNotNull(referenceName, nameof(referenceName));
-
-            SparkJobReferenceType = sparkJobReferenceType;
-            ReferenceName = referenceName;
-        }
-
-        /// <summary> Synapse spark job reference type. </summary>
-        public SparkJobReferenceType SparkJobReferenceType { get; set; }
         /// <summary>
-        /// Reference spark job name. Expression with resultType string.
+        /// Keeps track of any properties unknown to the library.
         /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
         /// </para>
         /// <para>
         /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
@@ -57,6 +44,39 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// </list>
         /// </para>
         /// </summary>
-        public BinaryData ReferenceName { get; set; }
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/>. </summary>
+        /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
+        /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="referenceName"/> is null. </exception>
+        public SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, DataFactoryElement<string> referenceName)
+        {
+            Argument.AssertNotNull(referenceName, nameof(referenceName));
+
+            SparkJobReferenceType = sparkJobReferenceType;
+            ReferenceName = referenceName;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/>. </summary>
+        /// <param name="sparkJobReferenceType"> Synapse spark job reference type. </param>
+        /// <param name="referenceName"> Reference spark job name. Expression with resultType string. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal SynapseSparkJobReference(SparkJobReferenceType sparkJobReferenceType, DataFactoryElement<string> referenceName, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            SparkJobReferenceType = sparkJobReferenceType;
+            ReferenceName = referenceName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="SynapseSparkJobReference"/> for deserialization. </summary>
+        internal SynapseSparkJobReference()
+        {
+        }
+
+        /// <summary> Synapse spark job reference type. </summary>
+        public SparkJobReferenceType SparkJobReferenceType { get; set; }
+        /// <summary> Reference spark job name. Expression with resultType string. </summary>
+        public DataFactoryElement<string> ReferenceName { get; set; }
     }
 }

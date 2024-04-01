@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceVisibility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkServiceVisibility)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkServiceVisibility)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateLinkServiceVisibility>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateLinkServiceVisibility)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateLinkServiceVisibility)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool> visible = default;
+            bool? visible = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PrivateLinkServiceVisibility(Optional.ToNullable(visible), serializedAdditionalRawData);
+            return new PrivateLinkServiceVisibility(visible, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PrivateLinkServiceVisibility>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkServiceVisibility)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkServiceVisibility)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePrivateLinkServiceVisibility(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateLinkServiceVisibility)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateLinkServiceVisibility)} does not support reading '{options.Format}' format.");
             }
         }
 

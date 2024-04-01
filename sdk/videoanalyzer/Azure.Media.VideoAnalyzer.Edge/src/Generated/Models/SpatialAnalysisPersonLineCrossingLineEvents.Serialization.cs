@@ -17,14 +17,14 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("line"u8);
-            writer.WriteObjectValue(Line);
+            writer.WriteObjectValue<NamedLineBase>(Line);
             if (Optional.IsCollectionDefined(Events))
             {
                 writer.WritePropertyName("events"u8);
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpatialAnalysisPersonLineCrossingEvent>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 return null;
             }
             NamedLineBase line = default;
-            Optional<IList<SpatialAnalysisPersonLineCrossingEvent>> events = default;
+            IList<SpatialAnalysisPersonLineCrossingEvent> events = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("line"u8))
@@ -61,7 +61,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new SpatialAnalysisPersonLineCrossingLineEvents(line, Optional.ToList(events));
+            return new SpatialAnalysisPersonLineCrossingLineEvents(line, events ?? new ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>());
         }
     }
 }

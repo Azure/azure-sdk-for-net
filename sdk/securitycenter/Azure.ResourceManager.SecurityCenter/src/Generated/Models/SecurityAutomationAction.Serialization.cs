@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,12 +70,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventHub": return SecurityAutomationActionEventHub.DeserializeSecurityAutomationActionEventHub(element);
-                    case "LogicApp": return SecurityAutomationActionLogicApp.DeserializeSecurityAutomationActionLogicApp(element);
-                    case "Workspace": return SecurityAutomationActionWorkspace.DeserializeSecurityAutomationActionWorkspace(element);
+                    case "EventHub": return SecurityAutomationActionEventHub.DeserializeSecurityAutomationActionEventHub(element, options);
+                    case "LogicApp": return SecurityAutomationActionLogicApp.DeserializeSecurityAutomationActionLogicApp(element, options);
+                    case "Workspace": return SecurityAutomationActionWorkspace.DeserializeSecurityAutomationActionWorkspace(element, options);
                 }
             }
-            return UnknownAutomationAction.DeserializeUnknownAutomationAction(element);
+            return UnknownAutomationAction.DeserializeUnknownAutomationAction(element, options);
         }
 
         BinaryData IPersistableModel<SecurityAutomationAction>.Write(ModelReaderWriterOptions options)
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationAction)} does not support reading '{options.Format}' format.");
             }
         }
 

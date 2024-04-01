@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GcpProjectDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> projectNumber = default;
-            Optional<string> projectId = default;
-            Optional<string> workloadIdentityPoolId = default;
-            Optional<string> projectName = default;
+            string projectNumber = default;
+            string projectId = default;
+            string workloadIdentityPoolId = default;
+            string projectName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GcpProjectDetails(projectNumber.Value, projectId.Value, workloadIdentityPoolId.Value, projectName.Value, serializedAdditionalRawData);
+            return new GcpProjectDetails(projectNumber, projectId, workloadIdentityPoolId, projectName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GcpProjectDetails>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGcpProjectDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GcpProjectDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

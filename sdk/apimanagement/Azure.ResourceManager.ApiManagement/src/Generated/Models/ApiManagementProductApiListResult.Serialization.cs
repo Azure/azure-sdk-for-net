@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductApiListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementProductApiListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementProductApiListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProductApiData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductApiListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementProductApiListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementProductApiListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ProductApiData>> value = default;
-            Optional<long> count = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ProductApiData> value = default;
+            long? count = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<ProductApiData> array = new List<ProductApiData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ProductApiData.DeserializeProductApiData(item));
+                        array.Add(ProductApiData.DeserializeProductApiData(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApiManagementProductApiListResult(Optional.ToList(value), Optional.ToNullable(count), nextLink.Value, serializedAdditionalRawData);
+            return new ApiManagementProductApiListResult(value ?? new ChangeTrackingList<ProductApiData>(), count, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApiManagementProductApiListResult>.Write(ModelReaderWriterOptions options)
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementProductApiListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementProductApiListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementProductApiListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementProductApiListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementProductApiListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

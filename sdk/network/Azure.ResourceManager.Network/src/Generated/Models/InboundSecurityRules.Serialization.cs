@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<InboundSecurityRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<InboundSecurityRulesProtocol> protocol = default;
-            Optional<string> sourceAddressPrefix = default;
-            Optional<int> destinationPortRange = default;
+            InboundSecurityRulesProtocol? protocol = default;
+            string sourceAddressPrefix = default;
+            int? destinationPortRange = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundSecurityRules(Optional.ToNullable(protocol), sourceAddressPrefix.Value, Optional.ToNullable(destinationPortRange), serializedAdditionalRawData);
+            return new InboundSecurityRules(protocol, sourceAddressPrefix, destinationPortRange, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundSecurityRules>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeInboundSecurityRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundSecurityRules)} does not support reading '{options.Format}' format.");
             }
         }
 

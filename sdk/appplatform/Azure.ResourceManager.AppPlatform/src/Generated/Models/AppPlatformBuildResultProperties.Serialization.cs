@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in BuildStages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformBuildStageProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformBuildResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AppPlatformBuildResultProvisioningState> provisioningState = default;
-            Optional<string> buildPodName = default;
-            Optional<IReadOnlyList<AppPlatformBuildStageProperties>> buildStages = default;
+            string name = default;
+            AppPlatformBuildResultProvisioningState? provisioningState = default;
+            string buildPodName = default;
+            IReadOnlyList<AppPlatformBuildStageProperties> buildStages = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformBuildStageProperties> array = new List<AppPlatformBuildStageProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformBuildStageProperties.DeserializeAppPlatformBuildStageProperties(item));
+                        array.Add(AppPlatformBuildStageProperties.DeserializeAppPlatformBuildStageProperties(item, options));
                     }
                     buildStages = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformBuildResultProperties(name.Value, Optional.ToNullable(provisioningState), buildPodName.Value, Optional.ToList(buildStages), serializedAdditionalRawData);
+            return new AppPlatformBuildResultProperties(name, provisioningState, buildPodName, buildStages ?? new ChangeTrackingList<AppPlatformBuildStageProperties>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformBuildResultProperties>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformBuildResultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformBuildResultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitRoutesTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitRoutesTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> network = default;
-            Optional<string> nextHop = default;
-            Optional<string> locPrf = default;
-            Optional<int> weight = default;
-            Optional<string> path = default;
+            string network = default;
+            string nextHop = default;
+            string locPrf = default;
+            int? weight = default;
+            string path = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitRoutesTable(network.Value, nextHop.Value, locPrf.Value, Optional.ToNullable(weight), path.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuitRoutesTable(
+                network,
+                nextHop,
+                locPrf,
+                weight,
+                path,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitRoutesTable>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteCircuitRoutesTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitRoutesTable)} does not support reading '{options.Format}' format.");
             }
         }
 

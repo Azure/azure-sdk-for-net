@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesDomainAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesDomainAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             }
             string subdomainName = default;
             ResourceType type = default;
-            Optional<string> kind = default;
+            string kind = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesDomainAvailabilityContent(subdomainName, type, kind.Value, serializedAdditionalRawData);
+            return new CognitiveServicesDomainAvailabilityContent(subdomainName, type, kind, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CognitiveServicesDomainAvailabilityContent>.Write(ModelReaderWriterOptions options)
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesDomainAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesDomainAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 

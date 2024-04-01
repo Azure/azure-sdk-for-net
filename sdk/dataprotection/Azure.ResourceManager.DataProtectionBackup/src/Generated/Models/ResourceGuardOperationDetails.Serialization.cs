@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardOperationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<string> vaultCriticalOperation = default;
-            Optional<ResourceType> requestResourceType = default;
+            string vaultCriticalOperation = default;
+            ResourceType? requestResourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGuardOperationDetails(vaultCriticalOperation.Value, Optional.ToNullable(requestResourceType), serializedAdditionalRawData);
+            return new ResourceGuardOperationDetails(vaultCriticalOperation, requestResourceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGuardOperationDetails>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeResourceGuardOperationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardOperationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

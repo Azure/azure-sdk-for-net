@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.Models
 {
@@ -21,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
                 return null;
             }
             Guid modelId = default;
-            Optional<IReadOnlyList<FormRecognizerError>> errors = default;
+            IReadOnlyList<FormRecognizerError> errors = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("modelId"u8))
@@ -44,7 +43,7 @@ namespace Azure.AI.FormRecognizer.Models
                     continue;
                 }
             }
-            return new CopyResult(modelId, Optional.ToList(errors));
+            return new CopyResult(modelId, errors ?? new ChangeTrackingList<FormRecognizerError>());
         }
     }
 }

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentBranch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentBranch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentBranch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Chaos.Models
             writer.WriteStartArray();
             foreach (var item in Actions)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ChaosExperimentAction>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.Chaos.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChaosExperimentBranch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChaosExperimentBranch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChaosExperimentBranch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Chaos.Models
                     List<ChaosExperimentAction> array = new List<ChaosExperimentAction>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChaosExperimentAction.DeserializeChaosExperimentAction(item));
+                        array.Add(ChaosExperimentAction.DeserializeChaosExperimentAction(item, options));
                     }
                     actions = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Chaos.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentBranch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentBranch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Chaos.Models
                         return DeserializeChaosExperimentBranch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChaosExperimentBranch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChaosExperimentBranch)} does not support reading '{options.Format}' format.");
             }
         }
 

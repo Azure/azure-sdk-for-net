@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerVipSwapContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in FrontendIPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LoadBalancerVipSwapRequestFrontendIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerVipSwapContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<LoadBalancerVipSwapRequestFrontendIPConfiguration>> frontendIPConfigurations = default;
+            IList<LoadBalancerVipSwapRequestFrontendIPConfiguration> frontendIPConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<LoadBalancerVipSwapRequestFrontendIPConfiguration> array = new List<LoadBalancerVipSwapRequestFrontendIPConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(LoadBalancerVipSwapRequestFrontendIPConfiguration.DeserializeLoadBalancerVipSwapRequestFrontendIPConfiguration(item));
+                        array.Add(LoadBalancerVipSwapRequestFrontendIPConfiguration.DeserializeLoadBalancerVipSwapRequestFrontendIPConfiguration(item, options));
                     }
                     frontendIPConfigurations = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LoadBalancerVipSwapContent(Optional.ToList(frontendIPConfigurations), serializedAdditionalRawData);
+            return new LoadBalancerVipSwapContent(frontendIPConfigurations ?? new ChangeTrackingList<LoadBalancerVipSwapRequestFrontendIPConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LoadBalancerVipSwapContent>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeLoadBalancerVipSwapContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerVipSwapContent)} does not support reading '{options.Format}' format.");
             }
         }
 

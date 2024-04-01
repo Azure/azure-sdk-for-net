@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             var format = options.Format == "W" ? ((IPersistableModel<EasmTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EasmTask)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             var format = options.Format == "W" ? ((IPersistableModel<EasmTask>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmTask)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EasmTask)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,15 +138,15 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<EasmResourceProvisioningState> provisioningState = default;
-            Optional<string> startedAt = default;
-            Optional<string> completedAt = default;
-            Optional<string> lastPolledAt = default;
-            Optional<string> state = default;
-            Optional<string> phase = default;
-            Optional<string> reason = default;
-            Optional<BinaryData> metadata = default;
+            SystemData systemData = default;
+            EasmResourceProvisioningState? provisioningState = default;
+            string startedAt = default;
+            string completedAt = default;
+            string lastPolledAt = default;
+            string state = default;
+            string phase = default;
+            string reason = default;
+            BinaryData metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -241,7 +241,20 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmTask(id, name, type, systemData.Value, Optional.ToNullable(provisioningState), startedAt.Value, completedAt.Value, lastPolledAt.Value, state.Value, phase.Value, reason.Value, metadata.Value, serializedAdditionalRawData);
+            return new EasmTask(
+                id,
+                name,
+                type,
+                systemData,
+                provisioningState,
+                startedAt,
+                completedAt,
+                lastPolledAt,
+                state,
+                phase,
+                reason,
+                metadata,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmTask>.Write(ModelReaderWriterOptions options)
@@ -253,7 +266,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EasmTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasmTask)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -269,7 +282,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                         return DeserializeEasmTask(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EasmTask)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasmTask)} does not support reading '{options.Format}' format.");
             }
         }
 

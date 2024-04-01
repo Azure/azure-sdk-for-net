@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionUsageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +94,11 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<string> firstConsumptionDate = default;
-            Optional<string> lastConsumptionDate = default;
-            Optional<string> lookBackUnitType = default;
-            Optional<IReadOnlyList<float>> usageData = default;
-            Optional<string> usageGrain = default;
+            string firstConsumptionDate = default;
+            string lastConsumptionDate = default;
+            string lookBackUnitType = default;
+            IReadOnlyList<float> usageData = default;
+            string usageGrain = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,13 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionUsageProperties(firstConsumptionDate.Value, lastConsumptionDate.Value, lookBackUnitType.Value, Optional.ToList(usageData), usageGrain.Value, serializedAdditionalRawData);
+            return new ConsumptionUsageProperties(
+                firstConsumptionDate,
+                lastConsumptionDate,
+                lookBackUnitType,
+                usageData ?? new ChangeTrackingList<float>(),
+                usageGrain,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionUsageProperties>.Write(ModelReaderWriterOptions options)
@@ -155,7 +161,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +177,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionUsageProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionUsageProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.CosmosDB.Models
 {
@@ -38,8 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> SqlDedicatedGateway endpoint for the service. </summary>
+        [WirePath("sqlDedicatedGatewayEndpoint")]
         public string SqlDedicatedGatewayEndpoint { get; set; }
         /// <summary> An array that contains all of the locations for the service. </summary>
+        [WirePath("locations")]
         public IReadOnlyList<SqlDedicatedGatewayRegionalService> Locations { get; }
     }
 }

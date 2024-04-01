@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArcIdentityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArcIdentityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<Guid> arcApplicationClientId = default;
-            Optional<Guid> arcApplicationTenantId = default;
-            Optional<Guid> arcServicePrincipalObjectId = default;
-            Optional<Guid> arcApplicationObjectId = default;
+            Guid? arcApplicationClientId = default;
+            Guid? arcApplicationTenantId = default;
+            Guid? arcServicePrincipalObjectId = default;
+            Guid? arcApplicationObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ArcIdentityResult(Optional.ToNullable(arcApplicationClientId), Optional.ToNullable(arcApplicationTenantId), Optional.ToNullable(arcServicePrincipalObjectId), Optional.ToNullable(arcApplicationObjectId), serializedAdditionalRawData);
+            return new ArcIdentityResult(arcApplicationClientId, arcApplicationTenantId, arcServicePrincipalObjectId, arcApplicationObjectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ArcIdentityResult>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeArcIdentityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

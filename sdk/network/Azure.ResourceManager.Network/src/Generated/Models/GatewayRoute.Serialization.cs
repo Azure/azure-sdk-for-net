@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayRoute)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayRoute>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayRoute)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> localAddress = default;
-            Optional<string> network = default;
-            Optional<string> nextHop = default;
-            Optional<string> sourcePeer = default;
-            Optional<string> origin = default;
-            Optional<string> asPath = default;
-            Optional<int> weight = default;
+            string localAddress = default;
+            string network = default;
+            string nextHop = default;
+            string sourcePeer = default;
+            string origin = default;
+            string asPath = default;
+            int? weight = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -155,7 +155,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayRoute(localAddress.Value, network.Value, nextHop.Value, sourcePeer.Value, origin.Value, asPath.Value, Optional.ToNullable(weight), serializedAdditionalRawData);
+            return new GatewayRoute(
+                localAddress,
+                network,
+                nextHop,
+                sourcePeer,
+                origin,
+                asPath,
+                weight,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayRoute>.Write(ModelReaderWriterOptions options)
@@ -167,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeGatewayRoute(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayRoute)} does not support reading '{options.Format}' format.");
             }
         }
 

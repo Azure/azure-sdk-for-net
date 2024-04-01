@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceTimeSpan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceTimeSpan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceTimeSpan)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceTimeSpan>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceTimeSpan)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceTimeSpan)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> start = default;
-            Optional<DateTimeOffset> end = default;
+            DateTimeOffset? start = default;
+            DateTimeOffset? end = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceTimeSpan(Optional.ToNullable(start), Optional.ToNullable(end), serializedAdditionalRawData);
+            return new ContainerServiceTimeSpan(start, end, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceTimeSpan>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceTimeSpan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceTimeSpan)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceTimeSpan(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceTimeSpan)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceTimeSpan)} does not support reading '{options.Format}' format.");
             }
         }
 

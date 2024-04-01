@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailablePatchSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ComputeApiError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailablePatchSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<string> assessmentActivityId = default;
-            Optional<bool> rebootPending = default;
-            Optional<int> criticalAndSecurityPatchCount = default;
-            Optional<int> otherPatchCount = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> lastModifiedTime = default;
-            Optional<ComputeApiError> error = default;
+            PatchOperationStatus? status = default;
+            string assessmentActivityId = default;
+            bool? rebootPending = default;
+            int? criticalAndSecurityPatchCount = default;
+            int? otherPatchCount = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? lastModifiedTime = default;
+            ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -190,7 +190,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailablePatchSummary(Optional.ToNullable(status), assessmentActivityId.Value, Optional.ToNullable(rebootPending), Optional.ToNullable(criticalAndSecurityPatchCount), Optional.ToNullable(otherPatchCount), Optional.ToNullable(startTime), Optional.ToNullable(lastModifiedTime), error.Value, serializedAdditionalRawData);
+            return new AvailablePatchSummary(
+                status,
+                assessmentActivityId,
+                rebootPending,
+                criticalAndSecurityPatchCount,
+                otherPatchCount,
+                startTime,
+                lastModifiedTime,
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailablePatchSummary>.Write(ModelReaderWriterOptions options)
@@ -202,7 +211,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -218,7 +227,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAvailablePatchSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailablePatchSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

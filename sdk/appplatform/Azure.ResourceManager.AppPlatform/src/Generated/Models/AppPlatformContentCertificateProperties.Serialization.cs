@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformContentCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformContentCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,16 +116,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> content = default;
+            string content = default;
             string type = default;
-            Optional<string> thumbprint = default;
-            Optional<string> issuer = default;
-            Optional<DateTimeOffset> issuedDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<DateTimeOffset> activateDate = default;
-            Optional<string> subjectName = default;
-            Optional<IReadOnlyList<string>> dnsNames = default;
-            Optional<AppPlatformCertificateProvisioningState> provisioningState = default;
+            string thumbprint = default;
+            string issuer = default;
+            DateTimeOffset? issuedDate = default;
+            DateTimeOffset? expirationDate = default;
+            DateTimeOffset? activateDate = default;
+            string subjectName = default;
+            IReadOnlyList<string> dnsNames = default;
+            AppPlatformCertificateProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformContentCertificateProperties(type, thumbprint.Value, issuer.Value, Optional.ToNullable(issuedDate), Optional.ToNullable(expirationDate), Optional.ToNullable(activateDate), subjectName.Value, Optional.ToList(dnsNames), Optional.ToNullable(provisioningState), serializedAdditionalRawData, content.Value);
+            return new AppPlatformContentCertificateProperties(
+                type,
+                thumbprint,
+                issuer,
+                issuedDate,
+                expirationDate,
+                activateDate,
+                subjectName,
+                dnsNames ?? new ChangeTrackingList<string>(),
+                provisioningState,
+                serializedAdditionalRawData,
+                content);
         }
 
         BinaryData IPersistableModel<AppPlatformContentCertificateProperties>.Write(ModelReaderWriterOptions options)
@@ -223,7 +234,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +250,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformContentCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformContentCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BenefitRecommendationProperties>(Properties, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitRecommendationModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -95,12 +95,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitRecommendationProperties> properties = default;
-            Optional<BillingAccountBenefitKind> kind = default;
+            BenefitRecommendationProperties properties = default;
+            BillingAccountBenefitKind? kind = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    properties = BenefitRecommendationProperties.DeserializeBenefitRecommendationProperties(property.Value);
+                    properties = BenefitRecommendationProperties.DeserializeBenefitRecommendationProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -153,7 +153,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitRecommendationModel(id, name, type, systemData.Value, properties.Value, Optional.ToNullable(kind), serializedAdditionalRawData);
+            return new BenefitRecommendationModel(
+                id,
+                name,
+                type,
+                systemData,
+                properties,
+                kind,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitRecommendationModel>.Write(ModelReaderWriterOptions options)
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +188,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeBenefitRecommendationModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitRecommendationModel)} does not support reading '{options.Format}' format.");
             }
         }
 

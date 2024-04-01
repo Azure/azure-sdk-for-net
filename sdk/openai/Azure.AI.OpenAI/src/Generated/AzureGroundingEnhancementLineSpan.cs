@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary> A span object that represents a detected object and its bounding box information. </summary>
     public partial class AzureGroundingEnhancementLineSpan
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLineSpan"/>. </summary>
         /// <param name="text"> The text content of the span that represents the detected object. </param>
         /// <param name="offset">
@@ -43,12 +74,19 @@ namespace Azure.AI.OpenAI
         /// </param>
         /// <param name="length"> The length of the span in characters, measured in Unicode codepoints. </param>
         /// <param name="polygon"> An array of objects representing points in the polygon that encloses the detected object. </param>
-        internal AzureGroundingEnhancementLineSpan(string text, int offset, int length, IReadOnlyList<AzureGroundingEnhancementCoordinatePoint> polygon)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureGroundingEnhancementLineSpan(string text, int offset, int length, IReadOnlyList<AzureGroundingEnhancementCoordinatePoint> polygon, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Offset = offset;
             Length = length;
             Polygon = polygon;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLineSpan"/> for deserialization. </summary>
+        internal AzureGroundingEnhancementLineSpan()
+        {
         }
 
         /// <summary> The text content of the span that represents the detected object. </summary>

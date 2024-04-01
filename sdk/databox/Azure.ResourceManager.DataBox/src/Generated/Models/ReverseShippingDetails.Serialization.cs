@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ContactDetails))
             {
                 writer.WritePropertyName("contactDetails"u8);
-                writer.WriteObjectValue(ContactDetails);
+                writer.WriteObjectValue<ContactInfo>(ContactDetails, options);
             }
             if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IsUpdated))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<ContactInfo> contactDetails = default;
-            Optional<DataBoxShippingAddress> shippingAddress = default;
-            Optional<bool> isUpdated = default;
+            ContactInfo contactDetails = default;
+            DataBoxShippingAddress shippingAddress = default;
+            bool? isUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    contactDetails = ContactInfo.DeserializeContactInfo(property.Value);
+                    contactDetails = ContactInfo.DeserializeContactInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("shippingAddress"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value);
+                    shippingAddress = DataBoxShippingAddress.DeserializeDataBoxShippingAddress(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("isUpdated"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReverseShippingDetails(contactDetails.Value, shippingAddress.Value, Optional.ToNullable(isUpdated), serializedAdditionalRawData);
+            return new ReverseShippingDetails(contactDetails, shippingAddress, isUpdated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReverseShippingDetails>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeReverseShippingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

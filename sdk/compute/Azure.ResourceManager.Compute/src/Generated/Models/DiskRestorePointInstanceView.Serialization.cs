@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskRestorePointInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskRestorePointInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus);
+                writer.WriteObjectValue<DiskRestorePointReplicationStatus>(ReplicationStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiskRestorePointInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiskRestorePointInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiskRestorePointInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<DiskRestorePointReplicationStatus> replicationStatus = default;
+            string id = default;
+            DiskRestorePointReplicationStatus replicationStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    replicationStatus = DiskRestorePointReplicationStatus.DeserializeDiskRestorePointReplicationStatus(property.Value);
+                    replicationStatus = DiskRestorePointReplicationStatus.DeserializeDiskRestorePointReplicationStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DiskRestorePointInstanceView(id.Value, replicationStatus.Value, serializedAdditionalRawData);
+            return new DiskRestorePointInstanceView(id, replicationStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DiskRestorePointInstanceView>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskRestorePointInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDiskRestorePointInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiskRestorePointInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiskRestorePointInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

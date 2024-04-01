@@ -19,13 +19,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("resourceManagerEndpoint"u8);
-            writer.WriteObjectValue(ResourceManagerEndpoint);
+            writer.WriteObjectValue<object>(ResourceManagerEndpoint);
             writer.WritePropertyName("tempScriptPath"u8);
-            writer.WriteObjectValue(TempScriptPath);
+            writer.WriteObjectValue<object>(TempScriptPath);
             if (Optional.IsDefined(DistcpOptions))
             {
                 writer.WritePropertyName("distcpOptions"u8);
-                writer.WriteObjectValue(DistcpOptions);
+                writer.WriteObjectValue<object>(DistcpOptions);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             object resourceManagerEndpoint = default;
             object tempScriptPath = default;
-            Optional<object> distcpOptions = default;
+            object distcpOptions = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("resourceManagerEndpoint"u8))
@@ -61,14 +61,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions.Value);
+            return new DistcpSettings(resourceManagerEndpoint, tempScriptPath, distcpOptions);
         }
 
         internal partial class DistcpSettingsConverter : JsonConverter<DistcpSettings>
         {
             public override void Write(Utf8JsonWriter writer, DistcpSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DistcpSettings>(model);
             }
             public override DistcpSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

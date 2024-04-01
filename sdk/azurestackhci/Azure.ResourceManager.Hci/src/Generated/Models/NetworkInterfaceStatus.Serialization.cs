@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(ProvisioningStatus))
             {
                 writer.WritePropertyName("provisioningStatus"u8);
-                writer.WriteObjectValue(ProvisioningStatus);
+                writer.WriteObjectValue<NetworkInterfaceStatusProvisioningStatus>(ProvisioningStatus, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<NetworkInterfaceStatusProvisioningStatus> provisioningStatus = default;
+            string errorCode = default;
+            string errorMessage = default;
+            NetworkInterfaceStatusProvisioningStatus provisioningStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    provisioningStatus = NetworkInterfaceStatusProvisioningStatus.DeserializeNetworkInterfaceStatusProvisioningStatus(property.Value);
+                    provisioningStatus = NetworkInterfaceStatusProvisioningStatus.DeserializeNetworkInterfaceStatusProvisioningStatus(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceStatus(errorCode.Value, errorMessage.Value, provisioningStatus.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceStatus(errorCode, errorMessage, provisioningStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceStatus>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeNetworkInterfaceStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

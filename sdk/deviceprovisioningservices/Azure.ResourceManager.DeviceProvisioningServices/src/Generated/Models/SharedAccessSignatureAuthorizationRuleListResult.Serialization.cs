@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureAuthorizationRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRuleListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRuleListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeviceProvisioningServicesSharedAccessKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedAccessSignatureAuthorizationRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRuleListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRuleListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DeviceProvisioningServicesSharedAccessKey>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DeviceProvisioningServicesSharedAccessKey> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     List<DeviceProvisioningServicesSharedAccessKey> array = new List<DeviceProvisioningServicesSharedAccessKey>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(item));
+                        array.Add(DeviceProvisioningServicesSharedAccessKey.DeserializeDeviceProvisioningServicesSharedAccessKey(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedAccessSignatureAuthorizationRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new SharedAccessSignatureAuthorizationRuleListResult(value ?? new ChangeTrackingList<DeviceProvisioningServicesSharedAccessKey>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedAccessSignatureAuthorizationRuleListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRuleListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRuleListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeSharedAccessSignatureAuthorizationRuleListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRuleListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedAccessSignatureAuthorizationRuleListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

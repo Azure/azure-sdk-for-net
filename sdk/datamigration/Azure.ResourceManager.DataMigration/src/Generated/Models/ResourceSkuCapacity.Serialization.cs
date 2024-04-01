@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSkuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSkuCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSkuCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSkuCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSkuCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<long> minimum = default;
-            Optional<long> maximum = default;
-            Optional<long> @default = default;
-            Optional<ResourceSkuCapacityScaleType> scaleType = default;
+            long? minimum = default;
+            long? maximum = default;
+            long? @default = default;
+            ResourceSkuCapacityScaleType? scaleType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSkuCapacity(Optional.ToNullable(minimum), Optional.ToNullable(maximum), Optional.ToNullable(@default), Optional.ToNullable(scaleType), serializedAdditionalRawData);
+            return new ResourceSkuCapacity(minimum, maximum, @default, scaleType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSkuCapacity>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSkuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSkuCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeResourceSkuCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSkuCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSkuCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

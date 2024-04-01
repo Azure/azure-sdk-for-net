@@ -25,7 +25,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TriggerPipelineReference>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -47,19 +47,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("recurrence"u8);
-            writer.WriteObjectValue(Recurrence);
+            writer.WriteObjectValue<ScheduleTriggerRecurrence>(Recurrence);
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -70,11 +70,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<IList<TriggerPipelineReference>> pipelines = default;
+            IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<TriggerRuntimeState> runtimeState = default;
-            Optional<IList<object>> annotations = default;
+            string description = default;
+            TriggerRuntimeState? runtimeState = default;
+            IList<object> annotations = default;
             ScheduleTriggerRecurrence recurrence = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -154,14 +154,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ScheduleTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), recurrence);
+            return new ScheduleTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                recurrence);
         }
 
         internal partial class ScheduleTriggerConverter : JsonConverter<ScheduleTrigger>
         {
             public override void Write(Utf8JsonWriter writer, ScheduleTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ScheduleTrigger>(model);
             }
             public override ScheduleTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

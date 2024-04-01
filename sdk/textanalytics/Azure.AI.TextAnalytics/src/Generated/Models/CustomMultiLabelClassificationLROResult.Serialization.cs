@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 using Azure.Core;
 
 namespace Azure.AI.TextAnalytics.Models
@@ -18,7 +17,7 @@ namespace Azure.AI.TextAnalytics.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("results"u8);
-            writer.WriteObjectValue(Results);
+            writer.WriteObjectValue<CustomLabelClassificationResult>(Results);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
             if (Optional.IsDefined(TaskName))
@@ -41,7 +40,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             CustomLabelClassificationResult results = default;
             AnalyzeTextLROResultsKind kind = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             DateTimeOffset lastUpdateDateTime = default;
             TextAnalyticsOperationStatus status = default;
             foreach (var property in element.EnumerateObject())
@@ -72,7 +71,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new CustomMultiLabelClassificationLROResult(lastUpdateDateTime, status, kind, taskName.Value, results);
+            return new CustomMultiLabelClassificationLROResult(lastUpdateDateTime, status, kind, taskName, results);
         }
     }
 }

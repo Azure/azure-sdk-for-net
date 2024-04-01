@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataSourcePrecedence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataSourcePrecedence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> precedence = default;
-            Optional<string> name = default;
-            Optional<DataSourceType> dataSourceType = default;
-            Optional<Status> status = default;
-            Optional<int> id = default;
-            Optional<string> dataSourceReferenceId = default;
+            int? precedence = default;
+            string name = default;
+            DataSourceType? dataSourceType = default;
+            Status? status = default;
+            int? id = default;
+            string dataSourceReferenceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -171,7 +171,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataSourcePrecedence(Optional.ToNullable(precedence), name.Value, Optional.ToNullable(dataSourceType), Optional.ToNullable(status), Optional.ToNullable(id), dataSourceReferenceId.Value, serializedAdditionalRawData);
+            return new DataSourcePrecedence(
+                precedence,
+                name,
+                dataSourceType,
+                status,
+                id,
+                dataSourceReferenceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataSourcePrecedence>.Write(ModelReaderWriterOptions options)
@@ -183,7 +190,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +206,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeDataSourcePrecedence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataSourcePrecedence)} does not support reading '{options.Format}' format.");
             }
         }
 

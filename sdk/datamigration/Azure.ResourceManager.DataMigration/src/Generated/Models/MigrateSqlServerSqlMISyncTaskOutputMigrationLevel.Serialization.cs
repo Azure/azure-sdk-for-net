@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,18 +126,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<int> databaseCount = default;
-            Optional<MigrationState> state = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> sourceServerName = default;
-            Optional<string> sourceServerVersion = default;
-            Optional<string> sourceServerBrandVersion = default;
-            Optional<string> targetServerName = default;
-            Optional<string> targetServerVersion = default;
-            Optional<string> targetServerBrandVersion = default;
-            Optional<int> databaseErrorCount = default;
-            Optional<string> id = default;
+            int? databaseCount = default;
+            MigrationState? state = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string sourceServerName = default;
+            string sourceServerVersion = default;
+            string sourceServerBrandVersion = default;
+            string targetServerName = default;
+            string targetServerVersion = default;
+            string targetServerBrandVersion = default;
+            int? databaseErrorCount = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -234,7 +234,21 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(id.Value, resultType, serializedAdditionalRawData, Optional.ToNullable(databaseCount), Optional.ToNullable(state), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), sourceServerName.Value, sourceServerVersion.Value, sourceServerBrandVersion.Value, targetServerName.Value, targetServerVersion.Value, targetServerBrandVersion.Value, Optional.ToNullable(databaseErrorCount));
+            return new MigrateSqlServerSqlMISyncTaskOutputMigrationLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                databaseCount,
+                state,
+                startedOn,
+                endedOn,
+                sourceServerName,
+                sourceServerVersion,
+                sourceServerBrandVersion,
+                targetServerName,
+                targetServerVersion,
+                targetServerBrandVersion,
+                databaseErrorCount);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMISyncTaskOutputMigrationLevel>.Write(ModelReaderWriterOptions options)
@@ -246,7 +260,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -262,7 +276,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlMISyncTaskOutputMigrationLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMISyncTaskOutputMigrationLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

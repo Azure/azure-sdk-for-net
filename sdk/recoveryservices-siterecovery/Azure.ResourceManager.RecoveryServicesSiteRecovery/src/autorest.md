@@ -8,8 +8,8 @@ azure-arm: true
 csharp: true
 library-name: RecoveryServicesSiteRecovery
 namespace: Azure.ResourceManager.RecoveryServicesSiteRecovery
-require: https://github.com/Azure/azure-rest-api-specs/blob/5dd1107d5f2be8d600325d795450e1d854fbe7e8/specification/recoveryservicessiterecovery/resource-manager/readme.md
-#tag: package-2023-06
+require: https://github.com/Azure/azure-rest-api-specs/blob/39608b2c1c7b7dc06cb99abb9d733665cfce9a75/specification/recoveryservicessiterecovery/resource-manager/readme.md
+#tag: package-2023-08
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,7 +17,7 @@ sample-gen:
   clear-output-folder: true
   skipped-operations:
     # The discriminator value is incorrect
-    - ReplicationFabrics_Create 
+    - ReplicationFabrics_Create
     - ReplicationProtectionContainers_Create
     - ReplicationProtectedItems_Delete
     - ReplicationProtectionContainerMappings_Create
@@ -26,8 +26,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 rename-mapping:
@@ -307,10 +308,10 @@ rename-mapping:
   VMNicDetails.enableAcceleratedNetworkingOnTfo: IsAcceleratedNetworkingOnTfoEnabled
   VMNicDetails.reuseExistingNic: IsReuseExistingNicAllowed
   VMNicDetails.tfoReuseExistingNic: IsTfoReuseExistingNicAllowed
-  VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId: -|arm-id 
-  VMwareCbtEnableMigrationInput.snapshotRunAsAccountId: -|arm-id 
-  VMwareCbtMigrationDetails.dataMoverRunAsAccountId: -|arm-id 
-  VMwareCbtMigrationDetails.snapshotRunAsAccountId: -|arm-id 
+  VMwareCbtEnableMigrationInput.dataMoverRunAsAccountId: -|arm-id
+  VMwareCbtEnableMigrationInput.snapshotRunAsAccountId: -|arm-id
+  VMwareCbtMigrationDetails.dataMoverRunAsAccountId: -|arm-id
+  VMwareCbtMigrationDetails.snapshotRunAsAccountId: -|arm-id
   VMwareV2FabricSpecificDetails.serviceResourceId: -|arm-id
 
 format-by-name-rules:

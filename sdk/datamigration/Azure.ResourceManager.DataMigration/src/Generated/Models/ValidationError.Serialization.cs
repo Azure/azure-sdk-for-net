@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ValidationError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidationError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ValidationError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ValidationError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ValidationError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ValidationError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> text = default;
-            Optional<Severity> severity = default;
+            string text = default;
+            Severity? severity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ValidationError(text.Value, Optional.ToNullable(severity), serializedAdditionalRawData);
+            return new ValidationError(text, severity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ValidationError>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ValidationError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ValidationError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeValidationError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ValidationError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ValidationError)} does not support reading '{options.Format}' format.");
             }
         }
 

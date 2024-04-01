@@ -24,44 +24,44 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(IgnoreNullValues))
             {
                 writer.WritePropertyName("ignoreNullValues"u8);
-                writer.WriteObjectValue(IgnoreNullValues);
+                writer.WriteObjectValue<object>(IgnoreNullValues);
             }
             if (Optional.IsDefined(AlternateKeyName))
             {
                 writer.WritePropertyName("alternateKeyName"u8);
-                writer.WriteObjectValue(AlternateKeyName);
+                writer.WriteObjectValue<object>(AlternateKeyName);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(WriteBatchSize))
             {
                 writer.WritePropertyName("writeBatchSize"u8);
-                writer.WriteObjectValue(WriteBatchSize);
+                writer.WriteObjectValue<object>(WriteBatchSize);
             }
             if (Optional.IsDefined(WriteBatchTimeout))
             {
                 writer.WritePropertyName("writeBatchTimeout"u8);
-                writer.WriteObjectValue(WriteBatchTimeout);
+                writer.WriteObjectValue<object>(WriteBatchTimeout);
             }
             if (Optional.IsDefined(SinkRetryCount))
             {
                 writer.WritePropertyName("sinkRetryCount"u8);
-                writer.WriteObjectValue(SinkRetryCount);
+                writer.WriteObjectValue<object>(SinkRetryCount);
             }
             if (Optional.IsDefined(SinkRetryWait))
             {
                 writer.WritePropertyName("sinkRetryWait"u8);
-                writer.WriteObjectValue(SinkRetryWait);
+                writer.WriteObjectValue<object>(SinkRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -73,14 +73,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             DynamicsSinkWriteBehavior writeBehavior = default;
-            Optional<object> ignoreNullValues = default;
-            Optional<object> alternateKeyName = default;
+            object ignoreNullValues = default;
+            object alternateKeyName = default;
             string type = default;
-            Optional<object> writeBatchSize = default;
-            Optional<object> writeBatchTimeout = default;
-            Optional<object> sinkRetryCount = default;
-            Optional<object> sinkRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object writeBatchSize = default;
+            object writeBatchTimeout = default;
+            object sinkRetryCount = default;
+            object sinkRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -161,14 +161,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new CommonDataServiceForAppsSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, writeBehavior, ignoreNullValues.Value, alternateKeyName.Value);
+            return new CommonDataServiceForAppsSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                writeBehavior,
+                ignoreNullValues,
+                alternateKeyName);
         }
 
         internal partial class CommonDataServiceForAppsSinkConverter : JsonConverter<CommonDataServiceForAppsSink>
         {
             public override void Write(Utf8JsonWriter writer, CommonDataServiceForAppsSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CommonDataServiceForAppsSink>(model);
             }
             public override CommonDataServiceForAppsSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

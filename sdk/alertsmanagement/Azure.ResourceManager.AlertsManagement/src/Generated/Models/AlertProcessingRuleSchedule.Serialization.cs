@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Recurrences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AlertProcessingRuleRecurrence>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> effectiveFrom = default;
-            Optional<DateTimeOffset> effectiveUntil = default;
-            Optional<string> timeZone = default;
-            Optional<IList<AlertProcessingRuleRecurrence>> recurrences = default;
+            DateTimeOffset? effectiveFrom = default;
+            DateTimeOffset? effectiveUntil = default;
+            string timeZone = default;
+            IList<AlertProcessingRuleRecurrence> recurrences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<AlertProcessingRuleRecurrence> array = new List<AlertProcessingRuleRecurrence>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AlertProcessingRuleRecurrence.DeserializeAlertProcessingRuleRecurrence(item));
+                        array.Add(AlertProcessingRuleRecurrence.DeserializeAlertProcessingRuleRecurrence(item, options));
                     }
                     recurrences = array;
                     continue;
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertProcessingRuleSchedule(Optional.ToNullable(effectiveFrom), Optional.ToNullable(effectiveUntil), timeZone.Value, Optional.ToList(recurrences), serializedAdditionalRawData);
+            return new AlertProcessingRuleSchedule(effectiveFrom, effectiveUntil, timeZone, recurrences ?? new ChangeTrackingList<AlertProcessingRuleRecurrence>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertProcessingRuleSchedule>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeAlertProcessingRuleSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

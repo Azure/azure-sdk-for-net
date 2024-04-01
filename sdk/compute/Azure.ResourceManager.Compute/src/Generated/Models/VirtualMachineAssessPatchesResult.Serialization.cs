@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineAssessPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineAssessPatchesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,14 +62,14 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in AvailablePatches)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineSoftwarePatchProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<ComputeApiError>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineAssessPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineAssessPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineAssessPatchesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<PatchOperationStatus> status = default;
-            Optional<string> assessmentActivityId = default;
-            Optional<bool> rebootPending = default;
-            Optional<int> criticalAndSecurityPatchCount = default;
-            Optional<int> otherPatchCount = default;
-            Optional<DateTimeOffset> startDateTime = default;
-            Optional<IReadOnlyList<VirtualMachineSoftwarePatchProperties>> availablePatches = default;
-            Optional<ComputeApiError> error = default;
+            PatchOperationStatus? status = default;
+            string assessmentActivityId = default;
+            bool? rebootPending = default;
+            int? criticalAndSecurityPatchCount = default;
+            int? otherPatchCount = default;
+            DateTimeOffset? startDateTime = default;
+            IReadOnlyList<VirtualMachineSoftwarePatchProperties> availablePatches = default;
+            ComputeApiError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineSoftwarePatchProperties> array = new List<VirtualMachineSoftwarePatchProperties>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineSoftwarePatchProperties.DeserializeVirtualMachineSoftwarePatchProperties(item));
+                        array.Add(VirtualMachineSoftwarePatchProperties.DeserializeVirtualMachineSoftwarePatchProperties(item, options));
                     }
                     availablePatches = array;
                     continue;
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    error = ComputeApiError.DeserializeComputeApiError(property.Value);
+                    error = ComputeApiError.DeserializeComputeApiError(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -200,7 +200,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineAssessPatchesResult(Optional.ToNullable(status), assessmentActivityId.Value, Optional.ToNullable(rebootPending), Optional.ToNullable(criticalAndSecurityPatchCount), Optional.ToNullable(otherPatchCount), Optional.ToNullable(startDateTime), Optional.ToList(availablePatches), error.Value, serializedAdditionalRawData);
+            return new VirtualMachineAssessPatchesResult(
+                status,
+                assessmentActivityId,
+                rebootPending,
+                criticalAndSecurityPatchCount,
+                otherPatchCount,
+                startDateTime,
+                availablePatches ?? new ChangeTrackingList<VirtualMachineSoftwarePatchProperties>(),
+                error,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineAssessPatchesResult>.Write(ModelReaderWriterOptions options)
@@ -212,7 +221,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineAssessPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineAssessPatchesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +237,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineAssessPatchesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineAssessPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineAssessPatchesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

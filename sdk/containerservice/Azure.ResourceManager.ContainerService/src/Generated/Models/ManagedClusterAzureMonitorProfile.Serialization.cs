@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAzureMonitorProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
-                writer.WriteObjectValue(Metrics);
+                writer.WriteObjectValue<ManagedClusterMonitorProfileMetrics>(Metrics, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAzureMonitorProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<ManagedClusterMonitorProfileMetrics> metrics = default;
+            ManagedClusterMonitorProfileMetrics metrics = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     {
                         continue;
                     }
-                    metrics = ManagedClusterMonitorProfileMetrics.DeserializeManagedClusterMonitorProfileMetrics(property.Value);
+                    metrics = ManagedClusterMonitorProfileMetrics.DeserializeManagedClusterMonitorProfileMetrics(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAzureMonitorProfile(metrics.Value, serializedAdditionalRawData);
+            return new ManagedClusterAzureMonitorProfile(metrics, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAzureMonitorProfile>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterAzureMonitorProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAzureMonitorProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

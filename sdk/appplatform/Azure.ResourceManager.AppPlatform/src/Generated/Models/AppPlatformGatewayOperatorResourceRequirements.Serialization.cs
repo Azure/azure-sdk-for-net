@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayOperatorResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformGatewayOperatorResourceRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> cpu = default;
-            Optional<string> memory = default;
-            Optional<int> instanceCount = default;
+            string cpu = default;
+            string memory = default;
+            int? instanceCount = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformGatewayOperatorResourceRequirements(cpu.Value, memory.Value, Optional.ToNullable(instanceCount), serializedAdditionalRawData);
+            return new AppPlatformGatewayOperatorResourceRequirements(cpu, memory, instanceCount, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformGatewayOperatorResourceRequirements>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformGatewayOperatorResourceRequirements(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformGatewayOperatorResourceRequirements)} does not support reading '{options.Format}' format.");
             }
         }
 

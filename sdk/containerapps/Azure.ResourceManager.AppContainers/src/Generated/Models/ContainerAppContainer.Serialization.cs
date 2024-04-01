@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Probes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppProbe>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Env)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppEnvironmentVariable>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                writer.WriteObjectValue<AppContainerResources>(Resources, options);
             }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppVolumeMount>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,14 +129,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<IList<ContainerAppProbe>> probes = default;
-            Optional<string> image = default;
-            Optional<string> name = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<string>> args = default;
-            Optional<IList<ContainerAppEnvironmentVariable>> env = default;
-            Optional<AppContainerResources> resources = default;
-            Optional<IList<ContainerAppVolumeMount>> volumeMounts = default;
+            IList<ContainerAppProbe> probes = default;
+            string image = default;
+            string name = default;
+            IList<string> command = default;
+            IList<string> args = default;
+            IList<ContainerAppEnvironmentVariable> env = default;
+            AppContainerResources resources = default;
+            IList<ContainerAppVolumeMount> volumeMounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppProbe> array = new List<ContainerAppProbe>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppProbe.DeserializeContainerAppProbe(item));
+                        array.Add(ContainerAppProbe.DeserializeContainerAppProbe(item, options));
                     }
                     probes = array;
                     continue;
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppEnvironmentVariable> array = new List<ContainerAppEnvironmentVariable>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item));
+                        array.Add(ContainerAppEnvironmentVariable.DeserializeContainerAppEnvironmentVariable(item, options));
                     }
                     env = array;
                     continue;
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value);
+                    resources = AppContainerResources.DeserializeAppContainerResources(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("volumeMounts"u8))
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppVolumeMount> array = new List<ContainerAppVolumeMount>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppVolumeMount.DeserializeContainerAppVolumeMount(item));
+                        array.Add(ContainerAppVolumeMount.DeserializeContainerAppVolumeMount(item, options));
                     }
                     volumeMounts = array;
                     continue;
@@ -236,7 +236,16 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppContainer(image.Value, name.Value, Optional.ToList(command), Optional.ToList(args), Optional.ToList(env), resources.Value, Optional.ToList(volumeMounts), serializedAdditionalRawData, Optional.ToList(probes));
+            return new ContainerAppContainer(
+                image,
+                name,
+                command ?? new ChangeTrackingList<string>(),
+                args ?? new ChangeTrackingList<string>(),
+                env ?? new ChangeTrackingList<ContainerAppEnvironmentVariable>(),
+                resources,
+                volumeMounts ?? new ChangeTrackingList<ContainerAppVolumeMount>(),
+                serializedAdditionalRawData,
+                probes ?? new ChangeTrackingList<ContainerAppProbe>());
         }
 
         BinaryData IPersistableModel<ContainerAppContainer>.Write(ModelReaderWriterOptions options)
@@ -248,7 +257,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +273,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

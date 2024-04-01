@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotCreateEmailSignInUriResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotCreateEmailSignInUriResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotCreateEmailSignInUriResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.BotService.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<CreateEmailSignInUrlResponseProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<BotCreateEmailSignInUriResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BotCreateEmailSignInUriResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BotCreateEmailSignInUriResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<AzureLocation> location = default;
-            Optional<CreateEmailSignInUrlResponseProperties> properties = default;
+            ResourceIdentifier id = default;
+            AzureLocation? location = default;
+            CreateEmailSignInUrlResponseProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = CreateEmailSignInUrlResponseProperties.DeserializeCreateEmailSignInUrlResponseProperties(property.Value);
+                    properties = CreateEmailSignInUrlResponseProperties.DeserializeCreateEmailSignInUrlResponseProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BotCreateEmailSignInUriResult(id.Value, Optional.ToNullable(location), properties.Value, serializedAdditionalRawData);
+            return new BotCreateEmailSignInUriResult(id, location, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BotCreateEmailSignInUriResult>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BotCreateEmailSignInUriResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotCreateEmailSignInUriResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeBotCreateEmailSignInUriResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BotCreateEmailSignInUriResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BotCreateEmailSignInUriResult)} does not support reading '{options.Format}' format.");
             }
         }
 

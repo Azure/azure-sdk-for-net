@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UploadCertificateResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,14 +104,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeAuthenticationType> authType = default;
-            Optional<string> resourceId = default;
-            Optional<string> aadAuthority = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> servicePrincipalClientId = default;
-            Optional<Guid> servicePrincipalObjectId = default;
-            Optional<string> azureManagementEndpointAudience = default;
-            Optional<string> aadAudience = default;
+            DataBoxEdgeAuthenticationType? authType = default;
+            string resourceId = default;
+            string aadAuthority = default;
+            Guid? aadTenantId = default;
+            Guid? servicePrincipalClientId = default;
+            Guid? servicePrincipalObjectId = default;
+            string azureManagementEndpointAudience = default;
+            string aadAudience = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -178,7 +178,16 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UploadCertificateResponse(Optional.ToNullable(authType), resourceId.Value, aadAuthority.Value, Optional.ToNullable(aadTenantId), Optional.ToNullable(servicePrincipalClientId), Optional.ToNullable(servicePrincipalObjectId), azureManagementEndpointAudience.Value, aadAudience.Value, serializedAdditionalRawData);
+            return new UploadCertificateResponse(
+                authType,
+                resourceId,
+                aadAuthority,
+                aadTenantId,
+                servicePrincipalClientId,
+                servicePrincipalObjectId,
+                azureManagementEndpointAudience,
+                aadAudience,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UploadCertificateResponse>.Write(ModelReaderWriterOptions options)
@@ -190,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +215,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeUploadCertificateResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UploadCertificateResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

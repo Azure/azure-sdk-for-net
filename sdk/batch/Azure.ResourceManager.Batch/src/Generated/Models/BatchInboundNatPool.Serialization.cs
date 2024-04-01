@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchInboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchInboundNatPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchInboundNatPool)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Batch.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkSecurityGroupRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BatchNetworkSecurityGroupRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchInboundNatPool>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchInboundNatPool)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchInboundNatPool)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Batch.Models
             int backendPort = default;
             int frontendPortRangeStart = default;
             int frontendPortRangeEnd = default;
-            Optional<IList<BatchNetworkSecurityGroupRule>> networkSecurityGroupRules = default;
+            IList<BatchNetworkSecurityGroupRule> networkSecurityGroupRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Batch.Models
                     List<BatchNetworkSecurityGroupRule> array = new List<BatchNetworkSecurityGroupRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item));
+                        array.Add(BatchNetworkSecurityGroupRule.DeserializeBatchNetworkSecurityGroupRule(item, options));
                     }
                     networkSecurityGroupRules = array;
                     continue;
@@ -139,7 +139,14 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchInboundNatPool(name, protocol, backendPort, frontendPortRangeStart, frontendPortRangeEnd, Optional.ToList(networkSecurityGroupRules), serializedAdditionalRawData);
+            return new BatchInboundNatPool(
+                name,
+                protocol,
+                backendPort,
+                frontendPortRangeStart,
+                frontendPortRangeEnd,
+                networkSecurityGroupRules ?? new ChangeTrackingList<BatchNetworkSecurityGroupRule>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchInboundNatPool>.Write(ModelReaderWriterOptions options)
@@ -151,7 +158,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchInboundNatPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchInboundNatPool)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +174,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchInboundNatPool(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchInboundNatPool)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchInboundNatPool)} does not support reading '{options.Format}' format.");
             }
         }
 

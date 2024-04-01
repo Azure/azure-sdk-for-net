@@ -21,7 +21,13 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <returns> A new <see cref="Models.TrafficManagerNameAvailabilityResult"/> instance for mocking. </returns>
         public static TrafficManagerNameAvailabilityResult TrafficManagerNameAvailabilityResult(string name = null, ResourceType? resourceType = null, bool? isNameAvailable = null, string unavailableReason = null, string message = null)
         {
-            return new TrafficManagerNameAvailabilityResult(name, resourceType, isNameAvailable, unavailableReason, message);
+            return new TrafficManagerNameAvailabilityResult(
+                name,
+                resourceType,
+                isNameAvailable,
+                unavailableReason,
+                message,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.TrafficManagerDnsConfig"/>. </summary>
@@ -31,7 +37,7 @@ namespace Azure.ResourceManager.TrafficManager.Models
         /// <returns> A new <see cref="Models.TrafficManagerDnsConfig"/> instance for mocking. </returns>
         public static TrafficManagerDnsConfig TrafficManagerDnsConfig(string relativeName = null, string fqdn = null, long? ttl = null)
         {
-            return new TrafficManagerDnsConfig(relativeName, fqdn, ttl);
+            return new TrafficManagerDnsConfig(relativeName, fqdn, ttl, serializedAdditionalRawData: null);
         }
     }
 }

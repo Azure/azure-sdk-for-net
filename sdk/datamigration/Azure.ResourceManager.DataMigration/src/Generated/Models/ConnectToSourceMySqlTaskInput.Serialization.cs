@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            writer.WriteObjectValue<MySqlConnectionInfo>(SourceConnectionInfo, options);
             if (Optional.IsDefined(TargetPlatform))
             {
                 writer.WritePropertyName("targetPlatform"u8);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToSourceMySqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,16 +82,16 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             MySqlConnectionInfo sourceConnectionInfo = default;
-            Optional<MySqlTargetPlatformType> targetPlatform = default;
-            Optional<ServerLevelPermissionsGroup> checkPermissionsGroup = default;
-            Optional<bool> isOfflineMigration = default;
+            MySqlTargetPlatformType? targetPlatform = default;
+            ServerLevelPermissionsGroup? checkPermissionsGroup = default;
+            bool? isOfflineMigration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = MySqlConnectionInfo.DeserializeMySqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetPlatform"u8))
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, Optional.ToNullable(targetPlatform), Optional.ToNullable(checkPermissionsGroup), Optional.ToNullable(isOfflineMigration), serializedAdditionalRawData);
+            return new ConnectToSourceMySqlTaskInput(sourceConnectionInfo, targetPlatform, checkPermissionsGroup, isOfflineMigration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToSourceMySqlTaskInput>.Write(ModelReaderWriterOptions options)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToSourceMySqlTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToSourceMySqlTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

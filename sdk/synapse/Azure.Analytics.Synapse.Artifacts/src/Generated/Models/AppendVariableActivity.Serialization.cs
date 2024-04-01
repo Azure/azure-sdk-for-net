@@ -44,7 +44,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -68,13 +68,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue<object>(Value);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -87,13 +87,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            Optional<string> variableName = default;
-            Optional<object> value = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
+            string variableName = default;
+            object value = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -188,14 +188,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AppendVariableActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, variableName.Value, value.Value);
+            return new AppendVariableActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                variableName,
+                value);
         }
 
         internal partial class AppendVariableActivityConverter : JsonConverter<AppendVariableActivity>
         {
             public override void Write(Utf8JsonWriter writer, AppendVariableActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AppendVariableActivity>(model);
             }
             public override AppendVariableActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

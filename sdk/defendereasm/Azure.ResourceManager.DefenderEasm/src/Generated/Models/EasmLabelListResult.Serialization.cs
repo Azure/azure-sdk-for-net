@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DefenderEasm;
 
 namespace Azure.ResourceManager.DefenderEasm.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             var format = options.Format == "W" ? ((IPersistableModel<EasmLabelListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmLabelListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EasmLabelListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EasmLabelData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             var format = options.Format == "W" ? ((IPersistableModel<EasmLabelListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmLabelListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EasmLabelListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<EasmLabelData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<EasmLabelData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                     List<EasmLabelData> array = new List<EasmLabelData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EasmLabelData.DeserializeEasmLabelData(item));
+                        array.Add(EasmLabelData.DeserializeEasmLabelData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmLabelListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new EasmLabelListResult(value ?? new ChangeTrackingList<EasmLabelData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmLabelListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EasmLabelListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasmLabelListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                         return DeserializeEasmLabelListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EasmLabelListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasmLabelListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

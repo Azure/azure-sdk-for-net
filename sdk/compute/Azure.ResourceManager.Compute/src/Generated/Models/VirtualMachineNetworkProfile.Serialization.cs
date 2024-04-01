@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineNetworkInterfaceReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in NetworkInterfaceConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineNetworkInterfaceConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<VirtualMachineNetworkInterfaceReference>> networkInterfaces = default;
-            Optional<NetworkApiVersion> networkApiVersion = default;
-            Optional<IList<VirtualMachineNetworkInterfaceConfiguration>> networkInterfaceConfigurations = default;
+            IList<VirtualMachineNetworkInterfaceReference> networkInterfaces = default;
+            NetworkApiVersion? networkApiVersion = default;
+            IList<VirtualMachineNetworkInterfaceConfiguration> networkInterfaceConfigurations = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineNetworkInterfaceReference> array = new List<VirtualMachineNetworkInterfaceReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineNetworkInterfaceReference.DeserializeVirtualMachineNetworkInterfaceReference(item));
+                        array.Add(VirtualMachineNetworkInterfaceReference.DeserializeVirtualMachineNetworkInterfaceReference(item, options));
                     }
                     networkInterfaces = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<VirtualMachineNetworkInterfaceConfiguration> array = new List<VirtualMachineNetworkInterfaceConfiguration>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(VirtualMachineNetworkInterfaceConfiguration.DeserializeVirtualMachineNetworkInterfaceConfiguration(item));
+                        array.Add(VirtualMachineNetworkInterfaceConfiguration.DeserializeVirtualMachineNetworkInterfaceConfiguration(item, options));
                     }
                     networkInterfaceConfigurations = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineNetworkProfile(Optional.ToList(networkInterfaces), Optional.ToNullable(networkApiVersion), Optional.ToList(networkInterfaceConfigurations), serializedAdditionalRawData);
+            return new VirtualMachineNetworkProfile(networkInterfaces ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceReference>(), networkApiVersion, networkInterfaceConfigurations ?? new ChangeTrackingList<VirtualMachineNetworkInterfaceConfiguration>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

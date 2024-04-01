@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.ResourceManager.EventHubs.Models
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// <summary> Capture storage details for capture description. </summary>
     public partial class EventHubDestination
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EventHubDestination"/>. </summary>
         public EventHubDestination()
         {
@@ -26,7 +59,8 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <param name="dataLakeSubscriptionId"> Subscription Id of Azure Data Lake Store. </param>
         /// <param name="dataLakeAccountName"> The Azure Data Lake Store name for the captured events. </param>
         /// <param name="dataLakeFolderPath"> The destination folder path for the captured events. </param>
-        internal EventHubDestination(string name, ResourceIdentifier storageAccountResourceId, string blobContainer, string archiveNameFormat, Guid? dataLakeSubscriptionId, string dataLakeAccountName, string dataLakeFolderPath)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubDestination(string name, ResourceIdentifier storageAccountResourceId, string blobContainer, string archiveNameFormat, Guid? dataLakeSubscriptionId, string dataLakeAccountName, string dataLakeFolderPath, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             StorageAccountResourceId = storageAccountResourceId;
@@ -35,21 +69,29 @@ namespace Azure.ResourceManager.EventHubs.Models
             DataLakeSubscriptionId = dataLakeSubscriptionId;
             DataLakeAccountName = dataLakeAccountName;
             DataLakeFolderPath = dataLakeFolderPath;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Name for capture destination. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Resource id of the storage account to be used to create the blobs. </summary>
+        [WirePath("properties.storageAccountResourceId")]
         public ResourceIdentifier StorageAccountResourceId { get; set; }
         /// <summary> Blob container Name. </summary>
+        [WirePath("properties.blobContainer")]
         public string BlobContainer { get; set; }
         /// <summary> Blob naming convention for archive, e.g. {Namespace}/{EventHub}/{PartitionId}/{Year}/{Month}/{Day}/{Hour}/{Minute}/{Second}. Here all the parameters (Namespace,EventHub .. etc) are mandatory irrespective of order. </summary>
+        [WirePath("properties.archiveNameFormat")]
         public string ArchiveNameFormat { get; set; }
         /// <summary> Subscription Id of Azure Data Lake Store. </summary>
+        [WirePath("properties.dataLakeSubscriptionId")]
         public Guid? DataLakeSubscriptionId { get; set; }
         /// <summary> The Azure Data Lake Store name for the captured events. </summary>
+        [WirePath("properties.dataLakeAccountName")]
         public string DataLakeAccountName { get; set; }
         /// <summary> The destination folder path for the captured events. </summary>
+        [WirePath("properties.dataLakeFolderPath")]
         public string DataLakeFolderPath { get; set; }
     }
 }

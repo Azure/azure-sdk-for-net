@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPoolUpgradeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterPoolUpgradeProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterPoolUpgradeProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Upgrades)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterPoolUpgradeProfileUpgradesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPoolUpgradeProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterPoolUpgradeProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterPoolUpgradeProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.ContainerService.Models
                 return null;
             }
             string kubernetesVersion = default;
-            Optional<string> name = default;
+            string name = default;
             ContainerServiceOSType osType = default;
-            Optional<IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem>> upgrades = default;
+            IReadOnlyList<ManagedClusterPoolUpgradeProfileUpgradesItem> upgrades = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ManagedClusterPoolUpgradeProfileUpgradesItem> array = new List<ManagedClusterPoolUpgradeProfileUpgradesItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ManagedClusterPoolUpgradeProfileUpgradesItem.DeserializeManagedClusterPoolUpgradeProfileUpgradesItem(item));
+                        array.Add(ManagedClusterPoolUpgradeProfileUpgradesItem.DeserializeManagedClusterPoolUpgradeProfileUpgradesItem(item, options));
                     }
                     upgrades = array;
                     continue;
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name.Value, osType, Optional.ToList(upgrades), serializedAdditionalRawData);
+            return new ManagedClusterPoolUpgradeProfile(kubernetesVersion, name, osType, upgrades ?? new ChangeTrackingList<ManagedClusterPoolUpgradeProfileUpgradesItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterPoolUpgradeProfile>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterPoolUpgradeProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterPoolUpgradeProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterPoolUpgradeProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterPoolUpgradeProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterPoolUpgradeProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

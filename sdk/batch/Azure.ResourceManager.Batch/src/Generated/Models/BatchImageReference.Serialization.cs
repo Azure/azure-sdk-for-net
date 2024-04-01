@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchImageReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchImageReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<string> publisher = default;
-            Optional<string> offer = default;
-            Optional<string> sku = default;
-            Optional<string> version = default;
-            Optional<ResourceIdentifier> id = default;
+            string publisher = default;
+            string offer = default;
+            string sku = default;
+            string version = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +133,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchImageReference(publisher.Value, offer.Value, sku.Value, version.Value, id.Value, serializedAdditionalRawData);
+            return new BatchImageReference(
+                publisher,
+                offer,
+                sku,
+                version,
+                id,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchImageReference>.Write(ModelReaderWriterOptions options)
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchImageReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchImageReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchImageReference)} does not support reading '{options.Format}' format.");
             }
         }
 

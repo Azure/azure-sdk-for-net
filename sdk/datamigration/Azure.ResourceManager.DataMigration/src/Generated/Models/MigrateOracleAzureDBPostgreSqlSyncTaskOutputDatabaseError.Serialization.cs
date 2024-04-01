@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Events)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SyncMigrationDatabaseErrorEvent>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> errorMessage = default;
-            Optional<IReadOnlyList<SyncMigrationDatabaseErrorEvent>> events = default;
-            Optional<string> id = default;
+            string errorMessage = default;
+            IReadOnlyList<SyncMigrationDatabaseErrorEvent> events = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SyncMigrationDatabaseErrorEvent> array = new List<SyncMigrationDatabaseErrorEvent>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SyncMigrationDatabaseErrorEvent.DeserializeSyncMigrationDatabaseErrorEvent(item));
+                        array.Add(SyncMigrationDatabaseErrorEvent.DeserializeSyncMigrationDatabaseErrorEvent(item, options));
                     }
                     events = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(id.Value, resultType, serializedAdditionalRawData, errorMessage.Value, Optional.ToList(events));
+            return new MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(id, resultType, serializedAdditionalRawData, errorMessage, events ?? new ChangeTrackingList<SyncMigrationDatabaseErrorEvent>());
         }
 
         BinaryData IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskOutputDatabaseError)} does not support reading '{options.Format}' format.");
             }
         }
 

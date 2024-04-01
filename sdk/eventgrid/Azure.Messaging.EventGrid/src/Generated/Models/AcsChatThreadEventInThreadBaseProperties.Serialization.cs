@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -19,10 +18,10 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("createTime"u8))
@@ -54,7 +53,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatThreadEventInThreadBaseProperties(transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version));
+            return new AcsChatThreadEventInThreadBaseProperties(transactionId, threadId, createTime, version);
         }
     }
 }

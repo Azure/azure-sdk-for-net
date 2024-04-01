@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.Analysis;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Analysis.Models
@@ -42,7 +41,26 @@ namespace Azure.ResourceManager.Analysis.Models
             tags ??= new Dictionary<string, string>();
             asAdministratorIdentities ??= new List<string>();
 
-            return new AnalysisServerData(id, name, resourceType, systemData, tags, location, asAdministratorIdentities != null ? new ServerAdministrators(asAdministratorIdentities?.ToList(), serializedAdditionalRawData: null) : null, backupBlobContainerUri, gatewayDetails, iPv4FirewallSettings, queryPoolConnectionMode, managedMode, serverMonitorMode, state, provisioningState, serverFullName, analysisServerSku, analysisSku, serializedAdditionalRawData: null);
+            return new AnalysisServerData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                asAdministratorIdentities != null ? new ServerAdministrators(asAdministratorIdentities?.ToList(), serializedAdditionalRawData: null) : null,
+                backupBlobContainerUri,
+                gatewayDetails,
+                iPv4FirewallSettings,
+                queryPoolConnectionMode,
+                managedMode,
+                serverMonitorMode,
+                state,
+                provisioningState,
+                serverFullName,
+                analysisServerSku,
+                analysisSku,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.AnalysisGatewayDetails"/>. </summary>

@@ -6,8 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Communication;
-using Azure.Core;
 
 namespace Azure.Communication.CallingServer
 {
@@ -19,8 +17,8 @@ namespace Azure.Communication.CallingServer
             {
                 return null;
             }
-            Optional<CommunicationIdentifierModel> identifier = default;
-            Optional<bool> isMuted = default;
+            CommunicationIdentifierModel identifier = default;
+            bool? isMuted = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("identifier"u8))
@@ -42,7 +40,7 @@ namespace Azure.Communication.CallingServer
                     continue;
                 }
             }
-            return new AcsCallParticipantInternal(identifier.Value, Optional.ToNullable(isMuted));
+            return new AcsCallParticipantInternal(identifier, isMuted);
         }
     }
 }

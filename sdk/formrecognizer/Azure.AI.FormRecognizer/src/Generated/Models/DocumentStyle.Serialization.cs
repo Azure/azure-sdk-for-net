@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -19,12 +18,12 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<bool> isHandwritten = default;
-            Optional<string> similarFontFamily = default;
-            Optional<DocumentFontStyle> fontStyle = default;
-            Optional<DocumentFontWeight> fontWeight = default;
-            Optional<string> color = default;
-            Optional<string> backgroundColor = default;
+            bool? isHandwritten = default;
+            string similarFontFamily = default;
+            DocumentFontStyle? fontStyle = default;
+            DocumentFontWeight? fontWeight = default;
+            string color = default;
+            string backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
             float confidence = default;
             foreach (var property in element.EnumerateObject())
@@ -87,7 +86,15 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentStyle(Optional.ToNullable(isHandwritten), similarFontFamily.Value, Optional.ToNullable(fontStyle), Optional.ToNullable(fontWeight), color.Value, backgroundColor.Value, spans, confidence);
+            return new DocumentStyle(
+                isHandwritten,
+                similarFontFamily,
+                fontStyle,
+                fontWeight,
+                color,
+                backgroundColor,
+                spans,
+                confidence);
         }
     }
 }

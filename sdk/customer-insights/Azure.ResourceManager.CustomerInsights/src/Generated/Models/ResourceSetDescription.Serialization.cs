@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSetDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSetDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IList<string>> elements = default;
-            Optional<IList<string>> exceptions = default;
+            IList<string> elements = default;
+            IList<string> exceptions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSetDescription(Optional.ToList(elements), Optional.ToList(exceptions), serializedAdditionalRawData);
+            return new ResourceSetDescription(elements ?? new ChangeTrackingList<string>(), exceptions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSetDescription>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeResourceSetDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSetDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in NodePublicIPTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerServiceIPTag>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in AllowedHostPorts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AgentPoolNetworkPortRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IList<ContainerServiceIPTag>> nodePublicIPTags = default;
-            Optional<IList<AgentPoolNetworkPortRange>> allowedHostPorts = default;
-            Optional<IList<ResourceIdentifier>> applicationSecurityGroups = default;
+            IList<ContainerServiceIPTag> nodePublicIPTags = default;
+            IList<AgentPoolNetworkPortRange> allowedHostPorts = default;
+            IList<ResourceIdentifier> applicationSecurityGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceIPTag> array = new List<ContainerServiceIPTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item));
+                        array.Add(ContainerServiceIPTag.DeserializeContainerServiceIPTag(item, options));
                     }
                     nodePublicIPTags = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<AgentPoolNetworkPortRange> array = new List<AgentPoolNetworkPortRange>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AgentPoolNetworkPortRange.DeserializeAgentPoolNetworkPortRange(item));
+                        array.Add(AgentPoolNetworkPortRange.DeserializeAgentPoolNetworkPortRange(item, options));
                     }
                     allowedHostPorts = array;
                     continue;
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AgentPoolNetworkProfile(Optional.ToList(nodePublicIPTags), Optional.ToList(allowedHostPorts), Optional.ToList(applicationSecurityGroups), serializedAdditionalRawData);
+            return new AgentPoolNetworkProfile(nodePublicIPTags ?? new ChangeTrackingList<ContainerServiceIPTag>(), allowedHostPorts ?? new ChangeTrackingList<AgentPoolNetworkPortRange>(), applicationSecurityGroups ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AgentPoolNetworkProfile>.Write(ModelReaderWriterOptions options)
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeAgentPoolNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

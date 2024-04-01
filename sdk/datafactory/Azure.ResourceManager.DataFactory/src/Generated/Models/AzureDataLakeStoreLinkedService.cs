@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -43,7 +42,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="resourceGroupName"> Data Lake Store account resource group name (if different from Data Factory account). Type: string (or Expression with resultType string). </param>
         /// <param name="encryptedCredential"> The encrypted credential used for authentication. Credentials are encrypted using the integration runtime credential manager. Type: string. </param>
         /// <param name="credential"> The credential reference containing authentication information. </param>
-        internal AzureDataLakeStoreLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> dataLakeStoreUri, DataFactoryElement<string> servicePrincipalId, DataFactorySecretBaseDefinition servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> accountName, DataFactoryElement<string> subscriptionId, DataFactoryElement<string> resourceGroupName, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
+        internal AzureDataLakeStoreLinkedService(string linkedServiceType, IntegrationRuntimeReference connectVia, string description, IDictionary<string, EntityParameterSpecification> parameters, IList<BinaryData> annotations, IDictionary<string, BinaryData> additionalProperties, DataFactoryElement<string> dataLakeStoreUri, DataFactoryElement<string> servicePrincipalId, DataFactorySecret servicePrincipalKey, DataFactoryElement<string> tenant, DataFactoryElement<string> azureCloudType, DataFactoryElement<string> accountName, DataFactoryElement<string> subscriptionId, DataFactoryElement<string> resourceGroupName, string encryptedCredential, DataFactoryCredentialReference credential) : base(linkedServiceType, connectVia, description, parameters, annotations, additionalProperties)
         {
             DataLakeStoreUri = dataLakeStoreUri;
             ServicePrincipalId = servicePrincipalId;
@@ -58,12 +57,17 @@ namespace Azure.ResourceManager.DataFactory.Models
             LinkedServiceType = linkedServiceType ?? "AzureDataLakeStore";
         }
 
+        /// <summary> Initializes a new instance of <see cref="AzureDataLakeStoreLinkedService"/> for deserialization. </summary>
+        internal AzureDataLakeStoreLinkedService()
+        {
+        }
+
         /// <summary> Data Lake Store service URI. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> DataLakeStoreUri { get; set; }
         /// <summary> The ID of the application used to authenticate against the Azure Data Lake Store account. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> ServicePrincipalId { get; set; }
         /// <summary> The Key of the application used to authenticate against the Azure Data Lake Store account. </summary>
-        public DataFactorySecretBaseDefinition ServicePrincipalKey { get; set; }
+        public DataFactorySecret ServicePrincipalKey { get; set; }
         /// <summary> The name or ID of the tenant to which the service principal belongs. Type: string (or Expression with resultType string). </summary>
         public DataFactoryElement<string> Tenant { get; set; }
         /// <summary> Indicates the azure cloud type of the service principle auth. Allowed values are AzurePublic, AzureChina, AzureUsGovernment, AzureGermany. Default value is the data factory regions’ cloud type. Type: string (or Expression with resultType string). </summary>

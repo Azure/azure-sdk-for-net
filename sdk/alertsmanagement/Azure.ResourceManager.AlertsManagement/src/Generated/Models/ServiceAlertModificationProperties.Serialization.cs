@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertModificationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertModificationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Modifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceAlertModificationItemInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertModificationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertModificationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertModificationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<Guid> alertId = default;
-            Optional<IList<ServiceAlertModificationItemInfo>> modifications = default;
+            Guid? alertId = default;
+            IList<ServiceAlertModificationItemInfo> modifications = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ServiceAlertModificationItemInfo> array = new List<ServiceAlertModificationItemInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item));
+                        array.Add(ServiceAlertModificationItemInfo.DeserializeServiceAlertModificationItemInfo(item, options));
                     }
                     modifications = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertModificationProperties(Optional.ToNullable(alertId), Optional.ToList(modifications), serializedAdditionalRawData);
+            return new ServiceAlertModificationProperties(alertId, modifications ?? new ChangeTrackingList<ServiceAlertModificationItemInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertModificationProperties>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertModificationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertModificationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertModificationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertModificationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertModificationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

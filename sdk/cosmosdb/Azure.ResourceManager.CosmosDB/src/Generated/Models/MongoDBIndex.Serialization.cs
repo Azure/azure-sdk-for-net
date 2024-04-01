@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,19 +24,19 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBIndex)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBIndex)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                writer.WriteObjectValue<MongoIndexKeys>(Key, options);
             }
             if (Optional.IsDefined(Options))
             {
                 writer.WritePropertyName("options"u8);
-                writer.WriteObjectValue(Options);
+                writer.WriteObjectValue<MongoDBIndexConfig>(Options, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +61,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBIndex>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBIndex)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBIndex)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +76,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<MongoIndexKeys> key = default;
-            Optional<MongoDBIndexConfig> options0 = default;
+            MongoIndexKeys key = default;
+            MongoDBIndexConfig options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    key = MongoIndexKeys.DeserializeMongoIndexKeys(property.Value);
+                    key = MongoIndexKeys.DeserializeMongoIndexKeys(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("options"u8))
@@ -95,7 +97,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    options0 = MongoDBIndexConfig.DeserializeMongoDBIndexConfig(property.Value);
+                    options0 = MongoDBIndexConfig.DeserializeMongoDBIndexConfig(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +106,72 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MongoDBIndex(key.Value, options0.Value, serializedAdditionalRawData);
+            return new MongoDBIndex(key, options0, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
+            if (Optional.IsDefined(Key) || hasPropertyOverride)
+            {
+                builder.Append("  key: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Key, options, 2, false, "  key: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Options), out propertyOverride);
+            if (Optional.IsDefined(Options) || hasPropertyOverride)
+            {
+                builder.Append("  options: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Options, options, 2, false, "  options: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "Keys":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("Keys", item.Value);
+                        bicepOptions.PropertyOverrides.Add(Key, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
         }
 
         BinaryData IPersistableModel<MongoDBIndex>.Write(ModelReaderWriterOptions options)
@@ -115,8 +182,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBIndex)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBIndex)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +201,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeMongoDBIndex(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBIndex)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBIndex)} does not support reading '{options.Format}' format.");
             }
         }
 

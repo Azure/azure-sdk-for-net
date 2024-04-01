@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionUnlockDeleteContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionUnlockDeleteContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IList<string>> resourceGuardOperationRequests = default;
-            Optional<string> resourceToBeDeleted = default;
+            IList<string> resourceGuardOperationRequests = default;
+            string resourceToBeDeleted = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataProtectionUnlockDeleteContent(Optional.ToList(resourceGuardOperationRequests), resourceToBeDeleted.Value, serializedAdditionalRawData);
+            return new DataProtectionUnlockDeleteContent(resourceGuardOperationRequests ?? new ChangeTrackingList<string>(), resourceToBeDeleted, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataProtectionUnlockDeleteContent>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionUnlockDeleteContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionUnlockDeleteContent)} does not support reading '{options.Format}' format.");
             }
         }
 

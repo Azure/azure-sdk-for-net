@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttachDetachDataDisksRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksToAttach)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataDisksToAttach>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in DataDisksToDetach)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataDisksToDetach>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttachDetachDataDisksRequest>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IList<DataDisksToAttach>> dataDisksToAttach = default;
-            Optional<IList<DataDisksToDetach>> dataDisksToDetach = default;
+            IList<DataDisksToAttach> dataDisksToAttach = default;
+            IList<DataDisksToDetach> dataDisksToDetach = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDisksToAttach> array = new List<DataDisksToAttach>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataDisksToAttach.DeserializeDataDisksToAttach(item));
+                        array.Add(Models.DataDisksToAttach.DeserializeDataDisksToAttach(item, options));
                     }
                     dataDisksToAttach = array;
                     continue;
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<DataDisksToDetach> array = new List<DataDisksToDetach>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.DataDisksToDetach.DeserializeDataDisksToDetach(item));
+                        array.Add(Models.DataDisksToDetach.DeserializeDataDisksToDetach(item, options));
                     }
                     dataDisksToDetach = array;
                     continue;
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttachDetachDataDisksRequest(Optional.ToList(dataDisksToAttach), Optional.ToList(dataDisksToDetach), serializedAdditionalRawData);
+            return new AttachDetachDataDisksRequest(dataDisksToAttach ?? new ChangeTrackingList<DataDisksToAttach>(), dataDisksToDetach ?? new ChangeTrackingList<DataDisksToDetach>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttachDetachDataDisksRequest>.Write(ModelReaderWriterOptions options)
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAttachDetachDataDisksRequest(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttachDetachDataDisksRequest)} does not support reading '{options.Format}' format.");
             }
         }
 

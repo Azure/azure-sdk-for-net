@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<CreditBalanceSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(EstimatedBalance))
             {
                 writer.WritePropertyName("estimatedBalance"u8);
-                writer.WriteObjectValue(EstimatedBalance);
+                writer.WriteObjectValue<ConsumptionAmount>(EstimatedBalance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(CurrentBalance))
             {
                 writer.WritePropertyName("currentBalance"u8);
-                writer.WriteObjectValue(CurrentBalance);
+                writer.WriteObjectValue<ConsumptionAmount>(CurrentBalance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(EstimatedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("estimatedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(EstimatedBalanceInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(EstimatedBalanceInBillingCurrency, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<CreditBalanceSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ConsumptionAmount> estimatedBalance = default;
-            Optional<ConsumptionAmount> currentBalance = default;
-            Optional<ConsumptionAmountWithExchangeRate> estimatedBalanceInBillingCurrency = default;
+            ConsumptionAmount estimatedBalance = default;
+            ConsumptionAmount currentBalance = default;
+            ConsumptionAmountWithExchangeRate estimatedBalanceInBillingCurrency = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
+                    estimatedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("currentBalance"u8))
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value);
+                    currentBalance = ConsumptionAmount.DeserializeConsumptionAmount(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("estimatedBalanceInBillingCurrency"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     {
                         continue;
                     }
-                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value);
+                    estimatedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CreditBalanceSummary(estimatedBalance.Value, currentBalance.Value, estimatedBalanceInBillingCurrency.Value, serializedAdditionalRawData);
+            return new CreditBalanceSummary(estimatedBalance, currentBalance, estimatedBalanceInBillingCurrency, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CreditBalanceSummary>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeCreditBalanceSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CreditBalanceSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

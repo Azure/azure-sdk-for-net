@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
@@ -32,6 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// Backup is VMAppContainer
         /// </param>
         /// <param name="protectableObjectType"> Type of the protectable object associated with this container. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="canReRegister"> Can the container be registered one more time. </param>
         /// <param name="containerId"> ContainerID represents the container. </param>
         /// <param name="protectedItemCount"> Number of items backed up in this container. </param>
@@ -39,7 +40,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="extendedInfo"> Additional information for this container. </param>
         /// <param name="mabContainerHealthDetails"> Health details on this mab container. </param>
         /// <param name="containerHealthState"> Health state of mab container. </param>
-        internal MabContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, bool? canReRegister, long? containerId, long? protectedItemCount, string agentVersion, MabContainerExtendedInfo extendedInfo, IList<MabContainerHealthDetails> mabContainerHealthDetails, string containerHealthState) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType)
+        internal MabContainer(string friendlyName, BackupManagementType? backupManagementType, string registrationStatus, string healthStatus, ProtectableContainerType containerType, string protectableObjectType, IDictionary<string, BinaryData> serializedAdditionalRawData, bool? canReRegister, long? containerId, long? protectedItemCount, string agentVersion, MabContainerExtendedInfo extendedInfo, IList<MabContainerHealthDetails> mabContainerHealthDetails, string containerHealthState) : base(friendlyName, backupManagementType, registrationStatus, healthStatus, containerType, protectableObjectType, serializedAdditionalRawData)
         {
             CanReRegister = canReRegister;
             ContainerId = containerId;

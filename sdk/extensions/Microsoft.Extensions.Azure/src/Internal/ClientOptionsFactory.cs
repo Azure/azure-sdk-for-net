@@ -3,13 +3,15 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using Azure.Core;
 using Microsoft.Extensions.Options;
 
 namespace Microsoft.Extensions.Azure
 {
     // Slightly adjusted copy of https://github.com/aspnet/Extensions/blob/master/src/Options/Options/src/OptionsFactory.cs
-    internal class ClientOptionsFactory<TClient, TOptions>: IClientOptionsFactory where TOptions : class
+    internal class ClientOptionsFactory<TClient, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TOptions>
+        : IClientOptionsFactory where TOptions : class
     {
         private readonly IEnumerable<IConfigureOptions<TOptions>> _setups;
         private readonly IEnumerable<IPostConfigureOptions<TOptions>> _postConfigures;

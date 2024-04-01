@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorUpdateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorUpdateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorUpdateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorUpdateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<MonitoringStatus> monitoringStatus = default;
+            MonitoringStatus? monitoringStatus = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MonitorUpdateProperties(Optional.ToNullable(monitoringStatus), serializedAdditionalRawData);
+            return new MonitorUpdateProperties(monitoringStatus, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MonitorUpdateProperties>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorUpdateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeMonitorUpdateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorUpdateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorUpdateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -27,18 +27,24 @@ namespace Azure.ResourceManager.DataFactory.Models
 
         /// <summary> Initializes a new instance of <see cref="ComponentSetup"/>. </summary>
         /// <param name="customSetupBaseType"> The type of custom setup. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="componentName"> The name of the 3rd party component. </param>
         /// <param name="licenseKey"> The license key to activate the component. </param>
-        internal ComponentSetup(string customSetupBaseType, string componentName, DataFactorySecretBaseDefinition licenseKey) : base(customSetupBaseType)
+        internal ComponentSetup(string customSetupBaseType, IDictionary<string, BinaryData> serializedAdditionalRawData, string componentName, DataFactorySecret licenseKey) : base(customSetupBaseType, serializedAdditionalRawData)
         {
             ComponentName = componentName;
             LicenseKey = licenseKey;
             CustomSetupBaseType = customSetupBaseType ?? "ComponentSetup";
         }
 
+        /// <summary> Initializes a new instance of <see cref="ComponentSetup"/> for deserialization. </summary>
+        internal ComponentSetup()
+        {
+        }
+
         /// <summary> The name of the 3rd party component. </summary>
         public string ComponentName { get; set; }
         /// <summary> The license key to activate the component. </summary>
-        public DataFactorySecretBaseDefinition LicenseKey { get; set; }
+        public DataFactorySecret LicenseKey { get; set; }
     }
 }

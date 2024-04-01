@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.Translation.Text
 {
@@ -38,16 +37,16 @@ namespace Azure.AI.Translation.Text
         /// <param name="name"> Display name of the script in the locale requested via Accept-Language header. </param>
         /// <param name="nativeName"> Display name of the language in the locale native for the language. </param>
         /// <param name="dir"> Directionality, which is rtl for right-to-left languages or ltr for left-to-right languages. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="toScripts"> List of scripts available to convert text to. </param>
-        /// <exception cref="ArgumentNullException"> <paramref name="code"/>, <paramref name="name"/>, <paramref name="nativeName"/> or <paramref name="dir"/> is null. </exception>
-        internal TransliterableScript(string code, string name, string nativeName, string dir, IReadOnlyList<CommonScriptModel> toScripts) : base(code, name, nativeName, dir)
+        internal TransliterableScript(string code, string name, string nativeName, string dir, IDictionary<string, BinaryData> serializedAdditionalRawData, IReadOnlyList<CommonScriptModel> toScripts) : base(code, name, nativeName, dir, serializedAdditionalRawData)
         {
-            Argument.AssertNotNull(code, nameof(code));
-            Argument.AssertNotNull(name, nameof(name));
-            Argument.AssertNotNull(nativeName, nameof(nativeName));
-            Argument.AssertNotNull(dir, nameof(dir));
-
             ToScripts = toScripts;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TransliterableScript"/> for deserialization. </summary>
+        internal TransliterableScript()
+        {
         }
 
         /// <summary> List of scripts available to convert text to. </summary>

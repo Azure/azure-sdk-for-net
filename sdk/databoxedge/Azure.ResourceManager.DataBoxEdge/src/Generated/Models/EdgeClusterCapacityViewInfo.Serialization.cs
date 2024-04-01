@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterCapacityViewInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(GpuCapacity))
             {
                 writer.WritePropertyName("gpuCapacity"u8);
-                writer.WriteObjectValue(GpuCapacity);
+                writer.WriteObjectValue<EdgeClusterGpuCapacity>(GpuCapacity, options);
             }
             if (Optional.IsDefined(MemoryCapacity))
             {
                 writer.WritePropertyName("memoryCapacity"u8);
-                writer.WriteObjectValue(MemoryCapacity);
+                writer.WriteObjectValue<EdgeClusterMemoryCapacity>(MemoryCapacity, options);
             }
             if (Optional.IsDefined(LastRefreshedOn))
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeClusterCapacityViewInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
-            Optional<EdgeClusterGpuCapacity> gpuCapacity = default;
-            Optional<EdgeClusterMemoryCapacity> memoryCapacity = default;
-            Optional<DateTimeOffset> lastRefreshedTime = default;
-            Optional<long> totalProvisionedNonHpnCores = default;
+            string fqdn = default;
+            EdgeClusterGpuCapacity gpuCapacity = default;
+            EdgeClusterMemoryCapacity memoryCapacity = default;
+            DateTimeOffset? lastRefreshedTime = default;
+            long? totalProvisionedNonHpnCores = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    gpuCapacity = EdgeClusterGpuCapacity.DeserializeEdgeClusterGpuCapacity(property.Value);
+                    gpuCapacity = EdgeClusterGpuCapacity.DeserializeEdgeClusterGpuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("memoryCapacity"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    memoryCapacity = EdgeClusterMemoryCapacity.DeserializeEdgeClusterMemoryCapacity(property.Value);
+                    memoryCapacity = EdgeClusterMemoryCapacity.DeserializeEdgeClusterMemoryCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastRefreshedTime"u8))
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeClusterCapacityViewInfo(fqdn.Value, gpuCapacity.Value, memoryCapacity.Value, Optional.ToNullable(lastRefreshedTime), Optional.ToNullable(totalProvisionedNonHpnCores), serializedAdditionalRawData);
+            return new EdgeClusterCapacityViewInfo(
+                fqdn,
+                gpuCapacity,
+                memoryCapacity,
+                lastRefreshedTime,
+                totalProvisionedNonHpnCores,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeClusterCapacityViewInfo>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeClusterCapacityViewInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeClusterCapacityViewInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

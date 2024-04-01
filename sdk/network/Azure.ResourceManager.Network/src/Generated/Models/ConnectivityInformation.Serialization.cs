@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Hops)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityHopInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,13 +104,13 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConnectivityHopInfo>> hops = default;
-            Optional<NetworkConnectionStatus> connectionStatus = default;
-            Optional<int> avgLatencyInMs = default;
-            Optional<int> minLatencyInMs = default;
-            Optional<int> maxLatencyInMs = default;
-            Optional<int> probesSent = default;
-            Optional<int> probesFailed = default;
+            IReadOnlyList<ConnectivityHopInfo> hops = default;
+            NetworkConnectionStatus? connectionStatus = default;
+            int? avgLatencyInMs = default;
+            int? minLatencyInMs = default;
+            int? maxLatencyInMs = default;
+            int? probesSent = default;
+            int? probesFailed = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ConnectivityHopInfo> array = new List<ConnectivityHopInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item));
+                        array.Add(ConnectivityHopInfo.DeserializeConnectivityHopInfo(item, options));
                     }
                     hops = array;
                     continue;
@@ -189,7 +189,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityInformation(Optional.ToList(hops), Optional.ToNullable(connectionStatus), Optional.ToNullable(avgLatencyInMs), Optional.ToNullable(minLatencyInMs), Optional.ToNullable(maxLatencyInMs), Optional.ToNullable(probesSent), Optional.ToNullable(probesFailed), serializedAdditionalRawData);
+            return new ConnectivityInformation(
+                hops ?? new ChangeTrackingList<ConnectivityHopInfo>(),
+                connectionStatus,
+                avgLatencyInMs,
+                minLatencyInMs,
+                maxLatencyInMs,
+                probesSent,
+                probesFailed,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityInformation>.Write(ModelReaderWriterOptions options)
@@ -201,7 +209,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +225,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectivityInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

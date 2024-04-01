@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAutoScalerProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,23 +149,23 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> balanceSimilarNodeGroups = default;
-            Optional<AutoScaleExpander> expander = default;
-            Optional<string> maxEmptyBulkDelete = default;
-            Optional<string> maxGracefulTerminationSec = default;
-            Optional<string> maxNodeProvisionTime = default;
-            Optional<string> maxTotalUnreadyPercentage = default;
-            Optional<string> newPodScaleUpDelay = default;
-            Optional<string> okTotalUnreadyCount = default;
-            Optional<string> scanInterval = default;
-            Optional<string> scaleDownDelayAfterAdd = default;
-            Optional<string> scaleDownDelayAfterDelete = default;
-            Optional<string> scaleDownDelayAfterFailure = default;
-            Optional<string> scaleDownUnneededTime = default;
-            Optional<string> scaleDownUnreadyTime = default;
-            Optional<string> scaleDownUtilizationThreshold = default;
-            Optional<string> skipNodesWithLocalStorage = default;
-            Optional<string> skipNodesWithSystemPods = default;
+            string balanceSimilarNodeGroups = default;
+            AutoScaleExpander? expander = default;
+            string maxEmptyBulkDelete = default;
+            string maxGracefulTerminationSec = default;
+            string maxNodeProvisionTime = default;
+            string maxTotalUnreadyPercentage = default;
+            string newPodScaleUpDelay = default;
+            string okTotalUnreadyCount = default;
+            string scanInterval = default;
+            string scaleDownDelayAfterAdd = default;
+            string scaleDownDelayAfterDelete = default;
+            string scaleDownDelayAfterFailure = default;
+            string scaleDownUnneededTime = default;
+            string scaleDownUnreadyTime = default;
+            string scaleDownUtilizationThreshold = default;
+            string skipNodesWithLocalStorage = default;
+            string skipNodesWithSystemPods = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,25 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterAutoScalerProfile(balanceSimilarNodeGroups.Value, Optional.ToNullable(expander), maxEmptyBulkDelete.Value, maxGracefulTerminationSec.Value, maxNodeProvisionTime.Value, maxTotalUnreadyPercentage.Value, newPodScaleUpDelay.Value, okTotalUnreadyCount.Value, scanInterval.Value, scaleDownDelayAfterAdd.Value, scaleDownDelayAfterDelete.Value, scaleDownDelayAfterFailure.Value, scaleDownUnneededTime.Value, scaleDownUnreadyTime.Value, scaleDownUtilizationThreshold.Value, skipNodesWithLocalStorage.Value, skipNodesWithSystemPods.Value, serializedAdditionalRawData);
+            return new ManagedClusterAutoScalerProfile(
+                balanceSimilarNodeGroups,
+                expander,
+                maxEmptyBulkDelete,
+                maxGracefulTerminationSec,
+                maxNodeProvisionTime,
+                maxTotalUnreadyPercentage,
+                newPodScaleUpDelay,
+                okTotalUnreadyCount,
+                scanInterval,
+                scaleDownDelayAfterAdd,
+                scaleDownDelayAfterDelete,
+                scaleDownDelayAfterFailure,
+                scaleDownUnneededTime,
+                scaleDownUnreadyTime,
+                scaleDownUtilizationThreshold,
+                skipNodesWithLocalStorage,
+                skipNodesWithSystemPods,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterAutoScalerProfile>.Write(ModelReaderWriterOptions options)
@@ -277,7 +295,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -293,7 +311,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterAutoScalerProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAutoScalerProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

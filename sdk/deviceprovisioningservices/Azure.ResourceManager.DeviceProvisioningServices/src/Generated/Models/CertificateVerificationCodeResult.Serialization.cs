@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -36,7 +35,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<CertificateVerificationCodeProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CertificateVerificationCodeResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,12 +95,12 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<CertificateVerificationCodeProperties> properties = default;
+            ETag? etag = default;
+            CertificateVerificationCodeProperties properties = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -121,7 +120,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                     {
                         continue;
                     }
-                    properties = CertificateVerificationCodeProperties.DeserializeCertificateVerificationCodeProperties(property.Value);
+                    properties = CertificateVerificationCodeProperties.DeserializeCertificateVerificationCodeProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("id"u8))
@@ -154,7 +153,14 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CertificateVerificationCodeResult(id, name, type, systemData.Value, Optional.ToNullable(etag), properties.Value, serializedAdditionalRawData);
+            return new CertificateVerificationCodeResult(
+                id,
+                name,
+                type,
+                systemData,
+                etag,
+                properties,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CertificateVerificationCodeResult>.Write(ModelReaderWriterOptions options)
@@ -166,7 +172,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +188,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeCertificateVerificationCodeResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CertificateVerificationCodeResult)} does not support reading '{options.Format}' format.");
             }
         }
 

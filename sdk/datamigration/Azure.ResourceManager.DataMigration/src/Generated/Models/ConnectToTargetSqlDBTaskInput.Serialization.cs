@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlDBTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            writer.WriteObjectValue<SqlConnectionInfo>(TargetConnectionInfo, options);
             if (Optional.IsDefined(QueryObjectCounts))
             {
                 writer.WritePropertyName("queryObjectCounts"u8);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectToTargetSqlDBTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             SqlConnectionInfo targetConnectionInfo = default;
-            Optional<bool> queryObjectCounts = default;
+            bool? queryObjectCounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("queryObjectCounts"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectToTargetSqlDBTaskInput(targetConnectionInfo, Optional.ToNullable(queryObjectCounts), serializedAdditionalRawData);
+            return new ConnectToTargetSqlDBTaskInput(targetConnectionInfo, queryObjectCounts, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectToTargetSqlDBTaskInput>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeConnectToTargetSqlDBTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectToTargetSqlDBTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

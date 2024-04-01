@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -54,28 +53,28 @@ namespace Azure.ResourceManager.Sql
             uri.AppendPath("/databases/", false);
             uri.AppendPath(databaseName, true);
             uri.AppendPath("/columns", false);
-            if (schema != null && Optional.IsCollectionDefined(schema))
+            if (schema != null && !(schema is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in schema)
                 {
                     uri.AppendQuery("schema", param, true);
                 }
             }
-            if (table != null && Optional.IsCollectionDefined(table))
+            if (table != null && !(table is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in table)
                 {
                     uri.AppendQuery("table", param, true);
                 }
             }
-            if (column != null && Optional.IsCollectionDefined(column))
+            if (column != null && !(column is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in column)
                 {
                     uri.AppendQuery("column", param, true);
                 }
             }
-            if (orderBy != null && Optional.IsCollectionDefined(orderBy))
+            if (orderBy != null && !(orderBy is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in orderBy)
                 {

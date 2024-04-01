@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> nsxtManager = default;
-            Optional<string> vcsa = default;
-            Optional<string> hcxCloudManager = default;
+            string nsxtManager = default;
+            string vcsa = default;
+            string hcxCloudManager = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsPrivateCloudEndpoints(nsxtManager.Value, vcsa.Value, hcxCloudManager.Value, serializedAdditionalRawData);
+            return new AvsPrivateCloudEndpoints(nsxtManager, vcsa, hcxCloudManager, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsPrivateCloudEndpoints>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsPrivateCloudEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -61,6 +60,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Format = format;
             Compression = compression;
             DatasetType = datasetType ?? "AmazonS3Object";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AmazonS3Dataset"/> for deserialization. </summary>
+        internal AmazonS3Dataset()
+        {
         }
 
         /// <summary> The name of the Amazon S3 bucket. Type: string (or Expression with resultType string). </summary>

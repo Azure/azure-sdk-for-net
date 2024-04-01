@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(KeyVaultProperties))
             {
                 writer.WritePropertyName("keyVaultProperties"u8);
-                writer.WriteObjectValue(KeyVaultProperties);
+                writer.WriteObjectValue<AutomationKeyVaultProperties>(KeyVaultProperties, options);
             }
             if (Optional.IsDefined(KeySource))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<EncryptionPropertiesIdentity>(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationEncryptionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AutomationKeyVaultProperties> keyVaultProperties = default;
-            Optional<EncryptionKeySourceType> keySource = default;
-            Optional<EncryptionPropertiesIdentity> identity = default;
+            AutomationKeyVaultProperties keyVaultProperties = default;
+            EncryptionKeySourceType? keySource = default;
+            EncryptionPropertiesIdentity identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value);
+                    keyVaultProperties = AutomationKeyVaultProperties.DeserializeAutomationKeyVaultProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("keySource"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value);
+                    identity = EncryptionPropertiesIdentity.DeserializeEncryptionPropertiesIdentity(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationEncryptionProperties(keyVaultProperties.Value, Optional.ToNullable(keySource), identity.Value, serializedAdditionalRawData);
+            return new AutomationEncryptionProperties(keyVaultProperties, keySource, identity, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationEncryptionProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationEncryptionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationEncryptionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

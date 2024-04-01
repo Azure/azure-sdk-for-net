@@ -22,7 +22,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LivePipeline>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -40,8 +40,8 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             {
                 return null;
             }
-            Optional<IList<LivePipeline>> value = default;
-            Optional<string> continuationToken = default;
+            IList<LivePipeline> value = default;
+            string continuationToken = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -64,7 +64,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                     continue;
                 }
             }
-            return new LivePipelineCollection(Optional.ToList(value), continuationToken.Value);
+            return new LivePipelineCollection(value ?? new ChangeTrackingList<LivePipeline>(), continuationToken);
         }
     }
 }

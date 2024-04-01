@@ -36,7 +36,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(IntegrationRuntime))
             {
                 writer.WritePropertyName("integrationRuntime"u8);
-                writer.WriteObjectValue(IntegrationRuntime);
+                writer.WriteObjectValue<IntegrationRuntimeDebugResource>(IntegrationRuntime);
             }
             writer.WriteEndObject();
         }
@@ -47,10 +47,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> computeType = default;
-            Optional<int> coreCount = default;
-            Optional<int> timeToLive = default;
-            Optional<IntegrationRuntimeDebugResource> integrationRuntime = default;
+            string computeType = default;
+            int? coreCount = default;
+            int? timeToLive = default;
+            IntegrationRuntimeDebugResource integrationRuntime = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("computeType"u8))
@@ -86,14 +86,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new CreateDataFlowDebugSessionRequest(computeType.Value, Optional.ToNullable(coreCount), Optional.ToNullable(timeToLive), integrationRuntime.Value);
+            return new CreateDataFlowDebugSessionRequest(computeType, coreCount, timeToLive, integrationRuntime);
         }
 
         internal partial class CreateDataFlowDebugSessionRequestConverter : JsonConverter<CreateDataFlowDebugSessionRequest>
         {
             public override void Write(Utf8JsonWriter writer, CreateDataFlowDebugSessionRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<CreateDataFlowDebugSessionRequest>(model);
             }
             public override CreateDataFlowDebugSessionRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

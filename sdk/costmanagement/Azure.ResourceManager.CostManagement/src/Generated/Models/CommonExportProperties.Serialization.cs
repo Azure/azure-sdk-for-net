@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,13 +32,13 @@ namespace Azure.ResourceManager.CostManagement.Models
                 writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WritePropertyName("deliveryInfo"u8);
-            writer.WriteObjectValue(DeliveryInfo);
+            writer.WriteObjectValue<ExportDeliveryInfo>(DeliveryInfo, options);
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition);
+            writer.WriteObjectValue<ExportDefinition>(Definition, options);
             if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                writer.WriteObjectValue<ExportExecutionListResult>(RunHistory, options);
             }
             if (Optional.IsDefined(PartitionData))
             {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,12 +88,12 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<ExportFormatType> format = default;
+            ExportFormatType? format = default;
             ExportDeliveryInfo deliveryInfo = default;
             ExportDefinition definition = default;
-            Optional<ExportExecutionListResult> runHistory = default;
-            Optional<bool> partitionData = default;
-            Optional<DateTimeOffset> nextRunTimeEstimate = default;
+            ExportExecutionListResult runHistory = default;
+            bool? partitionData = default;
+            DateTimeOffset? nextRunTimeEstimate = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,12 +109,12 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
                 if (property.NameEquals("deliveryInfo"u8))
                 {
-                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property.Value);
+                    deliveryInfo = ExportDeliveryInfo.DeserializeExportDeliveryInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("definition"u8))
                 {
-                    definition = ExportDefinition.DeserializeExportDefinition(property.Value);
+                    definition = ExportDefinition.DeserializeExportDefinition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("runHistory"u8))
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property.Value);
+                    runHistory = ExportExecutionListResult.DeserializeExportExecutionListResult(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("partitionData"u8))
@@ -150,7 +150,14 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CommonExportProperties(Optional.ToNullable(format), deliveryInfo, definition, runHistory.Value, Optional.ToNullable(partitionData), Optional.ToNullable(nextRunTimeEstimate), serializedAdditionalRawData);
+            return new CommonExportProperties(
+                format,
+                deliveryInfo,
+                definition,
+                runHistory,
+                partitionData,
+                nextRunTimeEstimate,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CommonExportProperties>.Write(ModelReaderWriterOptions options)
@@ -162,7 +169,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeCommonExportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

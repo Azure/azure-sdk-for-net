@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerDeploymentStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerDeploymentStatusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> regions = default;
-            Optional<IList<NetworkConfigurationDeploymentType>> deploymentTypes = default;
-            Optional<string> skipToken = default;
+            IList<string> regions = default;
+            IList<NetworkConfigurationDeploymentType> deploymentTypes = default;
+            string skipToken = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerDeploymentStatusContent(Optional.ToList(regions), Optional.ToList(deploymentTypes), skipToken.Value, serializedAdditionalRawData);
+            return new NetworkManagerDeploymentStatusContent(regions ?? new ChangeTrackingList<string>(), deploymentTypes ?? new ChangeTrackingList<NetworkConfigurationDeploymentType>(), skipToken, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerDeploymentStatusContent>.Write(ModelReaderWriterOptions options)
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkManagerDeploymentStatusContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerDeploymentStatusContent)} does not support reading '{options.Format}' format.");
             }
         }
 

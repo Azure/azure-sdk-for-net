@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.NetApp.Models;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.NetApp
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2023-05-01";
+            _apiVersion = apiVersion ?? "2023-07-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -54,15 +54,15 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<NetAppNameAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check if a resource name is available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -89,8 +89,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Check if a resource name is available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Name availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -133,15 +133,15 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<NetAppFilePathAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check if a file path is available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -168,8 +168,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Check if a file path is available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> File path availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -212,15 +212,15 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<NetAppQuotaAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check if a quota is available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -247,8 +247,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Check if a quota is available. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Quota availability request. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -294,8 +294,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Provides storage to network proximity and logical zone mapping information. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -320,8 +320,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Provides storage to network proximity and logical zone mapping information. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
@@ -362,15 +362,15 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<QueryNetworkSiblingSetContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Get details of the specified network sibling set. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Network sibling set to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -397,8 +397,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Get details of the specified network sibling set. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Network sibling set to query. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -441,15 +441,15 @@ namespace Azure.ResourceManager.NetApp
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<UpdateNetworkSiblingSetContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Update the network features of the specified network sibling set. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Update for the specified network sibling set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>
@@ -472,8 +472,8 @@ namespace Azure.ResourceManager.NetApp
         }
 
         /// <summary> Update the network features of the specified network sibling set. </summary>
-        /// <param name="subscriptionId"> The ID of the target subscription. </param>
-        /// <param name="location"> The name of Azure region. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
+        /// <param name="location"> The name of the Azure region. </param>
         /// <param name="content"> Update for the specified network sibling set. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> or <paramref name="content"/> is null. </exception>

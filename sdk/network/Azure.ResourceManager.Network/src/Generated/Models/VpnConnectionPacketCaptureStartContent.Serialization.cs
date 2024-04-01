@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionPacketCaptureStartContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStartContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStartContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionPacketCaptureStartContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStartContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStartContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> filterData = default;
-            Optional<IList<string>> linkConnectionNames = default;
+            string filterData = default;
+            IList<string> linkConnectionNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConnectionPacketCaptureStartContent(filterData.Value, Optional.ToList(linkConnectionNames), serializedAdditionalRawData);
+            return new VpnConnectionPacketCaptureStartContent(filterData, linkConnectionNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnConnectionPacketCaptureStartContent>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStartContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStartContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnConnectionPacketCaptureStartContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStartContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStartContent)} does not support reading '{options.Format}' format.");
             }
         }
 

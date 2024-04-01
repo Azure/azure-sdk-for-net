@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -26,10 +26,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OnYourDataApiKeyAuthenticationOptions"/>. </summary>
         /// <param name="type"> The authentication type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="key"> The API key to use for authentication. </param>
-        internal OnYourDataApiKeyAuthenticationOptions(OnYourDataAuthenticationType type, string key) : base(type)
+        internal OnYourDataApiKeyAuthenticationOptions(OnYourDataAuthenticationType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string key) : base(type, serializedAdditionalRawData)
         {
             Key = key;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnYourDataApiKeyAuthenticationOptions"/> for deserialization. </summary>
+        internal OnYourDataApiKeyAuthenticationOptions()
+        {
         }
 
         /// <summary> The API key to use for authentication. </summary>

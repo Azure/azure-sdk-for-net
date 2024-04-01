@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDBTableDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDBTableDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDBTableDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDBTableDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDBTableDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDBTableDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,12 +119,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> databaseName = default;
-            Optional<Guid> dataSetId = default;
-            Optional<string> schemaName = default;
-            Optional<ResourceIdentifier> sqlServerResourceId = default;
-            Optional<string> tableName = default;
+            SystemData systemData = default;
+            string databaseName = default;
+            Guid? dataSetId = default;
+            string schemaName = default;
+            ResourceIdentifier sqlServerResourceId = default;
+            string tableName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -209,7 +209,18 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SqlDBTableDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, databaseName.Value, Optional.ToNullable(dataSetId), schemaName.Value, sqlServerResourceId.Value, tableName.Value);
+            return new SqlDBTableDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                databaseName,
+                dataSetId,
+                schemaName,
+                sqlServerResourceId,
+                tableName);
         }
 
         BinaryData IPersistableModel<SqlDBTableDataSet>.Write(ModelReaderWriterOptions options)
@@ -221,7 +232,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDBTableDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDBTableDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +248,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeSqlDBTableDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDBTableDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDBTableDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

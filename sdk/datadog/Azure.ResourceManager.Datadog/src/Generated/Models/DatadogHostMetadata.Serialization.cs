@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogHostMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHostMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHostMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(InstallMethod))
             {
                 writer.WritePropertyName("installMethod"u8);
-                writer.WriteObjectValue(InstallMethod);
+                writer.WriteObjectValue<DatadogInstallMethod>(InstallMethod, options);
             }
             if (Optional.IsDefined(LogsAgent))
             {
                 writer.WritePropertyName("logsAgent"u8);
-                writer.WriteObjectValue(LogsAgent);
+                writer.WriteObjectValue<DatadogLogsAgent>(LogsAgent, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogHostMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHostMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHostMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> agentVersion = default;
-            Optional<DatadogInstallMethod> installMethod = default;
-            Optional<DatadogLogsAgent> logsAgent = default;
+            string agentVersion = default;
+            DatadogInstallMethod installMethod = default;
+            DatadogLogsAgent logsAgent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    installMethod = DatadogInstallMethod.DeserializeDatadogInstallMethod(property.Value);
+                    installMethod = DatadogInstallMethod.DeserializeDatadogInstallMethod(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("logsAgent"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    logsAgent = DatadogLogsAgent.DeserializeDatadogLogsAgent(property.Value);
+                    logsAgent = DatadogLogsAgent.DeserializeDatadogLogsAgent(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHostMetadata(agentVersion.Value, installMethod.Value, logsAgent.Value, serializedAdditionalRawData);
+            return new DatadogHostMetadata(agentVersion, installMethod, logsAgent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHostMetadata>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHostMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHostMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogHostMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHostMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHostMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MigrateSqlServerSqlMIDatabaseInput>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(StartedOn))
@@ -61,10 +61,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (Optional.IsDefined(BackupFileShare))
             {
                 writer.WritePropertyName("backupFileShare"u8);
-                writer.WriteObjectValue(BackupFileShare);
+                writer.WriteObjectValue<FileShare>(BackupFileShare, options);
             }
             writer.WritePropertyName("backupBlobShare"u8);
-            writer.WriteObjectValue(BackupBlobShare);
+            writer.WriteObjectValue<BlobShare>(BackupBlobShare, options);
             if (Optional.IsDefined(BackupMode))
             {
                 writer.WritePropertyName("backupMode"u8);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStringValue(EncryptedKeyForSecureFields);
             }
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            writer.WriteObjectValue<SqlConnectionInfo>(SourceConnectionInfo, options);
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            writer.WriteObjectValue<SqlConnectionInfo>(TargetConnectionInfo, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlMITaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,14 +123,14 @@ namespace Azure.ResourceManager.DataMigration.Models
                 return null;
             }
             IList<MigrateSqlServerSqlMIDatabaseInput> selectedDatabases = default;
-            Optional<string> startedOn = default;
-            Optional<IList<string>> selectedLogins = default;
-            Optional<IList<string>> selectedAgentJobs = default;
-            Optional<FileShare> backupFileShare = default;
+            string startedOn = default;
+            IList<string> selectedLogins = default;
+            IList<string> selectedAgentJobs = default;
+            FileShare backupFileShare = default;
             BlobShare backupBlobShare = default;
-            Optional<BackupMode> backupMode = default;
-            Optional<string> aadDomainName = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            BackupMode? backupMode = default;
+            string aadDomainName = default;
+            string encryptedKeyForSecureFields = default;
             SqlConnectionInfo sourceConnectionInfo = default;
             SqlConnectionInfo targetConnectionInfo = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateSqlServerSqlMIDatabaseInput> array = new List<MigrateSqlServerSqlMIDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item));
+                        array.Add(MigrateSqlServerSqlMIDatabaseInput.DeserializeMigrateSqlServerSqlMIDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
@@ -186,12 +186,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupBlobShare"u8))
                 {
-                    backupBlobShare = BlobShare.DeserializeBlobShare(property.Value);
+                    backupBlobShare = BlobShare.DeserializeBlobShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupMode"u8))
@@ -215,12 +215,12 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -229,7 +229,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlMITaskInput(sourceConnectionInfo, targetConnectionInfo, serializedAdditionalRawData, selectedDatabases, startedOn.Value, Optional.ToList(selectedLogins), Optional.ToList(selectedAgentJobs), backupFileShare.Value, backupBlobShare, Optional.ToNullable(backupMode), aadDomainName.Value, encryptedKeyForSecureFields.Value);
+            return new MigrateSqlServerSqlMITaskInput(
+                sourceConnectionInfo,
+                targetConnectionInfo,
+                serializedAdditionalRawData,
+                selectedDatabases,
+                startedOn,
+                selectedLogins ?? new ChangeTrackingList<string>(),
+                selectedAgentJobs ?? new ChangeTrackingList<string>(),
+                backupFileShare,
+                backupBlobShare,
+                backupMode,
+                aadDomainName,
+                encryptedKeyForSecureFields);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlMITaskInput>.Write(ModelReaderWriterOptions options)
@@ -241,7 +253,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +269,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlMITaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlMITaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

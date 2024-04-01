@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistrySourceTriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceRepository))
             {
                 writer.WritePropertyName("sourceRepository"u8);
-                writer.WriteObjectValue(SourceRepository);
+                writer.WriteObjectValue<SourceCodeRepoUpdateContent>(SourceRepository, options);
             }
             if (Optional.IsCollectionDefined(SourceTriggerEvents))
             {
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistrySourceTriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,9 +86,9 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceCodeRepoUpdateContent> sourceRepository = default;
-            Optional<IList<ContainerRegistrySourceTriggerEvent>> sourceTriggerEvents = default;
-            Optional<ContainerRegistryTriggerStatus> status = default;
+            SourceCodeRepoUpdateContent sourceRepository = default;
+            IList<ContainerRegistrySourceTriggerEvent> sourceTriggerEvents = default;
+            ContainerRegistryTriggerStatus? status = default;
             string name = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceRepository = SourceCodeRepoUpdateContent.DeserializeSourceCodeRepoUpdateContent(property.Value);
+                    sourceRepository = SourceCodeRepoUpdateContent.DeserializeSourceCodeRepoUpdateContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceTriggerEvents"u8))
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository.Value, Optional.ToList(sourceTriggerEvents), Optional.ToNullable(status), name, serializedAdditionalRawData);
+            return new ContainerRegistrySourceTriggerUpdateContent(sourceRepository, sourceTriggerEvents ?? new ChangeTrackingList<ContainerRegistrySourceTriggerEvent>(), status, name, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistrySourceTriggerUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistrySourceTriggerUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistrySourceTriggerUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

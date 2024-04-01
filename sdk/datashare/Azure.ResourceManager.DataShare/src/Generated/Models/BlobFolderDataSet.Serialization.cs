@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobFolderDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobFolderDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobFolderDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobFolderDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobFolderDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobFolderDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,9 +109,9 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             string containerName = default;
-            Optional<Guid> dataSetId = default;
+            Guid? dataSetId = default;
             string prefix = default;
             string resourceGroup = default;
             string storageAccountName = default;
@@ -201,7 +201,19 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlobFolderDataSet(id, name, type, systemData.Value, kind, serializedAdditionalRawData, containerName, Optional.ToNullable(dataSetId), prefix, resourceGroup, storageAccountName, subscriptionId);
+            return new BlobFolderDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                containerName,
+                dataSetId,
+                prefix,
+                resourceGroup,
+                storageAccountName,
+                subscriptionId);
         }
 
         BinaryData IPersistableModel<BlobFolderDataSet>.Write(ModelReaderWriterOptions options)
@@ -213,7 +225,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobFolderDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobFolderDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +241,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeBlobFolderDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobFolderDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobFolderDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

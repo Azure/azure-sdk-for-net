@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,12 +46,12 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<ConnectionMonitorEndpointFilter>(Filter, options);
             }
             if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
-                writer.WriteObjectValue(Scope);
+                writer.WriteObjectValue<ConnectionMonitorEndpointScope>(Scope, options);
             }
             if (Optional.IsDefined(CoverageLevel))
             {
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,12 +97,12 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string name = default;
-            Optional<ConnectionMonitorEndpointType> type = default;
-            Optional<ResourceIdentifier> resourceId = default;
-            Optional<string> address = default;
-            Optional<ConnectionMonitorEndpointFilter> filter = default;
-            Optional<ConnectionMonitorEndpointScope> scope = default;
-            Optional<CoverageLevel> coverageLevel = default;
+            ConnectionMonitorEndpointType? type = default;
+            ResourceIdentifier resourceId = default;
+            string address = default;
+            ConnectionMonitorEndpointFilter filter = default;
+            ConnectionMonitorEndpointScope scope = default;
+            CoverageLevel? coverageLevel = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value);
+                    filter = ConnectionMonitorEndpointFilter.DeserializeConnectionMonitorEndpointFilter(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("scope"u8))
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    scope = ConnectionMonitorEndpointScope.DeserializeConnectionMonitorEndpointScope(property.Value);
+                    scope = ConnectionMonitorEndpointScope.DeserializeConnectionMonitorEndpointScope(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("coverageLevel"u8))
@@ -168,7 +168,15 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectionMonitorEndpoint(name, Optional.ToNullable(type), resourceId.Value, address.Value, filter.Value, scope.Value, Optional.ToNullable(coverageLevel), serializedAdditionalRawData);
+            return new ConnectionMonitorEndpoint(
+                name,
+                type,
+                resourceId,
+                address,
+                filter,
+                scope,
+                coverageLevel,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectionMonitorEndpoint>.Write(ModelReaderWriterOptions options)
@@ -180,7 +188,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +204,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

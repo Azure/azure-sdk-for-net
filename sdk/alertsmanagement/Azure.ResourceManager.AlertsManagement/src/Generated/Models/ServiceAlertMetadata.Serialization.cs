@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ServiceAlertMetadataProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<ServiceAlertMetadataProperties> properties = default;
+            ServiceAlertMetadataProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     {
                         continue;
                     }
-                    properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value);
+                    properties = ServiceAlertMetadataProperties.DeserializeServiceAlertMetadataProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertMetadata(properties.Value, serializedAdditionalRawData);
+            return new ServiceAlertMetadata(properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertMetadata>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

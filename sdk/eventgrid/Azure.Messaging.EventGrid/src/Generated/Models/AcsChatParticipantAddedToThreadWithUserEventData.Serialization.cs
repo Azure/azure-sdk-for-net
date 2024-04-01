@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,14 +20,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> time = default;
-            Optional<CommunicationIdentifierModel> addedByCommunicationIdentifier = default;
-            Optional<AcsChatThreadParticipantProperties> participantAdded = default;
-            Optional<DateTimeOffset> createTime = default;
-            Optional<long> version = default;
-            Optional<CommunicationIdentifierModel> recipientCommunicationIdentifier = default;
-            Optional<string> transactionId = default;
-            Optional<string> threadId = default;
+            DateTimeOffset? time = default;
+            CommunicationIdentifierModel addedByCommunicationIdentifier = default;
+            AcsChatThreadParticipantProperties participantAdded = default;
+            DateTimeOffset? createTime = default;
+            long? version = default;
+            CommunicationIdentifierModel recipientCommunicationIdentifier = default;
+            string transactionId = default;
+            string threadId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("time"u8))
@@ -96,7 +95,15 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new AcsChatParticipantAddedToThreadWithUserEventData(recipientCommunicationIdentifier.Value, transactionId.Value, threadId.Value, Optional.ToNullable(createTime), Optional.ToNullable(version), Optional.ToNullable(time), addedByCommunicationIdentifier.Value, participantAdded.Value);
+            return new AcsChatParticipantAddedToThreadWithUserEventData(
+                recipientCommunicationIdentifier,
+                transactionId,
+                threadId,
+                createTime,
+                version,
+                time,
+                addedByCommunicationIdentifier,
+                participantAdded);
         }
 
         internal partial class AcsChatParticipantAddedToThreadWithUserEventDataConverter : JsonConverter<AcsChatParticipantAddedToThreadWithUserEventData>

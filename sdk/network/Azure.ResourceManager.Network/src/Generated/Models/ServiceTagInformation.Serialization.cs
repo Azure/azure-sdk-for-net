@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ServiceTagInformationPropertiesFormat>(Properties, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Name))
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ServiceTagInformationPropertiesFormat> properties = default;
-            Optional<string> name = default;
-            Optional<string> id = default;
-            Optional<string> serviceTagChangeNumber = default;
+            ServiceTagInformationPropertiesFormat properties = default;
+            string name = default;
+            string id = default;
+            string serviceTagChangeNumber = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    properties = ServiceTagInformationPropertiesFormat.DeserializeServiceTagInformationPropertiesFormat(property.Value);
+                    properties = ServiceTagInformationPropertiesFormat.DeserializeServiceTagInformationPropertiesFormat(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("name"u8))
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagInformation(properties.Value, name.Value, id.Value, serviceTagChangeNumber.Value, serializedAdditionalRawData);
+            return new ServiceTagInformation(properties, name, id, serviceTagChangeNumber, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagInformation>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeServiceTagInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in Traffic)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppRevisionTrafficWeight>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppCustomDomain>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -82,14 +82,14 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in IPSecurityRestrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppIPSecurityRestrictionRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(StickySessions))
             {
                 writer.WritePropertyName("stickySessions"u8);
-                writer.WriteObjectValue(StickySessions);
+                writer.WriteObjectValue<IngressStickySessions>(StickySessions, options);
             }
             if (Optional.IsDefined(ClientCertificateMode))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(CorsPolicy))
             {
                 writer.WritePropertyName("corsPolicy"u8);
-                writer.WriteObjectValue(CorsPolicy);
+                writer.WriteObjectValue<ContainerAppCorsPolicy>(CorsPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIngressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,18 +139,18 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> fqdn = default;
-            Optional<bool> external = default;
-            Optional<int> targetPort = default;
-            Optional<int> exposedPort = default;
-            Optional<ContainerAppIngressTransportMethod> transport = default;
-            Optional<IList<ContainerAppRevisionTrafficWeight>> traffic = default;
-            Optional<IList<ContainerAppCustomDomain>> customDomains = default;
-            Optional<bool> allowInsecure = default;
-            Optional<IList<ContainerAppIPSecurityRestrictionRule>> ipSecurityRestrictions = default;
-            Optional<IngressStickySessions> stickySessions = default;
-            Optional<ContainerAppIngressClientCertificateMode> clientCertificateMode = default;
-            Optional<ContainerAppCorsPolicy> corsPolicy = default;
+            string fqdn = default;
+            bool? external = default;
+            int? targetPort = default;
+            int? exposedPort = default;
+            ContainerAppIngressTransportMethod? transport = default;
+            IList<ContainerAppRevisionTrafficWeight> traffic = default;
+            IList<ContainerAppCustomDomain> customDomains = default;
+            bool? allowInsecure = default;
+            IList<ContainerAppIPSecurityRestrictionRule> ipSecurityRestrictions = default;
+            IngressStickySessions stickySessions = default;
+            ContainerAppIngressClientCertificateMode? clientCertificateMode = default;
+            ContainerAppCorsPolicy corsPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppRevisionTrafficWeight> array = new List<ContainerAppRevisionTrafficWeight>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppRevisionTrafficWeight.DeserializeContainerAppRevisionTrafficWeight(item));
+                        array.Add(ContainerAppRevisionTrafficWeight.DeserializeContainerAppRevisionTrafficWeight(item, options));
                     }
                     traffic = array;
                     continue;
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppCustomDomain> array = new List<ContainerAppCustomDomain>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppCustomDomain.DeserializeContainerAppCustomDomain(item));
+                        array.Add(ContainerAppCustomDomain.DeserializeContainerAppCustomDomain(item, options));
                     }
                     customDomains = array;
                     continue;
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppIPSecurityRestrictionRule> array = new List<ContainerAppIPSecurityRestrictionRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppIPSecurityRestrictionRule.DeserializeContainerAppIPSecurityRestrictionRule(item));
+                        array.Add(ContainerAppIPSecurityRestrictionRule.DeserializeContainerAppIPSecurityRestrictionRule(item, options));
                     }
                     ipSecurityRestrictions = array;
                     continue;
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    stickySessions = IngressStickySessions.DeserializeIngressStickySessions(property.Value);
+                    stickySessions = IngressStickySessions.DeserializeIngressStickySessions(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("clientCertificateMode"u8))
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value);
+                    corsPolicy = ContainerAppCorsPolicy.DeserializeContainerAppCorsPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIngressConfiguration(fqdn.Value, Optional.ToNullable(external), Optional.ToNullable(targetPort), Optional.ToNullable(exposedPort), Optional.ToNullable(transport), Optional.ToList(traffic), Optional.ToList(customDomains), Optional.ToNullable(allowInsecure), Optional.ToList(ipSecurityRestrictions), stickySessions.Value, Optional.ToNullable(clientCertificateMode), corsPolicy.Value, serializedAdditionalRawData);
+            return new ContainerAppIngressConfiguration(
+                fqdn,
+                external,
+                targetPort,
+                exposedPort,
+                transport,
+                traffic ?? new ChangeTrackingList<ContainerAppRevisionTrafficWeight>(),
+                customDomains ?? new ChangeTrackingList<ContainerAppCustomDomain>(),
+                allowInsecure,
+                ipSecurityRestrictions ?? new ChangeTrackingList<ContainerAppIPSecurityRestrictionRule>(),
+                stickySessions,
+                clientCertificateMode,
+                corsPolicy,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIngressConfiguration>.Write(ModelReaderWriterOptions options)
@@ -292,7 +305,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +321,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppIngressConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIngressConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

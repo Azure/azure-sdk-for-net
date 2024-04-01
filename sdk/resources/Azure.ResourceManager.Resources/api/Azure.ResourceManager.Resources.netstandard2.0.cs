@@ -17,7 +17,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmApplicationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmApplicationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmApplicationData : Azure.ResourceManager.Resources.Models.ArmApplicationResourceData
+    public partial class ArmApplicationData : Azure.ResourceManager.Resources.Models.ArmApplicationResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationData>
     {
         public ArmApplicationData(Azure.Core.AzureLocation location, string kind) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.ResourceIdentifier ApplicationDefinitionId { get { throw null; } set { } }
@@ -38,6 +38,11 @@ namespace Azure.ResourceManager.Resources
         public System.Guid? PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris SupportUris { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails UpdatedBy { get { throw null; } }
+        Azure.ResourceManager.Resources.ArmApplicationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ArmApplicationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ArmApplicationDefinitionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource>, System.Collections.IEnumerable
     {
@@ -56,7 +61,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmApplicationDefinitionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmApplicationDefinitionData : Azure.ResourceManager.Resources.Models.ArmApplicationResourceData
+    public partial class ArmApplicationDefinitionData : Azure.ResourceManager.Resources.Models.ArmApplicationResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>
     {
         public ArmApplicationDefinitionData(Azure.Core.AzureLocation location, Azure.ResourceManager.Resources.Models.ArmApplicationLockLevel lockLevel) : base (default(Azure.Core.AzureLocation)) { }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact> Artifacts { get { throw null; } }
@@ -76,6 +81,11 @@ namespace Azure.ResourceManager.Resources
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint> NotificationEndpoints { get { throw null; } set { } }
         public System.Uri PackageFileUri { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.ArmApplicationPolicy> Policies { get { throw null; } }
+        Azure.ResourceManager.Resources.ArmApplicationDefinitionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ArmApplicationDefinitionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmApplicationDefinitionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ArmApplicationDefinitionResource : Azure.ResourceManager.ArmResource
     {
@@ -136,12 +146,17 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmDeploymentResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmDeploymentResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmDeploymentData : Azure.ResourceManager.Models.ResourceData
+    public partial class ArmDeploymentData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>
     {
         internal ArmDeploymentData() { }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended Properties { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Resources.ArmDeploymentData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ArmDeploymentData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ArmDeploymentResource : Azure.ResourceManager.ArmResource
     {
@@ -194,12 +209,17 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.ArmDeploymentScriptResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ArmDeploymentScriptResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class ArmDeploymentScriptData : Azure.ResourceManager.Models.ResourceData
+    public partial class ArmDeploymentScriptData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>
     {
         public ArmDeploymentScriptData(Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity Identity { get { throw null; } set { } }
         public Azure.Core.AzureLocation Location { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Resources.ArmDeploymentScriptData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ArmDeploymentScriptData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ArmDeploymentScriptData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ArmDeploymentScriptResource : Azure.ResourceManager.ArmResource
     {
@@ -241,7 +261,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.JitRequestResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.JitRequestResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class JitRequestData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class JitRequestData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.JitRequestData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>
     {
         public JitRequestData(Azure.Core.AzureLocation location) { }
         public string ApplicationResourceId { get { throw null; } set { } }
@@ -252,6 +272,11 @@ namespace Azure.ResourceManager.Resources
         public Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? ProvisioningState { get { throw null; } }
         public System.Guid? PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails UpdatedBy { get { throw null; } }
+        Azure.ResourceManager.Resources.JitRequestData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.JitRequestData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.JitRequestData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.JitRequestData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.JitRequestData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class JitRequestResource : Azure.ResourceManager.ArmResource
     {
@@ -321,10 +346,15 @@ namespace Azure.ResourceManager.Resources
         public static Azure.AsyncPageable<Azure.ResourceManager.Resources.TemplateSpecResource> GetTemplateSpecsAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind? expand = default(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind?), System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.Resources.TemplateSpecVersionResource GetTemplateSpecVersionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
     }
-    public partial class ScriptLogData : Azure.ResourceManager.Models.ResourceData
+    public partial class ScriptLogData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ScriptLogData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>
     {
         public ScriptLogData() { }
         public string Log { get { throw null; } }
+        Azure.ResourceManager.Resources.ScriptLogData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ScriptLogData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.ScriptLogData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.ScriptLogData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.ScriptLogData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class ScriptLogResource : Azure.ResourceManager.ArmResource
     {
@@ -353,7 +383,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TemplateSpecResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TemplateSpecData : Azure.ResourceManager.Models.ResourceData
+    public partial class TemplateSpecData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>
     {
         public TemplateSpecData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
@@ -362,6 +392,11 @@ namespace Azure.ResourceManager.Resources
         public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo> Versions { get { throw null; } }
+        Azure.ResourceManager.Resources.TemplateSpecData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.TemplateSpecData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TemplateSpecResource : Azure.ResourceManager.ArmResource
     {
@@ -403,7 +438,7 @@ namespace Azure.ResourceManager.Resources
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.Resources.TemplateSpecVersionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.TemplateSpecVersionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class TemplateSpecVersionData : Azure.ResourceManager.Models.ResourceData
+    public partial class TemplateSpecVersionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>
     {
         public TemplateSpecVersionData(Azure.Core.AzureLocation location) { }
         public string Description { get { throw null; } set { } }
@@ -413,6 +448,11 @@ namespace Azure.ResourceManager.Resources
         public System.BinaryData Metadata { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public System.BinaryData UiFormDefinition { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.TemplateSpecVersionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.TemplateSpecVersionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.TemplateSpecVersionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class TemplateSpecVersionResource : Azure.ResourceManager.ArmResource
     {
@@ -505,12 +545,17 @@ namespace Azure.ResourceManager.Resources.Mocking
 }
 namespace Azure.ResourceManager.Resources.Models
 {
-    public partial class ArmApplicationArtifact
+    public partial class ArmApplicationArtifact : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationArtifact>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationArtifact>
     {
         internal ArmApplicationArtifact() { }
         public Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType ArtifactType { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName Name { get { throw null; } }
         public System.Uri Uri { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationArtifact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationArtifact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationArtifact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationArtifact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationArtifact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationArtifact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationArtifact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArmApplicationArtifactName : System.IEquatable<Azure.ResourceManager.Resources.Models.ArmApplicationArtifactName>
@@ -538,18 +583,28 @@ namespace Azure.ResourceManager.Resources.Models
         Template = 1,
         Custom = 2,
     }
-    public partial class ArmApplicationAuthorization
+    public partial class ArmApplicationAuthorization : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization>
     {
         public ArmApplicationAuthorization(System.Guid principalId, string roleDefinitionId) { }
         public System.Guid PrincipalId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationAuthorization>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationDefinitionArtifact
+    public partial class ArmApplicationDefinitionArtifact : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact>
     {
         public ArmApplicationDefinitionArtifact(Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName name, System.Uri uri, Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType artifactType) { }
         public Azure.ResourceManager.Resources.Models.ArmApplicationArtifactType ArtifactType { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName Name { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArmApplicationDefinitionArtifactName : System.IEquatable<Azure.ResourceManager.Resources.Models.ArmApplicationDefinitionArtifactName>
@@ -590,20 +645,30 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode left, Azure.ResourceManager.Resources.Models.ArmApplicationDeploymentMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ArmApplicationDetails
+    public partial class ArmApplicationDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationDetails>
     {
         internal ArmApplicationDetails() { }
         public System.Guid? ApplicationId { get { throw null; } }
         public System.Guid? ObjectId { get { throw null; } }
         public string Puid { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationJitAccessPolicy
+    public partial class ArmApplicationJitAccessPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy>
     {
         public ArmApplicationJitAccessPolicy(bool jitAccessEnabled) { }
         public bool JitAccessEnabled { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.JitApprovalMode? JitApprovalMode { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.Resources.Models.JitApprover> JitApprovers { get { throw null; } }
         public System.TimeSpan? MaximumJitAccessDuration { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationJitAccessPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ArmApplicationLockLevel
     {
@@ -611,13 +676,18 @@ namespace Azure.ResourceManager.Resources.Models
         CanNotDelete = 1,
         ReadOnly = 2,
     }
-    public partial class ArmApplicationManagedIdentity
+    public partial class ArmApplicationManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity>
     {
         public ArmApplicationManagedIdentity() { }
         public Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentityType? IdentityType { get { throw null; } set { } }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ArmApplicationManagedIdentityType
     {
@@ -645,31 +715,51 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode left, Azure.ResourceManager.Resources.Models.ArmApplicationManagementMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ArmApplicationNotificationEndpoint
+    public partial class ArmApplicationNotificationEndpoint : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint>
     {
         public ArmApplicationNotificationEndpoint(System.Uri uri) { }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationNotificationEndpoint>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationPackageContact
+    public partial class ArmApplicationPackageContact : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact>
     {
         internal ArmApplicationPackageContact() { }
         public string ContactName { get { throw null; } }
         public string Email { get { throw null; } }
         public string Phone { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageContact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationPackageLockingPolicy
+    public partial class ArmApplicationPackageLockingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy>
     {
         public ArmApplicationPackageLockingPolicy() { }
         public System.Collections.Generic.IList<string> AllowedActions { get { throw null; } }
         public System.Collections.Generic.IList<string> AllowedDataActions { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageLockingPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationPackageSupportUris
+    public partial class ArmApplicationPackageSupportUris : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris>
     {
         internal ArmApplicationPackageSupportUris() { }
         public System.Uri AzureGovernmentUri { get { throw null; } }
         public System.Uri AzurePublicCloudUri { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationPatch : Azure.ResourceManager.Resources.Models.ArmApplicationResourceData
+    public partial class ArmApplicationPatch : Azure.ResourceManager.Resources.Models.ArmApplicationResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPatch>
     {
         public ArmApplicationPatch(Azure.Core.AzureLocation location) : base (default(Azure.Core.AzureLocation)) { }
         public Azure.Core.ResourceIdentifier ApplicationDefinitionId { get { throw null; } set { } }
@@ -690,21 +780,36 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Guid? PublisherTenantId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationPackageSupportUris SupportUris { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationDetails UpdatedBy { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationPolicy
+    public partial class ArmApplicationPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPolicy>
     {
         public ArmApplicationPolicy() { }
         public string Name { get { throw null; } set { } }
         public string Parameters { get { throw null; } set { } }
         public string PolicyDefinitionId { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationResourceData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class ArmApplicationResourceData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationResourceData>
     {
         public ArmApplicationResourceData(Azure.Core.AzureLocation location) { }
         public string ManagedBy { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmApplicationSku Sku { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationSku
+    public partial class ArmApplicationSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationSku>
     {
         public ArmApplicationSku(string name) { }
         public int? Capacity { get { throw null; } set { } }
@@ -713,46 +818,76 @@ namespace Azure.ResourceManager.Resources.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public string Tier { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmApplicationUserAssignedIdentity
+    public partial class ArmApplicationUserAssignedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity>
     {
         public ArmApplicationUserAssignedIdentity() { }
         public System.Guid? PrincipalId { get { throw null; } }
         public System.Guid? TenantId { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDependency
+    public partial class ArmDependency : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDependency>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDependency>
     {
         internal ArmDependency() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.BasicArmDependency> DependsOn { get { throw null; } }
         public string Id { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDependency>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDependency>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentContent
+    public partial class ArmDeploymentContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentContent>
     {
         public ArmDeploymentContent(Azure.ResourceManager.Resources.Models.ArmDeploymentProperties properties) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentProperties Properties { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentExportResult
+    public partial class ArmDeploymentExportResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult>
     {
         internal ArmDeploymentExportResult() { }
         public System.BinaryData Template { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ArmDeploymentMode
     {
         Incremental = 0,
         Complete = 1,
     }
-    public partial class ArmDeploymentOperation
+    public partial class ArmDeploymentOperation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperation>
     {
         internal ArmDeploymentOperation() { }
         public string Id { get { throw null; } }
         public string OperationId { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentOperation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentOperation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentOperationProperties
+    public partial class ArmDeploymentOperationProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties>
     {
         internal ArmDeploymentOperationProperties() { }
         public System.TimeSpan? Duration { get { throw null; } }
@@ -765,14 +900,24 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.StatusMessage StatusMessage { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.TargetResource TargetResource { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentParametersLink
+    public partial class ArmDeploymentParametersLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink>
     {
         public ArmDeploymentParametersLink(System.Uri uri) { }
         public string ContentVersion { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentProperties
+    public partial class ArmDeploymentProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentProperties>
     {
         public ArmDeploymentProperties(Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode) { }
         public string DebugSettingDetailLevel { get { throw null; } set { } }
@@ -783,8 +928,13 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink ParametersLink { get { throw null; } set { } }
         public System.BinaryData Template { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink TemplateLink { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentPropertiesExtended
+    public partial class ArmDeploymentPropertiesExtended : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended>
     {
         internal ArmDeploymentPropertiesExtended() { }
         public string CorrelationId { get { throw null; } }
@@ -804,13 +954,23 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink TemplateLink { get { throw null; } }
         public System.DateTimeOffset? Timestamp { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.SubResource> ValidatedResources { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentScriptManagedIdentity
+    public partial class ArmDeploymentScriptManagedIdentity : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity>
     {
         public ArmDeploymentScriptManagedIdentity() { }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType? IdentityType { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } }
         public System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> UserAssignedIdentities { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ArmDeploymentScriptManagedIdentityType : System.IEquatable<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType>
@@ -829,12 +989,17 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType left, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ArmDeploymentScriptPatch : Azure.ResourceManager.Models.ResourceData
+    public partial class ArmDeploymentScriptPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch>
     {
         public ArmDeploymentScriptPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentTemplateLink
+    public partial class ArmDeploymentTemplateLink : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink>
     {
         public ArmDeploymentTemplateLink() { }
         public string ContentVersion { get { throw null; } set { } }
@@ -842,23 +1007,43 @@ namespace Azure.ResourceManager.Resources.Models
         public string QueryString { get { throw null; } set { } }
         public string RelativePath { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentValidateResult
+    public partial class ArmDeploymentValidateResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult>
     {
         internal ArmDeploymentValidateResult() { }
         public Azure.ResponseError Error { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended Properties { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentWhatIfContent
+    public partial class ArmDeploymentWhatIfContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent>
     {
         public ArmDeploymentWhatIfContent(Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties properties) { }
         public Azure.Core.AzureLocation? Location { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties Properties { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ArmDeploymentWhatIfProperties : Azure.ResourceManager.Resources.Models.ArmDeploymentProperties
+    public partial class ArmDeploymentWhatIfProperties : Azure.ResourceManager.Resources.Models.ArmDeploymentProperties, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties>
     {
         public ArmDeploymentWhatIfProperties(Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode) : base (default(Azure.ResourceManager.Resources.Models.ArmDeploymentMode)) { }
         public Azure.ResourceManager.Resources.Models.WhatIfResultFormat? WhatIfResultFormat { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public static partial class ArmResourcesModelFactory
     {
@@ -873,15 +1058,19 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.ArmApplicationResourceData ArmApplicationResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), string managedBy = null, Azure.ResourceManager.Resources.Models.ArmApplicationSku sku = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmApplicationUserAssignedIdentity ArmApplicationUserAssignedIdentity(System.Guid? principalId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDependency ArmDependency(System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.BasicArmDependency> dependsOn = null, string id = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string resourceName = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ArmDeploymentContent ArmDeploymentContent(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Resources.Models.ArmDeploymentProperties properties = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Resources.ArmDeploymentData ArmDeploymentData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended properties = null, System.Collections.Generic.IReadOnlyDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentExportResult ArmDeploymentExportResult(System.BinaryData template = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentOperation ArmDeploymentOperation(string id = null, string operationId = null, Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties properties = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentOperationProperties ArmDeploymentOperationProperties(Azure.ResourceManager.Resources.Models.ProvisioningOperationKind? provisioningOperation = default(Azure.ResourceManager.Resources.Models.ProvisioningOperationKind?), string provisioningState = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), string serviceRequestId = null, string statusCode = null, Azure.ResourceManager.Resources.Models.StatusMessage statusMessage = null, Azure.ResourceManager.Resources.Models.TargetResource targetResource = null, System.BinaryData requestContent = null, System.BinaryData responseContent = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ArmDeploymentProperties ArmDeploymentProperties(System.BinaryData template = null, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink = null, System.BinaryData parameters = null, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink = null, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode = Azure.ResourceManager.Resources.Models.ArmDeploymentMode.Incremental, string debugSettingDetailLevel = null, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment = null, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope = default(Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended ArmDeploymentPropertiesExtended(Azure.ResourceManager.Resources.Models.ResourcesProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ResourcesProvisioningState?), string correlationId = null, System.DateTimeOffset? timestamp = default(System.DateTimeOffset?), System.TimeSpan? duration = default(System.TimeSpan?), System.BinaryData outputs = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.ResourceProviderData> providers = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ArmDependency> dependencies = null, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink = null, System.BinaryData parameters = null, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink = null, Azure.ResourceManager.Resources.Models.ArmDeploymentMode? mode = default(Azure.ResourceManager.Resources.Models.ArmDeploymentMode?), string debugSettingDetailLevel = null, Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended errorDeployment = null, string templateHash = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> outputResources = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.SubResource> validatedResources = null, Azure.ResponseError error = null) { throw null; }
-        public static Azure.ResourceManager.Resources.ArmDeploymentScriptData ArmDeploymentScriptData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string kind = "Unknown") { throw null; }
+        public static Azure.ResourceManager.Resources.ArmDeploymentScriptData ArmDeploymentScriptData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string kind = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity ArmDeploymentScriptManagedIdentity(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType? identityType = default(Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentityType?), System.Guid? tenantId = default(System.Guid?), System.Collections.Generic.IDictionary<string, Azure.ResourceManager.Models.UserAssignedIdentity> userAssignedIdentities = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentScriptPatch ArmDeploymentScriptPatch(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.ArmDeploymentValidateResult ArmDeploymentValidateResult(Azure.ResponseError error = null, Azure.ResourceManager.Resources.Models.ArmDeploymentPropertiesExtended properties = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfContent ArmDeploymentWhatIfContent(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties properties = null) { throw null; }
+        public static Azure.ResourceManager.Resources.Models.ArmDeploymentWhatIfProperties ArmDeploymentWhatIfProperties(System.BinaryData template = null, Azure.ResourceManager.Resources.Models.ArmDeploymentTemplateLink templateLink = null, System.BinaryData parameters = null, Azure.ResourceManager.Resources.Models.ArmDeploymentParametersLink parametersLink = null, Azure.ResourceManager.Resources.Models.ArmDeploymentMode mode = Azure.ResourceManager.Resources.Models.ArmDeploymentMode.Incremental, string debugSettingDetailLevel = null, Azure.ResourceManager.Resources.Models.ErrorDeployment errorDeployment = null, Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope? expressionEvaluationScope = default(Azure.ResourceManager.Resources.Models.ExpressionEvaluationScope?), Azure.ResourceManager.Resources.Models.WhatIfResultFormat? whatIfResultFormat = default(Azure.ResourceManager.Resources.Models.WhatIfResultFormat?)) { throw null; }
         public static Azure.ResourceManager.Resources.Models.AzureCliScript AzureCliScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string containerGroupName = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azCliVersion = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.AzurePowerShellScript AzurePowerShellScript(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.Resources.Models.ArmDeploymentScriptManagedIdentity identity = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null, string containerGroupName = null, Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration storageAccountSettings = null, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions? cleanupPreference = default(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions?), Azure.ResourceManager.Resources.Models.ScriptProvisioningState? provisioningState = default(Azure.ResourceManager.Resources.Models.ScriptProvisioningState?), Azure.ResourceManager.Resources.Models.ScriptStatus status = null, System.BinaryData outputs = null, System.Uri primaryScriptUri = null, System.Collections.Generic.IEnumerable<System.Uri> supportingScriptUris = null, string scriptContent = null, string arguments = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable> environmentVariables = null, string forceUpdateTag = null, System.TimeSpan retentionInterval = default(System.TimeSpan), System.TimeSpan? timeout = default(System.TimeSpan?), string azPowerShellVersion = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.BasicArmDependency BasicArmDependency(string id = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?), string resourceName = null) { throw null; }
@@ -901,7 +1090,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static Azure.ResourceManager.Resources.Models.WhatIfOperationResult WhatIfOperationResult(string status = null, Azure.ResponseError error = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfChange> changes = null) { throw null; }
         public static Azure.ResourceManager.Resources.Models.WhatIfPropertyChange WhatIfPropertyChange(string path = null, Azure.ResourceManager.Resources.Models.WhatIfPropertyChangeType propertyChangeType = Azure.ResourceManager.Resources.Models.WhatIfPropertyChangeType.Create, System.BinaryData before = null, System.BinaryData after = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> children = null) { throw null; }
     }
-    public partial class AzureCliScript : Azure.ResourceManager.Resources.ArmDeploymentScriptData
+    public partial class AzureCliScript : Azure.ResourceManager.Resources.ArmDeploymentScriptData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.AzureCliScript>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AzureCliScript>
     {
         public AzureCliScript(Azure.Core.AzureLocation location, System.TimeSpan retentionInterval, string azCliVersion) : base (default(Azure.Core.AzureLocation)) { }
         public string Arguments { get { throw null; } set { } }
@@ -919,8 +1108,13 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration StorageAccountSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Uri> SupportingScriptUris { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.AzureCliScript System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.AzureCliScript>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.AzureCliScript>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.AzureCliScript System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AzureCliScript>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AzureCliScript>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AzureCliScript>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class AzurePowerShellScript : Azure.ResourceManager.Resources.ArmDeploymentScriptData
+    public partial class AzurePowerShellScript : Azure.ResourceManager.Resources.ArmDeploymentScriptData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.AzurePowerShellScript>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AzurePowerShellScript>
     {
         public AzurePowerShellScript(Azure.Core.AzureLocation location, System.TimeSpan retentionInterval, string azPowerShellVersion) : base (default(Azure.Core.AzureLocation)) { }
         public string Arguments { get { throw null; } set { } }
@@ -938,26 +1132,46 @@ namespace Azure.ResourceManager.Resources.Models
         public Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration StorageAccountSettings { get { throw null; } set { } }
         public System.Collections.Generic.IList<System.Uri> SupportingScriptUris { get { throw null; } }
         public System.TimeSpan? Timeout { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.AzurePowerShellScript System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.AzurePowerShellScript>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.AzurePowerShellScript>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.AzurePowerShellScript System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AzurePowerShellScript>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AzurePowerShellScript>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.AzurePowerShellScript>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class BasicArmDependency
+    public partial class BasicArmDependency : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.BasicArmDependency>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.BasicArmDependency>
     {
         internal BasicArmDependency() { }
         public string Id { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.BasicArmDependency System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.BasicArmDependency>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.BasicArmDependency>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.BasicArmDependency System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.BasicArmDependency>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.BasicArmDependency>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.BasicArmDependency>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ErrorDeployment
+    public partial class ErrorDeployment : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ErrorDeployment>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ErrorDeployment>
     {
         public ErrorDeployment() { }
         public string DeploymentName { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.ErrorDeploymentType? DeploymentType { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ErrorDeployment System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ErrorDeployment>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ErrorDeployment>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ErrorDeployment System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ErrorDeployment>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ErrorDeployment>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ErrorDeployment>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ErrorDeploymentExtended
+    public partial class ErrorDeploymentExtended : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended>
     {
         internal ErrorDeploymentExtended() { }
         public string DeploymentName { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.ErrorDeploymentType? DeploymentType { get { throw null; } }
         public string ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ErrorDeploymentExtended>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ErrorDeploymentType
     {
@@ -1002,12 +1216,17 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.JitApprovalMode left, Azure.ResourceManager.Resources.Models.JitApprovalMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class JitApprover
+    public partial class JitApprover : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitApprover>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitApprover>
     {
         public JitApprover(string id) { }
         public Azure.ResourceManager.Resources.Models.JitApproverType? ApproverType { get { throw null; } set { } }
         public string DisplayName { get { throw null; } set { } }
         public string Id { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.JitApprover System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitApprover>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitApprover>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.JitApprover System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitApprover>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitApprover>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitApprover>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitApproverType : System.IEquatable<Azure.ResourceManager.Resources.Models.JitApproverType>
@@ -1027,16 +1246,26 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.JitApproverType left, Azure.ResourceManager.Resources.Models.JitApproverType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class JitAuthorizationPolicies
+    public partial class JitAuthorizationPolicies : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies>
     {
         public JitAuthorizationPolicies(System.Guid principalId, string roleDefinitionId) { }
         public System.Guid PrincipalId { get { throw null; } set { } }
         public string RoleDefinitionId { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitAuthorizationPolicies>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class JitRequestPatch
+    public partial class JitRequestPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitRequestPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitRequestPatch>
     {
         public JitRequestPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.JitRequestPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitRequestPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitRequestPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.JitRequestPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitRequestPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitRequestPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitRequestPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitRequestState : System.IEquatable<Azure.ResourceManager.Resources.Models.JitRequestState>
@@ -1062,12 +1291,17 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.JitRequestState left, Azure.ResourceManager.Resources.Models.JitRequestState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class JitSchedulingPolicy
+    public partial class JitSchedulingPolicy : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitSchedulingPolicy>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitSchedulingPolicy>
     {
         public JitSchedulingPolicy(Azure.ResourceManager.Resources.Models.JitSchedulingType schedulingType, System.TimeSpan duration, System.DateTimeOffset startOn) { }
         public System.TimeSpan Duration { get { throw null; } set { } }
         public Azure.ResourceManager.Resources.Models.JitSchedulingType SchedulingType { get { throw null; } }
         public System.DateTimeOffset StartOn { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.JitSchedulingPolicy System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitSchedulingPolicy>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.JitSchedulingPolicy>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.JitSchedulingPolicy System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitSchedulingPolicy>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitSchedulingPolicy>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.JitSchedulingPolicy>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct JitSchedulingType : System.IEquatable<Azure.ResourceManager.Resources.Models.JitSchedulingType>
@@ -1088,11 +1322,16 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.JitSchedulingType left, Azure.ResourceManager.Resources.Models.JitSchedulingType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class LinkedTemplateArtifact
+    public partial class LinkedTemplateArtifact : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact>
     {
         public LinkedTemplateArtifact(string path, System.BinaryData template) { }
         public string Path { get { throw null; } set { } }
         public System.BinaryData Template { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.LinkedTemplateArtifact>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum ProvisioningOperationKind
     {
@@ -1154,12 +1393,17 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ScriptCleanupOptions left, Azure.ResourceManager.Resources.Models.ScriptCleanupOptions right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScriptEnvironmentVariable
+    public partial class ScriptEnvironmentVariable : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>
     {
         public ScriptEnvironmentVariable(string name) { }
         public string Name { get { throw null; } set { } }
         public string SecureValue { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptEnvironmentVariable>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ScriptProvisioningState : System.IEquatable<Azure.ResourceManager.Resources.Models.ScriptProvisioningState>
@@ -1183,7 +1427,7 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.ScriptProvisioningState left, Azure.ResourceManager.Resources.Models.ScriptProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class ScriptStatus
+    public partial class ScriptStatus : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptStatus>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptStatus>
     {
         internal ScriptStatus() { }
         public string ContainerInstanceId { get { throw null; } }
@@ -1194,31 +1438,56 @@ namespace Azure.ResourceManager.Resources.Models
         public System.DateTimeOffset? ExpireOn { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string StorageAccountId { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.ScriptStatus System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptStatus>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptStatus>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ScriptStatus System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptStatus>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptStatus>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptStatus>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ScriptStorageConfiguration
+    public partial class ScriptStorageConfiguration : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration>
     {
         public ScriptStorageConfiguration() { }
         public string StorageAccountKey { get { throw null; } set { } }
         public string StorageAccountName { get { throw null; } set { } }
+        Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.ScriptStorageConfiguration>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class StatusMessage
+    public partial class StatusMessage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.StatusMessage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.StatusMessage>
     {
         internal StatusMessage() { }
         public Azure.ResponseError Error { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.StatusMessage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.StatusMessage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.StatusMessage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.StatusMessage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.StatusMessage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.StatusMessage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.StatusMessage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TargetResource
+    public partial class TargetResource : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TargetResource>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TargetResource>
     {
         internal TargetResource() { }
         public string Id { get { throw null; } }
         public string ResourceName { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.TargetResource System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TargetResource>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TargetResource>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.TargetResource System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TargetResource>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TargetResource>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TargetResource>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TemplateHashResult
+    public partial class TemplateHashResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateHashResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateHashResult>
     {
         internal TemplateHashResult() { }
         public string MinifiedTemplate { get { throw null; } }
         public string TemplateHash { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.TemplateHashResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateHashResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateHashResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.TemplateHashResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateHashResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateHashResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateHashResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct TemplateSpecExpandKind : System.IEquatable<Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind>
@@ -1237,24 +1506,39 @@ namespace Azure.ResourceManager.Resources.Models
         public static bool operator !=(Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind left, Azure.ResourceManager.Resources.Models.TemplateSpecExpandKind right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class TemplateSpecPatch : Azure.ResourceManager.Models.ResourceData
+    public partial class TemplateSpecPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecPatch>
     {
         public TemplateSpecPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.TemplateSpecPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.TemplateSpecPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TemplateSpecVersionInfo
+    public partial class TemplateSpecVersionInfo : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo>
     {
         internal TemplateSpecVersionInfo() { }
         public string Description { get { throw null; } }
         public System.DateTimeOffset? TimeCreated { get { throw null; } }
         public System.DateTimeOffset? TimeModified { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionInfo>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class TemplateSpecVersionPatch : Azure.ResourceManager.Models.ResourceData
+    public partial class TemplateSpecVersionPatch : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch>
     {
         public TemplateSpecVersionPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.TemplateSpecVersionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WhatIfChange
+    public partial class WhatIfChange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfChange>
     {
         internal WhatIfChange() { }
         public System.BinaryData After { get { throw null; } }
@@ -1263,6 +1547,11 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> Delta { get { throw null; } }
         public string ResourceId { get { throw null; } }
         public string UnsupportedReason { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.WhatIfChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.WhatIfChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum WhatIfChangeType
     {
@@ -1274,14 +1563,19 @@ namespace Azure.ResourceManager.Resources.Models
         Modify = 5,
         Unsupported = 6,
     }
-    public partial class WhatIfOperationResult
+    public partial class WhatIfOperationResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>
     {
         internal WhatIfOperationResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WhatIfChange> Changes { get { throw null; } }
         public Azure.ResponseError Error { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.WhatIfOperationResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.WhatIfOperationResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfOperationResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class WhatIfPropertyChange
+    public partial class WhatIfPropertyChange : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange>
     {
         internal WhatIfPropertyChange() { }
         public System.BinaryData After { get { throw null; } }
@@ -1289,6 +1583,11 @@ namespace Azure.ResourceManager.Resources.Models
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange> Children { get { throw null; } }
         public string Path { get { throw null; } }
         public Azure.ResourceManager.Resources.Models.WhatIfPropertyChangeType PropertyChangeType { get { throw null; } }
+        Azure.ResourceManager.Resources.Models.WhatIfPropertyChange System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.Resources.Models.WhatIfPropertyChange System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.Resources.Models.WhatIfPropertyChange>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum WhatIfPropertyChangeType
     {

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationInputContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxValidationInputContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,15 +70,15 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ValidateCreateOrderLimit": return CreateOrderLimitForSubscriptionValidationContent.DeserializeCreateOrderLimitForSubscriptionValidationContent(element);
-                    case "ValidateDataTransferDetails": return DataTransferDetailsValidationContent.DeserializeDataTransferDetailsValidationContent(element);
-                    case "ValidatePreferences": return PreferencesValidationContent.DeserializePreferencesValidationContent(element);
-                    case "ValidateSkuAvailability": return SkuAvailabilityValidationContent.DeserializeSkuAvailabilityValidationContent(element);
-                    case "ValidateSubscriptionIsAllowedToCreateJob": return SubscriptionIsAllowedToCreateJobValidationContent.DeserializeSubscriptionIsAllowedToCreateJobValidationContent(element);
-                    case "ValidateAddress": return DataBoxValidateAddressContent.DeserializeDataBoxValidateAddressContent(element);
+                    case "ValidateAddress": return DataBoxValidateAddressContent.DeserializeDataBoxValidateAddressContent(element, options);
+                    case "ValidateCreateOrderLimit": return CreateOrderLimitForSubscriptionValidationContent.DeserializeCreateOrderLimitForSubscriptionValidationContent(element, options);
+                    case "ValidateDataTransferDetails": return DataTransferDetailsValidationContent.DeserializeDataTransferDetailsValidationContent(element, options);
+                    case "ValidatePreferences": return PreferencesValidationContent.DeserializePreferencesValidationContent(element, options);
+                    case "ValidateSkuAvailability": return SkuAvailabilityValidationContent.DeserializeSkuAvailabilityValidationContent(element, options);
+                    case "ValidateSubscriptionIsAllowedToCreateJob": return SubscriptionIsAllowedToCreateJobValidationContent.DeserializeSubscriptionIsAllowedToCreateJobValidationContent(element, options);
                 }
             }
-            return UnknownValidationInputRequest.DeserializeUnknownValidationInputRequest(element);
+            return UnknownValidationInputRequest.DeserializeUnknownValidationInputRequest(element, options);
         }
 
         BinaryData IPersistableModel<DataBoxValidationInputContent>.Write(ModelReaderWriterOptions options)
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxValidationInputContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxValidationInputContent)} does not support reading '{options.Format}' format.");
             }
         }
 

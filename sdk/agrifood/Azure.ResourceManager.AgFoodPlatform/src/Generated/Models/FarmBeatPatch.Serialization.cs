@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<FarmBeatPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<FarmBeatsUpdateProperties>(Properties, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<FarmBeatPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<FarmBeatsUpdateProperties> properties = default;
-            Optional<IDictionary<string, string>> tags = default;
+            AzureLocation? location = default;
+            ManagedServiceIdentity identity = default;
+            FarmBeatsUpdateProperties properties = default;
+            IDictionary<string, string> tags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                     {
                         continue;
                     }
-                    properties = FarmBeatsUpdateProperties.DeserializeFarmBeatsUpdateProperties(property.Value);
+                    properties = FarmBeatsUpdateProperties.DeserializeFarmBeatsUpdateProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FarmBeatPatch(Optional.ToNullable(location), identity, properties.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new FarmBeatPatch(location, identity, properties, tags ?? new ChangeTrackingDictionary<string, string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FarmBeatPatch>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                         return DeserializeFarmBeatPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FarmBeatPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

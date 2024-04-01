@@ -19,8 +19,10 @@ public partial class ElasticsearchChatExtensionConfiguration : AzureChatExtensio
 
     /// <summary> Initializes a new instance of <see cref="ElasticsearchChatExtensionConfiguration"/>. </summary>
     public ElasticsearchChatExtensionConfiguration()
-        : this(AzureChatExtensionType.Elasticsearch, new ElasticsearchChatExtensionParameters())
-    { }
+    {
+        Type = AzureChatExtensionType.Elasticsearch;
+        Parameters = new ElasticsearchChatExtensionParameters();
+    }
 
     internal ElasticsearchChatExtensionParameters Parameters { get; }
 

@@ -35,7 +35,7 @@ namespace Azure.AI.TextAnalytics.Models
             }
             WarningCodeValue code = default;
             string message = default;
-            Optional<string> targetRef = default;
+            string targetRef = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -54,7 +54,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new DocumentWarning(code, message, targetRef.Value);
+            return new DocumentWarning(code, message, targetRef);
         }
     }
 }

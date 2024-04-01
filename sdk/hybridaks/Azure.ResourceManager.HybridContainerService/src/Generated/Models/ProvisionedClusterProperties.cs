@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.HybridContainerService.Models
     /// <summary> Properties of the provisioned cluster. </summary>
     public partial class ProvisionedClusterProperties
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ProvisionedClusterProperties"/>. </summary>
         public ProvisionedClusterProperties()
         {
@@ -32,7 +65,8 @@ namespace Azure.ResourceManager.HybridContainerService.Models
         /// <param name="status"> The observed status of the provisioned cluster. </param>
         /// <param name="licenseProfile"> The license profile of the provisioned cluster. </param>
         /// <param name="autoScalerProfile"> Parameters to be applied to the cluster-autoscaler when auto scaling is enabled for the provisioned cluster. </param>
-        internal ProvisionedClusterProperties(LinuxProfileProperties linuxProfile, ProvisionedClusterControlPlaneProfile controlPlane, string kubernetesVersion, ProvisionedClusterNetworkProfile networkProfile, StorageProfile storageProfile, ClusterVmAccessProfile clusterVmAccessProfile, IList<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles, ProvisionedClusterCloudProviderProfile cloudProviderProfile, HybridContainerServiceResourceProvisioningState? provisioningState, ProvisionedClusterStatus status, ProvisionedClusterLicenseProfile licenseProfile, ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ProvisionedClusterProperties(LinuxProfileProperties linuxProfile, ProvisionedClusterControlPlaneProfile controlPlane, string kubernetesVersion, ProvisionedClusterNetworkProfile networkProfile, StorageProfile storageProfile, ClusterVmAccessProfile clusterVmAccessProfile, IList<HybridContainerServiceNamedAgentPoolProfile> agentPoolProfiles, ProvisionedClusterCloudProviderProfile cloudProviderProfile, HybridContainerServiceResourceProvisioningState? provisioningState, ProvisionedClusterStatus status, ProvisionedClusterLicenseProfile licenseProfile, ProvisionedClusterPropertiesAutoScalerProfile autoScalerProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             LinuxProfile = linuxProfile;
             ControlPlane = controlPlane;
@@ -46,6 +80,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             Status = status;
             LicenseProfile = licenseProfile;
             AutoScalerProfile = autoScalerProfile;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The profile for Linux VMs in the provisioned cluster. </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<StartMenuItemList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartMenuItemList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StartMenuItemList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DesktopVirtualizationStartMenuItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<StartMenuItemList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartMenuItemList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StartMenuItemList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DesktopVirtualizationStartMenuItem>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<DesktopVirtualizationStartMenuItem> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                     List<DesktopVirtualizationStartMenuItem> array = new List<DesktopVirtualizationStartMenuItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem(item));
+                        array.Add(DesktopVirtualizationStartMenuItem.DeserializeDesktopVirtualizationStartMenuItem(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new StartMenuItemList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new StartMenuItemList(value ?? new ChangeTrackingList<DesktopVirtualizationStartMenuItem>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<StartMenuItemList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StartMenuItemList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StartMenuItemList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeStartMenuItemList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StartMenuItemList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StartMenuItemList)} does not support reading '{options.Format}' format.");
             }
         }
 

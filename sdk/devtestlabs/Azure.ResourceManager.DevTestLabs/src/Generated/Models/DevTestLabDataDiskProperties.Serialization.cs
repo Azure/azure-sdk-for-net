@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AttachNewDataDiskOptions))
             {
                 writer.WritePropertyName("attachNewDataDiskOptions"u8);
-                writer.WriteObjectValue(AttachNewDataDiskOptions);
+                writer.WriteObjectValue<AttachNewDataDiskDetails>(AttachNewDataDiskOptions, options);
             }
             if (Optional.IsDefined(ExistingLabDiskId))
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<AttachNewDataDiskDetails> attachNewDataDiskOptions = default;
-            Optional<ResourceIdentifier> existingLabDiskId = default;
-            Optional<DevTestLabHostCachingOption> hostCaching = default;
+            AttachNewDataDiskDetails attachNewDataDiskOptions = default;
+            ResourceIdentifier existingLabDiskId = default;
+            DevTestLabHostCachingOption? hostCaching = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                     {
                         continue;
                     }
-                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value);
+                    attachNewDataDiskOptions = AttachNewDataDiskDetails.DeserializeAttachNewDataDiskDetails(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("existingLabDiskId"u8))
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions.Value, existingLabDiskId.Value, Optional.ToNullable(hostCaching), serializedAdditionalRawData);
+            return new DevTestLabDataDiskProperties(attachNewDataDiskOptions, existingLabDiskId, hostCaching, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabDataDiskProperties>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabDataDiskProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabDataDiskProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

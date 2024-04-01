@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIPSecurityRestrictionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppIPSecurityRestrictionRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             string ipAddressRange = default;
             ContainerAppIPRuleAction action = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppIPSecurityRestrictionRule(name, description.Value, ipAddressRange, action, serializedAdditionalRawData);
+            return new ContainerAppIPSecurityRestrictionRule(name, description, ipAddressRange, action, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppIPSecurityRestrictionRule>.Write(ModelReaderWriterOptions options)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppIPSecurityRestrictionRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppIPSecurityRestrictionRule)} does not support reading '{options.Format}' format.");
             }
         }
 

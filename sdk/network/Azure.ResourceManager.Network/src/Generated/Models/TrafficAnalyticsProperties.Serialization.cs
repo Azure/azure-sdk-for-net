@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficAnalyticsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(TrafficAnalyticsConfiguration))
             {
                 writer.WritePropertyName("networkWatcherFlowAnalyticsConfiguration"u8);
-                writer.WriteObjectValue(TrafficAnalyticsConfiguration);
+                writer.WriteObjectValue<TrafficAnalyticsConfigurationProperties>(TrafficAnalyticsConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrafficAnalyticsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<TrafficAnalyticsConfigurationProperties> networkWatcherFlowAnalyticsConfiguration = default;
+            TrafficAnalyticsConfigurationProperties networkWatcherFlowAnalyticsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value);
+                    networkWatcherFlowAnalyticsConfiguration = TrafficAnalyticsConfigurationProperties.DeserializeTrafficAnalyticsConfigurationProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration.Value, serializedAdditionalRawData);
+            return new TrafficAnalyticsProperties(networkWatcherFlowAnalyticsConfiguration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TrafficAnalyticsProperties>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeTrafficAnalyticsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficAnalyticsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

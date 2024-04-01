@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointDependency)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in EndpointDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EndpointDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDependency>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointDependency)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> domainName = default;
-            Optional<IReadOnlyList<EndpointDetail>> endpointDetails = default;
+            string domainName = default;
+            IReadOnlyList<EndpointDetail> endpointDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     List<EndpointDetail> array = new List<EndpointDetail>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EndpointDetail.DeserializeEndpointDetail(item));
+                        array.Add(EndpointDetail.DeserializeEndpointDetail(item, options));
                     }
                     endpointDetails = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDependency(domainName.Value, Optional.ToList(endpointDetails), serializedAdditionalRawData);
+            return new EndpointDependency(domainName, endpointDetails ?? new ChangeTrackingList<EndpointDetail>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDependency>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeEndpointDependency(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointDependency)} does not support reading '{options.Format}' format.");
             }
         }
 

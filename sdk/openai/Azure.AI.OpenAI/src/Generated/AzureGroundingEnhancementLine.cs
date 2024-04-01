@@ -8,13 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary> A content line object consisting of an adjacent sequence of content elements, such as words and selection marks. </summary>
     public partial class AzureGroundingEnhancementLine
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLine"/>. </summary>
         /// <param name="text"> The text within the line. </param>
         /// <param name="spans"> An array of spans that represent detected objects and its bounding box information. </param>
@@ -31,10 +62,17 @@ namespace Azure.AI.OpenAI
         /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLine"/>. </summary>
         /// <param name="text"> The text within the line. </param>
         /// <param name="spans"> An array of spans that represent detected objects and its bounding box information. </param>
-        internal AzureGroundingEnhancementLine(string text, IReadOnlyList<AzureGroundingEnhancementLineSpan> spans)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AzureGroundingEnhancementLine(string text, IReadOnlyList<AzureGroundingEnhancementLineSpan> spans, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Text = text;
             Spans = spans;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzureGroundingEnhancementLine"/> for deserialization. </summary>
+        internal AzureGroundingEnhancementLine()
+        {
         }
 
         /// <summary> The text within the line. </summary>

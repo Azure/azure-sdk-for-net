@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -44,6 +43,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Table = table;
             SchemaTypePropertiesSchema = schemaTypePropertiesSchema;
             DatasetType = datasetType ?? "AzurePostgreSqlTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="AzurePostgreSqlTableDataset"/> for deserialization. </summary>
+        internal AzurePostgreSqlTableDataset()
+        {
         }
 
         /// <summary> The table name of the Azure PostgreSQL database which includes both schema and table. Type: string (or Expression with resultType string). </summary>

@@ -19,7 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<LinkedService>(Properties);
             if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
@@ -35,7 +35,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             LinkedService properties = default;
-            Optional<string> name = default;
+            string name = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("properties"u8))
@@ -49,14 +49,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new LinkedServiceDebugResource(name.Value, properties);
+            return new LinkedServiceDebugResource(name, properties);
         }
 
         internal partial class LinkedServiceDebugResourceConverter : JsonConverter<LinkedServiceDebugResource>
         {
             public override void Write(Utf8JsonWriter writer, LinkedServiceDebugResource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LinkedServiceDebugResource>(model);
             }
             public override LinkedServiceDebugResource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

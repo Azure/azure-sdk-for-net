@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.FormRecognizer.DocumentAnalysis
 {
@@ -20,17 +19,17 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             {
                 return null;
             }
-            Optional<DocumentModelDetails> result = default;
+            DocumentModelDetails result = default;
             string operationId = default;
             DocumentOperationStatus status = default;
-            Optional<int> percentCompleted = default;
+            int? percentCompleted = default;
             DateTimeOffset createdDateTime = default;
             DateTimeOffset lastUpdatedDateTime = default;
             DocumentOperationKind kind = default;
             Uri resourceLocation = default;
-            Optional<string> apiVersion = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
-            Optional<JsonElement> error = default;
+            string apiVersion = default;
+            IReadOnlyDictionary<string, string> tags = default;
+            JsonElement error = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("result"u8))
@@ -106,7 +105,18 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                     continue;
                 }
             }
-            return new DocumentModelCopyToOperationDetails(operationId, status, Optional.ToNullable(percentCompleted), createdDateTime, lastUpdatedDateTime, kind, resourceLocation, apiVersion.Value, Optional.ToDictionary(tags), error, result.Value);
+            return new DocumentModelCopyToOperationDetails(
+                operationId,
+                status,
+                percentCompleted,
+                createdDateTime,
+                lastUpdatedDateTime,
+                kind,
+                resourceLocation,
+                apiVersion,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                error,
+                result);
         }
     }
 }

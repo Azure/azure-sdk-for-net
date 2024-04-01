@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryWebhookListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerRegistryWebhookData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryWebhookListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerRegistryWebhookData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ContainerRegistryWebhookData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     List<ContainerRegistryWebhookData> array = new List<ContainerRegistryWebhookData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(item));
+                        array.Add(ContainerRegistryWebhookData.DeserializeContainerRegistryWebhookData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookListResult(value ?? new ChangeTrackingList<ContainerRegistryWebhookData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryWebhookListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -11,10 +11,8 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.AppService.Models;
 
 namespace Azure.ResourceManager.AppService
@@ -431,7 +429,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteSlotInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceProcessResource.GetInstanceProcessThreadsSlot", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => ProcessThreadInfo.DeserializeProcessThreadInfo(e), _siteSlotInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceProcessResource.GetInstanceProcessThreadsSlot", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -461,7 +459,7 @@ namespace Azure.ResourceManager.AppService
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _siteSlotInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsSlotRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _siteSlotInstanceProcessWebAppsRestClient.CreateListInstanceProcessThreadsSlotNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Parent.Parent.Parent.Name, Id.Parent.Parent.Name, Id.Parent.Name, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ProcessThreadInfo.DeserializeProcessThreadInfo, _siteSlotInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceProcessResource.GetInstanceProcessThreadsSlot", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => ProcessThreadInfo.DeserializeProcessThreadInfo(e), _siteSlotInstanceProcessWebAppsClientDiagnostics, Pipeline, "SiteSlotInstanceProcessResource.GetInstanceProcessThreadsSlot", "value", "nextLink", cancellationToken);
         }
     }
 }

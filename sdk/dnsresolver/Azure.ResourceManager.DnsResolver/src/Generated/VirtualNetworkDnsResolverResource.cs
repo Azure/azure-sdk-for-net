@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Text.Json;
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -160,7 +158,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset, _dnsForwardingRulesetClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset(e), _dnsForwardingRulesetClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -191,7 +189,7 @@ namespace Azure.ResourceManager.DnsResolver
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dnsForwardingRulesetRestClient.CreateListByVirtualNetworkRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _dnsForwardingRulesetRestClient.CreateListByVirtualNetworkNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, top);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset, _dnsForwardingRulesetClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => VirtualNetworkDnsForwardingRuleset.DeserializeVirtualNetworkDnsForwardingRuleset(e), _dnsForwardingRulesetClientDiagnostics, Pipeline, "VirtualNetworkDnsResolverResource.GetDnsForwardingRulesets", "value", "nextLink", cancellationToken);
         }
     }
 }

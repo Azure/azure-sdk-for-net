@@ -14,6 +14,8 @@ clear-output-folder: true
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
+enable-bicep-serialization: true
 
 rename-mapping:
   SignalRResource: SignalR

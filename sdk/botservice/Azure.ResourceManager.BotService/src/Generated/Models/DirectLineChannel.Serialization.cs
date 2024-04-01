@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -23,14 +22,14 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineChannel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectLineChannel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectLineChannel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<DirectLineChannelProperties>(Properties, options);
             }
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
@@ -79,7 +78,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineChannel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectLineChannel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectLineChannel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,11 +93,11 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<DirectLineChannelProperties> properties = default;
+            DirectLineChannelProperties properties = default;
             string channelName = default;
-            Optional<ETag?> etag = default;
-            Optional<string> provisioningState = default;
-            Optional<AzureLocation> location = default;
+            ETag? etag = default;
+            string provisioningState = default;
+            AzureLocation? location = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -109,7 +108,7 @@ namespace Azure.ResourceManager.BotService.Models
                     {
                         continue;
                     }
-                    properties = DirectLineChannelProperties.DeserializeDirectLineChannelProperties(property.Value);
+                    properties = DirectLineChannelProperties.DeserializeDirectLineChannelProperties(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("channelName"u8))
@@ -147,7 +146,13 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DirectLineChannel(channelName, Optional.ToNullable(etag), provisioningState.Value, Optional.ToNullable(location), serializedAdditionalRawData, properties.Value);
+            return new DirectLineChannel(
+                channelName,
+                etag,
+                provisioningState,
+                location,
+                serializedAdditionalRawData,
+                properties);
         }
 
         BinaryData IPersistableModel<DirectLineChannel>.Write(ModelReaderWriterOptions options)
@@ -159,7 +164,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DirectLineChannel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectLineChannel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +180,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeDirectLineChannel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DirectLineChannel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectLineChannel)} does not support reading '{options.Format}' format.");
             }
         }
 

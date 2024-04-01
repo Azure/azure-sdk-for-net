@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> type = default;
+            string type = default;
             IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new SecurityAlertEntity(type.Value, additionalProperties);
+            return new SecurityAlertEntity(type, additionalProperties);
         }
 
         BinaryData IPersistableModel<SecurityAlertEntity>.Write(ModelReaderWriterOptions options)
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAlertEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

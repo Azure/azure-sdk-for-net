@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceRegistryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformServiceRegistryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformServiceRegistryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (options.Format != "W" && Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                writer.WriteObjectValue<AppPlatformServiceRegistryResourceRequirements>(ResourceRequests, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Instances))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Instances)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformServiceRegistryInstance>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformServiceRegistryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformServiceRegistryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformServiceRegistryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformServiceRegistryProvisioningState> provisioningState = default;
-            Optional<AppPlatformServiceRegistryResourceRequirements> resourceRequests = default;
-            Optional<IReadOnlyList<AppPlatformServiceRegistryInstance>> instances = default;
+            AppPlatformServiceRegistryProvisioningState? provisioningState = default;
+            AppPlatformServiceRegistryResourceRequirements resourceRequests = default;
+            IReadOnlyList<AppPlatformServiceRegistryInstance> instances = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformServiceRegistryResourceRequirements.DeserializeAppPlatformServiceRegistryResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("instances"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformServiceRegistryInstance> array = new List<AppPlatformServiceRegistryInstance>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformServiceRegistryInstance.DeserializeAppPlatformServiceRegistryInstance(item));
+                        array.Add(AppPlatformServiceRegistryInstance.DeserializeAppPlatformServiceRegistryInstance(item, options));
                     }
                     instances = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformServiceRegistryProperties(Optional.ToNullable(provisioningState), resourceRequests.Value, Optional.ToList(instances), serializedAdditionalRawData);
+            return new AppPlatformServiceRegistryProperties(provisioningState, resourceRequests, instances ?? new ChangeTrackingList<AppPlatformServiceRegistryInstance>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformServiceRegistryProperties>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformServiceRegistryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformServiceRegistryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformServiceRegistryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformServiceRegistryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformServiceRegistryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

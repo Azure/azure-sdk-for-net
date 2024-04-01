@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewaySslPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<ApplicationGatewaySslProtocol>> disabledSslProtocols = default;
-            Optional<ApplicationGatewaySslPolicyType> policyType = default;
-            Optional<ApplicationGatewaySslPolicyName> policyName = default;
-            Optional<IList<ApplicationGatewaySslCipherSuite>> cipherSuites = default;
-            Optional<ApplicationGatewaySslProtocol> minProtocolVersion = default;
+            IList<ApplicationGatewaySslProtocol> disabledSslProtocols = default;
+            ApplicationGatewaySslPolicyType? policyType = default;
+            ApplicationGatewaySslPolicyName? policyName = default;
+            IList<ApplicationGatewaySslCipherSuite> cipherSuites = default;
+            ApplicationGatewaySslProtocol? minProtocolVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -169,7 +169,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewaySslPolicy(Optional.ToList(disabledSslProtocols), Optional.ToNullable(policyType), Optional.ToNullable(policyName), Optional.ToList(cipherSuites), Optional.ToNullable(minProtocolVersion), serializedAdditionalRawData);
+            return new ApplicationGatewaySslPolicy(
+                disabledSslProtocols ?? new ChangeTrackingList<ApplicationGatewaySslProtocol>(),
+                policyType,
+                policyName,
+                cipherSuites ?? new ChangeTrackingList<ApplicationGatewaySslCipherSuite>(),
+                minProtocolVersion,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewaySslPolicy>.Write(ModelReaderWriterOptions options)
@@ -181,7 +187,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +203,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewaySslPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewaySslPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

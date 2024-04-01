@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecipientUserContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecipientUserContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecipientUserContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecipientUserContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecipientUserContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecipientUserContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -96,8 +96,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> userId = default;
+            SystemData systemData = default;
+            string userId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecipientUserContract(id, name, type, systemData.Value, userId.Value, serializedAdditionalRawData);
+            return new RecipientUserContract(
+                id,
+                name,
+                type,
+                systemData,
+                userId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecipientUserContract>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecipientUserContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecipientUserContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeRecipientUserContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecipientUserContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecipientUserContract)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class TarGzipReadSettings : IUtf8JsonSerializable
+    public partial class TarGzipReadSettings : IUtf8JsonSerializable, IJsonModel<TarGzipReadSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<TarGzipReadSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<TarGzipReadSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
@@ -40,13 +49,27 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static TarGzipReadSettings DeserializeTarGzipReadSettings(JsonElement element)
+        TarGzipReadSettings IJsonModel<TarGzipReadSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeTarGzipReadSettings(document.RootElement, options);
+        }
+
+        internal static TarGzipReadSettings DeserializeTarGzipReadSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<bool>> preserveCompressionFileNameAsFolder = default;
+            DataFactoryElement<bool> preserveCompressionFileNameAsFolder = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -69,7 +92,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new TarGzipReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder.Value);
+            return new TarGzipReadSettings(type, additionalProperties, preserveCompressionFileNameAsFolder);
         }
+
+        BinaryData IPersistableModel<TarGzipReadSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        TarGzipReadSettings IPersistableModel<TarGzipReadSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeTarGzipReadSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<TarGzipReadSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

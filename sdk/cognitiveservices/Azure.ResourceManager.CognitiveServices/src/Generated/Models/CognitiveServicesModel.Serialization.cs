@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,14 +23,14 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesModel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
-                writer.WriteObjectValue(Model);
+                writer.WriteObjectValue<CognitiveServicesAccountModel>(Model, options);
             }
             if (Optional.IsDefined(Kind))
             {
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<CognitiveServicesModel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CognitiveServicesModel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CognitiveServicesModel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +80,9 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 return null;
             }
-            Optional<CognitiveServicesAccountModel> model = default;
-            Optional<string> kind = default;
-            Optional<string> skuName = default;
+            CognitiveServicesAccountModel model = default;
+            string kind = default;
+            string skuName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +93,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                     {
                         continue;
                     }
-                    model = CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(property.Value);
+                    model = CognitiveServicesAccountModel.DeserializeCognitiveServicesAccountModel(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("kind"u8))
@@ -111,7 +112,80 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CognitiveServicesModel(model.Value, kind.Value, skuName.Value, serializedAdditionalRawData);
+            return new CognitiveServicesModel(model, kind, skuName, serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Model), out propertyOverride);
+            if (Optional.IsDefined(Model) || hasPropertyOverride)
+            {
+                builder.Append("  model: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, Model, options, 2, false, "  model: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SkuName), out propertyOverride);
+            if (Optional.IsDefined(SkuName) || hasPropertyOverride)
+            {
+                builder.Append("  skuName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (SkuName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{SkuName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{SkuName}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<CognitiveServicesModel>.Write(ModelReaderWriterOptions options)
@@ -122,8 +196,10 @@ namespace Azure.ResourceManager.CognitiveServices.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesModel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +215,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
                         return DeserializeCognitiveServicesModel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CognitiveServicesModel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CognitiveServicesModel)} does not support reading '{options.Format}' format.");
             }
         }
 

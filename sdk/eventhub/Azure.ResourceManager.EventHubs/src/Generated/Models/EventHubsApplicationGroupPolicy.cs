@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventHubs.Models
 {
@@ -17,6 +17,38 @@ namespace Azure.ResourceManager.EventHubs.Models
     /// </summary>
     public abstract partial class EventHubsApplicationGroupPolicy
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private protected IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -30,13 +62,21 @@ namespace Azure.ResourceManager.EventHubs.Models
         /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/>. </summary>
         /// <param name="name"> The Name of this policy. </param>
         /// <param name="applicationGroupPolicyType"> Application Group Policy types. </param>
-        internal EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal EventHubsApplicationGroupPolicy(string name, ApplicationGroupPolicyType applicationGroupPolicyType, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             ApplicationGroupPolicyType = applicationGroupPolicyType;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="EventHubsApplicationGroupPolicy"/> for deserialization. </summary>
+        internal EventHubsApplicationGroupPolicy()
+        {
         }
 
         /// <summary> The Name of this policy. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> Application Group Policy types. </summary>
         internal ApplicationGroupPolicyType ApplicationGroupPolicyType { get; set; }

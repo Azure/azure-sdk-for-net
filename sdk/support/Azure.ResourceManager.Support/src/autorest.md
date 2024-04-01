@@ -7,8 +7,8 @@ azure-arm: true
 csharp: true
 library-name: Support
 namespace: Azure.ResourceManager.Support
-require: https://github.com/Azure/azure-rest-api-specs/blob/e0583a2cb882c7c6d88d455bd20bacf0de3a82d4/specification/support/resource-manager/readme.md
-#tag: package-preview-2022-09
+require: https://github.com/Azure/azure-rest-api-specs/blob/e2090ece1cb26010da2af3b244e5d2b9c1cae3b3/specification/support/resource-manager/readme.md
+#tag: package-preview-2023-06
 output-folder: $(this-folder)/Generated
 clear-output-folder: true
 sample-gen:
@@ -17,8 +17,9 @@ sample-gen:
 skip-csproj: true
 modelerfour:
   flatten-payloads: false
+use-model-reader-writer: true
 
-#mgmt-debug: 
+#mgmt-debug:
 #  show-serialized-names: true
 
 request-path-to-resource-name:
@@ -87,8 +88,27 @@ rename-mapping:
   Consent: AdvancedDiagnosticConsent
   MessageProperties: ChatTranscriptMessageProperties
   UploadFile: UploadFileContent
+  LookUpResourceIdResponse: LookUpResourceIdResult
+  LookUpResourceIdResponse.resourceId: -|arm-id
+  ServiceClassificationRequest: ServiceClassificationContent
+  ResourceType: SupportResourceTypeName
+  LookUpResourceIdRequest.type: ResourceType
+  ProblemClassificationsClassificationInput: ServiceProblemClassificationContent
+  ProblemClassificationsClassificationOutput: ServiceProblemClassificationListResult
+  ProblemClassificationsClassificationResult: ServiceProblemClassificationResult
+  ProblemClassificationsClassificationResult.serviceId: -|arm-id
+  ProblemClassificationsClassificationResult.relatedService.serviceId: RelatedServiceId
+  ClassificationService.resourceTypes: -|resource-type
+
+models-to-treat-empty-string-as-null:
+  - LookUpResourceIdResult
+  - ServiceProblemClassificationResult
+  - ClassificationService
 
 override-operation-name:
   Communications_CheckNameAvailability: CheckCommunicationNameAvailability
   SupportTickets_CheckNameAvailability: CheckSupportTicketNameAvailability
+  LookUpResourceId_Post: LookUpResourceId
+  ProblemClassificationsNoSubscription_classifyProblems: ClassifyServiceProblem
+  ProblemClassifications_classifyProblems: ClassifyServiceProblem
 ```

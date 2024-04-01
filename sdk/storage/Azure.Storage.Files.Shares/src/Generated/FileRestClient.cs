@@ -11,7 +11,6 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Files.Shares.Models;
@@ -35,7 +34,7 @@ namespace Azure.Storage.Files.Shares
         /// <param name="clientDiagnostics"> The handler for diagnostic messaging in the client. </param>
         /// <param name="pipeline"> The HTTP pipeline for sending and receiving REST requests and responses. </param>
         /// <param name="url"> The URL of the service account, share, directory or file that is the target of the desired operation. </param>
-        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-02-04". </param>
+        /// <param name="version"> Specifies the version of the operation to use for this request. The default value is "2024-05-04". </param>
         /// <param name="fileRangeWriteFromUrl"> Only update is supported: - Update: Writes the bytes downloaded from the source url into the specified range. The default value is "update". </param>
         /// <param name="allowTrailingDot"> If true, the trailing dot will not be trimmed from the target URI. </param>
         /// <param name="fileRequestIntent"> Valid value is backup. </param>
@@ -1173,7 +1172,7 @@ namespace Azure.Storage.Files.Shares
             }
         }
 
-        internal HttpMessage CreateGetRangeListRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, ShareFileRequestConditions leaseAccessConditions)
+        internal HttpMessage CreateGetRangeListRequest(string sharesnapshot, string prevsharesnapshot, int? timeout, string range, bool? supportRename, ShareFileRequestConditions leaseAccessConditions)
         {
             var message = _pipeline.CreateMessage();
             var request = message.Request;
@@ -1211,6 +1210,10 @@ namespace Azure.Storage.Files.Shares
             {
                 request.Headers.Add("x-ms-file-request-intent", _fileRequestIntent.Value.ToString());
             }
+            if (supportRename != null)
+            {
+                request.Headers.Add("x-ms-file-support-rename", supportRename.Value);
+            }
             request.Headers.Add("Accept", "application/xml");
             return message;
         }
@@ -1220,11 +1223,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed. If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response. The default value is false. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListAsync(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public async Task<ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders>> GetRangeListAsync(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseAccessConditions);
+            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, supportRename, leaseAccessConditions);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
             var headers = new FileGetRangeListHeaders(message.Response);
             switch (message.Response.Status)
@@ -1249,11 +1253,12 @@ namespace Azure.Storage.Files.Shares
         /// <param name="prevsharesnapshot"> The previous snapshot parameter is an opaque DateTime value that, when present, specifies the previous snapshot. </param>
         /// <param name="timeout"> The timeout parameter is expressed in seconds. For more information, see &lt;a href="https://docs.microsoft.com/en-us/rest/api/storageservices/Setting-Timeouts-for-File-Service-Operations?redirectedfrom=MSDN"&gt;Setting Timeouts for File Service Operations.&lt;/a&gt;. </param>
         /// <param name="range"> Specifies the range of bytes over which to list ranges, inclusively. </param>
+        /// <param name="supportRename"> This header is allowed only when PrevShareSnapshot query parameter is set. Determines whether the changed ranges for a file that has been renamed or moved between the target snapshot (or the live file) and the previous snapshot should be listed. If the value is true, the valid changed ranges for the file will be returned. If the value is false, the operation will result in a failure with 409 (Conflict) response. The default value is false. </param>
         /// <param name="leaseAccessConditions"> Parameter group. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
-        public ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> GetRangeList(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
+        public ResponseWithHeaders<ShareFileRangeList, FileGetRangeListHeaders> GetRangeList(string sharesnapshot = null, string prevsharesnapshot = null, int? timeout = null, string range = null, bool? supportRename = null, ShareFileRequestConditions leaseAccessConditions = null, CancellationToken cancellationToken = default)
         {
-            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, leaseAccessConditions);
+            using var message = CreateGetRangeListRequest(sharesnapshot, prevsharesnapshot, timeout, range, supportRename, leaseAccessConditions);
             _pipeline.Send(message, cancellationToken);
             var headers = new FileGetRangeListHeaders(message.Response);
             switch (message.Response.Status)

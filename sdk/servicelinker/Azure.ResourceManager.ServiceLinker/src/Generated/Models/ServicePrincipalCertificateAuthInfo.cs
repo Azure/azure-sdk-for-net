@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ServiceLinker.Models
 {
@@ -31,15 +31,21 @@ namespace Azure.ResourceManager.ServiceLinker.Models
 
         /// <summary> Initializes a new instance of <see cref="ServicePrincipalCertificateAuthInfo"/>. </summary>
         /// <param name="authType"> The authentication type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="clientId"> Application clientId for servicePrincipal auth. </param>
         /// <param name="principalId"> Principal Id for servicePrincipal auth. </param>
         /// <param name="certificate"> ServicePrincipal certificate for servicePrincipal auth. </param>
-        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, string clientId, Guid principalId, string certificate) : base(authType)
+        internal ServicePrincipalCertificateAuthInfo(LinkerAuthType authType, IDictionary<string, BinaryData> serializedAdditionalRawData, string clientId, Guid principalId, string certificate) : base(authType, serializedAdditionalRawData)
         {
             ClientId = clientId;
             PrincipalId = principalId;
             Certificate = certificate;
             AuthType = authType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ServicePrincipalCertificateAuthInfo"/> for deserialization. </summary>
+        internal ServicePrincipalCertificateAuthInfo()
+        {
         }
 
         /// <summary> Application clientId for servicePrincipal auth. </summary>

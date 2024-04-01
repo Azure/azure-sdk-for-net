@@ -1,6 +1,6 @@
 # Release History
 
-## 1.3.0-beta.5 (Unreleased)
+## 1.3.0-beta.7 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,19 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.3.0-beta.6 (2024-03-26)
+
+### Features Added
+
+- Added experimental Bicep serialization.
+
+## 1.3.0-beta.5 (2024-02-08)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added TLS 1.3 to list of valid TLS versions. Also created custom classes needed since the type of MinimalTlsVersion was changed from String to Enum.
 
 ## 1.3.0-beta.4 (2023-11-21)
 

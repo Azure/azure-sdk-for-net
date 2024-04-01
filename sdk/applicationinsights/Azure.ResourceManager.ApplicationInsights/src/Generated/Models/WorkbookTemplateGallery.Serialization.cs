@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkbookTemplateGallery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +90,11 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> category = default;
-            Optional<string> type = default;
-            Optional<int> order = default;
-            Optional<string> resourceType = default;
+            string name = default;
+            string category = default;
+            string type = default;
+            int? order = default;
+            string resourceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -133,7 +134,130 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WorkbookTemplateGallery(name.Value, category.Value, type.Value, Optional.ToNullable(order), resourceType.Value, serializedAdditionalRawData);
+            return new WorkbookTemplateGallery(
+                name,
+                category,
+                type,
+                order,
+                resourceType,
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Category), out propertyOverride);
+            if (Optional.IsDefined(Category) || hasPropertyOverride)
+            {
+                builder.Append("  category: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Category.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Category}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Category}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WorkbookTemplateGalleryType), out propertyOverride);
+            if (Optional.IsDefined(WorkbookTemplateGalleryType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (WorkbookTemplateGalleryType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{WorkbookTemplateGalleryType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{WorkbookTemplateGalleryType}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Order), out propertyOverride);
+            if (Optional.IsDefined(Order) || hasPropertyOverride)
+            {
+                builder.Append("  order: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{Order.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceType), out propertyOverride);
+            if (Optional.IsDefined(ResourceType) || hasPropertyOverride)
+            {
+                builder.Append("  resourceType: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ResourceType.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ResourceType}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ResourceType}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<WorkbookTemplateGallery>.Write(ModelReaderWriterOptions options)
@@ -144,8 +268,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +287,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                         return DeserializeWorkbookTemplateGallery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkbookTemplateGallery)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerDiskJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 writer.WriteStartArray();
                 foreach (var item in DiskSecrets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxDiskSecret>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
             if (options.Format != "W" && Optional.IsDefined(DataCenterAccessSecurityCode))
             {
                 writer.WritePropertyName("dcAccessSecurityCode"u8);
-                writer.WriteObjectValue(DataCenterAccessSecurityCode);
+                writer.WriteObjectValue<DataCenterAccessSecurityCode>(DataCenterAccessSecurityCode, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Error))
             {
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerDiskJobSecrets>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,11 +91,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<DataBoxDiskSecret>> diskSecrets = default;
-            Optional<string> carrierAccountNumber = default;
+            IReadOnlyList<DataBoxDiskSecret> diskSecrets = default;
+            string carrierAccountNumber = default;
             DataBoxOrderType jobSecretsType = default;
-            Optional<DataCenterAccessSecurityCode> dcAccessSecurityCode = default;
-            Optional<ResponseError> error = default;
+            DataCenterAccessSecurityCode dcAccessSecurityCode = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     List<DataBoxDiskSecret> array = new List<DataBoxDiskSecret>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item));
+                        array.Add(DataBoxDiskSecret.DeserializeDataBoxDiskSecret(item, options));
                     }
                     diskSecrets = array;
                     continue;
@@ -131,7 +130,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value);
+                    dcAccessSecurityCode = DataCenterAccessSecurityCode.DeserializeDataCenterAccessSecurityCode(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("error"u8))
@@ -149,7 +148,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CustomerDiskJobSecrets(jobSecretsType, dcAccessSecurityCode.Value, error.Value, serializedAdditionalRawData, Optional.ToList(diskSecrets), carrierAccountNumber.Value);
+            return new CustomerDiskJobSecrets(
+                jobSecretsType,
+                dcAccessSecurityCode,
+                error,
+                serializedAdditionalRawData,
+                diskSecrets ?? new ChangeTrackingList<DataBoxDiskSecret>(),
+                carrierAccountNumber);
         }
 
         BinaryData IPersistableModel<CustomerDiskJobSecrets>.Write(ModelReaderWriterOptions options)
@@ -161,7 +166,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +182,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeCustomerDiskJobSecrets(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerDiskJobSecrets)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
-                writer.WriteObjectValue(Timeout);
+                writer.WriteObjectValue<object>(Timeout);
             }
             if (Optional.IsDefined(Retry))
             {
                 writer.WritePropertyName("retry"u8);
-                writer.WriteObjectValue(Retry);
+                writer.WriteObjectValue<object>(Retry);
             }
             if (Optional.IsDefined(RetryIntervalInSeconds))
             {
@@ -47,7 +47,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -58,11 +58,11 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> timeout = default;
-            Optional<object> retry = default;
-            Optional<int> retryIntervalInSeconds = default;
-            Optional<bool> secureInput = default;
-            Optional<bool> secureOutput = default;
+            object timeout = default;
+            object retry = default;
+            int? retryIntervalInSeconds = default;
+            bool? secureInput = default;
+            bool? secureOutput = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -115,14 +115,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ActivityPolicy(timeout.Value, retry.Value, Optional.ToNullable(retryIntervalInSeconds), Optional.ToNullable(secureInput), Optional.ToNullable(secureOutput), additionalProperties);
+            return new ActivityPolicy(
+                timeout,
+                retry,
+                retryIntervalInSeconds,
+                secureInput,
+                secureOutput,
+                additionalProperties);
         }
 
         internal partial class ActivityPolicyConverter : JsonConverter<ActivityPolicy>
         {
             public override void Write(Utf8JsonWriter writer, ActivityPolicy model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ActivityPolicy>(model);
             }
             public override ActivityPolicy Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

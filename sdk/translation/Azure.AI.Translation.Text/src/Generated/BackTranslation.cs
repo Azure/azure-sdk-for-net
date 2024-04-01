@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.Translation.Text
 {
     /// <summary> Back Translation. </summary>
     public partial class BackTranslation
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="BackTranslation"/>. </summary>
         /// <param name="normalizedText">
         /// A string giving the normalized form of the source term that is a back-translation of the target.
@@ -45,6 +77,43 @@ namespace Azure.AI.Translation.Text
             DisplayText = displayText;
             NumExamples = numExamples;
             FrequencyCount = frequencyCount;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackTranslation"/>. </summary>
+        /// <param name="normalizedText">
+        /// A string giving the normalized form of the source term that is a back-translation of the target.
+        /// This value should be used as input to lookup examples.
+        /// </param>
+        /// <param name="displayText">
+        /// A string giving the source term that is a back-translation of the target in a form best
+        /// suited for end-user display.
+        /// </param>
+        /// <param name="numExamples">
+        /// An integer representing the number of examples that are available for this translation pair.
+        /// Actual examples must be retrieved with a separate call to lookup examples. The number is mostly
+        /// intended to facilitate display in a UX. For example, a user interface may add a hyperlink
+        /// to the back-translation if the number of examples is greater than zero and show the back-translation
+        /// as plain text if there are no examples. Note that the actual number of examples returned
+        /// by a call to lookup examples may be less than numExamples, because additional filtering may be
+        /// applied on the fly to remove "bad" examples.
+        /// </param>
+        /// <param name="frequencyCount">
+        /// An integer representing the frequency of this translation pair in the data. The main purpose of this
+        /// field is to provide a user interface with a means to sort back-translations so the most frequent terms are first.
+        /// </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal BackTranslation(string normalizedText, string displayText, int numExamples, int frequencyCount, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            NormalizedText = normalizedText;
+            DisplayText = displayText;
+            NumExamples = numExamples;
+            FrequencyCount = frequencyCount;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="BackTranslation"/> for deserialization. </summary>
+        internal BackTranslation()
+        {
         }
 
         /// <summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeApiErrorBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeApiErrorBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeApiErrorBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeApiErrorBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeApiErrorBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeApiErrorBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> target = default;
-            Optional<string> message = default;
+            string code = default;
+            string target = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeApiErrorBase(code.Value, target.Value, message.Value, serializedAdditionalRawData);
+            return new ComputeApiErrorBase(code, target, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeApiErrorBase>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeApiErrorBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeApiErrorBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputeApiErrorBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeApiErrorBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeApiErrorBase)} does not support reading '{options.Format}' format.");
             }
         }
 

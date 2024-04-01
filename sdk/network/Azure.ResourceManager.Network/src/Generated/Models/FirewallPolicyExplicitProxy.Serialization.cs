@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyExplicitProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<bool?> enableExplicitProxy = default;
-            Optional<int> httpPort = default;
-            Optional<int> httpsPort = default;
-            Optional<bool?> enablePacFile = default;
-            Optional<int> pacFilePort = default;
-            Optional<string> pacFile = default;
+            bool? enableExplicitProxy = default;
+            int? httpPort = default;
+            int? httpsPort = default;
+            bool? enablePacFile = default;
+            int? pacFilePort = default;
+            string pacFile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -176,7 +176,14 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallPolicyExplicitProxy(Optional.ToNullable(enableExplicitProxy), Optional.ToNullable(httpPort), Optional.ToNullable(httpsPort), Optional.ToNullable(enablePacFile), Optional.ToNullable(pacFilePort), pacFile.Value, serializedAdditionalRawData);
+            return new FirewallPolicyExplicitProxy(
+                enableExplicitProxy,
+                httpPort,
+                httpsPort,
+                enablePacFile,
+                pacFilePort,
+                pacFile,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallPolicyExplicitProxy>.Write(ModelReaderWriterOptions options)
@@ -188,7 +195,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +211,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyExplicitProxy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyExplicitProxy)} does not support reading '{options.Format}' format.");
             }
         }
 

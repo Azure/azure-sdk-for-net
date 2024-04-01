@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.NetworkCloud.Tests.ScenarioTests
                 (
                     TestEnvironment.VMImageRepoPwd,
                     TestEnvironment.VMImageRepoUri,
-                    TestEnvironment.VMImageRepoUser
-                ),
+                    TestEnvironment.VMImageRepoUser,
+                    null),
                 Tags =
                 {
                     ["key1"] = "myvalue1",

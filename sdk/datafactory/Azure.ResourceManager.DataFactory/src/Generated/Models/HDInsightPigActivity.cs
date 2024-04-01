@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -44,7 +43,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="scriptPath"> Script path. Type: string (or Expression with resultType string). </param>
         /// <param name="scriptLinkedService"> Script linked service reference. </param>
         /// <param name="defines"> Allows user to specify defines for Pig job request. </param>
-        internal HDInsightPigActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, BinaryData arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
+        internal HDInsightPigActivity(string name, string activityType, string description, PipelineActivityState? state, ActivityOnInactiveMarkAs? onInactiveMarkAs, IList<PipelineActivityDependency> dependsOn, IList<PipelineActivityUserProperty> userProperties, IDictionary<string, BinaryData> additionalProperties, DataFactoryLinkedServiceReference linkedServiceName, PipelineActivityPolicy policy, IList<DataFactoryLinkedServiceReference> storageLinkedServices, DataFactoryElement<IList<string>> arguments, HDInsightActivityDebugInfoOptionSetting? getDebugInfo, DataFactoryElement<string> scriptPath, DataFactoryLinkedServiceReference scriptLinkedService, IDictionary<string, BinaryData> defines) : base(name, activityType, description, state, onInactiveMarkAs, dependsOn, userProperties, additionalProperties, linkedServiceName, policy)
         {
             StorageLinkedServices = storageLinkedServices;
             Arguments = arguments;
@@ -55,39 +54,15 @@ namespace Azure.ResourceManager.DataFactory.Models
             ActivityType = activityType ?? "HDInsightPig";
         }
 
+        /// <summary> Initializes a new instance of <see cref="HDInsightPigActivity"/> for deserialization. </summary>
+        internal HDInsightPigActivity()
+        {
+        }
+
         /// <summary> Storage linked service references. </summary>
         public IList<DataFactoryLinkedServiceReference> StorageLinkedServices { get; }
-        /// <summary>
-        /// User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array).
-        /// <para>
-        /// To assign an object to this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
-        /// </para>
-        /// <para>
-        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
-        /// </para>
-        /// <para>
-        /// Examples:
-        /// <list type="bullet">
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson("foo")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("\"foo\"")</term>
-        /// <description>Creates a payload of "foo".</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// <item>
-        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
-        /// <description>Creates a payload of { "key": "value" }.</description>
-        /// </item>
-        /// </list>
-        /// </para>
-        /// </summary>
-        public BinaryData Arguments { get; set; }
+        /// <summary> User specified arguments to HDInsightActivity. Type: array (or Expression with resultType array). </summary>
+        public DataFactoryElement<IList<string>> Arguments { get; set; }
         /// <summary> Debug info option. </summary>
         public HDInsightActivityDebugInfoOptionSetting? GetDebugInfo { get; set; }
         /// <summary> Script path. Type: string (or Expression with resultType string). </summary>

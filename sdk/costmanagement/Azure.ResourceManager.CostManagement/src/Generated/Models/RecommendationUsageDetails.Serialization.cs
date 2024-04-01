@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendationUsageDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecommendationUsageDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitRecommendationUsageGrain> usageGrain = default;
-            Optional<IReadOnlyList<decimal>> charges = default;
+            BenefitRecommendationUsageGrain? usageGrain = default;
+            IReadOnlyList<decimal> charges = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RecommendationUsageDetails(Optional.ToNullable(usageGrain), Optional.ToList(charges), serializedAdditionalRawData);
+            return new RecommendationUsageDetails(usageGrain, charges ?? new ChangeTrackingList<decimal>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RecommendationUsageDetails>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeRecommendationUsageDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecommendationUsageDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

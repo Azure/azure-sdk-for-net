@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Monitor.Models;
 using Azure.ResourceManager.Resources;
 
@@ -445,7 +443,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual AsyncPageable<MonitorIncident> GetAlertRuleIncidentsAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleIncidentsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, MonitorIncident.DeserializeMonitorIncident, _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => MonitorIncident.DeserializeMonitorIncident(e), _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -470,7 +468,7 @@ namespace Azure.ResourceManager.Monitor
         public virtual Pageable<MonitorIncident> GetAlertRuleIncidents(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _alertRuleIncidentsRestClient.CreateListByAlertRuleRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, MonitorIncident.DeserializeMonitorIncident, _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => MonitorIncident.DeserializeMonitorIncident(e), _alertRuleIncidentsClientDiagnostics, Pipeline, "AlertRuleResource.GetAlertRuleIncidents", "value", null, cancellationToken);
         }
 
         /// <summary>

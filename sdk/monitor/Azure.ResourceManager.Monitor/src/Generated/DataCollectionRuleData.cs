@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Monitor.Models;
@@ -19,6 +19,38 @@ namespace Azure.ResourceManager.Monitor
     /// </summary>
     public partial class DataCollectionRuleData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataCollectionRuleData"/>. </summary>
         /// <param name="location"> The location. </param>
         public DataCollectionRuleData(AzureLocation location) : base(location)
@@ -49,7 +81,8 @@ namespace Azure.ResourceManager.Monitor
         /// <param name="destinations"> The specification of destinations. </param>
         /// <param name="dataFlows"> The specification of data flows. </param>
         /// <param name="provisioningState"> The resource provisioning state. </param>
-        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataCollectionRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, DataCollectionRuleResourceKind? kind, ManagedServiceIdentity identity, ETag? etag, string description, string immutableId, ResourceIdentifier dataCollectionEndpointId, DataCollectionRuleMetadata metadata, IDictionary<string, DataStreamDeclaration> streamDeclarations, DataCollectionRuleDataSources dataSources, DataCollectionRuleDestinations destinations, IList<DataFlow> dataFlows, DataCollectionRuleProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             Kind = kind;
             Identity = identity;
@@ -63,6 +96,12 @@ namespace Azure.ResourceManager.Monitor
             Destinations = destinations;
             DataFlows = dataFlows;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataCollectionRuleData"/> for deserialization. </summary>
+        internal DataCollectionRuleData()
+        {
         }
 
         /// <summary> The kind of the resource. </summary>

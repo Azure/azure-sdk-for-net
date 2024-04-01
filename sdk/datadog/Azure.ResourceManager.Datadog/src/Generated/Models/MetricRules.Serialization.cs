@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilteringTag>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<IList<FilteringTag>> filteringTags = default;
+            IList<FilteringTag> filteringTags = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     List<FilteringTag> array = new List<FilteringTag>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(FilteringTag.DeserializeFilteringTag(item));
+                        array.Add(FilteringTag.DeserializeFilteringTag(item, options));
                     }
                     filteringTags = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetricRules(Optional.ToList(filteringTags), serializedAdditionalRawData);
+            return new MetricRules(filteringTags ?? new ChangeTrackingList<FilteringTag>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetricRules>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeMetricRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricRules)} does not support reading '{options.Format}' format.");
             }
         }
 

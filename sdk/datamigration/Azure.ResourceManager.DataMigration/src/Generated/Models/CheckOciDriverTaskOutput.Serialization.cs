@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckOciDriverTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckOciDriverTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckOciDriverTaskOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(InstalledDriver))
             {
                 writer.WritePropertyName("installedDriver"u8);
-                writer.WriteObjectValue(InstalledDriver);
+                writer.WriteObjectValue<OracleOciDriverInfo>(InstalledDriver, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ValidationErrors))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ValidationErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckOciDriverTaskOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckOciDriverTaskOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckOciDriverTaskOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<OracleOciDriverInfo> installedDriver = default;
-            Optional<IReadOnlyList<ReportableException>> validationErrors = default;
+            OracleOciDriverInfo installedDriver = default;
+            IReadOnlyList<ReportableException> validationErrors = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    installedDriver = OracleOciDriverInfo.DeserializeOracleOciDriverInfo(property.Value);
+                    installedDriver = OracleOciDriverInfo.DeserializeOracleOciDriverInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("validationErrors"u8))
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     validationErrors = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckOciDriverTaskOutput(installedDriver.Value, Optional.ToList(validationErrors), serializedAdditionalRawData);
+            return new CheckOciDriverTaskOutput(installedDriver, validationErrors ?? new ChangeTrackingList<ReportableException>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckOciDriverTaskOutput>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckOciDriverTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckOciDriverTaskOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeCheckOciDriverTaskOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckOciDriverTaskOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckOciDriverTaskOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

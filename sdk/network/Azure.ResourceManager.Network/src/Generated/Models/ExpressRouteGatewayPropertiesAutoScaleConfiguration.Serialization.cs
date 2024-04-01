@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteGatewayPropertiesAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteGatewayPropertiesAutoScaleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteGatewayPropertiesAutoScaleConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
-                writer.WriteObjectValue(Bounds);
+                writer.WriteObjectValue<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds>(Bounds, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteGatewayPropertiesAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteGatewayPropertiesAutoScaleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteGatewayPropertiesAutoScaleConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds> bounds = default;
+            ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds bounds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bounds = ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds.DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(property.Value);
+                    bounds = ExpressRouteGatewayPropertiesAutoScaleConfigurationBounds.DeserializeExpressRouteGatewayPropertiesAutoScaleConfigurationBounds(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteGatewayPropertiesAutoScaleConfiguration(bounds.Value, serializedAdditionalRawData);
+            return new ExpressRouteGatewayPropertiesAutoScaleConfiguration(bounds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteGatewayPropertiesAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteGatewayPropertiesAutoScaleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteGatewayPropertiesAutoScaleConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteGatewayPropertiesAutoScaleConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteGatewayPropertiesAutoScaleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteGatewayPropertiesAutoScaleConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

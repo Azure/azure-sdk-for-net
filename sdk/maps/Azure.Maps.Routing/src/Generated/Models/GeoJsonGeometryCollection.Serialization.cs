@@ -7,6 +7,7 @@
 
 using System.Text.Json;
 using Azure.Core;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Routing.Models
 {
@@ -19,7 +20,7 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStartArray();
             foreach (var item in Geometries)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<GeoJsonGeometry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("type"u8);

@@ -18,7 +18,7 @@ namespace Azure.AI.TextAnalytics.Models
             if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<HealthcareTaskParameters>(Parameters);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
@@ -36,9 +36,9 @@ namespace Azure.AI.TextAnalytics.Models
             {
                 return null;
             }
-            Optional<HealthcareTaskParameters> parameters = default;
+            HealthcareTaskParameters parameters = default;
             AnalyzeTextLROTaskKind kind = default;
-            Optional<string> taskName = default;
+            string taskName = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -61,7 +61,7 @@ namespace Azure.AI.TextAnalytics.Models
                     continue;
                 }
             }
-            return new HealthcareLROTask(taskName.Value, kind, parameters.Value);
+            return new HealthcareLROTask(taskName, kind, parameters);
         }
     }
 }

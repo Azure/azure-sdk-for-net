@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             int ruleId = default;
-            Optional<string> ruleIdString = default;
-            Optional<ApplicationGatewayWafRuleStateType> state = default;
-            Optional<ApplicationGatewayWafRuleActionType> action = default;
-            Optional<string> description = default;
+            string ruleIdString = default;
+            ApplicationGatewayWafRuleStateType? state = default;
+            ApplicationGatewayWafRuleActionType? action = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallRule(ruleId, ruleIdString.Value, Optional.ToNullable(state), Optional.ToNullable(action), description.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayFirewallRule(
+                ruleId,
+                ruleIdString,
+                state,
+                action,
+                description,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallRule>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayFirewallRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRule)} does not support reading '{options.Format}' format.");
             }
         }
 

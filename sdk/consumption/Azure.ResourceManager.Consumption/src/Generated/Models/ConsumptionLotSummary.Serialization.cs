@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,12 +57,12 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmount))
             {
                 writer.WritePropertyName("originalAmount"u8);
-                writer.WriteObjectValue(OriginalAmount);
+                writer.WriteObjectValue<ConsumptionAmount>(OriginalAmount, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalance))
             {
                 writer.WritePropertyName("closedBalance"u8);
-                writer.WriteObjectValue(ClosedBalance);
+                writer.WriteObjectValue<ConsumptionAmount>(ClosedBalance, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
@@ -108,17 +107,17 @@ namespace Azure.ResourceManager.Consumption.Models
             if (options.Format != "W" && Optional.IsDefined(OriginalAmountInBillingCurrency))
             {
                 writer.WritePropertyName("originalAmountInBillingCurrency"u8);
-                writer.WriteObjectValue(OriginalAmountInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(OriginalAmountInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ClosedBalanceInBillingCurrency))
             {
                 writer.WritePropertyName("closedBalanceInBillingCurrency"u8);
-                writer.WriteObjectValue(ClosedBalanceInBillingCurrency);
+                writer.WriteObjectValue<ConsumptionAmountWithExchangeRate>(ClosedBalanceInBillingCurrency, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Reseller))
             {
                 writer.WritePropertyName("reseller"u8);
-                writer.WriteObjectValue(Reseller);
+                writer.WriteObjectValue<ConsumptionReseller>(Reseller, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionLotSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,24 +158,24 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> eTag = default;
+            ETag? eTag = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ConsumptionAmount> originalAmount = default;
-            Optional<ConsumptionAmount> closedBalance = default;
-            Optional<ConsumptionLotSource> source = default;
-            Optional<DateTimeOffset> startDate = default;
-            Optional<DateTimeOffset> expirationDate = default;
-            Optional<string> poNumber = default;
-            Optional<DateTimeOffset> purchasedDate = default;
-            Optional<ConsumptionLotStatus> status = default;
-            Optional<string> creditCurrency = default;
-            Optional<string> billingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> originalAmountInBillingCurrency = default;
-            Optional<ConsumptionAmountWithExchangeRate> closedBalanceInBillingCurrency = default;
-            Optional<ConsumptionReseller> reseller = default;
+            SystemData systemData = default;
+            ConsumptionAmount originalAmount = default;
+            ConsumptionAmount closedBalance = default;
+            ConsumptionLotSource? source = default;
+            DateTimeOffset? startDate = default;
+            DateTimeOffset? expirationDate = default;
+            string poNumber = default;
+            DateTimeOffset? purchasedDate = default;
+            ConsumptionLotStatus? status = default;
+            string creditCurrency = default;
+            string billingCurrency = default;
+            ConsumptionAmountWithExchangeRate originalAmountInBillingCurrency = default;
+            ConsumptionAmountWithExchangeRate closedBalanceInBillingCurrency = default;
+            ConsumptionReseller reseller = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -229,7 +228,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            originalAmount = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            originalAmount = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("closedBalance"u8))
@@ -238,7 +237,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value);
+                            closedBalance = ConsumptionAmount.DeserializeConsumptionAmount(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("source"u8))
@@ -307,7 +306,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            originalAmountInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            originalAmountInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("closedBalanceInBillingCurrency"u8))
@@ -316,7 +315,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value);
+                            closedBalanceInBillingCurrency = ConsumptionAmountWithExchangeRate.DeserializeConsumptionAmountWithExchangeRate(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("reseller"u8))
@@ -325,7 +324,7 @@ namespace Azure.ResourceManager.Consumption.Models
                             {
                                 continue;
                             }
-                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value);
+                            reseller = ConsumptionReseller.DeserializeConsumptionReseller(property0.Value, options);
                             continue;
                         }
                     }
@@ -337,7 +336,26 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionLotSummary(id, name, type, systemData.Value, originalAmount.Value, closedBalance.Value, Optional.ToNullable(source), Optional.ToNullable(startDate), Optional.ToNullable(expirationDate), poNumber.Value, Optional.ToNullable(purchasedDate), Optional.ToNullable(status), creditCurrency.Value, billingCurrency.Value, originalAmountInBillingCurrency.Value, closedBalanceInBillingCurrency.Value, reseller.Value, Optional.ToNullable(eTag), serializedAdditionalRawData);
+            return new ConsumptionLotSummary(
+                id,
+                name,
+                type,
+                systemData,
+                originalAmount,
+                closedBalance,
+                source,
+                startDate,
+                expirationDate,
+                poNumber,
+                purchasedDate,
+                status,
+                creditCurrency,
+                billingCurrency,
+                originalAmountInBillingCurrency,
+                closedBalanceInBillingCurrency,
+                reseller,
+                eTag,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionLotSummary>.Write(ModelReaderWriterOptions options)
@@ -349,7 +367,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -365,7 +383,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionLotSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionLotSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

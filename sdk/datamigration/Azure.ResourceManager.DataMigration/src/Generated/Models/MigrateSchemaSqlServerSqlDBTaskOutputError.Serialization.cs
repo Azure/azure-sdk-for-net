@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,9 +81,9 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> commandText = default;
-            Optional<string> errorText = default;
-            Optional<string> id = default;
+            string commandText = default;
+            string errorText = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSchemaSqlServerSqlDBTaskOutputError(id.Value, resultType, serializedAdditionalRawData, commandText.Value, errorText.Value);
+            return new MigrateSchemaSqlServerSqlDBTaskOutputError(id, resultType, serializedAdditionalRawData, commandText, errorText);
         }
 
         BinaryData IPersistableModel<MigrateSchemaSqlServerSqlDBTaskOutputError>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSchemaSqlServerSqlDBTaskOutputError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSchemaSqlServerSqlDBTaskOutputError)} does not support reading '{options.Format}' format.");
             }
         }
 

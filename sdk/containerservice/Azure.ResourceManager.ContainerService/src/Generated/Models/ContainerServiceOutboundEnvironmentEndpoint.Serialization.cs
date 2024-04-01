@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceOutboundEnvironmentEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceOutboundEnvironmentEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceOutboundEnvironmentEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerServiceEndpointDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceOutboundEnvironmentEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceOutboundEnvironmentEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceOutboundEnvironmentEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> category = default;
-            Optional<IReadOnlyList<ContainerServiceEndpointDependency>> endpoints = default;
+            string category = default;
+            IReadOnlyList<ContainerServiceEndpointDependency> endpoints = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceEndpointDependency> array = new List<ContainerServiceEndpointDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceEndpointDependency.DeserializeContainerServiceEndpointDependency(item));
+                        array.Add(ContainerServiceEndpointDependency.DeserializeContainerServiceEndpointDependency(item, options));
                     }
                     endpoints = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceOutboundEnvironmentEndpoint(category.Value, Optional.ToList(endpoints), serializedAdditionalRawData);
+            return new ContainerServiceOutboundEnvironmentEndpoint(category, endpoints ?? new ChangeTrackingList<ContainerServiceEndpointDependency>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceOutboundEnvironmentEndpoint>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceOutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceOutboundEnvironmentEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceOutboundEnvironmentEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceOutboundEnvironmentEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceOutboundEnvironmentEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

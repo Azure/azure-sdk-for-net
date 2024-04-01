@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateDownloadProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateDownloadProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeDownloadPhase> downloadPhase = default;
-            Optional<int> percentComplete = default;
-            Optional<double> totalBytesToDownload = default;
-            Optional<double> totalBytesDownloaded = default;
-            Optional<int> numberOfUpdatesToDownload = default;
-            Optional<int> numberOfUpdatesDownloaded = default;
+            DataBoxEdgeDownloadPhase? downloadPhase = default;
+            int? percentComplete = default;
+            double? totalBytesToDownload = default;
+            double? totalBytesDownloaded = default;
+            int? numberOfUpdatesToDownload = default;
+            int? numberOfUpdatesDownloaded = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -164,7 +164,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new UpdateDownloadProgress(Optional.ToNullable(downloadPhase), Optional.ToNullable(percentComplete), Optional.ToNullable(totalBytesToDownload), Optional.ToNullable(totalBytesDownloaded), Optional.ToNullable(numberOfUpdatesToDownload), Optional.ToNullable(numberOfUpdatesDownloaded), serializedAdditionalRawData);
+            return new UpdateDownloadProgress(
+                downloadPhase,
+                percentComplete,
+                totalBytesToDownload,
+                totalBytesDownloaded,
+                numberOfUpdatesToDownload,
+                numberOfUpdatesDownloaded,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<UpdateDownloadProgress>.Write(ModelReaderWriterOptions options)
@@ -176,7 +183,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeUpdateDownloadProgress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support reading '{options.Format}' format.");
             }
         }
 

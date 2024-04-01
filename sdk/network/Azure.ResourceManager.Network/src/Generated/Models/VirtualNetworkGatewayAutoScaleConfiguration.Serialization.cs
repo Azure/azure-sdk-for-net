@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Bounds))
             {
                 writer.WritePropertyName("bounds"u8);
-                writer.WriteObjectValue(Bounds);
+                writer.WriteObjectValue<VirtualNetworkGatewayAutoScaleBounds>(Bounds, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkGatewayAutoScaleConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<VirtualNetworkGatewayAutoScaleBounds> bounds = default;
+            VirtualNetworkGatewayAutoScaleBounds bounds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    bounds = VirtualNetworkGatewayAutoScaleBounds.DeserializeVirtualNetworkGatewayAutoScaleBounds(property.Value);
+                    bounds = VirtualNetworkGatewayAutoScaleBounds.DeserializeVirtualNetworkGatewayAutoScaleBounds(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualNetworkGatewayAutoScaleConfiguration(bounds.Value, serializedAdditionalRawData);
+            return new VirtualNetworkGatewayAutoScaleConfiguration(bounds, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualNetworkGatewayAutoScaleConfiguration>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualNetworkGatewayAutoScaleConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkGatewayAutoScaleConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -77,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<NetworkPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -103,7 +102,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkPrivateLinkServiceConnection>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,15 +117,15 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<ResourceIdentifier> privateLinkServiceId = default;
-            Optional<IList<string>> groupIds = default;
-            Optional<string> requestMessage = default;
-            Optional<NetworkPrivateLinkServiceConnectionState> privateLinkServiceConnectionState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            NetworkProvisioningState? provisioningState = default;
+            ResourceIdentifier privateLinkServiceId = default;
+            IList<string> groupIds = default;
+            string requestMessage = default;
+            NetworkPrivateLinkServiceConnectionState privateLinkServiceConnectionState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -215,7 +214,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value);
+                            privateLinkServiceConnectionState = NetworkPrivateLinkServiceConnectionState.DeserializeNetworkPrivateLinkServiceConnectionState(property0.Value, options);
                             continue;
                         }
                     }
@@ -227,7 +226,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkPrivateLinkServiceConnection(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(provisioningState), privateLinkServiceId.Value, Optional.ToList(groupIds), requestMessage.Value, privateLinkServiceConnectionState.Value);
+            return new NetworkPrivateLinkServiceConnection(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                provisioningState,
+                privateLinkServiceId,
+                groupIds ?? new ChangeTrackingList<string>(),
+                requestMessage,
+                privateLinkServiceConnectionState);
         }
 
         BinaryData IPersistableModel<NetworkPrivateLinkServiceConnection>.Write(ModelReaderWriterOptions options)
@@ -239,7 +248,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +264,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkPrivateLinkServiceConnection(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkPrivateLinkServiceConnection)} does not support reading '{options.Format}' format.");
             }
         }
 

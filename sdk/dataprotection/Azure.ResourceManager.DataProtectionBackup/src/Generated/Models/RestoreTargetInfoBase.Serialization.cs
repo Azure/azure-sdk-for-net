@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreTargetInfoBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreTargetInfoBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,12 +77,12 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "ItemLevelRestoreTargetInfo": return ItemLevelRestoreTargetInfo.DeserializeItemLevelRestoreTargetInfo(element);
-                    case "RestoreFilesTargetInfo": return RestoreFilesTargetInfo.DeserializeRestoreFilesTargetInfo(element);
-                    case "RestoreTargetInfo": return RestoreTargetInfo.DeserializeRestoreTargetInfo(element);
+                    case "ItemLevelRestoreTargetInfo": return ItemLevelRestoreTargetInfo.DeserializeItemLevelRestoreTargetInfo(element, options);
+                    case "RestoreFilesTargetInfo": return RestoreFilesTargetInfo.DeserializeRestoreFilesTargetInfo(element, options);
+                    case "RestoreTargetInfo": return RestoreTargetInfo.DeserializeRestoreTargetInfo(element, options);
                 }
             }
-            return UnknownRestoreTargetInfoBase.DeserializeUnknownRestoreTargetInfoBase(element);
+            return UnknownRestoreTargetInfoBase.DeserializeUnknownRestoreTargetInfoBase(element, options);
         }
 
         BinaryData IPersistableModel<RestoreTargetInfoBase>.Write(ModelReaderWriterOptions options)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeRestoreTargetInfoBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreTargetInfoBase)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsDescriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (Properties != null)
                 {
                     writer.WritePropertyName("properties"u8);
-                    writer.WriteObjectValue(Properties);
+                    writer.WriteObjectValue<DigitalTwinsPatchProperties>(Properties, options);
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsDescriptionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsDescriptionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,9 +101,9 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<DigitalTwinsPatchProperties> properties = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            DigitalTwinsPatchProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         properties = null;
                         continue;
                     }
-                    properties = DigitalTwinsPatchProperties.DeserializeDigitalTwinsPatchProperties(property.Value);
+                    properties = DigitalTwinsPatchProperties.DeserializeDigitalTwinsPatchProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsDescriptionPatch(Optional.ToDictionary(tags), identity, properties.Value, serializedAdditionalRawData);
+            return new DigitalTwinsDescriptionPatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DigitalTwinsDescriptionPatch>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         return DeserializeDigitalTwinsDescriptionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsDescriptionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

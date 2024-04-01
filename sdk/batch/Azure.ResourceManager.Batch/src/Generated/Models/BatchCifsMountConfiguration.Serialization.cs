@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchCifsMountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchCifsMountConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Batch.Models
             string userName = default;
             string source = default;
             string relativeMountPath = default;
-            Optional<string> mountOptions = default;
+            string mountOptions = default;
             string password = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -117,7 +117,13 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchCifsMountConfiguration(userName, source, relativeMountPath, mountOptions.Value, password, serializedAdditionalRawData);
+            return new BatchCifsMountConfiguration(
+                userName,
+                source,
+                relativeMountPath,
+                mountOptions,
+                password,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchCifsMountConfiguration>.Write(ModelReaderWriterOptions options)
@@ -129,7 +135,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,7 +151,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchCifsMountConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchCifsMountConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

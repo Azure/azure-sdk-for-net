@@ -21,6 +21,38 @@ namespace Azure.ResourceManager.MobileNetwork
     /// </summary>
     public partial class PacketCoreControlPlaneData : TrackedResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneData"/>. </summary>
         /// <param name="location"> The location. </param>
         /// <param name="sites"> Site(s) under which this packet core control plane should be deployed. The sites must be in the same location as the packet core control plane. </param>
@@ -69,7 +101,9 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <param name="eventHub"> Configuration for sending packet core events to an Azure Event Hub. </param>
         /// <param name="signaling"> Signaling configuration for the packet core. </param>
         /// <param name="interopSettings"> Settings to allow interoperability with third party components e.g. RANs and UEs. </param>
-        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings) : base(id, name, resourceType, systemData, tags, location)
+        /// <param name="homeNetworkPrivateKeysProvisioning"> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal PacketCoreControlPlaneData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, MobileNetworkManagedServiceIdentity userAssignedIdentity, MobileNetworkProvisioningState? provisioningState, MobileNetworkInstallation installation, IList<WritableSubResource> sites, MobileNetworkPlatformConfiguration platform, MobileNetworkCoreNetworkType? coreNetworkTechnology, string version, string installedVersion, string rollbackVersion, MobileNetworkInterfaceProperties controlPlaneAccessInterface, IList<string> controlPlaneAccessVirtualIPv4Addresses, MobileNetworkBillingSku sku, int? ueMtu, MobileNetworkLocalDiagnosticsAccessConfiguration localDiagnosticsAccess, DiagnosticsUploadConfiguration diagnosticsUpload, MobileNetworkEventHubConfiguration eventHub, SignalingConfiguration signaling, BinaryData interopSettings, HomeNetworkPrivateKeysProvisioning homeNetworkPrivateKeysProvisioning, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
         {
             UserAssignedIdentity = userAssignedIdentity;
             ProvisioningState = provisioningState;
@@ -83,12 +117,19 @@ namespace Azure.ResourceManager.MobileNetwork
             ControlPlaneAccessInterface = controlPlaneAccessInterface;
             ControlPlaneAccessVirtualIPv4Addresses = controlPlaneAccessVirtualIPv4Addresses;
             Sku = sku;
-            UeMtu = ueMtu;
+            UEMtu = ueMtu;
             LocalDiagnosticsAccess = localDiagnosticsAccess;
             DiagnosticsUpload = diagnosticsUpload;
             EventHub = eventHub;
             Signaling = signaling;
             InteropSettings = interopSettings;
+            HomeNetworkPrivateKeysProvisioning = homeNetworkPrivateKeysProvisioning;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="PacketCoreControlPlaneData"/> for deserialization. </summary>
+        internal PacketCoreControlPlaneData()
+        {
         }
 
         /// <summary> The identity used to retrieve the ingress certificate from Azure key vault. </summary>
@@ -116,7 +157,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <summary> The SKU defining the throughput and SIM allowances for this packet core control plane deployment. </summary>
         public MobileNetworkBillingSku Sku { get; set; }
         /// <summary> The MTU (in bytes) signaled to the UE. The same MTU is set on the user plane data links for all data networks. The MTU set on the user plane access link is calculated to be 60 bytes greater than this value to allow for GTP encapsulation. </summary>
-        public int? UeMtu { get; set; }
+        public int? UEMtu { get; set; }
         /// <summary> The kubernetes ingress configuration to control access to packet core diagnostics over local APIs. </summary>
         public MobileNetworkLocalDiagnosticsAccessConfiguration LocalDiagnosticsAccess { get; set; }
         /// <summary> Configuration for uploading packet core diagnostics. </summary>
@@ -182,5 +223,12 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </para>
         /// </summary>
         public BinaryData InteropSettings { get; set; }
+        /// <summary> The provisioning state of the secret containing private keys and keyIds for SUPI concealment. </summary>
+        internal HomeNetworkPrivateKeysProvisioning HomeNetworkPrivateKeysProvisioning { get; }
+        /// <summary> The provisioning state of the private keys for SUPI concealment. </summary>
+        public HomeNetworkPrivateKeysProvisioningState? HomeNetworkPrivateKeysProvisioningState
+        {
+            get => HomeNetworkPrivateKeysProvisioning?.State;
+        }
     }
 }

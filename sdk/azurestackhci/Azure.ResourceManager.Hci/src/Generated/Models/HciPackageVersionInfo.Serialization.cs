@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciPackageVersionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciPackageVersionInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> packageType = default;
-            Optional<string> version = default;
-            Optional<DateTimeOffset> lastUpdated = default;
+            string packageType = default;
+            string version = default;
+            DateTimeOffset? lastUpdated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciPackageVersionInfo(packageType.Value, version.Value, Optional.ToNullable(lastUpdated), serializedAdditionalRawData);
+            return new HciPackageVersionInfo(packageType, version, lastUpdated, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciPackageVersionInfo>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciPackageVersionInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciPackageVersionInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

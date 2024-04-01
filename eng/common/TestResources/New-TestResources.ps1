@@ -67,7 +67,7 @@ param (
     [string] $Environment = 'AzureCloud',
 
     [Parameter()]
-    [ValidateSet('test', 'perf')]
+    [ValidateSet('test', 'perf', 'stress-test')]
     [string] $ResourceType = 'test',
 
     [Parameter()]
@@ -196,14 +196,14 @@ function NewServicePrincipalWrapper([string]$subscription, [string]$resourceGrou
             # Submitting a password credential object without specifying a password will result in one being generated on the server side.
             $password = New-Object -TypeName "Microsoft.Azure.PowerShell.Cmdlets.Resources.MSGraph.Models.ApiV10.MicrosoftGraphPasswordCredential"
             $password.DisplayName = "Password for $displayName"
-            $credential = Retry { New-AzADSpCredential -PasswordCredentials $password -ServicePrincipalObject $servicePrincipal }
+            $credential = Retry { New-AzADSpCredential -PasswordCredentials $password -ServicePrincipalObject $servicePrincipal -ErrorAction 'Stop' }
             $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
             $appId = $servicePrincipal.AppId
         } else {
             Write-Verbose "Creating service principal credential via MS Graph API"
             # In 5.2.0 the password credential issue was fixed (see https://github.com/Azure/azure-powershell/pull/16690) but the
             # parameter set was changed making the above call fail due to a missing ServicePrincipalId parameter.
-            $credential = Retry { $servicePrincipal | New-AzADSpCredential }
+            $credential = Retry { $servicePrincipal | New-AzADSpCredential -ErrorAction 'Stop' }
             $spPassword = ConvertTo-SecureString $credential.SecretText -AsPlainText -Force
             $appId = $servicePrincipal.AppId
         }
@@ -619,9 +619,11 @@ try {
             Write-Warning "The specified TestApplicationId '$TestApplicationId' will be ignored when UserAuth is set."
         }
 
-        $TestApplicationOid = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account).Id
+        $userAccount = (Get-AzADUser -UserPrincipalName (Get-AzContext).Account)
+        $TestApplicationOid = $userAccount.Id
         $TestApplicationId = $testApplicationOid
-        Log "User-based app id '$TestApplicationId' will be used."
+        $userAccountName = $userAccount.UserPrincipalName
+        Log "User authentication with user '$userAccountName' ('$TestApplicationId') will be used."
     }
     # If no test application ID was specified during an interactive session, create a new service principal.
     elseif (!$CI -and !$TestApplicationId) {
@@ -686,11 +688,11 @@ try {
     $PSBoundParameters['TestApplicationOid'] = $TestApplicationOid
     $PSBoundParameters['TestApplicationSecret'] = $TestApplicationSecret
 
-    # If the role hasn't been explicitly assigned to the resource group and a cached service principal is in use,
+    # If the role hasn't been explicitly assigned to the resource group and a cached service principal or user authentication is in use,
     # query to see if the grant is needed.
-    if (!$resourceGroupRoleAssigned -and $AzureTestPrincipal) {
+    if (!$resourceGroupRoleAssigned -and $TestApplicationOid) {
         $roleAssignment = Get-AzRoleAssignment `
-                            -ObjectId $AzureTestPrincipal.Id `
+                            -ObjectId $TestApplicationOid `
                             -RoleDefinitionName 'Owner' `
                             -ResourceGroupName "$ResourceGroupName" `
                             -ErrorAction SilentlyContinue
@@ -702,19 +704,20 @@ try {
    # considered a critical failure, as the test application may have subscription-level permissions and not require
    # the explicit grant.
    if (!$resourceGroupRoleAssigned) {
-        Log "Attempting to assigning the 'Owner' role for '$ResourceGroupName' to the Test Application '$TestApplicationId'"
-        $principalOwnerAssignment = New-AzRoleAssignment `
-                                        -RoleDefinitionName "Owner" `
-                                        -ApplicationId "$TestApplicationId" `
-                                        -ResourceGroupName "$ResourceGroupName" `
-                                        -ErrorAction SilentlyContinue
+        $idSlug = if ($userAuth) { "User '$userAccountName' ('$TestApplicationId')"} else { "Test Application '$TestApplicationId'"};
+        Log "Attempting to assign the 'Owner' role for '$ResourceGroupName' to the $idSlug"
+        $ownerAssignment = New-AzRoleAssignment `
+                            -RoleDefinitionName "Owner" `
+                            -ObjectId "$TestApplicationOId" `
+                            -ResourceGroupName "$ResourceGroupName" `
+                            -ErrorAction SilentlyContinue
 
-        if ($principalOwnerAssignment.RoleDefinitionName -eq 'Owner') {
-            Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the Test Application '$TestApplicationId'"
+        if ($ownerAssignment.RoleDefinitionName -eq 'Owner') {
+            Write-Verbose "Successfully assigned ownership of '$ResourceGroupName' to the $idSlug"
         } else {
             Write-Warning ("The 'Owner' role for '$ResourceGroupName' could not be assigned. " +
                           "You may need to manually grant 'Owner' for the resource group to the " +
-                          "Test Application '$TestApplicationId' if it does not have subscription-level permissions.")
+                          "$idSlug if it does not have subscription-level permissions.")
         }
     }
 

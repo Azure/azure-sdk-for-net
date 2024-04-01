@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetTdeCertificatesSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo);
+            writer.WriteObjectValue<SqlConnectionInfo>(ConnectionInfo, options);
             writer.WritePropertyName("backupFileShare"u8);
-            writer.WriteObjectValue(BackupFileShare);
+            writer.WriteObjectValue<FileShare>(BackupFileShare, options);
             writer.WritePropertyName("selectedCertificates"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedCertificates)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SelectedCertificateInput>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetTdeCertificatesSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("backupFileShare"u8))
                 {
-                    backupFileShare = FileShare.DeserializeFileShare(property.Value);
+                    backupFileShare = FileShare.DeserializeFileShare(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedCertificates"u8))
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<SelectedCertificateInput> array = new List<SelectedCertificateInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SelectedCertificateInput.DeserializeSelectedCertificateInput(item));
+                        array.Add(SelectedCertificateInput.DeserializeSelectedCertificateInput(item, options));
                     }
                     selectedCertificates = array;
                     continue;
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeGetTdeCertificatesSqlTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetTdeCertificatesSqlTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

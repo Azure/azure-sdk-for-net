@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.IotHub.Models
 {
     /// <summary> The IP filter rules for the IoT hub. </summary>
     public partial class IotHubIPFilterRule
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="IotHubIPFilterRule"/>. </summary>
         /// <param name="filterName"> The name of the IP filter rule. </param>
         /// <param name="action"> The desired action for requests captured by this rule. </param>
@@ -26,6 +58,24 @@ namespace Azure.ResourceManager.IotHub.Models
             FilterName = filterName;
             Action = action;
             IPMask = ipMask;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubIPFilterRule"/>. </summary>
+        /// <param name="filterName"> The name of the IP filter rule. </param>
+        /// <param name="action"> The desired action for requests captured by this rule. </param>
+        /// <param name="ipMask"> A string that contains the IP address range in CIDR notation for the rule. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal IotHubIPFilterRule(string filterName, IotHubIPFilterActionType action, string ipMask, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        {
+            FilterName = filterName;
+            Action = action;
+            IPMask = ipMask;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="IotHubIPFilterRule"/> for deserialization. </summary>
+        internal IotHubIPFilterRule()
+        {
         }
 
         /// <summary> The name of the IP filter rule. </summary>

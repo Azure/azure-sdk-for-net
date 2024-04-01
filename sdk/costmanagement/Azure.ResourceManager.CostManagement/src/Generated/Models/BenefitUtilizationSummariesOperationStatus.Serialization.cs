@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummariesOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesOperationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Input))
             {
                 writer.WritePropertyName("input"u8);
-                writer.WriteObjectValue(Input);
+                writer.WriteObjectValue<BenefitUtilizationSummariesContent>(Input, options);
             }
             if (Optional.IsDefined(Status))
             {
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<AsyncOperationStatusProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<BenefitUtilizationSummariesOperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesOperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BenefitUtilizationSummariesOperationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<BenefitUtilizationSummariesContent> input = default;
-            Optional<OperationStatusType> status = default;
-            Optional<AsyncOperationStatusProperties> properties = default;
+            BenefitUtilizationSummariesContent input = default;
+            OperationStatusType? status = default;
+            AsyncOperationStatusProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    input = BenefitUtilizationSummariesContent.DeserializeBenefitUtilizationSummariesContent(property.Value);
+                    input = BenefitUtilizationSummariesContent.DeserializeBenefitUtilizationSummariesContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("status"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                     {
                         continue;
                     }
-                    properties = AsyncOperationStatusProperties.DeserializeAsyncOperationStatusProperties(property.Value);
+                    properties = AsyncOperationStatusProperties.DeserializeAsyncOperationStatusProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BenefitUtilizationSummariesOperationStatus(input.Value, Optional.ToNullable(status), properties.Value, serializedAdditionalRawData);
+            return new BenefitUtilizationSummariesOperationStatus(input, status, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BenefitUtilizationSummariesOperationStatus>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesOperationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeBenefitUtilizationSummariesOperationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesOperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BenefitUtilizationSummariesOperationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

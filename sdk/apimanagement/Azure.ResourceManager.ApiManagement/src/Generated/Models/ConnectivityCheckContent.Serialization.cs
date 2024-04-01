@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<ConnectivityCheckRequestSource>(Source, options);
             writer.WritePropertyName("destination"u8);
-            writer.WriteObjectValue(Destination);
+            writer.WriteObjectValue<ConnectivityCheckRequestDestination>(Destination, options);
             if (Optional.IsDefined(PreferredIPVersion))
             {
                 writer.WritePropertyName("preferredIPVersion"u8);
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             if (Optional.IsDefined(ProtocolConfiguration))
             {
                 writer.WritePropertyName("protocolConfiguration"u8);
-                writer.WriteObjectValue(ProtocolConfiguration);
+                writer.WriteObjectValue<ConnectivityCheckRequestProtocolConfiguration>(ProtocolConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityCheckContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,21 +85,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             }
             ConnectivityCheckRequestSource source = default;
             ConnectivityCheckRequestDestination destination = default;
-            Optional<PreferredIPVersion> preferredIPVersion = default;
-            Optional<ConnectivityCheckProtocol> protocol = default;
-            Optional<ConnectivityCheckRequestProtocolConfiguration> protocolConfiguration = default;
+            PreferredIPVersion? preferredIPVersion = default;
+            ConnectivityCheckProtocol? protocol = default;
+            ConnectivityCheckRequestProtocolConfiguration protocolConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("source"u8))
                 {
-                    source = ConnectivityCheckRequestSource.DeserializeConnectivityCheckRequestSource(property.Value);
+                    source = ConnectivityCheckRequestSource.DeserializeConnectivityCheckRequestSource(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("destination"u8))
                 {
-                    destination = ConnectivityCheckRequestDestination.DeserializeConnectivityCheckRequestDestination(property.Value);
+                    destination = ConnectivityCheckRequestDestination.DeserializeConnectivityCheckRequestDestination(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("preferredIPVersion"u8))
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                     {
                         continue;
                     }
-                    protocolConfiguration = ConnectivityCheckRequestProtocolConfiguration.DeserializeConnectivityCheckRequestProtocolConfiguration(property.Value);
+                    protocolConfiguration = ConnectivityCheckRequestProtocolConfiguration.DeserializeConnectivityCheckRequestProtocolConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -135,7 +135,13 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectivityCheckContent(source, destination, Optional.ToNullable(preferredIPVersion), Optional.ToNullable(protocol), protocolConfiguration.Value, serializedAdditionalRawData);
+            return new ConnectivityCheckContent(
+                source,
+                destination,
+                preferredIPVersion,
+                protocol,
+                protocolConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectivityCheckContent>.Write(ModelReaderWriterOptions options)
@@ -147,7 +153,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +169,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeConnectivityCheckContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityCheckContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(DiffDiskSettings))
             {
                 writer.WritePropertyName("diffDiskSettings"u8);
-                writer.WriteObjectValue(DiffDiskSettings);
+                writer.WriteObjectValue<DiffDiskSettings>(DiffDiskSettings, options);
             }
             if (Optional.IsDefined(DiskSizeGB))
             {
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                writer.WriteObjectValue<VirtualHardDisk>(Image, options);
             }
             if (Optional.IsCollectionDefined(VhdContainers))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(ManagedDisk))
             {
                 writer.WritePropertyName("managedDisk"u8);
-                writer.WriteObjectValue(ManagedDisk);
+                writer.WriteObjectValue<VirtualMachineScaleSetManagedDisk>(ManagedDisk, options);
             }
             if (Optional.IsDefined(DeleteOption))
             {
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineScaleSetOSDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,17 +121,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<CachingType> caching = default;
-            Optional<bool> writeAcceleratorEnabled = default;
+            string name = default;
+            CachingType? caching = default;
+            bool? writeAcceleratorEnabled = default;
             DiskCreateOptionType createOption = default;
-            Optional<DiffDiskSettings> diffDiskSettings = default;
-            Optional<int> diskSizeGB = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<VirtualHardDisk> image = default;
-            Optional<IList<string>> vhdContainers = default;
-            Optional<VirtualMachineScaleSetManagedDisk> managedDisk = default;
-            Optional<DiskDeleteOptionType> deleteOption = default;
+            DiffDiskSettings diffDiskSettings = default;
+            int? diskSizeGB = default;
+            SupportedOperatingSystemType? osType = default;
+            VirtualHardDisk image = default;
+            IList<string> vhdContainers = default;
+            VirtualMachineScaleSetManagedDisk managedDisk = default;
+            DiskDeleteOptionType? deleteOption = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value);
+                    diffDiskSettings = DiffDiskSettings.DeserializeDiffDiskSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskSizeGB"u8))
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value);
+                    image = VirtualHardDisk.DeserializeVirtualHardDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("vhdContainers"u8))
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value);
+                    managedDisk = VirtualMachineScaleSetManagedDisk.DeserializeVirtualMachineScaleSetManagedDisk(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("deleteOption"u8))
@@ -238,7 +238,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineScaleSetOSDisk(name.Value, Optional.ToNullable(caching), Optional.ToNullable(writeAcceleratorEnabled), createOption, diffDiskSettings.Value, Optional.ToNullable(diskSizeGB), Optional.ToNullable(osType), image.Value, Optional.ToList(vhdContainers), managedDisk.Value, Optional.ToNullable(deleteOption), serializedAdditionalRawData);
+            return new VirtualMachineScaleSetOSDisk(
+                name,
+                caching,
+                writeAcceleratorEnabled,
+                createOption,
+                diffDiskSettings,
+                diskSizeGB,
+                osType,
+                image,
+                vhdContainers ?? new ChangeTrackingList<string>(),
+                managedDisk,
+                deleteOption,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineScaleSetOSDisk>.Write(ModelReaderWriterOptions options)
@@ -250,7 +262,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -266,7 +278,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineScaleSetOSDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineScaleSetOSDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

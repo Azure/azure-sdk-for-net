@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkConfigurationGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Hubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityHub>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in AppliesToGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectivityGroupItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveConnectivityConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,16 +132,16 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<IReadOnlyList<NetworkConfigurationGroup>> configurationGroups = default;
-            Optional<string> description = default;
-            Optional<ConnectivityTopology> connectivityTopology = default;
-            Optional<IReadOnlyList<ConnectivityHub>> hubs = default;
-            Optional<GlobalMeshSupportFlag> isGlobal = default;
-            Optional<IReadOnlyList<ConnectivityGroupItem>> appliesToGroups = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
-            Optional<DeleteExistingPeering> deleteExistingPeering = default;
-            Optional<Guid> resourceGuid = default;
+            string id = default;
+            IReadOnlyList<NetworkConfigurationGroup> configurationGroups = default;
+            string description = default;
+            ConnectivityTopology? connectivityTopology = default;
+            IReadOnlyList<ConnectivityHub> hubs = default;
+            GlobalMeshSupportFlag? isGlobal = default;
+            IReadOnlyList<ConnectivityGroupItem> appliesToGroups = default;
+            NetworkProvisioningState? provisioningState = default;
+            DeleteExistingPeering? deleteExistingPeering = default;
+            Guid? resourceGuid = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<NetworkConfigurationGroup> array = new List<NetworkConfigurationGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item));
+                        array.Add(NetworkConfigurationGroup.DeserializeNetworkConfigurationGroup(item, options));
                     }
                     configurationGroups = array;
                     continue;
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectivityHub> array = new List<ConnectivityHub>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item));
+                                array.Add(ConnectivityHub.DeserializeConnectivityHub(item, options));
                             }
                             hubs = array;
                             continue;
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ConnectivityGroupItem> array = new List<ConnectivityGroupItem>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item));
+                                array.Add(ConnectivityGroupItem.DeserializeConnectivityGroupItem(item, options));
                             }
                             appliesToGroups = array;
                             continue;
@@ -261,7 +261,18 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EffectiveConnectivityConfiguration(id.Value, Optional.ToList(configurationGroups), description.Value, Optional.ToNullable(connectivityTopology), Optional.ToList(hubs), Optional.ToNullable(isGlobal), Optional.ToList(appliesToGroups), Optional.ToNullable(provisioningState), Optional.ToNullable(deleteExistingPeering), Optional.ToNullable(resourceGuid), serializedAdditionalRawData);
+            return new EffectiveConnectivityConfiguration(
+                id,
+                configurationGroups ?? new ChangeTrackingList<NetworkConfigurationGroup>(),
+                description,
+                connectivityTopology,
+                hubs ?? new ChangeTrackingList<ConnectivityHub>(),
+                isGlobal,
+                appliesToGroups ?? new ChangeTrackingList<ConnectivityGroupItem>(),
+                provisioningState,
+                deleteExistingPeering,
+                resourceGuid,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EffectiveConnectivityConfiguration>.Write(ModelReaderWriterOptions options)
@@ -273,7 +284,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -289,7 +300,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveConnectivityConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveConnectivityConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

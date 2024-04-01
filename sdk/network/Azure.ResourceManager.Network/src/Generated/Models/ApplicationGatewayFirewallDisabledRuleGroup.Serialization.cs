@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFirewallDisabledRuleGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallDisabledRuleGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallDisabledRuleGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFirewallDisabledRuleGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallDisabledRuleGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallDisabledRuleGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleGroupName = default;
-            Optional<IList<int>> rules = default;
+            IList<int> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallDisabledRuleGroup(ruleGroupName, Optional.ToList(rules), serializedAdditionalRawData);
+            return new ApplicationGatewayFirewallDisabledRuleGroup(ruleGroupName, rules ?? new ChangeTrackingList<int>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallDisabledRuleGroup>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallDisabledRuleGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallDisabledRuleGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayFirewallDisabledRuleGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallDisabledRuleGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallDisabledRuleGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

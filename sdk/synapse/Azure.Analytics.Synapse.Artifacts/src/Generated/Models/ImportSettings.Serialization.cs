@@ -23,7 +23,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -38,8 +38,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "SnowflakeImportCopyCommand": return SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(element);
                     case "AzureDatabricksDeltaLakeImportCommand": return AzureDatabricksDeltaLakeImportCommand.DeserializeAzureDatabricksDeltaLakeImportCommand(element);
+                    case "SnowflakeImportCopyCommand": return SnowflakeImportCopyCommand.DeserializeSnowflakeImportCopyCommand(element);
                 }
             }
             return UnknownImportSettings.DeserializeUnknownImportSettings(element);
@@ -49,7 +49,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ImportSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ImportSettings>(model);
             }
             public override ImportSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

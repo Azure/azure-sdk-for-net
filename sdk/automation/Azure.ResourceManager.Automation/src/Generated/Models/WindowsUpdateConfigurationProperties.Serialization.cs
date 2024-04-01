@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsUpdateConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsUpdateConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<WindowsUpdateClassification> includedUpdateClassifications = default;
-            Optional<IList<string>> excludedKbNumbers = default;
-            Optional<IList<string>> includedKbNumbers = default;
-            Optional<string> rebootSetting = default;
+            WindowsUpdateClassification? includedUpdateClassifications = default;
+            IList<string> excludedKbNumbers = default;
+            IList<string> includedKbNumbers = default;
+            string rebootSetting = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WindowsUpdateConfigurationProperties(Optional.ToNullable(includedUpdateClassifications), Optional.ToList(excludedKbNumbers), Optional.ToList(includedKbNumbers), rebootSetting.Value, serializedAdditionalRawData);
+            return new WindowsUpdateConfigurationProperties(includedUpdateClassifications, excludedKbNumbers ?? new ChangeTrackingList<string>(), includedKbNumbers ?? new ChangeTrackingList<string>(), rebootSetting, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WindowsUpdateConfigurationProperties>.Write(ModelReaderWriterOptions options)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeWindowsUpdateConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

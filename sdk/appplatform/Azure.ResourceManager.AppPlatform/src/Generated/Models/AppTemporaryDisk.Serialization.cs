@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppTemporaryDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppTemporaryDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppTemporaryDisk)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppTemporaryDisk>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppTemporaryDisk)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppTemporaryDisk)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<int> sizeInGB = default;
-            Optional<string> mountPath = default;
+            int? sizeInGB = default;
+            string mountPath = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppTemporaryDisk(Optional.ToNullable(sizeInGB), mountPath.Value, serializedAdditionalRawData);
+            return new AppTemporaryDisk(sizeInGB, mountPath, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppTemporaryDisk>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppTemporaryDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppTemporaryDisk)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppTemporaryDisk(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppTemporaryDisk)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppTemporaryDisk)} does not support reading '{options.Format}' format.");
             }
         }
 

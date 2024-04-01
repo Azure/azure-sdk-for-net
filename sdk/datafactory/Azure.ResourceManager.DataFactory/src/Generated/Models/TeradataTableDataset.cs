@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -42,6 +41,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Database = database;
             Table = table;
             DatasetType = datasetType ?? "TeradataTable";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TeradataTableDataset"/> for deserialization. </summary>
+        internal TeradataTableDataset()
+        {
         }
 
         /// <summary> The database name of Teradata. Type: string (or Expression with resultType string). </summary>

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuAvailabilityValidationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,7 +114,13 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SkuAvailabilityValidationContent(validationType, serializedAdditionalRawData, deviceType, transferType, country, location);
+            return new SkuAvailabilityValidationContent(
+                validationType,
+                serializedAdditionalRawData,
+                deviceType,
+                transferType,
+                country,
+                location);
         }
 
         BinaryData IPersistableModel<SkuAvailabilityValidationContent>.Write(ModelReaderWriterOptions options)
@@ -126,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +148,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeSkuAvailabilityValidationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuAvailabilityValidationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

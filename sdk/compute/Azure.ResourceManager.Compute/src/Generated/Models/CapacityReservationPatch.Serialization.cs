@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ComputeSku>(Sku, options);
             }
             if (Optional.IsCollectionDefined(Tags))
             {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<CapacityReservationInstanceView>(InstanceView, options);
             }
             if (options.Format != "W" && Optional.IsDefined(TimeCreated))
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,15 +124,15 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ComputeSku> sku = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> reservationId = default;
-            Optional<int> platformFaultDomainCount = default;
-            Optional<IReadOnlyList<SubResource>> virtualMachinesAssociated = default;
-            Optional<DateTimeOffset> provisioningTime = default;
-            Optional<string> provisioningState = default;
-            Optional<CapacityReservationInstanceView> instanceView = default;
-            Optional<DateTimeOffset> timeCreated = default;
+            ComputeSku sku = default;
+            IDictionary<string, string> tags = default;
+            string reservationId = default;
+            int? platformFaultDomainCount = default;
+            IReadOnlyList<SubResource> virtualMachinesAssociated = default;
+            DateTimeOffset? provisioningTime = default;
+            string provisioningState = default;
+            CapacityReservationInstanceView instanceView = default;
+            DateTimeOffset? timeCreated = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    sku = ComputeSku.DeserializeComputeSku(property.Value);
+                    sku = ComputeSku.DeserializeComputeSku(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("tags"u8))
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value);
+                            instanceView = CapacityReservationInstanceView.DeserializeCapacityReservationInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeCreated"u8))
@@ -238,7 +238,17 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CapacityReservationPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, sku.Value, reservationId.Value, Optional.ToNullable(platformFaultDomainCount), Optional.ToList(virtualMachinesAssociated), Optional.ToNullable(provisioningTime), provisioningState.Value, instanceView.Value, Optional.ToNullable(timeCreated));
+            return new CapacityReservationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                sku,
+                reservationId,
+                platformFaultDomainCount,
+                virtualMachinesAssociated ?? new ChangeTrackingList<SubResource>(),
+                provisioningTime,
+                provisioningState,
+                instanceView,
+                timeCreated);
         }
 
         BinaryData IPersistableModel<CapacityReservationPatch>.Write(ModelReaderWriterOptions options)
@@ -250,7 +260,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -266,7 +276,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCapacityReservationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

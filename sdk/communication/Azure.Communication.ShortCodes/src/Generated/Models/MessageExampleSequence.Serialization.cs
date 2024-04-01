@@ -22,7 +22,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Messages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MessageExample>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -35,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IList<MessageExample>> messages = default;
+            IList<MessageExample> messages = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("messages"u8))
@@ -53,7 +53,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageExampleSequence(Optional.ToList(messages));
+            return new MessageExampleSequence(messages ?? new ChangeTrackingList<MessageExample>());
         }
     }
 }

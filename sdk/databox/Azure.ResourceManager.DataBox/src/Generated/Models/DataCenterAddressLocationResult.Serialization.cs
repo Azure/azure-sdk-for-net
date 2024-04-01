@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressLocationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressLocationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,22 +146,22 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> contactPersonName = default;
-            Optional<string> company = default;
-            Optional<string> street1 = default;
-            Optional<string> street2 = default;
-            Optional<string> street3 = default;
-            Optional<string> city = default;
-            Optional<string> state = default;
-            Optional<string> zip = default;
-            Optional<string> country = default;
-            Optional<string> phone = default;
-            Optional<string> phoneExtension = default;
-            Optional<string> addressType = default;
-            Optional<string> additionalShippingInformation = default;
+            string contactPersonName = default;
+            string company = default;
+            string street1 = default;
+            string street2 = default;
+            string street3 = default;
+            string city = default;
+            string state = default;
+            string zip = default;
+            string country = default;
+            string phone = default;
+            string phoneExtension = default;
+            string addressType = default;
+            string additionalShippingInformation = default;
             DataCenterAddressType dataCenterAddressType = default;
-            Optional<IReadOnlyList<string>> supportedCarriersForReturnShipment = default;
-            Optional<AzureLocation> dataCenterAzureLocation = default;
+            IReadOnlyList<string> supportedCarriersForReturnShipment = default;
+            AzureLocation? dataCenterAzureLocation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -265,7 +265,24 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataCenterAddressLocationResult(dataCenterAddressType, Optional.ToList(supportedCarriersForReturnShipment), Optional.ToNullable(dataCenterAzureLocation), serializedAdditionalRawData, contactPersonName.Value, company.Value, street1.Value, street2.Value, street3.Value, city.Value, state.Value, zip.Value, country.Value, phone.Value, phoneExtension.Value, addressType.Value, additionalShippingInformation.Value);
+            return new DataCenterAddressLocationResult(
+                dataCenterAddressType,
+                supportedCarriersForReturnShipment ?? new ChangeTrackingList<string>(),
+                dataCenterAzureLocation,
+                serializedAdditionalRawData,
+                contactPersonName,
+                company,
+                street1,
+                street2,
+                street3,
+                city,
+                state,
+                zip,
+                country,
+                phone,
+                phoneExtension,
+                addressType,
+                additionalShippingInformation);
         }
 
         BinaryData IPersistableModel<DataCenterAddressLocationResult>.Write(ModelReaderWriterOptions options)
@@ -277,7 +294,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -293,7 +310,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataCenterAddressLocationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressLocationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

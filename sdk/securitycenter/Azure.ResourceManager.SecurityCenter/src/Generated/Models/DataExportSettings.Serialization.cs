@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataExportSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataExportSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataExportSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataExportSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataExportSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataExportSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,8 +99,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<bool> enabled = default;
+            SystemData systemData = default;
+            bool? enabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataExportSettings(id, name, type, systemData.Value, kind, serializedAdditionalRawData, Optional.ToNullable(enabled));
+            return new DataExportSettings(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                enabled);
         }
 
         BinaryData IPersistableModel<DataExportSettings>.Write(ModelReaderWriterOptions options)
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataExportSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataExportSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDataExportSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataExportSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataExportSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

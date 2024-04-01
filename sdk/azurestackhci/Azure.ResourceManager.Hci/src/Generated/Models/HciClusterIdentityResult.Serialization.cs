@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterIdentityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterIdentityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterIdentityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciClusterIdentityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciClusterIdentityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciClusterIdentityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,10 +87,10 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<Guid> aadClientId = default;
-            Optional<Guid> aadTenantId = default;
-            Optional<Guid> aadServicePrincipalObjectId = default;
-            Optional<Guid> aadApplicationObjectId = default;
+            Guid? aadClientId = default;
+            Guid? aadTenantId = default;
+            Guid? aadServicePrincipalObjectId = default;
+            Guid? aadApplicationObjectId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciClusterIdentityResult(Optional.ToNullable(aadClientId), Optional.ToNullable(aadTenantId), Optional.ToNullable(aadServicePrincipalObjectId), Optional.ToNullable(aadApplicationObjectId), serializedAdditionalRawData);
+            return new HciClusterIdentityResult(aadClientId, aadTenantId, aadServicePrincipalObjectId, aadApplicationObjectId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciClusterIdentityResult>.Write(ModelReaderWriterOptions options)
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterIdentityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterIdentityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciClusterIdentityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciClusterIdentityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciClusterIdentityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

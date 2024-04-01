@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DppBaseResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceGuardProtectedObjectData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DppBaseResourceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ResourceGuardProtectedObjectData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ResourceGuardProtectedObjectData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                     List<ResourceGuardProtectedObjectData> array = new List<ResourceGuardProtectedObjectData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(item));
+                        array.Add(ResourceGuardProtectedObjectData.DeserializeResourceGuardProtectedObjectData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DppBaseResourceList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new DppBaseResourceList(value ?? new ChangeTrackingList<ResourceGuardProtectedObjectData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DppBaseResourceList>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDppBaseResourceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DppBaseResourceList)} does not support reading '{options.Format}' format.");
             }
         }
 

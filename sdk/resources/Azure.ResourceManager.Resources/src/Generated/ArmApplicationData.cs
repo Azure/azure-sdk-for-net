@@ -41,6 +41,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="location"> The location. </param>
         /// <param name="managedBy"> ID of the resource that manages this resource. </param>
         /// <param name="sku"> The SKU of the resource. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="plan"> The plan information. </param>
         /// <param name="kind"> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </param>
         /// <param name="identity"> The identity of the resource. </param>
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.Resources
         /// <param name="artifacts"> The collection of managed application artifacts. </param>
         /// <param name="createdBy"> The client entity that created the JIT request. </param>
         /// <param name="updatedBy"> The client entity that last updated the JIT request. </param>
-        internal ArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, Guid? publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUris supportUris, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku)
+        internal ArmApplicationData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, string managedBy, ArmApplicationSku sku, IDictionary<string, BinaryData> serializedAdditionalRawData, ArmPlan plan, string kind, ArmApplicationManagedIdentity identity, ResourceIdentifier managedResourceGroupId, ResourceIdentifier applicationDefinitionId, BinaryData parameters, BinaryData outputs, ResourcesProvisioningState? provisioningState, ArmApplicationBillingDetails billingDetails, ArmApplicationJitAccessPolicy jitAccessPolicy, Guid? publisherTenantId, IReadOnlyList<ArmApplicationAuthorization> authorizations, ArmApplicationManagementMode? managementMode, ArmApplicationPackageContact customerSupport, ArmApplicationPackageSupportUris supportUris, IReadOnlyList<ArmApplicationArtifact> artifacts, ArmApplicationDetails createdBy, ArmApplicationDetails updatedBy) : base(id, name, resourceType, systemData, tags, location, managedBy, sku, serializedAdditionalRawData)
         {
             Plan = plan;
             Kind = kind;
@@ -81,15 +82,25 @@ namespace Azure.ResourceManager.Resources
             UpdatedBy = updatedBy;
         }
 
+        /// <summary> Initializes a new instance of <see cref="ArmApplicationData"/> for deserialization. </summary>
+        internal ArmApplicationData()
+        {
+        }
+
         /// <summary> The plan information. </summary>
+        [WirePath("plan")]
         public ArmPlan Plan { get; set; }
         /// <summary> The kind of the managed application. Allowed values are MarketPlace and ServiceCatalog. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ArmApplicationManagedIdentity Identity { get; set; }
         /// <summary> The managed resource group Id. </summary>
+        [WirePath("properties.managedResourceGroupId")]
         public ResourceIdentifier ManagedResourceGroupId { get; set; }
         /// <summary> The fully qualified path of managed application definition Id. </summary>
+        [WirePath("properties.applicationDefinitionId")]
         public ResourceIdentifier ApplicationDefinitionId { get; set; }
         /// <summary>
         /// Name and value pairs that define the managed application parameters. It can be a JObject or a well formed JSON string.
@@ -121,6 +132,7 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.parameters")]
         public BinaryData Parameters { get; set; }
         /// <summary>
         /// Name and value pairs that define the managed application outputs.
@@ -152,34 +164,46 @@ namespace Azure.ResourceManager.Resources
         /// </list>
         /// </para>
         /// </summary>
+        [WirePath("properties.outputs")]
         public BinaryData Outputs { get; }
         /// <summary> The managed application provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public ResourcesProvisioningState? ProvisioningState { get; }
         /// <summary> The managed application billing details. </summary>
         internal ArmApplicationBillingDetails BillingDetails { get; }
         /// <summary> The managed application resource usage Id. </summary>
+        [WirePath("properties.billingDetails.resourceUsageId")]
         public string BillingDetailsResourceUsageId
         {
             get => BillingDetails?.ResourceUsageId;
         }
 
         /// <summary> The managed application Jit access policy. </summary>
+        [WirePath("properties.jitAccessPolicy")]
         public ArmApplicationJitAccessPolicy JitAccessPolicy { get; set; }
         /// <summary> The publisher tenant Id. </summary>
+        [WirePath("properties.publisherTenantId")]
         public Guid? PublisherTenantId { get; }
         /// <summary> The  read-only authorizations property that is retrieved from the application package. </summary>
+        [WirePath("properties.authorizations")]
         public IReadOnlyList<ArmApplicationAuthorization> Authorizations { get; }
         /// <summary> The managed application management mode. </summary>
+        [WirePath("properties.managementMode")]
         public ArmApplicationManagementMode? ManagementMode { get; }
         /// <summary> The read-only customer support property that is retrieved from the application package. </summary>
+        [WirePath("properties.customerSupport")]
         public ArmApplicationPackageContact CustomerSupport { get; }
         /// <summary> The read-only support URLs property that is retrieved from the application package. </summary>
+        [WirePath("properties.supportUrls")]
         public ArmApplicationPackageSupportUris SupportUris { get; }
         /// <summary> The collection of managed application artifacts. </summary>
+        [WirePath("properties.artifacts")]
         public IReadOnlyList<ArmApplicationArtifact> Artifacts { get; }
         /// <summary> The client entity that created the JIT request. </summary>
+        [WirePath("properties.createdBy")]
         public ArmApplicationDetails CreatedBy { get; }
         /// <summary> The client entity that last updated the JIT request. </summary>
+        [WirePath("properties.updatedBy")]
         public ArmApplicationDetails UpdatedBy { get; }
     }
 }

@@ -24,7 +24,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia);
             }
             if (Optional.IsDefined(Description))
             {
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<ParameterSpecification>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -53,14 +53,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("url"u8);
-            writer.WriteObjectValue(Url);
+            writer.WriteObjectValue<object>(Url);
             if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
@@ -69,38 +69,38 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
-                writer.WriteObjectValue(UserName);
+                writer.WriteObjectValue<object>(UserName);
             }
             if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
-                writer.WriteObjectValue(Password);
+                writer.WriteObjectValue<SecretBase>(Password);
             }
             if (Optional.IsDefined(EmbeddedCertData))
             {
                 writer.WritePropertyName("embeddedCertData"u8);
-                writer.WriteObjectValue(EmbeddedCertData);
+                writer.WriteObjectValue<object>(EmbeddedCertData);
             }
             if (Optional.IsDefined(CertThumbprint))
             {
                 writer.WritePropertyName("certThumbprint"u8);
-                writer.WriteObjectValue(CertThumbprint);
+                writer.WriteObjectValue<object>(CertThumbprint);
             }
             if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
-                writer.WriteObjectValue(EncryptedCredential);
+                writer.WriteObjectValue<object>(EncryptedCredential);
             }
             if (Optional.IsDefined(EnableServerCertificateValidation))
             {
                 writer.WritePropertyName("enableServerCertificateValidation"u8);
-                writer.WriteObjectValue(EnableServerCertificateValidation);
+                writer.WriteObjectValue<object>(EnableServerCertificateValidation);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -112,18 +112,18 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             string type = default;
-            Optional<IntegrationRuntimeReference> connectVia = default;
-            Optional<string> description = default;
-            Optional<IDictionary<string, ParameterSpecification>> parameters = default;
-            Optional<IList<object>> annotations = default;
+            IntegrationRuntimeReference connectVia = default;
+            string description = default;
+            IDictionary<string, ParameterSpecification> parameters = default;
+            IList<object> annotations = default;
             object url = default;
-            Optional<HttpAuthenticationType> authenticationType = default;
-            Optional<object> userName = default;
-            Optional<SecretBase> password = default;
-            Optional<object> embeddedCertData = default;
-            Optional<object> certThumbprint = default;
-            Optional<object> encryptedCredential = default;
-            Optional<object> enableServerCertificateValidation = default;
+            HttpAuthenticationType? authenticationType = default;
+            object userName = default;
+            SecretBase password = default;
+            object embeddedCertData = default;
+            object certThumbprint = default;
+            object encryptedCredential = default;
+            object enableServerCertificateValidation = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -265,14 +265,28 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HttpLinkedService(type, connectVia.Value, description.Value, Optional.ToDictionary(parameters), Optional.ToList(annotations), additionalProperties, url, Optional.ToNullable(authenticationType), userName.Value, password.Value, embeddedCertData.Value, certThumbprint.Value, encryptedCredential.Value, enableServerCertificateValidation.Value);
+            return new HttpLinkedService(
+                type,
+                connectVia,
+                description,
+                parameters ?? new ChangeTrackingDictionary<string, ParameterSpecification>(),
+                annotations ?? new ChangeTrackingList<object>(),
+                additionalProperties,
+                url,
+                authenticationType,
+                userName,
+                password,
+                embeddedCertData,
+                certThumbprint,
+                encryptedCredential,
+                enableServerCertificateValidation);
         }
 
         internal partial class HttpLinkedServiceConverter : JsonConverter<HttpLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, HttpLinkedService model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<HttpLinkedService>(model);
             }
             public override HttpLinkedService Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

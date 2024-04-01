@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class ParquetWriteSettings : IUtf8JsonSerializable
+    public partial class ParquetWriteSettings : IUtf8JsonSerializable, IJsonModel<ParquetWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<ParquetWriteSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<ParquetWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(MaxRowsPerFile))
             {
@@ -45,14 +54,28 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static ParquetWriteSettings DeserializeParquetWriteSettings(JsonElement element)
+        ParquetWriteSettings IJsonModel<ParquetWriteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeParquetWriteSettings(document.RootElement, options);
+        }
+
+        internal static ParquetWriteSettings DeserializeParquetWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<int>> maxRowsPerFile = default;
-            Optional<DataFactoryElement<string>> fileNamePrefix = default;
+            DataFactoryElement<int> maxRowsPerFile = default;
+            DataFactoryElement<string> fileNamePrefix = default;
             string type = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -84,7 +107,38 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new ParquetWriteSettings(type, additionalProperties, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new ParquetWriteSettings(type, additionalProperties, maxRowsPerFile, fileNamePrefix);
         }
+
+        BinaryData IPersistableModel<ParquetWriteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        ParquetWriteSettings IPersistableModel<ParquetWriteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<ParquetWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeParquetWriteSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<ParquetWriteSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

@@ -22,12 +22,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
-                writer.WriteObjectValue(LinkedServiceName);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             }
             if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<ActivityPolicy>(Policy);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -54,7 +54,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ActivityDependency>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserProperty>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStartArray();
                 foreach (var item in StorageLinkedServices)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LinkedServiceReference>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -91,7 +91,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -101,13 +101,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 writer.WriteStringValue(GetDebugInfo.Value.ToString());
             }
             writer.WritePropertyName("className"u8);
-            writer.WriteObjectValue(ClassName);
+            writer.WriteObjectValue<object>(ClassName);
             writer.WritePropertyName("jarFilePath"u8);
-            writer.WriteObjectValue(JarFilePath);
+            writer.WriteObjectValue<object>(JarFilePath);
             if (Optional.IsDefined(JarLinkedService))
             {
                 writer.WritePropertyName("jarLinkedService"u8);
-                writer.WriteObjectValue(JarLinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(JarLinkedService);
             }
             if (Optional.IsCollectionDefined(JarLibs))
             {
@@ -120,7 +120,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -136,7 +136,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
@@ -144,7 +144,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -155,23 +155,23 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> linkedServiceName = default;
-            Optional<ActivityPolicy> policy = default;
+            LinkedServiceReference linkedServiceName = default;
+            ActivityPolicy policy = default;
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<ActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<ActivityDependency>> dependsOn = default;
-            Optional<IList<UserProperty>> userProperties = default;
-            Optional<IList<LinkedServiceReference>> storageLinkedServices = default;
-            Optional<IList<object>> arguments = default;
-            Optional<HDInsightActivityDebugInfoOption> getDebugInfo = default;
+            string description = default;
+            ActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<ActivityDependency> dependsOn = default;
+            IList<UserProperty> userProperties = default;
+            IList<LinkedServiceReference> storageLinkedServices = default;
+            IList<object> arguments = default;
+            HDInsightActivityDebugInfoOption? getDebugInfo = default;
             object className = default;
             object jarFilePath = default;
-            Optional<LinkedServiceReference> jarLinkedService = default;
-            Optional<IList<object>> jarLibs = default;
-            Optional<IDictionary<string, object>> defines = default;
+            LinkedServiceReference jarLinkedService = default;
+            IList<object> jarLibs = default;
+            IDictionary<string, object> defines = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -375,14 +375,32 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new HDInsightMapReduceActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, linkedServiceName.Value, policy.Value, Optional.ToList(storageLinkedServices), Optional.ToList(arguments), Optional.ToNullable(getDebugInfo), className, jarFilePath, jarLinkedService.Value, Optional.ToList(jarLibs), Optional.ToDictionary(defines));
+            return new HDInsightMapReduceActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<ActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<UserProperty>(),
+                additionalProperties,
+                linkedServiceName,
+                policy,
+                storageLinkedServices ?? new ChangeTrackingList<LinkedServiceReference>(),
+                arguments ?? new ChangeTrackingList<object>(),
+                getDebugInfo,
+                className,
+                jarFilePath,
+                jarLinkedService,
+                jarLibs ?? new ChangeTrackingList<object>(),
+                defines ?? new ChangeTrackingDictionary<string, object>());
         }
 
         internal partial class HDInsightMapReduceActivityConverter : JsonConverter<HDInsightMapReduceActivity>
         {
             public override void Write(Utf8JsonWriter writer, HDInsightMapReduceActivity model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<HDInsightMapReduceActivity>(model);
             }
             public override HDInsightMapReduceActivity Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

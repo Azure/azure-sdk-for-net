@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> primarySubnet = default;
-            Optional<string> secondarySubnet = default;
-            Optional<ResourceIdentifier> expressRouteId = default;
-            Optional<ResourceIdentifier> expressRoutePrivatePeeringId = default;
+            string primarySubnet = default;
+            string secondarySubnet = default;
+            ResourceIdentifier expressRouteId = default;
+            ResourceIdentifier expressRoutePrivatePeeringId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuit(primarySubnet.Value, secondarySubnet.Value, expressRouteId.Value, expressRoutePrivatePeeringId.Value, serializedAdditionalRawData);
+            return new ExpressRouteCircuit(primarySubnet, secondarySubnet, expressRouteId, expressRoutePrivatePeeringId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuit>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeExpressRouteCircuit(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuit)} does not support reading '{options.Format}' format.");
             }
         }
 

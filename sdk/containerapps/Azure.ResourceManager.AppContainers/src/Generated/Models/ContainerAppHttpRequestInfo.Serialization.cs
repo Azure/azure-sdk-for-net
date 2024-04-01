@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 writer.WriteStartArray();
                 foreach (var item in HttpHeaders)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppHttpHeaderInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpRequestInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,11 +91,11 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> host = default;
-            Optional<IList<ContainerAppHttpHeaderInfo>> httpHeaders = default;
-            Optional<string> path = default;
+            string host = default;
+            IList<ContainerAppHttpHeaderInfo> httpHeaders = default;
+            string path = default;
             int port = default;
-            Optional<ContainerAppHttpScheme> scheme = default;
+            ContainerAppHttpScheme? scheme = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     List<ContainerAppHttpHeaderInfo> array = new List<ContainerAppHttpHeaderInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerAppHttpHeaderInfo.DeserializeContainerAppHttpHeaderInfo(item));
+                        array.Add(ContainerAppHttpHeaderInfo.DeserializeContainerAppHttpHeaderInfo(item, options));
                     }
                     httpHeaders = array;
                     continue;
@@ -144,7 +144,13 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppHttpRequestInfo(host.Value, Optional.ToList(httpHeaders), path.Value, port, Optional.ToNullable(scheme), serializedAdditionalRawData);
+            return new ContainerAppHttpRequestInfo(
+                host,
+                httpHeaders ?? new ChangeTrackingList<ContainerAppHttpHeaderInfo>(),
+                path,
+                port,
+                scheme,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppHttpRequestInfo>.Write(ModelReaderWriterOptions options)
@@ -156,7 +162,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +178,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppHttpRequestInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppHttpRequestInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

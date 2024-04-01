@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableServiceSkuSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableServiceSkuSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableServiceSkuSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableServiceSkuSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableServiceSkuSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableServiceSkuSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> family = default;
-            Optional<string> size = default;
-            Optional<string> tier = default;
+            string name = default;
+            string family = default;
+            string size = default;
+            string tier = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableServiceSkuSku(name.Value, family.Value, size.Value, tier.Value, serializedAdditionalRawData);
+            return new AvailableServiceSkuSku(name, family, size, tier, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableServiceSkuSku>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableServiceSkuSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableServiceSkuSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeAvailableServiceSkuSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableServiceSkuSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableServiceSkuSku)} does not support reading '{options.Format}' format.");
             }
         }
 

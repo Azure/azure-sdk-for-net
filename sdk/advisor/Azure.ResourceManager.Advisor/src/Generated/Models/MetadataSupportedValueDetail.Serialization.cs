@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetadataSupportedValueDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetadataSupportedValueDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetadataSupportedValueDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetadataSupportedValueDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetadataSupportedValueDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetadataSupportedValueDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> displayName = default;
+            string id = default;
+            string displayName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MetadataSupportedValueDetail(id.Value, displayName.Value, serializedAdditionalRawData);
+            return new MetadataSupportedValueDetail(id, displayName, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MetadataSupportedValueDetail>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetadataSupportedValueDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetadataSupportedValueDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Advisor.Models
                         return DeserializeMetadataSupportedValueDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetadataSupportedValueDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetadataSupportedValueDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

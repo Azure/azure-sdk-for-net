@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(FixedScale))
             {
                 writer.WritePropertyName("fixedScale"u8);
-                writer.WriteObjectValue(FixedScale);
+                writer.WriteObjectValue<BatchAccountFixedScaleSettings>(FixedScale, options);
             }
             if (Optional.IsDefined(AutoScale))
             {
                 writer.WritePropertyName("autoScale"u8);
-                writer.WriteObjectValue(AutoScale);
+                writer.WriteObjectValue<BatchAccountAutoScaleSettings>(AutoScale, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountPoolScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchAccountFixedScaleSettings> fixedScale = default;
-            Optional<BatchAccountAutoScaleSettings> autoScale = default;
+            BatchAccountFixedScaleSettings fixedScale = default;
+            BatchAccountAutoScaleSettings autoScale = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value);
+                    fixedScale = BatchAccountFixedScaleSettings.DeserializeBatchAccountFixedScaleSettings(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("autoScale"u8))
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    autoScale = BatchAccountAutoScaleSettings.DeserializeBatchAccountAutoScaleSettings(property.Value);
+                    autoScale = BatchAccountAutoScaleSettings.DeserializeBatchAccountAutoScaleSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchAccountPoolScaleSettings(fixedScale.Value, autoScale.Value, serializedAdditionalRawData);
+            return new BatchAccountPoolScaleSettings(fixedScale, autoScale, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchAccountPoolScaleSettings>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountPoolScaleSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountPoolScaleSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in ZoneDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformSkuZoneDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformSkuLocationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
-            Optional<IReadOnlyList<string>> zones = default;
-            Optional<IReadOnlyList<AppPlatformSkuZoneDetails>> zoneDetails = default;
+            AzureLocation? location = default;
+            IReadOnlyList<string> zones = default;
+            IReadOnlyList<AppPlatformSkuZoneDetails> zoneDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformSkuZoneDetails> array = new List<AppPlatformSkuZoneDetails>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformSkuZoneDetails.DeserializeAppPlatformSkuZoneDetails(item));
+                        array.Add(AppPlatformSkuZoneDetails.DeserializeAppPlatformSkuZoneDetails(item, options));
                     }
                     zoneDetails = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformSkuLocationInfo(Optional.ToNullable(location), Optional.ToList(zones), Optional.ToList(zoneDetails), serializedAdditionalRawData);
+            return new AppPlatformSkuLocationInfo(location, zones ?? new ChangeTrackingList<string>(), zoneDetails ?? new ChangeTrackingList<AppPlatformSkuZoneDetails>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformSkuLocationInfo>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformSkuLocationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformSkuLocationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

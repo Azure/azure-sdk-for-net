@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models;
@@ -20,6 +19,38 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
     /// </summary>
     public partial class LocalRulestackRuleData : ResourceData
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="LocalRulestackRuleData"/>. </summary>
         /// <param name="ruleName"> rule name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="ruleName"/> is null. </exception>
@@ -58,7 +89,8 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
         /// <param name="decryptionRuleType"> enable or disable decryption. </param>
         /// <param name="tags"> tag for rule. </param>
         /// <param name="provisioningState"> Provisioning state of the resource. </param>
-        internal LocalRulestackRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string ruleName, int? priority, string description, RulestackStateType? ruleState, SourceAddressInfo source, FirewallBooleanType? negateSource, DestinationAddressInfo destination, FirewallBooleanType? negateDestination, IList<string> applications, EdlMatchCategory category, string protocol, IList<string> protocolPortList, string inboundInspectionCertificate, string auditComment, RulestackActionType? actionType, RulestackStateType? enableLogging, DecryptionRuleType? decryptionRuleType, IList<RulestackTagInfo> tags, FirewallProvisioningState? provisioningState) : base(id, name, resourceType, systemData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal LocalRulestackRuleData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, ETag? etag, string ruleName, int? priority, string description, RulestackStateType? ruleState, SourceAddressInfo source, FirewallBooleanType? negateSource, DestinationAddressInfo destination, FirewallBooleanType? negateDestination, IList<string> applications, EdlMatchCategory category, string protocol, IList<string> protocolPortList, string inboundInspectionCertificate, string auditComment, RulestackActionType? actionType, RulestackStateType? enableLogging, DecryptionRuleType? decryptionRuleType, IList<RulestackTagInfo> tags, FirewallProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
         {
             ETag = etag;
             RuleName = ruleName;
@@ -80,6 +112,12 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw
             DecryptionRuleType = decryptionRuleType;
             Tags = tags;
             ProvisioningState = provisioningState;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="LocalRulestackRuleData"/> for deserialization. </summary>
+        internal LocalRulestackRuleData()
+        {
         }
 
         /// <summary> etag info. </summary>

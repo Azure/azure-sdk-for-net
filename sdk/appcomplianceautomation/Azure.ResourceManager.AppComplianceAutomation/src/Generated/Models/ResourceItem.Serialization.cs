@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             {
                 return null;
             }
-            Optional<string> subscriptionId = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceId = default;
+            string subscriptionId = default;
+            string resourceGroup = default;
+            string resourceType = default;
+            string resourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceItem(subscriptionId.Value, resourceGroup.Value, resourceType.Value, resourceId.Value, serializedAdditionalRawData);
+            return new ResourceItem(subscriptionId, resourceGroup, resourceType, resourceId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceItem>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeResourceItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceItem)} does not support reading '{options.Format}' format.");
             }
         }
 

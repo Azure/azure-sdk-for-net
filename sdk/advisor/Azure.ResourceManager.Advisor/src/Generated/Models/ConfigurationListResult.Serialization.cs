@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConfigData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Advisor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Advisor.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConfigData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConfigData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Advisor.Models
                     List<ConfigData> array = new List<ConfigData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConfigData.DeserializeConfigData(item));
+                        array.Add(ConfigData.DeserializeConfigData(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ConfigurationListResult(value ?? new ChangeTrackingList<ConfigData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Advisor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Advisor.Models
                         return DeserializeConfigurationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

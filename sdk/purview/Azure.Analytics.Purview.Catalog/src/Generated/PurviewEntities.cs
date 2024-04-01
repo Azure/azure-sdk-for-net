@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -2598,7 +2597,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (guids != null && Optional.IsCollectionDefined(guids))
+            if (guids != null && !(guids is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in guids)
                 {
@@ -2613,7 +2612,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("ignoreRelationships", ignoreRelationships.Value, true);
             }
-            if (excludeRelationshipTypes != null && Optional.IsCollectionDefined(excludeRelationshipTypes))
+            if (excludeRelationshipTypes != null && !(excludeRelationshipTypes is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in excludeRelationshipTypes)
                 {
@@ -2650,7 +2649,7 @@ namespace Azure.Analytics.Purview.Catalog
             uri.Reset(_endpoint);
             uri.AppendRaw("/catalog/api", false);
             uri.AppendPath("/atlas/v2/entity/bulk", false);
-            if (guids != null && Optional.IsCollectionDefined(guids))
+            if (guids != null && !(guids is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in guids)
                 {

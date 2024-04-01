@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<IncludedQuantityUtilizationSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,13 +124,13 @@ namespace Azure.ResourceManager.CostManagement.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> armSkuName = default;
-            Optional<string> benefitId = default;
-            Optional<string> benefitOrderId = default;
-            Optional<BillingAccountBenefitKind> benefitType = default;
-            Optional<DateTimeOffset> usageDate = default;
-            Optional<decimal> utilizationPercentage = default;
+            SystemData systemData = default;
+            string armSkuName = default;
+            string benefitId = default;
+            string benefitOrderId = default;
+            BillingAccountBenefitKind? benefitType = default;
+            DateTimeOffset? usageDate = default;
+            decimal? utilizationPercentage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,19 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IncludedQuantityUtilizationSummary(id, name, type, systemData.Value, kind, serializedAdditionalRawData, armSkuName.Value, benefitId.Value, benefitOrderId.Value, Optional.ToNullable(benefitType), Optional.ToNullable(usageDate), Optional.ToNullable(utilizationPercentage));
+            return new IncludedQuantityUtilizationSummary(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                armSkuName,
+                benefitId,
+                benefitOrderId,
+                benefitType,
+                usageDate,
+                utilizationPercentage);
         }
 
         BinaryData IPersistableModel<IncludedQuantityUtilizationSummary>.Write(ModelReaderWriterOptions options)
@@ -236,7 +248,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +264,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeIncludedQuantityUtilizationSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IncludedQuantityUtilizationSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

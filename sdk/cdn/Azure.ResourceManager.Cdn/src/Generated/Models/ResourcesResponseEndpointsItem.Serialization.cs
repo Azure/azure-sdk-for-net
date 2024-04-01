@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponseEndpointsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesResponseEndpointsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcesResponseEndpointsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 writer.WriteStartArray();
                 foreach (var item in CustomDomains)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourcesResponseEndpointsPropertiesItemsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourcesResponseEndpointsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourcesResponseEndpointsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourcesResponseEndpointsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<string> id = default;
-            Optional<string> name = default;
-            Optional<bool> history = default;
-            Optional<IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem>> customDomains = default;
+            string id = default;
+            string name = default;
+            bool? history = default;
+            IReadOnlyList<ResourcesResponseEndpointsPropertiesItemsItem> customDomains = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     List<ResourcesResponseEndpointsPropertiesItemsItem> array = new List<ResourcesResponseEndpointsPropertiesItemsItem>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourcesResponseEndpointsPropertiesItemsItem.DeserializeResourcesResponseEndpointsPropertiesItemsItem(item));
+                        array.Add(ResourcesResponseEndpointsPropertiesItemsItem.DeserializeResourcesResponseEndpointsPropertiesItemsItem(item, options));
                     }
                     customDomains = array;
                     continue;
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourcesResponseEndpointsItem(id.Value, name.Value, Optional.ToNullable(history), Optional.ToList(customDomains), serializedAdditionalRawData);
+            return new ResourcesResponseEndpointsItem(id, name, history, customDomains ?? new ChangeTrackingList<ResourcesResponseEndpointsPropertiesItemsItem>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourcesResponseEndpointsItem>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesResponseEndpointsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcesResponseEndpointsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeResourcesResponseEndpointsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourcesResponseEndpointsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourcesResponseEndpointsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

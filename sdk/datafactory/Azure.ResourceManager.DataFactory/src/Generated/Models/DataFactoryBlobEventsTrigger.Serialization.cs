@@ -6,16 +6,25 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class DataFactoryBlobEventsTrigger : IUtf8JsonSerializable
+    public partial class DataFactoryBlobEventsTrigger : IUtf8JsonSerializable, IJsonModel<DataFactoryBlobEventsTrigger>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<DataFactoryBlobEventsTrigger>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<DataFactoryBlobEventsTrigger>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsCollectionDefined(Pipelines))
             {
@@ -23,7 +32,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TriggerPipelineReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -33,6 +42,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
+            }
+            if (options.Format != "W" && Optional.IsDefined(RuntimeState))
+            {
+                writer.WritePropertyName("runtimeState"u8);
+                writer.WriteStringValue(RuntimeState.Value.ToString());
             }
             if (Optional.IsCollectionDefined(Annotations))
             {
@@ -98,20 +112,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static DataFactoryBlobEventsTrigger DeserializeDataFactoryBlobEventsTrigger(JsonElement element)
+        DataFactoryBlobEventsTrigger IJsonModel<DataFactoryBlobEventsTrigger>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeDataFactoryBlobEventsTrigger(document.RootElement, options);
+        }
+
+        internal static DataFactoryBlobEventsTrigger DeserializeDataFactoryBlobEventsTrigger(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<IList<TriggerPipelineReference>> pipelines = default;
+            IList<TriggerPipelineReference> pipelines = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<DataFactoryTriggerRuntimeState> runtimeState = default;
-            Optional<IList<BinaryData>> annotations = default;
-            Optional<string> blobPathBeginsWith = default;
-            Optional<string> blobPathEndsWith = default;
-            Optional<bool> ignoreEmptyBlobs = default;
+            string description = default;
+            DataFactoryTriggerRuntimeState? runtimeState = default;
+            IList<BinaryData> annotations = default;
+            string blobPathBeginsWith = default;
+            string blobPathEndsWith = default;
+            bool? ignoreEmptyBlobs = default;
             IList<DataFactoryBlobEventType> events = default;
             string scope = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -127,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<TriggerPipelineReference> array = new List<TriggerPipelineReference>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item));
+                        array.Add(TriggerPipelineReference.DeserializeTriggerPipelineReference(item, options));
                     }
                     pipelines = array;
                     continue;
@@ -221,7 +249,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DataFactoryBlobEventsTrigger(type, description.Value, Optional.ToNullable(runtimeState), Optional.ToList(annotations), additionalProperties, Optional.ToList(pipelines), blobPathBeginsWith.Value, blobPathEndsWith.Value, Optional.ToNullable(ignoreEmptyBlobs), events, scope);
+            return new DataFactoryBlobEventsTrigger(
+                type,
+                description,
+                runtimeState,
+                annotations ?? new ChangeTrackingList<BinaryData>(),
+                additionalProperties,
+                pipelines ?? new ChangeTrackingList<TriggerPipelineReference>(),
+                blobPathBeginsWith,
+                blobPathEndsWith,
+                ignoreEmptyBlobs,
+                events,
+                scope);
         }
+
+        BinaryData IPersistableModel<DataFactoryBlobEventsTrigger>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        DataFactoryBlobEventsTrigger IPersistableModel<DataFactoryBlobEventsTrigger>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<DataFactoryBlobEventsTrigger>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeDataFactoryBlobEventsTrigger(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(DataFactoryBlobEventsTrigger)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<DataFactoryBlobEventsTrigger>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

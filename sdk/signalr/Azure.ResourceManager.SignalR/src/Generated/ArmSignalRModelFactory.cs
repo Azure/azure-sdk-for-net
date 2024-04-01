@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.SignalR;
 
 namespace Azure.ResourceManager.SignalR.Models
 {
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRNameAvailabilityResult"/> instance for mocking. </returns>
         public static SignalRNameAvailabilityResult SignalRNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new SignalRNameAvailabilityResult(isNameAvailable, reason, message);
+            return new SignalRNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignalRUsage"/>. </summary>
@@ -36,7 +35,13 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRUsage"/> instance for mocking. </returns>
         public static SignalRUsage SignalRUsage(ResourceIdentifier id = null, long? currentValue = null, long? limit = null, SignalRUsageName name = null, string unit = null)
         {
-            return new SignalRUsage(id, currentValue, limit, name, unit);
+            return new SignalRUsage(
+                id,
+                currentValue,
+                limit,
+                name,
+                unit,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignalRUsageName"/>. </summary>
@@ -45,7 +50,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRUsageName"/> instance for mocking. </returns>
         public static SignalRUsageName SignalRUsageName(string value = null, string localizedValue = null)
         {
-            return new SignalRUsageName(value, localizedValue);
+            return new SignalRUsageName(value, localizedValue, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalR.SignalRData"/>. </summary>
@@ -107,7 +112,36 @@ namespace Azure.ResourceManager.SignalR.Models
             corsAllowedOrigins ??= new List<string>();
             upstreamTemplates ??= new List<SignalRUpstreamTemplate>();
 
-            return new SignalRData(id, name, resourceType, systemData, tags, location, sku, kind, identity, provisioningState, externalIP, hostName, publicPort, serverPort, version, privateEndpointConnections?.ToList(), sharedPrivateLinkResources?.ToList(), isClientCertEnabled != null ? new SignalRTlsSettings(isClientCertEnabled) : null, hostNamePrefix, features?.ToList(), liveTraceConfiguration, resourceLogCategories != null ? new SignalRResourceLogCategoryListResult(resourceLogCategories?.ToList()) : null, corsAllowedOrigins != null ? new SignalRCorsSettings(corsAllowedOrigins?.ToList()) : null, upstreamTemplates != null ? new ServerlessUpstreamSettings(upstreamTemplates?.ToList()) : null, networkACLs, publicNetworkAccess, disableLocalAuth, disableAadAuth);
+            return new SignalRData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                kind,
+                identity,
+                provisioningState,
+                externalIP,
+                hostName,
+                publicPort,
+                serverPort,
+                version,
+                privateEndpointConnections?.ToList(),
+                sharedPrivateLinkResources?.ToList(),
+                isClientCertEnabled != null ? new SignalRTlsSettings(isClientCertEnabled, serializedAdditionalRawData: null) : null,
+                hostNamePrefix,
+                features?.ToList(),
+                liveTraceConfiguration,
+                resourceLogCategories != null ? new SignalRResourceLogCategoryListResult(resourceLogCategories?.ToList(), serializedAdditionalRawData: null) : null,
+                corsAllowedOrigins != null ? new SignalRCorsSettings(corsAllowedOrigins?.ToList(), serializedAdditionalRawData: null) : null,
+                upstreamTemplates != null ? new ServerlessUpstreamSettings(upstreamTemplates?.ToList(), serializedAdditionalRawData: null) : null,
+                networkACLs,
+                publicNetworkAccess,
+                disableLocalAuth,
+                disableAadAuth,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignalRResourceSku"/>. </summary>
@@ -133,7 +167,13 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRResourceSku"/> instance for mocking. </returns>
         public static SignalRResourceSku SignalRResourceSku(string name = null, SignalRSkuTier? tier = null, string size = null, string family = null, int? capacity = null)
         {
-            return new SignalRResourceSku(name, tier, size, family, capacity);
+            return new SignalRResourceSku(
+                name,
+                tier,
+                size,
+                family,
+                capacity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalR.SignalRPrivateEndpointConnectionData"/>. </summary>
@@ -150,7 +190,16 @@ namespace Azure.ResourceManager.SignalR.Models
         {
             groupIds ??= new List<string>();
 
-            return new SignalRPrivateEndpointConnectionData(id, name, resourceType, systemData, provisioningState, privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null, groupIds?.ToList(), connectionState);
+            return new SignalRPrivateEndpointConnectionData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                privateEndpointId != null ? ResourceManagerModelFactory.WritableSubResource(privateEndpointId) : null,
+                groupIds?.ToList(),
+                connectionState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalR.SignalRSharedPrivateLinkResourceData"/>. </summary>
@@ -166,7 +215,17 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="SignalR.SignalRSharedPrivateLinkResourceData"/> instance for mocking. </returns>
         public static SignalRSharedPrivateLinkResourceData SignalRSharedPrivateLinkResourceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string groupId = null, ResourceIdentifier privateLinkResourceId = null, SignalRProvisioningState? provisioningState = null, string requestMessage = null, SignalRSharedPrivateLinkResourceStatus? status = null)
         {
-            return new SignalRSharedPrivateLinkResourceData(id, name, resourceType, systemData, groupId, privateLinkResourceId, provisioningState, requestMessage, status);
+            return new SignalRSharedPrivateLinkResourceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                privateLinkResourceId,
+                provisioningState,
+                requestMessage,
+                status,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalR.SignalRCustomCertificateData"/>. </summary>
@@ -181,7 +240,16 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="SignalR.SignalRCustomCertificateData"/> instance for mocking. </returns>
         public static SignalRCustomCertificateData SignalRCustomCertificateData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SignalRProvisioningState? provisioningState = null, Uri keyVaultBaseUri = null, string keyVaultSecretName = null, string keyVaultSecretVersion = null)
         {
-            return new SignalRCustomCertificateData(id, name, resourceType, systemData, provisioningState, keyVaultBaseUri, keyVaultSecretName, keyVaultSecretVersion);
+            return new SignalRCustomCertificateData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                keyVaultBaseUri,
+                keyVaultSecretName,
+                keyVaultSecretVersion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="SignalR.SignalRCustomDomainData"/>. </summary>
@@ -195,7 +263,15 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="SignalR.SignalRCustomDomainData"/> instance for mocking. </returns>
         public static SignalRCustomDomainData SignalRCustomDomainData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, SignalRProvisioningState? provisioningState = null, string domainName = null, ResourceIdentifier customCertificateId = null)
         {
-            return new SignalRCustomDomainData(id, name, resourceType, systemData, provisioningState, domainName, customCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(customCertificateId) : null);
+            return new SignalRCustomDomainData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                provisioningState,
+                domainName,
+                customCertificateId != null ? ResourceManagerModelFactory.WritableSubResource(customCertificateId) : null,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignalRKeys"/>. </summary>
@@ -206,7 +282,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRKeys"/> instance for mocking. </returns>
         public static SignalRKeys SignalRKeys(string primaryKey = null, string secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null)
         {
-            return new SignalRKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString);
+            return new SignalRKeys(primaryKey, secondaryKey, primaryConnectionString, secondaryConnectionString, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignalRPrivateLinkResource"/>. </summary>
@@ -225,7 +301,16 @@ namespace Azure.ResourceManager.SignalR.Models
             requiredZoneNames ??= new List<string>();
             shareablePrivateLinkResourceTypes ??= new List<ShareablePrivateLinkResourceType>();
 
-            return new SignalRPrivateLinkResource(id, name, resourceType, systemData, groupId, requiredMembers?.ToList(), requiredZoneNames?.ToList(), shareablePrivateLinkResourceTypes?.ToList());
+            return new SignalRPrivateLinkResource(
+                id,
+                name,
+                resourceType,
+                systemData,
+                groupId,
+                requiredMembers?.ToList(),
+                requiredZoneNames?.ToList(),
+                shareablePrivateLinkResourceTypes?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignalRSku"/>. </summary>
@@ -235,7 +320,7 @@ namespace Azure.ResourceManager.SignalR.Models
         /// <returns> A new <see cref="Models.SignalRSku"/> instance for mocking. </returns>
         public static SignalRSku SignalRSku(ResourceType? resourceType = null, SignalRResourceSku sku = null, SignalRSkuCapacity capacity = null)
         {
-            return new SignalRSku(resourceType, sku, capacity);
+            return new SignalRSku(resourceType, sku, capacity, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.SignalRSkuCapacity"/>. </summary>
@@ -249,7 +334,13 @@ namespace Azure.ResourceManager.SignalR.Models
         {
             allowedValues ??= new List<int>();
 
-            return new SignalRSkuCapacity(minimum, maximum, @default, allowedValues?.ToList(), scaleType);
+            return new SignalRSkuCapacity(
+                minimum,
+                maximum,
+                @default,
+                allowedValues?.ToList(),
+                scaleType,
+                serializedAdditionalRawData: null);
         }
     }
 }

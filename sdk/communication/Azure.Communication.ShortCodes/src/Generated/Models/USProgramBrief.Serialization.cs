@@ -35,7 +35,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in ReviewNotes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReviewNote>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -45,7 +45,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ShortCodeCost>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -62,22 +62,22 @@ namespace Azure.Communication.ShortCodes.Models
             if (Optional.IsDefined(ProgramDetails))
             {
                 writer.WritePropertyName("programDetails"u8);
-                writer.WriteObjectValue(ProgramDetails);
+                writer.WriteObjectValue<ProgramDetails>(ProgramDetails);
             }
             if (Optional.IsDefined(CompanyInformation))
             {
                 writer.WritePropertyName("companyInformation"u8);
-                writer.WriteObjectValue(CompanyInformation);
+                writer.WriteObjectValue<CompanyInformation>(CompanyInformation);
             }
             if (Optional.IsDefined(MessageDetails))
             {
                 writer.WritePropertyName("messageDetails"u8);
-                writer.WriteObjectValue(MessageDetails);
+                writer.WriteObjectValue<MessageDetails>(MessageDetails);
             }
             if (Optional.IsDefined(TrafficDetails))
             {
                 writer.WritePropertyName("trafficDetails"u8);
-                writer.WriteObjectValue(TrafficDetails);
+                writer.WriteObjectValue<TrafficDetails>(TrafficDetails);
             }
             writer.WriteEndObject();
         }
@@ -89,16 +89,16 @@ namespace Azure.Communication.ShortCodes.Models
                 return null;
             }
             Guid id = default;
-            Optional<ProgramBriefStatus> status = default;
-            Optional<string> number = default;
-            Optional<IList<ReviewNote>> reviewNotes = default;
-            Optional<IList<ShortCodeCost>> costs = default;
-            Optional<DateTimeOffset> submissionDate = default;
-            Optional<DateTimeOffset> statusUpdatedDate = default;
-            Optional<ProgramDetails> programDetails = default;
-            Optional<CompanyInformation> companyInformation = default;
-            Optional<MessageDetails> messageDetails = default;
-            Optional<TrafficDetails> trafficDetails = default;
+            ProgramBriefStatus? status = default;
+            string number = default;
+            IList<ReviewNote> reviewNotes = default;
+            IList<ShortCodeCost> costs = default;
+            DateTimeOffset? submissionDate = default;
+            DateTimeOffset? statusUpdatedDate = default;
+            ProgramDetails programDetails = default;
+            CompanyInformation companyInformation = default;
+            MessageDetails messageDetails = default;
+            TrafficDetails trafficDetails = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("id"u8))
@@ -203,7 +203,18 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new USProgramBrief(id, Optional.ToNullable(status), number.Value, Optional.ToList(reviewNotes), Optional.ToList(costs), Optional.ToNullable(submissionDate), Optional.ToNullable(statusUpdatedDate), programDetails.Value, companyInformation.Value, messageDetails.Value, trafficDetails.Value);
+            return new USProgramBrief(
+                id,
+                status,
+                number,
+                reviewNotes ?? new ChangeTrackingList<ReviewNote>(),
+                costs ?? new ChangeTrackingList<ShortCodeCost>(),
+                submissionDate,
+                statusUpdatedDate,
+                programDetails,
+                companyInformation,
+                messageDetails,
+                trafficDetails);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             foreach (var item in Parameters)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<ParameterValue>(item.Value, options);
             }
             writer.WriteEndObject();
             if (Optional.IsDefined(ResourceGroup))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,13 +129,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            IList<string> dependsOn = default;
             string policyDefinitionId = default;
             IDictionary<string, ParameterValue> parameters = default;
-            Optional<string> resourceGroup = default;
+            string resourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                             Dictionary<string, ParameterValue> dictionary = new Dictionary<string, ParameterValue>();
                             foreach (var property1 in property0.Value.EnumerateObject())
                             {
-                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value));
+                                dictionary.Add(property1.Name, ParameterValue.DeserializeParameterValue(property1.Value, options));
                             }
                             parameters = dictionary;
                             continue;
@@ -231,7 +231,19 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PolicyAssignmentArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, Optional.ToList(dependsOn), policyDefinitionId, parameters, resourceGroup.Value);
+            return new PolicyAssignmentArtifact(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                displayName,
+                description,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                policyDefinitionId,
+                parameters,
+                resourceGroup);
         }
 
         BinaryData IPersistableModel<PolicyAssignmentArtifact>.Write(ModelReaderWriterOptions options)
@@ -243,7 +255,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -259,7 +271,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializePolicyAssignmentArtifact(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyAssignmentArtifact)} does not support reading '{options.Format}' format.");
             }
         }
 

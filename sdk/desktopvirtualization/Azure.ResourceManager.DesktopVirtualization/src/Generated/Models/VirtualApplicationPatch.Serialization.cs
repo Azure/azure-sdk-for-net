@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualApplicationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualApplicationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualApplicationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualApplicationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualApplicationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,18 +147,18 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
-            Optional<string> filePath = default;
-            Optional<VirtualApplicationCommandLineSetting> commandLineSetting = default;
-            Optional<string> commandLineArguments = default;
-            Optional<bool> showInPortal = default;
-            Optional<string> iconPath = default;
-            Optional<int> iconIndex = default;
-            Optional<string> msixPackageFamilyName = default;
-            Optional<string> msixPackageApplicationId = default;
-            Optional<RemoteApplicationType> applicationType = default;
+            IDictionary<string, string> tags = default;
+            string description = default;
+            string friendlyName = default;
+            string filePath = default;
+            VirtualApplicationCommandLineSetting? commandLineSetting = default;
+            string commandLineArguments = default;
+            bool? showInPortal = default;
+            string iconPath = default;
+            int? iconIndex = default;
+            string msixPackageFamilyName = default;
+            string msixPackageApplicationId = default;
+            RemoteApplicationType? applicationType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -276,7 +276,20 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualApplicationPatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, filePath.Value, Optional.ToNullable(commandLineSetting), commandLineArguments.Value, Optional.ToNullable(showInPortal), iconPath.Value, Optional.ToNullable(iconIndex), msixPackageFamilyName.Value, msixPackageApplicationId.Value, Optional.ToNullable(applicationType), serializedAdditionalRawData);
+            return new VirtualApplicationPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                friendlyName,
+                filePath,
+                commandLineSetting,
+                commandLineArguments,
+                showInPortal,
+                iconPath,
+                iconIndex,
+                msixPackageFamilyName,
+                msixPackageApplicationId,
+                applicationType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualApplicationPatch>.Write(ModelReaderWriterOptions options)
@@ -288,7 +301,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualApplicationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualApplicationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +317,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeVirtualApplicationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualApplicationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualApplicationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeCount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeCount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<DscNodeCountProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeCount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeCount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeCount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<DscNodeCountProperties> properties = default;
+            string name = default;
+            DscNodeCountProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    properties = DscNodeCountProperties.DeserializeDscNodeCountProperties(property.Value);
+                    properties = DscNodeCountProperties.DeserializeDscNodeCountProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodeCount(name.Value, properties.Value, serializedAdditionalRawData);
+            return new DscNodeCount(name, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodeCount>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeCount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeCount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscNodeCount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeCount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeCount)} does not support reading '{options.Format}' format.");
             }
         }
 

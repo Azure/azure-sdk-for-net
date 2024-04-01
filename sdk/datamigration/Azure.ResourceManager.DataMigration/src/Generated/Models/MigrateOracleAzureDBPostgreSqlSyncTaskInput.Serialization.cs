@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            writer.WriteObjectValue<PostgreSqlConnectionInfo>(TargetConnectionInfo, options);
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            writer.WriteObjectValue<OracleConnectionInfo>(SourceConnectionInfo, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateOracleAzureDBPostgreSqlSyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,19 +87,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput> array = new List<MigrateOracleAzureDBPostgreSqlSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigrateOracleAzureDBPostgreSqlSyncDatabaseInput.DeserializeMigrateOracleAzureDBPostgreSqlSyncDatabaseInput(item));
+                        array.Add(MigrateOracleAzureDBPostgreSqlSyncDatabaseInput.DeserializeMigrateOracleAzureDBPostgreSqlSyncDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value);
+                    sourceConnectionInfo = OracleConnectionInfo.DeserializeOracleConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateOracleAzureDBPostgreSqlSyncTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateOracleAzureDBPostgreSqlSyncTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

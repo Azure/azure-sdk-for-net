@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<DigitalTwinsManagedIdentityReference>(Identity, options);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEventGridProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,14 +156,14 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             }
             string topicEndpoint = default;
             string accessKey1 = default;
-            Optional<string> accessKey2 = default;
+            string accessKey2 = default;
             EndpointType endpointType = default;
-            Optional<DigitalTwinsEndpointProvisioningState?> provisioningState = default;
-            Optional<DateTimeOffset?> createdTime = default;
-            Optional<DigitalTwinsAuthenticationType> authenticationType = default;
-            Optional<string> deadLetterSecret = default;
-            Optional<Uri> deadLetterUri = default;
-            Optional<DigitalTwinsManagedIdentityReference> identity = default;
+            DigitalTwinsEndpointProvisioningState? provisioningState = default;
+            DateTimeOffset? createdTime = default;
+            DigitalTwinsAuthenticationType? authenticationType = default;
+            string deadLetterSecret = default;
+            Uri deadLetterUri = default;
+            DigitalTwinsManagedIdentityReference identity = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         identity = null;
                         continue;
                     }
-                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value);
+                    identity = DigitalTwinsManagedIdentityReference.DeserializeDigitalTwinsManagedIdentityReference(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -263,7 +263,18 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DigitalTwinsEventGridProperties(endpointType, Optional.ToNullable(provisioningState), Optional.ToNullable(createdTime), Optional.ToNullable(authenticationType), deadLetterSecret.Value, deadLetterUri.Value, identity.Value, serializedAdditionalRawData, topicEndpoint, accessKey1, accessKey2.Value);
+            return new DigitalTwinsEventGridProperties(
+                endpointType,
+                provisioningState,
+                createdTime,
+                authenticationType,
+                deadLetterSecret,
+                deadLetterUri,
+                identity,
+                serializedAdditionalRawData,
+                topicEndpoint,
+                accessKey1,
+                accessKey2);
         }
 
         BinaryData IPersistableModel<DigitalTwinsEventGridProperties>.Write(ModelReaderWriterOptions options)
@@ -275,7 +286,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -291,7 +302,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         return DeserializeDigitalTwinsEventGridProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsEventGridProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

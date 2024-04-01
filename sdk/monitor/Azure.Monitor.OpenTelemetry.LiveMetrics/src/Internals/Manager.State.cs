@@ -4,7 +4,8 @@
 using System;
 using System.Diagnostics;
 using System.Threading;
-using System.Threading.Tasks;
+using Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Diagnostics;
+using OpenTelemetry;
 
 namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 {
@@ -22,18 +23,18 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
     /// </remarks>
     internal partial class Manager
     {
-        private Action _callbackAction = () => { };
+        private Thread? _backgroundThread;
+        private readonly ManualResetEvent _shutdownEvent = new(false);
 
         private readonly State _state = new();
-
         private TimeSpan _period;
         private bool _shouldCollect = false;
+        private Action _callbackAction = () => { };
         private Func<bool> _evaluateBackoff = () => false;
 
         private readonly TimeSpan _pingPeriod = TimeSpan.FromSeconds(5);
         private readonly TimeSpan _postPeriod = TimeSpan.FromSeconds(1);
         private readonly TimeSpan _backoffPeriod = TimeSpan.FromMinutes(1);
-
         private readonly TimeSpan _maximumPingInterval = TimeSpan.FromSeconds(60);
         private readonly TimeSpan _maximumPostInterval = TimeSpan.FromSeconds(20);
 
@@ -41,9 +42,21 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
 
         private void InitializeState()
         {
+            _backgroundThread = new Thread(Run)
+            {
+                Name = "LiveMetrics State Machine",
+                IsBackground = true,
+            };
+
             SetPingState();
-            Task.Run(() => Run(CancellationToken.None)); // TODO: USE AN ACTUAL CANCELLATION TOKEN
-            // TODO: Investigate use of a dedicated thread here.
+            _backgroundThread.Start();
+        }
+
+        private void ShutdownState()
+        {
+            _shutdownEvent.Set(); // Tell the background thread to exit
+            _backgroundThread?.Join(); // Wait for the thread to finish
+            _shutdownEvent.Dispose();
         }
 
         private void SetPingState()
@@ -58,6 +71,9 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
             // This is used in determining if we should Backoff.
             // If we've been in another state for X amount of time, that may exceed our maximum interval and immediately trigger a Backoff.
             _lastSuccessfulPing = DateTimeOffset.UtcNow;
+
+            // Must reset the metrics cache here.
+            ResetCachedValues();
         }
 
         private void SetPostState()
@@ -78,12 +94,12 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         {
             _state.Update(LiveMetricsState.Backoff);
             _shouldCollect = false;
-            _callbackAction = BackoffConcluded;
+            _callbackAction = OnBackoffConcluded;
             _period = _backoffPeriod;
             _evaluateBackoff = () => false;
         }
 
-        private void BackoffConcluded()
+        private void OnBackoffConcluded()
         {
             // when the backoff period is concluded, we switch to Ping.
             SetPingState();
@@ -94,34 +110,47 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals
         /// This State Machine uses delegates for the callback action and the backoff evaluation.
         /// These delegates are updated whenever a state is changed.
         /// </summary>
-        /// <param name="cancellationToken"></param>
-        private void Run(CancellationToken cancellationToken)
+        private void Run()
         {
-            while (!cancellationToken.IsCancellationRequested)
+            try
             {
-                var callbackStarted = DateTimeOffset.UtcNow;
+                // Suppress the outbound Live Metrics service calls from being collected as dependency telemetry.
+                using var scope = SuppressInstrumentationScope.Begin();
 
-                _callbackAction.Invoke();
-
-                var timeSpentInThisTick = DateTimeOffset.UtcNow - callbackStarted;
-
-                TimeSpan nextTick;
-
-                // Check if we need to backoff.
-                if (_evaluateBackoff.Invoke())
+                while (true)
                 {
-                    Debug.WriteLine($"{DateTime.Now}: Backing off.");
-                    SetBackoffState();
-                    nextTick = _period;
-                }
-                else
-                {
-                    // Subtract the time spent in this tick when scheduling the next tick so that the average period is close to the intended.
-                    nextTick = _period - timeSpentInThisTick;
-                    nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
-                }
+                    var callbackStarted = DateTimeOffset.UtcNow;
 
-                Task.Delay(nextTick, cancellationToken).Wait();
+                    _callbackAction();
+
+                    var timeSpentInThisCallback = DateTimeOffset.UtcNow - callbackStarted;
+
+                    TimeSpan nextTick;
+
+                    // Check if we need to backoff.
+                    if (_evaluateBackoff())
+                    {
+                        Debug.WriteLine($"{DateTime.Now}: Backing off.");
+                        SetBackoffState();
+                        nextTick = _period;
+                    }
+                    else
+                    {
+                        // Subtract the time spent in this tick when scheduling the next tick so that the average period is close to the intended.
+                        nextTick = _period - timeSpentInThisCallback;
+                        nextTick = nextTick > TimeSpan.Zero ? nextTick : TimeSpan.Zero;
+                    }
+
+                    if (_shutdownEvent.WaitOne(nextTick))
+                    {
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                LiveMetricsExporterEventSource.Log.StateMachineFailedWithUnknownException(ex);
+                Debug.WriteLine(ex);
             }
         }
     }

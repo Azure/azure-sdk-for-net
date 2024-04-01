@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Network;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<InboundNatRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundNatRuleListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundNatRuleListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InboundNatRuleData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<InboundNatRuleListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundNatRuleListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundNatRuleListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<InboundNatRuleData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<InboundNatRuleData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<InboundNatRuleData> array = new List<InboundNatRuleData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item));
+                        array.Add(InboundNatRuleData.DeserializeInboundNatRuleData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InboundNatRuleListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new InboundNatRuleListResult(value ?? new ChangeTrackingList<InboundNatRuleData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InboundNatRuleListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InboundNatRuleListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundNatRuleListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeInboundNatRuleListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InboundNatRuleListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundNatRuleListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

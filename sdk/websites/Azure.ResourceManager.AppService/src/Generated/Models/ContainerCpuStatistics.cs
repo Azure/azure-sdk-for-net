@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerCpuStatistics. </summary>
     public partial class ContainerCpuStatistics
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerCpuStatistics"/>. </summary>
         public ContainerCpuStatistics()
         {
@@ -20,21 +55,27 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="systemCpuUsage"></param>
         /// <param name="onlineCpuCount"></param>
         /// <param name="throttlingData"></param>
-        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingInfo throttlingData)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerCpuStatistics(ContainerCpuUsage cpuUsage, long? systemCpuUsage, int? onlineCpuCount, ContainerThrottlingInfo throttlingData, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             CpuUsage = cpuUsage;
             SystemCpuUsage = systemCpuUsage;
             OnlineCpuCount = onlineCpuCount;
             ThrottlingData = throttlingData;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the cpu usage. </summary>
+        [WirePath("cpuUsage")]
         public ContainerCpuUsage CpuUsage { get; set; }
         /// <summary> Gets or sets the system cpu usage. </summary>
+        [WirePath("systemCpuUsage")]
         public long? SystemCpuUsage { get; set; }
         /// <summary> Gets or sets the online cpu count. </summary>
+        [WirePath("onlineCpuCount")]
         public int? OnlineCpuCount { get; set; }
         /// <summary> Gets or sets the throttling data. </summary>
+        [WirePath("throttlingData")]
         public ContainerThrottlingInfo ThrottlingData { get; set; }
     }
 }

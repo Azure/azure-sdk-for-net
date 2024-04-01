@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
@@ -36,6 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// </param>
         /// <param name="taskType"> [Required] Task type for AutoMLJob. </param>
         /// <param name="trainingData"> [Required] Training data input. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="primaryMetric"> Primary metric for Text-Classification task. </param>
         /// <param name="featurizationSettings"> Featurization inputs needed for AutoML job. </param>
         /// <param name="fixedParameters"> Model/training parameters that will remain constant throughout training. </param>
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="searchSpace"> Search space for sampling different combinations of models and their hyperparameters. </param>
         /// <param name="sweepSettings"> Settings for model sweeping and hyperparameter tuning. </param>
         /// <param name="validationData"> Validation data inputs. </param>
-        internal TextClassification(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpFixedParameters fixedParameters, NlpVerticalLimitSettings limitSettings, IList<NlpParameterSubspace> searchSpace, NlpSweepSettings sweepSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData)
+        internal TextClassification(MachineLearningLogVerbosity? logVerbosity, string targetColumnName, TaskType taskType, MachineLearningTableJobInput trainingData, IDictionary<string, BinaryData> serializedAdditionalRawData, ClassificationPrimaryMetric? primaryMetric, NlpVerticalFeaturizationSettings featurizationSettings, NlpFixedParameters fixedParameters, NlpVerticalLimitSettings limitSettings, IList<NlpParameterSubspace> searchSpace, NlpSweepSettings sweepSettings, MachineLearningTableJobInput validationData) : base(logVerbosity, targetColumnName, taskType, trainingData, serializedAdditionalRawData)
         {
             PrimaryMetric = primaryMetric;
             FeaturizationSettings = featurizationSettings;
@@ -53,6 +53,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             SweepSettings = sweepSettings;
             ValidationData = validationData;
             TaskType = taskType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="TextClassification"/> for deserialization. </summary>
+        internal TextClassification()
+        {
         }
 
         /// <summary> Primary metric for Text-Classification task. </summary>

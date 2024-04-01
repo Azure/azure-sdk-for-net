@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalDataMaster>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsOrganizationalDataMaster)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsOrganizationalDataMaster)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsOrganizationalDataMaster>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsOrganizationalDataMaster)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsOrganizationalDataMaster)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<string> stacksetName = default;
-            Optional<IList<string>> excludedAccountIds = default;
+            string stacksetName = default;
+            IList<string> excludedAccountIds = default;
             OrganizationMembershipType organizationMembershipType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsOrganizationalDataMaster(organizationMembershipType, serializedAdditionalRawData, stacksetName.Value, Optional.ToList(excludedAccountIds));
+            return new AwsOrganizationalDataMaster(organizationMembershipType, serializedAdditionalRawData, stacksetName, excludedAccountIds ?? new ChangeTrackingList<string>());
         }
 
         BinaryData IPersistableModel<AwsOrganizationalDataMaster>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AwsOrganizationalDataMaster)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsOrganizationalDataMaster)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAwsOrganizationalDataMaster(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AwsOrganizationalDataMaster)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsOrganizationalDataMaster)} does not support reading '{options.Format}' format.");
             }
         }
 

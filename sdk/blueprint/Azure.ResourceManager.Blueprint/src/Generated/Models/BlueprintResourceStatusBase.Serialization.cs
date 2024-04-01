@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlueprintResourceStatusBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlueprintResourceStatusBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlueprintResourceStatusBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlueprintResourceStatusBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlueprintResourceStatusBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlueprintResourceStatusBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> timeCreated = default;
-            Optional<DateTimeOffset> lastModified = default;
+            DateTimeOffset? timeCreated = default;
+            DateTimeOffset? lastModified = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BlueprintResourceStatusBase(Optional.ToNullable(timeCreated), Optional.ToNullable(lastModified), serializedAdditionalRawData);
+            return new BlueprintResourceStatusBase(timeCreated, lastModified, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BlueprintResourceStatusBase>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlueprintResourceStatusBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlueprintResourceStatusBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeBlueprintResourceStatusBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlueprintResourceStatusBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlueprintResourceStatusBase)} does not support reading '{options.Format}' format.");
             }
         }
 

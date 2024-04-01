@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMarketplace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -220,7 +219,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionMarketplace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -235,38 +234,38 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<IReadOnlyDictionary<string, string>> tags = default;
+            ETag? etag = default;
+            IReadOnlyDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> billingPeriodId = default;
-            Optional<DateTimeOffset> usageStart = default;
-            Optional<DateTimeOffset> usageEnd = default;
-            Optional<decimal> resourceRate = default;
-            Optional<string> offerName = default;
-            Optional<string> resourceGroup = default;
-            Optional<string> additionalInfo = default;
-            Optional<string> orderNumber = default;
-            Optional<string> instanceName = default;
-            Optional<string> instanceId = default;
-            Optional<string> currency = default;
-            Optional<decimal> consumedQuantity = default;
-            Optional<string> unitOfMeasure = default;
-            Optional<decimal> pretaxCost = default;
-            Optional<bool> isEstimated = default;
-            Optional<Guid> meterId = default;
-            Optional<Guid> subscriptionGuid = default;
-            Optional<string> subscriptionName = default;
-            Optional<string> accountName = default;
-            Optional<string> departmentName = default;
-            Optional<string> consumedService = default;
-            Optional<string> costCenter = default;
-            Optional<string> additionalProperties = default;
-            Optional<string> publisherName = default;
-            Optional<string> planName = default;
-            Optional<bool> isRecurringCharge = default;
+            SystemData systemData = default;
+            string billingPeriodId = default;
+            DateTimeOffset? usageStart = default;
+            DateTimeOffset? usageEnd = default;
+            decimal? resourceRate = default;
+            string offerName = default;
+            string resourceGroup = default;
+            string additionalInfo = default;
+            string orderNumber = default;
+            string instanceName = default;
+            string instanceId = default;
+            string currency = default;
+            decimal? consumedQuantity = default;
+            string unitOfMeasure = default;
+            decimal? pretaxCost = default;
+            bool? isEstimated = default;
+            Guid? meterId = default;
+            Guid? subscriptionGuid = default;
+            string subscriptionName = default;
+            string accountName = default;
+            string departmentName = default;
+            string consumedService = default;
+            string costCenter = default;
+            string additionalProperties = default;
+            string publisherName = default;
+            string planName = default;
+            bool? isRecurringCharge = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -502,7 +501,40 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumptionMarketplace(id, name, type, systemData.Value, billingPeriodId.Value, Optional.ToNullable(usageStart), Optional.ToNullable(usageEnd), Optional.ToNullable(resourceRate), offerName.Value, resourceGroup.Value, additionalInfo.Value, orderNumber.Value, instanceName.Value, instanceId.Value, currency.Value, Optional.ToNullable(consumedQuantity), unitOfMeasure.Value, Optional.ToNullable(pretaxCost), Optional.ToNullable(isEstimated), Optional.ToNullable(meterId), Optional.ToNullable(subscriptionGuid), subscriptionName.Value, accountName.Value, departmentName.Value, consumedService.Value, costCenter.Value, additionalProperties.Value, publisherName.Value, planName.Value, Optional.ToNullable(isRecurringCharge), Optional.ToNullable(etag), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new ConsumptionMarketplace(
+                id,
+                name,
+                type,
+                systemData,
+                billingPeriodId,
+                usageStart,
+                usageEnd,
+                resourceRate,
+                offerName,
+                resourceGroup,
+                additionalInfo,
+                orderNumber,
+                instanceName,
+                instanceId,
+                currency,
+                consumedQuantity,
+                unitOfMeasure,
+                pretaxCost,
+                isEstimated,
+                meterId,
+                subscriptionGuid,
+                subscriptionName,
+                accountName,
+                departmentName,
+                consumedService,
+                costCenter,
+                additionalProperties,
+                publisherName,
+                planName,
+                isRecurringCharge,
+                etag,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumptionMarketplace>.Write(ModelReaderWriterOptions options)
@@ -514,7 +546,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -530,7 +562,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionMarketplace(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionMarketplace)} does not support reading '{options.Format}' format.");
             }
         }
 

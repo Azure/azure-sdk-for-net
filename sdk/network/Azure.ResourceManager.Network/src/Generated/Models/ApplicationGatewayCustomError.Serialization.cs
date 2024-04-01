@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayCustomError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayCustomError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ApplicationGatewayCustomErrorStatusCode> statusCode = default;
-            Optional<Uri> customErrorPageUrl = default;
+            ApplicationGatewayCustomErrorStatusCode? statusCode = default;
+            Uri customErrorPageUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayCustomError(Optional.ToNullable(statusCode), customErrorPageUrl.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayCustomError(statusCode, customErrorPageUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayCustomError>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayCustomError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayCustomError)} does not support reading '{options.Format}' format.");
             }
         }
 

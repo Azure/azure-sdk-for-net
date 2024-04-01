@@ -4,9 +4,13 @@
 
 ### Features Added
 
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
 ### Breaking Changes
 
 ### Bugs Fixed
+
+- Fix [issue#41377](https://github.com/Azure/azure-sdk-for-net/issues/41377), change the serialization for `MonitorConditionOperator`.
 
 ### Other Changes
 

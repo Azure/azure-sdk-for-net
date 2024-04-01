@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Groups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SharingProfileGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharingUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharingUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharingUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             SharingUpdateOperationType operationType = default;
-            Optional<IList<SharingProfileGroup>> groups = default;
+            IList<SharingProfileGroup> groups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SharingProfileGroup> array = new List<SharingProfileGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item));
+                        array.Add(SharingProfileGroup.DeserializeSharingProfileGroup(item, options));
                     }
                     groups = array;
                     continue;
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharingUpdate(operationType, Optional.ToList(groups), serializedAdditionalRawData);
+            return new SharingUpdate(operationType, groups ?? new ChangeTrackingList<SharingProfileGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharingUpdate>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharingUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSharingUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharingUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharingUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

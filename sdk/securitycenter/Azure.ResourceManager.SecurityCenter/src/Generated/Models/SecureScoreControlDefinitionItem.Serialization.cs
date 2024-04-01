@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<SecureScoreControlDefinitionSource>(Source, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
             {
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<int> maxScore = default;
-            Optional<SecureScoreControlDefinitionSource> source = default;
-            Optional<IReadOnlyList<SubResource>> assessmentDefinitions = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            int? maxScore = default;
+            SecureScoreControlDefinitionSource source = default;
+            IReadOnlyList<SubResource> assessmentDefinitions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                             {
                                 continue;
                             }
-                            source = SecureScoreControlDefinitionSource.DeserializeSecureScoreControlDefinitionSource(property0.Value);
+                            source = SecureScoreControlDefinitionSource.DeserializeSecureScoreControlDefinitionSource(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("assessmentDefinitions"u8))
@@ -216,7 +216,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecureScoreControlDefinitionItem(id, name, type, systemData.Value, displayName.Value, description.Value, Optional.ToNullable(maxScore), source.Value, Optional.ToList(assessmentDefinitions), serializedAdditionalRawData);
+            return new SecureScoreControlDefinitionItem(
+                id,
+                name,
+                type,
+                systemData,
+                displayName,
+                description,
+                maxScore,
+                source,
+                assessmentDefinitions ?? new ChangeTrackingList<SubResource>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecureScoreControlDefinitionItem>.Write(ModelReaderWriterOptions options)
@@ -228,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +254,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecureScoreControlDefinitionItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support reading '{options.Format}' format.");
             }
         }
 

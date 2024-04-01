@@ -27,7 +27,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in Examples)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MessageExampleSequence>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -40,8 +40,8 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<MessageContentCategory> contentCategory = default;
-            Optional<IList<MessageExampleSequence>> examples = default;
+            MessageContentCategory? contentCategory = default;
+            IList<MessageExampleSequence> examples = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("contentCategory"u8))
@@ -68,7 +68,7 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new UseCase(Optional.ToNullable(contentCategory), Optional.ToList(examples));
+            return new UseCase(contentCategory, examples ?? new ChangeTrackingList<MessageExampleSequence>());
         }
     }
 }

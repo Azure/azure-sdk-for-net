@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CosmosDBForPostgreSql;
 
 namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CosmosDBForPostgreSqlPrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData>> value = default;
+            IReadOnlyList<CosmosDBForPostgreSqlPrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                     List<CosmosDBForPostgreSqlPrivateLinkResourceData> array = new List<CosmosDBForPostgreSqlPrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(item));
+                        array.Add(CosmosDBForPostgreSqlPrivateLinkResourceData.DeserializeCosmosDBForPostgreSqlPrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBForPostgreSqlPrivateLinkResourceListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new CosmosDBForPostgreSqlPrivateLinkResourceListResult(value ?? new ChangeTrackingList<CosmosDBForPostgreSqlPrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBForPostgreSqlPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.CosmosDBForPostgreSql.Models
                         return DeserializeCosmosDBForPostgreSqlPrivateLinkResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBForPostgreSqlPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(MicrosoftPeeringConfig))
             {
                 writer.WritePropertyName("microsoftPeeringConfig"u8);
-                writer.WriteObjectValue(MicrosoftPeeringConfig);
+                writer.WriteObjectValue<ExpressRouteCircuitPeeringConfig>(MicrosoftPeeringConfig, options);
             }
             if (Optional.IsDefined(RouteFilter))
             {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,11 +90,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> primaryPeerAddressPrefix = default;
-            Optional<string> secondaryPeerAddressPrefix = default;
-            Optional<ExpressRouteCircuitPeeringConfig> microsoftPeeringConfig = default;
-            Optional<WritableSubResource> routeFilter = default;
-            Optional<ExpressRouteCircuitPeeringState> state = default;
+            string primaryPeerAddressPrefix = default;
+            string secondaryPeerAddressPrefix = default;
+            ExpressRouteCircuitPeeringConfig microsoftPeeringConfig = default;
+            WritableSubResource routeFilter = default;
+            ExpressRouteCircuitPeeringState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                     {
                         continue;
                     }
-                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value);
+                    microsoftPeeringConfig = ExpressRouteCircuitPeeringConfig.DeserializeExpressRouteCircuitPeeringConfig(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("routeFilter"u8))
@@ -142,7 +142,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new IPv6ExpressRouteCircuitPeeringConfig(primaryPeerAddressPrefix.Value, secondaryPeerAddressPrefix.Value, microsoftPeeringConfig.Value, routeFilter, Optional.ToNullable(state), serializedAdditionalRawData);
+            return new IPv6ExpressRouteCircuitPeeringConfig(
+                primaryPeerAddressPrefix,
+                secondaryPeerAddressPrefix,
+                microsoftPeeringConfig,
+                routeFilter,
+                state,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<IPv6ExpressRouteCircuitPeeringConfig>.Write(ModelReaderWriterOptions options)
@@ -154,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +176,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeIPv6ExpressRouteCircuitPeeringConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPv6ExpressRouteCircuitPeeringConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

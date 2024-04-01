@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SecurityAutomationTriggeringRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationRuleSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<IList<SecurityAutomationTriggeringRule>> rules = default;
+            IList<SecurityAutomationTriggeringRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<SecurityAutomationTriggeringRule> array = new List<SecurityAutomationTriggeringRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SecurityAutomationTriggeringRule.DeserializeSecurityAutomationTriggeringRule(item));
+                        array.Add(SecurityAutomationTriggeringRule.DeserializeSecurityAutomationTriggeringRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAutomationRuleSet(Optional.ToList(rules), serializedAdditionalRawData);
+            return new SecurityAutomationRuleSet(rules ?? new ChangeTrackingList<SecurityAutomationTriggeringRule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAutomationRuleSet>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationRuleSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationRuleSet)} does not support reading '{options.Format}' format.");
             }
         }
 

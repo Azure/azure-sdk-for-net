@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceEndpointDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceEndpointDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceEndpointDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceEndpointDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,10 +85,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IPAddress> ipAddress = default;
-            Optional<int> port = default;
-            Optional<string> protocol = default;
-            Optional<string> description = default;
+            IPAddress ipAddress = default;
+            int? port = default;
+            string protocol = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceEndpointDetail(ipAddress.Value, Optional.ToNullable(port), protocol.Value, description.Value, serializedAdditionalRawData);
+            return new ContainerServiceEndpointDetail(ipAddress, port, protocol, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceEndpointDetail>.Write(ModelReaderWriterOptions options)
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceEndpointDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceEndpointDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceEndpointDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceEndpointDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceEndpointDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallNatRuleCollectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallNatRuleCollectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallNatRuleCollectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -57,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
-                writer.WriteObjectValue(Action);
+                writer.WriteObjectValue<AzureFirewallNatRCAction>(Action, options);
             }
             if (Optional.IsCollectionDefined(Rules))
             {
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureFirewallNatRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -98,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureFirewallNatRuleCollectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureFirewallNatRuleCollectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureFirewallNatRuleCollectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,14 +112,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<int> priority = default;
-            Optional<AzureFirewallNatRCAction> action = default;
-            Optional<IList<AzureFirewallNatRule>> rules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            int? priority = default;
+            AzureFirewallNatRCAction action = default;
+            IList<AzureFirewallNatRule> rules = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +180,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            action = AzureFirewallNatRCAction.DeserializeAzureFirewallNatRCAction(property0.Value);
+                            action = AzureFirewallNatRCAction.DeserializeAzureFirewallNatRCAction(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rules"u8))
@@ -193,7 +192,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<AzureFirewallNatRule> array = new List<AzureFirewallNatRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(AzureFirewallNatRule.DeserializeAzureFirewallNatRule(item));
+                                array.Add(AzureFirewallNatRule.DeserializeAzureFirewallNatRule(item, options));
                             }
                             rules = array;
                             continue;
@@ -216,7 +215,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureFirewallNatRuleCollectionData(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), Optional.ToNullable(priority), action.Value, Optional.ToList(rules), Optional.ToNullable(provisioningState));
+            return new AzureFirewallNatRuleCollectionData(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                priority,
+                action,
+                rules ?? new ChangeTrackingList<AzureFirewallNatRule>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<AzureFirewallNatRuleCollectionData>.Write(ModelReaderWriterOptions options)
@@ -228,7 +236,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallNatRuleCollectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallNatRuleCollectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +252,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAzureFirewallNatRuleCollectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureFirewallNatRuleCollectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureFirewallNatRuleCollectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

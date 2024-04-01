@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sphere.Models;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Sphere
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2024-04-01";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Sphere
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<SphereImageData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="data"> Resource create parameters. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/>, <paramref name="imageName"/> or <paramref name="data"/> is null. </exception>
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Sphere
         /// <param name="subscriptionId"> The ID of the target subscription. </param>
         /// <param name="resourceGroupName"> The name of the resource group. The name is case insensitive. </param>
         /// <param name="catalogName"> Name of catalog. </param>
-        /// <param name="imageName"> Image name. Use .default for image creation. </param>
+        /// <param name="imageName"> Image name. Use an image GUID for GA versions of the API. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="imageName"/> is null. </exception>
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="catalogName"/> or <paramref name="imageName"/> is an empty string, and was expected to be non-empty. </exception>

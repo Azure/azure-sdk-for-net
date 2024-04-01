@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> JWT token for accessing live metrics stream data. </summary>
+        [WirePath("liveToken")]
         public string LiveToken { get; }
     }
 }

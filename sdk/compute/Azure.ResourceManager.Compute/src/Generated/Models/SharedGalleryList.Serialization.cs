@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Compute;
 
 namespace Azure.ResourceManager.Compute.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SharedGalleryData>(item, options);
             }
             writer.WriteEndArray();
             if (Optional.IsDefined(NextLink))
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -78,7 +77,7 @@ namespace Azure.ResourceManager.Compute.Models
                 return null;
             }
             IReadOnlyList<SharedGalleryData> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +87,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<SharedGalleryData> array = new List<SharedGalleryData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SharedGalleryData.DeserializeSharedGalleryData(item));
+                        array.Add(SharedGalleryData.DeserializeSharedGalleryData(item, options));
                     }
                     value = array;
                     continue;
@@ -104,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SharedGalleryList(value, nextLink.Value, serializedAdditionalRawData);
+            return new SharedGalleryList(value, nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SharedGalleryList>.Write(ModelReaderWriterOptions options)
@@ -116,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSharedGalleryList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryList)} does not support reading '{options.Format}' format.");
             }
         }
 

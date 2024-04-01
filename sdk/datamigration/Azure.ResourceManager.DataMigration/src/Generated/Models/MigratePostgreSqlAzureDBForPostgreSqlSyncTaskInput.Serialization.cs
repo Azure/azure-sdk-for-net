@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,13 +30,13 @@ namespace Azure.ResourceManager.DataMigration.Models
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetConnectionInfo"u8);
-            writer.WriteObjectValue(TargetConnectionInfo);
+            writer.WriteObjectValue<PostgreSqlConnectionInfo>(TargetConnectionInfo, options);
             writer.WritePropertyName("sourceConnectionInfo"u8);
-            writer.WriteObjectValue(SourceConnectionInfo);
+            writer.WriteObjectValue<PostgreSqlConnectionInfo>(SourceConnectionInfo, options);
             if (Optional.IsDefined(EncryptedKeyForSecureFields))
             {
                 writer.WritePropertyName("encryptedKeyForSecureFields"u8);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,8 +88,8 @@ namespace Azure.ResourceManager.DataMigration.Models
             IList<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> selectedDatabases = default;
             PostgreSqlConnectionInfo targetConnectionInfo = default;
             PostgreSqlConnectionInfo sourceConnectionInfo = default;
-            Optional<string> encryptedKeyForSecureFields = default;
-            Optional<DateTimeOffset> startedOn = default;
+            string encryptedKeyForSecureFields = default;
+            DateTimeOffset? startedOn = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,19 +99,19 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput> array = new List<MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(item));
+                        array.Add(MigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput.DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncDatabaseInput(item, options));
                     }
                     selectedDatabases = array;
                     continue;
                 }
                 if (property.NameEquals("targetConnectionInfo"u8))
                 {
-                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
+                    targetConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("sourceConnectionInfo"u8))
                 {
-                    sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value);
+                    sourceConnectionInfo = PostgreSqlConnectionInfo.DeserializePostgreSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("encryptedKeyForSecureFields"u8))
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(selectedDatabases, targetConnectionInfo, sourceConnectionInfo, encryptedKeyForSecureFields.Value, Optional.ToNullable(startedOn), serializedAdditionalRawData);
+            return new MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(
+                selectedDatabases,
+                targetConnectionInfo,
+                sourceConnectionInfo,
+                encryptedKeyForSecureFields,
+                startedOn,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigratePostgreSqlAzureDBForPostgreSqlSyncTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.BillingBenefits;
 
 namespace Azure.ResourceManager.BillingBenefits.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanModelListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BillingBenefitsSavingsPlanData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -48,7 +47,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 writer.WriteStartArray();
                 foreach (var item in AdditionalProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SavingsPlanSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             var format = options.Format == "W" ? ((IPersistableModel<SavingsPlanModelListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,9 +89,9 @@ namespace Azure.ResourceManager.BillingBenefits.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<BillingBenefitsSavingsPlanData>> value = default;
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<SavingsPlanSummary>> additionalProperties = default;
+            IReadOnlyList<BillingBenefitsSavingsPlanData> value = default;
+            string nextLink = default;
+            IReadOnlyList<SavingsPlanSummary> additionalProperties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -106,7 +105,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<BillingBenefitsSavingsPlanData> array = new List<BillingBenefitsSavingsPlanData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(item));
+                        array.Add(BillingBenefitsSavingsPlanData.DeserializeBillingBenefitsSavingsPlanData(item, options));
                     }
                     value = array;
                     continue;
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                     List<SavingsPlanSummary> array = new List<SavingsPlanSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(SavingsPlanSummary.DeserializeSavingsPlanSummary(item));
+                        array.Add(SavingsPlanSummary.DeserializeSavingsPlanSummary(item, options));
                     }
                     additionalProperties = array;
                     continue;
@@ -136,7 +135,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SavingsPlanModelListResult(Optional.ToList(value), nextLink.Value, Optional.ToList(additionalProperties), serializedAdditionalRawData);
+            return new SavingsPlanModelListResult(value ?? new ChangeTrackingList<BillingBenefitsSavingsPlanData>(), nextLink, additionalProperties ?? new ChangeTrackingList<SavingsPlanSummary>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SavingsPlanModelListResult>.Write(ModelReaderWriterOptions options)
@@ -148,7 +147,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +163,7 @@ namespace Azure.ResourceManager.BillingBenefits.Models
                         return DeserializeSavingsPlanModelListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SavingsPlanModelListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

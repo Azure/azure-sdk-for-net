@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -103,22 +103,22 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
-                writer.WriteObjectValue(Identifier);
+                writer.WriteObjectValue<GalleryImageIdentifier>(Identifier, options);
             }
             if (Optional.IsDefined(Recommended))
             {
                 writer.WritePropertyName("recommended"u8);
-                writer.WriteObjectValue(Recommended);
+                writer.WriteObjectValue<RecommendedMachineConfiguration>(Recommended, options);
             }
             if (Optional.IsDefined(Disallowed))
             {
                 writer.WritePropertyName("disallowed"u8);
-                writer.WriteObjectValue(Disallowed);
+                writer.WriteObjectValue<Disallowed>(Disallowed, options);
             }
             if (Optional.IsDefined(PurchasePlan))
             {
                 writer.WritePropertyName("purchasePlan"u8);
-                writer.WriteObjectValue(PurchasePlan);
+                writer.WriteObjectValue<ImagePurchasePlan>(PurchasePlan, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Features)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryImageFeature>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImagePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,26 +179,26 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> description = default;
-            Optional<string> eula = default;
-            Optional<Uri> privacyStatementUri = default;
-            Optional<Uri> releaseNoteUri = default;
-            Optional<SupportedOperatingSystemType> osType = default;
-            Optional<OperatingSystemStateType> osState = default;
-            Optional<HyperVGeneration> hyperVGeneration = default;
-            Optional<DateTimeOffset> endOfLifeDate = default;
-            Optional<GalleryImageIdentifier> identifier = default;
-            Optional<RecommendedMachineConfiguration> recommended = default;
-            Optional<Disallowed> disallowed = default;
-            Optional<ImagePurchasePlan> purchasePlan = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<IList<GalleryImageFeature>> features = default;
-            Optional<ArchitectureType> architecture = default;
+            SystemData systemData = default;
+            string description = default;
+            string eula = default;
+            Uri privacyStatementUri = default;
+            Uri releaseNoteUri = default;
+            SupportedOperatingSystemType? osType = default;
+            OperatingSystemStateType? osState = default;
+            HyperVGeneration? hyperVGeneration = default;
+            DateTimeOffset? endOfLifeDate = default;
+            GalleryImageIdentifier identifier = default;
+            RecommendedMachineConfiguration recommended = default;
+            Disallowed disallowed = default;
+            ImagePurchasePlan purchasePlan = default;
+            GalleryProvisioningState? provisioningState = default;
+            IList<GalleryImageFeature> features = default;
+            ArchitectureType? architecture = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value);
+                            identifier = GalleryImageIdentifier.DeserializeGalleryImageIdentifier(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("recommended"u8))
@@ -329,7 +329,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            recommended = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value);
+                            recommended = RecommendedMachineConfiguration.DeserializeRecommendedMachineConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("disallowed"u8))
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            disallowed = Disallowed.DeserializeDisallowed(property0.Value);
+                            disallowed = Disallowed.DeserializeDisallowed(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("purchasePlan"u8))
@@ -347,7 +347,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            purchasePlan = ImagePurchasePlan.DeserializeImagePurchasePlan(property0.Value);
+                            purchasePlan = ImagePurchasePlan.DeserializeImagePurchasePlan(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Compute.Models
                             List<GalleryImageFeature> array = new List<GalleryImageFeature>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(GalleryImageFeature.DeserializeGalleryImageFeature(item));
+                                array.Add(GalleryImageFeature.DeserializeGalleryImageFeature(item, options));
                             }
                             features = array;
                             continue;
@@ -391,7 +391,28 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImagePatch(id, name, type, systemData.Value, description.Value, eula.Value, privacyStatementUri.Value, releaseNoteUri.Value, Optional.ToNullable(osType), Optional.ToNullable(osState), Optional.ToNullable(hyperVGeneration), Optional.ToNullable(endOfLifeDate), identifier.Value, recommended.Value, disallowed.Value, purchasePlan.Value, Optional.ToNullable(provisioningState), Optional.ToList(features), Optional.ToNullable(architecture), Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryImagePatch(
+                id,
+                name,
+                type,
+                systemData,
+                description,
+                eula,
+                privacyStatementUri,
+                releaseNoteUri,
+                osType,
+                osState,
+                hyperVGeneration,
+                endOfLifeDate,
+                identifier,
+                recommended,
+                disallowed,
+                purchasePlan,
+                provisioningState,
+                features ?? new ChangeTrackingList<GalleryImageFeature>(),
+                architecture,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImagePatch>.Write(ModelReaderWriterOptions options)
@@ -403,7 +424,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -419,7 +440,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryImagePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImagePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePortsLocationBandwidths>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePortsLocationBandwidths>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> offerName = default;
-            Optional<int> valueInGbps = default;
+            string offerName = default;
+            int? valueInGbps = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRoutePortsLocationBandwidths(offerName.Value, Optional.ToNullable(valueInGbps), serializedAdditionalRawData);
+            return new ExpressRoutePortsLocationBandwidths(offerName, valueInGbps, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRoutePortsLocationBandwidths>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRoutePortsLocationBandwidths(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support reading '{options.Format}' format.");
             }
         }
 

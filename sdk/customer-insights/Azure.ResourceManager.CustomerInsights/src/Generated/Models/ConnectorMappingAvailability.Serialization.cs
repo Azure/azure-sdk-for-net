@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingAvailability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingAvailability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingAvailability)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingAvailability>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingAvailability)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingAvailability)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<FrequencyType> frequency = default;
+            FrequencyType? frequency = default;
             int interval = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingAvailability(Optional.ToNullable(frequency), interval, serializedAdditionalRawData);
+            return new ConnectorMappingAvailability(frequency, interval, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingAvailability>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingAvailability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingAvailability)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeConnectorMappingAvailability(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingAvailability)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingAvailability)} does not support reading '{options.Format}' format.");
             }
         }
 

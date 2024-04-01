@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
@@ -21,9 +22,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="description"> The asset description text. </param>
         /// <param name="properties"> The asset property dictionary. </param>
         /// <param name="tags"> Tag dictionary. Tags can be added, removed, and updated. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="dataType"> Specifies type. </param>
         /// <param name="featureName"> Specifies name. </param>
-        internal MachineLearningFeatureProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, FeatureDataType? dataType, string featureName) : base(description, properties, tags)
+        internal MachineLearningFeatureProperties(string description, IDictionary<string, string> properties, IDictionary<string, string> tags, IDictionary<string, BinaryData> serializedAdditionalRawData, FeatureDataType? dataType, string featureName) : base(description, properties, tags, serializedAdditionalRawData)
         {
             DataType = dataType;
             FeatureName = featureName;

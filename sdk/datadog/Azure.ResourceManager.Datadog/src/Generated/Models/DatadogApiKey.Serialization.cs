@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogApiKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogApiKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogApiKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogApiKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogApiKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogApiKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,10 +81,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> createdBy = default;
-            Optional<string> name = default;
+            string createdBy = default;
+            string name = default;
             string key = default;
-            Optional<string> created = default;
+            string created = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogApiKey(createdBy.Value, name.Value, key, created.Value, serializedAdditionalRawData);
+            return new DatadogApiKey(createdBy, name, key, created, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogApiKey>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogApiKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogApiKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogApiKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogApiKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogApiKey)} does not support reading '{options.Format}' format.");
             }
         }
 

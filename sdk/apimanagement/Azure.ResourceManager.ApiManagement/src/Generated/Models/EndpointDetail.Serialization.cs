@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<EndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<string> region = default;
+            int? port = default;
+            string region = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EndpointDetail(Optional.ToNullable(port), region.Value, serializedAdditionalRawData);
+            return new EndpointDetail(port, region, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EndpointDetail>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeEndpointDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

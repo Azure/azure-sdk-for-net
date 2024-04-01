@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureResourceManagerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureResourceManagerError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureResourceManagerError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureResourceManagerError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureResourceManagerError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureResourceManagerError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
+            string code = default;
+            string message = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureResourceManagerError(code.Value, message.Value, serializedAdditionalRawData);
+            return new AzureResourceManagerError(code, message, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureResourceManagerError>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureResourceManagerError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureResourceManagerError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeAzureResourceManagerError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureResourceManagerError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureResourceManagerError)} does not support reading '{options.Format}' format.");
             }
         }
 

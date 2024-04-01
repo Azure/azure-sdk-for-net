@@ -5,8 +5,8 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
-using Azure;
 
 namespace Azure.ResourceManager.StreamAnalytics.Models
 {
@@ -29,7 +29,8 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
         /// Please note <see cref="StreamingJobFunctionBinding"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
         /// The available derived classes include <see cref="EMachineLearningStudioFunctionBinding"/>, <see cref="MachineLearningServiceFunctionBinding"/>, <see cref="CSharpFunctionBinding"/> and <see cref="JavaScriptFunctionBinding"/>.
         /// </param>
-        internal AggregateFunctionProperties(string functionPropertiesType, ETag? etag, IList<StreamingJobFunctionInput> inputs, StreamingJobFunctionOutput output, StreamingJobFunctionBinding binding) : base(functionPropertiesType, etag, inputs, output, binding)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AggregateFunctionProperties(string functionPropertiesType, ETag? etag, IList<StreamingJobFunctionInput> inputs, StreamingJobFunctionOutput output, StreamingJobFunctionBinding binding, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(functionPropertiesType, etag, inputs, output, binding, serializedAdditionalRawData)
         {
             FunctionPropertiesType = functionPropertiesType ?? "Aggregate";
         }

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
@@ -36,6 +35,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 
         /// <summary> Initializes a new instance of <see cref="InMageReprotectContent"/>. </summary>
         /// <param name="instanceType"> The class type. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="masterTargetId"> The Master Target Id. </param>
         /// <param name="processServerId"> The Process Server Id. </param>
         /// <param name="retentionDrive"> The retention drive to use on the MT. </param>
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <param name="diskExclusionContent"> The enable disk exclusion input. </param>
         /// <param name="profileId"> The Policy Id. </param>
         /// <param name="disksToInclude"> The disks to include list. </param>
-        internal InMageReprotectContent(string instanceType, string masterTargetId, Guid processServerId, string retentionDrive, string runAsAccountId, string datastoreName, InMageDiskExclusionContent diskExclusionContent, string profileId, IList<string> disksToInclude) : base(instanceType)
+        internal InMageReprotectContent(string instanceType, IDictionary<string, BinaryData> serializedAdditionalRawData, string masterTargetId, Guid processServerId, string retentionDrive, string runAsAccountId, string datastoreName, InMageDiskExclusionContent diskExclusionContent, string profileId, IList<string> disksToInclude) : base(instanceType, serializedAdditionalRawData)
         {
             MasterTargetId = masterTargetId;
             ProcessServerId = processServerId;
@@ -55,6 +55,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             ProfileId = profileId;
             DisksToInclude = disksToInclude;
             InstanceType = instanceType ?? "InMage";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="InMageReprotectContent"/> for deserialization. </summary>
+        internal InMageReprotectContent()
+        {
         }
 
         /// <summary> The Master Target Id. </summary>

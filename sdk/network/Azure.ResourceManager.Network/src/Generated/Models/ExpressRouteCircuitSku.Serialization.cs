@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteCircuitSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteCircuitSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteCircuitSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<ExpressRouteCircuitSkuTier> tier = default;
-            Optional<ExpressRouteCircuitSkuFamily> family = default;
+            string name = default;
+            ExpressRouteCircuitSkuTier? tier = default;
+            ExpressRouteCircuitSkuFamily? family = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteCircuitSku(name.Value, Optional.ToNullable(tier), Optional.ToNullable(family), serializedAdditionalRawData);
+            return new ExpressRouteCircuitSku(name, tier, family, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteCircuitSku>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteCircuitSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteCircuitSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteCircuitSku)} does not support reading '{options.Format}' format.");
             }
         }
 

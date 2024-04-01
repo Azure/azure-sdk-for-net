@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmPlacementPolicyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -98,9 +98,9 @@ namespace Azure.ResourceManager.Avs.Models
             IList<ResourceIdentifier> vmMembers = default;
             AvsPlacementPolicyAffinityType affinityType = default;
             PlacementPolicyType type = default;
-            Optional<PlacementPolicyState> state = default;
-            Optional<string> displayName = default;
-            Optional<PlacementPolicyProvisioningState> provisioningState = default;
+            PlacementPolicyState? state = default;
+            string displayName = default;
+            PlacementPolicyProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -161,7 +161,14 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VmPlacementPolicyProperties(type, Optional.ToNullable(state), displayName.Value, Optional.ToNullable(provisioningState), serializedAdditionalRawData, vmMembers, affinityType);
+            return new VmPlacementPolicyProperties(
+                type,
+                state,
+                displayName,
+                provisioningState,
+                serializedAdditionalRawData,
+                vmMembers,
+                affinityType);
         }
 
         BinaryData IPersistableModel<VmPlacementPolicyProperties>.Write(ModelReaderWriterOptions options)
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +196,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeVmPlacementPolicyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmPlacementPolicyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

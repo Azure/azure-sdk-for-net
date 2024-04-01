@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -39,7 +39,7 @@ namespace Azure.ResourceManager.Batch.Models
             if (Optional.IsDefined(UefiSettings))
             {
                 writer.WritePropertyName("uefiSettings"u8);
-                writer.WriteObjectValue(UefiSettings);
+                writer.WriteObjectValue<BatchUefiSettings>(UefiSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchSecurityType> securityType = default;
-            Optional<bool> encryptionAtHost = default;
-            Optional<BatchUefiSettings> uefiSettings = default;
+            BatchSecurityType? securityType = default;
+            bool? encryptionAtHost = default;
+            BatchUefiSettings uefiSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Batch.Models
                     {
                         continue;
                     }
-                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value);
+                    uefiSettings = BatchUefiSettings.DeserializeBatchUefiSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchSecurityProfile(Optional.ToNullable(securityType), Optional.ToNullable(encryptionAtHost), uefiSettings.Value, serializedAdditionalRawData);
+            return new BatchSecurityProfile(securityType, encryptionAtHost, uefiSettings, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchSecurityProfile>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

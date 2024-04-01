@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineImageBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineImageBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineImageBase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineImageBase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineImageBase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineImageBase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,9 +92,9 @@ namespace Azure.ResourceManager.Compute.Models
             }
             string name = default;
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ExtendedLocation> extendedLocation = default;
-            Optional<ResourceIdentifier> id = default;
+            IDictionary<string, string> tags = default;
+            ExtendedLocation extendedLocation = default;
+            ResourceIdentifier id = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -147,7 +147,13 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineImageBase(id.Value, serializedAdditionalRawData, name, location, Optional.ToDictionary(tags), extendedLocation);
+            return new VirtualMachineImageBase(
+                id,
+                serializedAdditionalRawData,
+                name,
+                location,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                extendedLocation);
         }
 
         BinaryData IPersistableModel<VirtualMachineImageBase>.Write(ModelReaderWriterOptions options)
@@ -159,7 +165,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineImageBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineImageBase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineImageBase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineImageBase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineImageBase)} does not support reading '{options.Format}' format.");
             }
         }
 

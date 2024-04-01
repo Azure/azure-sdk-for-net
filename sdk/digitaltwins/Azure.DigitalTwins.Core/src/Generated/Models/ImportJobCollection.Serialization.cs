@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.DigitalTwins.Core
 {
@@ -20,7 +19,7 @@ namespace Azure.DigitalTwins.Core
                 return null;
             }
             IReadOnlyList<ImportJob> value = default;
-            Optional<string> nextLink = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -39,7 +38,7 @@ namespace Azure.DigitalTwins.Core
                     continue;
                 }
             }
-            return new ImportJobCollection(value, nextLink.Value);
+            return new ImportJobCollection(value, nextLink);
         }
     }
 }

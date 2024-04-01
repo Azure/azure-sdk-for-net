@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ProviderHub.Models
 {
     /// <summary> The ResourceTypeSkuCost. </summary>
     public partial class ResourceTypeSkuCost
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCost"/>. </summary>
         /// <param name="meterId"></param>
         /// <exception cref="ArgumentNullException"> <paramref name="meterId"/> is null. </exception>
@@ -27,11 +59,18 @@ namespace Azure.ResourceManager.ProviderHub.Models
         /// <param name="meterId"></param>
         /// <param name="quantity"></param>
         /// <param name="extendedUnit"></param>
-        internal ResourceTypeSkuCost(string meterId, int? quantity, string extendedUnit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ResourceTypeSkuCost(string meterId, int? quantity, string extendedUnit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             MeterId = meterId;
             Quantity = quantity;
             ExtendedUnit = extendedUnit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ResourceTypeSkuCost"/> for deserialization. </summary>
+        internal ResourceTypeSkuCost()
+        {
         }
 
         /// <summary> Gets or sets the meter id. </summary>

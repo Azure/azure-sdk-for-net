@@ -2679,6 +2679,61 @@ namespace Azure.Messaging.ServiceBus.Tests.Processor
             }
         }
 
+        [Test]
+        [TestCase(true, true)]
+        [TestCase(true, false)]
+        [TestCase(false, true)]
+        [TestCase(false, false)]
+        public async Task SessionOrderingIsGuaranteedProcessor(bool prefetch, bool useSpecificSession)
+        {
+            await using (var scope = await ServiceBusScope.CreateWithQueue(enablePartitioning: false, enableSession: true))
+            {
+                await using var client = new ServiceBusClient(TestEnvironment.ServiceBusConnectionString);
+                long lastSequenceNumber = 0;
+                var options = new ServiceBusSessionProcessorOptions
+                {
+                    MaxConcurrentCallsPerSession = 1, MaxConcurrentSessions = 1, PrefetchCount = prefetch ? 5 : 0
+                };
+                if (useSpecificSession)
+                {
+                    options.SessionIds.Add("session");
+                }
+
+                await using var processor = client.CreateSessionProcessor(scope.QueueName, options);
+                processor.ProcessMessageAsync += ProcessMessage;
+                processor.ProcessErrorAsync += SessionErrorHandler;
+
+                var sender = client.CreateSender(scope.QueueName);
+
+                CancellationTokenSource cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromSeconds(60));
+                await processor.StartProcessingAsync();
+                await SendMessagesAsync();
+
+                await processor.StopProcessingAsync();
+
+                async Task SendMessagesAsync()
+                {
+                    while (!cts.IsCancellationRequested)
+                    {
+                        await sender.SendMessageAsync(ServiceBusTestUtilities.GetMessage("session"));
+                        await Task.Delay(TimeSpan.FromMilliseconds(100));
+                    }
+                }
+
+                Task ProcessMessage(ProcessSessionMessageEventArgs args)
+                {
+                    Assert.That(
+                        args.Message.SequenceNumber,
+                        Is.EqualTo(lastSequenceNumber + 1),
+                        $"Last sequence number: {lastSequenceNumber}, current sequence number: {args.Message.SequenceNumber}");
+
+                    lastSequenceNumber = args.Message.SequenceNumber;
+                    return Task.CompletedTask;
+                }
+            }
+        }
+
         private Task SessionErrorHandler(ProcessErrorEventArgs args)
         {
             // If the connection drops due to network flakiness

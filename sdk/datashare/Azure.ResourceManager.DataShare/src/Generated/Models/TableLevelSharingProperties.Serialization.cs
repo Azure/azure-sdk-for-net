@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<TableLevelSharingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,12 +124,12 @@ namespace Azure.ResourceManager.DataShare.Models
             {
                 return null;
             }
-            Optional<IList<string>> externalTablesToExclude = default;
-            Optional<IList<string>> externalTablesToInclude = default;
-            Optional<IList<string>> materializedViewsToExclude = default;
-            Optional<IList<string>> materializedViewsToInclude = default;
-            Optional<IList<string>> tablesToExclude = default;
-            Optional<IList<string>> tablesToInclude = default;
+            IList<string> externalTablesToExclude = default;
+            IList<string> externalTablesToInclude = default;
+            IList<string> materializedViewsToExclude = default;
+            IList<string> materializedViewsToInclude = default;
+            IList<string> tablesToExclude = default;
+            IList<string> tablesToInclude = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -224,7 +224,14 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TableLevelSharingProperties(Optional.ToList(externalTablesToExclude), Optional.ToList(externalTablesToInclude), Optional.ToList(materializedViewsToExclude), Optional.ToList(materializedViewsToInclude), Optional.ToList(tablesToExclude), Optional.ToList(tablesToInclude), serializedAdditionalRawData);
+            return new TableLevelSharingProperties(
+                externalTablesToExclude ?? new ChangeTrackingList<string>(),
+                externalTablesToInclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToExclude ?? new ChangeTrackingList<string>(),
+                materializedViewsToInclude ?? new ChangeTrackingList<string>(),
+                tablesToExclude ?? new ChangeTrackingList<string>(),
+                tablesToInclude ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TableLevelSharingProperties>.Write(ModelReaderWriterOptions options)
@@ -236,7 +243,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +259,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeTableLevelSharingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TableLevelSharingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFirewallRuleGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRuleGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRuleGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in Rules)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ApplicationGatewayFirewallRule>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayFirewallRuleGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRuleGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRuleGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
                 return null;
             }
             string ruleGroupName = default;
-            Optional<string> description = default;
+            string description = default;
             IList<ApplicationGatewayFirewallRule> rules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayFirewallRule> array = new List<ApplicationGatewayFirewallRule>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayFirewallRule.DeserializeApplicationGatewayFirewallRule(item));
+                        array.Add(ApplicationGatewayFirewallRule.DeserializeApplicationGatewayFirewallRule(item, options));
                     }
                     rules = array;
                     continue;
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayFirewallRuleGroup(ruleGroupName, description.Value, rules, serializedAdditionalRawData);
+            return new ApplicationGatewayFirewallRuleGroup(ruleGroupName, description, rules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayFirewallRuleGroup>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRuleGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRuleGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayFirewallRuleGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRuleGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayFirewallRuleGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

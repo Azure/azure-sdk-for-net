@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownMonitoringInputDataBase. </summary>
+    /// <summary> Unknown version of MonitoringInputDataBase. </summary>
     internal partial class UnknownMonitoringInputDataBase : MonitoringInputDataBase
     {
         /// <summary> Initializes a new instance of <see cref="UnknownMonitoringInputDataBase"/>. </summary>
@@ -19,9 +19,15 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <param name="inputDataType"> [Required] Specifies the type of signal to monitor. </param>
         /// <param name="jobInputType"> [Required] Specifies the type of job. </param>
         /// <param name="uri"> [Required] Input Asset URI. </param>
-        internal UnknownMonitoringInputDataBase(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri) : base(columns, dataContext, inputDataType, jobInputType, uri)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal UnknownMonitoringInputDataBase(IDictionary<string, string> columns, string dataContext, MonitoringInputDataType inputDataType, JobInputType jobInputType, Uri uri, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(columns, dataContext, inputDataType, jobInputType, uri, serializedAdditionalRawData)
         {
             InputDataType = inputDataType;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="UnknownMonitoringInputDataBase"/> for deserialization. </summary>
+        internal UnknownMonitoringInputDataBase()
+        {
         }
     }
 }

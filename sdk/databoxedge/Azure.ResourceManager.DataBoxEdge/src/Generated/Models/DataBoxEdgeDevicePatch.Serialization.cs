@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDevicePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDevicePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (Optional.IsDefined(EdgeProfile))
             {
                 writer.WritePropertyName("edgeProfile"u8);
-                writer.WriteObjectValue(EdgeProfile);
+                writer.WriteObjectValue<EdgeProfilePatch>(EdgeProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeDevicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeDevicePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeDevicePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<ManagedServiceIdentity> identity = default;
-            Optional<EdgeProfilePatch> edgeProfile = default;
+            IDictionary<string, string> tags = default;
+            ManagedServiceIdentity identity = default;
+            EdgeProfilePatch edgeProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                             {
                                 continue;
                             }
-                            edgeProfile = EdgeProfilePatch.DeserializeEdgeProfilePatch(property0.Value);
+                            edgeProfile = EdgeProfilePatch.DeserializeEdgeProfilePatch(property0.Value, options);
                             continue;
                         }
                     }
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeDevicePatch(Optional.ToDictionary(tags), identity, edgeProfile.Value, serializedAdditionalRawData);
+            return new DataBoxEdgeDevicePatch(tags ?? new ChangeTrackingDictionary<string, string>(), identity, edgeProfile, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeDevicePatch>.Write(ModelReaderWriterOptions options)
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDevicePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDevicePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeDevicePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeDevicePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeDevicePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

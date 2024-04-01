@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteCacheCompressionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteCacheCompressionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<IList<string>> contentTypesToCompress = default;
-            Optional<bool> isCompressionEnabled = default;
+            IList<string> contentTypesToCompress = default;
+            bool? isCompressionEnabled = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RouteCacheCompressionSettings(Optional.ToList(contentTypesToCompress), Optional.ToNullable(isCompressionEnabled), serializedAdditionalRawData);
+            return new RouteCacheCompressionSettings(contentTypesToCompress ?? new ChangeTrackingList<string>(), isCompressionEnabled, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RouteCacheCompressionSettings>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeRouteCacheCompressionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteCacheCompressionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

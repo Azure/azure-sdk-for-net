@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.3.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -9,6 +9,18 @@
 ### Bugs Fixed
 
 ### Other Changes
+
+## 1.2.0 (2024-03-22)
+
+### Features Added
+
+- Upgraded api-version tag from 'package-2023-09' to 'package-2024-02'. Tag detail available at https://github.com/Azure/azure-rest-api-specs/blob/812012235b51ef1edf0e99f6ce9741c2c4c9df9a/specification/mobilenetwork/resource-manager/readme.md.
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+
+### Other Changes
+
+- Upgraded Azure.Core from 1.36.0 to 1.38.0
+- Upgraded Azure.ResourceManager from 1.9.0 to 1.10.2
 
 ## 1.1.1 (2023-11-29)
 

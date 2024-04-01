@@ -22,19 +22,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SkipLineCount))
             {
                 writer.WritePropertyName("skipLineCount"u8);
-                writer.WriteObjectValue(SkipLineCount);
+                writer.WriteObjectValue<object>(SkipLineCount);
             }
             if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                writer.WriteObjectValue<CompressionReadSettings>(CompressionProperties);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -45,8 +45,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> skipLineCount = default;
-            Optional<CompressionReadSettings> compressionProperties = default;
+            object skipLineCount = default;
+            CompressionReadSettings compressionProperties = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -78,14 +78,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new DelimitedTextReadSettings(type, additionalProperties, skipLineCount.Value, compressionProperties.Value);
+            return new DelimitedTextReadSettings(type, additionalProperties, skipLineCount, compressionProperties);
         }
 
         internal partial class DelimitedTextReadSettingsConverter : JsonConverter<DelimitedTextReadSettings>
         {
             public override void Write(Utf8JsonWriter writer, DelimitedTextReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DelimitedTextReadSettings>(model);
             }
             public override DelimitedTextReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

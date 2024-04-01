@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupDnsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerGroupDnsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,8 +82,8 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             IList<string> nameServers = default;
-            Optional<string> searchDomains = default;
-            Optional<string> options0 = default;
+            string searchDomains = default;
+            string options0 = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerGroupDnsConfiguration(nameServers, searchDomains.Value, options0.Value, serializedAdditionalRawData);
+            return new ContainerGroupDnsConfiguration(nameServers, searchDomains, options0, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerGroupDnsConfiguration>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerGroupDnsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerGroupDnsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

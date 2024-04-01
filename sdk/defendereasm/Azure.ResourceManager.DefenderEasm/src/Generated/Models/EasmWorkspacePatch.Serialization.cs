@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             var format = options.Format == "W" ? ((IPersistableModel<EasmWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EasmWorkspacePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             var format = options.Format == "W" ? ((IPersistableModel<EasmWorkspacePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EasmWorkspacePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EasmWorkspacePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DefenderEasm.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<SystemData> systemData = default;
+            IDictionary<string, string> tags = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EasmWorkspacePatch(Optional.ToDictionary(tags), systemData, serializedAdditionalRawData);
+            return new EasmWorkspacePatch(tags ?? new ChangeTrackingDictionary<string, string>(), systemData, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EasmWorkspacePatch>.Write(ModelReaderWriterOptions options)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EasmWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasmWorkspacePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.DefenderEasm.Models
                         return DeserializeEasmWorkspacePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EasmWorkspacePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EasmWorkspacePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
@@ -50,6 +49,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             Parameters = parameters;
             Libraries = libraries;
             ActivityType = activityType ?? "DatabricksSparkPython";
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DatabricksSparkPythonActivity"/> for deserialization. </summary>
+        internal DatabricksSparkPythonActivity()
+        {
         }
 
         /// <summary> The URI of the Python file to be executed. DBFS paths are supported. Type: string (or Expression with resultType string). </summary>

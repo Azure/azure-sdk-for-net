@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourcesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerServicePrivateLinkResourceData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServicePrivateLinkResourcesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ContainerServicePrivateLinkResourceData>> value = default;
+            IReadOnlyList<ContainerServicePrivateLinkResourceData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServicePrivateLinkResourceData> array = new List<ContainerServicePrivateLinkResourceData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item));
+                        array.Add(ContainerServicePrivateLinkResourceData.DeserializeContainerServicePrivateLinkResourceData(item, options));
                     }
                     value = array;
                     continue;
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServicePrivateLinkResourcesListResult(Optional.ToList(value), serializedAdditionalRawData);
+            return new ContainerServicePrivateLinkResourcesListResult(value ?? new ChangeTrackingList<ContainerServicePrivateLinkResourceData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServicePrivateLinkResourcesListResult>.Write(ModelReaderWriterOptions options)
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServicePrivateLinkResourcesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServicePrivateLinkResourcesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

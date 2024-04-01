@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -247,28 +247,28 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<AlertTimeGrainType> timeGrainType = default;
-            Optional<string> periodStartDate = default;
-            Optional<string> triggeredBy = default;
-            Optional<IList<BinaryData>> resourceGroupFilter = default;
-            Optional<IList<BinaryData>> resourceFilter = default;
-            Optional<IList<BinaryData>> meterFilter = default;
-            Optional<BinaryData> tagFilter = default;
-            Optional<decimal> threshold = default;
-            Optional<CostManagementAlertOperator> @operator = default;
-            Optional<decimal> amount = default;
-            Optional<string> unit = default;
-            Optional<decimal> currentSpend = default;
-            Optional<IList<string>> contactEmails = default;
-            Optional<IList<string>> contactGroups = default;
-            Optional<IList<string>> contactRoles = default;
-            Optional<string> overridingAlert = default;
-            Optional<string> departmentName = default;
-            Optional<string> companyName = default;
-            Optional<string> enrollmentNumber = default;
-            Optional<string> enrollmentStartDate = default;
-            Optional<string> enrollmentEndDate = default;
-            Optional<decimal> invoicingThreshold = default;
+            AlertTimeGrainType? timeGrainType = default;
+            string periodStartDate = default;
+            string triggeredBy = default;
+            IList<BinaryData> resourceGroupFilter = default;
+            IList<BinaryData> resourceFilter = default;
+            IList<BinaryData> meterFilter = default;
+            BinaryData tagFilter = default;
+            decimal? threshold = default;
+            CostManagementAlertOperator? @operator = default;
+            decimal? amount = default;
+            string unit = default;
+            decimal? currentSpend = default;
+            IList<string> contactEmails = default;
+            IList<string> contactGroups = default;
+            IList<string> contactRoles = default;
+            string overridingAlert = default;
+            string departmentName = default;
+            string companyName = default;
+            string enrollmentNumber = default;
+            string enrollmentStartDate = default;
+            string enrollmentEndDate = default;
+            decimal? invoicingThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -492,7 +492,30 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertPropertiesDetails(Optional.ToNullable(timeGrainType), periodStartDate.Value, triggeredBy.Value, Optional.ToList(resourceGroupFilter), Optional.ToList(resourceFilter), Optional.ToList(meterFilter), tagFilter.Value, Optional.ToNullable(threshold), Optional.ToNullable(@operator), Optional.ToNullable(amount), unit.Value, Optional.ToNullable(currentSpend), Optional.ToList(contactEmails), Optional.ToList(contactGroups), Optional.ToList(contactRoles), overridingAlert.Value, departmentName.Value, companyName.Value, enrollmentNumber.Value, enrollmentStartDate.Value, enrollmentEndDate.Value, Optional.ToNullable(invoicingThreshold), serializedAdditionalRawData);
+            return new AlertPropertiesDetails(
+                timeGrainType,
+                periodStartDate,
+                triggeredBy,
+                resourceGroupFilter ?? new ChangeTrackingList<BinaryData>(),
+                resourceFilter ?? new ChangeTrackingList<BinaryData>(),
+                meterFilter ?? new ChangeTrackingList<BinaryData>(),
+                tagFilter,
+                threshold,
+                @operator,
+                amount,
+                unit,
+                currentSpend,
+                contactEmails ?? new ChangeTrackingList<string>(),
+                contactGroups ?? new ChangeTrackingList<string>(),
+                contactRoles ?? new ChangeTrackingList<string>(),
+                overridingAlert,
+                departmentName,
+                companyName,
+                enrollmentNumber,
+                enrollmentStartDate,
+                enrollmentEndDate,
+                invoicingThreshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertPropertiesDetails>.Write(ModelReaderWriterOptions options)
@@ -504,7 +527,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -520,7 +543,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeAlertPropertiesDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertPropertiesDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

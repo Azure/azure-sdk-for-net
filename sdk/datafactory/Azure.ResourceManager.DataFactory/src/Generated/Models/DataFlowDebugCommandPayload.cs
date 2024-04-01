@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
     /// <summary> Structure of command payload. </summary>
     public partial class DataFlowDebugCommandPayload
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandPayload"/>. </summary>
         /// <param name="streamName"> The stream name which is used for preview. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="streamName"/> is null. </exception>
@@ -30,12 +61,19 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <param name="rowLimits"> Row limits for preview response. </param>
         /// <param name="columns"> Array of column names. </param>
         /// <param name="expression"> The expression which is used for preview. </param>
-        internal DataFlowDebugCommandPayload(string streamName, int? rowLimits, IList<string> columns, string expression)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal DataFlowDebugCommandPayload(string streamName, int? rowLimits, IList<string> columns, string expression, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             StreamName = streamName;
             RowLimits = rowLimits;
             Columns = columns;
             Expression = expression;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="DataFlowDebugCommandPayload"/> for deserialization. </summary>
+        internal DataFlowDebugCommandPayload()
+        {
         }
 
         /// <summary> The stream name which is used for preview. </summary>

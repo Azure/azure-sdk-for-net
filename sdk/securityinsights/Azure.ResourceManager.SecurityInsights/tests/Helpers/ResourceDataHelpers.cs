@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityInsights.Tests.Helpers
                 DataTypes = new SecurityInsightsAlertsDataTypeOfDataConnector(new DataConnectorDataTypeCommon()
                 {
                     State = SecurityInsightsDataTypeConnectionState.Enabled
-                })
+                }, null)
             };
             return data;
         }

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Monitor.Query.Models
 {
@@ -20,11 +19,11 @@ namespace Azure.Monitor.Query.Models
             {
                 return null;
             }
-            Optional<int> cost = default;
+            int? cost = default;
             string timespan = default;
-            Optional<TimeSpan> interval = default;
-            Optional<string> @namespace = default;
-            Optional<string> resourceregion = default;
+            TimeSpan? interval = default;
+            string @namespace = default;
+            string resourceregion = default;
             IReadOnlyList<MetricResult> value = default;
             foreach (var property in element.EnumerateObject())
             {
@@ -72,7 +71,13 @@ namespace Azure.Monitor.Query.Models
                     continue;
                 }
             }
-            return new MetricsQueryResult(Optional.ToNullable(cost), timespan, Optional.ToNullable(interval), @namespace.Value, resourceregion.Value, value);
+            return new MetricsQueryResult(
+                cost,
+                timespan,
+                interval,
+                @namespace,
+                resourceregion,
+                value);
         }
     }
 }

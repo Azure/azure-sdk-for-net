@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebChatChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebChatChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebChatChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.BotService.Models
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebChatSite>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebChatChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebChatChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebChatChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> webChatEmbedCode = default;
-            Optional<IList<WebChatSite>> sites = default;
+            string webChatEmbedCode = default;
+            IList<WebChatSite> sites = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.BotService.Models
                     List<WebChatSite> array = new List<WebChatSite>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(WebChatSite.DeserializeWebChatSite(item));
+                        array.Add(WebChatSite.DeserializeWebChatSite(item, options));
                     }
                     sites = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new WebChatChannelProperties(webChatEmbedCode.Value, Optional.ToList(sites), serializedAdditionalRawData);
+            return new WebChatChannelProperties(webChatEmbedCode, sites ?? new ChangeTrackingList<WebChatSite>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<WebChatChannelProperties>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebChatChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebChatChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeWebChatChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebChatChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebChatChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

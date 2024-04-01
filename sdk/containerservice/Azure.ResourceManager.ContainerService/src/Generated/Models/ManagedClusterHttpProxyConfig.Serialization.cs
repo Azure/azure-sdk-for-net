@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterHttpProxyConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> httpProxy = default;
-            Optional<string> httpsProxy = default;
-            Optional<IList<string>> noProxy = default;
-            Optional<string> trustedCA = default;
+            string httpProxy = default;
+            string httpsProxy = default;
+            IList<string> noProxy = default;
+            string trustedCA = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ManagedClusterHttpProxyConfig(httpProxy.Value, httpsProxy.Value, Optional.ToList(noProxy), trustedCA.Value, serializedAdditionalRawData);
+            return new ManagedClusterHttpProxyConfig(httpProxy, httpsProxy, noProxy ?? new ChangeTrackingList<string>(), trustedCA, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ManagedClusterHttpProxyConfig>.Write(ModelReaderWriterOptions options)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterHttpProxyConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterHttpProxyConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

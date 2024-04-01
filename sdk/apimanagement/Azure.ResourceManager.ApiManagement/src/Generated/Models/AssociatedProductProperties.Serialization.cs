@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssociatedProductProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssociatedProductProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,14 +101,14 @@ namespace Azure.ResourceManager.ApiManagement.Models
             {
                 return null;
             }
-            Optional<string> id = default;
+            string id = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<string> terms = default;
-            Optional<bool> subscriptionRequired = default;
-            Optional<bool> approvalRequired = default;
-            Optional<int> subscriptionsLimit = default;
-            Optional<ApiManagementProductState> state = default;
+            string description = default;
+            string terms = default;
+            bool? subscriptionRequired = default;
+            bool? approvalRequired = default;
+            int? subscriptionsLimit = default;
+            ApiManagementProductState? state = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -175,7 +175,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AssociatedProductProperties(description.Value, terms.Value, Optional.ToNullable(subscriptionRequired), Optional.ToNullable(approvalRequired), Optional.ToNullable(subscriptionsLimit), Optional.ToNullable(state), serializedAdditionalRawData, id.Value, name);
+            return new AssociatedProductProperties(
+                description,
+                terms,
+                subscriptionRequired,
+                approvalRequired,
+                subscriptionsLimit,
+                state,
+                serializedAdditionalRawData,
+                id,
+                name);
         }
 
         BinaryData IPersistableModel<AssociatedProductProperties>.Write(ModelReaderWriterOptions options)
@@ -187,7 +196,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +212,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeAssociatedProductProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssociatedProductProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

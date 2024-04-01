@@ -16,13 +16,13 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("aggregation"u8);
-            writer.WriteObjectValue(Aggregation);
+            writer.WriteObjectValue<TimeSeriesExpression>(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<TimeSeriesExpression>(Filter);
             }
             writer.WriteEndObject();
         }
@@ -35,7 +35,7 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             TimeSeriesExpression aggregation = default;
             string kind = default;
-            Optional<TimeSeriesExpression> filter = default;
+            TimeSeriesExpression filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("aggregation"u8))
@@ -58,7 +58,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new AggregateVariable(kind, filter.Value, aggregation);
+            return new AggregateVariable(kind, filter, aggregation);
         }
     }
 }

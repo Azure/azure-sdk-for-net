@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciPrecheckResultTags>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<HciPrecheckResultTags>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> key = default;
-            Optional<string> value = default;
+            string key = default;
+            string value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new HciPrecheckResultTags(key.Value, value.Value, serializedAdditionalRawData);
+            return new HciPrecheckResultTags(key, value, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<HciPrecheckResultTags>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeHciPrecheckResultTags(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HciPrecheckResultTags)} does not support reading '{options.Format}' format.");
             }
         }
 

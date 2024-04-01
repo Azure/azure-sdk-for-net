@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class UntilActivity : IUtf8JsonSerializable
+    public partial class UntilActivity : IUtf8JsonSerializable, IJsonModel<UntilActivity>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<UntilActivity>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<UntilActivity>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UntilActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UntilActivity)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -43,7 +52,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -53,14 +62,14 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("expression"u8);
-            writer.WriteObjectValue(Expression);
+            writer.WriteObjectValue<DataFactoryExpression>(Expression, options);
             if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
@@ -70,7 +79,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartArray();
             foreach (var item in Activities)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<PipelineActivity>(item, options);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -89,21 +98,35 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static UntilActivity DeserializeUntilActivity(JsonElement element)
+        UntilActivity IJsonModel<UntilActivity>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<UntilActivity>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(UntilActivity)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeUntilActivity(document.RootElement, options);
+        }
+
+        internal static UntilActivity DeserializeUntilActivity(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string name = default;
             string type = default;
-            Optional<string> description = default;
-            Optional<PipelineActivityState> state = default;
-            Optional<ActivityOnInactiveMarkAs> onInactiveMarkAs = default;
-            Optional<IList<PipelineActivityDependency>> dependsOn = default;
-            Optional<IList<PipelineActivityUserProperty>> userProperties = default;
+            string description = default;
+            PipelineActivityState? state = default;
+            ActivityOnInactiveMarkAs? onInactiveMarkAs = default;
+            IList<PipelineActivityDependency> dependsOn = default;
+            IList<PipelineActivityUserProperty> userProperties = default;
             DataFactoryExpression expression = default;
-            Optional<DataFactoryElement<string>> timeout = default;
+            DataFactoryElement<string> timeout = default;
             IList<PipelineActivity> activities = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -151,7 +174,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityDependency> array = new List<PipelineActivityDependency>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item));
+                        array.Add(PipelineActivityDependency.DeserializePipelineActivityDependency(item, options));
                     }
                     dependsOn = array;
                     continue;
@@ -165,7 +188,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     List<PipelineActivityUserProperty> array = new List<PipelineActivityUserProperty>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item));
+                        array.Add(PipelineActivityUserProperty.DeserializePipelineActivityUserProperty(item, options));
                     }
                     userProperties = array;
                     continue;
@@ -181,7 +204,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                     {
                         if (property0.NameEquals("expression"u8))
                         {
-                            expression = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value);
+                            expression = DataFactoryExpression.DeserializeDataFactoryExpression(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("timeout"u8))
@@ -198,7 +221,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             List<PipelineActivity> array = new List<PipelineActivity>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(DeserializePipelineActivity(item));
+                                array.Add(DeserializePipelineActivity(item, options));
                             }
                             activities = array;
                             continue;
@@ -209,7 +232,49 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UntilActivity(name, type, description.Value, Optional.ToNullable(state), Optional.ToNullable(onInactiveMarkAs), Optional.ToList(dependsOn), Optional.ToList(userProperties), additionalProperties, expression, timeout.Value, activities);
+            return new UntilActivity(
+                name,
+                type,
+                description,
+                state,
+                onInactiveMarkAs,
+                dependsOn ?? new ChangeTrackingList<PipelineActivityDependency>(),
+                userProperties ?? new ChangeTrackingList<PipelineActivityUserProperty>(),
+                additionalProperties,
+                expression,
+                timeout,
+                activities);
         }
+
+        BinaryData IPersistableModel<UntilActivity>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UntilActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(UntilActivity)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        UntilActivity IPersistableModel<UntilActivity>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<UntilActivity>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeUntilActivity(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(UntilActivity)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<UntilActivity>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

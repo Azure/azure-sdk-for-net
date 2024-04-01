@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorActivatedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorActivatedResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorActivatedResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<FrontDoorActivatedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FrontDoorActivatedResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FrontDoorActivatedResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Cdn.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<bool> isActive = default;
+            ResourceIdentifier id = default;
+            bool? isActive = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FrontDoorActivatedResourceInfo(id.Value, Optional.ToNullable(isActive), serializedAdditionalRawData);
+            return new FrontDoorActivatedResourceInfo(id, isActive, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FrontDoorActivatedResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorActivatedResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorActivatedResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeFrontDoorActivatedResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FrontDoorActivatedResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FrontDoorActivatedResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

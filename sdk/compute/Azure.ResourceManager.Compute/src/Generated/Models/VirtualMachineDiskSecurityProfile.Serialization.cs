@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineDiskSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<SecurityEncryptionType> securityEncryptionType = default;
-            Optional<WritableSubResource> diskEncryptionSet = default;
+            SecurityEncryptionType? securityEncryptionType = default;
+            WritableSubResource diskEncryptionSet = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineDiskSecurityProfile(Optional.ToNullable(securityEncryptionType), diskEncryptionSet, serializedAdditionalRawData);
+            return new VirtualMachineDiskSecurityProfile(securityEncryptionType, diskEncryptionSet, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineDiskSecurityProfile>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineDiskSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineDiskSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

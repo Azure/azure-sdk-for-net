@@ -5,15 +5,26 @@
 
 #nullable disable
 
+using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    public partial class MachineLearningWebhook : IUtf8JsonSerializable
+    [PersistableModelProxy(typeof(UnknownWebhook))]
+    public partial class MachineLearningWebhook : IUtf8JsonSerializable, IJsonModel<MachineLearningWebhook>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MachineLearningWebhook>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MachineLearningWebhook>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWebhook>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWebhook)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(EventType))
             {
@@ -29,11 +40,40 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("webhookType"u8);
             writer.WriteStringValue(WebhookType.ToString());
+            if (options.Format != "W" && _serializedAdditionalRawData != null)
+            {
+                foreach (var item in _serializedAdditionalRawData)
+                {
+                    writer.WritePropertyName(item.Key);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                    using (JsonDocument document = JsonDocument.Parse(item.Value))
+                    {
+                        JsonSerializer.Serialize(writer, document.RootElement);
+                    }
+#endif
+                }
+            }
             writer.WriteEndObject();
         }
 
-        internal static MachineLearningWebhook DeserializeMachineLearningWebhook(JsonElement element)
+        MachineLearningWebhook IJsonModel<MachineLearningWebhook>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWebhook>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MachineLearningWebhook)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMachineLearningWebhook(document.RootElement, options);
+        }
+
+        internal static MachineLearningWebhook DeserializeMachineLearningWebhook(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
@@ -42,10 +82,41 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureDevOps": return AzureDevOpsWebhook.DeserializeAzureDevOpsWebhook(element);
+                    case "AzureDevOps": return AzureDevOpsWebhook.DeserializeAzureDevOpsWebhook(element, options);
                 }
             }
-            return UnknownWebhook.DeserializeUnknownWebhook(element);
+            return UnknownWebhook.DeserializeUnknownWebhook(element, options);
         }
+
+        BinaryData IPersistableModel<MachineLearningWebhook>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWebhook>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningWebhook)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MachineLearningWebhook IPersistableModel<MachineLearningWebhook>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWebhook>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMachineLearningWebhook(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MachineLearningWebhook)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MachineLearningWebhook>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

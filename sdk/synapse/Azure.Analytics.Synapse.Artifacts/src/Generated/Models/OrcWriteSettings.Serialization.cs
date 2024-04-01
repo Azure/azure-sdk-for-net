@@ -22,19 +22,19 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
-                writer.WriteObjectValue(MaxRowsPerFile);
+                writer.WriteObjectValue<object>(MaxRowsPerFile);
             }
             if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
-                writer.WriteObjectValue(FileNamePrefix);
+                writer.WriteObjectValue<object>(FileNamePrefix);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -45,8 +45,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> maxRowsPerFile = default;
-            Optional<object> fileNamePrefix = default;
+            object maxRowsPerFile = default;
+            object fileNamePrefix = default;
             string type = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
@@ -78,14 +78,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new OrcWriteSettings(type, additionalProperties, maxRowsPerFile.Value, fileNamePrefix.Value);
+            return new OrcWriteSettings(type, additionalProperties, maxRowsPerFile, fileNamePrefix);
         }
 
         internal partial class OrcWriteSettingsConverter : JsonConverter<OrcWriteSettings>
         {
             public override void Write(Utf8JsonWriter writer, OrcWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<OrcWriteSettings>(model);
             }
             public override OrcWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

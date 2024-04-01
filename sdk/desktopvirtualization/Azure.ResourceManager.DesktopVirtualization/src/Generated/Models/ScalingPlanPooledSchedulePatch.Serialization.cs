@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPooledSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampUpStartTime))
             {
                 writer.WritePropertyName("rampUpStartTime"u8);
-                writer.WriteObjectValue(RampUpStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(RampUpStartTime, options);
             }
             if (Optional.IsDefined(RampUpLoadBalancingAlgorithm))
             {
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(PeakStartTime))
             {
                 writer.WritePropertyName("peakStartTime"u8);
-                writer.WriteObjectValue(PeakStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(PeakStartTime, options);
             }
             if (Optional.IsDefined(PeakLoadBalancingAlgorithm))
             {
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(RampDownStartTime))
             {
                 writer.WritePropertyName("rampDownStartTime"u8);
-                writer.WriteObjectValue(RampDownStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(RampDownStartTime, options);
             }
             if (Optional.IsDefined(RampDownLoadBalancingAlgorithm))
             {
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             if (Optional.IsDefined(OffPeakStartTime))
             {
                 writer.WritePropertyName("offPeakStartTime"u8);
-                writer.WriteObjectValue(OffPeakStartTime);
+                writer.WriteObjectValue<ScalingActionTime>(OffPeakStartTime, options);
             }
             if (Optional.IsDefined(OffPeakLoadBalancingAlgorithm))
             {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPooledSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,24 +181,24 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<IList<DesktopVirtualizationDayOfWeek>> daysOfWeek = default;
-            Optional<ScalingActionTime> rampUpStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> rampUpLoadBalancingAlgorithm = default;
-            Optional<int> rampUpMinimumHostsPct = default;
-            Optional<int> rampUpCapacityThresholdPct = default;
-            Optional<ScalingActionTime> peakStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> peakLoadBalancingAlgorithm = default;
-            Optional<ScalingActionTime> rampDownStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> rampDownLoadBalancingAlgorithm = default;
-            Optional<int> rampDownMinimumHostsPct = default;
-            Optional<int> rampDownCapacityThresholdPct = default;
-            Optional<bool> rampDownForceLogoffUsers = default;
-            Optional<DesktopVirtualizationStopHostsWhen> rampDownStopHostsWhen = default;
-            Optional<int> rampDownWaitTimeMinutes = default;
-            Optional<string> rampDownNotificationMessage = default;
-            Optional<ScalingActionTime> offPeakStartTime = default;
-            Optional<SessionHostLoadBalancingAlgorithm> offPeakLoadBalancingAlgorithm = default;
+            SystemData systemData = default;
+            IList<DesktopVirtualizationDayOfWeek> daysOfWeek = default;
+            ScalingActionTime rampUpStartTime = default;
+            SessionHostLoadBalancingAlgorithm? rampUpLoadBalancingAlgorithm = default;
+            int? rampUpMinimumHostsPct = default;
+            int? rampUpCapacityThresholdPct = default;
+            ScalingActionTime peakStartTime = default;
+            SessionHostLoadBalancingAlgorithm? peakLoadBalancingAlgorithm = default;
+            ScalingActionTime rampDownStartTime = default;
+            SessionHostLoadBalancingAlgorithm? rampDownLoadBalancingAlgorithm = default;
+            int? rampDownMinimumHostsPct = default;
+            int? rampDownCapacityThresholdPct = default;
+            bool? rampDownForceLogoffUsers = default;
+            DesktopVirtualizationStopHostsWhen? rampDownStopHostsWhen = default;
+            int? rampDownWaitTimeMinutes = default;
+            string rampDownNotificationMessage = default;
+            ScalingActionTime offPeakStartTime = default;
+            SessionHostLoadBalancingAlgorithm? offPeakLoadBalancingAlgorithm = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            rampUpStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rampUpLoadBalancingAlgorithm"u8))
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            peakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("peakLoadBalancingAlgorithm"u8))
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            rampDownStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("rampDownLoadBalancingAlgorithm"u8))
@@ -378,7 +378,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             {
                                 continue;
                             }
-                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value);
+                            offPeakStartTime = ScalingActionTime.DeserializeScalingActionTime(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("offPeakLoadBalancingAlgorithm"u8))
@@ -399,7 +399,29 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanPooledSchedulePatch(id, name, type, systemData.Value, Optional.ToList(daysOfWeek), rampUpStartTime.Value, Optional.ToNullable(rampUpLoadBalancingAlgorithm), Optional.ToNullable(rampUpMinimumHostsPct), Optional.ToNullable(rampUpCapacityThresholdPct), peakStartTime.Value, Optional.ToNullable(peakLoadBalancingAlgorithm), rampDownStartTime.Value, Optional.ToNullable(rampDownLoadBalancingAlgorithm), Optional.ToNullable(rampDownMinimumHostsPct), Optional.ToNullable(rampDownCapacityThresholdPct), Optional.ToNullable(rampDownForceLogoffUsers), Optional.ToNullable(rampDownStopHostsWhen), Optional.ToNullable(rampDownWaitTimeMinutes), rampDownNotificationMessage.Value, offPeakStartTime.Value, Optional.ToNullable(offPeakLoadBalancingAlgorithm), serializedAdditionalRawData);
+            return new ScalingPlanPooledSchedulePatch(
+                id,
+                name,
+                type,
+                systemData,
+                daysOfWeek ?? new ChangeTrackingList<DesktopVirtualizationDayOfWeek>(),
+                rampUpStartTime,
+                rampUpLoadBalancingAlgorithm,
+                rampUpMinimumHostsPct,
+                rampUpCapacityThresholdPct,
+                peakStartTime,
+                peakLoadBalancingAlgorithm,
+                rampDownStartTime,
+                rampDownLoadBalancingAlgorithm,
+                rampDownMinimumHostsPct,
+                rampDownCapacityThresholdPct,
+                rampDownForceLogoffUsers,
+                rampDownStopHostsWhen,
+                rampDownWaitTimeMinutes,
+                rampDownNotificationMessage,
+                offPeakStartTime,
+                offPeakLoadBalancingAlgorithm,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanPooledSchedulePatch>.Write(ModelReaderWriterOptions options)
@@ -411,7 +433,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -427,7 +449,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeScalingPlanPooledSchedulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPooledSchedulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

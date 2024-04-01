@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBasePolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBasePolicyRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,11 +72,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "AzureBackupRule": return DataProtectionBackupRule.DeserializeDataProtectionBackupRule(element);
-                    case "AzureRetentionRule": return DataProtectionRetentionRule.DeserializeDataProtectionRetentionRule(element);
+                    case "AzureBackupRule": return DataProtectionBackupRule.DeserializeDataProtectionBackupRule(element, options);
+                    case "AzureRetentionRule": return DataProtectionRetentionRule.DeserializeDataProtectionRetentionRule(element, options);
                 }
             }
-            return UnknownBasePolicyRule.DeserializeUnknownBasePolicyRule(element);
+            return UnknownBasePolicyRule.DeserializeUnknownBasePolicyRule(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionBasePolicyRule>.Write(ModelReaderWriterOptions options)
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBasePolicyRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBasePolicyRule)} does not support reading '{options.Format}' format.");
             }
         }
 

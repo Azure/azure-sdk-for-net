@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ManagementGroups.Models;
 using Azure.ResourceManager.Resources;
 
@@ -88,6 +86,79 @@ namespace Azure.ResourceManager.ManagementGroups
         {
             if (id.ResourceType != ResourceType)
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
+        }
+
+        /// <summary> Gets a collection of ManagementGroupSubscriptionResources in the ManagementGroup. </summary>
+        /// <returns> An object representing collection of ManagementGroupSubscriptionResources and their operations over a ManagementGroupSubscriptionResource. </returns>
+        public virtual ManagementGroupSubscriptionCollection GetManagementGroupSubscriptions()
+        {
+            return GetCachedClient(client => new ManagementGroupSubscriptionCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Retrieves details about given subscription which is associated with the management group.
+        ///
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroupSubscriptions_GetSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> Subscription ID. </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<ManagementGroupSubscriptionResource>> GetManagementGroupSubscriptionAsync(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        {
+            return await GetManagementGroupSubscriptions().GetAsync(subscriptionId, cacheControl, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Retrieves details about given subscription which is associated with the management group.
+        ///
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/providers/Microsoft.Management/managementGroups/{groupId}/subscriptions/{subscriptionId}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>ManagementGroupSubscriptions_GetSubscription</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2021-04-01</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="ManagementGroupSubscriptionResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="subscriptionId"> Subscription ID. </param>
+        /// <param name="cacheControl"> Indicates whether the request should utilize any caches. Populate the header with 'no-cache' value to bypass existing caches. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="subscriptionId"/> is null. </exception>
+        /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
+        [ForwardsClientCalls]
+        public virtual Response<ManagementGroupSubscriptionResource> GetManagementGroupSubscription(string subscriptionId, string cacheControl = null, CancellationToken cancellationToken = default)
+        {
+            return GetManagementGroupSubscriptions().Get(subscriptionId, cacheControl, cancellationToken);
         }
 
         /// <summary>

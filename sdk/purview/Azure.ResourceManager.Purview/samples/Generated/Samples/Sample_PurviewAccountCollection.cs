@@ -7,11 +7,9 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Purview;
+using Azure.ResourceManager.Purview.Models;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Purview.Samples
@@ -23,7 +21,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetAll_AccountsListByResourceGroup()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_ListByResourceGroup.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_ListByResourceGroup.json
             // this example is just showing the usage of "Accounts_ListByResourceGroup" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -59,7 +57,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AccountsGet()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -93,7 +91,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Exists_AccountsGet()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -123,7 +121,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetIfExists_AccountsGet()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_Get.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -165,7 +163,7 @@ namespace Azure.ResourceManager.Purview.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_AccountsCreateOrUpdate()
         {
-            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/stable/2021-07-01/examples/Accounts_CreateOrUpdate.json
+            // Generated from example definition: specification/purview/resource-manager/Microsoft.Purview/preview/2023-05-01-preview/examples/Accounts_CreateOrUpdate.json
             // this example is just showing the usage of "Accounts_CreateOrUpdate" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -188,6 +186,7 @@ namespace Azure.ResourceManager.Purview.Samples
             PurviewAccountData data = new PurviewAccountData(new AzureLocation("West US 2"))
             {
                 ManagedResourceGroupName = "custom-rgname",
+                ManagedResourcesPublicNetworkAccess = ManagedResourcesPublicNetworkAccess.Enabled,
             };
             ArmOperation<PurviewAccountResource> lro = await collection.CreateOrUpdateAsync(WaitUntil.Completed, accountName, data);
             PurviewAccountResource result = lro.Value;

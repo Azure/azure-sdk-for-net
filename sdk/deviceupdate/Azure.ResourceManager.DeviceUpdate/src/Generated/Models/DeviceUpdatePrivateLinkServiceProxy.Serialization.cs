@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             if (Optional.IsDefined(RemotePrivateLinkServiceConnectionState))
             {
                 writer.WritePropertyName("remotePrivateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(RemotePrivateLinkServiceConnectionState);
+                writer.WriteObjectValue<DeviceUpdatePrivateLinkServiceConnectionState>(RemotePrivateLinkServiceConnectionState, options);
             }
             if (Optional.IsDefined(RemotePrivateEndpointConnection))
             {
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in GroupConnectivityInformation)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GroupConnectivityInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,10 +90,10 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<DeviceUpdatePrivateLinkServiceConnectionState> remotePrivateLinkServiceConnectionState = default;
-            Optional<SubResource> remotePrivateEndpointConnection = default;
-            Optional<IList<GroupConnectivityInformation>> groupConnectivityInformation = default;
+            ResourceIdentifier id = default;
+            DeviceUpdatePrivateLinkServiceConnectionState remotePrivateLinkServiceConnectionState = default;
+            SubResource remotePrivateEndpointConnection = default;
+            IList<GroupConnectivityInformation> groupConnectivityInformation = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     {
                         continue;
                     }
-                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value);
+                    remotePrivateLinkServiceConnectionState = DeviceUpdatePrivateLinkServiceConnectionState.DeserializeDeviceUpdatePrivateLinkServiceConnectionState(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("remotePrivateEndpointConnection"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<GroupConnectivityInformation> array = new List<GroupConnectivityInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item));
+                        array.Add(Models.GroupConnectivityInformation.DeserializeGroupConnectivityInformation(item, options));
                     }
                     groupConnectivityInformation = array;
                     continue;
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeviceUpdatePrivateLinkServiceProxy(id.Value, remotePrivateLinkServiceConnectionState.Value, remotePrivateEndpointConnection, Optional.ToList(groupConnectivityInformation), serializedAdditionalRawData);
+            return new DeviceUpdatePrivateLinkServiceProxy(id, remotePrivateLinkServiceConnectionState, remotePrivateEndpointConnection, groupConnectivityInformation ?? new ChangeTrackingList<GroupConnectivityInformation>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeviceUpdatePrivateLinkServiceProxy>.Write(ModelReaderWriterOptions options)
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeDeviceUpdatePrivateLinkServiceProxy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateLinkServiceProxy)} does not support reading '{options.Format}' format.");
             }
         }
 

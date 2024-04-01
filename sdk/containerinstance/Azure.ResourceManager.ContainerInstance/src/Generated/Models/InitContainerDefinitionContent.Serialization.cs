@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<InitContainerDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,14 +51,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in EnvironmentVariables)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerEnvironmentVariable>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<InitContainerPropertiesDefinitionInstanceView>(InstanceView, options);
             }
             if (Optional.IsCollectionDefined(VolumeMounts))
             {
@@ -66,14 +66,14 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 writer.WriteStartArray();
                 foreach (var item in VolumeMounts)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerVolumeMount>(item, options);
                 }
                 writer.WriteEndArray();
             }
             if (Optional.IsDefined(SecurityContext))
             {
                 writer.WritePropertyName("securityContext"u8);
-                writer.WriteObjectValue(SecurityContext);
+                writer.WriteObjectValue<ContainerSecurityContextDefinition>(SecurityContext, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<InitContainerDefinitionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,12 +115,12 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 return null;
             }
             string name = default;
-            Optional<string> image = default;
-            Optional<IList<string>> command = default;
-            Optional<IList<ContainerEnvironmentVariable>> environmentVariables = default;
-            Optional<InitContainerPropertiesDefinitionInstanceView> instanceView = default;
-            Optional<IList<ContainerVolumeMount>> volumeMounts = default;
-            Optional<ContainerSecurityContextDefinition> securityContext = default;
+            string image = default;
+            IList<string> command = default;
+            IList<ContainerEnvironmentVariable> environmentVariables = default;
+            InitContainerPropertiesDefinitionInstanceView instanceView = default;
+            IList<ContainerVolumeMount> volumeMounts = default;
+            ContainerSecurityContextDefinition securityContext = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             List<ContainerEnvironmentVariable> array = new List<ContainerEnvironmentVariable>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item));
+                                array.Add(ContainerEnvironmentVariable.DeserializeContainerEnvironmentVariable(item, options));
                             }
                             environmentVariables = array;
                             continue;
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            instanceView = InitContainerPropertiesDefinitionInstanceView.DeserializeInitContainerPropertiesDefinitionInstanceView(property0.Value);
+                            instanceView = InitContainerPropertiesDefinitionInstanceView.DeserializeInitContainerPropertiesDefinitionInstanceView(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("volumeMounts"u8))
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             List<ContainerVolumeMount> array = new List<ContainerVolumeMount>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item));
+                                array.Add(ContainerVolumeMount.DeserializeContainerVolumeMount(item, options));
                             }
                             volumeMounts = array;
                             continue;
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                             {
                                 continue;
                             }
-                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value);
+                            securityContext = ContainerSecurityContextDefinition.DeserializeContainerSecurityContextDefinition(property0.Value, options);
                             continue;
                         }
                     }
@@ -213,7 +213,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new InitContainerDefinitionContent(name, image.Value, Optional.ToList(command), Optional.ToList(environmentVariables), instanceView.Value, Optional.ToList(volumeMounts), securityContext.Value, serializedAdditionalRawData);
+            return new InitContainerDefinitionContent(
+                name,
+                image,
+                command ?? new ChangeTrackingList<string>(),
+                environmentVariables ?? new ChangeTrackingList<ContainerEnvironmentVariable>(),
+                instanceView,
+                volumeMounts ?? new ChangeTrackingList<ContainerVolumeMount>(),
+                securityContext,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<InitContainerDefinitionContent>.Write(ModelReaderWriterOptions options)
@@ -225,7 +233,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +249,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeInitContainerDefinitionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InitContainerDefinitionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

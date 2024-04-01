@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDistributionDefinitionDistributionsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionDistributionDefinitionDistributionsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<int> scoreThreshold = default;
-            Optional<long> positives = default;
-            Optional<long> negatives = default;
-            Optional<long> positivesAboveThreshold = default;
-            Optional<long> negativesAboveThreshold = default;
+            int? scoreThreshold = default;
+            long? positives = default;
+            long? negatives = default;
+            long? positivesAboveThreshold = default;
+            long? negativesAboveThreshold = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -149,7 +149,13 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PredictionDistributionDefinitionDistributionsItem(Optional.ToNullable(scoreThreshold), Optional.ToNullable(positives), Optional.ToNullable(negatives), Optional.ToNullable(positivesAboveThreshold), Optional.ToNullable(negativesAboveThreshold), serializedAdditionalRawData);
+            return new PredictionDistributionDefinitionDistributionsItem(
+                scoreThreshold,
+                positives,
+                negatives,
+                positivesAboveThreshold,
+                negativesAboveThreshold,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PredictionDistributionDefinitionDistributionsItem>.Write(ModelReaderWriterOptions options)
@@ -161,7 +167,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +183,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializePredictionDistributionDefinitionDistributionsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionDistributionDefinitionDistributionsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

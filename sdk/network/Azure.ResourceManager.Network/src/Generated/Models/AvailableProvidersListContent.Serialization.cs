@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableProvidersListContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableProvidersListContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableProvidersListContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableProvidersListContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableProvidersListContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableProvidersListContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<AzureLocation>> azureLocations = default;
-            Optional<string> country = default;
-            Optional<string> state = default;
-            Optional<string> city = default;
+            IList<AzureLocation> azureLocations = default;
+            string country = default;
+            string state = default;
+            string city = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvailableProvidersListContent(Optional.ToList(azureLocations), country.Value, state.Value, city.Value, serializedAdditionalRawData);
+            return new AvailableProvidersListContent(azureLocations ?? new ChangeTrackingList<AzureLocation>(), country, state, city, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvailableProvidersListContent>.Write(ModelReaderWriterOptions options)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableProvidersListContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableProvidersListContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAvailableProvidersListContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableProvidersListContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableProvidersListContent)} does not support reading '{options.Format}' format.");
             }
         }
 

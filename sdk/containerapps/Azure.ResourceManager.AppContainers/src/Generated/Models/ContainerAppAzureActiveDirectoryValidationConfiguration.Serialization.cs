@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryValidationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
-                writer.WriteObjectValue(JwtClaimChecks);
+                writer.WriteObjectValue<ContainerAppJwtClaimChecks>(JwtClaimChecks, options);
             }
             if (Optional.IsCollectionDefined(AllowedAudiences))
             {
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
-                writer.WriteObjectValue(DefaultAuthorizationPolicy);
+                writer.WriteObjectValue<ContainerAppDefaultAuthorizationPolicy>(DefaultAuthorizationPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppAzureActiveDirectoryValidationConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<ContainerAppJwtClaimChecks> jwtClaimChecks = default;
-            Optional<IList<string>> allowedAudiences = default;
-            Optional<ContainerAppDefaultAuthorizationPolicy> defaultAuthorizationPolicy = default;
+            ContainerAppJwtClaimChecks jwtClaimChecks = default;
+            IList<string> allowedAudiences = default;
+            ContainerAppDefaultAuthorizationPolicy defaultAuthorizationPolicy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    jwtClaimChecks = ContainerAppJwtClaimChecks.DeserializeContainerAppJwtClaimChecks(property.Value);
+                    jwtClaimChecks = ContainerAppJwtClaimChecks.DeserializeContainerAppJwtClaimChecks(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("allowedAudiences"u8))
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    defaultAuthorizationPolicy = ContainerAppDefaultAuthorizationPolicy.DeserializeContainerAppDefaultAuthorizationPolicy(property.Value);
+                    defaultAuthorizationPolicy = ContainerAppDefaultAuthorizationPolicy.DeserializeContainerAppDefaultAuthorizationPolicy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks.Value, Optional.ToList(allowedAudiences), defaultAuthorizationPolicy.Value, serializedAdditionalRawData);
+            return new ContainerAppAzureActiveDirectoryValidationConfiguration(jwtClaimChecks, allowedAudiences ?? new ChangeTrackingList<string>(), defaultAuthorizationPolicy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppAzureActiveDirectoryValidationConfiguration>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppAzureActiveDirectoryValidationConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppAzureActiveDirectoryValidationConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

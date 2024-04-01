@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerCommit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerCommit>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -88,9 +88,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> commitId = default;
+            string commitId = default;
             IList<string> targetLocations = default;
-            Optional<IList<string>> configurationIds = default;
+            IList<string> configurationIds = default;
             NetworkConfigurationDeploymentType commitType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkManagerCommit(commitId.Value, targetLocations, Optional.ToList(configurationIds), commitType, serializedAdditionalRawData);
+            return new NetworkManagerCommit(commitId, targetLocations, configurationIds ?? new ChangeTrackingList<string>(), commitType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkManagerCommit>.Write(ModelReaderWriterOptions options)
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkManagerCommit(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerCommit)} does not support reading '{options.Format}' format.");
             }
         }
 

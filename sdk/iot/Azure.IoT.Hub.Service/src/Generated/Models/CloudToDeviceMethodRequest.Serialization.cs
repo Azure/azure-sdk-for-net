@@ -23,7 +23,7 @@ namespace Azure.IoT.Hub.Service.Models
             if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
-                writer.WriteObjectValue(Payload);
+                writer.WriteObjectValue<object>(Payload);
             }
             if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {
@@ -44,10 +44,10 @@ namespace Azure.IoT.Hub.Service.Models
             {
                 return null;
             }
-            Optional<string> methodName = default;
-            Optional<object> payload = default;
-            Optional<int> responseTimeoutInSeconds = default;
-            Optional<int> connectTimeoutInSeconds = default;
+            string methodName = default;
+            object payload = default;
+            int? responseTimeoutInSeconds = default;
+            int? connectTimeoutInSeconds = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("methodName"u8))
@@ -83,7 +83,7 @@ namespace Azure.IoT.Hub.Service.Models
                     continue;
                 }
             }
-            return new CloudToDeviceMethodRequest(methodName.Value, payload.Value, Optional.ToNullable(responseTimeoutInSeconds), Optional.ToNullable(connectTimeoutInSeconds));
+            return new CloudToDeviceMethodRequest(methodName, payload, responseTimeoutInSeconds, connectTimeoutInSeconds);
         }
     }
 }

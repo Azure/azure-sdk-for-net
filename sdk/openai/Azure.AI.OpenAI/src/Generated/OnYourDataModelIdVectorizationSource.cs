@@ -6,7 +6,7 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
@@ -29,10 +29,16 @@ namespace Azure.AI.OpenAI
 
         /// <summary> Initializes a new instance of <see cref="OnYourDataModelIdVectorizationSource"/>. </summary>
         /// <param name="type"> The type of vectorization source to use. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="modelId"> The embedding model ID build inside the search service. Currently only supported by Elasticsearch®. </param>
-        internal OnYourDataModelIdVectorizationSource(OnYourDataVectorizationSourceType type, string modelId) : base(type)
+        internal OnYourDataModelIdVectorizationSource(OnYourDataVectorizationSourceType type, IDictionary<string, BinaryData> serializedAdditionalRawData, string modelId) : base(type, serializedAdditionalRawData)
         {
             ModelId = modelId;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="OnYourDataModelIdVectorizationSource"/> for deserialization. </summary>
+        internal OnYourDataModelIdVectorizationSource()
+        {
         }
 
         /// <summary> The embedding model ID build inside the search service. Currently only supported by Elasticsearch®. </summary>

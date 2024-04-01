@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGroupDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<AzureLocation> location = default;
-            Optional<IList<string>> dependsOn = default;
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<string> strongType = default;
+            string name = default;
+            AzureLocation? location = default;
+            IList<string> dependsOn = default;
+            IDictionary<string, string> tags = default;
+            string displayName = default;
+            string description = default;
+            string strongType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -199,7 +199,15 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceGroupDefinition(name.Value, Optional.ToNullable(location), Optional.ToList(dependsOn), Optional.ToDictionary(tags), displayName.Value, description.Value, strongType.Value, serializedAdditionalRawData);
+            return new ResourceGroupDefinition(
+                name,
+                location,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                displayName,
+                description,
+                strongType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceGroupDefinition>.Write(ModelReaderWriterOptions options)
@@ -211,7 +219,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +235,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeResourceGroupDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGroupDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

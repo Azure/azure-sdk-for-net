@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VCenterInfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VCenterInfrastructureProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,16 +114,16 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             {
                 return null;
             }
-            Optional<string> templateId = default;
-            Optional<string> vCenterId = default;
-            Optional<string> moRefId = default;
-            Optional<string> inventoryItemId = default;
-            Optional<string> moName = default;
-            Optional<string> folderPath = default;
-            Optional<string> instanceUuid = default;
-            Optional<string> smbiosUuid = default;
-            Optional<VMwareFirmwareType> firmwareType = default;
-            Optional<string> customResourceName = default;
+            string templateId = default;
+            string vCenterId = default;
+            string moRefId = default;
+            string inventoryItemId = default;
+            string moName = default;
+            string folderPath = default;
+            string instanceUuid = default;
+            string smbiosUuid = default;
+            VMwareFirmwareType? firmwareType = default;
+            string customResourceName = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -188,7 +188,18 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VCenterInfrastructureProfile(templateId.Value, vCenterId.Value, moRefId.Value, inventoryItemId.Value, moName.Value, folderPath.Value, instanceUuid.Value, smbiosUuid.Value, Optional.ToNullable(firmwareType), customResourceName.Value, serializedAdditionalRawData);
+            return new VCenterInfrastructureProfile(
+                templateId,
+                vCenterId,
+                moRefId,
+                inventoryItemId,
+                moName,
+                folderPath,
+                instanceUuid,
+                smbiosUuid,
+                firmwareType,
+                customResourceName,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VCenterInfrastructureProfile>.Write(ModelReaderWriterOptions options)
@@ -200,7 +211,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +227,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVCenterInfrastructureProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VCenterInfrastructureProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

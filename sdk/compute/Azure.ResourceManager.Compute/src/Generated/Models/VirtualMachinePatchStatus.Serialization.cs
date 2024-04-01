@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePatchStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachinePatchStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachinePatchStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(AvailablePatchSummary))
             {
                 writer.WritePropertyName("availablePatchSummary"u8);
-                writer.WriteObjectValue(AvailablePatchSummary);
+                writer.WriteObjectValue<AvailablePatchSummary>(AvailablePatchSummary, options);
             }
             if (Optional.IsDefined(LastPatchInstallationSummary))
             {
                 writer.WritePropertyName("lastPatchInstallationSummary"u8);
-                writer.WriteObjectValue(LastPatchInstallationSummary);
+                writer.WriteObjectValue<LastPatchInstallationSummary>(LastPatchInstallationSummary, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationStatuses))
             {
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in ConfigurationStatuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InstanceViewStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePatchStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachinePatchStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachinePatchStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,9 +84,9 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<AvailablePatchSummary> availablePatchSummary = default;
-            Optional<LastPatchInstallationSummary> lastPatchInstallationSummary = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> configurationStatuses = default;
+            AvailablePatchSummary availablePatchSummary = default;
+            LastPatchInstallationSummary lastPatchInstallationSummary = default;
+            IReadOnlyList<InstanceViewStatus> configurationStatuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    availablePatchSummary = AvailablePatchSummary.DeserializeAvailablePatchSummary(property.Value);
+                    availablePatchSummary = AvailablePatchSummary.DeserializeAvailablePatchSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("lastPatchInstallationSummary"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    lastPatchInstallationSummary = LastPatchInstallationSummary.DeserializeLastPatchInstallationSummary(property.Value);
+                    lastPatchInstallationSummary = LastPatchInstallationSummary.DeserializeLastPatchInstallationSummary(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("configurationStatuses"u8))
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     configurationStatuses = array;
                     continue;
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachinePatchStatus(availablePatchSummary.Value, lastPatchInstallationSummary.Value, Optional.ToList(configurationStatuses), serializedAdditionalRawData);
+            return new VirtualMachinePatchStatus(availablePatchSummary, lastPatchInstallationSummary, configurationStatuses ?? new ChangeTrackingList<InstanceViewStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachinePatchStatus>.Write(ModelReaderWriterOptions options)
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachinePatchStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachinePatchStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachinePatchStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachinePatchStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachinePatchStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

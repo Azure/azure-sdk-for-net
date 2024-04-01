@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (options.Format != "W" && Optional.IsDefined(EtcdInfo))
             {
                 writer.WritePropertyName("etcdInfo"u8);
-                writer.WriteObjectValue(EtcdInfo);
+                writer.WriteObjectValue<DataBoxEdgeEtcdInfo>(EtcdInfo, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Nodes))
             {
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WriteStartArray();
                 foreach (var item in Nodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdgeKubernetesNodeInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeKubernetesClusterInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<DataBoxEdgeEtcdInfo> etcdInfo = default;
-            Optional<IReadOnlyList<EdgeKubernetesNodeInfo>> nodes = default;
+            DataBoxEdgeEtcdInfo etcdInfo = default;
+            IReadOnlyList<EdgeKubernetesNodeInfo> nodes = default;
             string version = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value);
+                    etcdInfo = DataBoxEdgeEtcdInfo.DeserializeDataBoxEdgeEtcdInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("nodes"u8))
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     List<EdgeKubernetesNodeInfo> array = new List<EdgeKubernetesNodeInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EdgeKubernetesNodeInfo.DeserializeEdgeKubernetesNodeInfo(item));
+                        array.Add(EdgeKubernetesNodeInfo.DeserializeEdgeKubernetesNodeInfo(item, options));
                     }
                     nodes = array;
                     continue;
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new EdgeKubernetesClusterInfo(etcdInfo.Value, Optional.ToList(nodes), version, serializedAdditionalRawData);
+            return new EdgeKubernetesClusterInfo(etcdInfo, nodes ?? new ChangeTrackingList<EdgeKubernetesNodeInfo>(), version, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<EdgeKubernetesClusterInfo>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeKubernetesClusterInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeKubernetesClusterInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -1,6 +1,6 @@
 # Release History
 
-## 5.14.0-beta.1 (Unreleased)
+## 5.15.0-beta.1 (Unreleased)
 
 ### Features Added
 
@@ -10,6 +10,18 @@
 
 ### Other Changes
 
+## 5.14.0 (2024-03-14)
+
+### Features Added
+
+- Added the `MaxMessageBatchSize` property to the `ServiceBusTrigger` attribute to allow configuring the maximum number of messages to process in a batch at the function level.
+
+## 5.13.6 (2024-03-05)
+
+### Other Changes
+
+- Updated the `Azure.Messaging.ServiceBus`, which includes a new build of the AMQP transport library.  One notable but fix addresses an obscure race condition when a cancellation token is signaled while service operations are being invoked concurrently which caused those operations to hang.  Another notable fix is for an obscure race condition that occurred when attempting to complete a message which caused the operation to hang.
+
 ## 5.13.5 (2023-12-04)
 
 ### Bugs Fixed
@@ -18,9 +30,9 @@
 
 ### Other Changes
 
-- Updated the `Azure.Messaging.ServiceBus` dependency, which includes optimized defaults of the host platform to be 
-  used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor 
-  improvement on macOS. This update also enables support for TLS 1.3. Additionally, this update contains a fix for 
+- Updated the `Azure.Messaging.ServiceBus` dependency, which includes optimized defaults of the host platform to be
+  used for AMQP buffers.  This offers non-trivial performance increase on Linux-based platforms and a minor
+  improvement on macOS. This update also enables support for TLS 1.3. Additionally, this update contains a fix for
   session messages to ensure FIFO ordering.
 
 ## 5.13.4 (2023-11-09)
@@ -34,7 +46,7 @@
 
 ### Bugs Fixed
 
-- Fixed issue where deadlettering a message without specifying properties to modify could throw 
+- Fixed issue where deadlettering a message without specifying properties to modify could throw
   an exception from out of proc extension.
 - Include underlying exception details in RpcException when a failure occurs.
 
@@ -48,7 +60,7 @@
 
 ### Bugs Fixed
 
-- Fixed the disposal pattern for cached Service Bus clients so that they are disposed only on 
+- Fixed the disposal pattern for cached Service Bus clients so that they are disposed only on
   host shutdown.
 
 ### Other Changes
@@ -70,7 +82,7 @@
 ### Bugs Fixed
 
 - When binding to a `CancellationToken`, the token will no longer be signaled when in Drain Mode.
-  To detect if the function app is in Drain Mode, use dependency injection to inject the 
+  To detect if the function app is in Drain Mode, use dependency injection to inject the
   `IDrainModeManager`, and check the `IsDrainModeEnabled` property.
 
 ## 5.11.0 (2023-06-06)
@@ -135,7 +147,7 @@
 
 ### Bugs Fixed
 
-- `SessionIdleTimeout` now will be applied for batch functions in addition to single-message 
+- `SessionIdleTimeout` now will be applied for batch functions in addition to single-message
   functions.
 
 ## 5.5.1 (2022-06-07)

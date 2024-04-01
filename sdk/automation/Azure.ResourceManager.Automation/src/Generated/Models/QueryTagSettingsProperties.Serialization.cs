@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryTagSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryTagSettingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryTagSettingsProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryTagSettingsProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryTagSettingsProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryTagSettingsProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -90,8 +90,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, IList<string>>> tags = default;
-            Optional<QueryTagOperator> filterOperator = default;
+            IDictionary<string, IList<string>> tags = default;
+            QueryTagOperator? filterOperator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new QueryTagSettingsProperties(Optional.ToDictionary(tags), Optional.ToNullable(filterOperator), serializedAdditionalRawData);
+            return new QueryTagSettingsProperties(tags ?? new ChangeTrackingDictionary<string, IList<string>>(), filterOperator, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<QueryTagSettingsProperties>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryTagSettingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryTagSettingsProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeQueryTagSettingsProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryTagSettingsProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryTagSettingsProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

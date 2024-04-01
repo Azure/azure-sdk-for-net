@@ -8,14 +8,44 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
-using Azure.ResourceManager.NewRelicObservability;
 
 namespace Azure.ResourceManager.NewRelicObservability.Models
 {
     /// <summary> The response of a NewRelicMonitorResource list operation. </summary>
     internal partial class NewRelicMonitorResourceListResult
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceListResult"/>. </summary>
         /// <param name="value"> The NewRelicMonitorResource items on this page. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="value"/> is null. </exception>
@@ -29,10 +59,17 @@ namespace Azure.ResourceManager.NewRelicObservability.Models
         /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceListResult"/>. </summary>
         /// <param name="value"> The NewRelicMonitorResource items on this page. </param>
         /// <param name="nextLink"> The link to the next page of items. </param>
-        internal NewRelicMonitorResourceListResult(IReadOnlyList<NewRelicMonitorResourceData> value, Uri nextLink)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal NewRelicMonitorResourceListResult(IReadOnlyList<NewRelicMonitorResourceData> value, Uri nextLink, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Value = value;
             NextLink = nextLink;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="NewRelicMonitorResourceListResult"/> for deserialization. </summary>
+        internal NewRelicMonitorResourceListResult()
+        {
         }
 
         /// <summary> The NewRelicMonitorResource items on this page. </summary>

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumerSourceDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.DataShare.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumerSourceDataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,12 +116,12 @@ namespace Azure.ResourceManager.DataShare.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<Guid> dataSetId = default;
-            Optional<AzureLocation> dataSetLocation = default;
-            Optional<string> dataSetName = default;
-            Optional<string> dataSetPath = default;
-            Optional<ShareDataSetType> dataSetType = default;
+            SystemData systemData = default;
+            Guid? dataSetId = default;
+            AzureLocation? dataSetLocation = default;
+            string dataSetName = default;
+            string dataSetPath = default;
+            ShareDataSetType? dataSetType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.DataShare.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConsumerSourceDataSet(id, name, type, systemData.Value, Optional.ToNullable(dataSetId), Optional.ToNullable(dataSetLocation), dataSetName.Value, dataSetPath.Value, Optional.ToNullable(dataSetType), serializedAdditionalRawData);
+            return new ConsumerSourceDataSet(
+                id,
+                name,
+                type,
+                systemData,
+                dataSetId,
+                dataSetLocation,
+                dataSetName,
+                dataSetPath,
+                dataSetType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConsumerSourceDataSet>.Write(ModelReaderWriterOptions options)
@@ -217,7 +227,7 @@ namespace Azure.ResourceManager.DataShare.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +243,7 @@ namespace Azure.ResourceManager.DataShare.Models
                         return DeserializeConsumerSourceDataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumerSourceDataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

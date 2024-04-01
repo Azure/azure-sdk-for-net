@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AlertsManagement;
 
 namespace Azure.ResourceManager.AlertsManagement.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceAlertData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceAlertListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceAlertListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceAlertListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<ServiceAlertData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<ServiceAlertData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                     List<ServiceAlertData> array = new List<ServiceAlertData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceAlertData.DeserializeServiceAlertData(item));
+                        array.Add(ServiceAlertData.DeserializeServiceAlertData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceAlertListResult(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new ServiceAlertListResult(nextLink, value ?? new ChangeTrackingList<ServiceAlertData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceAlertListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeServiceAlertListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceAlertListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceAlertListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,7 +7,6 @@
 
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
 {
@@ -19,8 +18,8 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ManagedPrivateEndpoint>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ManagedPrivateEndpoint> value = default;
+            string nextLink = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -43,7 +42,7 @@ namespace Azure.Analytics.Synapse.ManagedPrivateEndpoints.Models
                     continue;
                 }
             }
-            return new ManagedPrivateEndpointListResponse(Optional.ToList(value), nextLink.Value);
+            return new ManagedPrivateEndpointListResponse(value ?? new ChangeTrackingList<ManagedPrivateEndpoint>(), nextLink);
         }
     }
 }

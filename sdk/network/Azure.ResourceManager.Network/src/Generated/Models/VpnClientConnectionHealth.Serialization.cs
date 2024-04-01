@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnClientConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<long> totalIngressBytesTransferred = default;
-            Optional<long> totalEgressBytesTransferred = default;
-            Optional<int> vpnClientConnectionsCount = default;
-            Optional<IReadOnlyList<string>> allocatedIPAddresses = default;
+            long? totalIngressBytesTransferred = default;
+            long? totalEgressBytesTransferred = default;
+            int? vpnClientConnectionsCount = default;
+            IReadOnlyList<string> allocatedIPAddresses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnClientConnectionHealth(Optional.ToNullable(totalIngressBytesTransferred), Optional.ToNullable(totalEgressBytesTransferred), Optional.ToNullable(vpnClientConnectionsCount), Optional.ToList(allocatedIPAddresses), serializedAdditionalRawData);
+            return new VpnClientConnectionHealth(totalIngressBytesTransferred, totalEgressBytesTransferred, vpnClientConnectionsCount, allocatedIPAddresses ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnClientConnectionHealth>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnClientConnectionHealth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnClientConnectionHealth)} does not support reading '{options.Format}' format.");
             }
         }
 

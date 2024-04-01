@@ -6,13 +6,45 @@
 #nullable disable
 
 using System;
-using Azure.Core;
+using System.Collections.Generic;
 
 namespace Azure.AI.OpenAI
 {
     /// <summary> The configuration information for an audio translation request. </summary>
     public partial class AudioTranslationOptions
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AudioTranslationOptions"/>. </summary>
         /// <param name="audioData">
         /// The audio data to translate. This must be the binary content of a file in one of the supported media formats:
@@ -30,7 +62,8 @@ namespace Azure.AI.OpenAI
         /// If set to 0, the model will use log probability to automatically increase the temperature until certain thresholds are hit.
         /// </param>
         /// <param name="deploymentName"> The model to use for this translation request. </param>
-        internal AudioTranslationOptions(BinaryData audioData, string filename, AudioTranslationFormat? responseFormat, string prompt, float? temperature, string deploymentName)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AudioTranslationOptions(BinaryData audioData, string filename, AudioTranslationFormat? responseFormat, string prompt, float? temperature, string deploymentName, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             AudioData = audioData;
             Filename = filename;
@@ -38,6 +71,7 @@ namespace Azure.AI.OpenAI
             Prompt = prompt;
             Temperature = temperature;
             DeploymentName = deploymentName;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> The optional filename or descriptive identifier to associate with with the audio data. </summary>
         public string Filename { get; set; }

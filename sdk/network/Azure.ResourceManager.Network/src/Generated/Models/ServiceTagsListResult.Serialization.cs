@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceTagInformation>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceTagsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,14 +110,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> changeNumber = default;
-            Optional<string> cloud = default;
-            Optional<IReadOnlyList<ServiceTagInformation>> values = default;
-            Optional<string> nextLink = default;
+            string changeNumber = default;
+            string cloud = default;
+            IReadOnlyList<ServiceTagInformation> values = default;
+            string nextLink = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
+            SystemData systemData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ServiceTagInformation> array = new List<ServiceTagInformation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item));
+                        array.Add(ServiceTagInformation.DeserializeServiceTagInformation(item, options));
                     }
                     values = array;
                     continue;
@@ -181,7 +181,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ServiceTagsListResult(id, name, type, systemData.Value, changeNumber.Value, cloud.Value, Optional.ToList(values), nextLink.Value, serializedAdditionalRawData);
+            return new ServiceTagsListResult(
+                id,
+                name,
+                type,
+                systemData,
+                changeNumber,
+                cloud,
+                values ?? new ChangeTrackingList<ServiceTagInformation>(),
+                nextLink,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ServiceTagsListResult>.Write(ModelReaderWriterOptions options)
@@ -193,7 +202,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +218,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeServiceTagsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceTagsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

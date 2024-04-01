@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Summary)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RegionalReplicationStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReplicationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReplicationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReplicationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<AggregatedReplicationState> aggregatedState = default;
-            Optional<IReadOnlyList<RegionalReplicationStatus>> summary = default;
+            AggregatedReplicationState? aggregatedState = default;
+            IReadOnlyList<RegionalReplicationStatus> summary = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<RegionalReplicationStatus> array = new List<RegionalReplicationStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item));
+                        array.Add(RegionalReplicationStatus.DeserializeRegionalReplicationStatus(item, options));
                     }
                     summary = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReplicationStatus(Optional.ToNullable(aggregatedState), Optional.ToList(summary), serializedAdditionalRawData);
+            return new ReplicationStatus(aggregatedState, summary ?? new ChangeTrackingList<RegionalReplicationStatus>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReplicationStatus>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeReplicationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReplicationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReplicationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

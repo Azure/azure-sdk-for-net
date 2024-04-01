@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EventHubs;
 using Azure.ResourceManager.EventHubs.Models;
 
 namespace Azure.ResourceManager.EventHubs.Mocking
@@ -75,7 +72,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         public virtual AsyncPageable<AvailableCluster> GetAvailableClusterRegionClustersAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsClusterClustersRestClient.CreateListAvailableClusterRegionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, AvailableCluster.DeserializeAvailableCluster, EventHubsClusterClustersClientDiagnostics, Pipeline, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => AvailableCluster.DeserializeAvailableCluster(e), EventHubsClusterClustersClientDiagnostics, Pipeline, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -104,7 +101,7 @@ namespace Azure.ResourceManager.EventHubs.Mocking
         public virtual Pageable<AvailableCluster> GetAvailableClusterRegionClusters(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => EventHubsClusterClustersRestClient.CreateListAvailableClusterRegionRequest(Id.SubscriptionId);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, AvailableCluster.DeserializeAvailableCluster, EventHubsClusterClustersClientDiagnostics, Pipeline, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => AvailableCluster.DeserializeAvailableCluster(e), EventHubsClusterClustersClientDiagnostics, Pipeline, "MockableEventHubsSubscriptionResource.GetAvailableClusterRegionClusters", "value", null, cancellationToken);
         }
 
         /// <summary>

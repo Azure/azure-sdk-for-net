@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreferencesValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreferencesValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreferencesValidationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PreferencesValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PreferencesValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PreferencesValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,9 +76,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DataBoxValidationStatus> status = default;
+            DataBoxValidationStatus? status = default;
             DataBoxValidationInputDiscriminator validationType = default;
-            Optional<ResponseError> error = default;
+            ResponseError error = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -113,7 +112,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PreferencesValidationResult(validationType, error.Value, serializedAdditionalRawData, Optional.ToNullable(status));
+            return new PreferencesValidationResult(validationType, error, serializedAdditionalRawData, status);
         }
 
         BinaryData IPersistableModel<PreferencesValidationResult>.Write(ModelReaderWriterOptions options)
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PreferencesValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreferencesValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializePreferencesValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PreferencesValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PreferencesValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

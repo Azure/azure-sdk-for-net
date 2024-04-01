@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Billing.Models
             var format = options.Format == "W" ? ((IPersistableModel<BillingSubscriptionMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Billing.Models
             {
                 return null;
             }
-            Optional<string> destinationEnrollmentAccountId = default;
-            Optional<ResourceIdentifier> destinationInvoiceSectionId = default;
+            string destinationEnrollmentAccountId = default;
+            ResourceIdentifier destinationInvoiceSectionId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Billing.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BillingSubscriptionMoveContent(destinationEnrollmentAccountId.Value, destinationInvoiceSectionId.Value, serializedAdditionalRawData);
+            return new BillingSubscriptionMoveContent(destinationEnrollmentAccountId, destinationInvoiceSectionId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BillingSubscriptionMoveContent>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Billing.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Billing.Models
                         return DeserializeBillingSubscriptionMoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BillingSubscriptionMoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

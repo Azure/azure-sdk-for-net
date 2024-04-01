@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionOperationExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionOperationExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionOperationExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionOperationExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionOperationExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionOperationExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -70,10 +70,10 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "OperationJobExtendedInfo": return DataProtectionOperationJobExtendedInfo.DeserializeDataProtectionOperationJobExtendedInfo(element);
+                    case "OperationJobExtendedInfo": return DataProtectionOperationJobExtendedInfo.DeserializeDataProtectionOperationJobExtendedInfo(element, options);
                 }
             }
-            return UnknownOperationExtendedInfo.DeserializeUnknownOperationExtendedInfo(element);
+            return UnknownOperationExtendedInfo.DeserializeUnknownOperationExtendedInfo(element, options);
         }
 
         BinaryData IPersistableModel<DataProtectionOperationExtendedInfo>.Write(ModelReaderWriterOptions options)
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionOperationExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionOperationExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionOperationExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionOperationExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionOperationExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

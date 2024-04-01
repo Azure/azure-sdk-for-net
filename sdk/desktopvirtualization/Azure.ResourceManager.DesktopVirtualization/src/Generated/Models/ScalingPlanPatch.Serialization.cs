@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in Schedules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScalingSchedule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 writer.WriteStartArray();
                 foreach (var item in HostPoolReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScalingHostPoolReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScalingPlanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,13 +118,13 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> description = default;
-            Optional<string> friendlyName = default;
-            Optional<string> timeZone = default;
-            Optional<string> exclusionTag = default;
-            Optional<IList<ScalingSchedule>> schedules = default;
-            Optional<IList<ScalingHostPoolReference>> hostPoolReferences = default;
+            IDictionary<string, string> tags = default;
+            string description = default;
+            string friendlyName = default;
+            string timeZone = default;
+            string exclusionTag = default;
+            IList<ScalingSchedule> schedules = default;
+            IList<ScalingHostPoolReference> hostPoolReferences = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<ScalingSchedule> array = new List<ScalingSchedule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item));
+                                array.Add(ScalingSchedule.DeserializeScalingSchedule(item, options));
                             }
                             schedules = array;
                             continue;
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                             List<ScalingHostPoolReference> array = new List<ScalingHostPoolReference>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item));
+                                array.Add(ScalingHostPoolReference.DeserializeScalingHostPoolReference(item, options));
                             }
                             hostPoolReferences = array;
                             continue;
@@ -209,7 +209,15 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ScalingPlanPatch(Optional.ToDictionary(tags), description.Value, friendlyName.Value, timeZone.Value, exclusionTag.Value, Optional.ToList(schedules), Optional.ToList(hostPoolReferences), serializedAdditionalRawData);
+            return new ScalingPlanPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                description,
+                friendlyName,
+                timeZone,
+                exclusionTag,
+                schedules ?? new ChangeTrackingList<ScalingSchedule>(),
+                hostPoolReferences ?? new ChangeTrackingList<ScalingHostPoolReference>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ScalingPlanPatch>.Write(ModelReaderWriterOptions options)
@@ -221,7 +229,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -237,7 +245,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeScalingPlanPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScalingPlanPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

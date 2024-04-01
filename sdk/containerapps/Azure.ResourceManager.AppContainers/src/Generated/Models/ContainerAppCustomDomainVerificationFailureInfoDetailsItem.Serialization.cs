@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfoDetailsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfoDetailsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfoDetailsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfoDetailsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<string> code = default;
-            Optional<string> message = default;
-            Optional<string> target = default;
+            string code = default;
+            string message = default;
+            string target = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppCustomDomainVerificationFailureInfoDetailsItem(code.Value, message.Value, target.Value, serializedAdditionalRawData);
+            return new ContainerAppCustomDomainVerificationFailureInfoDetailsItem(code, message, target, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppCustomDomainVerificationFailureInfoDetailsItem>.Write(ModelReaderWriterOptions options)
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfoDetailsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfoDetailsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppCustomDomainVerificationFailureInfoDetailsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfoDetailsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppCustomDomainVerificationFailureInfoDetailsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

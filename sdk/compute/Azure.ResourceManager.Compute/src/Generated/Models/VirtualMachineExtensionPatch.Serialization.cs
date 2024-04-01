@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(KeyVaultProtectedSettings))
             {
                 writer.WritePropertyName("protectedSettingsFromKeyVault"u8);
-                writer.WriteObjectValue(KeyVaultProtectedSettings);
+                writer.WriteObjectValue<KeyVaultSecretReference>(KeyVaultProtectedSettings, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,17 +142,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
-            Optional<string> forceUpdateTag = default;
-            Optional<string> publisher = default;
-            Optional<string> type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<bool> suppressFailures = default;
-            Optional<KeyVaultSecretReference> protectedSettingsFromKeyVault = default;
+            IDictionary<string, string> tags = default;
+            string forceUpdateTag = default;
+            string publisher = default;
+            string type = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            bool? enableAutomaticUpgrade = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            bool? suppressFailures = default;
+            KeyVaultSecretReference protectedSettingsFromKeyVault = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value);
+                            protectedSettingsFromKeyVault = KeyVaultSecretReference.DeserializeKeyVaultSecretReference(property0.Value, options);
                             continue;
                         }
                     }
@@ -263,7 +263,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineExtensionPatch(Optional.ToDictionary(tags), serializedAdditionalRawData, forceUpdateTag.Value, publisher.Value, type.Value, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToNullable(suppressFailures), protectedSettingsFromKeyVault.Value);
+            return new VirtualMachineExtensionPatch(
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData,
+                forceUpdateTag,
+                publisher,
+                type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                suppressFailures,
+                protectedSettingsFromKeyVault);
         }
 
         BinaryData IPersistableModel<VirtualMachineExtensionPatch>.Write(ModelReaderWriterOptions options)
@@ -275,7 +287,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -291,7 +303,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineExtensionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineExtensionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

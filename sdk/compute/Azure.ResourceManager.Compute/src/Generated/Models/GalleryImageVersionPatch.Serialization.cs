@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageVersionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(PublishingProfile))
             {
                 writer.WritePropertyName("publishingProfile"u8);
-                writer.WriteObjectValue(PublishingProfile);
+                writer.WriteObjectValue<GalleryImageVersionPublishingProfile>(PublishingProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
@@ -73,22 +73,22 @@ namespace Azure.ResourceManager.Compute.Models
             if (Optional.IsDefined(StorageProfile))
             {
                 writer.WritePropertyName("storageProfile"u8);
-                writer.WriteObjectValue(StorageProfile);
+                writer.WriteObjectValue<GalleryImageVersionStorageProfile>(StorageProfile, options);
             }
             if (Optional.IsDefined(SafetyProfile))
             {
                 writer.WritePropertyName("safetyProfile"u8);
-                writer.WriteObjectValue(SafetyProfile);
+                writer.WriteObjectValue<GalleryImageVersionSafetyProfile>(SafetyProfile, options);
             }
             if (options.Format != "W" && Optional.IsDefined(ReplicationStatus))
             {
                 writer.WritePropertyName("replicationStatus"u8);
-                writer.WriteObjectValue(ReplicationStatus);
+                writer.WriteObjectValue<ReplicationStatus>(ReplicationStatus, options);
             }
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<ImageVersionSecurityProfile>(SecurityProfile, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageVersionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,17 +129,17 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<GalleryImageVersionPublishingProfile> publishingProfile = default;
-            Optional<GalleryProvisioningState> provisioningState = default;
-            Optional<GalleryImageVersionStorageProfile> storageProfile = default;
-            Optional<GalleryImageVersionSafetyProfile> safetyProfile = default;
-            Optional<ReplicationStatus> replicationStatus = default;
-            Optional<ImageVersionSecurityProfile> securityProfile = default;
+            SystemData systemData = default;
+            GalleryImageVersionPublishingProfile publishingProfile = default;
+            GalleryProvisioningState? provisioningState = default;
+            GalleryImageVersionStorageProfile storageProfile = default;
+            GalleryImageVersionSafetyProfile safetyProfile = default;
+            ReplicationStatus replicationStatus = default;
+            ImageVersionSecurityProfile securityProfile = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            publishingProfile = GalleryImageVersionPublishingProfile.DeserializeGalleryImageVersionPublishingProfile(property0.Value);
+                            publishingProfile = GalleryImageVersionPublishingProfile.DeserializeGalleryImageVersionPublishingProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("provisioningState"u8))
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            storageProfile = GalleryImageVersionStorageProfile.DeserializeGalleryImageVersionStorageProfile(property0.Value);
+                            storageProfile = GalleryImageVersionStorageProfile.DeserializeGalleryImageVersionStorageProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("safetyProfile"u8))
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            safetyProfile = GalleryImageVersionSafetyProfile.DeserializeGalleryImageVersionSafetyProfile(property0.Value);
+                            safetyProfile = GalleryImageVersionSafetyProfile.DeserializeGalleryImageVersionSafetyProfile(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("replicationStatus"u8))
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value);
+                            replicationStatus = ReplicationStatus.DeserializeReplicationStatus(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("securityProfile"u8))
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Compute.Models
                             {
                                 continue;
                             }
-                            securityProfile = ImageVersionSecurityProfile.DeserializeImageVersionSecurityProfile(property0.Value);
+                            securityProfile = ImageVersionSecurityProfile.DeserializeImageVersionSecurityProfile(property0.Value, options);
                             continue;
                         }
                     }
@@ -254,7 +254,19 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionPatch(id, name, type, systemData.Value, publishingProfile.Value, Optional.ToNullable(provisioningState), storageProfile.Value, safetyProfile.Value, replicationStatus.Value, securityProfile.Value, Optional.ToDictionary(tags), serializedAdditionalRawData);
+            return new GalleryImageVersionPatch(
+                id,
+                name,
+                type,
+                systemData,
+                publishingProfile,
+                provisioningState,
+                storageProfile,
+                safetyProfile,
+                replicationStatus,
+                securityProfile,
+                tags ?? new ChangeTrackingDictionary<string, string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionPatch>.Write(ModelReaderWriterOptions options)
@@ -266,7 +278,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageVersionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -282,7 +294,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryImageVersionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageVersionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

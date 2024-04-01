@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(AdapterPosition))
             {
                 writer.WritePropertyName("adapterPosition"u8);
-                writer.WriteObjectValue(AdapterPosition);
+                writer.WriteObjectValue<DataBoxEdgeNetworkAdapterPosition>(AdapterPosition, options);
             }
             if (options.Format != "W" && Optional.IsDefined(Index))
             {
@@ -84,12 +84,12 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             if (options.Format != "W" && Optional.IsDefined(IPv4Configuration))
             {
                 writer.WritePropertyName("ipv4Configuration"u8);
-                writer.WriteObjectValue(IPv4Configuration);
+                writer.WriteObjectValue<DataBoxEdgeIPv4Config>(IPv4Configuration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6Configuration))
             {
                 writer.WritePropertyName("ipv6Configuration"u8);
-                writer.WriteObjectValue(IPv6Configuration);
+                writer.WriteObjectValue<DataBoxEdgeIPv6Config>(IPv6Configuration, options);
             }
             if (options.Format != "W" && Optional.IsDefined(IPv6LinkLocalAddress))
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeNetworkAdapter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,21 +144,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             {
                 return null;
             }
-            Optional<string> adapterId = default;
-            Optional<DataBoxEdgeNetworkAdapterPosition> adapterPosition = default;
-            Optional<int> index = default;
-            Optional<Guid> nodeId = default;
-            Optional<string> networkAdapterName = default;
-            Optional<string> label = default;
-            Optional<string> macAddress = default;
-            Optional<long> linkSpeed = default;
-            Optional<DataBoxEdgeNetworkAdapterStatus> status = default;
-            Optional<DataBoxEdgeNetworkAdapterRdmaStatus> rdmaStatus = default;
-            Optional<DataBoxEdgeNetworkAdapterDhcpStatus> dhcpStatus = default;
-            Optional<DataBoxEdgeIPv4Config> ipv4Configuration = default;
-            Optional<DataBoxEdgeIPv6Config> ipv6Configuration = default;
-            Optional<string> ipv6LinkLocalAddress = default;
-            Optional<IReadOnlyList<string>> dnsServers = default;
+            string adapterId = default;
+            DataBoxEdgeNetworkAdapterPosition adapterPosition = default;
+            int? index = default;
+            Guid? nodeId = default;
+            string networkAdapterName = default;
+            string label = default;
+            string macAddress = default;
+            long? linkSpeed = default;
+            DataBoxEdgeNetworkAdapterStatus? status = default;
+            DataBoxEdgeNetworkAdapterRdmaStatus? rdmaStatus = default;
+            DataBoxEdgeNetworkAdapterDhcpStatus? dhcpStatus = default;
+            DataBoxEdgeIPv4Config ipv4Configuration = default;
+            DataBoxEdgeIPv6Config ipv6Configuration = default;
+            string ipv6LinkLocalAddress = default;
+            IReadOnlyList<string> dnsServers = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    adapterPosition = DataBoxEdgeNetworkAdapterPosition.DeserializeDataBoxEdgeNetworkAdapterPosition(property.Value);
+                    adapterPosition = DataBoxEdgeNetworkAdapterPosition.DeserializeDataBoxEdgeNetworkAdapterPosition(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("index"u8))
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    ipv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(property.Value);
+                    ipv4Configuration = DataBoxEdgeIPv4Config.DeserializeDataBoxEdgeIPv4Config(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipv6Configuration"u8))
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                     {
                         continue;
                     }
-                    ipv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(property.Value);
+                    ipv6Configuration = DataBoxEdgeIPv6Config.DeserializeDataBoxEdgeIPv6Config(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("ipv6LinkLocalAddress"u8))
@@ -289,7 +289,23 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataBoxEdgeNetworkAdapter(adapterId.Value, adapterPosition.Value, Optional.ToNullable(index), Optional.ToNullable(nodeId), networkAdapterName.Value, label.Value, macAddress.Value, Optional.ToNullable(linkSpeed), Optional.ToNullable(status), Optional.ToNullable(rdmaStatus), Optional.ToNullable(dhcpStatus), ipv4Configuration.Value, ipv6Configuration.Value, ipv6LinkLocalAddress.Value, Optional.ToList(dnsServers), serializedAdditionalRawData);
+            return new DataBoxEdgeNetworkAdapter(
+                adapterId,
+                adapterPosition,
+                index,
+                nodeId,
+                networkAdapterName,
+                label,
+                macAddress,
+                linkSpeed,
+                status,
+                rdmaStatus,
+                dhcpStatus,
+                ipv4Configuration,
+                ipv6Configuration,
+                ipv6LinkLocalAddress,
+                dnsServers ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataBoxEdgeNetworkAdapter>.Write(ModelReaderWriterOptions options)
@@ -301,7 +317,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -317,7 +333,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeNetworkAdapter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeNetworkAdapter)} does not support reading '{options.Format}' format.");
             }
         }
 

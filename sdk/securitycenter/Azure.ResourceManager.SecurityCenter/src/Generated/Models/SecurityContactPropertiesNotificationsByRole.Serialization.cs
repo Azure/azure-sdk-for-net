@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityContactPropertiesNotificationsByRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityContactPropertiesNotificationsByRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<SecurityAlertNotificationByRoleState> state = default;
-            Optional<IList<SecurityAlertReceivingRole>> roles = default;
+            SecurityAlertNotificationByRoleState? state = default;
+            IList<SecurityAlertReceivingRole> roles = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityContactPropertiesNotificationsByRole(Optional.ToNullable(state), Optional.ToList(roles), serializedAdditionalRawData);
+            return new SecurityContactPropertiesNotificationsByRole(state, roles ?? new ChangeTrackingList<SecurityAlertReceivingRole>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityContactPropertiesNotificationsByRole>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityContactPropertiesNotificationsByRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support reading '{options.Format}' format.");
             }
         }
 

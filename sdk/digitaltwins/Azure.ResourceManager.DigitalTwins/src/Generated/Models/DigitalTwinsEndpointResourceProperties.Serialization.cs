@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEndpointResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<DigitalTwinsManagedIdentityReference>(Identity, options);
                 }
                 else
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             var format = options.Format == "W" ? ((IPersistableModel<DigitalTwinsEndpointResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,12 +135,12 @@ namespace Azure.ResourceManager.DigitalTwins.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "EventGrid": return DigitalTwinsEventGridProperties.DeserializeDigitalTwinsEventGridProperties(element);
-                    case "EventHub": return DigitalTwinsEventHubProperties.DeserializeDigitalTwinsEventHubProperties(element);
-                    case "ServiceBus": return DigitalTwinsServiceBusProperties.DeserializeDigitalTwinsServiceBusProperties(element);
+                    case "EventGrid": return DigitalTwinsEventGridProperties.DeserializeDigitalTwinsEventGridProperties(element, options);
+                    case "EventHub": return DigitalTwinsEventHubProperties.DeserializeDigitalTwinsEventHubProperties(element, options);
+                    case "ServiceBus": return DigitalTwinsServiceBusProperties.DeserializeDigitalTwinsServiceBusProperties(element, options);
                 }
             }
-            return UnknownDigitalTwinsEndpointResourceProperties.DeserializeUnknownDigitalTwinsEndpointResourceProperties(element);
+            return UnknownDigitalTwinsEndpointResourceProperties.DeserializeUnknownDigitalTwinsEndpointResourceProperties(element, options);
         }
 
         BinaryData IPersistableModel<DigitalTwinsEndpointResourceProperties>.Write(ModelReaderWriterOptions options)
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DigitalTwins.Models
                         return DeserializeDigitalTwinsEndpointResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DigitalTwinsEndpointResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

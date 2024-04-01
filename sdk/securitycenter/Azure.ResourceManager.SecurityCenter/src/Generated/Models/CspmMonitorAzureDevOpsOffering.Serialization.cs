@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAzureDevOpsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorAzureDevOpsOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -93,7 +93,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CspmMonitorAzureDevOpsOffering(offeringType, description.Value, serializedAdditionalRawData);
+            return new CspmMonitorAzureDevOpsOffering(offeringType, description, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CspmMonitorAzureDevOpsOffering>.Write(ModelReaderWriterOptions options)
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeCspmMonitorAzureDevOpsOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CspmMonitorAzureDevOpsOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

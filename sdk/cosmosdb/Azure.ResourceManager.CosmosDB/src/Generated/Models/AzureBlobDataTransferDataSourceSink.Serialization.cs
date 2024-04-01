@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +23,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureBlobDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBlobDataTransferDataSourceSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBlobDataTransferDataSourceSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -58,7 +59,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureBlobDataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureBlobDataTransferDataSourceSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureBlobDataTransferDataSourceSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 return null;
             }
             string containerName = default;
-            Optional<Uri> endpointUrl = default;
+            Uri endpointUrl = default;
             DataTransferComponent component = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -105,7 +106,69 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureBlobDataTransferDataSourceSink(component, serializedAdditionalRawData, containerName, endpointUrl.Value);
+            return new AzureBlobDataTransferDataSourceSink(component, serializedAdditionalRawData, containerName, endpointUrl);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ContainerName), out propertyOverride);
+            if (Optional.IsDefined(ContainerName) || hasPropertyOverride)
+            {
+                builder.Append("  containerName: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (ContainerName.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{ContainerName}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{ContainerName}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EndpointUri), out propertyOverride);
+            if (Optional.IsDefined(EndpointUri) || hasPropertyOverride)
+            {
+                builder.Append("  endpointUrl: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{EndpointUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
+            builder.Append("  component: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Component.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<AzureBlobDataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)
@@ -116,8 +179,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureBlobDataTransferDataSourceSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBlobDataTransferDataSourceSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +198,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeAzureBlobDataTransferDataSourceSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureBlobDataTransferDataSourceSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureBlobDataTransferDataSourceSink)} does not support reading '{options.Format}' format.");
             }
         }
 

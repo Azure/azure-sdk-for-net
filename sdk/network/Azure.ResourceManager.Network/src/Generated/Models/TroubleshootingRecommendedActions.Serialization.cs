@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshootingRecommendedActions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshootingRecommendedActions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> actionId = default;
-            Optional<string> actionText = default;
-            Optional<Uri> actionUri = default;
-            Optional<string> actionUriText = default;
+            string actionId = default;
+            string actionText = default;
+            Uri actionUri = default;
+            string actionUriText = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TroubleshootingRecommendedActions(actionId.Value, actionText.Value, actionUri.Value, actionUriText.Value, serializedAdditionalRawData);
+            return new TroubleshootingRecommendedActions(actionId, actionText, actionUri, actionUriText, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TroubleshootingRecommendedActions>.Write(ModelReaderWriterOptions options)
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeTroubleshootingRecommendedActions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TroubleshootingRecommendedActions)} does not support reading '{options.Format}' format.");
             }
         }
 

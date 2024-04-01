@@ -16,20 +16,20 @@ namespace Azure.IoT.TimeSeriesInsights
         {
             writer.WriteStartObject();
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(Value);
+            writer.WriteObjectValue<TimeSeriesExpression>(Value);
             if (Optional.IsDefined(Interpolation))
             {
                 writer.WritePropertyName("interpolation"u8);
-                writer.WriteObjectValue(Interpolation);
+                writer.WriteObjectValue<TimeSeriesInterpolation>(Interpolation);
             }
             writer.WritePropertyName("aggregation"u8);
-            writer.WriteObjectValue(Aggregation);
+            writer.WriteObjectValue<TimeSeriesExpression>(Aggregation);
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind);
             if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
-                writer.WriteObjectValue(Filter);
+                writer.WriteObjectValue<TimeSeriesExpression>(Filter);
             }
             writer.WriteEndObject();
         }
@@ -41,10 +41,10 @@ namespace Azure.IoT.TimeSeriesInsights
                 return null;
             }
             TimeSeriesExpression value = default;
-            Optional<TimeSeriesInterpolation> interpolation = default;
+            TimeSeriesInterpolation interpolation = default;
             TimeSeriesExpression aggregation = default;
             string kind = default;
-            Optional<TimeSeriesExpression> filter = default;
+            TimeSeriesExpression filter = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("value"u8))
@@ -81,7 +81,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     continue;
                 }
             }
-            return new NumericVariable(kind, filter.Value, value, interpolation.Value, aggregation);
+            return new NumericVariable(kind, filter, value, interpolation, aggregation);
         }
     }
 }

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SourceRegistry))
             {
                 writer.WritePropertyName("sourceRegistry"u8);
-                writer.WriteObjectValue(SourceRegistry);
+                writer.WriteObjectValue<SourceRegistryCredentials>(SourceRegistry, options);
             }
             if (Optional.IsCollectionDefined(CustomRegistries))
             {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 foreach (var item in CustomRegistries)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<CustomRegistryCredentials>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +80,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<SourceRegistryCredentials> sourceRegistry = default;
-            Optional<IDictionary<string, CustomRegistryCredentials>> customRegistries = default;
+            SourceRegistryCredentials sourceRegistry = default;
+            IDictionary<string, CustomRegistryCredentials> customRegistries = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -92,7 +92,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(property.Value);
+                    sourceRegistry = SourceRegistryCredentials.DeserializeSourceRegistryCredentials(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("customRegistries"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     Dictionary<string, CustomRegistryCredentials> dictionary = new Dictionary<string, CustomRegistryCredentials>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(property0.Value));
+                        dictionary.Add(property0.Name, CustomRegistryCredentials.DeserializeCustomRegistryCredentials(property0.Value, options));
                     }
                     customRegistries = dictionary;
                     continue;
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryCredentials(sourceRegistry.Value, Optional.ToDictionary(customRegistries), serializedAdditionalRawData);
+            return new ContainerRegistryCredentials(sourceRegistry, customRegistries ?? new ChangeTrackingDictionary<string, CustomRegistryCredentials>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryCredentials>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

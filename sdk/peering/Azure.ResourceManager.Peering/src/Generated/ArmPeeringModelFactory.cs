@@ -11,7 +11,6 @@ using System.Linq;
 using System.Net;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Peering;
 
 namespace Azure.ResourceManager.Peering.Models
 {
@@ -31,7 +30,17 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.CdnPeeringPrefix"/> instance for mocking. </returns>
         public static CdnPeeringPrefix CdnPeeringPrefix(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string prefix = null, AzureLocation? azureRegion = null, string azureService = null, bool? isPrimaryRegion = null, string bgpCommunity = null)
         {
-            return new CdnPeeringPrefix(id, name, resourceType, systemData, prefix, azureRegion, azureService, isPrimaryRegion, bgpCommunity);
+            return new CdnPeeringPrefix(
+                id,
+                name,
+                resourceType,
+                systemData,
+                prefix,
+                azureRegion,
+                azureService,
+                isPrimaryRegion,
+                bgpCommunity,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Peering.PeeringData"/>. </summary>
@@ -52,7 +61,20 @@ namespace Azure.ResourceManager.Peering.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PeeringData(id, name, resourceType, systemData, tags, location, sku, kind, direct, exchange, peeringLocation, provisioningState);
+            return new PeeringData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                sku,
+                kind,
+                direct,
+                exchange,
+                peeringLocation,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringSku"/>. </summary>
@@ -63,7 +85,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringSku"/> instance for mocking. </returns>
         public static PeeringSku PeeringSku(string name = null, PeeringTier? tier = null, PeeringFamily? family = null, PeeringSize? size = null)
         {
-            return new PeeringSku(name, tier, family, size);
+            return new PeeringSku(name, tier, family, size, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.DirectPeeringProperties"/>. </summary>
@@ -76,7 +98,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             connections ??= new List<PeeringDirectConnection>();
 
-            return new DirectPeeringProperties(connections?.ToList(), useForPeeringService, peerAsnId != null ? ResourceManagerModelFactory.WritableSubResource(peerAsnId) : null, directPeeringType);
+            return new DirectPeeringProperties(connections?.ToList(), useForPeeringService, peerAsnId != null ? ResourceManagerModelFactory.WritableSubResource(peerAsnId) : null, directPeeringType, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringDirectConnection"/>. </summary>
@@ -93,7 +115,18 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringDirectConnection"/> instance for mocking. </returns>
         public static PeeringDirectConnection PeeringDirectConnection(int? bandwidthInMbps = null, int? provisionedBandwidthInMbps = null, PeeringSessionAddressProvider? sessionAddressProvider = null, bool? useForPeeringService = null, string microsoftTrackingId = null, int? peeringDBFacilityId = null, PeeringConnectionState? connectionState = null, PeeringBgpSession bgpSession = null, string connectionIdentifier = null, string errorMessage = null)
         {
-            return new PeeringDirectConnection(bandwidthInMbps, provisionedBandwidthInMbps, sessionAddressProvider, useForPeeringService, microsoftTrackingId, peeringDBFacilityId, connectionState, bgpSession, connectionIdentifier, errorMessage);
+            return new PeeringDirectConnection(
+                bandwidthInMbps,
+                provisionedBandwidthInMbps,
+                sessionAddressProvider,
+                useForPeeringService,
+                microsoftTrackingId,
+                peeringDBFacilityId,
+                connectionState,
+                bgpSession,
+                connectionIdentifier,
+                errorMessage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringBgpSession"/>. </summary>
@@ -111,7 +144,19 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringBgpSession"/> instance for mocking. </returns>
         public static PeeringBgpSession PeeringBgpSession(string sessionPrefixV4 = null, string sessionPrefixV6 = null, IPAddress microsoftSessionIPv4Address = null, IPAddress microsoftSessionIPv6Address = null, IPAddress peerSessionIPv4Address = null, IPAddress peerSessionIPv6Address = null, PeeringSessionStateV4? sessionStateV4 = null, PeeringSessionStateV6? sessionStateV6 = null, int? maxPrefixesAdvertisedV4 = null, int? maxPrefixesAdvertisedV6 = null, string md5AuthenticationKey = null)
         {
-            return new PeeringBgpSession(sessionPrefixV4, sessionPrefixV6, microsoftSessionIPv4Address, microsoftSessionIPv6Address, peerSessionIPv4Address, peerSessionIPv6Address, sessionStateV4, sessionStateV6, maxPrefixesAdvertisedV4, maxPrefixesAdvertisedV6, md5AuthenticationKey);
+            return new PeeringBgpSession(
+                sessionPrefixV4,
+                sessionPrefixV6,
+                microsoftSessionIPv4Address,
+                microsoftSessionIPv6Address,
+                peerSessionIPv4Address,
+                peerSessionIPv6Address,
+                sessionStateV4,
+                sessionStateV6,
+                maxPrefixesAdvertisedV4,
+                maxPrefixesAdvertisedV6,
+                md5AuthenticationKey,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringExchangeConnection"/>. </summary>
@@ -123,7 +168,13 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringExchangeConnection"/> instance for mocking. </returns>
         public static PeeringExchangeConnection PeeringExchangeConnection(int? peeringDBFacilityId = null, PeeringConnectionState? connectionState = null, PeeringBgpSession bgpSession = null, Guid? connectionIdentifier = null, string errorMessage = null)
         {
-            return new PeeringExchangeConnection(peeringDBFacilityId, connectionState, bgpSession, connectionIdentifier, errorMessage);
+            return new PeeringExchangeConnection(
+                peeringDBFacilityId,
+                connectionState,
+                bgpSession,
+                connectionIdentifier,
+                errorMessage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.LookingGlassOutput"/>. </summary>
@@ -132,7 +183,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.LookingGlassOutput"/> instance for mocking. </returns>
         public static LookingGlassOutput LookingGlassOutput(LookingGlassCommand? command = null, string output = null)
         {
-            return new LookingGlassOutput(command, output);
+            return new LookingGlassOutput(command, output, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Peering.PeerAsnData"/>. </summary>
@@ -150,7 +201,17 @@ namespace Azure.ResourceManager.Peering.Models
         {
             peerContactDetail ??= new List<PeerAsnContactDetail>();
 
-            return new PeerAsnData(id, name, resourceType, systemData, peerAsn, peerContactDetail?.ToList(), peerName, validationState, errorMessage);
+            return new PeerAsnData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                peerAsn,
+                peerContactDetail?.ToList(),
+                peerName,
+                validationState,
+                errorMessage,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringLocation"/>. </summary>
@@ -169,7 +230,18 @@ namespace Azure.ResourceManager.Peering.Models
         {
             exchangePeeringFacilities ??= new List<ExchangePeeringFacility>();
 
-            return new PeeringLocation(id, name, resourceType, systemData, kind, direct, exchangePeeringFacilities != null ? new PeeringLocationPropertiesExchange(exchangePeeringFacilities?.ToList()) : null, peeringLocationValue, country, azureRegion);
+            return new PeeringLocation(
+                id,
+                name,
+                resourceType,
+                systemData,
+                kind,
+                direct,
+                exchangePeeringFacilities != null ? new PeeringLocationPropertiesExchange(exchangePeeringFacilities?.ToList(), serializedAdditionalRawData: null) : null,
+                peeringLocationValue,
+                country,
+                azureRegion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Peering.PeeringRegisteredAsnData"/>. </summary>
@@ -183,7 +255,15 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Peering.PeeringRegisteredAsnData"/> instance for mocking. </returns>
         public static PeeringRegisteredAsnData PeeringRegisteredAsnData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, int? asn = null, string peeringServicePrefixKey = null, PeeringProvisioningState? provisioningState = null)
         {
-            return new PeeringRegisteredAsnData(id, name, resourceType, systemData, asn, peeringServicePrefixKey, provisioningState);
+            return new PeeringRegisteredAsnData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                asn,
+                peeringServicePrefixKey,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Peering.PeeringRegisteredPrefixData"/>. </summary>
@@ -199,7 +279,17 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Peering.PeeringRegisteredPrefixData"/> instance for mocking. </returns>
         public static PeeringRegisteredPrefixData PeeringRegisteredPrefixData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string prefix = null, PeeringPrefixValidationState? prefixValidationState = null, string peeringServicePrefixKey = null, string errorMessage = null, PeeringProvisioningState? provisioningState = null)
         {
-            return new PeeringRegisteredPrefixData(id, name, resourceType, systemData, prefix, prefixValidationState, peeringServicePrefixKey, errorMessage, provisioningState);
+            return new PeeringRegisteredPrefixData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                prefix,
+                prefixValidationState,
+                peeringServicePrefixKey,
+                errorMessage,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringReceivedRoute"/>. </summary>
@@ -213,7 +303,15 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringReceivedRoute"/> instance for mocking. </returns>
         public static PeeringReceivedRoute PeeringReceivedRoute(string prefix = null, string nextHop = null, string asPath = null, string originAsValidationState = null, string rpkiValidationState = null, string trustAnchor = null, string receivedTimestamp = null)
         {
-            return new PeeringReceivedRoute(prefix, nextHop, asPath, originAsValidationState, rpkiValidationState, trustAnchor, receivedTimestamp);
+            return new PeeringReceivedRoute(
+                prefix,
+                nextHop,
+                asPath,
+                originAsValidationState,
+                rpkiValidationState,
+                trustAnchor,
+                receivedTimestamp,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Peering.ConnectionMonitorTestData"/>. </summary>
@@ -233,7 +331,19 @@ namespace Azure.ResourceManager.Peering.Models
         {
             path ??= new List<string>();
 
-            return new ConnectionMonitorTestData(id, name, resourceType, systemData, sourceAgent, destination, destinationPort, testFrequencyInSec, isTestSuccessful, path?.ToList(), provisioningState);
+            return new ConnectionMonitorTestData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                sourceAgent,
+                destination,
+                destinationPort,
+                testFrequencyInSec,
+                isTestSuccessful,
+                path?.ToList(),
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringServiceCountry"/>. </summary>
@@ -244,7 +354,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringServiceCountry"/> instance for mocking. </returns>
         public static PeeringServiceCountry PeeringServiceCountry(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null)
         {
-            return new PeeringServiceCountry(id, name, resourceType, systemData);
+            return new PeeringServiceCountry(id, name, resourceType, systemData, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringServiceLocation"/>. </summary>
@@ -258,7 +368,15 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringServiceLocation"/> instance for mocking. </returns>
         public static PeeringServiceLocation PeeringServiceLocation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string country = null, string state = null, AzureLocation? azureRegion = null)
         {
-            return new PeeringServiceLocation(id, name, resourceType, systemData, country, state, azureRegion);
+            return new PeeringServiceLocation(
+                id,
+                name,
+                resourceType,
+                systemData,
+                country,
+                state,
+                azureRegion,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Peering.PeeringServicePrefixData"/>. </summary>
@@ -278,7 +396,19 @@ namespace Azure.ResourceManager.Peering.Models
         {
             events ??= new List<PeeringServicePrefixEvent>();
 
-            return new PeeringServicePrefixData(id, name, resourceType, systemData, prefix, prefixValidationState, learnedType, errorMessage, events?.ToList(), peeringServicePrefixKey, provisioningState);
+            return new PeeringServicePrefixData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                prefix,
+                prefixValidationState,
+                learnedType,
+                errorMessage,
+                events?.ToList(),
+                peeringServicePrefixKey,
+                provisioningState,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringServicePrefixEvent"/>. </summary>
@@ -290,7 +420,13 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.PeeringServicePrefixEvent"/> instance for mocking. </returns>
         public static PeeringServicePrefixEvent PeeringServicePrefixEvent(DateTimeOffset? eventTimestamp = null, string eventType = null, string eventSummary = null, string eventLevel = null, string eventDescription = null)
         {
-            return new PeeringServicePrefixEvent(eventTimestamp, eventType, eventSummary, eventLevel, eventDescription);
+            return new PeeringServicePrefixEvent(
+                eventTimestamp,
+                eventType,
+                eventSummary,
+                eventLevel,
+                eventDescription,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringServiceProvider"/>. </summary>
@@ -305,7 +441,14 @@ namespace Azure.ResourceManager.Peering.Models
         {
             peeringLocations ??= new List<string>();
 
-            return new PeeringServiceProvider(id, name, resourceType, systemData, serviceProviderName, peeringLocations?.ToList());
+            return new PeeringServiceProvider(
+                id,
+                name,
+                resourceType,
+                systemData,
+                serviceProviderName,
+                peeringLocations?.ToList(),
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Peering.PeeringServiceData"/>. </summary>
@@ -327,7 +470,21 @@ namespace Azure.ResourceManager.Peering.Models
         {
             tags ??= new Dictionary<string, string>();
 
-            return new PeeringServiceData(id, name, resourceType, systemData, tags, location, skuName != null ? new PeeringServiceSku(skuName) : null, peeringServiceLocation, peeringServiceProvider, provisioningState, providerPrimaryPeeringLocation, providerBackupPeeringLocation, logAnalyticsWorkspaceProperties);
+            return new PeeringServiceData(
+                id,
+                name,
+                resourceType,
+                systemData,
+                tags,
+                location,
+                skuName != null ? new PeeringServiceSku(skuName, serializedAdditionalRawData: null) : null,
+                peeringServiceLocation,
+                peeringServiceProvider,
+                provisioningState,
+                providerPrimaryPeeringLocation,
+                providerBackupPeeringLocation,
+                logAnalyticsWorkspaceProperties,
+                serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.PeeringLogAnalyticsWorkspaceProperties"/>. </summary>
@@ -339,7 +496,7 @@ namespace Azure.ResourceManager.Peering.Models
         {
             connectedAgents ??= new List<string>();
 
-            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, connectedAgents?.ToList());
+            return new PeeringLogAnalyticsWorkspaceProperties(workspaceId, key, connectedAgents?.ToList(), serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.RoutingPreferenceUnbilledPrefix"/>. </summary>
@@ -349,7 +506,7 @@ namespace Azure.ResourceManager.Peering.Models
         /// <returns> A new <see cref="Models.RoutingPreferenceUnbilledPrefix"/> instance for mocking. </returns>
         public static RoutingPreferenceUnbilledPrefix RoutingPreferenceUnbilledPrefix(string prefix = null, AzureLocation? azureRegion = null, int? peerAsn = null)
         {
-            return new RoutingPreferenceUnbilledPrefix(prefix, azureRegion, peerAsn);
+            return new RoutingPreferenceUnbilledPrefix(prefix, azureRegion, peerAsn, serializedAdditionalRawData: null);
         }
     }
 }

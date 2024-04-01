@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceHttpGetAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceHttpGetAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,8 +76,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> path = default;
-            Optional<AppInstanceHttpSchemeType> scheme = default;
+            string path = default;
+            AppInstanceHttpSchemeType? scheme = default;
             ProbeActionType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppInstanceHttpGetAction(type, serializedAdditionalRawData, path.Value, Optional.ToNullable(scheme));
+            return new AppInstanceHttpGetAction(type, serializedAdditionalRawData, path, scheme);
         }
 
         BinaryData IPersistableModel<AppInstanceHttpGetAction>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppInstanceHttpGetAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support reading '{options.Format}' format.");
             }
         }
 

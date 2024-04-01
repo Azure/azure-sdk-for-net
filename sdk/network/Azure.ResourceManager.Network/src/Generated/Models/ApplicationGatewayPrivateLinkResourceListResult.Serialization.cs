@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkResourceListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayPrivateLinkResource>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayPrivateLinkResourceListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkResourceListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkResourceListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ApplicationGatewayPrivateLinkResource>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ApplicationGatewayPrivateLinkResource> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<ApplicationGatewayPrivateLinkResource> array = new List<ApplicationGatewayPrivateLinkResource>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource(item));
+                        array.Add(ApplicationGatewayPrivateLinkResource.DeserializeApplicationGatewayPrivateLinkResource(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayPrivateLinkResourceListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ApplicationGatewayPrivateLinkResourceListResult(value ?? new ChangeTrackingList<ApplicationGatewayPrivateLinkResource>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayPrivateLinkResourceListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkResourceListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayPrivateLinkResourceListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkResourceListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayPrivateLinkResourceListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

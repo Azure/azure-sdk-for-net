@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(OSDiskImage))
             {
                 writer.WritePropertyName("osDiskImage"u8);
-                writer.WriteObjectValue(OSDiskImage);
+                writer.WriteObjectValue<GalleryOSDiskImage>(OSDiskImage, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryImageVersionStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<GalleryOSDiskImage> osDiskImage = default;
+            GalleryOSDiskImage osDiskImage = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value);
+                    osDiskImage = GalleryOSDiskImage.DeserializeGalleryOSDiskImage(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GalleryImageVersionStorageProfile(osDiskImage.Value, serializedAdditionalRawData);
+            return new GalleryImageVersionStorageProfile(osDiskImage, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GalleryImageVersionStorageProfile>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeGalleryImageVersionStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryImageVersionStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

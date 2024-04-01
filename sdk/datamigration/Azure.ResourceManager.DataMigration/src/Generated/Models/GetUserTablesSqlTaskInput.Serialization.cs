@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetUserTablesSqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetUserTablesSqlTaskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("connectionInfo"u8);
-            writer.WriteObjectValue(ConnectionInfo);
+            writer.WriteObjectValue<SqlConnectionInfo>(ConnectionInfo, options);
             writer.WritePropertyName("selectedDatabases"u8);
             writer.WriteStartArray();
             foreach (var item in SelectedDatabases)
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetUserTablesSqlTaskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetUserTablesSqlTaskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetUserTablesSqlTaskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,14 +80,14 @@ namespace Azure.ResourceManager.DataMigration.Models
             }
             SqlConnectionInfo connectionInfo = default;
             IList<string> selectedDatabases = default;
-            Optional<string> encryptedKeyForSecureFields = default;
+            string encryptedKeyForSecureFields = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("connectionInfo"u8))
                 {
-                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value);
+                    connectionInfo = SqlConnectionInfo.DeserializeSqlConnectionInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("selectedDatabases"u8))
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields.Value, serializedAdditionalRawData);
+            return new GetUserTablesSqlTaskInput(connectionInfo, selectedDatabases, encryptedKeyForSecureFields, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetUserTablesSqlTaskInput>.Write(ModelReaderWriterOptions options)
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetUserTablesSqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetUserTablesSqlTaskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeGetUserTablesSqlTaskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetUserTablesSqlTaskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetUserTablesSqlTaskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

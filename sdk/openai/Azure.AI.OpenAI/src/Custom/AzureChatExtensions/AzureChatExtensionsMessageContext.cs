@@ -17,14 +17,4 @@ public partial class AzureChatExtensionsMessageContext
 
     public ContentFilterResultsForPrompt RequestContentFilterResults { get; internal set; }
     public ContentFilterResultsForChoice ResponseContentFilterResults { get; internal set; }
-
-    internal AzureChatExtensionsMessageContext(
-        IReadOnlyList<ChatResponseMessage> messages,
-        ContentFilterResultsForPrompt requestContentFilterResults,
-        ContentFilterResultsForChoice responseContentFilterResults)
-        : this(messages)
-    {
-        RequestContentFilterResults = requestContentFilterResults;
-        ResponseContentFilterResults = responseContentFilterResults;
-    }
 }

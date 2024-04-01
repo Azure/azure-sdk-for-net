@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.Automanage;
 
 namespace Azure.ResourceManager.Automanage.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationProfileList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomanageConfigurationProfileData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationProfileList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +74,7 @@ namespace Azure.ResourceManager.Automanage.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AutomanageConfigurationProfileData>> value = default;
+            IReadOnlyList<AutomanageConfigurationProfileData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Automanage.Models
                     List<AutomanageConfigurationProfileData> array = new List<AutomanageConfigurationProfileData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(item));
+                        array.Add(AutomanageConfigurationProfileData.DeserializeAutomanageConfigurationProfileData(item, options));
                     }
                     value = array;
                     continue;
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConfigurationProfileList(Optional.ToList(value), serializedAdditionalRawData);
+            return new ConfigurationProfileList(value ?? new ChangeTrackingList<AutomanageConfigurationProfileData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConfigurationProfileList>.Write(ModelReaderWriterOptions options)
@@ -112,7 +111,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +127,7 @@ namespace Azure.ResourceManager.Automanage.Models
                         return DeserializeConfigurationProfileList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationProfileList)} does not support reading '{options.Format}' format.");
             }
         }
 

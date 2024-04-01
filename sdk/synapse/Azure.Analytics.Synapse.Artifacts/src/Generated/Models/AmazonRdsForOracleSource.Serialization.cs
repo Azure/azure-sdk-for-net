@@ -22,49 +22,49 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(OracleReaderQuery))
             {
                 writer.WritePropertyName("oracleReaderQuery"u8);
-                writer.WriteObjectValue(OracleReaderQuery);
+                writer.WriteObjectValue<object>(OracleReaderQuery);
             }
             if (Optional.IsDefined(QueryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
-                writer.WriteObjectValue(QueryTimeout);
+                writer.WriteObjectValue<object>(QueryTimeout);
             }
             if (Optional.IsDefined(PartitionOption))
             {
                 writer.WritePropertyName("partitionOption"u8);
-                writer.WriteObjectValue(PartitionOption);
+                writer.WriteObjectValue<object>(PartitionOption);
             }
             if (Optional.IsDefined(PartitionSettings))
             {
                 writer.WritePropertyName("partitionSettings"u8);
-                writer.WriteObjectValue(PartitionSettings);
+                writer.WriteObjectValue<AmazonRdsForOraclePartitionSettings>(PartitionSettings);
             }
             if (Optional.IsDefined(AdditionalColumns))
             {
                 writer.WritePropertyName("additionalColumns"u8);
-                writer.WriteObjectValue(AdditionalColumns);
+                writer.WriteObjectValue<object>(AdditionalColumns);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             if (Optional.IsDefined(SourceRetryCount))
             {
                 writer.WritePropertyName("sourceRetryCount"u8);
-                writer.WriteObjectValue(SourceRetryCount);
+                writer.WriteObjectValue<object>(SourceRetryCount);
             }
             if (Optional.IsDefined(SourceRetryWait))
             {
                 writer.WritePropertyName("sourceRetryWait"u8);
-                writer.WriteObjectValue(SourceRetryWait);
+                writer.WriteObjectValue<object>(SourceRetryWait);
             }
             if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -75,15 +75,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<object> oracleReaderQuery = default;
-            Optional<object> queryTimeout = default;
-            Optional<object> partitionOption = default;
-            Optional<AmazonRdsForOraclePartitionSettings> partitionSettings = default;
-            Optional<object> additionalColumns = default;
+            object oracleReaderQuery = default;
+            object queryTimeout = default;
+            object partitionOption = default;
+            AmazonRdsForOraclePartitionSettings partitionSettings = default;
+            object additionalColumns = default;
             string type = default;
-            Optional<object> sourceRetryCount = default;
-            Optional<object> sourceRetryWait = default;
-            Optional<object> maxConcurrentConnections = default;
+            object sourceRetryCount = default;
+            object sourceRetryWait = default;
+            object maxConcurrentConnections = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -168,14 +168,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonRdsForOracleSource(type, sourceRetryCount.Value, sourceRetryWait.Value, maxConcurrentConnections.Value, additionalProperties, oracleReaderQuery.Value, queryTimeout.Value, partitionOption.Value, partitionSettings.Value, additionalColumns.Value);
+            return new AmazonRdsForOracleSource(
+                type,
+                sourceRetryCount,
+                sourceRetryWait,
+                maxConcurrentConnections,
+                additionalProperties,
+                oracleReaderQuery,
+                queryTimeout,
+                partitionOption,
+                partitionSettings,
+                additionalColumns);
         }
 
         internal partial class AmazonRdsForOracleSourceConverter : JsonConverter<AmazonRdsForOracleSource>
         {
             public override void Write(Utf8JsonWriter writer, AmazonRdsForOracleSource model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AmazonRdsForOracleSource>(model);
             }
             public override AmazonRdsForOracleSource Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

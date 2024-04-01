@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,9 +91,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> servers = default;
-            Optional<bool> enableProxy = default;
-            Optional<bool?> requireProxyForNetworkRules = default;
+            IList<string> servers = default;
+            bool? enableProxy = default;
+            bool? requireProxyForNetworkRules = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DnsSettings(Optional.ToList(servers), Optional.ToNullable(enableProxy), Optional.ToNullable(requireProxyForNetworkRules), serializedAdditionalRawData);
+            return new DnsSettings(servers ?? new ChangeTrackingList<string>(), enableProxy, requireProxyForNetworkRules, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DnsSettings>.Write(ModelReaderWriterOptions options)
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeDnsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

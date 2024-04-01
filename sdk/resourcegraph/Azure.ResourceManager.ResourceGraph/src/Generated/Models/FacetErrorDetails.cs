@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ResourceGraph.Models
 {
@@ -37,6 +36,11 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             Code = code;
             Message = message;
             AdditionalProperties = additionalProperties;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="FacetErrorDetails"/> for deserialization. </summary>
+        internal FacetErrorDetails()
+        {
         }
 
         /// <summary> Error code identifying the specific error. </summary>

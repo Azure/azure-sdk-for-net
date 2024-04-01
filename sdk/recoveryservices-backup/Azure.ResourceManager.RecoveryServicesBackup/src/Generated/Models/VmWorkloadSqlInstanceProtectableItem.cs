@@ -5,6 +5,9 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.RecoveryServicesBackup.Models
 {
     /// <summary> Azure VM workload-specific protectable item representing SQL Instance. </summary>
@@ -22,6 +25,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="protectableItemType"> Type of the backup item. </param>
         /// <param name="friendlyName"> Friendly name of the backup item. </param>
         /// <param name="protectionState"> State of the back up item. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="parentName"> Name for instance or AG. </param>
         /// <param name="parentUniqueName">
         /// Parent Unique Name is added to provide the service formatted URI Name of the Parent
@@ -34,7 +38,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
         /// <param name="subProtectableItemCount"> For instance or AG, indicates number of DB's to be protected. </param>
         /// <param name="preBackupValidation"> Pre-backup validation for protectable objects. </param>
         /// <param name="isProtectable"> Indicates if item is protectable. </param>
-        internal VmWorkloadSqlInstanceProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
+        internal VmWorkloadSqlInstanceProtectableItem(string backupManagementType, string workloadType, string protectableItemType, string friendlyName, BackupProtectionStatus? protectionState, IDictionary<string, BinaryData> serializedAdditionalRawData, string parentName, string parentUniqueName, string serverName, bool? isAutoProtectable, bool? isAutoProtected, int? subInquiredItemCount, int? subProtectableItemCount, PreBackupValidation preBackupValidation, bool? isProtectable) : base(backupManagementType, workloadType, protectableItemType, friendlyName, protectionState, serializedAdditionalRawData, parentName, parentUniqueName, serverName, isAutoProtectable, isAutoProtected, subInquiredItemCount, subProtectableItemCount, preBackupValidation, isProtectable)
         {
             ProtectableItemType = protectableItemType ?? "SQLInstance";
         }

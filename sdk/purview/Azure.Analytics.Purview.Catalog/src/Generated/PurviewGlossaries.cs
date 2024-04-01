@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -2851,7 +2850,7 @@ namespace Azure.Analytics.Purview.Catalog
             {
                 uri.AppendQuery("includeTermHierarchy", includeTermHierarchy.Value, true);
             }
-            if (excludeRelationshipTypeList != null && Optional.IsCollectionDefined(excludeRelationshipTypeList))
+            if (excludeRelationshipTypeList != null && !(excludeRelationshipTypeList is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in excludeRelationshipTypeList)
                 {

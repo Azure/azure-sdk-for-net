@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class MicrosoftAccessSink : IUtf8JsonSerializable
+    public partial class MicrosoftAccessSink : IUtf8JsonSerializable, IJsonModel<MicrosoftAccessSink>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<MicrosoftAccessSink>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<MicrosoftAccessSink>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(PreCopyScript))
             {
@@ -70,20 +79,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static MicrosoftAccessSink DeserializeMicrosoftAccessSink(JsonElement element)
+        MicrosoftAccessSink IJsonModel<MicrosoftAccessSink>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSink>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeMicrosoftAccessSink(document.RootElement, options);
+        }
+
+        internal static MicrosoftAccessSink DeserializeMicrosoftAccessSink(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> preCopyScript = default;
+            DataFactoryElement<string> preCopyScript = default;
             string type = default;
-            Optional<DataFactoryElement<int>> writeBatchSize = default;
-            Optional<DataFactoryElement<string>> writeBatchTimeout = default;
-            Optional<DataFactoryElement<int>> sinkRetryCount = default;
-            Optional<DataFactoryElement<string>> sinkRetryWait = default;
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
+            DataFactoryElement<int> writeBatchSize = default;
+            DataFactoryElement<string> writeBatchTimeout = default;
+            DataFactoryElement<int> sinkRetryCount = default;
+            DataFactoryElement<string> sinkRetryWait = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -159,7 +182,47 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new MicrosoftAccessSink(type, writeBatchSize.Value, writeBatchTimeout.Value, sinkRetryCount.Value, sinkRetryWait.Value, maxConcurrentConnections.Value, disableMetricsCollection.Value, additionalProperties, preCopyScript.Value);
+            return new MicrosoftAccessSink(
+                type,
+                writeBatchSize,
+                writeBatchTimeout,
+                sinkRetryCount,
+                sinkRetryWait,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                additionalProperties,
+                preCopyScript);
         }
+
+        BinaryData IPersistableModel<MicrosoftAccessSink>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        MicrosoftAccessSink IPersistableModel<MicrosoftAccessSink>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<MicrosoftAccessSink>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeMicrosoftAccessSink(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(MicrosoftAccessSink)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<MicrosoftAccessSink>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

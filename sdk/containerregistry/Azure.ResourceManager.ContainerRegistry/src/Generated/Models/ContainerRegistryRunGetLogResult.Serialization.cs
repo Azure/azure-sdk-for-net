@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunGetLogResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunGetLogResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunGetLogResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunGetLogResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunGetLogResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunGetLogResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<string> logLink = default;
-            Optional<string> logArtifactLink = default;
+            string logLink = default;
+            string logArtifactLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryRunGetLogResult(logLink.Value, logArtifactLink.Value, serializedAdditionalRawData);
+            return new ContainerRegistryRunGetLogResult(logLink, logArtifactLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryRunGetLogResult>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunGetLogResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunGetLogResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryRunGetLogResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunGetLogResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunGetLogResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBServiceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<CosmosDBServiceCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            Optional<CosmosDBServiceSize> instanceSize = default;
-            Optional<int> instanceCount = default;
-            Optional<CosmosDBServiceType> serviceType = default;
+            CosmosDBServiceSize? instanceSize = default;
+            int? instanceCount = default;
+            CosmosDBServiceType? serviceType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CosmosDBServiceCreateOrUpdateContent(Optional.ToNullable(instanceSize), Optional.ToNullable(instanceCount), Optional.ToNullable(serviceType), serializedAdditionalRawData);
+            return new CosmosDBServiceCreateOrUpdateContent(instanceSize, instanceCount, serviceType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CosmosDBServiceCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeCosmosDBServiceCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CosmosDBServiceCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

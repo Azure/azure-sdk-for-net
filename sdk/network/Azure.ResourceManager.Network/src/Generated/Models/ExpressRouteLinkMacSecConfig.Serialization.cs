@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteLinkMacSecConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteLinkMacSecConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteLinkMacSecConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteLinkMacSecConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteLinkMacSecConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteLinkMacSecConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> cknSecretIdentifier = default;
-            Optional<string> cakSecretIdentifier = default;
-            Optional<ExpressRouteLinkMacSecCipher> cipher = default;
-            Optional<ExpressRouteLinkMacSecSciState> sciState = default;
+            string cknSecretIdentifier = default;
+            string cakSecretIdentifier = default;
+            ExpressRouteLinkMacSecCipher? cipher = default;
+            ExpressRouteLinkMacSecSciState? sciState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier.Value, cakSecretIdentifier.Value, Optional.ToNullable(cipher), Optional.ToNullable(sciState), serializedAdditionalRawData);
+            return new ExpressRouteLinkMacSecConfig(cknSecretIdentifier, cakSecretIdentifier, cipher, sciState, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ExpressRouteLinkMacSecConfig>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteLinkMacSecConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteLinkMacSecConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteLinkMacSecConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteLinkMacSecConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteLinkMacSecConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

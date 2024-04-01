@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DownloadURL>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DownloadURL)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DownloadURL)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DownloadURL>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DownloadURL)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DownloadURL)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> expiryTime = default;
-            Optional<DateTimeOffset> validTill = default;
-            Optional<Uri> downloadUrl = default;
+            DateTimeOffset? expiryTime = default;
+            DateTimeOffset? validTill = default;
+            Uri downloadUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DownloadURL(Optional.ToNullable(expiryTime), Optional.ToNullable(validTill), downloadUrl.Value, serializedAdditionalRawData);
+            return new DownloadURL(expiryTime, validTill, downloadUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DownloadURL>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DownloadURL)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DownloadURL)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeDownloadURL(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DownloadURL)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DownloadURL)} does not support reading '{options.Format}' format.");
             }
         }
 

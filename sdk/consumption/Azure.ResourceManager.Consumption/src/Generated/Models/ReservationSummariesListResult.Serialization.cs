@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationSummariesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationSummariesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationSummariesListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConsumptionReservationSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationSummariesListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationSummariesListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationSummariesListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Consumption.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<ConsumptionReservationSummary>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<ConsumptionReservationSummary> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Consumption.Models
                     List<ConsumptionReservationSummary> array = new List<ConsumptionReservationSummary>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(item));
+                        array.Add(ConsumptionReservationSummary.DeserializeConsumptionReservationSummary(item, options));
                     }
                     value = array;
                     continue;
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ReservationSummariesListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new ReservationSummariesListResult(value ?? new ChangeTrackingList<ConsumptionReservationSummary>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ReservationSummariesListResult>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationSummariesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationSummariesListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeReservationSummariesListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationSummariesListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationSummariesListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

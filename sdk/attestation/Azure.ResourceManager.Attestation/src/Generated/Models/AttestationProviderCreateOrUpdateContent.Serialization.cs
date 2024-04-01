@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("properties"u8);
-            writer.WriteObjectValue(Properties);
+            writer.WriteObjectValue<AttestationServiceCreationSpecificParams>(Properties, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttestationProviderCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 return null;
             }
             AzureLocation location = default;
-            Optional<IDictionary<string, string>> tags = default;
+            IDictionary<string, string> tags = default;
             AttestationServiceCreationSpecificParams properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
                 if (property.NameEquals("properties"u8))
                 {
-                    properties = AttestationServiceCreationSpecificParams.DeserializeAttestationServiceCreationSpecificParams(property.Value);
+                    properties = AttestationServiceCreationSpecificParams.DeserializeAttestationServiceCreationSpecificParams(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AttestationProviderCreateOrUpdateContent(location, Optional.ToDictionary(tags), properties, serializedAdditionalRawData);
+            return new AttestationProviderCreateOrUpdateContent(location, tags ?? new ChangeTrackingDictionary<string, string>(), properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AttestationProviderCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Attestation.Models
                         return DeserializeAttestationProviderCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttestationProviderCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

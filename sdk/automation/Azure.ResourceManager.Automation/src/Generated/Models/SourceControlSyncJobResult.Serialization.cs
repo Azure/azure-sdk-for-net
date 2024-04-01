@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -121,14 +121,14 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> sourceControlSyncJobId = default;
-            Optional<DateTimeOffset> creationTime = default;
-            Optional<SourceControlProvisioningState> provisioningState = default;
-            Optional<DateTimeOffset?> startTime = default;
-            Optional<DateTimeOffset?> endTime = default;
-            Optional<SourceControlSyncType> syncType = default;
-            Optional<string> exception = default;
+            ResourceIdentifier id = default;
+            string sourceControlSyncJobId = default;
+            DateTimeOffset? creationTime = default;
+            SourceControlProvisioningState? provisioningState = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            SourceControlSyncType? syncType = default;
+            string exception = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -217,7 +217,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SourceControlSyncJobResult(id.Value, sourceControlSyncJobId.Value, Optional.ToNullable(creationTime), Optional.ToNullable(provisioningState), Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToNullable(syncType), exception.Value, serializedAdditionalRawData);
+            return new SourceControlSyncJobResult(
+                id,
+                sourceControlSyncJobId,
+                creationTime,
+                provisioningState,
+                startTime,
+                endTime,
+                syncType,
+                exception,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SourceControlSyncJobResult>.Write(ModelReaderWriterOptions options)
@@ -229,7 +238,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +254,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSourceControlSyncJobResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobResult)} does not support reading '{options.Format}' format.");
             }
         }
 

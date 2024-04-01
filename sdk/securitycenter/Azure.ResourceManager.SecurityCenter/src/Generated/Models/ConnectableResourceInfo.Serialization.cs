@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectableResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectableResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in InboundConnectedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectedResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStartArray();
                 foreach (var item in OutboundConnectedResources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectedResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectableResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectableResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectableResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,9 +89,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> id = default;
-            Optional<IReadOnlyList<ConnectedResourceInfo>> inboundConnectedResources = default;
-            Optional<IReadOnlyList<ConnectedResourceInfo>> outboundConnectedResources = default;
+            ResourceIdentifier id = default;
+            IReadOnlyList<ConnectedResourceInfo> inboundConnectedResources = default;
+            IReadOnlyList<ConnectedResourceInfo> outboundConnectedResources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ConnectedResourceInfo> array = new List<ConnectedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item, options));
                     }
                     inboundConnectedResources = array;
                     continue;
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     List<ConnectedResourceInfo> array = new List<ConnectedResourceInfo>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item));
+                        array.Add(ConnectedResourceInfo.DeserializeConnectedResourceInfo(item, options));
                     }
                     outboundConnectedResources = array;
                     continue;
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectableResourceInfo(id.Value, Optional.ToList(inboundConnectedResources), Optional.ToList(outboundConnectedResources), serializedAdditionalRawData);
+            return new ConnectableResourceInfo(id, inboundConnectedResources ?? new ChangeTrackingList<ConnectedResourceInfo>(), outboundConnectedResources ?? new ChangeTrackingList<ConnectedResourceInfo>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectableResourceInfo>.Write(ModelReaderWriterOptions options)
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectableResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectableResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeConnectableResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectableResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectableResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

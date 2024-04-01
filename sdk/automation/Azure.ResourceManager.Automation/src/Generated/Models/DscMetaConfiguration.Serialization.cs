@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscMetaConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<int> configurationModeFrequencyMins = default;
-            Optional<bool> rebootNodeIfNeeded = default;
-            Optional<string> configurationMode = default;
-            Optional<string> actionAfterReboot = default;
-            Optional<string> certificateId = default;
-            Optional<int> refreshFrequencyMins = default;
-            Optional<bool> allowModuleOverwrite = default;
+            int? configurationModeFrequencyMins = default;
+            bool? rebootNodeIfNeeded = default;
+            string configurationMode = default;
+            string actionAfterReboot = default;
+            string certificateId = default;
+            int? refreshFrequencyMins = default;
+            bool? allowModuleOverwrite = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -167,7 +167,15 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscMetaConfiguration(Optional.ToNullable(configurationModeFrequencyMins), Optional.ToNullable(rebootNodeIfNeeded), configurationMode.Value, actionAfterReboot.Value, certificateId.Value, Optional.ToNullable(refreshFrequencyMins), Optional.ToNullable(allowModuleOverwrite), serializedAdditionalRawData);
+            return new DscMetaConfiguration(
+                configurationModeFrequencyMins,
+                rebootNodeIfNeeded,
+                configurationMode,
+                actionAfterReboot,
+                certificateId,
+                refreshFrequencyMins,
+                allowModuleOverwrite,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscMetaConfiguration>.Write(ModelReaderWriterOptions options)
@@ -179,7 +187,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +203,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscMetaConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscMetaConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

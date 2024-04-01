@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(SecurityProfile))
             {
                 writer.WritePropertyName("securityProfile"u8);
-                writer.WriteObjectValue(SecurityProfile);
+                writer.WriteObjectValue<OSDiskImageSecurityProfile>(SecurityProfile, options);
             }
             if (Optional.IsDefined(DiskEncryptionSetId))
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<OSDiskImageSecurityProfile> securityProfile = default;
-            Optional<ResourceIdentifier> diskEncryptionSetId = default;
+            OSDiskImageSecurityProfile securityProfile = default;
+            ResourceIdentifier diskEncryptionSetId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Compute.Models
                     {
                         continue;
                     }
-                    securityProfile = OSDiskImageSecurityProfile.DeserializeOSDiskImageSecurityProfile(property.Value);
+                    securityProfile = OSDiskImageSecurityProfile.DeserializeOSDiskImageSecurityProfile(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("diskEncryptionSetId"u8))
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OSDiskImageEncryption(diskEncryptionSetId.Value, serializedAdditionalRawData, securityProfile.Value);
+            return new OSDiskImageEncryption(diskEncryptionSetId, serializedAdditionalRawData, securityProfile);
         }
 
         BinaryData IPersistableModel<OSDiskImageEncryption>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeOSDiskImageEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSDiskImageEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

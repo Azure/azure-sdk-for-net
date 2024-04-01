@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 return null;
             }
             string name = default;
-            Optional<string> suffix = default;
+            string suffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DataLakeStoreForDataLakeAnalyticsAccountUpdateContent(name, suffix.Value, serializedAdditionalRawData);
+            return new DataLakeStoreForDataLakeAnalyticsAccountUpdateContent(name, suffix, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DataLakeStoreForDataLakeAnalyticsAccountUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeStoreForDataLakeAnalyticsAccountUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeStoreForDataLakeAnalyticsAccountUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

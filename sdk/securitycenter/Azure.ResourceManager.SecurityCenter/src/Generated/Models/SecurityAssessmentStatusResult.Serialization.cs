@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentStatusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -86,11 +86,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> firstEvaluationDate = default;
-            Optional<DateTimeOffset> statusChangeDate = default;
+            DateTimeOffset? firstEvaluationDate = default;
+            DateTimeOffset? statusChangeDate = default;
             SecurityAssessmentStatusCode code = default;
-            Optional<string> cause = default;
-            Optional<string> description = default;
+            string cause = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentStatusResult(code, cause.Value, description.Value, serializedAdditionalRawData, Optional.ToNullable(firstEvaluationDate), Optional.ToNullable(statusChangeDate));
+            return new SecurityAssessmentStatusResult(
+                code,
+                cause,
+                description,
+                serializedAdditionalRawData,
+                firstEvaluationDate,
+                statusChangeDate);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentStatusResult>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAssessmentStatusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentStatusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

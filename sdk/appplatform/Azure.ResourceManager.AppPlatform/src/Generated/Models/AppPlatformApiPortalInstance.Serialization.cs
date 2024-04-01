@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformApiPortalInstance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformApiPortalInstance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformApiPortalInstance)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformApiPortalInstance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformApiPortalInstance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformApiPortalInstance)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> status = default;
+            string name = default;
+            string status = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformApiPortalInstance(name.Value, status.Value, serializedAdditionalRawData);
+            return new AppPlatformApiPortalInstance(name, status, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformApiPortalInstance>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformApiPortalInstance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformApiPortalInstance)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformApiPortalInstance(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformApiPortalInstance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformApiPortalInstance)} does not support reading '{options.Format}' format.");
             }
         }
 

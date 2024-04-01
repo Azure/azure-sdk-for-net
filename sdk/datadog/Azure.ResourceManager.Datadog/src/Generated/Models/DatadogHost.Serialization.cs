@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogHost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHost)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Datadog.Models
             if (Optional.IsDefined(Meta))
             {
                 writer.WritePropertyName("meta"u8);
-                writer.WriteObjectValue(Meta);
+                writer.WriteObjectValue<DatadogHostMetadata>(Meta, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogHost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogHost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogHost)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,10 +94,10 @@ namespace Azure.ResourceManager.Datadog.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IReadOnlyList<string>> aliases = default;
-            Optional<IReadOnlyList<string>> apps = default;
-            Optional<DatadogHostMetadata> meta = default;
+            string name = default;
+            IReadOnlyList<string> aliases = default;
+            IReadOnlyList<string> apps = default;
+            DatadogHostMetadata meta = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Datadog.Models
                     {
                         continue;
                     }
-                    meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value);
+                    meta = DatadogHostMetadata.DeserializeDatadogHostMetadata(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DatadogHost(name.Value, Optional.ToList(aliases), Optional.ToList(apps), meta.Value, serializedAdditionalRawData);
+            return new DatadogHost(name, aliases ?? new ChangeTrackingList<string>(), apps ?? new ChangeTrackingList<string>(), meta, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DatadogHost>.Write(ModelReaderWriterOptions options)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHost)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogHost(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogHost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogHost)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -77,13 +77,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, string> configs = default;
-            Optional<IList<string>> annotations = default;
-            Optional<string> notes = default;
-            Optional<string> createdBy = default;
-            Optional<DateTimeOffset> created = default;
-            Optional<IDictionary<string, string>> configMergeRule = default;
+            IList<string> annotations = default;
+            string notes = default;
+            string createdBy = default;
+            DateTimeOffset? created = default;
+            IDictionary<string, string> configMergeRule = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("description"u8))
@@ -149,14 +149,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkConfiguration(description.Value, configs, Optional.ToList(annotations), notes.Value, createdBy.Value, Optional.ToNullable(created), Optional.ToDictionary(configMergeRule));
+            return new SparkConfiguration(
+                description,
+                configs,
+                annotations ?? new ChangeTrackingList<string>(),
+                notes,
+                createdBy,
+                created,
+                configMergeRule ?? new ChangeTrackingDictionary<string, string>());
         }
 
         internal partial class SparkConfigurationConverter : JsonConverter<SparkConfiguration>
         {
             public override void Write(Utf8JsonWriter writer, SparkConfiguration model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SparkConfiguration>(model);
             }
             public override SparkConfiguration Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Media.Models
 {
@@ -24,6 +23,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <summary> Initializes a new instance of <see cref="H264Video"/>. </summary>
         /// <param name="odataType"> The discriminator for derived types. </param>
         /// <param name="label"> An optional label for the codec. The label can be used to control muxing behavior. </param>
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="keyFrameInterval"> The distance between two key frames. The value should be non-zero in the range [0.5, 20] seconds, specified in ISO 8601 format. The default is 2 seconds(PT2S). Note that this setting is ignored if VideoSyncMode.Passthrough is set, where the KeyFrameInterval value will follow the input source setting. </param>
         /// <param name="stretchMode"> The resizing mode - how the input video will be resized to fit the desired output resolution(s). Default is AutoSize. </param>
         /// <param name="syncMode"> The Video Sync Mode. </param>
@@ -31,7 +31,7 @@ namespace Azure.ResourceManager.Media.Models
         /// <param name="layers"> The collection of output H.264 layers to be produced by the encoder. </param>
         /// <param name="rateControlMode"> The video rate control mode. </param>
         /// <param name="useSceneChangeDetection"> Whether or not the encoder should insert key frames at scene changes. If not specified, the default is false. This flag should be set to true only when the encoder is being configured to produce a single output video. </param>
-        internal H264Video(string odataType, string label, TimeSpan? keyFrameInterval, InputVideoStretchMode? stretchMode, VideoSyncMode? syncMode, H264Complexity? complexity, IList<H264Layer> layers, H264RateControlMode? rateControlMode, bool? useSceneChangeDetection) : base(odataType, label, keyFrameInterval, stretchMode, syncMode)
+        internal H264Video(string odataType, string label, IDictionary<string, BinaryData> serializedAdditionalRawData, TimeSpan? keyFrameInterval, InputVideoStretchMode? stretchMode, VideoSyncMode? syncMode, H264Complexity? complexity, IList<H264Layer> layers, H264RateControlMode? rateControlMode, bool? useSceneChangeDetection) : base(odataType, label, serializedAdditionalRawData, keyFrameInterval, stretchMode, syncMode)
         {
             Complexity = complexity;
             Layers = layers;

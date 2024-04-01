@@ -21,12 +21,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(SchemaLinkedService))
             {
                 writer.WritePropertyName("schemaLinkedService"u8);
-                writer.WriteObjectValue(SchemaLinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(SchemaLinkedService);
             }
             if (Optional.IsDefined(RejectedDataLinkedService))
             {
                 writer.WritePropertyName("rejectedDataLinkedService"u8);
-                writer.WriteObjectValue(RejectedDataLinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(RejectedDataLinkedService);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
@@ -38,17 +38,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             if (Optional.IsDefined(Dataset))
             {
                 writer.WritePropertyName("dataset"u8);
-                writer.WriteObjectValue(Dataset);
+                writer.WriteObjectValue<DatasetReference>(Dataset);
             }
             if (Optional.IsDefined(LinkedService))
             {
                 writer.WritePropertyName("linkedService"u8);
-                writer.WriteObjectValue(LinkedService);
+                writer.WriteObjectValue<LinkedServiceReference>(LinkedService);
             }
             if (Optional.IsDefined(Flowlet))
             {
                 writer.WritePropertyName("flowlet"u8);
-                writer.WriteObjectValue(Flowlet);
+                writer.WriteObjectValue<DataFlowReference>(Flowlet);
             }
             writer.WriteEndObject();
         }
@@ -59,13 +59,13 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<LinkedServiceReference> schemaLinkedService = default;
-            Optional<LinkedServiceReference> rejectedDataLinkedService = default;
+            LinkedServiceReference schemaLinkedService = default;
+            LinkedServiceReference rejectedDataLinkedService = default;
             string name = default;
-            Optional<string> description = default;
-            Optional<DatasetReference> dataset = default;
-            Optional<LinkedServiceReference> linkedService = default;
-            Optional<DataFlowReference> flowlet = default;
+            string description = default;
+            DatasetReference dataset = default;
+            LinkedServiceReference linkedService = default;
+            DataFlowReference flowlet = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schemaLinkedService"u8))
@@ -124,14 +124,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowSink(name, description.Value, dataset.Value, linkedService.Value, flowlet.Value, schemaLinkedService.Value, rejectedDataLinkedService.Value);
+            return new DataFlowSink(
+                name,
+                description,
+                dataset,
+                linkedService,
+                flowlet,
+                schemaLinkedService,
+                rejectedDataLinkedService);
         }
 
         internal partial class DataFlowSinkConverter : JsonConverter<DataFlowSink>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowSink model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowSink>(model);
             }
             public override DataFlowSink Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

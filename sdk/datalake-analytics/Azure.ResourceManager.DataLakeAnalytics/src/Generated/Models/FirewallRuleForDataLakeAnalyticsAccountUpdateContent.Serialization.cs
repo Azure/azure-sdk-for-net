@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -81,8 +81,8 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 return null;
             }
             string name = default;
-            Optional<IPAddress> startIPAddress = default;
-            Optional<IPAddress> endIPAddress = default;
+            IPAddress startIPAddress = default;
+            IPAddress endIPAddress = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new FirewallRuleForDataLakeAnalyticsAccountUpdateContent(name, startIPAddress.Value, endIPAddress.Value, serializedAdditionalRawData);
+            return new FirewallRuleForDataLakeAnalyticsAccountUpdateContent(name, startIPAddress, endIPAddress, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<FirewallRuleForDataLakeAnalyticsAccountUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeFirewallRuleForDataLakeAnalyticsAccountUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallRuleForDataLakeAnalyticsAccountUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

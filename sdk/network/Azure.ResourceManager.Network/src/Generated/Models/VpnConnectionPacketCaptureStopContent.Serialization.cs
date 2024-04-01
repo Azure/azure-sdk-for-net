@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionPacketCaptureStopContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnConnectionPacketCaptureStopContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<Uri> sasUrl = default;
-            Optional<IList<string>> linkConnectionNames = default;
+            Uri sasUrl = default;
+            IList<string> linkConnectionNames = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VpnConnectionPacketCaptureStopContent(sasUrl.Value, Optional.ToList(linkConnectionNames), serializedAdditionalRawData);
+            return new VpnConnectionPacketCaptureStopContent(sasUrl, linkConnectionNames ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VpnConnectionPacketCaptureStopContent>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnConnectionPacketCaptureStopContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnConnectionPacketCaptureStopContent)} does not support reading '{options.Format}' format.");
             }
         }
 

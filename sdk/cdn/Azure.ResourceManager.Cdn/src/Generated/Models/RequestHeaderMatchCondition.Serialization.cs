@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestHeaderMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestHeaderMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestHeaderMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RequestHeaderMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RequestHeaderMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RequestHeaderMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Cdn.Models
                 return null;
             }
             RequestHeaderMatchConditionType typeName = default;
-            Optional<string> selector = default;
+            string selector = default;
             RequestHeaderOperator @operator = default;
-            Optional<bool> negateCondition = default;
-            Optional<IList<string>> matchValues = default;
-            Optional<IList<PreTransformCategory>> transforms = default;
+            bool? negateCondition = default;
+            IList<string> matchValues = default;
+            IList<PreTransformCategory> transforms = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -166,7 +166,14 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RequestHeaderMatchCondition(typeName, selector.Value, @operator, Optional.ToNullable(negateCondition), Optional.ToList(matchValues), Optional.ToList(transforms), serializedAdditionalRawData);
+            return new RequestHeaderMatchCondition(
+                typeName,
+                selector,
+                @operator,
+                negateCondition,
+                matchValues ?? new ChangeTrackingList<string>(),
+                transforms ?? new ChangeTrackingList<PreTransformCategory>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RequestHeaderMatchCondition>.Write(ModelReaderWriterOptions options)
@@ -178,7 +185,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RequestHeaderMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestHeaderMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +201,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeRequestHeaderMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RequestHeaderMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RequestHeaderMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.Hci.Models
             if (Optional.IsDefined(LinuxConfiguration))
             {
                 writer.WritePropertyName("linuxConfiguration"u8);
-                writer.WriteObjectValue(LinuxConfiguration);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration>(LinuxConfiguration, options);
             }
             if (Optional.IsDefined(WindowsConfiguration))
             {
                 writer.WritePropertyName("windowsConfiguration"u8);
-                writer.WriteObjectValue(WindowsConfiguration);
+                writer.WriteObjectValue<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration>(WindowsConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineInstancePropertiesOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,11 +89,11 @@ namespace Azure.ResourceManager.Hci.Models
             {
                 return null;
             }
-            Optional<string> adminPassword = default;
-            Optional<string> adminUsername = default;
-            Optional<string> computerName = default;
-            Optional<VirtualMachineInstancePropertiesOSProfileLinuxConfiguration> linuxConfiguration = default;
-            Optional<VirtualMachineInstancePropertiesOSProfileWindowsConfiguration> windowsConfiguration = default;
+            string adminPassword = default;
+            string adminUsername = default;
+            string computerName = default;
+            VirtualMachineInstancePropertiesOSProfileLinuxConfiguration linuxConfiguration = default;
+            VirtualMachineInstancePropertiesOSProfileWindowsConfiguration windowsConfiguration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    linuxConfiguration = VirtualMachineInstancePropertiesOSProfileLinuxConfiguration.DeserializeVirtualMachineInstancePropertiesOSProfileLinuxConfiguration(property.Value);
+                    linuxConfiguration = VirtualMachineInstancePropertiesOSProfileLinuxConfiguration.DeserializeVirtualMachineInstancePropertiesOSProfileLinuxConfiguration(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("windowsConfiguration"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
                     {
                         continue;
                     }
-                    windowsConfiguration = VirtualMachineInstancePropertiesOSProfileWindowsConfiguration.DeserializeVirtualMachineInstancePropertiesOSProfileWindowsConfiguration(property.Value);
+                    windowsConfiguration = VirtualMachineInstancePropertiesOSProfileWindowsConfiguration.DeserializeVirtualMachineInstancePropertiesOSProfileWindowsConfiguration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -137,7 +137,13 @@ namespace Azure.ResourceManager.Hci.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineInstancePropertiesOSProfile(adminPassword.Value, adminUsername.Value, computerName.Value, linuxConfiguration.Value, windowsConfiguration.Value, serializedAdditionalRawData);
+            return new VirtualMachineInstancePropertiesOSProfile(
+                adminPassword,
+                adminUsername,
+                computerName,
+                linuxConfiguration,
+                windowsConfiguration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineInstancePropertiesOSProfile>.Write(ModelReaderWriterOptions options)
@@ -149,7 +155,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +171,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeVirtualMachineInstancePropertiesOSProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineInstancePropertiesOSProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 foreach (var item in SummaryResults)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<MigrationValidationDatabaseSummaryResult>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSqlServerSqlDBTaskOutputValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,10 +92,10 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> migrationId = default;
-            Optional<IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult>> summaryResults = default;
-            Optional<ValidationStatus> status = default;
-            Optional<string> id = default;
+            string migrationId = default;
+            IReadOnlyDictionary<string, MigrationValidationDatabaseSummaryResult> summaryResults = default;
+            ValidationStatus? status = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     Dictionary<string, MigrationValidationDatabaseSummaryResult> dictionary = new Dictionary<string, MigrationValidationDatabaseSummaryResult>();
                     foreach (var property0 in property.Value.EnumerateObject())
                     {
-                        dictionary.Add(property0.Name, MigrationValidationDatabaseSummaryResult.DeserializeMigrationValidationDatabaseSummaryResult(property0.Value));
+                        dictionary.Add(property0.Name, MigrationValidationDatabaseSummaryResult.DeserializeMigrationValidationDatabaseSummaryResult(property0.Value, options));
                     }
                     summaryResults = dictionary;
                     continue;
@@ -145,7 +145,13 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSqlServerSqlDBTaskOutputValidationResult(id.Value, resultType, serializedAdditionalRawData, migrationId.Value, Optional.ToDictionary(summaryResults), Optional.ToNullable(status));
+            return new MigrateSqlServerSqlDBTaskOutputValidationResult(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                migrationId,
+                summaryResults ?? new ChangeTrackingDictionary<string, MigrationValidationDatabaseSummaryResult>(),
+                status);
         }
 
         BinaryData IPersistableModel<MigrateSqlServerSqlDBTaskOutputValidationResult>.Write(ModelReaderWriterOptions options)
@@ -157,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSqlServerSqlDBTaskOutputValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSqlServerSqlDBTaskOutputValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

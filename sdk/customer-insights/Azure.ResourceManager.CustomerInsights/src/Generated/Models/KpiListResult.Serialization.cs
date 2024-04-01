@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.CustomerInsights;
 
 namespace Azure.ResourceManager.CustomerInsights.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KpiResourceFormatData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<KpiResourceFormatData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<KpiResourceFormatData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                     List<KpiResourceFormatData> array = new List<KpiResourceFormatData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(KpiResourceFormatData.DeserializeKpiResourceFormatData(item));
+                        array.Add(KpiResourceFormatData.DeserializeKpiResourceFormatData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new KpiListResult(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new KpiListResult(value ?? new ChangeTrackingList<KpiResourceFormatData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<KpiListResult>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeKpiListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

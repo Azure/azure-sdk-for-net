@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<PropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertyChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PropertyChange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<PropertyChange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PropertyChange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PropertyChange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
             {
                 return null;
             }
-            Optional<ChangeType> changeType = default;
-            Optional<ChangeCategory> changeCategory = default;
-            Optional<string> jsonPath = default;
-            Optional<string> displayName = default;
-            Optional<PropertyChangeLevel> level = default;
-            Optional<string> description = default;
-            Optional<string> oldValue = default;
-            Optional<string> newValue = default;
-            Optional<bool> isDataMasked = default;
+            ChangeType? changeType = default;
+            ChangeCategory? changeCategory = default;
+            string jsonPath = default;
+            string displayName = default;
+            PropertyChangeLevel? level = default;
+            string description = default;
+            string oldValue = default;
+            string newValue = default;
+            bool? isDataMasked = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -189,7 +189,17 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PropertyChange(Optional.ToNullable(changeType), Optional.ToNullable(changeCategory), jsonPath.Value, displayName.Value, Optional.ToNullable(level), description.Value, oldValue.Value, newValue.Value, Optional.ToNullable(isDataMasked), serializedAdditionalRawData);
+            return new PropertyChange(
+                changeType,
+                changeCategory,
+                jsonPath,
+                displayName,
+                level,
+                description,
+                oldValue,
+                newValue,
+                isDataMasked,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PropertyChange>.Write(ModelReaderWriterOptions options)
@@ -201,7 +211,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PropertyChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropertyChange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -217,7 +227,7 @@ namespace Azure.ResourceManager.ChangeAnalysis.Models
                         return DeserializePropertyChange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PropertyChange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PropertyChange)} does not support reading '{options.Format}' format.");
             }
         }
 

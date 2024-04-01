@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.DeviceUpdate;
 
 namespace Azure.ResourceManager.DeviceUpdate.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccountList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -38,7 +37,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DeviceUpdateAccountData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<AccountList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AccountList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AccountList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             {
                 return null;
             }
-            Optional<string> nextLink = default;
-            Optional<IReadOnlyList<DeviceUpdateAccountData>> value = default;
+            string nextLink = default;
+            IReadOnlyList<DeviceUpdateAccountData> value = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -100,7 +99,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                     List<DeviceUpdateAccountData> array = new List<DeviceUpdateAccountData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(item));
+                        array.Add(DeviceUpdateAccountData.DeserializeDeviceUpdateAccountData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AccountList(nextLink.Value, Optional.ToList(value), serializedAdditionalRawData);
+            return new AccountList(nextLink, value ?? new ChangeTrackingList<DeviceUpdateAccountData>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AccountList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AccountList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeAccountList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AccountList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AccountList)} does not support reading '{options.Format}' format.");
             }
         }
 

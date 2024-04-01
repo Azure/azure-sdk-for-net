@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationScheduleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationScheduleCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationScheduleCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(AdvancedSchedule))
             {
                 writer.WritePropertyName("advancedSchedule"u8);
-                writer.WriteObjectValue(AdvancedSchedule);
+                writer.WriteObjectValue<AutomationAdvancedSchedule>(AdvancedSchedule, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationScheduleCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationScheduleCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationScheduleCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,13 +113,13 @@ namespace Azure.ResourceManager.Automation.Models
                 return null;
             }
             string name = default;
-            Optional<string> description = default;
+            string description = default;
             DateTimeOffset startTime = default;
-            Optional<DateTimeOffset?> expiryTime = default;
-            Optional<BinaryData> interval = default;
+            DateTimeOffset? expiryTime = default;
+            BinaryData interval = default;
             AutomationScheduleFrequency frequency = default;
-            Optional<string> timeZone = default;
-            Optional<AutomationAdvancedSchedule> advancedSchedule = default;
+            string timeZone = default;
+            AutomationAdvancedSchedule advancedSchedule = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Automation.Models
                             {
                                 continue;
                             }
-                            advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property0.Value);
+                            advancedSchedule = AutomationAdvancedSchedule.DeserializeAutomationAdvancedSchedule(property0.Value, options);
                             continue;
                         }
                     }
@@ -195,7 +195,16 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AutomationScheduleCreateOrUpdateContent(name, description.Value, startTime, Optional.ToNullable(expiryTime), interval.Value, frequency, timeZone.Value, advancedSchedule.Value, serializedAdditionalRawData);
+            return new AutomationScheduleCreateOrUpdateContent(
+                name,
+                description,
+                startTime,
+                expiryTime,
+                interval,
+                frequency,
+                timeZone,
+                advancedSchedule,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AutomationScheduleCreateOrUpdateContent>.Write(ModelReaderWriterOptions options)
@@ -207,7 +216,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationScheduleCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationScheduleCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -223,7 +232,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationScheduleCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationScheduleCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationScheduleCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

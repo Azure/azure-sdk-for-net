@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,12 +34,12 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
-                writer.WriteObjectValue(Routes);
+                writer.WriteObjectValue<HttpSettingsRoutes>(Routes, options);
             }
             if (Optional.IsDefined(ForwardProxy))
             {
                 writer.WritePropertyName("forwardProxy"u8);
-                writer.WriteObjectValue(ForwardProxy);
+                writer.WriteObjectValue<ContainerAppForwardProxy>(ForwardProxy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppHttpSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> requireHttps = default;
-            Optional<HttpSettingsRoutes> routes = default;
-            Optional<ContainerAppForwardProxy> forwardProxy = default;
+            bool? requireHttps = default;
+            HttpSettingsRoutes routes = default;
+            ContainerAppForwardProxy forwardProxy = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value);
+                    routes = HttpSettingsRoutes.DeserializeHttpSettingsRoutes(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("forwardProxy"u8))
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    forwardProxy = ContainerAppForwardProxy.DeserializeContainerAppForwardProxy(property.Value);
+                    forwardProxy = ContainerAppForwardProxy.DeserializeContainerAppForwardProxy(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppHttpSettings(Optional.ToNullable(requireHttps), routes.Value, forwardProxy.Value, serializedAdditionalRawData);
+            return new ContainerAppHttpSettings(requireHttps, routes, forwardProxy, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppHttpSettings>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppHttpSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppHttpSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

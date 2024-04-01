@@ -7,13 +7,44 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerServiceFleet.Models
 {
     /// <summary> Defines a stage which contains the groups to update and the steps to take (e.g., wait for a time period) before starting the next stage. </summary>
     public partial class ContainerServiceFleetUpdateStage
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStage"/>. </summary>
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
@@ -29,11 +60,18 @@ namespace Azure.ResourceManager.ContainerServiceFleet.Models
         /// <param name="name"> The name of the stage. Must be unique within the UpdateRun. </param>
         /// <param name="groups"> Defines the groups to be executed in parallel in this stage. Duplicate groups are not allowed. Min size: 1. </param>
         /// <param name="afterStageWaitInSeconds"> The time in seconds to wait at the end of this stage before starting the next one. Defaults to 0 seconds if unspecified. </param>
-        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerServiceFleetUpdateStage(string name, IList<ContainerServiceFleetUpdateGroup> groups, int? afterStageWaitInSeconds, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Name = name;
             Groups = groups;
             AfterStageWaitInSeconds = afterStageWaitInSeconds;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
+        }
+
+        /// <summary> Initializes a new instance of <see cref="ContainerServiceFleetUpdateStage"/> for deserialization. </summary>
+        internal ContainerServiceFleetUpdateStage()
+        {
         }
 
         /// <summary> The name of the stage. Must be unique within the UpdateRun. </summary>

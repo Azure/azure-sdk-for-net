@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectorMappingFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectorMappingFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectorMappingFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,11 +92,11 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 return null;
             }
             FormatType formatType = default;
-            Optional<string> columnDelimiter = default;
-            Optional<string> acceptLanguage = default;
-            Optional<string> quoteCharacter = default;
-            Optional<string> quoteEscapeCharacter = default;
-            Optional<string> arraySeparator = default;
+            string columnDelimiter = default;
+            string acceptLanguage = default;
+            string quoteCharacter = default;
+            string quoteEscapeCharacter = default;
+            string arraySeparator = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -137,7 +137,14 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ConnectorMappingFormat(formatType, columnDelimiter.Value, acceptLanguage.Value, quoteCharacter.Value, quoteEscapeCharacter.Value, arraySeparator.Value, serializedAdditionalRawData);
+            return new ConnectorMappingFormat(
+                formatType,
+                columnDelimiter,
+                acceptLanguage,
+                quoteCharacter,
+                quoteEscapeCharacter,
+                arraySeparator,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ConnectorMappingFormat>.Write(ModelReaderWriterOptions options)
@@ -149,7 +156,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +172,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeConnectorMappingFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectorMappingFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectorMappingFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

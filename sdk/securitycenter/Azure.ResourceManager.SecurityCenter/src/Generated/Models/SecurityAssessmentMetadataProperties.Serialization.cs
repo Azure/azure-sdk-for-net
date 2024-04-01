@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             if (Optional.IsDefined(PartnerData))
             {
                 writer.WritePropertyName("partnerData"u8);
-                writer.WriteObjectValue(PartnerData);
+                writer.WriteObjectValue<SecurityAssessmentMetadataPartner>(PartnerData, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentMetadataProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,17 +126,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 return null;
             }
             string displayName = default;
-            Optional<ResourceIdentifier> policyDefinitionId = default;
-            Optional<string> description = default;
-            Optional<string> remediationDescription = default;
-            Optional<IList<SecurityAssessmentResourceCategory>> categories = default;
+            ResourceIdentifier policyDefinitionId = default;
+            string description = default;
+            string remediationDescription = default;
+            IList<SecurityAssessmentResourceCategory> categories = default;
             SecurityAssessmentSeverity severity = default;
-            Optional<SecurityAssessmentUserImpact> userImpact = default;
-            Optional<ImplementationEffort> implementationEffort = default;
-            Optional<IList<SecurityThreat>> threats = default;
-            Optional<bool> preview = default;
+            SecurityAssessmentUserImpact? userImpact = default;
+            ImplementationEffort? implementationEffort = default;
+            IList<SecurityThreat> threats = default;
+            bool? preview = default;
             SecurityAssessmentType assessmentType = default;
-            Optional<SecurityAssessmentMetadataPartner> partnerData = default;
+            SecurityAssessmentMetadataPartner partnerData = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value);
+                    partnerData = SecurityAssessmentMetadataPartner.DeserializeSecurityAssessmentMetadataPartner(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -245,7 +245,20 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new SecurityAssessmentMetadataProperties(displayName, policyDefinitionId.Value, description.Value, remediationDescription.Value, Optional.ToList(categories), severity, Optional.ToNullable(userImpact), Optional.ToNullable(implementationEffort), Optional.ToList(threats), Optional.ToNullable(preview), assessmentType, partnerData.Value, serializedAdditionalRawData);
+            return new SecurityAssessmentMetadataProperties(
+                displayName,
+                policyDefinitionId,
+                description,
+                remediationDescription,
+                categories ?? new ChangeTrackingList<SecurityAssessmentResourceCategory>(),
+                severity,
+                userImpact,
+                implementationEffort,
+                threats ?? new ChangeTrackingList<SecurityThreat>(),
+                preview,
+                assessmentType,
+                partnerData,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<SecurityAssessmentMetadataProperties>.Write(ModelReaderWriterOptions options)
@@ -257,7 +270,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +286,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAssessmentMetadataProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentMetadataProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

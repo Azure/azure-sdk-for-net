@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleAssignmentArtifact>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,13 +130,13 @@ namespace Azure.ResourceManager.Blueprint.Models
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<string> displayName = default;
-            Optional<string> description = default;
-            Optional<IList<string>> dependsOn = default;
+            SystemData systemData = default;
+            string displayName = default;
+            string description = default;
+            IList<string> dependsOn = default;
             string roleDefinitionId = default;
             BinaryData principalIds = default;
-            Optional<string> resourceGroup = default;
+            string resourceGroup = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -227,7 +227,19 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleAssignmentArtifact(id, name, type, systemData.Value, kind, serializedAdditionalRawData, displayName.Value, description.Value, Optional.ToList(dependsOn), roleDefinitionId, principalIds, resourceGroup.Value);
+            return new RoleAssignmentArtifact(
+                id,
+                name,
+                type,
+                systemData,
+                kind,
+                serializedAdditionalRawData,
+                displayName,
+                description,
+                dependsOn ?? new ChangeTrackingList<string>(),
+                roleDefinitionId,
+                principalIds,
+                resourceGroup);
         }
 
         BinaryData IPersistableModel<RoleAssignmentArtifact>.Write(ModelReaderWriterOptions options)
@@ -239,7 +251,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -255,7 +267,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeRoleAssignmentArtifact(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleAssignmentArtifact)} does not support reading '{options.Format}' format.");
             }
         }
 

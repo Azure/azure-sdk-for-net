@@ -15,10 +15,15 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlAdvisorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlAdvisorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlAdvisorData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlAdvisorData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlAdvisorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlAdvisorData>
     {
         public MySqlAdvisorData() { }
         public System.BinaryData Properties { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlAdvisorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlAdvisorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlAdvisorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlAdvisorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlAdvisorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlAdvisorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlAdvisorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlAdvisorResource : Azure.ResourceManager.ArmResource
     {
@@ -52,7 +57,7 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlConfigurationData>
     {
         public MySqlConfigurationData() { }
         public string AllowedValues { get { throw null; } }
@@ -61,6 +66,11 @@ namespace Azure.ResourceManager.MySql
         public string Description { get { throw null; } }
         public string Source { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -91,11 +101,16 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlDatabaseData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlDatabaseData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlDatabaseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlDatabaseData>
     {
         public MySqlDatabaseData() { }
         public string Charset { get { throw null; } set { } }
         public string Collation { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlDatabaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlDatabaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlDatabaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlDatabaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlDatabaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlDatabaseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlDatabaseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlDatabaseResource : Azure.ResourceManager.ArmResource
     {
@@ -155,11 +170,16 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlFirewallRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlFirewallRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlFirewallRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFirewallRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlFirewallRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlFirewallRuleData>
     {
         public MySqlFirewallRuleData(System.Net.IPAddress startIPAddress, System.Net.IPAddress endIPAddress) { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlFirewallRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlFirewallRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlFirewallRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlFirewallRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlFirewallRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlFirewallRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -192,12 +212,17 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlPrivateEndpointConnectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData>
     {
         public MySqlPrivateEndpointConnectionData() { }
         public Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty ConnectionState { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } set { } }
         public string ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlPrivateEndpointConnectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlPrivateEndpointConnectionResource : Azure.ResourceManager.ArmResource
     {
@@ -238,10 +263,15 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlPrivateLinkResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlPrivateLinkResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlPrivateLinkResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData>
     {
         public MySqlPrivateLinkResourceData() { }
         public Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties Properties { get { throw null; } }
+        Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlPrivateLinkResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlQueryStatisticCollection : Azure.ResourceManager.ArmCollection
     {
@@ -255,7 +285,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Azure.NullableResponse<Azure.ResourceManager.MySql.MySqlQueryStatisticResource> GetIfExists(string queryStatisticId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MySql.MySqlQueryStatisticResource>> GetIfExistsAsync(string queryStatisticId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MySqlQueryStatisticData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlQueryStatisticData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlQueryStatisticData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlQueryStatisticData>
     {
         public MySqlQueryStatisticData() { }
         public string AggregationFunction { get { throw null; } set { } }
@@ -268,6 +298,11 @@ namespace Azure.ResourceManager.MySql
         public long? QueryExecutionCount { get { throw null; } set { } }
         public string QueryId { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlQueryStatisticData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlQueryStatisticData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlQueryStatisticData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlQueryStatisticData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlQueryStatisticData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlQueryStatisticData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlQueryStatisticData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlQueryStatisticResource : Azure.ResourceManager.ArmResource
     {
@@ -291,11 +326,16 @@ namespace Azure.ResourceManager.MySql
         public virtual Azure.NullableResponse<Azure.ResourceManager.MySql.MySqlQueryTextResource> GetIfExists(string queryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MySql.MySqlQueryTextResource>> GetIfExistsAsync(string queryId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MySqlQueryTextData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlQueryTextData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlQueryTextData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlQueryTextData>
     {
         public MySqlQueryTextData() { }
         public string QueryId { get { throw null; } set { } }
         public string QueryText { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlQueryTextData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlQueryTextData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlQueryTextData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlQueryTextData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlQueryTextData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlQueryTextData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlQueryTextData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlQueryTextResource : Azure.ResourceManager.ArmResource
     {
@@ -322,7 +362,7 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlRecommendationActionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlRecommendationActionResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlRecommendationActionData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlRecommendationActionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlRecommendationActionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlRecommendationActionData>
     {
         public MySqlRecommendationActionData() { }
         public int? ActionId { get { throw null; } set { } }
@@ -333,6 +373,11 @@ namespace Azure.ResourceManager.MySql
         public string Reason { get { throw null; } set { } }
         public string RecommendationType { get { throw null; } set { } }
         public System.Guid? SessionId { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlRecommendationActionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlRecommendationActionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlRecommendationActionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlRecommendationActionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlRecommendationActionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlRecommendationActionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlRecommendationActionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlRecommendationActionResource : Azure.ResourceManager.ArmResource
     {
@@ -344,13 +389,18 @@ namespace Azure.ResourceManager.MySql
         public virtual Azure.Response<Azure.ResourceManager.MySql.MySqlRecommendationActionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.MySqlRecommendationActionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MySqlServerAdministratorData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlServerAdministratorData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerAdministratorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerAdministratorData>
     {
         public MySqlServerAdministratorData() { }
         public Azure.ResourceManager.MySql.Models.MySqlAdministratorType? AdministratorType { get { throw null; } set { } }
         public string LoginAccountName { get { throw null; } set { } }
         public System.Guid? SecureId { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlServerAdministratorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerAdministratorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerAdministratorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlServerAdministratorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerAdministratorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerAdministratorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerAdministratorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlServerAdministratorResource : Azure.ResourceManager.ArmResource
     {
@@ -385,7 +435,7 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlServerResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlServerResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlServerData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class MySqlServerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerData>
     {
         public MySqlServerData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } set { } }
@@ -405,6 +455,11 @@ namespace Azure.ResourceManager.MySql
         public Azure.ResourceManager.MySql.Models.MySqlStorageProfile StorageProfile { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlServerState? UserVisibleState { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlServerVersion? Version { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlServerKeyCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.MySqlServerKeyResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlServerKeyResource>, System.Collections.IEnumerable
     {
@@ -423,13 +478,18 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlServerKeyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlServerKeyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlServerKeyData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlServerKeyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerKeyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerKeyData>
     {
         public MySqlServerKeyData() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
         public string Kind { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlServerKeyType? ServerKeyType { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlServerKeyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerKeyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerKeyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlServerKeyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerKeyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerKeyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerKeyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlServerKeyResource : Azure.ResourceManager.ArmResource
     {
@@ -537,7 +597,7 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlServerSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlServerSecurityAlertPolicyData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData>
     {
         public MySqlServerSecurityAlertPolicyData() { }
         public System.Collections.Generic.IList<string> DisabledAlerts { get { throw null; } }
@@ -547,6 +607,11 @@ namespace Azure.ResourceManager.MySql
         public Azure.ResourceManager.MySql.Models.MySqlServerSecurityAlertPolicyState? State { get { throw null; } set { } }
         public string StorageAccountAccessKey { get { throw null; } set { } }
         public string StorageEndpoint { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlServerSecurityAlertPolicyResource : Azure.ResourceManager.ArmResource
     {
@@ -577,12 +642,17 @@ namespace Azure.ResourceManager.MySql
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlVirtualNetworkRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlVirtualNetworkRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData>
     {
         public MySqlVirtualNetworkRuleData() { }
         public bool? IgnoreMissingVnetServiceEndpoint { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState? State { get { throw null; } }
         public Azure.Core.ResourceIdentifier VirtualNetworkSubnetId { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlVirtualNetworkRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -610,7 +680,7 @@ namespace Azure.ResourceManager.MySql
         public virtual Azure.NullableResponse<Azure.ResourceManager.MySql.MySqlWaitStatisticResource> GetIfExists(string waitStatisticsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MySql.MySqlWaitStatisticResource>> GetIfExistsAsync(string waitStatisticsId, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MySqlWaitStatisticData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlWaitStatisticData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlWaitStatisticData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlWaitStatisticData>
     {
         public MySqlWaitStatisticData() { }
         public long? Count { get { throw null; } set { } }
@@ -622,6 +692,11 @@ namespace Azure.ResourceManager.MySql
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public double? TotalTimeInMinutes { get { throw null; } set { } }
         public long? UserId { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.MySqlWaitStatisticData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlWaitStatisticData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.MySqlWaitStatisticData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.MySqlWaitStatisticData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlWaitStatisticData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlWaitStatisticData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.MySqlWaitStatisticData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlWaitStatisticResource : Azure.ResourceManager.ArmResource
     {
@@ -636,6 +711,47 @@ namespace Azure.ResourceManager.MySql
 }
 namespace Azure.ResourceManager.MySql.FlexibleServers
 {
+    public partial class AdvancedThreatProtectionCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>, System.Collections.IEnumerable
+    {
+        protected AdvancedThreatProtectionCollection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> CreateOrUpdate(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> Get(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>> GetAsync(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> GetIfExists(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>> GetIfExistsAsync(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class AdvancedThreatProtectionData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData>
+    {
+        public AdvancedThreatProtectionData() { }
+        public System.DateTimeOffset? CreatedOn { get { throw null; } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState? ProvisioningState { get { throw null; } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState? State { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class AdvancedThreatProtectionResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected AdvancedThreatProtectionResource() { }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
     public static partial class FlexibleServersExtensions
     {
         public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult> CheckMySqlFlexibleServerNameAvailability(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -646,15 +762,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>> ExecuteCheckVirtualNetworkSubnetUsageAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter mySqlFlexibleServerVirtualNetworkSubnetUsageParameter, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse> ExecuteGetPrivateDnsZoneSuffix(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>> ExecuteGetPrivateDnsZoneSuffixAsync(this Azure.ResourceManager.Resources.TenantResource tenantResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource GetAdvancedThreatProtectionResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilities(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties> GetLocationBasedCapabilitiesAsync(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, Azure.Core.AzureLocation locationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> GetMySqlFlexibleServer(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorResource GetMySqlFlexibleServerAadAdministratorResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> GetMySqlFlexibleServerAsync(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource, string serverName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource GetMySqlFlexibleServerBackupResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource GetMySqlFlexibleServerBackupV2Resource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource GetMySqlFlexibleServerConfigurationResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseResource GetMySqlFlexibleServerDatabaseResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource GetMySqlFlexibleServerFirewallRuleResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource GetMySqlFlexibleServerMaintenanceResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource GetMySqlFlexibleServerResource(this Azure.ResourceManager.ArmClient client, Azure.Core.ResourceIdentifier id) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerCollection GetMySqlFlexibleServers(this Azure.ResourceManager.Resources.ResourceGroupResource resourceGroupResource) { throw null; }
         public static Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> GetMySqlFlexibleServers(this Azure.ResourceManager.Resources.SubscriptionResource subscriptionResource, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -683,7 +802,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlFlexibleServerAadAdministratorData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServerAadAdministratorData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData>
     {
         public MySqlFlexibleServerAadAdministratorData() { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType? AdministratorType { get { throw null; } set { } }
@@ -691,6 +810,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public string Login { get { throw null; } set { } }
         public string Sid { get { throw null; } set { } }
         public System.Guid? TenantId { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlFlexibleServerAadAdministratorResource : Azure.ResourceManager.ArmResource
     {
@@ -723,12 +847,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlFlexibleServerBackupData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServerBackupData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>
     {
         public MySqlFlexibleServerBackupData() { }
         public string BackupType { get { throw null; } set { } }
         public System.DateTimeOffset? CompletedOn { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlFlexibleServerBackupResource : Azure.ResourceManager.ArmResource
     {
@@ -741,6 +870,49 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource> Update(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource>> UpdateAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MySqlFlexibleServerBackupV2Collection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>, System.Collections.IEnumerable
+    {
+        protected MySqlFlexibleServerBackupV2Collection() { }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> CreateOrUpdate(Azure.WaitUntil waitUntil, string backupName, Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>> CreateOrUpdateAsync(Azure.WaitUntil waitUntil, string backupName, Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<bool> Exists(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> Get(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>> GetAsync(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> GetIfExists(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>> GetIfExistsAsync(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MySqlFlexibleServerBackupV2Data : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data>
+    {
+        public MySqlFlexibleServerBackupV2Data() { }
+        public string BackupNameV2 { get { throw null; } set { } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType? BackupType { get { throw null; } set { } }
+        public System.DateTimeOffset? CompletedOn { get { throw null; } set { } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState? ProvisioningState { get { throw null; } }
+        public string Source { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MySqlFlexibleServerBackupV2Resource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MySqlFlexibleServerBackupV2Resource() { }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string backupName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MySqlFlexibleServerCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>, System.Collections.IEnumerable
     {
@@ -782,7 +954,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlFlexibleServerConfigurationData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServerConfigurationData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData>
     {
         public MySqlFlexibleServerConfigurationData() { }
         public string AllowedValues { get { throw null; } }
@@ -796,6 +968,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState? IsReadOnly { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource? Source { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlFlexibleServerConfigurationResource : Azure.ResourceManager.ArmResource
     {
@@ -809,7 +986,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
-    public partial class MySqlFlexibleServerData : Azure.ResourceManager.Models.TrackedResourceData
+    public partial class MySqlFlexibleServerData : Azure.ResourceManager.Models.TrackedResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData>
     {
         public MySqlFlexibleServerData(Azure.Core.AzureLocation location) { }
         public string AdministratorLogin { get { throw null; } set { } }
@@ -833,6 +1010,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState? State { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage Storage { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion? Version { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlFlexibleServerDatabaseCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseResource>, System.Collections.IEnumerable
     {
@@ -851,11 +1033,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlFlexibleServerDatabaseData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServerDatabaseData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData>
     {
         public MySqlFlexibleServerDatabaseData() { }
         public string Charset { get { throw null; } set { } }
         public string Collation { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlFlexibleServerDatabaseResource : Azure.ResourceManager.ArmResource
     {
@@ -888,11 +1075,16 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlFlexibleServerFirewallRuleData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServerFirewallRuleData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData>
     {
         public MySqlFlexibleServerFirewallRuleData(System.Net.IPAddress startIPAddress, System.Net.IPAddress endIPAddress) { }
         public System.Net.IPAddress EndIPAddress { get { throw null; } set { } }
         public System.Net.IPAddress StartIPAddress { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlFlexibleServerFirewallRuleResource : Azure.ResourceManager.ArmResource
     {
@@ -907,6 +1099,53 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData data, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+    }
+    public partial class MySqlFlexibleServerMaintenanceCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>, System.Collections.IEnumerable
+    {
+        protected MySqlFlexibleServerMaintenanceCollection() { }
+        public virtual Azure.Response<bool> Exists(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<bool>> ExistsAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> Get(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> GetAll(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> GetAllAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>> GetAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.NullableResponse<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> GetIfExists(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.NullableResponse<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>> GetIfExistsAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        System.Collections.Generic.IAsyncEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>.GetAsyncEnumerator(System.Threading.CancellationToken cancellationToken) { throw null; }
+        System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>.GetEnumerator() { throw null; }
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
+    }
+    public partial class MySqlFlexibleServerMaintenanceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>
+    {
+        public MySqlFlexibleServerMaintenanceData() { }
+        public System.DateTimeOffset? MaintenanceAvailableScheduleMaxOn { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceAvailableScheduleMinOn { get { throw null; } }
+        public string MaintenanceDescription { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceEndOn { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceExecutionEndOn { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceExecutionStartOn { get { throw null; } }
+        public System.DateTimeOffset? MaintenanceStartOn { get { throw null; } set { } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState? MaintenanceState { get { throw null; } }
+        public string MaintenanceTitle { get { throw null; } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType? MaintenanceType { get { throw null; } }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class MySqlFlexibleServerMaintenanceResource : Azure.ResourceManager.ArmResource
+    {
+        public static readonly Azure.Core.ResourceType ResourceType;
+        protected MySqlFlexibleServerMaintenanceResource() { }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData Data { get { throw null; } }
+        public virtual bool HasData { get { throw null; } }
+        public static Azure.Core.ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string serverName, string maintenanceName) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> Update(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>> UpdateAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch patch, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MySqlFlexibleServerResource : Azure.ResourceManager.ArmResource
     {
@@ -926,6 +1165,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual Azure.ResourceManager.ArmOperation Failover(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation> FailoverAsync(Azure.WaitUntil waitUntil, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> Get(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource> GetAdvancedThreatProtection(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource>> GetAdvancedThreatProtectionAsync(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName advancedThreatProtectionName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionCollection GetAdvancedThreatProtections() { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> GetAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Pageable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile> GetLogFiles(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.AsyncPageable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile> GetLogFilesAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -935,6 +1177,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource> GetMySqlFlexibleServerBackup(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource>> GetMySqlFlexibleServerBackupAsync(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupCollection GetMySqlFlexibleServerBackups() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource> GetMySqlFlexibleServerBackupV2(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource>> GetMySqlFlexibleServerBackupV2Async(string backupName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Collection GetMySqlFlexibleServerBackupV2s() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource> GetMySqlFlexibleServerConfiguration(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource>> GetMySqlFlexibleServerConfigurationAsync(string configurationName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationCollection GetMySqlFlexibleServerConfigurations() { throw null; }
@@ -944,6 +1189,9 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource> GetMySqlFlexibleServerFirewallRule(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource>> GetMySqlFlexibleServerFirewallRuleAsync(string firewallRuleName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleCollection GetMySqlFlexibleServerFirewallRules() { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource> GetMySqlFlexibleServerMaintenance(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource>> GetMySqlFlexibleServerMaintenanceAsync(string maintenanceName, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceCollection GetMySqlFlexibleServerMaintenances() { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource> RemoveTag(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource>> RemoveTagAsync(string key, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.ResourceManager.ArmOperation ResetGtid(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent content, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
@@ -962,6 +1210,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         public virtual System.Threading.Tasks.Task<Azure.ResourceManager.ArmOperation<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>> UpdateConfigurationsAsync(Azure.WaitUntil waitUntil, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate mySqlFlexibleServerConfigurationListForBatchUpdate, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult> ValidateBackup(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
         public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult>> ValidateBackupAsync(System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation> ValidateEstimateHighAvailability(Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation highAvailabilityValidationEstimation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
+        public virtual System.Threading.Tasks.Task<Azure.Response<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation>> ValidateEstimateHighAvailabilityAsync(Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation highAvailabilityValidationEstimation, System.Threading.CancellationToken cancellationToken = default(System.Threading.CancellationToken)) { throw null; }
     }
     public partial class MySqlFlexibleServersCapabilityCollection : Azure.ResourceManager.ArmCollection, System.Collections.Generic.IAsyncEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource>, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource>, System.Collections.IEnumerable
     {
@@ -978,12 +1228,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers
         System.Collections.Generic.IEnumerator<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource> System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource>.GetEnumerator() { throw null; }
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator() { throw null; }
     }
-    public partial class MySqlFlexibleServersCapabilityData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServersCapabilityData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>
     {
         public MySqlFlexibleServersCapabilityData() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2> SupportedFlexibleServerEditions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedGeoBackupRegions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2> SupportedServerVersions { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class MySqlFlexibleServersCapabilityResource : Azure.ResourceManager.ArmResource
     {
@@ -1001,11 +1256,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
     public partial class MockableMySqlFlexibleServersArmClient : Azure.ResourceManager.ArmResource
     {
         protected MockableMySqlFlexibleServersArmClient() { }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionResource GetAdvancedThreatProtectionResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorResource GetMySqlFlexibleServerAadAdministratorResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupResource GetMySqlFlexibleServerBackupResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Resource GetMySqlFlexibleServerBackupV2Resource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationResource GetMySqlFlexibleServerConfigurationResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerDatabaseResource GetMySqlFlexibleServerDatabaseResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleResource GetMySqlFlexibleServerFirewallRuleResource(Azure.Core.ResourceIdentifier id) { throw null; }
+        public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceResource GetMySqlFlexibleServerMaintenanceResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerResource GetMySqlFlexibleServerResource(Azure.Core.ResourceIdentifier id) { throw null; }
         public virtual Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityResource GetMySqlFlexibleServersCapabilityResource(Azure.Core.ResourceIdentifier id) { throw null; }
     }
@@ -1044,12 +1302,81 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 }
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
 {
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AdvancedThreatProtectionName : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AdvancedThreatProtectionName(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName Default { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionName right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class AdvancedThreatProtectionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch>
+    {
+        public AdvancedThreatProtectionPatch() { }
+        public Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState? State { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AdvancedThreatProtectionProvisioningState : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AdvancedThreatProtectionProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState Succeeded { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState Updating { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct AdvancedThreatProtectionState : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public AdvancedThreatProtectionState(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState Disabled { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState Enabled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState left, Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
     public static partial class ArmMySqlFlexibleServersModelFactory
     {
+        public static Azure.ResourceManager.MySql.FlexibleServers.AdvancedThreatProtectionData AdvancedThreatProtectionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState? state = default(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionState?), Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState? provisioningState = default(Azure.ResourceManager.MySql.FlexibleServers.Models.AdvancedThreatProtectionProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation HighAvailabilityValidationEstimation(int? estimatedDowntime = default(int?), string scheduledStandbyAvailabilityZone = null, string expectedStandbyAvailabilityZone = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerAadAdministratorData MySqlFlexibleServerAadAdministratorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType? administratorType = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType?), string login = null, string sid = null, System.Guid? tenantId = default(System.Guid?), Azure.Core.ResourceIdentifier identityResourceId = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult MySqlFlexibleServerBackupAndExportResult(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportOperationStatus? status = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportOperationStatus?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), double? percentComplete = default(double?), long? datasourceSizeInBytes = default(long?), long? dataTransferredInBytes = default(long?), string backupMetadata = null, Azure.ResponseError error = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupData MySqlFlexibleServerBackupData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string backupType = null, System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), string source = null) { throw null; }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties MySqlFlexibleServerBackupProperties(int? backupRetentionDays = default(int?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum?), System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties MySqlFlexibleServerBackupProperties(int? backupRetentionDays = default(int?), int? backupIntervalHours = default(int?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? geoRedundantBackup = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum?), System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?)) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings MySqlFlexibleServerBackupSettings(string backupName = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat? backupFormat = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat?)) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerBackupV2Data MySqlFlexibleServerBackupV2Data(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string backupNameV2 = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType? backupType = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType?), System.DateTimeOffset? completedOn = default(System.DateTimeOffset?), string source = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState? provisioningState = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties MySqlFlexibleServerCapabilityProperties(string zone = null, System.Collections.Generic.IEnumerable<string> supportedHAMode = null, System.Collections.Generic.IEnumerable<string> supportedGeoBackupRegions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability> supportedFlexibleServerEditions = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData MySqlFlexibleServerConfigurationData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string value = null, string currentValue = null, string description = null, string documentationLink = null, string defaultValue = null, string dataType = null, string allowedValues = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource? source = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState? isReadOnly = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState? isConfigPendingRestart = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigPendingRestartState?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState? isDynamicConfig = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations MySqlFlexibleServerConfigurations(System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData> values = null) { throw null; }
@@ -1060,6 +1387,8 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerFirewallRuleData MySqlFlexibleServerFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Net.IPAddress startIPAddress = null, System.Net.IPAddress endIPAddress = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability MySqlFlexibleServerHighAvailability(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode? mode = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState? state = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState?), string standbyAvailabilityZone = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile MySqlFlexibleServerLogFile(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, long? sizeInKB = default(long?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), string typePropertiesType = null, System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), System.Uri uri = null) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerMaintenanceData MySqlFlexibleServerMaintenanceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType? maintenanceType = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState? maintenanceState = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState?), System.DateTimeOffset? maintenanceStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? maintenanceEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? maintenanceExecutionStartOn = default(System.DateTimeOffset?), System.DateTimeOffset? maintenanceExecutionEndOn = default(System.DateTimeOffset?), System.DateTimeOffset? maintenanceAvailableScheduleMinOn = default(System.DateTimeOffset?), System.DateTimeOffset? maintenanceAvailableScheduleMaxOn = default(System.DateTimeOffset?), string maintenanceTitle = null, string maintenanceDescription = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState? provisioningState = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState?)) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent MySqlFlexibleServerNameAvailabilityContent(string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult MySqlFlexibleServerNameAvailabilityResult(string message = null, bool? isNameAvailable = default(bool?), string reason = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse MySqlFlexibleServerPrivateDnsZoneSuffixResponse(string privateDnsZoneSuffix = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServersCapabilityData MySqlFlexibleServersCapabilityData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> supportedGeoBackupRegions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2> supportedFlexibleServerEditions = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2> supportedServerVersions = null) { throw null; }
@@ -1067,7 +1396,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability MySqlFlexibleServerSkuCapability(string name = null, long? vCores = default(long?), long? supportedIops = default(long?), long? supportedMemoryPerVCoreInMB = default(long?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection MySqlFlexibleServersPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IEnumerable<string> groupIds = null, Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState connectionState = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? provisioningState = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage MySqlFlexibleServerStorage(int? storageSizeInGB = default(int?), int? iops = default(int?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? autoGrow = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum?), Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? logOnDisk = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum?), string storageSku = null, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? autoIoScaling = default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum?)) { throw null; }
-        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability MySqlFlexibleServerStorageEditionCapability(string name = null, long? minStorageSize = default(long?), long? maxStorageSize = default(long?), long? minBackupRetentionDays = default(long?), long? maxBackupRetentionDays = default(long?)) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability MySqlFlexibleServerStorageEditionCapability(string name = null, long? minStorageSize = default(long?), long? maxStorageSize = default(long?), long? minBackupRetentionDays = default(long?), long? maxBackupRetentionDays = default(long?), long? minBackupIntervalHours = default(long?), long? maxBackupIntervalHours = default(long?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult MySqlFlexibleServerValidateBackupResult(int? numberOfContainers = default(int?)) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult MySqlFlexibleServerVirtualNetworkSubnetUsageResult(Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?), string subscriptionId = null, System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage> delegatedSubnetsUsage = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult OperationStatusExtendedResult(Azure.Core.ResourceIdentifier id = null, Azure.Core.ResourceIdentifier resourceId = null, string name = null, string status = null, float? percentComplete = default(float?), System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult> operations = null, Azure.ResponseError error = null, System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> properties = null) { throw null; }
@@ -1076,13 +1405,30 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2 ServerVersionCapabilityV2(string name = null) { throw null; }
         public static Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2 SkuCapabilityV2(string name = null, long? vCores = default(long?), long? supportedIops = default(long?), long? supportedMemoryPerVCoreMB = default(long?), System.Collections.Generic.IEnumerable<string> supportedZones = null, System.Collections.Generic.IEnumerable<string> supportedHAMode = null) { throw null; }
     }
-    public partial class ImportSourceProperties
+    public partial class HighAvailabilityValidationEstimation : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation>
+    {
+        public HighAvailabilityValidationEstimation() { }
+        public int? EstimatedDowntime { get { throw null; } }
+        public string ExpectedStandbyAvailabilityZone { get { throw null; } set { } }
+        public string ScheduledStandbyAvailabilityZone { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.HighAvailabilityValidationEstimation>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    public partial class ImportSourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties>
     {
         public ImportSourceProperties() { }
         public string DataDirPath { get { throw null; } set { } }
         public string SasToken { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceStorageType? StorageType { get { throw null; } set { } }
         public System.Uri StorageUri { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct ImportSourceStorageType : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.ImportSourceStorageType>
@@ -1135,10 +1481,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerAdministratorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerBackupAndExportContent : Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase
+    public partial class MySqlFlexibleServerBackupAndExportContent : Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent>
     {
         public MySqlFlexibleServerBackupAndExportContent(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings backupSettings, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails targetDetails) : base (default(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings)) { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails TargetDetails { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum MySqlFlexibleServerBackupAndExportOperationStatus
     {
@@ -1149,7 +1500,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         CancelInProgress = 4,
         Canceled = 5,
     }
-    public partial class MySqlFlexibleServerBackupAndExportResult : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServerBackupAndExportResult : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>
     {
         public MySqlFlexibleServerBackupAndExportResult() { }
         public string BackupMetadata { get { throw null; } set { } }
@@ -1160,11 +1511,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public double? PercentComplete { get { throw null; } set { } }
         public System.DateTimeOffset? StartOn { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportOperationStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupAndExportResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerBackupContentBase
+    public partial class MySqlFlexibleServerBackupContentBase : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase>
     {
         public MySqlFlexibleServerBackupContentBase(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings backupSettings) { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings BackupSettings { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupContentBase>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerBackupFormat : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat>
@@ -1184,30 +1545,89 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerBackupProperties
+    public partial class MySqlFlexibleServerBackupProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties>
     {
         public MySqlFlexibleServerBackupProperties() { }
+        public int? BackupIntervalHours { get { throw null; } set { } }
         public int? BackupRetentionDays { get { throw null; } set { } }
         public System.DateTimeOffset? EarliestRestoreOn { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? GeoRedundantBackup { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerBackupSettings
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MySqlFlexibleServerBackupProvisioningState : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MySqlFlexibleServerBackupProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MySqlFlexibleServerBackupSettings : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings>
     {
         public MySqlFlexibleServerBackupSettings(string backupName) { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupFormat? BackupFormat { get { throw null; } set { } }
         public string BackupName { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupSettings>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class MySqlFlexibleServerBackupStoreDetails
+    public abstract partial class MySqlFlexibleServerBackupStoreDetails : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails>
     {
         protected MySqlFlexibleServerBackupStoreDetails() { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerCapabilityProperties
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MySqlFlexibleServerBackupType : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MySqlFlexibleServerBackupType(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType Full { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MySqlFlexibleServerCapabilityProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties>
     {
         internal MySqlFlexibleServerCapabilityProperties() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability> SupportedFlexibleServerEditions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedGeoBackupRegions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedHAMode { get { throw null; } }
         public string Zone { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCapabilityProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerConfigDynamicState : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigDynamicState>
@@ -1263,18 +1683,28 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigReadOnlyState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerConfigurationForBatchUpdate
+    public partial class MySqlFlexibleServerConfigurationForBatchUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate>
     {
         public MySqlFlexibleServerConfigurationForBatchUpdate() { }
         public string Name { get { throw null; } set { } }
         public string Source { get { throw null; } set { } }
         public string Value { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerConfigurationListForBatchUpdate
+    public partial class MySqlFlexibleServerConfigurationListForBatchUpdate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate>
     {
         public MySqlFlexibleServerConfigurationListForBatchUpdate() { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault? ResetAllToDefault { get { throw null; } set { } }
         public System.Collections.Generic.IList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationForBatchUpdate> Values { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationListForBatchUpdate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerConfigurationResetAllToDefault : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault>
@@ -1294,10 +1724,15 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationResetAllToDefault right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerConfigurations
+    public partial class MySqlFlexibleServerConfigurations : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>
     {
         internal MySqlFlexibleServerConfigurations() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.MySqlFlexibleServerConfigurationData> Values { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerConfigurationSource : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerConfigurationSource>
@@ -1337,7 +1772,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerCreateMode right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerDataEncryption
+    public partial class MySqlFlexibleServerDataEncryption : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption>
     {
         public MySqlFlexibleServerDataEncryption() { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryptionType? EncryptionType { get { throw null; } set { } }
@@ -1345,24 +1780,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public Azure.Core.ResourceIdentifier GeoBackupUserAssignedIdentityId { get { throw null; } set { } }
         public System.Uri PrimaryKeyUri { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrimaryUserAssignedIdentityId { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDataEncryption>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum MySqlFlexibleServerDataEncryptionType
     {
         AzureKeyVault = 0,
         SystemManaged = 1,
     }
-    public partial class MySqlFlexibleServerDelegatedSubnetUsage
+    public partial class MySqlFlexibleServerDelegatedSubnetUsage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage>
     {
         internal MySqlFlexibleServerDelegatedSubnetUsage() { }
         public string SubnetName { get { throw null; } }
         public long? Usage { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerEditionCapability
+    public partial class MySqlFlexibleServerEditionCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability>
     {
         internal MySqlFlexibleServerEditionCapability() { }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability> SupportedServerVersions { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEditionCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerEnableStatusEnum : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum>
@@ -1382,22 +1832,37 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerFullBackupStoreDetails : Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails
+    public partial class MySqlFlexibleServerFullBackupStoreDetails : Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerBackupStoreDetails, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails>
     {
         public MySqlFlexibleServerFullBackupStoreDetails(System.Collections.Generic.IEnumerable<string> sasUriList) { }
         public System.Collections.Generic.IList<string> SasUriList { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerFullBackupStoreDetails>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerGtidSetContent
+    public partial class MySqlFlexibleServerGtidSetContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent>
     {
         public MySqlFlexibleServerGtidSetContent() { }
         public string GtidSet { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerGtidSetContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerHighAvailability
+    public partial class MySqlFlexibleServerHighAvailability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability>
     {
         public MySqlFlexibleServerHighAvailability() { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode? Mode { get { throw null; } set { } }
         public string StandbyAvailabilityZone { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState? State { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerHighAvailabilityMode : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityMode>
@@ -1439,7 +1904,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerHighAvailabilityState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerLogFile : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServerLogFile : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>
     {
         public MySqlFlexibleServerLogFile() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } set { } }
@@ -1447,36 +1912,133 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public long? SizeInKB { get { throw null; } set { } }
         public string TypePropertiesType { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerLogFile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerMaintenanceWindow
+    public partial class MySqlFlexibleServerMaintenancePatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch>
+    {
+        public MySqlFlexibleServerMaintenancePatch() { }
+        public System.DateTimeOffset? MaintenanceStartOn { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenancePatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MySqlFlexibleServerMaintenanceProvisioningState : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MySqlFlexibleServerMaintenanceProvisioningState(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState Creating { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState Deleting { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState Failed { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState Succeeded { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceProvisioningState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MySqlFlexibleServerMaintenanceState : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MySqlFlexibleServerMaintenanceState(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState Canceled { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState Completed { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState InPreparation { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState Processing { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState ReScheduled { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState Scheduled { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceState right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct MySqlFlexibleServerMaintenanceType : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public MySqlFlexibleServerMaintenanceType(string value) { throw null; }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType HotFixes { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType MinorVersionUpgrade { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType RoutineMaintenance { get { throw null; } }
+        public static Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType SecurityPatches { get { throw null; } }
+        public bool Equals(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType right) { throw null; }
+        public static implicit operator Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType (string value) { throw null; }
+        public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceType right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class MySqlFlexibleServerMaintenanceWindow : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow>
     {
         public MySqlFlexibleServerMaintenanceWindow() { }
         public string CustomWindow { get { throw null; } set { } }
         public int? DayOfWeek { get { throw null; } set { } }
         public int? StartHour { get { throw null; } set { } }
         public int? StartMinute { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerMaintenanceWindow>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerNameAvailabilityContent
+    public partial class MySqlFlexibleServerNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent>
     {
         public MySqlFlexibleServerNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerNameAvailabilityResult
+    public partial class MySqlFlexibleServerNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>
     {
         internal MySqlFlexibleServerNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerNetwork
+    public partial class MySqlFlexibleServerNetwork : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork>
     {
         public MySqlFlexibleServerNetwork() { }
         public Azure.Core.ResourceIdentifier DelegatedSubnetResourceId { get { throw null; } set { } }
         public Azure.Core.ResourceIdentifier PrivateDnsZoneResourceId { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? PublicNetworkAccess { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerNetwork>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerPatch
+    public partial class MySqlFlexibleServerPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch>
     {
         public MySqlFlexibleServerPatch() { }
         public string AdministratorLoginPassword { get { throw null; } set { } }
@@ -1491,11 +2053,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage Storage { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion? Version { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerPrivateDnsZoneSuffixResponse
+    public partial class MySqlFlexibleServerPrivateDnsZoneSuffixResponse : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>
     {
         internal MySqlFlexibleServerPrivateDnsZoneSuffixResponse() { }
         public string PrivateDnsZoneSuffix { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerPrivateDnsZoneSuffixResponse>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerReplicationRole : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole>
@@ -1516,31 +2088,51 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerReplicationRole right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerRestartParameter
+    public partial class MySqlFlexibleServerRestartParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter>
     {
         public MySqlFlexibleServerRestartParameter() { }
         public int? MaxFailoverSeconds { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? RestartWithFailover { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerRestartParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerServerVersionCapability
+    public partial class MySqlFlexibleServerServerVersionCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability>
     {
         internal MySqlFlexibleServerServerVersionCapability() { }
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability> SupportedSkus { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerServerVersionCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerSku
+    public partial class MySqlFlexibleServerSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku>
     {
         public MySqlFlexibleServerSku(string name, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier tier) { }
         public string Name { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier Tier { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerSkuCapability
+    public partial class MySqlFlexibleServerSkuCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability>
     {
         internal MySqlFlexibleServerSkuCapability() { }
         public string Name { get { throw null; } }
         public long? SupportedIops { get { throw null; } }
         public long? SupportedMemoryPerVCoreInMB { get { throw null; } }
         public long? VCores { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerSkuTier : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier>
@@ -1561,13 +2153,18 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerSkuTier right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServersPrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlFlexibleServersPrivateEndpointConnection : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection>
     {
         public MySqlFlexibleServersPrivateEndpointConnection() { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState ConnectionState { get { throw null; } set { } }
         public System.Collections.Generic.IReadOnlyList<string> GroupIds { get { throw null; } }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServersPrivateEndpointConnectionProvisioningState : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointConnectionProvisioningState>
@@ -1608,12 +2205,17 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServersPrivateLinkServiceConnectionState
+    public partial class MySqlFlexibleServersPrivateLinkServiceConnectionState : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState>
     {
         public MySqlFlexibleServersPrivateLinkServiceConnectionState() { }
         public string ActionsRequired { get { throw null; } set { } }
         public string Description { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateEndpointServiceConnectionStatus? Status { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServersPrivateLinkServiceConnectionState>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerState : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState>
@@ -1638,7 +2240,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerStorage
+    public partial class MySqlFlexibleServerStorage : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage>
     {
         public MySqlFlexibleServerStorage() { }
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? AutoGrow { get { throw null; } set { } }
@@ -1647,20 +2249,37 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerEnableStatusEnum? LogOnDisk { get { throw null; } set { } }
         public int? StorageSizeInGB { get { throw null; } set { } }
         public string StorageSku { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorage>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerStorageEditionCapability
+    public partial class MySqlFlexibleServerStorageEditionCapability : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability>
     {
         internal MySqlFlexibleServerStorageEditionCapability() { }
+        public long? MaxBackupIntervalHours { get { throw null; } }
         public long? MaxBackupRetentionDays { get { throw null; } }
         public long? MaxStorageSize { get { throw null; } }
+        public long? MinBackupIntervalHours { get { throw null; } }
         public long? MinBackupRetentionDays { get { throw null; } }
         public long? MinStorageSize { get { throw null; } }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerValidateBackupResult
+    public partial class MySqlFlexibleServerValidateBackupResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult>
     {
         internal MySqlFlexibleServerValidateBackupResult() { }
         public int? NumberOfContainers { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerValidateBackupResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlFlexibleServerVersion : System.IEquatable<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion>
@@ -1680,24 +2299,39 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public static bool operator !=(Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion left, Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageParameter
+    public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageParameter : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter>
     {
         public MySqlFlexibleServerVirtualNetworkSubnetUsageParameter() { }
         public Azure.Core.ResourceIdentifier VirtualNetworkResourceId { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageParameter>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageResult
+    public partial class MySqlFlexibleServerVirtualNetworkSubnetUsageResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>
     {
         internal MySqlFlexibleServerVirtualNetworkSubnetUsageResult() { }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerDelegatedSubnetUsage> DelegatedSubnetsUsage { get { throw null; } }
         public Azure.Core.AzureLocation? Location { get { throw null; } }
         public string SubscriptionId { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerVirtualNetworkSubnetUsageResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationStatusExtendedResult : Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult
+    public partial class OperationStatusExtendedResult : Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>
     {
         internal OperationStatusExtendedResult() { }
         public System.Collections.Generic.IReadOnlyDictionary<string, System.BinaryData> Properties { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusExtendedResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class OperationStatusResult
+    public partial class OperationStatusResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>
     {
         internal OperationStatusResult() { }
         public System.DateTimeOffset? EndOn { get { throw null; } }
@@ -1709,8 +2343,13 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public Azure.Core.ResourceIdentifier ResourceId { get { throw null; } }
         public System.DateTimeOffset? StartOn { get { throw null; } }
         public string Status { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.OperationStatusResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServerEditionCapabilityV2
+    public partial class ServerEditionCapabilityV2 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2>
     {
         internal ServerEditionCapabilityV2() { }
         public string DefaultSku { get { throw null; } }
@@ -1718,13 +2357,23 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public string Name { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2> SupportedSkus { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.FlexibleServers.Models.MySqlFlexibleServerStorageEditionCapability> SupportedStorageEditions { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerEditionCapabilityV2>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class ServerVersionCapabilityV2
+    public partial class ServerVersionCapabilityV2 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2>
     {
         internal ServerVersionCapabilityV2() { }
         public string Name { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.ServerVersionCapabilityV2>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class SkuCapabilityV2
+    public partial class SkuCapabilityV2 : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2>
     {
         internal SkuCapabilityV2() { }
         public string Name { get { throw null; } }
@@ -1733,6 +2382,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
         public long? SupportedMemoryPerVCoreMB { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> SupportedZones { get { throw null; } }
         public long? VCores { get { throw null; } }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2 System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2 System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.FlexibleServers.Models.SkuCapabilityV2>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }
 namespace Azure.ResourceManager.MySql.Mocking
@@ -1783,6 +2437,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.MySqlDatabaseData MySqlDatabaseData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string charset = null, string collation = null) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlFirewallRuleData MySqlFirewallRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Net.IPAddress startIPAddress = null, System.Net.IPAddress endIPAddress = null) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlLogFile MySqlLogFile(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, long? sizeInKB = default(long?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? lastModifiedOn = default(System.DateTimeOffset?), string logFileType = null, System.Uri uri = null) { throw null; }
+        public static Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent MySqlNameAvailabilityContent(string name = null, Azure.Core.ResourceType? resourceType = default(Azure.Core.ResourceType?)) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult MySqlNameAvailabilityResult(string message = null, bool? isNameAvailable = default(bool?), string reason = null) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlPerformanceTier MySqlPerformanceTier(string id = null, int? maxBackupRetentionDays = default(int?), int? minBackupRetentionDays = default(int?), int? maxStorageInMB = default(int?), int? minLargeStorageInMB = default(int?), int? maxLargeStorageInMB = default(int?), int? minStorageInMB = default(int?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives> serviceLevelObjectives = null) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives MySqlPerformanceTierServiceLevelObjectives(string id = null, string edition = null, int? vCores = default(int?), string hardwareGeneration = null, int? maxBackupRetentionDays = default(int?), int? minBackupRetentionDays = default(int?), int? maxStorageInMB = default(int?), int? minStorageInMB = default(int?)) { throw null; }
@@ -1796,11 +2451,16 @@ namespace Azure.ResourceManager.MySql.Models
         public static Azure.ResourceManager.MySql.MySqlRecommendationActionData MySqlRecommendationActionData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string advisorName = null, System.Guid? sessionId = default(System.Guid?), int? actionId = default(int?), System.DateTimeOffset? createdOn = default(System.DateTimeOffset?), System.DateTimeOffset? expireOn = default(System.DateTimeOffset?), string reason = null, string recommendationType = null, System.Collections.Generic.IDictionary<string, string> details = null) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData MySqlRecoverableServerResourceData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? lastAvailableBackupOn = default(System.DateTimeOffset?), string serviceLevelObjective = null, string edition = null, int? vCores = default(int?), string hardwareGeneration = null, string version = null) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlServerAdministratorData MySqlServerAdministratorData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MySql.Models.MySqlAdministratorType? administratorType = default(Azure.ResourceManager.MySql.Models.MySqlAdministratorType?), string loginAccountName = null, System.Guid? secureId = default(System.Guid?), System.Guid? tenantId = default(System.Guid?)) { throw null; }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent MySqlServerCreateOrUpdateContent(Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.MySql.Models.MySqlSku sku = null, Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate properties = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), System.Collections.Generic.IDictionary<string, string> tags = null) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlServerData MySqlServerData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.Collections.Generic.IDictionary<string, string> tags = null, Azure.Core.AzureLocation location = default(Azure.Core.AzureLocation), Azure.ResourceManager.Models.ManagedServiceIdentity identity = null, Azure.ResourceManager.MySql.Models.MySqlSku sku = null, string administratorLogin = null, Azure.ResourceManager.MySql.Models.MySqlServerVersion? version = default(Azure.ResourceManager.MySql.Models.MySqlServerVersion?), Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum? sslEnforcement = default(Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum?), Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum? minimalTlsVersion = default(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum?), string byokEnforcement = null, Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption? infrastructureEncryption = default(Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption?), Azure.ResourceManager.MySql.Models.MySqlServerState? userVisibleState = default(Azure.ResourceManager.MySql.Models.MySqlServerState?), string fullyQualifiedDomainName = null, System.DateTimeOffset? earliestRestoreOn = default(System.DateTimeOffset?), Azure.ResourceManager.MySql.Models.MySqlStorageProfile storageProfile = null, string replicationRole = null, Azure.Core.ResourceIdentifier masterServerId = null, int? replicaCapacity = default(int?), Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum? publicNetworkAccess = default(Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum?), System.Collections.Generic.IEnumerable<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection> privateEndpointConnections = null) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlServerKeyData MySqlServerKeyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, string kind = null, Azure.ResourceManager.MySql.Models.MySqlServerKeyType? serverKeyType = default(Azure.ResourceManager.MySql.Models.MySqlServerKeyType?), System.Uri uri = null, System.DateTimeOffset? createdOn = default(System.DateTimeOffset?)) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection MySqlServerPrivateEndpointConnection(Azure.Core.ResourceIdentifier id = null, Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties properties = null) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties MySqlServerPrivateEndpointConnectionProperties(Azure.Core.ResourceIdentifier privateEndpointId = null, Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty privateLinkServiceConnectionState = null, Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState? provisioningState = default(Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState?)) { throw null; }
         public static Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty MySqlServerPrivateLinkServiceConnectionStateProperty(Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus status = default(Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus), string description = null, Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction? actionsRequired = default(Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction?)) { throw null; }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate MySqlServerPropertiesForDefaultCreate(Azure.ResourceManager.MySql.Models.MySqlServerVersion? version = default(Azure.ResourceManager.MySql.Models.MySqlServerVersion?), Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum? sslEnforcement = default(Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum?), Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum? minimalTlsVersion = default(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum?), Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption? infrastructureEncryption = default(Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption?), Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum? publicNetworkAccess = default(Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum?), Azure.ResourceManager.MySql.Models.MySqlStorageProfile storageProfile = null, string administratorLogin = null, string administratorLoginPassword = null) { throw null; }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore MySqlServerPropertiesForGeoRestore(Azure.ResourceManager.MySql.Models.MySqlServerVersion? version = default(Azure.ResourceManager.MySql.Models.MySqlServerVersion?), Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum? sslEnforcement = default(Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum?), Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum? minimalTlsVersion = default(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum?), Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption? infrastructureEncryption = default(Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption?), Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum? publicNetworkAccess = default(Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum?), Azure.ResourceManager.MySql.Models.MySqlStorageProfile storageProfile = null, Azure.Core.ResourceIdentifier sourceServerId = null) { throw null; }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica MySqlServerPropertiesForReplica(Azure.ResourceManager.MySql.Models.MySqlServerVersion? version = default(Azure.ResourceManager.MySql.Models.MySqlServerVersion?), Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum? sslEnforcement = default(Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum?), Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum? minimalTlsVersion = default(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum?), Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption? infrastructureEncryption = default(Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption?), Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum? publicNetworkAccess = default(Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum?), Azure.ResourceManager.MySql.Models.MySqlStorageProfile storageProfile = null, Azure.Core.ResourceIdentifier sourceServerId = null) { throw null; }
+        public static Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore MySqlServerPropertiesForRestore(Azure.ResourceManager.MySql.Models.MySqlServerVersion? version = default(Azure.ResourceManager.MySql.Models.MySqlServerVersion?), Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum? sslEnforcement = default(Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum?), Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum? minimalTlsVersion = default(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum?), Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption? infrastructureEncryption = default(Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption?), Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum? publicNetworkAccess = default(Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum?), Azure.ResourceManager.MySql.Models.MySqlStorageProfile storageProfile = null, Azure.Core.ResourceIdentifier sourceServerId = null, System.DateTimeOffset restorePointInTime = default(System.DateTimeOffset)) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlServerSecurityAlertPolicyData MySqlServerSecurityAlertPolicyData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.ResourceManager.MySql.Models.MySqlServerSecurityAlertPolicyState? state = default(Azure.ResourceManager.MySql.Models.MySqlServerSecurityAlertPolicyState?), System.Collections.Generic.IEnumerable<string> disabledAlerts = null, System.Collections.Generic.IEnumerable<string> emailAddresses = null, bool? sendToEmailAccountAdmins = default(bool?), string storageEndpoint = null, string storageAccountAccessKey = null, int? retentionDays = default(int?)) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlVirtualNetworkRuleData MySqlVirtualNetworkRuleData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, Azure.Core.ResourceIdentifier virtualNetworkSubnetId = null, bool? ignoreMissingVnetServiceEndpoint = default(bool?), Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState? state = default(Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState?)) { throw null; }
         public static Azure.ResourceManager.MySql.MySqlWaitStatisticData MySqlWaitStatisticData(Azure.Core.ResourceIdentifier id = null, string name = null, Azure.Core.ResourceType resourceType = default(Azure.Core.ResourceType), Azure.ResourceManager.Models.SystemData systemData = null, System.DateTimeOffset? startOn = default(System.DateTimeOffset?), System.DateTimeOffset? endOn = default(System.DateTimeOffset?), string eventName = null, string eventTypeName = null, long? queryId = default(long?), string databaseName = null, long? userId = default(long?), long? count = default(long?), double? totalTimeInMinutes = default(double?)) { throw null; }
@@ -1822,10 +2482,15 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlAdministratorType left, Azure.ResourceManager.MySql.Models.MySqlAdministratorType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlConfigurations
+    public partial class MySqlConfigurations : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlConfigurations>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlConfigurations>
     {
         public MySqlConfigurations() { }
         public System.Collections.Generic.IList<Azure.ResourceManager.MySql.MySqlConfigurationData> Values { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlConfigurations System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlConfigurations>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlConfigurations>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlConfigurations System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlConfigurations>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlConfigurations>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlConfigurations>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlGeoRedundantBackup : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup>
@@ -1863,7 +2528,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption left, Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlLogFile : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlLogFile : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlLogFile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlLogFile>
     {
         public MySqlLogFile() { }
         public System.DateTimeOffset? CreatedOn { get { throw null; } }
@@ -1871,6 +2536,11 @@ namespace Azure.ResourceManager.MySql.Models
         public string LogFileType { get { throw null; } set { } }
         public long? SizeInKB { get { throw null; } set { } }
         public System.Uri Uri { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.Models.MySqlLogFile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlLogFile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlLogFile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlLogFile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlLogFile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlLogFile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlLogFile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlMinimalTlsVersionEnum : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum>
@@ -1892,20 +2562,30 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum left, Azure.ResourceManager.MySql.Models.MySqlMinimalTlsVersionEnum right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlNameAvailabilityContent
+    public partial class MySqlNameAvailabilityContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent>
     {
         public MySqlNameAvailabilityContent(string name) { }
         public string Name { get { throw null; } }
         public Azure.Core.ResourceType? ResourceType { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlNameAvailabilityResult
+    public partial class MySqlNameAvailabilityResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>
     {
         internal MySqlNameAvailabilityResult() { }
         public bool? IsNameAvailable { get { throw null; } }
         public string Message { get { throw null; } }
         public string Reason { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlNameAvailabilityResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlPerformanceTier
+    public partial class MySqlPerformanceTier : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier>
     {
         internal MySqlPerformanceTier() { }
         public string Id { get { throw null; } }
@@ -1916,8 +2596,13 @@ namespace Azure.ResourceManager.MySql.Models
         public int? MinLargeStorageInMB { get { throw null; } }
         public int? MinStorageInMB { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives> ServiceLevelObjectives { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlPerformanceTier System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlPerformanceTier System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTier>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlPerformanceTierServiceLevelObjectives
+    public partial class MySqlPerformanceTierServiceLevelObjectives : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives>
     {
         internal MySqlPerformanceTierServiceLevelObjectives() { }
         public string Edition { get { throw null; } }
@@ -1928,11 +2613,21 @@ namespace Azure.ResourceManager.MySql.Models
         public int? MinBackupRetentionDays { get { throw null; } }
         public int? MinStorageInMB { get { throw null; } }
         public int? VCores { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPerformanceTierServiceLevelObjectives>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlPrivateEndpointConnectionPatch
+    public partial class MySqlPrivateEndpointConnectionPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch>
     {
         public MySqlPrivateEndpointConnectionPatch() { }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointConnectionPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlPrivateEndpointProvisioningState : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState>
@@ -1955,18 +2650,28 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState left, Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlPrivateLinkResourceProperties
+    public partial class MySqlPrivateLinkResourceProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties>
     {
         internal MySqlPrivateLinkResourceProperties() { }
         public string GroupId { get { throw null; } }
         public System.Collections.Generic.IReadOnlyList<string> RequiredMembers { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkResourceProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlPrivateLinkServiceConnectionStateProperty
+    public partial class MySqlPrivateLinkServiceConnectionStateProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty>
     {
         public MySqlPrivateLinkServiceConnectionStateProperty(string status, string description) { }
         public string ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } set { } }
         public string Status { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlPrivateLinkServiceConnectionStateRequiredAction : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction>
@@ -2023,11 +2728,16 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum left, Azure.ResourceManager.MySql.Models.MySqlPublicNetworkAccessEnum right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlQueryPerformanceInsightResetDataResult
+    public partial class MySqlQueryPerformanceInsightResetDataResult : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult>
     {
         internal MySqlQueryPerformanceInsightResetDataResult() { }
         public string Message { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState? Status { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResult>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlQueryPerformanceInsightResetDataResultState : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState>
@@ -2047,7 +2757,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState left, Azure.ResourceManager.MySql.Models.MySqlQueryPerformanceInsightResetDataResultState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlRecoverableServerResourceData : Azure.ResourceManager.Models.ResourceData
+    public partial class MySqlRecoverableServerResourceData : Azure.ResourceManager.Models.ResourceData, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData>
     {
         public MySqlRecoverableServerResourceData() { }
         public string Edition { get { throw null; } }
@@ -2056,6 +2766,11 @@ namespace Azure.ResourceManager.MySql.Models
         public string ServiceLevelObjective { get { throw null; } }
         public int? VCores { get { throw null; } }
         public string Version { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlRecoverableServerResourceData>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlSecurityAlertPolicyName : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlSecurityAlertPolicyName>
@@ -2074,7 +2789,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlSecurityAlertPolicyName left, Azure.ResourceManager.MySql.Models.MySqlSecurityAlertPolicyName right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlServerCreateOrUpdateContent
+    public partial class MySqlServerCreateOrUpdateContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent>
     {
         public MySqlServerCreateOrUpdateContent(Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate properties, Azure.Core.AzureLocation location) { }
         public Azure.ResourceManager.Models.ManagedServiceIdentity Identity { get { throw null; } set { } }
@@ -2082,6 +2797,11 @@ namespace Azure.ResourceManager.MySql.Models
         public Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate Properties { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlSku Sku { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerCreateOrUpdateContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlServerKeyType : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlServerKeyType>
@@ -2100,7 +2820,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlServerKeyType left, Azure.ResourceManager.MySql.Models.MySqlServerKeyType right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlServerPatch
+    public partial class MySqlServerPatch : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPatch>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPatch>
     {
         public MySqlServerPatch() { }
         public string AdministratorLoginPassword { get { throw null; } set { } }
@@ -2113,28 +2833,48 @@ namespace Azure.ResourceManager.MySql.Models
         public Azure.ResourceManager.MySql.Models.MySqlStorageProfile StorageProfile { get { throw null; } set { } }
         public System.Collections.Generic.IDictionary<string, string> Tags { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlServerVersion? Version { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPatch System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPatch>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPatch>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPatch System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPatch>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPatch>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPatch>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlServerPrivateEndpointConnection
+    public partial class MySqlServerPrivateEndpointConnection : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection>
     {
         internal MySqlServerPrivateEndpointConnection() { }
         public Azure.Core.ResourceIdentifier Id { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties Properties { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnection>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlServerPrivateEndpointConnectionProperties
+    public partial class MySqlServerPrivateEndpointConnectionProperties : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties>
     {
         internal MySqlServerPrivateEndpointConnectionProperties() { }
         public Azure.Core.ResourceIdentifier PrivateEndpointId { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty PrivateLinkServiceConnectionState { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlPrivateEndpointProvisioningState? ProvisioningState { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateEndpointConnectionProperties>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlServerPrivateLinkServiceConnectionStateProperty
+    public partial class MySqlServerPrivateLinkServiceConnectionStateProperty : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty>
     {
         internal MySqlServerPrivateLinkServiceConnectionStateProperty() { }
         public Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateRequiredAction? ActionsRequired { get { throw null; } }
         public string Description { get { throw null; } }
         public Azure.ResourceManager.MySql.Models.MySqlPrivateLinkServiceConnectionStateStatus Status { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPrivateLinkServiceConnectionStateProperty>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public abstract partial class MySqlServerPropertiesForCreate
+    public abstract partial class MySqlServerPropertiesForCreate : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate>
     {
         protected MySqlServerPropertiesForCreate() { }
         public Azure.ResourceManager.MySql.Models.MySqlInfrastructureEncryption? InfrastructureEncryption { get { throw null; } set { } }
@@ -2143,28 +2883,53 @@ namespace Azure.ResourceManager.MySql.Models
         public Azure.ResourceManager.MySql.Models.MySqlSslEnforcementEnum? SslEnforcement { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlStorageProfile StorageProfile { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlServerVersion? Version { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlServerPropertiesForDefaultCreate : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate
+    public partial class MySqlServerPropertiesForDefaultCreate : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate>
     {
         public MySqlServerPropertiesForDefaultCreate(string administratorLogin, string administratorLoginPassword) { }
         public string AdministratorLogin { get { throw null; } }
         public string AdministratorLoginPassword { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForDefaultCreate>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlServerPropertiesForGeoRestore : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate
+    public partial class MySqlServerPropertiesForGeoRestore : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore>
     {
         public MySqlServerPropertiesForGeoRestore(Azure.Core.ResourceIdentifier sourceServerId) { }
         public Azure.Core.ResourceIdentifier SourceServerId { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForGeoRestore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlServerPropertiesForReplica : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate
+    public partial class MySqlServerPropertiesForReplica : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica>
     {
         public MySqlServerPropertiesForReplica(Azure.Core.ResourceIdentifier sourceServerId) { }
         public Azure.Core.ResourceIdentifier SourceServerId { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForReplica>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlServerPropertiesForRestore : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate
+    public partial class MySqlServerPropertiesForRestore : Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForCreate, System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore>
     {
         public MySqlServerPropertiesForRestore(Azure.Core.ResourceIdentifier sourceServerId, System.DateTimeOffset restorePointInTime) { }
         public System.DateTimeOffset RestorePointInTime { get { throw null; } }
         public Azure.Core.ResourceIdentifier SourceServerId { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerPropertiesForRestore>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public enum MySqlServerSecurityAlertPolicyState
     {
@@ -2191,10 +2956,15 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlServerState left, Azure.ResourceManager.MySql.Models.MySqlServerState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlServerUpgradeContent
+    public partial class MySqlServerUpgradeContent : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent>
     {
         public MySqlServerUpgradeContent() { }
         public string TargetServerVersion { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlServerUpgradeContent>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlServerVersion : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlServerVersion>
@@ -2215,7 +2985,7 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlServerVersion left, Azure.ResourceManager.MySql.Models.MySqlServerVersion right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlSku
+    public partial class MySqlSku : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlSku>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlSku>
     {
         public MySqlSku(string name) { }
         public int? Capacity { get { throw null; } set { } }
@@ -2223,6 +2993,11 @@ namespace Azure.ResourceManager.MySql.Models
         public string Name { get { throw null; } set { } }
         public string Size { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlSkuTier? Tier { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.Models.MySqlSku System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlSku>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlSku>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlSku System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlSku>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlSku>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlSku>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlSkuTier : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlSkuTier>
@@ -2266,15 +3041,20 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow left, Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlStorageProfile
+    public partial class MySqlStorageProfile : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlStorageProfile>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlStorageProfile>
     {
         public MySqlStorageProfile() { }
         public int? BackupRetentionDays { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlGeoRedundantBackup? GeoRedundantBackup { get { throw null; } set { } }
         public Azure.ResourceManager.MySql.Models.MySqlStorageAutogrow? StorageAutogrow { get { throw null; } set { } }
         public int? StorageInMB { get { throw null; } set { } }
+        Azure.ResourceManager.MySql.Models.MySqlStorageProfile System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlStorageProfile>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlStorageProfile>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlStorageProfile System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlStorageProfile>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlStorageProfile>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlStorageProfile>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
-    public partial class MySqlTopQueryStatisticsInput
+    public partial class MySqlTopQueryStatisticsInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput>
     {
         public MySqlTopQueryStatisticsInput(int numberOfTopQueries, string aggregationFunction, string observedMetric, System.DateTimeOffset observationStartOn, System.DateTimeOffset observationEndOn, string aggregationWindow) { }
         public string AggregationFunction { get { throw null; } }
@@ -2283,6 +3063,11 @@ namespace Azure.ResourceManager.MySql.Models
         public System.DateTimeOffset ObservationEndOn { get { throw null; } }
         public System.DateTimeOffset ObservationStartOn { get { throw null; } }
         public string ObservedMetric { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlTopQueryStatisticsInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
     public readonly partial struct MySqlVirtualNetworkRuleState : System.IEquatable<Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState>
@@ -2305,11 +3090,16 @@ namespace Azure.ResourceManager.MySql.Models
         public static bool operator !=(Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState left, Azure.ResourceManager.MySql.Models.MySqlVirtualNetworkRuleState right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class MySqlWaitStatisticsInput
+    public partial class MySqlWaitStatisticsInput : System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput>, System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput>
     {
         public MySqlWaitStatisticsInput(System.DateTimeOffset observationStartOn, System.DateTimeOffset observationEndOn, string aggregationWindow) { }
         public string AggregationWindow { get { throw null; } }
         public System.DateTimeOffset ObservationEndOn { get { throw null; } }
         public System.DateTimeOffset ObservationStartOn { get { throw null; } }
+        Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        void System.ClientModel.Primitives.IJsonModel<Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
+        Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        string System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
+        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.ResourceManager.MySql.Models.MySqlWaitStatisticsInput>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
 }

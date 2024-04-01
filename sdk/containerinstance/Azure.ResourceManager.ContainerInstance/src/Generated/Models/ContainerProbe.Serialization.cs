@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerProbe)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Exec))
             {
                 writer.WritePropertyName("exec"u8);
-                writer.WriteObjectValue(Exec);
+                writer.WriteObjectValue<ContainerExec>(Exec, options);
             }
             if (Optional.IsDefined(HttpGet))
             {
                 writer.WritePropertyName("httpGet"u8);
-                writer.WriteObjectValue(HttpGet);
+                writer.WriteObjectValue<ContainerHttpGet>(HttpGet, options);
             }
             if (Optional.IsDefined(InitialDelayInSeconds))
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerProbe>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerProbe)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerProbe)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             {
                 return null;
             }
-            Optional<ContainerExec> exec = default;
-            Optional<ContainerHttpGet> httpGet = default;
-            Optional<int> initialDelaySeconds = default;
-            Optional<int> periodSeconds = default;
-            Optional<int> failureThreshold = default;
-            Optional<int> successThreshold = default;
-            Optional<int> timeoutSeconds = default;
+            ContainerExec exec = default;
+            ContainerHttpGet httpGet = default;
+            int? initialDelaySeconds = default;
+            int? periodSeconds = default;
+            int? failureThreshold = default;
+            int? successThreshold = default;
+            int? timeoutSeconds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    exec = ContainerExec.DeserializeContainerExec(property.Value);
+                    exec = ContainerExec.DeserializeContainerExec(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("httpGet"u8))
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                     {
                         continue;
                     }
-                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value);
+                    httpGet = ContainerHttpGet.DeserializeContainerHttpGet(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("initialDelaySeconds"u8))
@@ -179,7 +179,15 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerProbe(exec.Value, httpGet.Value, Optional.ToNullable(initialDelaySeconds), Optional.ToNullable(periodSeconds), Optional.ToNullable(failureThreshold), Optional.ToNullable(successThreshold), Optional.ToNullable(timeoutSeconds), serializedAdditionalRawData);
+            return new ContainerProbe(
+                exec,
+                httpGet,
+                initialDelaySeconds,
+                periodSeconds,
+                failureThreshold,
+                successThreshold,
+                timeoutSeconds,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerProbe>.Write(ModelReaderWriterOptions options)
@@ -191,7 +199,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerProbe)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -207,7 +215,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerProbe(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerProbe)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerProbe)} does not support reading '{options.Format}' format.");
             }
         }
 

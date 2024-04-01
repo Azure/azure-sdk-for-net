@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeletedAutomationAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeletedAutomationAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,15 +113,15 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<AzureLocation> location = default;
+            AzureLocation? location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
-            Optional<SystemData> systemData = default;
-            Optional<ResourceIdentifier> automationAccountResourceId = default;
-            Optional<string> automationAccountId = default;
-            Optional<string> location0 = default;
-            Optional<DateTimeOffset> deletionTime = default;
+            SystemData systemData = default;
+            ResourceIdentifier automationAccountResourceId = default;
+            string automationAccountId = default;
+            string location0 = default;
+            DateTimeOffset? deletionTime = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -205,7 +205,17 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DeletedAutomationAccount(id, name, type, systemData.Value, Optional.ToNullable(location), automationAccountResourceId.Value, automationAccountId.Value, location0.Value, Optional.ToNullable(deletionTime), serializedAdditionalRawData);
+            return new DeletedAutomationAccount(
+                id,
+                name,
+                type,
+                systemData,
+                location,
+                automationAccountResourceId,
+                automationAccountId,
+                location0,
+                deletionTime,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DeletedAutomationAccount>.Write(ModelReaderWriterOptions options)
@@ -217,7 +227,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +243,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDeletedAutomationAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeletedAutomationAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

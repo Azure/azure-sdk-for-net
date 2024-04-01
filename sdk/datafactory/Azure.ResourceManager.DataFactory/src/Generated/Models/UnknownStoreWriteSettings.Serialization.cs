@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    internal partial class UnknownStoreWriteSettings : IUtf8JsonSerializable
+    internal partial class UnknownStoreWriteSettings : IUtf8JsonSerializable, IJsonModel<StoreWriteSettings>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<StoreWriteSettings>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<StoreWriteSettings>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StoreWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StoreWriteSettings)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(StoreWriteSettingsType);
@@ -35,6 +44,16 @@ namespace Azure.ResourceManager.DataFactory.Models
                 writer.WritePropertyName("copyBehavior"u8);
                 JsonSerializer.Serialize(writer, CopyBehavior);
             }
+            if (Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartArray();
+                foreach (var item in Metadata)
+                {
+                    writer.WriteObjectValue<DataFactoryMetadataItemInfo>(item, options);
+                }
+                writer.WriteEndArray();
+            }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
@@ -50,16 +69,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static UnknownStoreWriteSettings DeserializeUnknownStoreWriteSettings(JsonElement element)
+        StoreWriteSettings IJsonModel<StoreWriteSettings>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<StoreWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(StoreWriteSettings)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeStoreWriteSettings(document.RootElement, options);
+        }
+
+        internal static UnknownStoreWriteSettings DeserializeUnknownStoreWriteSettings(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
             string type = "Unknown";
-            Optional<DataFactoryElement<int>> maxConcurrentConnections = default;
-            Optional<DataFactoryElement<bool>> disableMetricsCollection = default;
-            Optional<DataFactoryElement<string>> copyBehavior = default;
+            DataFactoryElement<int> maxConcurrentConnections = default;
+            DataFactoryElement<bool> disableMetricsCollection = default;
+            DataFactoryElement<string> copyBehavior = default;
+            IList<DataFactoryMetadataItemInfo> metadata = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,10 +130,61 @@ namespace Azure.ResourceManager.DataFactory.Models
                     copyBehavior = JsonSerializer.Deserialize<DataFactoryElement<string>>(property.Value.GetRawText());
                     continue;
                 }
+                if (property.NameEquals("metadata"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    List<DataFactoryMetadataItemInfo> array = new List<DataFactoryMetadataItemInfo>();
+                    foreach (var item in property.Value.EnumerateArray())
+                    {
+                        array.Add(DataFactoryMetadataItemInfo.DeserializeDataFactoryMetadataItemInfo(item, options));
+                    }
+                    metadata = array;
+                    continue;
+                }
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownStoreWriteSettings(type, maxConcurrentConnections.Value, disableMetricsCollection.Value, copyBehavior.Value, additionalProperties);
+            return new UnknownStoreWriteSettings(
+                type,
+                maxConcurrentConnections,
+                disableMetricsCollection,
+                copyBehavior,
+                metadata ?? new ChangeTrackingList<DataFactoryMetadataItemInfo>(),
+                additionalProperties);
         }
+
+        BinaryData IPersistableModel<StoreWriteSettings>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StoreWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(StoreWriteSettings)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        StoreWriteSettings IPersistableModel<StoreWriteSettings>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<StoreWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeStoreWriteSettings(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(StoreWriteSettings)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<StoreWriteSettings>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

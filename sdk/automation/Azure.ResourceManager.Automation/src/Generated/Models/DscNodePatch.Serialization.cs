@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.Automation.Models
             if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<DscNodeUpdateParametersProperties>(Properties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> nodeId = default;
-            Optional<DscNodeUpdateParametersProperties> properties = default;
+            string nodeId = default;
+            DscNodeUpdateParametersProperties properties = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Automation.Models
                     {
                         continue;
                     }
-                    properties = DscNodeUpdateParametersProperties.DeserializeDscNodeUpdateParametersProperties(property.Value);
+                    properties = DscNodeUpdateParametersProperties.DeserializeDscNodeUpdateParametersProperties(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscNodePatch(nodeId.Value, properties.Value, serializedAdditionalRawData);
+            return new DscNodePatch(nodeId, properties, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscNodePatch>.Write(ModelReaderWriterOptions options)
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscNodePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscNodePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscNodePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

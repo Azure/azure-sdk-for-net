@@ -67,7 +67,7 @@ namespace Azure.Communication.ShortCodes.Models
                 writer.WriteStartArray();
                 foreach (var item in UseCases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UseCase>(item);
                 }
                 writer.WriteEndArray();
             }
@@ -80,15 +80,15 @@ namespace Azure.Communication.ShortCodes.Models
             {
                 return null;
             }
-            Optional<IList<MessageProtocol>> supportedProtocols = default;
-            Optional<MessageRecurrence> recurrence = default;
-            Optional<string> helpMessage = default;
-            Optional<string> optOutMessage = default;
-            Optional<string> optInMessage = default;
-            Optional<string> optInReply = default;
-            Optional<string> confirmationMessage = default;
-            Optional<MessageDirectionality> directionality = default;
-            Optional<IList<UseCase>> useCases = default;
+            IList<MessageProtocol> supportedProtocols = default;
+            MessageRecurrence? recurrence = default;
+            string helpMessage = default;
+            string optOutMessage = default;
+            string optInMessage = default;
+            string optInReply = default;
+            string confirmationMessage = default;
+            MessageDirectionality? directionality = default;
+            IList<UseCase> useCases = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("supportedProtocols"u8))
@@ -163,7 +163,16 @@ namespace Azure.Communication.ShortCodes.Models
                     continue;
                 }
             }
-            return new MessageDetails(Optional.ToList(supportedProtocols), Optional.ToNullable(recurrence), helpMessage.Value, optOutMessage.Value, optInMessage.Value, optInReply.Value, confirmationMessage.Value, Optional.ToNullable(directionality), Optional.ToList(useCases));
+            return new MessageDetails(
+                supportedProtocols ?? new ChangeTrackingList<MessageProtocol>(),
+                recurrence,
+                helpMessage,
+                optOutMessage,
+                optInMessage,
+                optInReply,
+                confirmationMessage,
+                directionality,
+                useCases ?? new ChangeTrackingList<UseCase>());
         }
     }
 }

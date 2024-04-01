@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkInterfaceDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,11 +99,11 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<IList<string>> dnsServers = default;
-            Optional<IReadOnlyList<string>> appliedDnsServers = default;
-            Optional<string> internalDnsNameLabel = default;
-            Optional<string> internalFqdn = default;
-            Optional<string> internalDomainNameSuffix = default;
+            IList<string> dnsServers = default;
+            IReadOnlyList<string> appliedDnsServers = default;
+            string internalDnsNameLabel = default;
+            string internalFqdn = default;
+            string internalDomainNameSuffix = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,13 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkInterfaceDnsSettings(Optional.ToList(dnsServers), Optional.ToList(appliedDnsServers), internalDnsNameLabel.Value, internalFqdn.Value, internalDomainNameSuffix.Value, serializedAdditionalRawData);
+            return new NetworkInterfaceDnsSettings(
+                dnsServers ?? new ChangeTrackingList<string>(),
+                appliedDnsServers ?? new ChangeTrackingList<string>(),
+                internalDnsNameLabel,
+                internalFqdn,
+                internalDomainNameSuffix,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkInterfaceDnsSettings>.Write(ModelReaderWriterOptions options)
@@ -169,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +191,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkInterfaceDnsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkInterfaceDnsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

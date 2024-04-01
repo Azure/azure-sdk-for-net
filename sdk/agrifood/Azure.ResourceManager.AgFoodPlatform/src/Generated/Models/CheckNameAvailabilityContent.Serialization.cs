@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<string> type = default;
+            string name = default;
+            string type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CheckNameAvailabilityContent(name.Value, type.Value, serializedAdditionalRawData);
+            return new CheckNameAvailabilityContent(name, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CheckNameAvailabilityContent>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                         return DeserializeCheckNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 

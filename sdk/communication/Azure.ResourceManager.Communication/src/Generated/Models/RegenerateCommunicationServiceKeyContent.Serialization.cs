@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegenerateCommunicationServiceKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Communication.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegenerateCommunicationServiceKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Communication.Models
             {
                 return null;
             }
-            Optional<CommunicationServiceKeyType> keyType = default;
+            CommunicationServiceKeyType? keyType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.Communication.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RegenerateCommunicationServiceKeyContent(Optional.ToNullable(keyType), serializedAdditionalRawData);
+            return new RegenerateCommunicationServiceKeyContent(keyType, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<RegenerateCommunicationServiceKeyContent>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Communication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Communication.Models
                         return DeserializeRegenerateCommunicationServiceKeyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegenerateCommunicationServiceKeyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

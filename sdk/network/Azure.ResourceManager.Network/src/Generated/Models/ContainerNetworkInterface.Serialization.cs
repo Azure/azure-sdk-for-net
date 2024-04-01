@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Network.Models
             if (options.Format != "W" && Optional.IsDefined(ContainerNetworkInterfaceConfiguration))
             {
                 writer.WritePropertyName("containerNetworkInterfaceConfiguration"u8);
-                writer.WriteObjectValue(ContainerNetworkInterfaceConfiguration);
+                writer.WriteObjectValue<ContainerNetworkInterfaceConfiguration>(ContainerNetworkInterfaceConfiguration, options);
             }
             if (Optional.IsDefined(Container))
             {
@@ -66,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in IPConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerNetworkInterfaceIPConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +98,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,14 +113,14 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<ContainerNetworkInterfaceConfiguration> containerNetworkInterfaceConfiguration = default;
-            Optional<WritableSubResource> container = default;
-            Optional<IReadOnlyList<ContainerNetworkInterfaceIPConfiguration>> ipConfigurations = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            ContainerNetworkInterfaceConfiguration containerNetworkInterfaceConfiguration = default;
+            WritableSubResource container = default;
+            IReadOnlyList<ContainerNetworkInterfaceIPConfiguration> ipConfigurations = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.Network.Models
                             {
                                 continue;
                             }
-                            containerNetworkInterfaceConfiguration = ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(property0.Value);
+                            containerNetworkInterfaceConfiguration = ContainerNetworkInterfaceConfiguration.DeserializeContainerNetworkInterfaceConfiguration(property0.Value, options);
                             continue;
                         }
                         if (property0.NameEquals("container"u8))
@@ -194,7 +193,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ContainerNetworkInterfaceIPConfiguration> array = new List<ContainerNetworkInterfaceIPConfiguration>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ContainerNetworkInterfaceIPConfiguration.DeserializeContainerNetworkInterfaceIPConfiguration(item));
+                                array.Add(ContainerNetworkInterfaceIPConfiguration.DeserializeContainerNetworkInterfaceIPConfiguration(item, options));
                             }
                             ipConfigurations = array;
                             continue;
@@ -217,7 +216,16 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerNetworkInterface(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), containerNetworkInterfaceConfiguration.Value, container, Optional.ToList(ipConfigurations), Optional.ToNullable(provisioningState));
+            return new ContainerNetworkInterface(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                containerNetworkInterfaceConfiguration,
+                container,
+                ipConfigurations ?? new ChangeTrackingList<ContainerNetworkInterfaceIPConfiguration>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ContainerNetworkInterface>.Write(ModelReaderWriterOptions options)
@@ -229,7 +237,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -245,7 +253,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeContainerNetworkInterface(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerNetworkInterface)} does not support reading '{options.Format}' format.");
             }
         }
 

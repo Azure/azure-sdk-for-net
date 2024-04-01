@@ -19,6 +19,9 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
 
     public override void Add(string name, string value)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+        Argument.AssertNotNullOrEmpty(value, nameof(value));
+
         if (_headers.TryAdd(new IgnoreCaseString(name), value, out object? currentValue))
         {
             return;
@@ -37,9 +40,11 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
 
     public override bool TryGetValue(string name, out string? value)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
         if (_headers.TryGetValue(new IgnoreCaseString(name), out object? headerValue))
         {
-            value = GetHeaderValueString(name, headerValue);
+            value = GetHeaderValueString(name, headerValue!);
             return true;
         }
 
@@ -49,9 +54,11 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
 
     public override bool TryGetValues(string name, out IEnumerable<string>? values)
     {
+        Argument.AssertNotNullOrEmpty(name, nameof(name));
+
         if (_headers.TryGetValue(new IgnoreCaseString(name), out object? value))
         {
-            values = GetHeaderValueEnumerable(name, value);
+            values = GetHeaderValueEnumerable(name, value!);
             return true;
         }
 
@@ -63,16 +70,17 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
         => GetHeadersStringValues().GetEnumerator();
 
     // Internal API provided to take advantage of performance-optimized implementation.
-    internal bool GetNextValue(int index, out string name, out object value)
+    internal bool GetNextValue(int index, out string name, out object? value)
     {
         if (index >= _headers.Count)
         {
             name = default!;
-            value = default!;
+            value = default;
             return false;
         }
 
-        _headers.GetAt(index, out IgnoreCaseString headerName, out object headerValue);
+        _headers.GetAt(index, out IgnoreCaseString headerName, out object? headerValue);
+
         name = headerName;
         value = headerValue;
         return true;
@@ -83,19 +91,9 @@ internal class ArrayBackedRequestHeaders : PipelineRequestHeaders
     {
         for (int i = 0; i < _headers.Count; i++)
         {
-            _headers.GetAt(i, out IgnoreCaseString name, out object value);
-            string values = GetHeaderValueString(name, value);
+            _headers.GetAt(i, out IgnoreCaseString name, out object? value);
+            string values = GetHeaderValueString(name, value!);
             yield return new KeyValuePair<string, string>(name, values);
-        }
-    }
-
-    private IEnumerable<KeyValuePair<string, IEnumerable<string>>> GetHeadersListValues()
-    {
-        for (int i = 0; i < _headers.Count; i++)
-        {
-            _headers.GetAt(i, out IgnoreCaseString name, out object value);
-            IEnumerable<string> values = GetHeaderValueEnumerable(name, value);
-            yield return new KeyValuePair<string, IEnumerable<string>>(name, values);
         }
     }
 

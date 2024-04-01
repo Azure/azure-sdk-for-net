@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsEncryptionKeyVaultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<string> keyName = default;
-            Optional<string> keyVersion = default;
-            Optional<string> autoDetectedKeyVersion = default;
-            Optional<Uri> keyVaultUrl = default;
-            Optional<AvsEncryptionKeyStatus> keyState = default;
-            Optional<AvsEncryptionVersionType> versionType = default;
+            string keyName = default;
+            string keyVersion = default;
+            string autoDetectedKeyVersion = default;
+            Uri keyVaultUrl = default;
+            AvsEncryptionKeyStatus? keyState = default;
+            AvsEncryptionVersionType? versionType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -152,7 +152,14 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsEncryptionKeyVaultProperties(keyName.Value, keyVersion.Value, autoDetectedKeyVersion.Value, keyVaultUrl.Value, Optional.ToNullable(keyState), Optional.ToNullable(versionType), serializedAdditionalRawData);
+            return new AvsEncryptionKeyVaultProperties(
+                keyName,
+                keyVersion,
+                autoDetectedKeyVersion,
+                keyVaultUrl,
+                keyState,
+                versionType,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsEncryptionKeyVaultProperties>.Write(ModelReaderWriterOptions options)
@@ -164,7 +171,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +187,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsEncryptionKeyVaultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsEncryptionKeyVaultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -7,11 +7,8 @@
 
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.LabServices;
 using Azure.ResourceManager.LabServices.Models;
 
 namespace Azure.ResourceManager.LabServices.Mocking
@@ -203,7 +200,7 @@ namespace Azure.ResourceManager.LabServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, AvailableLabServicesSku.DeserializeAvailableLabServicesSku, SkusClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => AvailableLabServicesSku.DeserializeAvailableLabServicesSku(e), SkusClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -230,7 +227,7 @@ namespace Azure.ResourceManager.LabServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => SkusRestClient.CreateListRequest(Id.SubscriptionId, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SkusRestClient.CreateListNextPageRequest(nextLink, Id.SubscriptionId, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, AvailableLabServicesSku.DeserializeAvailableLabServicesSku, SkusClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => AvailableLabServicesSku.DeserializeAvailableLabServicesSku(e), SkusClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetSkus", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -258,7 +255,7 @@ namespace Azure.ResourceManager.LabServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, LabServicesUsage.DeserializeLabServicesUsage, UsagesClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, e => LabServicesUsage.DeserializeLabServicesUsage(e), UsagesClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
 
         /// <summary>
@@ -286,7 +283,7 @@ namespace Azure.ResourceManager.LabServices.Mocking
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => UsagesRestClient.CreateListByLocationRequest(Id.SubscriptionId, location, filter);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => UsagesRestClient.CreateListByLocationNextPageRequest(nextLink, Id.SubscriptionId, location, filter);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, LabServicesUsage.DeserializeLabServicesUsage, UsagesClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, e => LabServicesUsage.DeserializeLabServicesUsage(e), UsagesClientDiagnostics, Pipeline, "MockableLabServicesSubscriptionResource.GetUsages", "value", "nextLink", cancellationToken);
         }
     }
 }

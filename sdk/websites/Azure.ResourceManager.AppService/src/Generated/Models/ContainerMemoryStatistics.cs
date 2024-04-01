@@ -5,11 +5,46 @@
 
 #nullable disable
 
+using System;
+using System.Collections.Generic;
+
 namespace Azure.ResourceManager.AppService.Models
 {
     /// <summary> The ContainerMemoryStatistics. </summary>
     public partial class ContainerMemoryStatistics
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="ContainerMemoryStatistics"/>. </summary>
         public ContainerMemoryStatistics()
         {
@@ -19,18 +54,23 @@ namespace Azure.ResourceManager.AppService.Models
         /// <param name="usage"></param>
         /// <param name="maxUsage"></param>
         /// <param name="limit"></param>
-        internal ContainerMemoryStatistics(long? usage, long? maxUsage, long? limit)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal ContainerMemoryStatistics(long? usage, long? maxUsage, long? limit, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             Usage = usage;
             MaxUsage = maxUsage;
             Limit = limit;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> Gets or sets the usage. </summary>
+        [WirePath("usage")]
         public long? Usage { get; set; }
         /// <summary> Gets or sets the max usage. </summary>
+        [WirePath("maxUsage")]
         public long? MaxUsage { get; set; }
         /// <summary> Gets or sets the limit. </summary>
+        [WirePath("limit")]
         public long? Limit { get; set; }
     }
 }

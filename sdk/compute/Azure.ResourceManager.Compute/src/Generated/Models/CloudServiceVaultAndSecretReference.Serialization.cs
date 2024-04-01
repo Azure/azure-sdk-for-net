@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceVaultAndSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceVaultAndSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,8 +75,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<WritableSubResource> sourceVault = default;
-            Optional<Uri> secretUrl = default;
+            WritableSubResource sourceVault = default;
+            Uri secretUrl = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CloudServiceVaultAndSecretReference(sourceVault, secretUrl.Value, serializedAdditionalRawData);
+            return new CloudServiceVaultAndSecretReference(sourceVault, secretUrl, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CloudServiceVaultAndSecretReference>.Write(ModelReaderWriterOptions options)
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCloudServiceVaultAndSecretReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support reading '{options.Format}' format.");
             }
         }
 

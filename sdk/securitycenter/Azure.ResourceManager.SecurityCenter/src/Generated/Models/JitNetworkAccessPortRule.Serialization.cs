@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPortRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<JitNetworkAccessPortRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -87,8 +87,8 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             }
             int number = default;
             JitNetworkAccessPortProtocol protocol = default;
-            Optional<string> allowedSourceAddressPrefix = default;
-            Optional<IList<string>> allowedSourceAddressPrefixes = default;
+            string allowedSourceAddressPrefix = default;
+            IList<string> allowedSourceAddressPrefixes = default;
             TimeSpan maxRequestAccessDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -134,7 +134,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JitNetworkAccessPortRule(number, protocol, allowedSourceAddressPrefix.Value, Optional.ToList(allowedSourceAddressPrefixes), maxRequestAccessDuration, serializedAdditionalRawData);
+            return new JitNetworkAccessPortRule(
+                number,
+                protocol,
+                allowedSourceAddressPrefix,
+                allowedSourceAddressPrefixes ?? new ChangeTrackingList<string>(),
+                maxRequestAccessDuration,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JitNetworkAccessPortRule>.Write(ModelReaderWriterOptions options)
@@ -146,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeJitNetworkAccessPortRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JitNetworkAccessPortRule)} does not support reading '{options.Format}' format.");
             }
         }
 

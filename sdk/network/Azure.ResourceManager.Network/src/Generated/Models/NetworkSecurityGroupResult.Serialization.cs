@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in EvaluatedNetworkSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EvaluatedNetworkSecurityGroup>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkSecurityGroupResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<SecurityRuleAccess> securityRuleAccessResult = default;
-            Optional<IReadOnlyList<EvaluatedNetworkSecurityGroup>> evaluatedNetworkSecurityGroups = default;
+            SecurityRuleAccess? securityRuleAccessResult = default;
+            IReadOnlyList<EvaluatedNetworkSecurityGroup> evaluatedNetworkSecurityGroups = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Network.Models
                     List<EvaluatedNetworkSecurityGroup> array = new List<EvaluatedNetworkSecurityGroup>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(EvaluatedNetworkSecurityGroup.DeserializeEvaluatedNetworkSecurityGroup(item));
+                        array.Add(EvaluatedNetworkSecurityGroup.DeserializeEvaluatedNetworkSecurityGroup(item, options));
                     }
                     evaluatedNetworkSecurityGroups = array;
                     continue;
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new NetworkSecurityGroupResult(Optional.ToNullable(securityRuleAccessResult), Optional.ToList(evaluatedNetworkSecurityGroups), serializedAdditionalRawData);
+            return new NetworkSecurityGroupResult(securityRuleAccessResult, evaluatedNetworkSecurityGroups ?? new ChangeTrackingList<EvaluatedNetworkSecurityGroup>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<NetworkSecurityGroupResult>.Write(ModelReaderWriterOptions options)
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkSecurityGroupResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkSecurityGroupResult)} does not support reading '{options.Format}' format.");
             }
         }
 

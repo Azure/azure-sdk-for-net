@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsManagementCluster>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsManagementCluster>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -89,10 +89,10 @@ namespace Azure.ResourceManager.Avs.Models
             {
                 return null;
             }
-            Optional<int> clusterSize = default;
-            Optional<AvsPrivateCloudClusterProvisioningState> provisioningState = default;
-            Optional<int> clusterId = default;
-            Optional<IList<string>> hosts = default;
+            int? clusterSize = default;
+            AvsPrivateCloudClusterProvisioningState? provisioningState = default;
+            int? clusterId = default;
+            IList<string> hosts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Avs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AvsManagementCluster(Optional.ToNullable(clusterSize), Optional.ToNullable(provisioningState), Optional.ToNullable(clusterId), Optional.ToList(hosts), serializedAdditionalRawData);
+            return new AvsManagementCluster(clusterSize, provisioningState, clusterId, hosts ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AvsManagementCluster>.Write(ModelReaderWriterOptions options)
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsManagementCluster(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsManagementCluster)} does not support reading '{options.Format}' format.");
             }
         }
 

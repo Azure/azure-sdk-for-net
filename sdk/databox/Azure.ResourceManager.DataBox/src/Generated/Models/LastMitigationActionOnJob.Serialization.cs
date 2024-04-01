@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<LastMitigationActionOnJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LastMitigationActionOnJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LastMitigationActionOnJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<LastMitigationActionOnJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LastMitigationActionOnJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LastMitigationActionOnJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset> actionDateTimeInUtc = default;
-            Optional<bool> isPerformedByCustomer = default;
-            Optional<CustomerResolutionCode> customerResolution = default;
+            DateTimeOffset? actionDateTimeInUtc = default;
+            bool? isPerformedByCustomer = default;
+            CustomerResolutionCode? customerResolution = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new LastMitigationActionOnJob(Optional.ToNullable(actionDateTimeInUtc), Optional.ToNullable(isPerformedByCustomer), Optional.ToNullable(customerResolution), serializedAdditionalRawData);
+            return new LastMitigationActionOnJob(actionDateTimeInUtc, isPerformedByCustomer, customerResolution, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<LastMitigationActionOnJob>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LastMitigationActionOnJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LastMitigationActionOnJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeLastMitigationActionOnJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LastMitigationActionOnJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LastMitigationActionOnJob)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Communication.CallAutomation
 {
@@ -18,16 +17,16 @@ namespace Azure.Communication.CallAutomation
             {
                 return null;
             }
-            Optional<string> transferType = default;
-            Optional<string> transferDestination = default;
-            Optional<string> operationContext = default;
-            Optional<ResultInformation> resultInformation = default;
-            Optional<DialogInputType> dialogInputType = default;
-            Optional<string> dialogId = default;
-            Optional<object> ivrContext = default;
-            Optional<string> callConnectionId = default;
-            Optional<string> serverCallId = default;
-            Optional<string> correlationId = default;
+            string transferType = default;
+            string transferDestination = default;
+            string operationContext = default;
+            ResultInformation resultInformation = default;
+            DialogInputType? dialogInputType = default;
+            string dialogId = default;
+            object ivrContext = default;
+            string callConnectionId = default;
+            string serverCallId = default;
+            string correlationId = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("transferType"u8))
@@ -93,7 +92,17 @@ namespace Azure.Communication.CallAutomation
                     continue;
                 }
             }
-            return new DialogTransferInternal(transferType.Value, transferDestination.Value, operationContext.Value, resultInformation.Value, Optional.ToNullable(dialogInputType), dialogId.Value, ivrContext.Value, callConnectionId.Value, serverCallId.Value, correlationId.Value);
+            return new DialogTransferInternal(
+                transferType,
+                transferDestination,
+                operationContext,
+                resultInformation,
+                dialogInputType,
+                dialogId,
+                ivrContext,
+                callConnectionId,
+                serverCallId,
+                correlationId);
         }
     }
 }

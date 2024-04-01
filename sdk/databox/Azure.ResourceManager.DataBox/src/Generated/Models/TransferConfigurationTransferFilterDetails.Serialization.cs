@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferConfigurationTransferFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferConfigurationTransferFilterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferConfigurationTransferFilterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(Include))
             {
                 writer.WritePropertyName("include"u8);
-                writer.WriteObjectValue(Include);
+                writer.WriteObjectValue<TransferFilterDetails>(Include, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransferConfigurationTransferFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransferConfigurationTransferFilterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransferConfigurationTransferFilterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<TransferFilterDetails> include = default;
+            TransferFilterDetails include = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.DataBox.Models
                     {
                         continue;
                     }
-                    include = TransferFilterDetails.DeserializeTransferFilterDetails(property.Value);
+                    include = TransferFilterDetails.DeserializeTransferFilterDetails(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new TransferConfigurationTransferFilterDetails(include.Value, serializedAdditionalRawData);
+            return new TransferConfigurationTransferFilterDetails(include, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<TransferConfigurationTransferFilterDetails>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransferConfigurationTransferFilterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferConfigurationTransferFilterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeTransferConfigurationTransferFilterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransferConfigurationTransferFilterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransferConfigurationTransferFilterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

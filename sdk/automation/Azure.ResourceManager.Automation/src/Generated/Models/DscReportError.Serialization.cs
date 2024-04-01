@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscReportError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscReportError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscReportError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscReportError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscReportError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscReportError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -94,12 +94,12 @@ namespace Azure.ResourceManager.Automation.Models
             {
                 return null;
             }
-            Optional<string> errorSource = default;
-            Optional<string> resourceId = default;
-            Optional<string> errorCode = default;
-            Optional<string> errorMessage = default;
-            Optional<string> locale = default;
-            Optional<string> errorDetails = default;
+            string errorSource = default;
+            string resourceId = default;
+            string errorCode = default;
+            string errorMessage = default;
+            string locale = default;
+            string errorDetails = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -140,7 +140,14 @@ namespace Azure.ResourceManager.Automation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DscReportError(errorSource.Value, resourceId.Value, errorCode.Value, errorMessage.Value, locale.Value, errorDetails.Value, serializedAdditionalRawData);
+            return new DscReportError(
+                errorSource,
+                resourceId,
+                errorCode,
+                errorMessage,
+                locale,
+                errorDetails,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DscReportError>.Write(ModelReaderWriterOptions options)
@@ -152,7 +159,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscReportError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscReportError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +175,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscReportError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscReportError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscReportError)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayLoadBalancerTunnelInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayLoadBalancerTunnelInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayLoadBalancerTunnelInterface)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayLoadBalancerTunnelInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayLoadBalancerTunnelInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayLoadBalancerTunnelInterface)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<int> port = default;
-            Optional<int> identifier = default;
-            Optional<GatewayLoadBalancerTunnelProtocol> protocol = default;
-            Optional<GatewayLoadBalancerTunnelInterfaceType> type = default;
+            int? port = default;
+            int? identifier = default;
+            GatewayLoadBalancerTunnelProtocol? protocol = default;
+            GatewayLoadBalancerTunnelInterfaceType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GatewayLoadBalancerTunnelInterface(Optional.ToNullable(port), Optional.ToNullable(identifier), Optional.ToNullable(protocol), Optional.ToNullable(type), serializedAdditionalRawData);
+            return new GatewayLoadBalancerTunnelInterface(port, identifier, protocol, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GatewayLoadBalancerTunnelInterface>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayLoadBalancerTunnelInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayLoadBalancerTunnelInterface)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeGatewayLoadBalancerTunnelInterface(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayLoadBalancerTunnelInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayLoadBalancerTunnelInterface)} does not support reading '{options.Format}' format.");
             }
         }
 

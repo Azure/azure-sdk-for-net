@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
         {
             writer.WriteStartObject();
             writer.WritePropertyName("parameters"u8);
-            writer.WriteObjectValue(Parameters);
+            writer.WriteObjectValue<ServicePrincipalInKVParam>(Parameters);
             writer.WritePropertyName("dataSourceCredentialType"u8);
             writer.WriteStringValue(CredentialKind.ToString());
             writer.WritePropertyName("dataSourceCredentialName"u8);
@@ -38,9 +38,9 @@ namespace Azure.AI.MetricsAdvisor.Administration
             }
             ServicePrincipalInKVParam parameters = default;
             DataSourceCredentialKind dataSourceCredentialType = default;
-            Optional<string> dataSourceCredentialId = default;
+            string dataSourceCredentialId = default;
             string dataSourceCredentialName = default;
-            Optional<string> dataSourceCredentialDescription = default;
+            string dataSourceCredentialDescription = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("parameters"u8))
@@ -69,7 +69,7 @@ namespace Azure.AI.MetricsAdvisor.Administration
                     continue;
                 }
             }
-            return new ServicePrincipalInKeyVaultCredentialEntity(dataSourceCredentialType, dataSourceCredentialId.Value, dataSourceCredentialName, dataSourceCredentialDescription.Value, parameters);
+            return new ServicePrincipalInKeyVaultCredentialEntity(dataSourceCredentialType, dataSourceCredentialId, dataSourceCredentialName, dataSourceCredentialDescription, parameters);
         }
     }
 }

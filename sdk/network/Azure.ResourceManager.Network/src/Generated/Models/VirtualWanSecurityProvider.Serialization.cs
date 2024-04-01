@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualWanSecurityProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualWanSecurityProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualWanSecurityProvider)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualWanSecurityProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualWanSecurityProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualWanSecurityProvider)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<Uri> url = default;
-            Optional<VirtualWanSecurityProviderType> type = default;
+            string name = default;
+            Uri url = default;
+            VirtualWanSecurityProviderType? type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualWanSecurityProvider(name.Value, url.Value, Optional.ToNullable(type), serializedAdditionalRawData);
+            return new VirtualWanSecurityProvider(name, url, type, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualWanSecurityProvider>.Write(ModelReaderWriterOptions options)
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualWanSecurityProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualWanSecurityProvider)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualWanSecurityProvider(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualWanSecurityProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualWanSecurityProvider)} does not support reading '{options.Format}' format.");
             }
         }
 

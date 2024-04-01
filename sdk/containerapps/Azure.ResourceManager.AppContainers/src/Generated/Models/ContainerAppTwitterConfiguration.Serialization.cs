@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTwitterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppTwitterConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppTwitterConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             if (Optional.IsDefined(Registration))
             {
                 writer.WritePropertyName("registration"u8);
-                writer.WriteObjectValue(Registration);
+                writer.WriteObjectValue<ContainerAppTwitterRegistration>(Registration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppTwitterConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppTwitterConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppTwitterConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.AppContainers.Models
             {
                 return null;
             }
-            Optional<bool> enabled = default;
-            Optional<ContainerAppTwitterRegistration> registration = default;
+            bool? enabled = default;
+            ContainerAppTwitterRegistration registration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +95,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                     {
                         continue;
                     }
-                    registration = ContainerAppTwitterRegistration.DeserializeContainerAppTwitterRegistration(property.Value);
+                    registration = ContainerAppTwitterRegistration.DeserializeContainerAppTwitterRegistration(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerAppTwitterConfiguration(Optional.ToNullable(enabled), registration.Value, serializedAdditionalRawData);
+            return new ContainerAppTwitterConfiguration(enabled, registration, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerAppTwitterConfiguration>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppTwitterConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppTwitterConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppTwitterConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppTwitterConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppTwitterConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

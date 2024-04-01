@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.PowerBIDedicated.Models;
 using Azure.ResourceManager.Resources;
 
@@ -543,7 +541,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual AsyncPageable<SkuDetails> GetSkusForCapacityAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, SkuDetails.DeserializeSkuDetails, _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => SkuDetails.DeserializeSkuDetails(e), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -572,7 +570,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         public virtual Pageable<SkuDetails> GetSkusForCapacity(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _dedicatedCapacityCapacitiesRestClient.CreateListSkusForCapacityRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, SkuDetails.DeserializeSkuDetails, _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => SkuDetails.DeserializeSkuDetails(e), _dedicatedCapacityCapacitiesClientDiagnostics, Pipeline, "DedicatedCapacityResource.GetSkusForCapacity", "value", null, cancellationToken);
         }
 
         /// <summary>

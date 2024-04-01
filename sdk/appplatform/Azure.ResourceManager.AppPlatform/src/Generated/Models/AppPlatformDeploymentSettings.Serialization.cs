@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformDeploymentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(ResourceRequests))
             {
                 writer.WritePropertyName("resourceRequests"u8);
-                writer.WriteObjectValue(ResourceRequests);
+                writer.WriteObjectValue<AppPlatformDeploymentResourceRequirements>(ResourceRequests, options);
             }
             if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
@@ -79,17 +79,17 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(LivenessProbe))
             {
                 writer.WritePropertyName("livenessProbe"u8);
-                writer.WriteObjectValue(LivenessProbe);
+                writer.WriteObjectValue<AppInstanceProbe>(LivenessProbe, options);
             }
             if (Optional.IsDefined(ReadinessProbe))
             {
                 writer.WritePropertyName("readinessProbe"u8);
-                writer.WriteObjectValue(ReadinessProbe);
+                writer.WriteObjectValue<AppInstanceProbe>(ReadinessProbe, options);
             }
             if (Optional.IsDefined(StartupProbe))
             {
                 writer.WritePropertyName("startupProbe"u8);
-                writer.WriteObjectValue(StartupProbe);
+                writer.WriteObjectValue<AppInstanceProbe>(StartupProbe, options);
             }
             if (Optional.IsDefined(TerminationGracePeriodInSeconds))
             {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             if (Optional.IsDefined(ContainerProbeSettings))
             {
                 writer.WritePropertyName("containerProbeSettings"u8);
-                writer.WriteObjectValue(ContainerProbeSettings);
+                writer.WriteObjectValue<ContainerProbeSettings>(ContainerProbeSettings, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformDeploymentSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,14 +139,14 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<AppPlatformDeploymentResourceRequirements> resourceRequests = default;
-            Optional<IDictionary<string, string>> environmentVariables = default;
-            Optional<IDictionary<string, IDictionary<string, BinaryData>>> addonConfigs = default;
-            Optional<AppInstanceProbe> livenessProbe = default;
-            Optional<AppInstanceProbe> readinessProbe = default;
-            Optional<AppInstanceProbe> startupProbe = default;
-            Optional<int> terminationGracePeriodSeconds = default;
-            Optional<ContainerProbeSettings> containerProbeSettings = default;
+            AppPlatformDeploymentResourceRequirements resourceRequests = default;
+            IDictionary<string, string> environmentVariables = default;
+            IDictionary<string, IDictionary<string, BinaryData>> addonConfigs = default;
+            AppInstanceProbe livenessProbe = default;
+            AppInstanceProbe readinessProbe = default;
+            AppInstanceProbe startupProbe = default;
+            int? terminationGracePeriodSeconds = default;
+            ContainerProbeSettings containerProbeSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    resourceRequests = AppPlatformDeploymentResourceRequirements.DeserializeAppPlatformDeploymentResourceRequirements(property.Value);
+                    resourceRequests = AppPlatformDeploymentResourceRequirements.DeserializeAppPlatformDeploymentResourceRequirements(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("environmentVariables"u8))
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    livenessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    livenessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("readinessProbe"u8))
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    readinessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    readinessProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("startupProbe"u8))
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    startupProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value);
+                    startupProbe = AppInstanceProbe.DeserializeAppInstanceProbe(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("terminationGracePeriodSeconds"u8))
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     {
                         continue;
                     }
-                    containerProbeSettings = ContainerProbeSettings.DeserializeContainerProbeSettings(property.Value);
+                    containerProbeSettings = ContainerProbeSettings.DeserializeContainerProbeSettings(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -258,7 +258,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppPlatformDeploymentSettings(resourceRequests.Value, Optional.ToDictionary(environmentVariables), Optional.ToDictionary(addonConfigs), livenessProbe.Value, readinessProbe.Value, startupProbe.Value, Optional.ToNullable(terminationGracePeriodSeconds), containerProbeSettings.Value, serializedAdditionalRawData);
+            return new AppPlatformDeploymentSettings(
+                resourceRequests,
+                environmentVariables ?? new ChangeTrackingDictionary<string, string>(),
+                addonConfigs ?? new ChangeTrackingDictionary<string, IDictionary<string, BinaryData>>(),
+                livenessProbe,
+                readinessProbe,
+                startupProbe,
+                terminationGracePeriodSeconds,
+                containerProbeSettings,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppPlatformDeploymentSettings>.Write(ModelReaderWriterOptions options)
@@ -270,7 +279,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +295,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformDeploymentSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformDeploymentSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

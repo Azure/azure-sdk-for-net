@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(NativeCloudConnection))
             {
                 writer.WritePropertyName("nativeCloudConnection"u8);
-                writer.WriteObjectValue(NativeCloudConnection);
+                writer.WriteObjectValue<CspmMonitorGcpOfferingNativeCloudConnection>(NativeCloudConnection, options);
             }
             writer.WritePropertyName("offeringType"u8);
             writer.WriteStringValue(OfferingType.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CspmMonitorGcpOffering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -76,9 +76,9 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<CspmMonitorGcpOfferingNativeCloudConnection> nativeCloudConnection = default;
+            CspmMonitorGcpOfferingNativeCloudConnection nativeCloudConnection = default;
             OfferingType offeringType = default;
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    nativeCloudConnection = CspmMonitorGcpOfferingNativeCloudConnection.DeserializeCspmMonitorGcpOfferingNativeCloudConnection(property.Value);
+                    nativeCloudConnection = CspmMonitorGcpOfferingNativeCloudConnection.DeserializeCspmMonitorGcpOfferingNativeCloudConnection(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("offeringType"u8))
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CspmMonitorGcpOffering(offeringType, description.Value, serializedAdditionalRawData, nativeCloudConnection.Value);
+            return new CspmMonitorGcpOffering(offeringType, description, serializedAdditionalRawData, nativeCloudConnection);
         }
 
         BinaryData IPersistableModel<CspmMonitorGcpOffering>.Write(ModelReaderWriterOptions options)
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeCspmMonitorGcpOffering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CspmMonitorGcpOffering)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,7 +23,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayUrlPathMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayUrlPathMap)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayUrlPathMap)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Network.Models
                 writer.WriteStartArray();
                 foreach (var item in PathRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ApplicationGatewayPathRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayUrlPathMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayUrlPathMap)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayUrlPathMap)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,17 +128,17 @@ namespace Azure.ResourceManager.Network.Models
             {
                 return null;
             }
-            Optional<ETag> etag = default;
-            Optional<ResourceIdentifier> id = default;
-            Optional<string> name = default;
-            Optional<ResourceType> type = default;
-            Optional<WritableSubResource> defaultBackendAddressPool = default;
-            Optional<WritableSubResource> defaultBackendHttpSettings = default;
-            Optional<WritableSubResource> defaultRewriteRuleSet = default;
-            Optional<WritableSubResource> defaultRedirectConfiguration = default;
-            Optional<WritableSubResource> defaultLoadDistributionPolicy = default;
-            Optional<IList<ApplicationGatewayPathRule>> pathRules = default;
-            Optional<NetworkProvisioningState> provisioningState = default;
+            ETag? etag = default;
+            ResourceIdentifier id = default;
+            string name = default;
+            ResourceType? type = default;
+            WritableSubResource defaultBackendAddressPool = default;
+            WritableSubResource defaultBackendHttpSettings = default;
+            WritableSubResource defaultRewriteRuleSet = default;
+            WritableSubResource defaultRedirectConfiguration = default;
+            WritableSubResource defaultLoadDistributionPolicy = default;
+            IList<ApplicationGatewayPathRule> pathRules = default;
+            NetworkProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -239,7 +238,7 @@ namespace Azure.ResourceManager.Network.Models
                             List<ApplicationGatewayPathRule> array = new List<ApplicationGatewayPathRule>();
                             foreach (var item in property0.Value.EnumerateArray())
                             {
-                                array.Add(ApplicationGatewayPathRule.DeserializeApplicationGatewayPathRule(item));
+                                array.Add(ApplicationGatewayPathRule.DeserializeApplicationGatewayPathRule(item, options));
                             }
                             pathRules = array;
                             continue;
@@ -262,7 +261,19 @@ namespace Azure.ResourceManager.Network.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ApplicationGatewayUrlPathMap(id.Value, name.Value, Optional.ToNullable(type), serializedAdditionalRawData, Optional.ToNullable(etag), defaultBackendAddressPool, defaultBackendHttpSettings, defaultRewriteRuleSet, defaultRedirectConfiguration, defaultLoadDistributionPolicy, Optional.ToList(pathRules), Optional.ToNullable(provisioningState));
+            return new ApplicationGatewayUrlPathMap(
+                id,
+                name,
+                type,
+                serializedAdditionalRawData,
+                etag,
+                defaultBackendAddressPool,
+                defaultBackendHttpSettings,
+                defaultRewriteRuleSet,
+                defaultRedirectConfiguration,
+                defaultLoadDistributionPolicy,
+                pathRules ?? new ChangeTrackingList<ApplicationGatewayPathRule>(),
+                provisioningState);
         }
 
         BinaryData IPersistableModel<ApplicationGatewayUrlPathMap>.Write(ModelReaderWriterOptions options)
@@ -274,7 +285,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayUrlPathMap)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayUrlPathMap)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -290,7 +301,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayUrlPathMap(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayUrlPathMap)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayUrlPathMap)} does not support reading '{options.Format}' format.");
             }
         }
 

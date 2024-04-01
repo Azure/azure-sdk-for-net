@@ -9,8 +9,6 @@ using System;
 using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Chaos;
 using Azure.ResourceManager.Chaos.Models;
 
 namespace Azure.ResourceManager.Chaos.Samples
@@ -22,7 +20,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_GetTheExecutionOfAExperiment()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2023-11-01/examples/GetExperimentExecution.json
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/GetExperimentExecution.json
             // this example is just showing the usage of "Experiments_GetExecution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -54,7 +52,7 @@ namespace Azure.ResourceManager.Chaos.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task ExecutionDetails_GetExperimentExecutionDetails()
         {
-            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2023-11-01/examples/DetailsExperiment.json
+            // Generated from example definition: specification/chaos/resource-manager/Microsoft.Chaos/stable/2024-01-01/examples/DetailsExperiment.json
             // this example is just showing the usage of "Experiments_ExecutionDetails" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

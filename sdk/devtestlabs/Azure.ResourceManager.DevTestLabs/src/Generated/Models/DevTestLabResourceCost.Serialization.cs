@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabResourceCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabResourceCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,15 +109,15 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             {
                 return null;
             }
-            Optional<string> resourcename = default;
-            Optional<string> resourceUId = default;
-            Optional<double> resourceCost = default;
-            Optional<string> resourceType = default;
-            Optional<string> resourceOwner = default;
-            Optional<string> resourcePricingTier = default;
-            Optional<string> resourceStatus = default;
-            Optional<string> resourceId = default;
-            Optional<string> externalResourceId = default;
+            string resourcename = default;
+            string resourceUId = default;
+            double? resourceCost = default;
+            string resourceType = default;
+            string resourceOwner = default;
+            string resourcePricingTier = default;
+            string resourceStatus = default;
+            string resourceId = default;
+            string externalResourceId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -177,7 +177,17 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new DevTestLabResourceCost(resourcename.Value, resourceUId.Value, Optional.ToNullable(resourceCost), resourceType.Value, resourceOwner.Value, resourcePricingTier.Value, resourceStatus.Value, resourceId.Value, externalResourceId.Value, serializedAdditionalRawData);
+            return new DevTestLabResourceCost(
+                resourcename,
+                resourceUId,
+                resourceCost,
+                resourceType,
+                resourceOwner,
+                resourcePricingTier,
+                resourceStatus,
+                resourceId,
+                externalResourceId,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<DevTestLabResourceCost>.Write(ModelReaderWriterOptions options)
@@ -189,7 +199,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +215,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabResourceCost(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabResourceCost)} does not support reading '{options.Format}' format.");
             }
         }
 

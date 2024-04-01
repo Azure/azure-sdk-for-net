@@ -61,14 +61,14 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<InputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("outputs"u8);
             writer.WriteStartArray();
             foreach (var item in Outputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<OutputFieldMappingEntry>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();
@@ -80,12 +80,12 @@ namespace Azure.Search.Documents.Indexes.Models
             {
                 return null;
             }
-            Optional<string> defaultCountryHint = default;
-            Optional<string> modelVersion = default;
+            string defaultCountryHint = default;
+            string modelVersion = default;
             string odataType = default;
-            Optional<string> name = default;
-            Optional<string> description = default;
-            Optional<string> context = default;
+            string name = default;
+            string description = default;
+            string context = default;
             IList<InputFieldMappingEntry> inputs = default;
             IList<OutputFieldMappingEntry> outputs = default;
             foreach (var property in element.EnumerateObject())
@@ -151,7 +151,15 @@ namespace Azure.Search.Documents.Indexes.Models
                     continue;
                 }
             }
-            return new LanguageDetectionSkill(odataType, name.Value, description.Value, context.Value, inputs, outputs, defaultCountryHint.Value, modelVersion.Value);
+            return new LanguageDetectionSkill(
+                odataType,
+                name,
+                description,
+                context,
+                inputs,
+                outputs,
+                defaultCountryHint,
+                modelVersion);
         }
     }
 }

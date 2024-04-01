@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -82,9 +82,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<OperationStatusType> status = default;
-            Optional<ReservationReportSchema> reportUrl = default;
-            Optional<DateTimeOffset> validUntil = default;
+            OperationStatusType? status = default;
+            ReservationReportSchema? reportUrl = default;
+            DateTimeOffset? validUntil = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new OperationStatus(Optional.ToNullable(status), Optional.ToNullable(reportUrl), Optional.ToNullable(validUntil), serializedAdditionalRawData);
+            return new OperationStatus(status, reportUrl, validUntil, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<OperationStatus>.Write(ModelReaderWriterOptions options)
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeOperationStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

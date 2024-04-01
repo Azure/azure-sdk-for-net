@@ -6,6 +6,7 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -13,10 +14,18 @@ using Azure.Core.Expressions.DataFactory;
 
 namespace Azure.ResourceManager.DataFactory.Models
 {
-    public partial class AmazonS3Location : IUtf8JsonSerializable
+    public partial class AmazonS3Location : IUtf8JsonSerializable, IJsonModel<AmazonS3Location>
     {
-        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
+        void IUtf8JsonSerializable.Write(Utf8JsonWriter writer) => ((IJsonModel<AmazonS3Location>)this).Write(writer, new ModelReaderWriterOptions("W"));
+
+        void IJsonModel<AmazonS3Location>.Write(Utf8JsonWriter writer, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3Location>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmazonS3Location)} does not support writing '{format}' format.");
+            }
+
             writer.WriteStartObject();
             if (Optional.IsDefined(BucketName))
             {
@@ -55,17 +64,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteEndObject();
         }
 
-        internal static AmazonS3Location DeserializeAmazonS3Location(JsonElement element)
+        AmazonS3Location IJsonModel<AmazonS3Location>.Create(ref Utf8JsonReader reader, ModelReaderWriterOptions options)
         {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3Location>)this).GetFormatFromOptions(options) : options.Format;
+            if (format != "J")
+            {
+                throw new FormatException($"The model {nameof(AmazonS3Location)} does not support reading '{format}' format.");
+            }
+
+            using JsonDocument document = JsonDocument.ParseValue(ref reader);
+            return DeserializeAmazonS3Location(document.RootElement, options);
+        }
+
+        internal static AmazonS3Location DeserializeAmazonS3Location(JsonElement element, ModelReaderWriterOptions options = null)
+        {
+            options ??= new ModelReaderWriterOptions("W");
+
             if (element.ValueKind == JsonValueKind.Null)
             {
                 return null;
             }
-            Optional<DataFactoryElement<string>> bucketName = default;
-            Optional<DataFactoryElement<string>> version = default;
+            DataFactoryElement<string> bucketName = default;
+            DataFactoryElement<string> version = default;
             string type = default;
-            Optional<DataFactoryElement<string>> folderPath = default;
-            Optional<DataFactoryElement<string>> fileName = default;
+            DataFactoryElement<string> folderPath = default;
+            DataFactoryElement<string> fileName = default;
             IDictionary<string, BinaryData> additionalProperties = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -114,7 +137,44 @@ namespace Azure.ResourceManager.DataFactory.Models
                 additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new AmazonS3Location(type, folderPath.Value, fileName.Value, additionalProperties, bucketName.Value, version.Value);
+            return new AmazonS3Location(
+                type,
+                folderPath,
+                fileName,
+                additionalProperties,
+                bucketName,
+                version);
         }
+
+        BinaryData IPersistableModel<AmazonS3Location>.Write(ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3Location>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    return ModelReaderWriter.Write(this, options);
+                default:
+                    throw new FormatException($"The model {nameof(AmazonS3Location)} does not support writing '{options.Format}' format.");
+            }
+        }
+
+        AmazonS3Location IPersistableModel<AmazonS3Location>.Create(BinaryData data, ModelReaderWriterOptions options)
+        {
+            var format = options.Format == "W" ? ((IPersistableModel<AmazonS3Location>)this).GetFormatFromOptions(options) : options.Format;
+
+            switch (format)
+            {
+                case "J":
+                    {
+                        using JsonDocument document = JsonDocument.Parse(data);
+                        return DeserializeAmazonS3Location(document.RootElement, options);
+                    }
+                default:
+                    throw new FormatException($"The model {nameof(AmazonS3Location)} does not support reading '{options.Format}' format.");
+            }
+        }
+
+        string IPersistableModel<AmazonS3Location>.GetFormatFromOptions(ModelReaderWriterOptions options) => "J";
     }
 }

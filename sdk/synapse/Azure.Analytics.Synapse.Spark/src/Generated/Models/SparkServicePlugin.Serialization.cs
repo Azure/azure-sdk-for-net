@@ -7,7 +7,6 @@
 
 using System;
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Spark.Models
 {
@@ -19,12 +18,12 @@ namespace Azure.Analytics.Synapse.Spark.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> preparationStartedAt = default;
-            Optional<DateTimeOffset?> resourceAcquisitionStartedAt = default;
-            Optional<DateTimeOffset?> submissionStartedAt = default;
-            Optional<DateTimeOffset?> monitoringStartedAt = default;
-            Optional<DateTimeOffset?> cleanupStartedAt = default;
-            Optional<PluginCurrentState> currentState = default;
+            DateTimeOffset? preparationStartedAt = default;
+            DateTimeOffset? resourceAcquisitionStartedAt = default;
+            DateTimeOffset? submissionStartedAt = default;
+            DateTimeOffset? monitoringStartedAt = default;
+            DateTimeOffset? cleanupStartedAt = default;
+            PluginCurrentState? currentState = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("preparationStartedAt"u8))
@@ -87,7 +86,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
                     continue;
                 }
             }
-            return new SparkServicePlugin(Optional.ToNullable(preparationStartedAt), Optional.ToNullable(resourceAcquisitionStartedAt), Optional.ToNullable(submissionStartedAt), Optional.ToNullable(monitoringStartedAt), Optional.ToNullable(cleanupStartedAt), Optional.ToNullable(currentState));
+            return new SparkServicePlugin(
+                preparationStartedAt,
+                resourceAcquisitionStartedAt,
+                submissionStartedAt,
+                monitoringStartedAt,
+                cleanupStartedAt,
+                currentState);
         }
     }
 }

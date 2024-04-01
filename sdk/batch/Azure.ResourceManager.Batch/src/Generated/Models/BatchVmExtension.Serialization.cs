@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchVmExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmExtension)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchVmExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchVmExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchVmExtension)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,12 +122,12 @@ namespace Azure.ResourceManager.Batch.Models
             string name = default;
             string publisher = default;
             string type = default;
-            Optional<string> typeHandlerVersion = default;
-            Optional<bool> autoUpgradeMinorVersion = default;
-            Optional<bool> enableAutomaticUpgrade = default;
-            Optional<BinaryData> settings = default;
-            Optional<BinaryData> protectedSettings = default;
-            Optional<IList<string>> provisionAfterExtensions = default;
+            string typeHandlerVersion = default;
+            bool? autoUpgradeMinorVersion = default;
+            bool? enableAutomaticUpgrade = default;
+            BinaryData settings = default;
+            BinaryData protectedSettings = default;
+            IList<string> provisionAfterExtensions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -208,7 +208,17 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchVmExtension(name, publisher, type, typeHandlerVersion.Value, Optional.ToNullable(autoUpgradeMinorVersion), Optional.ToNullable(enableAutomaticUpgrade), settings.Value, protectedSettings.Value, Optional.ToList(provisionAfterExtensions), serializedAdditionalRawData);
+            return new BatchVmExtension(
+                name,
+                publisher,
+                type,
+                typeHandlerVersion,
+                autoUpgradeMinorVersion,
+                enableAutomaticUpgrade,
+                settings,
+                protectedSettings,
+                provisionAfterExtensions ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchVmExtension>.Write(ModelReaderWriterOptions options)
@@ -220,7 +230,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchVmExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmExtension)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -236,7 +246,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchVmExtension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchVmExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchVmExtension)} does not support reading '{options.Format}' format.");
             }
         }
 

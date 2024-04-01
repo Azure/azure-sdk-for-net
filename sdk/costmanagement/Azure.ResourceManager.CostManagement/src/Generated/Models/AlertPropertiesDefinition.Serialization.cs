@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertPropertiesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,9 +79,9 @@ namespace Azure.ResourceManager.CostManagement.Models
             {
                 return null;
             }
-            Optional<CostManagementAlertType> type = default;
-            Optional<CostManagementAlertCategory> category = default;
-            Optional<AlertCriterion> criteria = default;
+            CostManagementAlertType? type = default;
+            CostManagementAlertCategory? category = default;
+            AlertCriterion? criteria = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AlertPropertiesDefinition(Optional.ToNullable(type), Optional.ToNullable(category), Optional.ToNullable(criteria), serializedAdditionalRawData);
+            return new AlertPropertiesDefinition(type, category, criteria, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AlertPropertiesDefinition>.Write(ModelReaderWriterOptions options)
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeAlertPropertiesDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertPropertiesDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

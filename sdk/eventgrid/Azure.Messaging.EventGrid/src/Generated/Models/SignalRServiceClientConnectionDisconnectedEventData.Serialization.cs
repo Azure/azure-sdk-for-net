@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Messaging.EventGrid.SystemEvents
 {
@@ -21,11 +20,11 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             {
                 return null;
             }
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> hubName = default;
-            Optional<string> connectionId = default;
-            Optional<string> userId = default;
-            Optional<string> errorMessage = default;
+            DateTimeOffset? timestamp = default;
+            string hubName = default;
+            string connectionId = default;
+            string userId = default;
+            string errorMessage = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("timestamp"u8))
@@ -58,7 +57,7 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                     continue;
                 }
             }
-            return new SignalRServiceClientConnectionDisconnectedEventData(Optional.ToNullable(timestamp), hubName.Value, connectionId.Value, userId.Value, errorMessage.Value);
+            return new SignalRServiceClientConnectionDisconnectedEventData(timestamp, hubName, connectionId, userId, errorMessage);
         }
 
         internal partial class SignalRServiceClientConnectionDisconnectedEventDataConverter : JsonConverter<SignalRServiceClientConnectionDisconnectedEventData>

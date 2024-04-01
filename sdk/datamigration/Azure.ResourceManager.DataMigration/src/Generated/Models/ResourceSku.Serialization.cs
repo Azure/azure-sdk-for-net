@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
-                writer.WriteObjectValue(Capacity);
+                writer.WriteObjectValue<ResourceSkuCapacity>(Capacity, options);
             }
             if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuCosts>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuCapabilities>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in Restrictions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuRestrictions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,18 +149,18 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> resourceType = default;
-            Optional<string> name = default;
-            Optional<string> tier = default;
-            Optional<string> size = default;
-            Optional<string> family = default;
-            Optional<string> kind = default;
-            Optional<ResourceSkuCapacity> capacity = default;
-            Optional<IReadOnlyList<string>> locations = default;
-            Optional<IReadOnlyList<string>> apiVersions = default;
-            Optional<IReadOnlyList<ResourceSkuCosts>> costs = default;
-            Optional<IReadOnlyList<ResourceSkuCapabilities>> capabilities = default;
-            Optional<IReadOnlyList<ResourceSkuRestrictions>> restrictions = default;
+            string resourceType = default;
+            string name = default;
+            string tier = default;
+            string size = default;
+            string family = default;
+            string kind = default;
+            ResourceSkuCapacity capacity = default;
+            IReadOnlyList<string> locations = default;
+            IReadOnlyList<string> apiVersions = default;
+            IReadOnlyList<ResourceSkuCosts> costs = default;
+            IReadOnlyList<ResourceSkuCapabilities> capabilities = default;
+            IReadOnlyList<ResourceSkuRestrictions> restrictions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     {
                         continue;
                     }
-                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value);
+                    capacity = ResourceSkuCapacity.DeserializeResourceSkuCapacity(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("locations"u8))
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuCosts> array = new List<ResourceSkuCosts>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item));
+                        array.Add(ResourceSkuCosts.DeserializeResourceSkuCosts(item, options));
                     }
                     costs = array;
                     continue;
@@ -255,7 +255,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuCapabilities> array = new List<ResourceSkuCapabilities>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item));
+                        array.Add(ResourceSkuCapabilities.DeserializeResourceSkuCapabilities(item, options));
                     }
                     capabilities = array;
                     continue;
@@ -269,7 +269,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ResourceSkuRestrictions> array = new List<ResourceSkuRestrictions>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item));
+                        array.Add(ResourceSkuRestrictions.DeserializeResourceSkuRestrictions(item, options));
                     }
                     restrictions = array;
                     continue;
@@ -280,7 +280,20 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ResourceSku(resourceType.Value, name.Value, tier.Value, size.Value, family.Value, kind.Value, capacity.Value, Optional.ToList(locations), Optional.ToList(apiVersions), Optional.ToList(costs), Optional.ToList(capabilities), Optional.ToList(restrictions), serializedAdditionalRawData);
+            return new ResourceSku(
+                resourceType,
+                name,
+                tier,
+                size,
+                family,
+                kind,
+                capacity,
+                locations ?? new ChangeTrackingList<string>(),
+                apiVersions ?? new ChangeTrackingList<string>(),
+                costs ?? new ChangeTrackingList<ResourceSkuCosts>(),
+                capabilities ?? new ChangeTrackingList<ResourceSkuCapabilities>(),
+                restrictions ?? new ChangeTrackingList<ResourceSkuRestrictions>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ResourceSku>.Write(ModelReaderWriterOptions options)
@@ -292,7 +305,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -308,7 +321,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeResourceSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSku)} does not support reading '{options.Format}' format.");
             }
         }
 

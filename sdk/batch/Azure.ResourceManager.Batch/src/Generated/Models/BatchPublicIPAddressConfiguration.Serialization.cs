@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchPublicIPAddressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchPublicIPAddressConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchPublicIPAddressConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchPublicIPAddressConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchPublicIPAddressConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,8 +84,8 @@ namespace Azure.ResourceManager.Batch.Models
             {
                 return null;
             }
-            Optional<BatchIPAddressProvisioningType> provision = default;
-            Optional<IList<ResourceIdentifier>> ipAddressIds = default;
+            BatchIPAddressProvisioningType? provision = default;
+            IList<ResourceIdentifier> ipAddressIds = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Batch.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new BatchPublicIPAddressConfiguration(Optional.ToNullable(provision), Optional.ToList(ipAddressIds), serializedAdditionalRawData);
+            return new BatchPublicIPAddressConfiguration(provision, ipAddressIds ?? new ChangeTrackingList<ResourceIdentifier>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<BatchPublicIPAddressConfiguration>.Write(ModelReaderWriterOptions options)
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchPublicIPAddressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchPublicIPAddressConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchPublicIPAddressConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchPublicIPAddressConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchPublicIPAddressConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -593,28 +592,28 @@ namespace Azure.Verticals.AgriFood.Farming
             var uri = new RawRequestUriBuilder();
             uri.Reset(_endpoint);
             uri.AppendPath("/farms", false);
-            if (farmIds != null && Optional.IsCollectionDefined(farmIds))
+            if (farmIds != null && !(farmIds is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in farmIds)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in statuses)
                 {
@@ -693,28 +692,28 @@ namespace Azure.Verticals.AgriFood.Farming
             uri.AppendPath("/parties/", false);
             uri.AppendPath(partyId, true);
             uri.AppendPath("/farms", false);
-            if (ids != null && Optional.IsCollectionDefined(ids))
+            if (ids != null && !(ids is ChangeTrackingList<string> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 foreach (var param in ids)
                 {
                     uri.AppendQuery("ids", param, true);
                 }
             }
-            if (names != null && Optional.IsCollectionDefined(names))
+            if (names != null && !(names is ChangeTrackingList<string> changeTrackingList0 && changeTrackingList0.IsUndefined))
             {
                 foreach (var param in names)
                 {
                     uri.AppendQuery("names", param, true);
                 }
             }
-            if (propertyFilters != null && Optional.IsCollectionDefined(propertyFilters))
+            if (propertyFilters != null && !(propertyFilters is ChangeTrackingList<string> changeTrackingList1 && changeTrackingList1.IsUndefined))
             {
                 foreach (var param in propertyFilters)
                 {
                     uri.AppendQuery("propertyFilters", param, true);
                 }
             }
-            if (statuses != null && Optional.IsCollectionDefined(statuses))
+            if (statuses != null && !(statuses is ChangeTrackingList<string> changeTrackingList2 && changeTrackingList2.IsUndefined))
             {
                 foreach (var param in statuses)
                 {

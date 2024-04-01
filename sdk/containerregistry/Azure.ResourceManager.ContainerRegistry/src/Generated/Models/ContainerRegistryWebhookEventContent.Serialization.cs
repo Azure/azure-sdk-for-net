@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEventContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,22 +44,22 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             if (Optional.IsDefined(Target))
             {
                 writer.WritePropertyName("target"u8);
-                writer.WriteObjectValue(Target);
+                writer.WriteObjectValue<ContainerRegistryWebhookEventTarget>(Target, options);
             }
             if (Optional.IsDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
-                writer.WriteObjectValue(Request);
+                writer.WriteObjectValue<ContainerRegistryWebhookEventRequestContent>(Request, options);
             }
             if (Optional.IsDefined(Actor))
             {
                 writer.WritePropertyName("actor"u8);
-                writer.WriteObjectValue(Actor);
+                writer.WriteObjectValue<ContainerRegistryWebhookEventActor>(Actor, options);
             }
             if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<ContainerRegistryWebhookEventSource>(Source, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEventContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,13 +99,13 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             {
                 return null;
             }
-            Optional<Guid> id = default;
-            Optional<DateTimeOffset> timestamp = default;
-            Optional<string> action = default;
-            Optional<ContainerRegistryWebhookEventTarget> target = default;
-            Optional<ContainerRegistryWebhookEventRequestContent> request = default;
-            Optional<ContainerRegistryWebhookEventActor> actor = default;
-            Optional<ContainerRegistryWebhookEventSource> source = default;
+            Guid? id = default;
+            DateTimeOffset? timestamp = default;
+            string action = default;
+            ContainerRegistryWebhookEventTarget target = default;
+            ContainerRegistryWebhookEventRequestContent request = default;
+            ContainerRegistryWebhookEventActor actor = default;
+            ContainerRegistryWebhookEventSource source = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    target = ContainerRegistryWebhookEventTarget.DeserializeContainerRegistryWebhookEventTarget(property.Value);
+                    target = ContainerRegistryWebhookEventTarget.DeserializeContainerRegistryWebhookEventTarget(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("request"u8))
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value);
+                    request = ContainerRegistryWebhookEventRequestContent.DeserializeContainerRegistryWebhookEventRequestContent(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("actor"u8))
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    actor = ContainerRegistryWebhookEventActor.DeserializeContainerRegistryWebhookEventActor(property.Value);
+                    actor = ContainerRegistryWebhookEventActor.DeserializeContainerRegistryWebhookEventActor(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("source"u8))
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                     {
                         continue;
                     }
-                    source = ContainerRegistryWebhookEventSource.DeserializeContainerRegistryWebhookEventSource(property.Value);
+                    source = ContainerRegistryWebhookEventSource.DeserializeContainerRegistryWebhookEventSource(property.Value, options);
                     continue;
                 }
                 if (options.Format != "W")
@@ -175,7 +175,15 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerRegistryWebhookEventContent(Optional.ToNullable(id), Optional.ToNullable(timestamp), action.Value, target.Value, request.Value, actor.Value, source.Value, serializedAdditionalRawData);
+            return new ContainerRegistryWebhookEventContent(
+                id,
+                timestamp,
+                action,
+                target,
+                request,
+                actor,
+                source,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerRegistryWebhookEventContent>.Write(ModelReaderWriterOptions options)
@@ -187,7 +195,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +211,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryWebhookEventContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventContent)} does not support reading '{options.Format}' format.");
             }
         }
 

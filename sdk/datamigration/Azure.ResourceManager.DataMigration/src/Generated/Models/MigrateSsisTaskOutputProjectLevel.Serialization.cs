@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputProjectLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 writer.WriteStartArray();
                 foreach (var item in ExceptionsAndWarnings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ReportableException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateSsisTaskOutputProjectLevel>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,15 +116,15 @@ namespace Azure.ResourceManager.DataMigration.Models
             {
                 return null;
             }
-            Optional<string> folderName = default;
-            Optional<string> projectName = default;
-            Optional<MigrationState> state = default;
-            Optional<SsisMigrationStage> stage = default;
-            Optional<DateTimeOffset> startedOn = default;
-            Optional<DateTimeOffset> endedOn = default;
-            Optional<string> message = default;
-            Optional<IReadOnlyList<ReportableException>> exceptionsAndWarnings = default;
-            Optional<string> id = default;
+            string folderName = default;
+            string projectName = default;
+            MigrationState? state = default;
+            SsisMigrationStage? stage = default;
+            DateTimeOffset? startedOn = default;
+            DateTimeOffset? endedOn = default;
+            string message = default;
+            IReadOnlyList<ReportableException> exceptionsAndWarnings = default;
+            string id = default;
             string resultType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                     List<ReportableException> array = new List<ReportableException>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ReportableException.DeserializeReportableException(item));
+                        array.Add(ReportableException.DeserializeReportableException(item, options));
                     }
                     exceptionsAndWarnings = array;
                     continue;
@@ -211,7 +211,18 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new MigrateSsisTaskOutputProjectLevel(id.Value, resultType, serializedAdditionalRawData, folderName.Value, projectName.Value, Optional.ToNullable(state), Optional.ToNullable(stage), Optional.ToNullable(startedOn), Optional.ToNullable(endedOn), message.Value, Optional.ToList(exceptionsAndWarnings));
+            return new MigrateSsisTaskOutputProjectLevel(
+                id,
+                resultType,
+                serializedAdditionalRawData,
+                folderName,
+                projectName,
+                state,
+                stage,
+                startedOn,
+                endedOn,
+                message,
+                exceptionsAndWarnings ?? new ChangeTrackingList<ReportableException>());
         }
 
         BinaryData IPersistableModel<MigrateSsisTaskOutputProjectLevel>.Write(ModelReaderWriterOptions options)
@@ -223,7 +234,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +250,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateSsisTaskOutputProjectLevel(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateSsisTaskOutputProjectLevel)} does not support reading '{options.Format}' format.");
             }
         }
 

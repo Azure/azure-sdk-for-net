@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyRuleTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -99,7 +101,7 @@ namespace Azure.ResourceManager.Authorization.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoleManagementPolicyRuleTarget>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,12 +116,12 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 return null;
             }
-            Optional<string> caller = default;
-            Optional<IList<string>> operations = default;
-            Optional<RoleManagementAssignmentLevel> level = default;
-            Optional<IList<string>> targetObjects = default;
-            Optional<IList<string>> inheritableSettings = default;
-            Optional<IList<string>> enforcedSettings = default;
+            string caller = default;
+            IList<string> operations = default;
+            RoleManagementAssignmentLevel? level = default;
+            IList<string> targetObjects = default;
+            IList<string> inheritableSettings = default;
+            IList<string> enforcedSettings = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -200,7 +202,205 @@ namespace Azure.ResourceManager.Authorization.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new RoleManagementPolicyRuleTarget(caller.Value, Optional.ToList(operations), Optional.ToNullable(level), Optional.ToList(targetObjects), Optional.ToList(inheritableSettings), Optional.ToList(enforcedSettings), serializedAdditionalRawData);
+            return new RoleManagementPolicyRuleTarget(
+                caller,
+                operations ?? new ChangeTrackingList<string>(),
+                level,
+                targetObjects ?? new ChangeTrackingList<string>(),
+                inheritableSettings ?? new ChangeTrackingList<string>(),
+                enforcedSettings ?? new ChangeTrackingList<string>(),
+                serializedAdditionalRawData);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Caller), out propertyOverride);
+            if (Optional.IsDefined(Caller) || hasPropertyOverride)
+            {
+                builder.Append("  caller: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Caller.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Caller}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Caller}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Operations), out propertyOverride);
+            if (Optional.IsCollectionDefined(Operations) || hasPropertyOverride)
+            {
+                if (Operations.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  operations: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Operations)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Level), out propertyOverride);
+            if (Optional.IsDefined(Level) || hasPropertyOverride)
+            {
+                builder.Append("  level: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Level.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TargetObjects), out propertyOverride);
+            if (Optional.IsCollectionDefined(TargetObjects) || hasPropertyOverride)
+            {
+                if (TargetObjects.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  targetObjects: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in TargetObjects)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InheritableSettings), out propertyOverride);
+            if (Optional.IsCollectionDefined(InheritableSettings) || hasPropertyOverride)
+            {
+                if (InheritableSettings.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  inheritableSettings: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in InheritableSettings)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(EnforcedSettings), out propertyOverride);
+            if (Optional.IsCollectionDefined(EnforcedSettings) || hasPropertyOverride)
+            {
+                if (EnforcedSettings.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  enforcedSettings: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in EnforcedSettings)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<RoleManagementPolicyRuleTarget>.Write(ModelReaderWriterOptions options)
@@ -211,8 +411,10 @@ namespace Azure.ResourceManager.Authorization.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +430,7 @@ namespace Azure.ResourceManager.Authorization.Models
                         return DeserializeRoleManagementPolicyRuleTarget(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoleManagementPolicyRuleTarget)} does not support reading '{options.Format}' format.");
             }
         }
 

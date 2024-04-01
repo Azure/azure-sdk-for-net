@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.Core;
 
 namespace Azure.AI.MetricsAdvisor.Models
 {
@@ -19,9 +18,9 @@ namespace Azure.AI.MetricsAdvisor.Models
                 return null;
             }
             AnomalySeverity anomalySeverity = default;
-            Optional<AnomalyStatus> anomalyStatus = default;
+            AnomalyStatus? anomalyStatus = default;
             double value = default;
-            Optional<double?> expectedValue = default;
+            double? expectedValue = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("anomalySeverity"u8))
@@ -54,7 +53,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     continue;
                 }
             }
-            return new AnomalyProperty(anomalySeverity, Optional.ToNullable(anomalyStatus), value, Optional.ToNullable(expectedValue));
+            return new AnomalyProperty(anomalySeverity, anomalyStatus, value, expectedValue);
         }
     }
 }

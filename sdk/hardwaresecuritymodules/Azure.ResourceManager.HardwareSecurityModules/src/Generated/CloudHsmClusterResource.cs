@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.HardwareSecurityModules.Models;
 using Azure.ResourceManager.Resources;
 
@@ -444,7 +442,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public virtual AsyncPageable<HardwareSecurityModulesPrivateLinkData> GetCloudHsmClusterPrivateLinkResourcesAsync(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData, _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -469,7 +467,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules
         public virtual Pageable<HardwareSecurityModulesPrivateLinkData> GetCloudHsmClusterPrivateLinkResources(CancellationToken cancellationToken = default)
         {
             HttpMessage FirstPageRequest(int? pageSizeHint) => _cloudHsmClusterPrivateLinkResourcesRestClient.CreateListByCloudHsmClusterRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData, _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => HardwareSecurityModulesPrivateLinkData.DeserializeHardwareSecurityModulesPrivateLinkData(e), _cloudHsmClusterPrivateLinkResourcesClientDiagnostics, Pipeline, "CloudHsmClusterResource.GetCloudHsmClusterPrivateLinkResources", "value", null, cancellationToken);
         }
 
         /// <summary>

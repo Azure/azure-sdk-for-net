@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAddressResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -85,11 +85,11 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "DatacenterAddressInstruction": return DataCenterAddressInstructionResult.DeserializeDataCenterAddressInstructionResult(element);
-                    case "DatacenterAddressLocation": return DataCenterAddressLocationResult.DeserializeDataCenterAddressLocationResult(element);
+                    case "DatacenterAddressInstruction": return DataCenterAddressInstructionResult.DeserializeDataCenterAddressInstructionResult(element, options);
+                    case "DatacenterAddressLocation": return DataCenterAddressLocationResult.DeserializeDataCenterAddressLocationResult(element, options);
                 }
             }
-            return UnknownDataCenterAddressResponse.DeserializeUnknownDataCenterAddressResponse(element);
+            return UnknownDataCenterAddressResponse.DeserializeUnknownDataCenterAddressResponse(element, options);
         }
 
         BinaryData IPersistableModel<DataCenterAddressResult>.Write(ModelReaderWriterOptions options)
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataCenterAddressResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAddressResult)} does not support reading '{options.Format}' format.");
             }
         }
 

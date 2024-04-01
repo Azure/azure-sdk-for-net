@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("schedule"u8);
-            writer.WriteObjectValue(Schedule);
+            writer.WriteObjectValue<ContainerServiceMaintenanceSchedule>(Schedule, options);
             writer.WritePropertyName("durationHours"u8);
             writer.WriteNumberValue(DurationHours);
             if (Optional.IsDefined(UtcOffset))
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 writer.WriteStartArray();
                 foreach (var item in NotAllowedDates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerServiceDateSpan>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerServiceMaintenanceWindow>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.ContainerService.Models
             }
             ContainerServiceMaintenanceSchedule schedule = default;
             int durationHours = default;
-            Optional<string> utcOffset = default;
-            Optional<string> startDate = default;
+            string utcOffset = default;
+            string startDate = default;
             string startTime = default;
-            Optional<IList<ContainerServiceDateSpan>> notAllowedDates = default;
+            IList<ContainerServiceDateSpan> notAllowedDates = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("schedule"u8))
                 {
-                    schedule = ContainerServiceMaintenanceSchedule.DeserializeContainerServiceMaintenanceSchedule(property.Value);
+                    schedule = ContainerServiceMaintenanceSchedule.DeserializeContainerServiceMaintenanceSchedule(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("durationHours"u8))
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                     List<ContainerServiceDateSpan> array = new List<ContainerServiceDateSpan>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ContainerServiceDateSpan.DeserializeContainerServiceDateSpan(item));
+                        array.Add(ContainerServiceDateSpan.DeserializeContainerServiceDateSpan(item, options));
                     }
                     notAllowedDates = array;
                     continue;
@@ -145,7 +145,14 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ContainerServiceMaintenanceWindow(schedule, durationHours, utcOffset.Value, startDate.Value, startTime, Optional.ToList(notAllowedDates), serializedAdditionalRawData);
+            return new ContainerServiceMaintenanceWindow(
+                schedule,
+                durationHours,
+                utcOffset,
+                startDate,
+                startTime,
+                notAllowedDates ?? new ChangeTrackingList<ContainerServiceDateSpan>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ContainerServiceMaintenanceWindow>.Write(ModelReaderWriterOptions options)
@@ -157,7 +164,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +180,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeContainerServiceMaintenanceWindow(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerServiceMaintenanceWindow)} does not support reading '{options.Format}' format.");
             }
         }
 

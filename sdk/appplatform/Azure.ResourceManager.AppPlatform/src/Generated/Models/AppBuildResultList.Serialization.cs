@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.AppPlatform;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
@@ -23,7 +22,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppBuildResultList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppBuildResultList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppBuildResultList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +32,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppPlatformBuildResultData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppBuildResultList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppBuildResultList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppBuildResultList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -80,8 +79,8 @@ namespace Azure.ResourceManager.AppPlatform.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<AppPlatformBuildResultData>> value = default;
-            Optional<string> nextLink = default;
+            IReadOnlyList<AppPlatformBuildResultData> value = default;
+            string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -95,7 +94,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                     List<AppPlatformBuildResultData> array = new List<AppPlatformBuildResultData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(AppPlatformBuildResultData.DeserializeAppPlatformBuildResultData(item));
+                        array.Add(AppPlatformBuildResultData.DeserializeAppPlatformBuildResultData(item, options));
                     }
                     value = array;
                     continue;
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AppBuildResultList(Optional.ToList(value), nextLink.Value, serializedAdditionalRawData);
+            return new AppBuildResultList(value ?? new ChangeTrackingList<AppPlatformBuildResultData>(), nextLink, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AppBuildResultList>.Write(ModelReaderWriterOptions options)
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppBuildResultList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppBuildResultList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppBuildResultList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppBuildResultList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppBuildResultList)} does not support reading '{options.Format}' format.");
             }
         }
 

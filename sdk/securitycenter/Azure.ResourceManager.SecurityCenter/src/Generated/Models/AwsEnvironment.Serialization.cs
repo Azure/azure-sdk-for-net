@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsEnvironment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             if (Optional.IsDefined(OrganizationalData))
             {
                 writer.WritePropertyName("organizationalData"u8);
-                writer.WriteObjectValue(OrganizationalData);
+                writer.WriteObjectValue<AwsOrganizationalInfo>(OrganizationalData, options);
             }
             if (Optional.IsCollectionDefined(Regions))
             {
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AwsEnvironment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AwsEnvironment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AwsEnvironment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -91,10 +91,10 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<AwsOrganizationalInfo> organizationalData = default;
-            Optional<IList<string>> regions = default;
-            Optional<string> accountName = default;
-            Optional<long> scanInterval = default;
+            AwsOrganizationalInfo organizationalData = default;
+            IList<string> regions = default;
+            string accountName = default;
+            long? scanInterval = default;
             EnvironmentType environmentType = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                     {
                         continue;
                     }
-                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value);
+                    organizationalData = AwsOrganizationalInfo.DeserializeAwsOrganizationalInfo(property.Value, options);
                     continue;
                 }
                 if (property.NameEquals("regions"u8))
@@ -148,7 +148,13 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AwsEnvironment(environmentType, serializedAdditionalRawData, organizationalData.Value, Optional.ToList(regions), accountName.Value, Optional.ToNullable(scanInterval));
+            return new AwsEnvironment(
+                environmentType,
+                serializedAdditionalRawData,
+                organizationalData,
+                regions ?? new ChangeTrackingList<string>(),
+                accountName,
+                scanInterval);
         }
 
         BinaryData IPersistableModel<AwsEnvironment>.Write(ModelReaderWriterOptions options)
@@ -160,7 +166,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -176,7 +182,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAwsEnvironment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AwsEnvironment)} does not support reading '{options.Format}' format.");
             }
         }
 

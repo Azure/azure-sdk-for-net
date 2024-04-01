@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSizeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<int> vCpusAvailable = default;
-            Optional<int> vCpusPerCore = default;
+            int? vCpusAvailable = default;
+            int? vCpusPerCore = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineSizeProperties(Optional.ToNullable(vCpusAvailable), Optional.ToNullable(vCpusPerCore), serializedAdditionalRawData);
+            return new VirtualMachineSizeProperties(vCpusAvailable, vCpusPerCore, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineSizeProperties>.Write(ModelReaderWriterOptions options)
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineSizeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineSizeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

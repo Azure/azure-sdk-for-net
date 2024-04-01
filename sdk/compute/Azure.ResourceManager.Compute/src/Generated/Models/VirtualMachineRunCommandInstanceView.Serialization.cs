@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandInstanceView)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Compute.Models
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InstanceViewStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineRunCommandInstanceView>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineRunCommandInstanceView)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineRunCommandInstanceView)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,14 +109,14 @@ namespace Azure.ResourceManager.Compute.Models
             {
                 return null;
             }
-            Optional<ExecutionState> executionState = default;
-            Optional<string> executionMessage = default;
-            Optional<int> exitCode = default;
-            Optional<string> output = default;
-            Optional<string> error = default;
-            Optional<DateTimeOffset> startTime = default;
-            Optional<DateTimeOffset> endTime = default;
-            Optional<IReadOnlyList<InstanceViewStatus>> statuses = default;
+            ExecutionState? executionState = default;
+            string executionMessage = default;
+            int? exitCode = default;
+            string output = default;
+            string error = default;
+            DateTimeOffset? startTime = default;
+            DateTimeOffset? endTime = default;
+            IReadOnlyList<InstanceViewStatus> statuses = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Compute.Models
                     List<InstanceViewStatus> array = new List<InstanceViewStatus>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item));
+                        array.Add(InstanceViewStatus.DeserializeInstanceViewStatus(item, options));
                     }
                     statuses = array;
                     continue;
@@ -192,7 +192,16 @@ namespace Azure.ResourceManager.Compute.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new VirtualMachineRunCommandInstanceView(Optional.ToNullable(executionState), executionMessage.Value, Optional.ToNullable(exitCode), output.Value, error.Value, Optional.ToNullable(startTime), Optional.ToNullable(endTime), Optional.ToList(statuses), serializedAdditionalRawData);
+            return new VirtualMachineRunCommandInstanceView(
+                executionState,
+                executionMessage,
+                exitCode,
+                output,
+                error,
+                startTime,
+                endTime,
+                statuses ?? new ChangeTrackingList<InstanceViewStatus>(),
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<VirtualMachineRunCommandInstanceView>.Write(ModelReaderWriterOptions options)
@@ -204,7 +213,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandInstanceView)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -220,7 +229,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineRunCommandInstanceView(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandInstanceView)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineRunCommandInstanceView)} does not support reading '{options.Format}' format.");
             }
         }
 

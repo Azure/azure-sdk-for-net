@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureResourceIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureResourceIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             {
                 return null;
             }
-            Optional<ResourceIdentifier> azureResourceId = default;
+            ResourceIdentifier azureResourceId = default;
             ResourceIdentifierType type = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureResourceIdentifier(type, serializedAdditionalRawData, azureResourceId.Value);
+            return new AzureResourceIdentifier(type, serializedAdditionalRawData, azureResourceId);
         }
 
         BinaryData IPersistableModel<AzureResourceIdentifier>.Write(ModelReaderWriterOptions options)
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAzureResourceIdentifier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureResourceIdentifier)} does not support reading '{options.Format}' format.");
             }
         }
 

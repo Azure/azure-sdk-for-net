@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CompatibleVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompatibleVersions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompatibleVersions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<CompatibleVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompatibleVersions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompatibleVersions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -79,8 +79,8 @@ namespace Azure.ResourceManager.ContainerService.Models
             {
                 return null;
             }
-            Optional<string> name = default;
-            Optional<IList<string>> versions = default;
+            string name = default;
+            IList<string> versions = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new CompatibleVersions(name.Value, Optional.ToList(versions), serializedAdditionalRawData);
+            return new CompatibleVersions(name, versions ?? new ChangeTrackingList<string>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<CompatibleVersions>.Write(ModelReaderWriterOptions options)
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CompatibleVersions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompatibleVersions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeCompatibleVersions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CompatibleVersions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompatibleVersions)} does not support reading '{options.Format}' format.");
             }
         }
 

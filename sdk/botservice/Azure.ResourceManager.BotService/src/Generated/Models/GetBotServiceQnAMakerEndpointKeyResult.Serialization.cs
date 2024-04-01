@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -84,10 +84,10 @@ namespace Azure.ResourceManager.BotService.Models
             {
                 return null;
             }
-            Optional<string> primaryEndpointKey = default;
-            Optional<string> secondaryEndpointKey = default;
-            Optional<string> installedVersion = default;
-            Optional<string> lastStableVersion = default;
+            string primaryEndpointKey = default;
+            string secondaryEndpointKey = default;
+            string installedVersion = default;
+            string lastStableVersion = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.BotService.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey.Value, secondaryEndpointKey.Value, installedVersion.Value, lastStableVersion.Value, serializedAdditionalRawData);
+            return new GetBotServiceQnAMakerEndpointKeyResult(primaryEndpointKey, secondaryEndpointKey, installedVersion, lastStableVersion, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<GetBotServiceQnAMakerEndpointKeyResult>.Write(ModelReaderWriterOptions options)
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeGetBotServiceQnAMakerEndpointKeyResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GetBotServiceQnAMakerEndpointKeyResult)} does not support reading '{options.Format}' format.");
             }
         }
 

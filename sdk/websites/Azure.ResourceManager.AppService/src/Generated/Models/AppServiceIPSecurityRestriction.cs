@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using Azure.Core;
 
@@ -13,6 +14,38 @@ namespace Azure.ResourceManager.AppService.Models
     /// <summary> IP security restriction on an app. </summary>
     public partial class AppServiceIPSecurityRestriction
     {
+        /// <summary>
+        /// Keeps track of any properties unknown to the library.
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        private IDictionary<string, BinaryData> _serializedAdditionalRawData;
+
         /// <summary> Initializes a new instance of <see cref="AppServiceIPSecurityRestriction"/>. </summary>
         public AppServiceIPSecurityRestriction()
         {
@@ -53,7 +86,8 @@ namespace Azure.ResourceManager.AppService.Models
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </param>
-        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, AppServiceIPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers)
+        /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        internal AppServiceIPSecurityRestriction(string ipAddressOrCidr, string subnetMask, ResourceIdentifier vnetSubnetResourceId, int? vnetTrafficTag, int? subnetTrafficTag, string action, AppServiceIPFilterTag? tag, int? priority, string name, string description, IDictionary<string, IList<string>> headers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             IPAddressOrCidr = ipAddressOrCidr;
             SubnetMask = subnetMask;
@@ -66,6 +100,7 @@ namespace Azure.ResourceManager.AppService.Models
             Name = name;
             Description = description;
             Headers = headers;
+            _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary>
@@ -74,24 +109,34 @@ namespace Azure.ResourceManager.AppService.Models
         /// CIDR notation such as ipv4/mask (leading bit match). For CIDR,
         /// SubnetMask property must not be specified.
         /// </summary>
+        [WirePath("ipAddress")]
         public string IPAddressOrCidr { get; set; }
         /// <summary> Subnet mask for the range of IP addresses the restriction is valid for. </summary>
+        [WirePath("subnetMask")]
         public string SubnetMask { get; set; }
         /// <summary> Virtual network resource id. </summary>
+        [WirePath("vnetSubnetResourceId")]
         public ResourceIdentifier VnetSubnetResourceId { get; set; }
         /// <summary> (internal) Vnet traffic tag. </summary>
+        [WirePath("vnetTrafficTag")]
         public int? VnetTrafficTag { get; set; }
         /// <summary> (internal) Subnet traffic tag. </summary>
+        [WirePath("subnetTrafficTag")]
         public int? SubnetTrafficTag { get; set; }
         /// <summary> Allow or Deny access for this IP range. </summary>
+        [WirePath("action")]
         public string Action { get; set; }
         /// <summary> Defines what this IP filter will be used for. This is to support IP filtering on proxies. </summary>
+        [WirePath("tag")]
         public AppServiceIPFilterTag? Tag { get; set; }
         /// <summary> Priority of IP restriction rule. </summary>
+        [WirePath("priority")]
         public int? Priority { get; set; }
         /// <summary> IP restriction rule name. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> IP restriction rule description. </summary>
+        [WirePath("description")]
         public string Description { get; set; }
         /// <summary>
         /// IP restriction rule headers.
@@ -111,6 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// X-Azure-FDID and X-FD-HealthProbe.
         /// The matching logic is exact match.
         /// </summary>
+        [WirePath("headers")]
         public IDictionary<string, IList<string>> Headers { get; }
     }
 }

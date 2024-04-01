@@ -8,7 +8,6 @@
 using System;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -21,15 +20,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<DateTimeOffset?> notStartedAt = default;
-            Optional<DateTimeOffset?> startingAt = default;
-            Optional<DateTimeOffset?> runningAt = default;
-            Optional<DateTimeOffset?> deadAt = default;
-            Optional<DateTimeOffset?> successAt = default;
-            Optional<DateTimeOffset?> killedAt = default;
-            Optional<DateTimeOffset?> recoveringAt = default;
-            Optional<string> currentState = default;
-            Optional<SparkRequest> jobCreationRequest = default;
+            DateTimeOffset? notStartedAt = default;
+            DateTimeOffset? startingAt = default;
+            DateTimeOffset? runningAt = default;
+            DateTimeOffset? deadAt = default;
+            DateTimeOffset? successAt = default;
+            DateTimeOffset? killedAt = default;
+            DateTimeOffset? recoveringAt = default;
+            string currentState = default;
+            SparkRequest jobCreationRequest = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("notStartedAt"u8))
@@ -117,7 +116,16 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new SparkBatchJobState(Optional.ToNullable(notStartedAt), Optional.ToNullable(startingAt), Optional.ToNullable(runningAt), Optional.ToNullable(deadAt), Optional.ToNullable(successAt), Optional.ToNullable(killedAt), Optional.ToNullable(recoveringAt), currentState.Value, jobCreationRequest.Value);
+            return new SparkBatchJobState(
+                notStartedAt,
+                startingAt,
+                runningAt,
+                deadAt,
+                successAt,
+                killedAt,
+                recoveringAt,
+                currentState,
+                jobCreationRequest);
         }
 
         internal partial class SparkBatchJobStateConverter : JsonConverter<SparkBatchJobState>

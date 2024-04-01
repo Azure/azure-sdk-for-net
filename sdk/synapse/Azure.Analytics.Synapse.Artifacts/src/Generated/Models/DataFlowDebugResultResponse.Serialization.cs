@@ -37,8 +37,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             {
                 return null;
             }
-            Optional<string> status = default;
-            Optional<string> data = default;
+            string status = default;
+            string data = default;
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("status"u8))
@@ -52,14 +52,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                     continue;
                 }
             }
-            return new DataFlowDebugResultResponse(status.Value, data.Value);
+            return new DataFlowDebugResultResponse(status, data);
         }
 
         internal partial class DataFlowDebugResultResponseConverter : JsonConverter<DataFlowDebugResultResponse>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowDebugResultResponse model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowDebugResultResponse>(model);
             }
             public override DataFlowDebugResultResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

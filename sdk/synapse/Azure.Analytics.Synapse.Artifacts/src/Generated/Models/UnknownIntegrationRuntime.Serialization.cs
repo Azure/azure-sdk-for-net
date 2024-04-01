@@ -26,7 +26,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -38,7 +38,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 return null;
             }
             IntegrationRuntimeType type = "Unknown";
-            Optional<string> description = default;
+            string description = default;
             IDictionary<string, object> additionalProperties = default;
             Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
             foreach (var property in element.EnumerateObject())
@@ -56,7 +56,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
             }
             additionalProperties = additionalPropertiesDictionary;
-            return new UnknownIntegrationRuntime(type, description.Value, additionalProperties);
+            return new UnknownIntegrationRuntime(type, description, additionalProperties);
         }
     }
 }

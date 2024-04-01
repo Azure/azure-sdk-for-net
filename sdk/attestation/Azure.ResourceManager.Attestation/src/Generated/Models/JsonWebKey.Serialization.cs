@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Attestation.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonWebKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,23 +151,23 @@ namespace Azure.ResourceManager.Attestation.Models
             {
                 return null;
             }
-            Optional<string> alg = default;
-            Optional<string> crv = default;
-            Optional<string> d = default;
-            Optional<string> dp = default;
-            Optional<string> dq = default;
-            Optional<string> e = default;
-            Optional<string> k = default;
-            Optional<string> kid = default;
+            string alg = default;
+            string crv = default;
+            string d = default;
+            string dp = default;
+            string dq = default;
+            string e = default;
+            string k = default;
+            string kid = default;
             string kty = default;
-            Optional<string> n = default;
-            Optional<string> p = default;
-            Optional<string> q = default;
-            Optional<string> qi = default;
-            Optional<string> use = default;
-            Optional<string> x = default;
-            Optional<IList<string>> x5c = default;
-            Optional<string> y = default;
+            string n = default;
+            string p = default;
+            string q = default;
+            string qi = default;
+            string use = default;
+            string x = default;
+            IList<string> x5c = default;
+            string y = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -272,7 +272,25 @@ namespace Azure.ResourceManager.Attestation.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new JsonWebKey(alg.Value, crv.Value, d.Value, dp.Value, dq.Value, e.Value, k.Value, kid.Value, kty, n.Value, p.Value, q.Value, qi.Value, use.Value, x.Value, Optional.ToList(x5c), y.Value, serializedAdditionalRawData);
+            return new JsonWebKey(
+                alg,
+                crv,
+                d,
+                dp,
+                dq,
+                e,
+                k,
+                kid,
+                kty,
+                n,
+                p,
+                q,
+                qi,
+                use,
+                x,
+                x5c ?? new ChangeTrackingList<string>(),
+                y,
+                serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<JsonWebKey>.Write(ModelReaderWriterOptions options)
@@ -284,7 +302,7 @@ namespace Azure.ResourceManager.Attestation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +318,7 @@ namespace Azure.ResourceManager.Attestation.Models
                         return DeserializeJsonWebKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonWebKey)} does not support reading '{options.Format}' format.");
             }
         }
 

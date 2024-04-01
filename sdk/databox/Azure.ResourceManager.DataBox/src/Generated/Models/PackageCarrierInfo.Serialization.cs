@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageCarrierInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageCarrierInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -74,8 +74,8 @@ namespace Azure.ResourceManager.DataBox.Models
             {
                 return null;
             }
-            Optional<string> carrierName = default;
-            Optional<string> trackingId = default;
+            string carrierName = default;
+            string trackingId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new PackageCarrierInfo(carrierName.Value, trackingId.Value, serializedAdditionalRawData);
+            return new PackageCarrierInfo(carrierName, trackingId, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<PackageCarrierInfo>.Write(ModelReaderWriterOptions options)
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializePackageCarrierInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

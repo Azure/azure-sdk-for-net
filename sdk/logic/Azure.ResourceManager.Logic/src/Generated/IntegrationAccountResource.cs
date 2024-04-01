@@ -11,10 +11,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Logic.Models;
 using Azure.ResourceManager.Resources;
 
@@ -1007,7 +1005,7 @@ namespace Azure.ResourceManager.Logic
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListKeyVaultKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey, _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreateAsyncPageable(FirstPageRequest, null, e => IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(e), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
@@ -1040,7 +1038,7 @@ namespace Azure.ResourceManager.Logic
             Argument.AssertNotNull(content, nameof(content));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _integrationAccountRestClient.CreateListKeyVaultKeysRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, content);
-            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey, _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
+            return GeneratorPageableHelpers.CreatePageable(FirstPageRequest, null, e => IntegrationAccountKeyVaultKey.DeserializeIntegrationAccountKeyVaultKey(e), _integrationAccountClientDiagnostics, Pipeline, "IntegrationAccountResource.GetKeyVaultKeys", "value", null, cancellationToken);
         }
 
         /// <summary>
