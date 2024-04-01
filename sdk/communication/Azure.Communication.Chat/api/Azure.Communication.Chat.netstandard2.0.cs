@@ -210,7 +210,7 @@ namespace Azure.Communication.Chat
         public System.DateTimeOffset? DeletedOn { get { throw null; } }
         public string Id { get { throw null; } }
         public System.Collections.Generic.IReadOnlyDictionary<string, string> Metadata { get { throw null; } }
-        public Azure.Communication.Chat.ChatRetentionPolicy RetentionPolicy { get { throw null; } set { } }
+        public Azure.Communication.Chat.ChatRetentionPolicy RetentionPolicy { get { throw null; } }
         public string Topic { get { throw null; } }
     }
     public partial class CreateChatThreadOptions

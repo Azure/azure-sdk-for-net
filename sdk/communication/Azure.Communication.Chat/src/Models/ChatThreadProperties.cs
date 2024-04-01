@@ -49,6 +49,6 @@ namespace Azure.Communication.Chat
         /// <summary>
         /// Thread retention policy
         /// </summary>
-        public ChatRetentionPolicy RetentionPolicy { get; set; }
+        public ChatRetentionPolicy RetentionPolicy { get; }
     }
 }
