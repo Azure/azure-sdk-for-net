@@ -22,13 +22,15 @@ namespace Azure.Identity
         protected override bool ShouldRetry(HttpMessage message, Exception exception)
         {
             // For IMDS requests, do not retry until we have observed the first response cycle
-            return _firstRequestComplete || !message.Request.Uri.ToUri().Equals(_imdsUri) ? base.ShouldRetry(message, exception) : false;
+            var doRetry = _firstRequestComplete || !(message.Request.Uri.Host ==_imdsUri.Host && message.Request.Uri.Path == _imdsUri.AbsolutePath) ? base.ShouldRetry(message, exception) : false;
+            Console.WriteLine($"{doRetry}");
+            return doRetry;
         }
 
         protected override ValueTask<bool> ShouldRetryAsync(HttpMessage message, Exception exception)
         {
             // For IMDS requests, do not retry until we have observed the first response cycle
-            return _firstRequestComplete || !message.Request.Uri.ToUri().Equals(_imdsUri) ? base.ShouldRetryAsync(message, exception) : default;
+            return _firstRequestComplete || !(message.Request.Uri.Host ==_imdsUri.Host && message.Request.Uri.Path == _imdsUri.AbsolutePath) ? base.ShouldRetryAsync(message, exception) : default;
         }
 
         public override void Process(HttpMessage message, ReadOnlyMemory<HttpPipelinePolicy> pipeline)

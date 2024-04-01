@@ -14,7 +14,7 @@ namespace Azure.Identity
         // IMDS constants. Docs for IMDS are available at https://learn.microsoft.com/entra/identity/managed-identities-azure-resources/how-to-use-vm-token#get-a-token-using-http
         internal static readonly Uri s_imdsEndpoint = new Uri("http://169.254.169.254/metadata/identity/oauth2/token");
         internal const string imddsTokenPath = "/metadata/identity/oauth2/token";
-
+        internal const string metadataHeaderName = "Metadata";
         private const string ImdsApiVersion = "2018-02-01";
 
         internal const string IdentityUnavailableError = "ManagedIdentityCredential authentication unavailable. The requested identity has not been assigned to this resource.";
@@ -26,15 +26,16 @@ namespace Azure.Identity
         private readonly string _clientId;
         private readonly string _resourceId;
         private readonly Uri _imdsEndpoint;
-        private bool _firstTokenAcquired;
+        private bool _isFirstRequest = true;
         private TimeSpan? _imdsNetworkTimeout;
+        private bool _isChainedCredential;
 
         internal ImdsManagedIdentitySource(ManagedIdentityClientOptions options) : base(options.Pipeline)
         {
             _clientId = options.ClientId;
             _resourceId = options.ResourceIdentifier?.ToString();
             _imdsNetworkTimeout = options.InitialImdsConnectionTimeout;
-
+            _isChainedCredential = options.Options?.IsChainedCredential ?? false;
             _imdsEndpoint = GetImdsUri();
         }
 
@@ -61,7 +62,11 @@ namespace Azure.Identity
 
             Request request = Pipeline.HttpPipeline.CreateRequest();
             request.Method = RequestMethod.Get;
-            request.Headers.Add("Metadata", "true");
+            // dont add the Metadata endpoint for the probe request
+            if (_isFirstRequest && _isChainedCredential)
+            {
+                request.Headers.Add(metadataHeaderName, "true");
+            }
             request.Uri.Reset(_imdsEndpoint);
             request.Uri.AppendQuery("api-version", ImdsApiVersion);
 
@@ -83,9 +88,10 @@ namespace Azure.Identity
         {
             HttpMessage message = base.CreateHttpMessage(request);
 
-            if (!_firstTokenAcquired)
+            if (_isFirstRequest && _isChainedCredential)
             {
                 message.NetworkTimeout = _imdsNetworkTimeout;
+                _isFirstRequest = false;
             }
 
             return message;
@@ -151,7 +157,6 @@ namespace Azure.Identity
             }
 
             var token = await base.HandleResponseAsync(async, context, response, cancellationToken).ConfigureAwait(false);
-            _firstTokenAcquired = true;
             return token;
         }
 

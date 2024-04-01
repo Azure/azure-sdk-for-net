@@ -28,21 +28,22 @@ namespace Azure.Identity
                 tryCount++;
                 return new MockResponse(500);
             });
+            Uri imdsUri = new Uri(ImdsManagedIdentitySource.GetImdsUri().ToString() + "?api-version=2018-02-01&resource=test");
 
             // The first request should only try once
-            var response = await SendGetRequest(mockTransport, policy, uri: ImdsManagedIdentitySource.GetImdsUri());
+            var response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
             Assert.AreEqual(1, tryCount);
             Assert.Greater(options.Retry.MaxRetries, 1);
             Assert.AreEqual(500, response.Status);
 
             tryCount = 0;
             // Subsequent requests should default to the retry options behavior
-            response = await SendGetRequest(mockTransport, policy, uri: ImdsManagedIdentitySource.GetImdsUri());
+            response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
             Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
             Assert.AreEqual(500, response.Status);
 
             tryCount = 0;
-            response = await SendGetRequest(mockTransport, policy, uri: ImdsManagedIdentitySource.GetImdsUri());
+            response = await SendGetRequest(mockTransport, policy, uri: imdsUri);
             Assert.AreEqual(options.Retry.MaxRetries + 1, tryCount);
             Assert.AreEqual(500, response.Status);
         }
