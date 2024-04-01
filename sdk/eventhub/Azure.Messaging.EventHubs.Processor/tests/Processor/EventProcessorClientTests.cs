@@ -1730,6 +1730,7 @@ namespace Azure.Messaging.EventHubs.Tests
             public Task InvokeUpdateCheckpointAsync(string partitionId, CheckpointPosition checkpointStartingPosition, CancellationToken cancellationToken) => base.UpdateCheckpointAsync(partitionId, checkpointStartingPosition, cancellationToken);
             protected override EventHubConnection CreateConnection() => InjectedConnection;
             protected override Task ValidateProcessingPreconditions(CancellationToken cancellationToken = default) => Task.CompletedTask;
+            public bool? IsBaseBatchTracingEnabled => base.IsBatchTracingEnabled;
         }
 
         /// <summary>
