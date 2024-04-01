@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  caller: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  operations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  level: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -302,7 +302,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  targetObjects: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  inheritableSettings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  enforcedSettings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

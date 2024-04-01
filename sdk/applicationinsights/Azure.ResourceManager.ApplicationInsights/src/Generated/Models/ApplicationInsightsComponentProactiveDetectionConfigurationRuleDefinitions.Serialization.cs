@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -234,7 +234,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  DisplayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  HelpUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -292,7 +292,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IsHidden: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IsEnabledByDefault: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IsInPreview: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -337,7 +337,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  SupportsEmailNotifications: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

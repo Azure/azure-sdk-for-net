@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ContentValidation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  SSLCheck: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  SSLCertRemainingLifetimeCheck: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ExpectedHttpStatusCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IgnoreHttpStatusCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

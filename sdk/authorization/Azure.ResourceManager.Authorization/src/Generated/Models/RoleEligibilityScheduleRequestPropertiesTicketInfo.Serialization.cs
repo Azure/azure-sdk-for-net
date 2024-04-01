@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  ticketNumber: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  ticketSystem: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ConnectorId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ConfigDisplayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  IsDefault: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ConfigProperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

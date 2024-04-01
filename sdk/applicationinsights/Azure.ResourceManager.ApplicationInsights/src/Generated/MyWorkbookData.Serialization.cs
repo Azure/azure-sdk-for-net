@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  location: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -488,7 +488,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -526,7 +526,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     builder.Append("  etag: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -562,7 +562,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    serializedData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    timeModified: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -650,7 +650,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    category: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -672,7 +672,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    userId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    sourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -716,7 +716,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    storageUri: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

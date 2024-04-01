@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -301,7 +301,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -323,7 +323,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    email: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -345,7 +345,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -376,7 +376,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -398,7 +398,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -429,7 +429,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -451,7 +451,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("    type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

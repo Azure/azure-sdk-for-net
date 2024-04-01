@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  userType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  isBackup: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

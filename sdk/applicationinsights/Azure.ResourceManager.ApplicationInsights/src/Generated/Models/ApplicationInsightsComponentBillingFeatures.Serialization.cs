@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  DataVolumeCap: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     builder.Append("  CurrentBillingFeatures: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

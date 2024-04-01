@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  SendEmailsToSubscriptionOwners: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                     builder.Append("  CustomEmails: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  LastUpdatedTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  RuleDefinitions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

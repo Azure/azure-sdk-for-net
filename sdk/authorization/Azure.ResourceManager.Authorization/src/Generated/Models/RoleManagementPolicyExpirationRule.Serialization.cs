@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  isExpirationRequired: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  maximumDuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Authorization.Models
             builder.Append("  ruleType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  target: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

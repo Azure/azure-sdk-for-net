@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  WebTest: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

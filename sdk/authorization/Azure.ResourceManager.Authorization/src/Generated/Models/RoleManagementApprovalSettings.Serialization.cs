@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  isApprovalRequired: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  isApprovalRequiredForExtension: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  isRequestorJustificationRequired: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Authorization.Models
                 builder.Append("  approvalMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.Authorization.Models
                     builder.Append("  approvalStages: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

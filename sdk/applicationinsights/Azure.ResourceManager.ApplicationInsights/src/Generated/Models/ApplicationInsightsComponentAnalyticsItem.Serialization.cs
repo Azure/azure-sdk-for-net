@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -209,11 +208,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
@@ -222,7 +216,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -244,7 +238,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -266,7 +260,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Content: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -288,7 +282,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -310,7 +304,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Scope: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -324,7 +318,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  Type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -338,7 +332,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  TimeCreated: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -360,7 +354,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  TimeModified: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -376,13 +370,16 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Properties), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ApplicationInsightsComponentAnalyticsItemFunctionAlias", out propertyOverride);
             if (Optional.IsDefined(Properties) || hasPropertyOverride)
             {
                 builder.Append("  Properties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.Append("    functionAlias: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("  }");
                 }
                 else
                 {
@@ -392,23 +389,6 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "ApplicationInsightsComponentAnalyticsItemFunctionAlias":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("FunctionAlias", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Properties, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<ApplicationInsightsComponentAnalyticsItem>.Write(ModelReaderWriterOptions options)

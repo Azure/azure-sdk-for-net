@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -334,7 +334,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -348,7 +348,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    denyAssignmentName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.Authorization
                     builder.Append("    permissions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    scope: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    doNotApplyToChildScopes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -469,7 +469,7 @@ namespace Azure.ResourceManager.Authorization
                     builder.Append("    principals: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -491,7 +491,7 @@ namespace Azure.ResourceManager.Authorization
                     builder.Append("    excludePrincipals: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -511,7 +511,7 @@ namespace Azure.ResourceManager.Authorization
                 builder.Append("    isSystemProtected: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

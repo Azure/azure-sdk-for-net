@@ -412,11 +412,6 @@ namespace Azure.ResourceManager.ApplicationInsights
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -425,7 +420,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -445,7 +440,7 @@ namespace Azure.ResourceManager.ApplicationInsights
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -460,7 +455,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -494,7 +489,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -508,7 +503,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -522,7 +517,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -538,7 +533,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    SyntheticMonitorId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -560,7 +555,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    Name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -582,7 +577,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    Description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -604,7 +599,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    Enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -619,7 +614,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    Frequency: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -633,7 +628,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    Timeout: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -647,7 +642,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    Kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -661,7 +656,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    RetryEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -678,7 +673,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                     builder.Append("    Locations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -692,13 +687,18 @@ namespace Azure.ResourceManager.ApplicationInsights
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Configuration), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("WebTest", out propertyOverride);
             if (Optional.IsDefined(Configuration) || hasPropertyOverride)
             {
                 builder.Append("    Configuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      Configuration: {");
+                    builder.Append("        WebTest: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -712,7 +712,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -734,7 +734,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    Request: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -748,7 +748,7 @@ namespace Azure.ResourceManager.ApplicationInsights
                 builder.Append("    ValidationRules: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -759,23 +759,6 @@ namespace Azure.ResourceManager.ApplicationInsights
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "WebTest":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("WebTest", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Configuration, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<WebTestData>.Write(ModelReaderWriterOptions options)

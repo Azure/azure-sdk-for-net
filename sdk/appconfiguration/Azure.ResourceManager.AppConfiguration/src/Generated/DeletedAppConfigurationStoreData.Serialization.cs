@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -308,7 +308,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -324,7 +324,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 builder.Append("    configurationStoreId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -338,7 +338,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 builder.Append("    location: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 builder.Append("    deletionDate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -367,7 +367,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 builder.Append("    scheduledPurgeDate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.AppConfiguration
                     builder.Append("    tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.AppConfiguration
                 builder.Append("    purgeProtectionEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

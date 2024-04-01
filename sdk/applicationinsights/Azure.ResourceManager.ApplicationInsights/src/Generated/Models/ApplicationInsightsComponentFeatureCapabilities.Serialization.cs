@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  SupportExportData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -351,7 +351,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  BurstThrottlePolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  MetadataClass: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -395,7 +395,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  LiveStreamMetrics: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -410,7 +410,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ApplicationMap: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -425,7 +425,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  WorkItemIntegration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -440,7 +440,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  PowerBIIntegration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -455,7 +455,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  OpenSchema: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -470,7 +470,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ProactiveDetection: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  AnalyticsIntegration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  MultipleStepWebTest: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -515,7 +515,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ApiAccessLevel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -537,7 +537,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  TrackingType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  DailyCap: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -573,7 +573,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  DailyCapResetTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -587,7 +587,7 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
                 builder.Append("  ThrottleRate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
