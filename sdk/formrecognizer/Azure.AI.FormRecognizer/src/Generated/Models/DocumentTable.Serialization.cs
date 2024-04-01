@@ -72,5 +72,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             return new DocumentTable(rowCount, columnCount, cells, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DocumentTable FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDocumentTable(document.RootElement);
+        }
     }
 }
