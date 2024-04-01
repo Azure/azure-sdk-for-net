@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  directory: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

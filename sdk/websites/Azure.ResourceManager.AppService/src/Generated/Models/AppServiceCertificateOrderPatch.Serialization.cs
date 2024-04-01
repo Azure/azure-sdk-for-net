@@ -502,7 +502,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -546,7 +546,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -560,7 +560,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -578,7 +578,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("    certificates: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -599,7 +599,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    distinguishedName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -621,7 +621,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    domainVerificationToken: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -643,7 +643,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    validityInYears: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -657,7 +657,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    keySize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -671,7 +671,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    productType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    autoRenew: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -700,7 +700,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -714,7 +714,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -728,7 +728,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    signedCertificate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -742,7 +742,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    csr: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -764,7 +764,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    intermediate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -778,7 +778,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    root: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -792,7 +792,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    serialNumber: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -814,7 +814,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    lastCertificateIssuanceTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -829,7 +829,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    expirationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -844,7 +844,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    isPrivateKeyExternal: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -861,7 +861,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("    appServiceCertificateNotRenewableReasons: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -881,7 +881,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    nextAutoRenewalTimeStamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -896,7 +896,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("    contact: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

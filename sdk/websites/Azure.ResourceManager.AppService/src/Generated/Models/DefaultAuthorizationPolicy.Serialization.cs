@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  allowedPrincipals: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  allowedApplications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

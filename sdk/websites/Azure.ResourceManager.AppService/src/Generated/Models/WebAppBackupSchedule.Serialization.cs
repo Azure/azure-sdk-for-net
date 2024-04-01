@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.AppService.Models
             builder.Append("  frequencyInterval: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
             builder.Append("  frequencyUnit: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.AppService.Models
             builder.Append("  keepAtLeastOneBackup: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.AppService.Models
             builder.Append("  retentionPeriodInDays: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  startTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  lastExecutionTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

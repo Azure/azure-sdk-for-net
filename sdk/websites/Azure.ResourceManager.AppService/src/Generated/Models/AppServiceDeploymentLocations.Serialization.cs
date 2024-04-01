@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  locations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  hostingEnvironments: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  hostingEnvironmentDeploymentInfos: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

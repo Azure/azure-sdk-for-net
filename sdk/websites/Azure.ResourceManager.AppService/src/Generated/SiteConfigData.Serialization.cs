@@ -1859,11 +1859,6 @@ namespace Azure.ResourceManager.AppService
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -1872,7 +1867,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1894,7 +1889,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1916,7 +1911,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1930,7 +1925,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1946,7 +1941,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    numberOfWorkers: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1962,7 +1957,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    defaultDocuments: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -1995,7 +1990,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    netFrameworkVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2017,7 +2012,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    phpVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2039,7 +2034,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    pythonVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2061,7 +2056,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    nodeVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2083,7 +2078,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    powerShellVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2105,7 +2100,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    linuxFxVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2127,7 +2122,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    windowsFxVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2149,7 +2144,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    requestTracingEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2164,7 +2159,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    requestTracingExpirationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2179,7 +2174,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    remoteDebuggingEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2194,7 +2189,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    remoteDebuggingVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2216,7 +2211,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    httpLoggingEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2231,7 +2226,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    acrUseManagedIdentityCreds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2246,7 +2241,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    acrUserManagedIdentityID: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2268,7 +2263,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    logsDirectorySizeLimit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2282,7 +2277,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    detailedErrorLoggingEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2297,7 +2292,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    publishingUsername: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2321,7 +2316,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    appSettings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -2343,7 +2338,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    connectionStrings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -2363,7 +2358,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    machineKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2379,7 +2374,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    handlerMappings: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -2399,7 +2394,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    documentRoot: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2421,7 +2416,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    scmType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2435,7 +2430,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    use32BitWorkerProcess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2450,7 +2445,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    webSocketsEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2465,7 +2460,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    alwaysOn: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2480,7 +2475,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    javaVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2502,7 +2497,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    javaContainer: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2524,7 +2519,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    javaContainerVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2546,7 +2541,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    appCommandLine: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2568,7 +2563,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    managedPipelineMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2584,7 +2579,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    virtualApplications: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -2604,7 +2599,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    loadBalancing: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2612,13 +2607,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Experiments), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ExperimentsRampUpRules", out propertyOverride);
             if (Optional.IsDefined(Experiments) || hasPropertyOverride)
             {
                 builder.Append("    experiments: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      experiments: {");
+                    builder.Append("        rampUpRules: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -2632,7 +2632,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    limits: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2646,7 +2646,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    autoHealEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2661,7 +2661,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    autoHealRules: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2675,7 +2675,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    tracingOptions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2697,7 +2697,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    vnetName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2719,7 +2719,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    vnetRouteAllEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2734,7 +2734,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    vnetPrivatePortsCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2748,7 +2748,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    cors: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2762,7 +2762,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    push: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2770,13 +2770,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiDefinition), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ApiDefinitionUri", out propertyOverride);
             if (Optional.IsDefined(ApiDefinition) || hasPropertyOverride)
             {
                 builder.Append("    apiDefinition: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      apiDefinition: {");
+                    builder.Append("        url: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -2784,13 +2789,18 @@ namespace Azure.ResourceManager.AppService
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ApiManagementConfig), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("ApiManagementConfigId", out propertyOverride);
             if (Optional.IsDefined(ApiManagementConfig) || hasPropertyOverride)
             {
                 builder.Append("    apiManagementConfig: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      apiManagementConfig: {");
+                    builder.Append("        id: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -2804,7 +2814,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    autoSwapSlotName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2826,7 +2836,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    localMySqlEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2841,7 +2851,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    managedServiceIdentityId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2855,7 +2865,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    xManagedServiceIdentityId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2869,7 +2879,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    keyVaultReferenceIdentity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2893,7 +2903,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    ipSecurityRestrictions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -2915,7 +2925,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    scmIpSecurityRestrictions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -2935,7 +2945,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    scmIpSecurityRestrictionsUseMain: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2950,7 +2960,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    http20Enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2965,7 +2975,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    minTlsVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2979,7 +2989,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    scmMinTlsVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -2993,7 +3003,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    ftpsState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -3007,7 +3017,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    preWarmedInstanceCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -3021,7 +3031,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    functionAppScaleLimit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -3035,7 +3045,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    healthCheckPath: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -3057,7 +3067,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    functionsRuntimeScaleMonitoringEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -3072,7 +3082,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    websiteTimeZone: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -3094,7 +3104,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    minimumElasticInstanceCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -3110,7 +3120,7 @@ namespace Azure.ResourceManager.AppService
                     builder.Append("    azureStorageAccounts: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -3131,7 +3141,7 @@ namespace Azure.ResourceManager.AppService
                 builder.Append("    publicNetworkAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -3150,33 +3160,6 @@ namespace Azure.ResourceManager.AppService
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "ExperimentsRampUpRules":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("RampUpRules", item.Value);
-                        bicepOptions.PropertyOverrides.Add(Experiments, propertyDictionary);
-                        break;
-                    case "ApiDefinitionUri":
-                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
-                        propertyDictionary0.Add("Uri", item.Value);
-                        bicepOptions.PropertyOverrides.Add(ApiDefinition, propertyDictionary0);
-                        break;
-                    case "ApiManagementConfigId":
-                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
-                        propertyDictionary1.Add("Id", item.Value);
-                        bicepOptions.PropertyOverrides.Add(ApiManagementConfig, propertyDictionary1);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<SiteConfigData>.Write(ModelReaderWriterOptions options)

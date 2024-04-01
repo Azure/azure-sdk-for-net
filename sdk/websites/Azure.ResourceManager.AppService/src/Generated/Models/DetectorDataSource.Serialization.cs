@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  instructions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  dataSourceUri: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

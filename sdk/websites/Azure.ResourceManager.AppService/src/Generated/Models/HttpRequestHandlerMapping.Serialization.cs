@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  extension: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  scriptProcessor: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  arguments: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

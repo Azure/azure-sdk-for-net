@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  groups: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.AppService.Models
                     builder.Append("  identities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

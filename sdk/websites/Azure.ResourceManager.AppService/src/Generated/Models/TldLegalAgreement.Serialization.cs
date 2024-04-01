@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  agreementKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  title: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  content: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  url: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

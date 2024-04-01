@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  keyVaultId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  keyVaultSecretName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

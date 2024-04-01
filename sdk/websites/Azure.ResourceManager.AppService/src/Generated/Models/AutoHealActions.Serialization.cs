@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  actionType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  customAction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.AppService.Models
                 builder.Append("  minProcessExecutionTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
