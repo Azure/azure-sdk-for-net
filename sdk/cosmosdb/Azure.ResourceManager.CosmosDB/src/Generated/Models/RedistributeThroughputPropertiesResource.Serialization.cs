@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.Append("  throughputPolicy: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  targetPhysicalPartitionThroughputInfo: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  sourcePhysicalPartitionThroughputInfo: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

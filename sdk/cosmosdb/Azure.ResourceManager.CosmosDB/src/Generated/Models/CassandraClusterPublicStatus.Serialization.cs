@@ -207,7 +207,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  eTag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  reaperStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  connectionErrors: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -259,7 +259,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  errors: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  dataCenters: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

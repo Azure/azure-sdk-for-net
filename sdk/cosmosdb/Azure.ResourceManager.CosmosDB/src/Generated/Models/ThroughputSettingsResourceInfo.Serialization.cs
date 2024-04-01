@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  throughput: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  autoscaleSettings: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  minimumThroughput: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  offerReplacePending: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  instantMaximumThroughput: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  softAllowedMaximumThroughput: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

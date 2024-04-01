@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  columns: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  partitionKeys: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  clusterKeys: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

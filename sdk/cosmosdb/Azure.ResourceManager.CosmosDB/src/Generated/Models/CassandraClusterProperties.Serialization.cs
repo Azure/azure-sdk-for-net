@@ -569,11 +569,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
@@ -582,7 +577,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -596,7 +591,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  restoreFromBackupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -618,7 +613,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  delegatedManagementSubnetId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -632,7 +627,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  cassandraVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -654,7 +649,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  clusterNameOverride: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -676,7 +671,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  authenticationMethod: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -690,7 +685,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  initialCassandraAdminPassword: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -706,13 +701,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrometheusEndpoint), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrometheusEndpointIPAddress", out propertyOverride);
             if (Optional.IsDefined(PrometheusEndpoint) || hasPropertyOverride)
             {
                 builder.Append("  prometheusEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.Append("    ipAddress: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("  }");
                 }
                 else
                 {
@@ -726,7 +724,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  repairEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -741,7 +739,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  autoReplicate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -757,7 +755,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  clientCertificates: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -779,7 +777,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  externalGossipCertificates: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -801,7 +799,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  gossipCertificates: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -823,7 +821,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  externalSeedNodes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -845,7 +843,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  seedNodes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -867,7 +865,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  externalDataCenters: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -900,7 +898,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  hoursBetweenBackups: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -914,7 +912,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  deallocated: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -929,7 +927,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  cassandraAuditLoggingEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -944,7 +942,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  clusterType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -958,7 +956,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  provisionError: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -974,7 +972,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  extensions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -1009,7 +1007,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  backupSchedules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -1029,7 +1027,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  scheduledEventStrategy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1043,7 +1041,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  azureConnectionMethod: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1057,7 +1055,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  privateLinkResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1067,23 +1065,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "PrometheusEndpointIPAddress":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("IPAddress", item.Value);
-                        bicepOptions.PropertyOverrides.Add(PrometheusEndpoint, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<CassandraClusterProperties>.Write(ModelReaderWriterOptions options)

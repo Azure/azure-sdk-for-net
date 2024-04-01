@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  seedNodes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  nodes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

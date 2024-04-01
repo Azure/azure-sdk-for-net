@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  connectionState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  iPFrom: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  iPTo: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  port: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  exception: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

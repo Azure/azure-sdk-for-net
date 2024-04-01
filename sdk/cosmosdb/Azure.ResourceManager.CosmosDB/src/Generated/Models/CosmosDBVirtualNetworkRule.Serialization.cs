@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  ignoreMissingVNetServiceEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.CosmosDB
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.CosmosDB
                 builder.Append("    roleName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.CosmosDB
                 builder.Append("    type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.CosmosDB
                     builder.Append("    assignableScopes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.CosmosDB
                     builder.Append("    permissions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

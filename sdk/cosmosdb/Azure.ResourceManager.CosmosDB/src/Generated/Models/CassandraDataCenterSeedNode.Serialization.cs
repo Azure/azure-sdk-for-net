@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  ipAddress: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

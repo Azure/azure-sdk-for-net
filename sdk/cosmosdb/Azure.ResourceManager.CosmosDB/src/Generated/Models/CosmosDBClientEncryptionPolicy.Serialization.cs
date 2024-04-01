@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  includedPaths: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.Append("  policyFormatVersion: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {

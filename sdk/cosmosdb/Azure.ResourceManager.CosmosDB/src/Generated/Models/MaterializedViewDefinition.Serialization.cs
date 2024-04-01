@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  sourceCollectionRid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  sourceCollectionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  definition: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

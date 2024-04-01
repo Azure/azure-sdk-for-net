@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  generationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

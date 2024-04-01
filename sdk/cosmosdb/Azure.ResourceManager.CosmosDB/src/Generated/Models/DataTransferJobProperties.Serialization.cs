@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  jobName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  source: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  destination: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -322,7 +322,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  processedCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -336,7 +336,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  totalCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -350,7 +350,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  lastUpdatedUtcTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  workerCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -379,7 +379,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  error: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -393,7 +393,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  duration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  mode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

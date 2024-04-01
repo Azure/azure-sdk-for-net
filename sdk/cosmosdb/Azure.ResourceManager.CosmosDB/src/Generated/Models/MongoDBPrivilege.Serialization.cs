@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  resource: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  actions: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

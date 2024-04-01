@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  restoreMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  databasesToRestore: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -285,7 +285,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  gremlinDatabasesToRestore: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -307,7 +307,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  tablesToRestore: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  sourceBackupLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -362,7 +362,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  restoreSource: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -384,7 +384,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  restoreTimestampInUtc: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  restoreWithTtlDisabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  _colls: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  _users: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  _self: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  _rid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -305,7 +305,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  _ts: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  _etag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -333,7 +333,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -355,7 +355,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  restoreParameters: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  createMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

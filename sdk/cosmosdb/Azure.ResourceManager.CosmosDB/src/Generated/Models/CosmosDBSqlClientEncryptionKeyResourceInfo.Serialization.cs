@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  encryptionAlgorithm: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  wrappedDataEncryptionKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  keyWrapMetadata: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

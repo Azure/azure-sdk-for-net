@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  graphApiComputeEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -226,7 +226,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     builder.Append("  locations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  creationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  instanceSize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  instanceCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.Append("  serviceType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

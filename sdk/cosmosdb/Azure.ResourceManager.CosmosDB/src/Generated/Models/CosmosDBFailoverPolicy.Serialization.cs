@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  locationName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  failoverPriority: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

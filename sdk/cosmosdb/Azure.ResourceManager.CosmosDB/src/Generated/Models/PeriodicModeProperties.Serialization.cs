@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  backupIntervalInMinutes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  backupRetentionIntervalInHours: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  backupStorageRedundancy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

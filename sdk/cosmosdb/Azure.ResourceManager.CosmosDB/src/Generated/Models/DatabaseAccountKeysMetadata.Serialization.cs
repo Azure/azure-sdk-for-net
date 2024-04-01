@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Text.Json;
 using Azure.Core;
@@ -148,20 +147,18 @@ namespace Azure.ResourceManager.CosmosDB.Models
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryMasterKey), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrimaryMasterKeyGeneratedOn", out propertyOverride);
             if (Optional.IsDefined(PrimaryMasterKey) || hasPropertyOverride)
             {
                 builder.Append("  primaryMasterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.Append("    generationTime: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("  }");
                 }
                 else
                 {
@@ -169,13 +166,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryMasterKey), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SecondaryMasterKeyGeneratedOn", out propertyOverride);
             if (Optional.IsDefined(SecondaryMasterKey) || hasPropertyOverride)
             {
                 builder.Append("  secondaryMasterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.Append("    generationTime: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("  }");
                 }
                 else
                 {
@@ -183,13 +183,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrimaryReadonlyMasterKey), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("PrimaryReadonlyMasterKeyGeneratedOn", out propertyOverride);
             if (Optional.IsDefined(PrimaryReadonlyMasterKey) || hasPropertyOverride)
             {
                 builder.Append("  primaryReadonlyMasterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.Append("    generationTime: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("  }");
                 }
                 else
                 {
@@ -197,13 +200,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SecondaryReadonlyMasterKey), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("SecondaryReadonlyMasterKeyGeneratedOn", out propertyOverride);
             if (Optional.IsDefined(SecondaryReadonlyMasterKey) || hasPropertyOverride)
             {
                 builder.Append("  secondaryReadonlyMasterKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.Append("    generationTime: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("  }");
                 }
                 else
                 {
@@ -213,38 +219,6 @@ namespace Azure.ResourceManager.CosmosDB.Models
 
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "PrimaryMasterKeyGeneratedOn":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("GeneratedOn", item.Value);
-                        bicepOptions.PropertyOverrides.Add(PrimaryMasterKey, propertyDictionary);
-                        break;
-                    case "SecondaryMasterKeyGeneratedOn":
-                        Dictionary<string, string> propertyDictionary0 = new Dictionary<string, string>();
-                        propertyDictionary0.Add("GeneratedOn", item.Value);
-                        bicepOptions.PropertyOverrides.Add(SecondaryMasterKey, propertyDictionary0);
-                        break;
-                    case "PrimaryReadonlyMasterKeyGeneratedOn":
-                        Dictionary<string, string> propertyDictionary1 = new Dictionary<string, string>();
-                        propertyDictionary1.Add("GeneratedOn", item.Value);
-                        bicepOptions.PropertyOverrides.Add(PrimaryReadonlyMasterKey, propertyDictionary1);
-                        break;
-                    case "SecondaryReadonlyMasterKeyGeneratedOn":
-                        Dictionary<string, string> propertyDictionary2 = new Dictionary<string, string>();
-                        propertyDictionary2.Add("GeneratedOn", item.Value);
-                        bicepOptions.PropertyOverrides.Add(SecondaryReadonlyMasterKey, propertyDictionary2);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<DatabaseAccountKeysMetadata>.Write(ModelReaderWriterOptions options)

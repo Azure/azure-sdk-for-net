@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  containerName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 builder.Append("  endpointUrl: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             builder.Append("  component: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
