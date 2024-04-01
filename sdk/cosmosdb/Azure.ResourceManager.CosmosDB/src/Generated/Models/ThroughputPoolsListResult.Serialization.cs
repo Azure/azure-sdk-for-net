@@ -34,7 +34,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue<ThroughputPoolResourceData>(item, options);
+                    writer.WriteObjectValue<CosmosDBThroughputPoolData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 return null;
             }
-            IReadOnlyList<ThroughputPoolResourceData> value = default;
+            IReadOnlyList<CosmosDBThroughputPoolData> value = default;
             string nextLink = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -93,10 +93,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                     {
                         continue;
                     }
-                    List<ThroughputPoolResourceData> array = new List<ThroughputPoolResourceData>();
+                    List<CosmosDBThroughputPoolData> array = new List<CosmosDBThroughputPoolData>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ThroughputPoolResourceData.DeserializeThroughputPoolResourceData(item, options));
+                        array.Add(CosmosDBThroughputPoolData.DeserializeCosmosDBThroughputPoolData(item, options));
                     }
                     value = array;
                     continue;
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ThroughputPoolsListResult(value ?? new ChangeTrackingList<ThroughputPoolResourceData>(), nextLink, serializedAdditionalRawData);
+            return new ThroughputPoolsListResult(value ?? new ChangeTrackingList<CosmosDBThroughputPoolData>(), nextLink, serializedAdditionalRawData);
         }
 
         private BinaryData SerializeBicep(ModelReaderWriterOptions options)

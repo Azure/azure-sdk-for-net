@@ -37,10 +37,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 writer.WritePropertyName("restoreTimestampInUtc"u8);
                 writer.WriteStringValue(RestoreTimestampInUtc.Value, "O");
             }
-            if (Optional.IsDefined(RestoreWithTtlDisabled))
+            if (Optional.IsDefined(IsRestoreWithTtlDisabled))
             {
                 writer.WritePropertyName("restoreWithTtlDisabled"u8);
-                writer.WriteBooleanValue(RestoreWithTtlDisabled.Value);
+                writer.WriteBooleanValue(IsRestoreWithTtlDisabled.Value);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -167,8 +167,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RestoreWithTtlDisabled), out propertyOverride);
-            if (Optional.IsDefined(RestoreWithTtlDisabled) || hasPropertyOverride)
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsRestoreWithTtlDisabled), out propertyOverride);
+            if (Optional.IsDefined(IsRestoreWithTtlDisabled) || hasPropertyOverride)
             {
                 builder.Append("  restoreWithTtlDisabled: ");
                 if (hasPropertyOverride)
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 }
                 else
                 {
-                    var boolValue = RestoreWithTtlDisabled.Value == true ? "true" : "false";
+                    var boolValue = IsRestoreWithTtlDisabled.Value == true ? "true" : "false";
                     builder.AppendLine($"{boolValue}");
                 }
             }
