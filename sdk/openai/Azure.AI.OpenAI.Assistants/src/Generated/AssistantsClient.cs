@@ -8,6 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -3226,11 +3227,14 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNull(data, nameof(data));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose)
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data.ToStream(), purpose)
             {
                 Filename = filename
             };
-            Response response = await UploadFileAsync(uploadFileRequest.ToRequestContent(), context).ConfigureAwait(false);
+
+            using MultipartFormDataBinaryContent content = uploadFileRequest.ToMultipartContent();
+
+            Response response = await UploadFileAsync(content, content.ContentType, context).ConfigureAwait(false);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
@@ -3245,11 +3249,13 @@ namespace Azure.AI.OpenAI.Assistants
             Argument.AssertNotNull(data, nameof(data));
 
             RequestContext context = FromCancellationToken(cancellationToken);
-            UploadFileRequest uploadFileRequest = new UploadFileRequest(data, purpose)
+            UploadFileRequest uploadFileRequest = new UploadFileRequest(data.ToStream(), purpose)
             {
                 Filename = filename
             };
-            Response response = UploadFile(uploadFileRequest.ToRequestContent(), context);
+
+            using MultipartFormDataBinaryContent content = uploadFileRequest.ToMultipartContent();
+            Response response = UploadFile(content, content.ContentType, context);
             return Response.FromValue(OpenAIFile.FromResponse(response), response);
         }
 
@@ -3264,11 +3270,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType">The type of the request content.</param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual async Task<Response> UploadFileAsync(RequestContent content, RequestContext context = null)
+        internal virtual async Task<Response> UploadFileAsync(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3276,7 +3283,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadFileRequest(content, context);
+                using HttpMessage message = CreateUploadFileRequest(content, contentType, context);
                 return await _pipeline.ProcessMessageAsync(message, context).ConfigureAwait(false);
             }
             catch (Exception e)
@@ -3297,11 +3304,12 @@ namespace Azure.AI.OpenAI.Assistants
         /// </list>
         /// </summary>
         /// <param name="content"> The content to send as the body of the request. </param>
+        /// <param name="contentType">The type of the request content.</param>
         /// <param name="context"> The request context, which can override default behaviors of the client pipeline on a per-call basis. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         /// <exception cref="RequestFailedException"> Service returned a non-success status code. </exception>
         /// <returns> The response returned from the service. </returns>
-        internal virtual Response UploadFile(RequestContent content, RequestContext context = null)
+        internal virtual Response UploadFile(RequestContent content, string contentType, RequestContext context = null)
         {
             Argument.AssertNotNull(content, nameof(content));
 
@@ -3309,7 +3317,7 @@ namespace Azure.AI.OpenAI.Assistants
             scope.Start();
             try
             {
-                using HttpMessage message = CreateUploadFileRequest(content, context);
+                using HttpMessage message = CreateUploadFileRequest(content, contentType, context);
                 return _pipeline.ProcessMessage(message, context);
             }
             catch (Exception e)
