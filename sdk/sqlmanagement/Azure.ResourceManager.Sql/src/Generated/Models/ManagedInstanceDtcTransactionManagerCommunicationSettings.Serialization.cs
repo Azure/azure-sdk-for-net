@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  allowInboundEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  allowOutboundEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  authentication: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

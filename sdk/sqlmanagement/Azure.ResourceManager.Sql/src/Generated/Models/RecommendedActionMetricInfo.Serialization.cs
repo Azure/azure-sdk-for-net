@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  metricName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  unit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  timeGrain: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  startTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  value: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

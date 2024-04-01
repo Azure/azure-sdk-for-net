@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  etag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -281,7 +281,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -311,7 +311,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    immutabilityPeriodSinceCreationInDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -325,7 +325,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    state: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    allowProtectedAppendWrites: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    allowProtectedAppendWritesAll: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  routingChoice: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  publishMicrosoftEndpoints: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  publishInternetEndpoints: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

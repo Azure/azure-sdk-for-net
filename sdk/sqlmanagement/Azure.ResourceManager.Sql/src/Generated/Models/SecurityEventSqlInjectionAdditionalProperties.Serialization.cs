@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  threatId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  statement: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  statementHighlightOffset: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  statementHighlightLength: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  errorCode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  errorSeverity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -296,7 +296,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  errorMessage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

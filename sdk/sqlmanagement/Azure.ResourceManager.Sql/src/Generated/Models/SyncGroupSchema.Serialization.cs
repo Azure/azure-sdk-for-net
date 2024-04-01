@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  tables: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  masterSyncMemberName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

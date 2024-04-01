@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -354,7 +354,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  location: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -368,7 +368,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -390,7 +390,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -404,7 +404,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    aliasName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    ruleState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -456,7 +456,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    schemaName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -478,7 +478,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    tableName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -500,7 +500,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    columnName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    maskingFunction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -536,7 +536,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    numberFrom: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -558,7 +558,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    numberTo: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -580,7 +580,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    prefixSize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -602,7 +602,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    suffixSize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    replacementString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

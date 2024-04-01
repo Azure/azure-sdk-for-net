@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  allowProtectedAppendWritesAll: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  timestamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

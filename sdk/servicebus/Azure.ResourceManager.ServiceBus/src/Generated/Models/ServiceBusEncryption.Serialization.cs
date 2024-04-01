@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     builder.Append("  keyVaultProperties: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  keySource: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  requireInfrastructureEncryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

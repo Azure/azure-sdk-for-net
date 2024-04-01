@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  services: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  keySource: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  requireInfrastructureEncryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  keyvaultproperties: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     builder.Append("  categories: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

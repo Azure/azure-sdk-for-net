@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  numberOfQueries: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  aggregationFunction: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  observationMetric: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  intervalType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -275,7 +275,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  startTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -297,7 +297,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  endTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -321,7 +321,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  queries: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

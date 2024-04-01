@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -505,7 +505,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  etag: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -519,7 +519,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -533,7 +533,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -549,7 +549,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    lastModifiedTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -566,7 +566,7 @@ namespace Azure.ResourceManager.Storage
                     builder.Append("    metadata: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -600,7 +600,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    shareQuota: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -614,7 +614,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    enabledProtocols: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    rootSquash: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -642,7 +642,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    version: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    deleted: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    deletedTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -694,7 +694,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    remainingRetentionDays: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -708,7 +708,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    accessTier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    accessTierChangeTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -737,7 +737,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    accessTierStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -759,7 +759,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    shareUsageBytes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    leaseStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -787,7 +787,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    leaseState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -801,7 +801,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    leaseDuration: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -817,7 +817,7 @@ namespace Azure.ResourceManager.Storage
                     builder.Append("    signedIdentifiers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -837,7 +837,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    snapshotTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

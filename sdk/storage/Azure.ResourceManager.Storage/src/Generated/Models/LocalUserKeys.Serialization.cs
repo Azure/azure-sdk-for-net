@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  sshAuthorizedKeys: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  sharedKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

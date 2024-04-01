@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  currentParameters: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  requestedParameters: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

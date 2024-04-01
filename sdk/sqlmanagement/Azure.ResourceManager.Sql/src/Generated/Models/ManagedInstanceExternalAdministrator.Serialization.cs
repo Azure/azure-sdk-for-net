@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  administratorType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  principalType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  login: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  sid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  tenantId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -266,7 +266,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  azureADOnlyAuthentication: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

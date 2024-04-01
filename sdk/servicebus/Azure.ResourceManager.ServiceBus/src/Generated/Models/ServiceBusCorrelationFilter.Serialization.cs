@@ -250,7 +250,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     builder.Append("  properties: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  correlationId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  messageId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -320,7 +320,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  to: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -342,7 +342,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  replyTo: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  label: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -386,7 +386,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  sessionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  replyToSessionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  contentType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  requiresPreprocessing: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

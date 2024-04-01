@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Search.Models
                 builder.Append("  groupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Search.Models
                     builder.Append("  requiredMembers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Search.Models
                     builder.Append("  requiredZoneNames: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Search.Models
                     builder.Append("  shareablePrivateLinkResourceTypes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

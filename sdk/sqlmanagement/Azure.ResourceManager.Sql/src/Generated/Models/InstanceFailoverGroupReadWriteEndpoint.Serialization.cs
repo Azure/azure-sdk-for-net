@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Sql.Models
             builder.Append("  failoverPolicy: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  failoverWithDataLossGracePeriodMinutes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

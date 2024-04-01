@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SignalR.Models
                     builder.Append("  allowedOrigins: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

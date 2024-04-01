@@ -317,7 +317,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -339,7 +339,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -353,7 +353,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -369,7 +369,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    serverName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -391,7 +391,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    serverCreateTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -406,7 +406,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    databaseName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -428,7 +428,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    databaseDeletionTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -443,7 +443,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    backupTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -458,7 +458,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    backupExpirationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -473,7 +473,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    backupStorageRedundancy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    requestedBackupStorageRedundancy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    isBackupImmutable: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    backupStorageAccessTier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

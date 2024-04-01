@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -316,7 +316,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    requestId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -330,7 +330,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    operationType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -352,7 +352,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    fromBackupResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -366,7 +366,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    toBackupResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -380,7 +380,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    targetBackupStorageRedundancy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -394,7 +394,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -416,7 +416,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("    message: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Search.Models
                 builder.Append("  privateLinkResourceId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Search.Models
                 builder.Append("  groupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -220,7 +220,7 @@ namespace Azure.ResourceManager.Search.Models
                 builder.Append("  requestMessage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Search.Models
                 builder.Append("  resourceRegion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Search.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Search.Models
                 builder.Append("  provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

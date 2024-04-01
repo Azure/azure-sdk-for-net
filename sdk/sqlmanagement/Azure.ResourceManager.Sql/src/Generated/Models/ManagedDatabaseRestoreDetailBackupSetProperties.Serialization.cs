@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  firstStripeName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  numberOfStripes: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  backupSizeMB: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  restoreStartedTimestampUtc: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  restoreFinishedTimestampUtc: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

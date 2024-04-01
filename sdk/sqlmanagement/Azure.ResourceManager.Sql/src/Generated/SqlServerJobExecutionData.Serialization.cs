@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -401,7 +401,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -417,7 +417,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    jobVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -431,7 +431,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    stepName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -453,7 +453,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    stepId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -467,7 +467,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    jobExecutionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -481,7 +481,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    lifecycle: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -495,7 +495,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -509,7 +509,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    createTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -524,7 +524,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    startTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    endTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    currentAttempts: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -568,7 +568,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    currentAttemptStartTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -583,7 +583,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    lastMessage: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -605,7 +605,7 @@ namespace Azure.ResourceManager.Sql
                 builder.Append("    target: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

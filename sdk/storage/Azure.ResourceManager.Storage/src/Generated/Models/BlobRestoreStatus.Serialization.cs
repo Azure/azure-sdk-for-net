@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  failureReason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  restoreId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  parameters: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

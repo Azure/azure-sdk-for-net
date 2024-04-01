@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  prefixMatch: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  excludePrefix: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -295,7 +295,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  blobTypes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -328,7 +328,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  includeBlobVersions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  includeSnapshots: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -358,7 +358,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  includeDeleted: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  primaryAggregationType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  resourceUri: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  unit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -249,7 +249,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  metricAvailabilities: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  corsRules: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

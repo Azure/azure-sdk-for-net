@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -312,7 +312,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -344,7 +344,7 @@ namespace Azure.ResourceManager.Storage
                     builder.Append("    permissionScopes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -364,7 +364,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    homeDirectory: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -388,7 +388,7 @@ namespace Azure.ResourceManager.Storage
                     builder.Append("    sshAuthorizedKeys: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    sid: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -430,7 +430,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    hasSharedKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -445,7 +445,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    hasSshKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -460,7 +460,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    hasSshPassword: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -383,7 +383,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -418,7 +418,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -452,7 +452,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -466,7 +466,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -480,7 +480,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -494,7 +494,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -510,7 +510,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -554,7 +554,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    createdAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -569,7 +569,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    updatedAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -584,7 +584,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    serviceBusEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -606,7 +606,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    metricId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -628,7 +628,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    encryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -644,7 +644,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                     builder.Append("    privateEndpointConnections: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -664,7 +664,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    disableLocalAuth: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -679,7 +679,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("    alternateName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

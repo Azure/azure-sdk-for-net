@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  minValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  maxValue: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  scaleSize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  logSize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  reason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

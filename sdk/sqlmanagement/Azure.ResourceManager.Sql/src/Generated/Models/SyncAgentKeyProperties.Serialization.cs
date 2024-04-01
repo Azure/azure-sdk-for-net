@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  syncAgentKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

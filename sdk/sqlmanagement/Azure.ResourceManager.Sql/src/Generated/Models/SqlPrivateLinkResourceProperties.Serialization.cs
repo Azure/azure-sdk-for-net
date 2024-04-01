@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  groupId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  requiredMembers: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  requiredZoneNames: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

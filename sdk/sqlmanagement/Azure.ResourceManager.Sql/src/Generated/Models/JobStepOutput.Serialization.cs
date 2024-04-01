@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  subscriptionId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  resourceGroupName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  serverName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  databaseName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  schemaName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  tableName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -326,7 +326,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  credential: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -448,7 +448,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -468,7 +468,7 @@ namespace Azure.ResourceManager.ServiceBus
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -483,7 +483,7 @@ namespace Azure.ResourceManager.ServiceBus
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -517,7 +517,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("  sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -531,7 +531,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -545,7 +545,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -559,7 +559,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -575,7 +575,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    minimumTlsVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -589,7 +589,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -633,7 +633,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    createdAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -648,7 +648,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    updatedAt: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -663,7 +663,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    serviceBusEndpoint: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -685,7 +685,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    metricId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -707,7 +707,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    zoneRedundant: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -722,7 +722,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    encryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -738,7 +738,7 @@ namespace Azure.ResourceManager.ServiceBus
                     builder.Append("    privateEndpointConnections: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -758,7 +758,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    disableLocalAuth: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -773,7 +773,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    alternateName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -795,7 +795,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    publicNetworkAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -809,7 +809,7 @@ namespace Azure.ResourceManager.ServiceBus
                 builder.Append("    premiumMessagingPartitions: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

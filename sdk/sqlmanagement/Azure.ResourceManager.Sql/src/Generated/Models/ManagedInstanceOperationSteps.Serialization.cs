@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  totalSteps: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  currentStep: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  stepsList: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

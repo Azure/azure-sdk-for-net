@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  filters: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.Storage.Models
             builder.Append("  format: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Storage.Models
             builder.Append("  schedule: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.Storage.Models
             builder.Append("  objectType: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  schemaFields: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {

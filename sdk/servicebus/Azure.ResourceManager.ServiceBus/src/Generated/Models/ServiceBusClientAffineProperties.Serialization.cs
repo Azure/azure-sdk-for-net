@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  clientId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  isDurable: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  isShared: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

@@ -879,11 +879,6 @@ namespace Azure.ResourceManager.Storage
             bool hasPropertyOverride = false;
             string propertyOverride = null;
 
-            if (propertyOverrides != null)
-            {
-                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
-            }
-
             builder.AppendLine("{");
 
             hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
@@ -892,7 +887,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -912,7 +907,7 @@ namespace Azure.ResourceManager.Storage
             builder.Append("  location: ");
             if (hasPropertyOverride)
             {
-                builder.AppendLine($"{propertyOverride}");
+                builder.AppendLine(propertyOverride);
             }
             else
             {
@@ -927,7 +922,7 @@ namespace Azure.ResourceManager.Storage
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -961,7 +956,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -975,7 +970,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  kind: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -989,7 +984,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  identity: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1003,7 +998,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  extendedLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1017,7 +1012,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  id: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1031,7 +1026,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("  systemData: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1047,7 +1042,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    provisioningState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1061,7 +1056,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    primaryEndpoints: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1075,7 +1070,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    primaryLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1089,7 +1084,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    statusOfPrimary: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1103,7 +1098,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    lastGeoFailoverTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1118,7 +1113,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    secondaryLocation: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1132,7 +1127,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    statusOfSecondary: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1146,7 +1141,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    creationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1161,7 +1156,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    customDomain: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1175,7 +1170,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    sasPolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1183,13 +1178,18 @@ namespace Azure.ResourceManager.Storage
                 }
             }
 
-            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(KeyPolicy), out propertyOverride);
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue("KeyExpirationPeriodInDays", out propertyOverride);
             if (Optional.IsDefined(KeyPolicy) || hasPropertyOverride)
             {
                 builder.Append("    keyPolicy: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine("{");
+                    builder.AppendLine("      keyPolicy: {");
+                    builder.Append("        keyExpirationPeriodInDays: ");
+                    builder.AppendLine(propertyOverride);
+                    builder.AppendLine("      }");
+                    builder.AppendLine("    }");
                 }
                 else
                 {
@@ -1203,7 +1203,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    keyCreationTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1217,7 +1217,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    secondaryEndpoints: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1231,7 +1231,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    encryption: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1245,7 +1245,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    accessTier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1259,7 +1259,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    azureFilesIdentityBasedAuthentication: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1273,7 +1273,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    supportsHttpsTrafficOnly: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1288,7 +1288,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    networkAcls: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1302,7 +1302,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    isSftpEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1317,7 +1317,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    isLocalUserEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1332,7 +1332,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    isHnsEnabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1347,7 +1347,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    geoReplicationStats: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1361,7 +1361,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    failoverInProgress: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1376,7 +1376,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    largeFileSharesState: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1392,7 +1392,7 @@ namespace Azure.ResourceManager.Storage
                     builder.Append("    privateEndpointConnections: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -1412,7 +1412,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    routingPreference: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1426,7 +1426,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    blobRestoreStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1440,7 +1440,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    allowBlobPublicAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1455,7 +1455,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    minimumTlsVersion: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1469,7 +1469,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    allowSharedKeyAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1484,7 +1484,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    isNfsV3Enabled: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1499,7 +1499,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    allowCrossTenantReplication: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1514,7 +1514,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    defaultToOAuthAuthentication: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1529,7 +1529,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    publicNetworkAccess: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1543,7 +1543,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    immutableStorageWithVersioning: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1557,7 +1557,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    allowedCopyScope: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1571,7 +1571,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    storageAccountSkuConversionStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1585,7 +1585,7 @@ namespace Azure.ResourceManager.Storage
                 builder.Append("    dnsEndpointType: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -1596,23 +1596,6 @@ namespace Azure.ResourceManager.Storage
             builder.AppendLine("  }");
             builder.AppendLine("}");
             return BinaryData.FromString(builder.ToString());
-        }
-
-        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
-        {
-            foreach (var item in propertyOverrides.ToList())
-            {
-                switch (item.Key)
-                {
-                    case "KeyExpirationPeriodInDays":
-                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
-                        propertyDictionary.Add("KeyExpirationPeriodInDays", item.Value);
-                        bicepOptions.PropertyOverrides.Add(KeyPolicy, propertyDictionary);
-                        break;
-                    default:
-                        continue;
-                }
-            }
         }
 
         BinaryData IPersistableModel<StorageAccountData>.Write(ModelReaderWriterOptions options)

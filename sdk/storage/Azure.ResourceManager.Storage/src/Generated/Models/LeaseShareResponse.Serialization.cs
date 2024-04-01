@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  leaseId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  leaseTimeSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

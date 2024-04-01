@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  hubPattern: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  eventPattern: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  categoryPattern: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  urlTemplate: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  auth: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

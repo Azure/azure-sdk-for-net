@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  description: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

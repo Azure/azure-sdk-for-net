@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  hasLegalHold: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Storage.Models
                     builder.Append("  tags: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  protectedAppendWritesHistory: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

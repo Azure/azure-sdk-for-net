@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  primaryKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  secondaryKey: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  primaryConnectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  secondaryConnectionString: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

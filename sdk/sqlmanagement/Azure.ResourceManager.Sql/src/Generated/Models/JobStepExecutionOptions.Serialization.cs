@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  timeoutSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  retryAttempts: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  initialRetryIntervalSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  maximumRetryIntervalSeconds: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  retryIntervalBackoffMultiplier: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

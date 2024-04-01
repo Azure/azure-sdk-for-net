@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.SignalR.Models
                 builder.Append("  resource: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

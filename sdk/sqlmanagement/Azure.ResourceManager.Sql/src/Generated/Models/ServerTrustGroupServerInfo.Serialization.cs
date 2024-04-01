@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  serverId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

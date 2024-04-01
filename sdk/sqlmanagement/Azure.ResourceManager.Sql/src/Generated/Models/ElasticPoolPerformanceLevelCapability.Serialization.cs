@@ -335,7 +335,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  performanceLevel: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -349,7 +349,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  sku: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -365,7 +365,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  supportedLicenseTypes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -385,7 +385,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  maxDatabaseCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -399,7 +399,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  includedMaxSize: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -415,7 +415,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  supportedMaxSizes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -437,7 +437,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  supportedPerDatabaseMaxSizes: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -459,7 +459,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  supportedPerDatabaseMaxPerformanceLevels: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -479,7 +479,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  zoneRedundant: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -496,7 +496,7 @@ namespace Azure.ResourceManager.Sql.Models
                     builder.Append("  supportedMaintenanceConfigurations: ");
                     if (hasPropertyOverride)
                     {
-                        builder.AppendLine($"{propertyOverride}");
+                        builder.AppendLine(propertyOverride);
                     }
                     else
                     {
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  status: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -530,7 +530,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  reason: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

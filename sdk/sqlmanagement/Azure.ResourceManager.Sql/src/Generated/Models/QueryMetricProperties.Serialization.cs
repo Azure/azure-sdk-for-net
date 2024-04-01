@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  name: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  displayName: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  unit: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  value: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  min: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -318,7 +318,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  max: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -332,7 +332,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  avg: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -346,7 +346,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  sum: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -360,7 +360,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  stdev: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

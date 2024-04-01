@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  timestamp: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  type: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  source: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  details: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  tracingId: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Sql.Models
                 builder.Append("  operationStatus: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

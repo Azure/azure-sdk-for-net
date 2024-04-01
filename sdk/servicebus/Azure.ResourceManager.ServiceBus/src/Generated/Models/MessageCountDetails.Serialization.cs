@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  activeMessageCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  deadLetterMessageCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  scheduledMessageCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -218,7 +218,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  transferMessageCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ServiceBus.Models
                 builder.Append("  transferDeadLetterMessageCount: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

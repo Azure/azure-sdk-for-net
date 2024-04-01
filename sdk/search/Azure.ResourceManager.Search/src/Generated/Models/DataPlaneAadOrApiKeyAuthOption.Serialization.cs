@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Search.Models
                 builder.Append("  aadAuthFailureMode: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {

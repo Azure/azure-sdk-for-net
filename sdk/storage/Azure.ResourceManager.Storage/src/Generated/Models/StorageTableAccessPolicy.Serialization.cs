@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  startTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  expiryTime: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Storage.Models
                 builder.Append("  permission: ");
                 if (hasPropertyOverride)
                 {
-                    builder.AppendLine($"{propertyOverride}");
+                    builder.AppendLine(propertyOverride);
                 }
                 else
                 {
