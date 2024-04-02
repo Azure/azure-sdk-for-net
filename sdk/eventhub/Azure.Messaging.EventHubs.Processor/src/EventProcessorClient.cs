@@ -360,12 +360,6 @@ namespace Azure.Messaging.EventHubs
         internal MessagingClientDiagnostics ClientDiagnostics { get; }
 
         /// <summary>
-        ///   Indicates whether or not this processor should instrument batch event processing calls with distributed tracing.
-        /// </summary>
-        ///
-        protected override bool? IsBatchTracingEnabled { get => false; }
-
-        /// <summary>
         ///   Responsible for creation of checkpoints and for ownership claim.
         /// </summary>
         ///
@@ -491,6 +485,8 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -527,6 +523,8 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -563,6 +561,8 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -599,6 +599,8 @@ namespace Azure.Messaging.EventHubs
 
             _containerClient = checkpointStore;
             CheckpointStore = new BlobCheckpointStoreInternal(checkpointStore);
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -635,6 +637,8 @@ namespace Azure.Messaging.EventHubs
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
             CheckpointStore = checkpointStore;
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -671,6 +675,8 @@ namespace Azure.Messaging.EventHubs
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
             CheckpointStore = checkpointStore;
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -707,6 +713,8 @@ namespace Azure.Messaging.EventHubs
 
             DefaultStartingPosition = (clientOptions?.DefaultStartingPosition ?? DefaultStartingPosition);
             CheckpointStore = checkpointStore;
+
+            EnableBatchTracing = false;
             ClientDiagnostics = new MessagingClientDiagnostics(
                 DiagnosticProperty.DiagnosticNamespace,
                 DiagnosticProperty.ResourceProviderNamespace,
@@ -721,6 +729,7 @@ namespace Azure.Messaging.EventHubs
         ///
         protected EventProcessorClient() : base()
         {
+            EnableBatchTracing = false;
         }
 
         /// <summary>
