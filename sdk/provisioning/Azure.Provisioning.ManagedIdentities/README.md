@@ -1,6 +1,6 @@
 # Azure Provisioning client library for .NET
 
-Azure.Provisioning.ManagedIdentities is a cloud development kit that allows you to declaratively specify your Azure infrastructure natively in .NET.
+Azure.Provisioning.ManagedIdentities simplifies declarative resource provisioning in .NET for Azure Managed Identities.
 
 ## Getting started
 

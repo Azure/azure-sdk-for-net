@@ -1,6 +1,6 @@
 # Azure Provisioning client library for .NET
 
-Azure.Provisioning.EventHubs is a cloud development kit that allows you to declaratively specify your Azure infrastructure natively in .NET.
+Azure.Provisioning.EventHubs simplifies declarative resource provisioning in .NET for Azure Event Hubs.
 
 ## Getting started
 

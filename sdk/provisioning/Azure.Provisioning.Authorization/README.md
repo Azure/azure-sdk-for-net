@@ -1,6 +1,6 @@
 # Azure Provisioning client library for .NET
 
-Azure.Provisioning.Authorization simplifies declarative resource provisioning in .NET for Azure App Configuration.
+Azure.Provisioning.Authorization simplifies declarative resource provisioning in .NET for Azure Authorization.
 
 ## Getting started
 

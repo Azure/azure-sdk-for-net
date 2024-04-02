@@ -1,6 +1,6 @@
 # Azure Provisioning client library for .NET
 
-Azure.Provisioning.Redis is a cloud development kit that allows you to declaratively specify your Azure infrastructure natively in .NET.
+Azure.Provisioning.Redis simplifies declarative resource provisioning in .NET for Azure Redis.
 
 ## Getting started
 
