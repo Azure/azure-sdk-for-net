@@ -58,7 +58,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 monitoringDataPoint: monitoringDataPoint);
 
             _pipeline.Send(message, cancellationToken);
-            var headers = new LiveMetricsRestAPIsForClientSDKsIsSubscribedHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
@@ -118,7 +117,6 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics
                 monitoringDataPoints: monitoringDataPoints);
 
             _pipeline.Send(message, cancellationToken);
-            var headers = new LiveMetricsRestAPIsForClientSDKsPublishHeaders(message.Response);
             switch (message.Response.Status)
             {
                 case 200:
