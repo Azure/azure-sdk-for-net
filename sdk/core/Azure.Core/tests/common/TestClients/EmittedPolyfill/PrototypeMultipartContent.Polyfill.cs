@@ -21,12 +21,13 @@ internal class PrototypeMultipartContent : RequestContent
     private static readonly char[] _boundaryValues = "0123456789=ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz".ToCharArray();
 
     private const string CRLF = "\r\n";
-    private const string EOMPC = "==";
+    private const string EOMPC = "--";
     private const string MPFD = "multipart/form-data";
+    private static readonly byte[] CRLF8 = Encoding.UTF8.GetBytes(CRLF);
     private static readonly byte[] EOMPC8 = Encoding.UTF8.GetBytes(EOMPC);
 
     private readonly List<Part> _parts = new List<Part>();
-    private byte[] _boundary;
+    private readonly byte[] _boundary;
 
     // TODO: optimize
     public string ContentType { get; }
@@ -47,10 +48,12 @@ internal class PrototypeMultipartContent : RequestContent
         // from the RFC.
         string boundary = CreateBoundary();
 
-        int length = boundary.Length + CRLF.Length;
-        _boundary = new byte[length];
+        // TODO: Why was this a good optimization -- keeping the CRLF at the end?
+
+        //int length = boundary.Length + CRLF.Length;
+        _boundary = new byte[boundary.Length];
         int utf8Length = Encoding.UTF8.GetBytes(boundary, 0, boundary.Length, _boundary, 0);
-        "\r\n"u8.CopyTo(_boundary.AsSpan(utf8Length));
+        //"\r\n"u8.CopyTo(_boundary.AsSpan(utf8Length));
 
         // TODO: Optimize
         ContentType = MPFD + "; boundary=\"" + boundary + "\"";
@@ -59,22 +62,26 @@ internal class PrototypeMultipartContent : RequestContent
     public void Add(RequestContent content, params (string Name, string Value)[] headers)
     {
         int bufferLength = 0;
-        foreach ((string Name, string Value) header in headers)
+
+        foreach ((string Name, string Value) in headers)
         {
-            bufferLength += GetLength(header.Name, header.Value);
-            ThrowIfNotAscii(header.Name);
-            ThrowIfNotAscii(header.Value);
+            bufferLength += GetLength(Name, Value);
+            ThrowIfNotAscii(Name);
+            ThrowIfNotAscii(Value);
         }
+
         bufferLength += 2;
-        byte[] bytes = new byte[bufferLength];
+        byte[] headersBytes = new byte[bufferLength];
+
         int written = 0;
-        foreach ((string Name, string Value) header in headers)
+        foreach ((string Name, string Value) in headers)
         {
-            written += WriteHeader(bytes, written, header.Name, header.Value);
+            written += WriteHeader(headersBytes, written, Name, Value);
         }
-        written += WriteCRLF(bytes.AsSpan(written));
-        Part part = new Part(content, bytes);
-        _parts.Add(part);
+
+        written += WriteCRLF(headersBytes.AsSpan(written));
+
+        _parts.Add(new Part(content, headersBytes));
     }
 
     //private void Add(RequestContent content,
@@ -119,6 +126,7 @@ internal class PrototypeMultipartContent : RequestContent
     //    _parts.Add(part);
     //}
 
+    // TODO: validate that this is up to date
     public override bool TryComputeLength(out long length)
     {
         length = 0;
@@ -144,26 +152,46 @@ internal class PrototypeMultipartContent : RequestContent
 
     public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
     {
-        foreach (Part part in _parts)
+        // Write start boundary.
+        await stream.WriteAsync(EOMPC8, 0, EOMPC8.Length).ConfigureAwait(false);
+        await stream.WriteAsync(_boundary, 0, _boundary.Length).ConfigureAwait(false);
+        await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
+
+        // Write each content part.
+        for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
         {
-            await stream.WriteAsync(_boundary, 0, _boundary.Length).ConfigureAwait(false);
-            await part.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            Part part = _parts[partIndex];
+            await part.WriteToAsync(stream, partIndex != 0, _boundary, cancellationToken).ConfigureAwait(false);
         }
 
-        await stream.WriteAsync(_boundary, 0, _boundary.Length - CRLF.Length).ConfigureAwait(false);
+        // Write footer boundary.
+        await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
         await stream.WriteAsync(EOMPC8, 0, EOMPC8.Length).ConfigureAwait(false);
+        await stream.WriteAsync(_boundary, 0, _boundary.Length).ConfigureAwait(false);
+        await stream.WriteAsync(EOMPC8, 0, EOMPC8.Length).ConfigureAwait(false);
+        await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
     }
 
     public override void WriteTo(Stream stream, CancellationToken cancellationToken)
     {
-        foreach (Part part in _parts)
+        // Write start boundary.
+        stream.Write(EOMPC8, 0, EOMPC8.Length);
+        stream.Write(_boundary, 0, _boundary.Length);
+        stream.Write(CRLF8, 0, CRLF8.Length);
+
+        // Write each content part.
+        for (int partIndex = 0; partIndex < _parts.Count; partIndex++)
         {
-            stream.Write(_boundary, 0, _boundary.Length);
-            part.WriteTo(stream, cancellationToken);
+            Part part = _parts[partIndex];
+            part.WriteTo(stream, partIndex != 0, _boundary, cancellationToken);
         }
 
-        stream.Write(_boundary, 0, _boundary.Length - CRLF.Length);
+        // Write footer boundary.
+        stream.Write(CRLF8, 0, CRLF8.Length);
         stream.Write(EOMPC8, 0, EOMPC8.Length);
+        stream.Write(_boundary, 0, _boundary.Length);
+        stream.Write(EOMPC8, 0, EOMPC8.Length);
+        stream.Write(CRLF8, 0, CRLF8.Length);
     }
 
     //private int GetLength(ReadOnlySpan<byte> headerName, ReadOnlySpan<byte> headerValue)
@@ -189,11 +217,15 @@ internal class PrototypeMultipartContent : RequestContent
     private static int WriteHeader(byte[] buffer, int bufferIndex, string headerName, string headerValue)
     {
         bufferIndex += Encoding.UTF8.GetBytes(headerName, 0, headerName.Length, buffer, bufferIndex);
+
         ": "u8.CopyTo(buffer.AsSpan(bufferIndex));
         bufferIndex += 2;
+
         bufferIndex += Encoding.UTF8.GetBytes(headerValue, 0, headerValue.Length, buffer, bufferIndex);
+
         "\r\n"u8.CopyTo(buffer.AsSpan(bufferIndex));
         bufferIndex += 2;
+
         return bufferIndex;
     }
 
@@ -250,44 +282,59 @@ internal class PrototypeMultipartContent : RequestContent
 
     private readonly struct Part : IDisposable
     {
-        private const string CRLF = "\r\n";
-        private static readonly byte[] CRLF8 = Encoding.UTF8.GetBytes(CRLF);
-
-        internal readonly RequestContent _data;
+        internal readonly RequestContent _content;
         internal readonly byte[] _headers; // TODO: should these arrays be borrowed from the pool?
 
         public Part(RequestContent data, byte[] headers)
         {
-            _data = data;
+            _content = data;
             _headers = headers;
         }
 
         public bool TryComputeLength(out long length)
         {
-            if (_data.TryComputeLength(out length))
+            // TODO: update
+            if (_content.TryComputeLength(out length))
             {
                 length += _headers.Length;
                 length += CRLF8.Length;
                 return true;
             }
+
             return false;
         }
 
-        public async Task WriteToAsync(Stream stream, CancellationToken cancellationToken)
+        public async Task WriteToAsync(Stream stream, bool writeDelimiter, byte[] boundary, CancellationToken cancellationToken)
         {
+            if (writeDelimiter)
+            {
+                await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
+                await stream.WriteAsync(EOMPC8, 0, EOMPC8.Length).ConfigureAwait(false);
+                await stream.WriteAsync(boundary, 0, boundary.Length).ConfigureAwait(false);
+                await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
+            }
+
             await stream.WriteAsync(_headers, 0, _headers.Length).ConfigureAwait(false);
             await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
-            await _data.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
+            await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
 
-        public void WriteTo(Stream stream, CancellationToken cancellationToken)
+        public void WriteTo(Stream stream, bool writeDelimiter, byte[] boundary, CancellationToken cancellationToken)
         {
+            if (writeDelimiter)
+            {
+                stream.Write(CRLF8, 0, CRLF8.Length);
+                stream.Write(EOMPC8, 0, EOMPC8.Length);
+                stream.Write(boundary, 0, boundary.Length);
+                stream.Write(CRLF8, 0, CRLF8.Length);
+            }
+
             stream.Write(_headers, 0, _headers.Length);
             stream.Write(CRLF8, 0, CRLF8.Length);
-            _data.WriteTo(stream, cancellationToken); // TODO: how are we goign to validate that the boundary is not contained in data?
+            _content.WriteTo(stream, cancellationToken);
         }
 
-        public void Dispose() => _data.Dispose();
+        public void Dispose() => _content.Dispose();
     }
 }
 #endif
