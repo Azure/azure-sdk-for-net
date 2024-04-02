@@ -245,7 +245,7 @@ namespace Azure.Core.Tests
             Assert.AreEqual(
                 $"--{boundary}\r\nContent-Type: text/plain; charset=utf-8\r\n" +
                 "Content-Disposition: form-data; name=\"=?utf-8?B?dGVzdOOCrw0KIG5hbcOp?=\";" +
-                " filename=\"=?utf-8?B?ZmlsZeOCrw0KIG5hbcOp?=\"; filename*=utf-8\'\'file%E3%82%AF%0D%0A%20nam%C3%A9" +
+                " filename=\"=?utf-8?B?ZmlsZeOCrw0KIG5hbcOp?=\"" +
                 $"\r\n\r\nHello World\r\n--{boundary}--\r\n",
                 result);
         }
@@ -291,10 +291,12 @@ namespace Azure.Core.Tests
 
             Assert.AreEqual(
                 $"--{boundary}\r\n" +
+                "Content-Disposition: form-data; name=bytes\r\n" +
                 "\r\n" +
                 "This is a ByteArrayContent\r\n" +
                 $"--{boundary}\r\n" +
                 "Content-Type: text/plain; charset=utf-8\r\n" +
+                "Content-Disposition: form-data; name=string\r\n" +
                 "\r\n" +
                 "This is a StringContent\r\n" +
                 $"--{boundary}--\r\n",
