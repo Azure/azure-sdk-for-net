@@ -591,17 +591,14 @@ namespace Azure.Messaging.EventHubs.Tests
 
             using var listener = new ClientDiagnosticListener(DiagnosticProperty.DiagnosticNamespace);
 
-            var eventBatch = new List<EventData>
-            {
-                new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: DateTimeOffset.UtcNow)
-            };
+            var eventBatch = new[] { new EventData(new BinaryData(Array.Empty<byte>()), enqueuedTime: DateTimeOffset.UtcNow) };
             var partition = new EventProcessorPartition { PartitionId = "123" };
             var fullyQualifiedNamespace = "namespace";
             var eventHubName = "eventHub";
-            var mockProcessor = new Mock<EventProcessor<EventProcessorPartition>>(1, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default(EventProcessorOptions)) { CallBase = true };
-            mockProcessor.Protected().Setup<bool?>("IsBatchTracingEnabled").Returns(false);
+            var mockProcessor = new MockEventProcessor(1, "consumerGroup", fullyQualifiedNamespace, eventHubName, Mock.Of<TokenCredential>(), default);
 
-            await mockProcessor.Object.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
+            mockProcessor.EnableBatchTracing = false;
+            await mockProcessor.ProcessEventBatchAsync(partition, eventBatch, false, cancellationSource.Token);
 
             // Validate the diagnostics.
 
@@ -679,6 +676,36 @@ namespace Azure.Messaging.EventHubs.Tests
                                                                     EventHubTokenCredential credential,
                                                                     EventHubConnectionOptions options,
                                                                     bool useTls = true) => Mock.Of<TransportClient>();
+        }
+
+        /// <summary>
+        ///   A minimal mock processor that allows toggling the batch tracing
+        ///   flag.
+        /// </summary>
+        ///
+        private class MockEventProcessor : EventProcessor<EventProcessorPartition>
+        {
+            public MockEventProcessor(int identifier,
+                                      string consumerGroup,
+                                      string fullyQualifiedNamespace,
+                                      string eventHubName,
+                                      TokenCredential credential,
+                                      EventProcessorOptions options) : base(identifier, consumerGroup, fullyQualifiedNamespace, eventHubName, credential, options)
+            {
+            }
+
+            public new bool EnableBatchTracing
+            {
+                get => base.EnableBatchTracing;
+                set => base.EnableBatchTracing = value;
+            }
+
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ListOwnershipAsync(CancellationToken cancellationToken) => throw new NotImplementedException();
+            protected override Task<IEnumerable<EventProcessorPartitionOwnership>> ClaimOwnershipAsync(IEnumerable<EventProcessorPartitionOwnership> desiredOwnership, CancellationToken cancellationToken) => throw new NotImplementedException();
+
+            protected override Task OnProcessingEventBatchAsync(IEnumerable<EventData> events, EventProcessorPartition partition, CancellationToken cancellationToken) => Task.CompletedTask;
+
+            protected override Task OnProcessingErrorAsync(Exception exception, EventProcessorPartition partition, string operationDescription, CancellationToken cancellationToken) => Task.CompletedTask;
         }
     }
 }
