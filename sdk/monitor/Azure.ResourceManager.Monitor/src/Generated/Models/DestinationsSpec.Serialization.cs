@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Monitor.Models
             IList<DataCollectionRuleStorageTableDestination> storageTablesDirect = default;
             IList<DataCollectionRuleStorageBlobDestination> storageAccounts = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("logAnalytics"u8))
@@ -260,10 +260,10 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new DestinationsSpec(
                 logAnalytics ?? new ChangeTrackingList<LogAnalyticsDestination>(),
                 monitoringAccounts ?? new ChangeTrackingList<MonitoringAccountDestination>(),
