@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Cdn
 {
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<ArmOperation<FrontDoorRuleSetResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.CreateOrUpdate");
             scope.Start();
@@ -135,14 +126,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual ArmOperation<FrontDoorRuleSetResource> CreateOrUpdate(WaitUntil waitUntil, string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.CreateOrUpdate");
             scope.Start();
@@ -188,14 +172,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<FrontDoorRuleSetResource>> GetAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Get");
             scope.Start();
@@ -240,14 +217,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<FrontDoorRuleSetResource> Get(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Get");
             scope.Start();
@@ -352,14 +322,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Exists");
             scope.Start();
@@ -402,14 +365,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual Response<bool> Exists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.Exists");
             scope.Start();
@@ -452,14 +408,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual async Task<NullableResponse<FrontDoorRuleSetResource>> GetIfExistsAsync(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.GetIfExists");
             scope.Start();
@@ -504,14 +453,7 @@ namespace Azure.ResourceManager.Cdn
         /// <exception cref="ArgumentNullException"> <paramref name="ruleSetName"/> is null. </exception>
         public virtual NullableResponse<FrontDoorRuleSetResource> GetIfExists(string ruleSetName, CancellationToken cancellationToken = default)
         {
-            if (ruleSetName == null)
-            {
-                throw new ArgumentNullException(nameof(ruleSetName));
-            }
-            if (ruleSetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ruleSetName));
-            }
+            Argument.AssertNotNullOrEmpty(ruleSetName, nameof(ruleSetName));
 
             using var scope = _frontDoorRuleSetClientDiagnostics.CreateScope("FrontDoorRuleSetCollection.GetIfExists");
             scope.Start();

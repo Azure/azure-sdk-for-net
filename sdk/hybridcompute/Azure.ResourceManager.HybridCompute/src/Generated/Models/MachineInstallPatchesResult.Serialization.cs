@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.HybridCompute.Models
@@ -23,81 +22,81 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && InstallationActivityId != null)
+            if (options.Format != "W" && Optional.IsDefined(InstallationActivityId))
             {
                 writer.WritePropertyName("installationActivityId"u8);
                 writer.WriteStringValue(InstallationActivityId);
             }
-            if (options.Format != "W" && RebootStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RebootStatus))
             {
                 writer.WritePropertyName("rebootStatus"u8);
                 writer.WriteStringValue(RebootStatus.Value.ToString());
             }
-            if (options.Format != "W" && MaintenanceWindowExceeded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaintenanceWindowExceeded))
             {
                 writer.WritePropertyName("maintenanceWindowExceeded"u8);
                 writer.WriteBooleanValue(MaintenanceWindowExceeded.Value);
             }
-            if (options.Format != "W" && ExcludedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExcludedPatchCount))
             {
                 writer.WritePropertyName("excludedPatchCount"u8);
                 writer.WriteNumberValue(ExcludedPatchCount.Value);
             }
-            if (options.Format != "W" && NotSelectedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NotSelectedPatchCount))
             {
                 writer.WritePropertyName("notSelectedPatchCount"u8);
                 writer.WriteNumberValue(NotSelectedPatchCount.Value);
             }
-            if (options.Format != "W" && PendingPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PendingPatchCount))
             {
                 writer.WritePropertyName("pendingPatchCount"u8);
                 writer.WriteNumberValue(PendingPatchCount.Value);
             }
-            if (options.Format != "W" && InstalledPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InstalledPatchCount))
             {
                 writer.WritePropertyName("installedPatchCount"u8);
                 writer.WriteNumberValue(InstalledPatchCount.Value);
             }
-            if (options.Format != "W" && FailedPatchCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedPatchCount))
             {
                 writer.WritePropertyName("failedPatchCount"u8);
                 writer.WriteNumberValue(FailedPatchCount.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDateTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedDateTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && StartedBy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartedBy))
             {
                 writer.WritePropertyName("startedBy"u8);
                 writer.WriteStringValue(StartedBy.Value.ToString());
             }
-            if (options.Format != "W" && PatchServiceUsed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PatchServiceUsed))
             {
                 writer.WritePropertyName("patchServiceUsed"u8);
                 writer.WriteStringValue(PatchServiceUsed.Value.ToString());
             }
-            if (options.Format != "W" && OSType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType.Value.ToString());
             }
-            if (options.Format != "W" && ErrorDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 JsonSerializer.Serialize(writer, ErrorDetails);
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -324,7 +323,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -340,7 +339,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineInstallPatchesResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaAccessControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAccessControl)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAccessControl)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DefaultAction.HasValue)
+            if (Optional.IsDefined(DefaultAction))
             {
                 writer.WritePropertyName("defaultAction"u8);
                 writer.WriteStringValue(DefaultAction.Value.ToString());
             }
-            if (!(IPAllowList is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAllowList))
             {
                 writer.WritePropertyName("ipAllowList"u8);
                 writer.WriteStartArray();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaAccessControl>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAccessControl)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAccessControl)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaAccessControl)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAccessControl)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaAccessControl(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaAccessControl)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAccessControl)} does not support reading '{options.Format}' format.");
             }
         }
 

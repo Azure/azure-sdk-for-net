@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunActionCorrelation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRunActionCorrelation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRunActionCorrelation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ActionTrackingId.HasValue)
+            if (Optional.IsDefined(ActionTrackingId))
             {
                 writer.WritePropertyName("actionTrackingId"u8);
                 writer.WriteStringValue(ActionTrackingId.Value);
             }
-            if (ClientTrackingId != null)
+            if (Optional.IsDefined(ClientTrackingId))
             {
                 writer.WritePropertyName("clientTrackingId"u8);
                 writer.WriteStringValue(ClientTrackingId);
             }
-            if (!(ClientKeywords is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClientKeywords))
             {
                 writer.WritePropertyName("clientKeywords"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRunActionCorrelation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRunActionCorrelation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRunActionCorrelation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRunActionCorrelation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRunActionCorrelation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowRunActionCorrelation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRunActionCorrelation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRunActionCorrelation)} does not support reading '{options.Format}' format.");
             }
         }
 

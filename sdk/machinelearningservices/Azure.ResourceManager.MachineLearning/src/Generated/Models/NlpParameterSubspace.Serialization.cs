@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<NlpParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GradientAccumulationSteps != null)
+            if (Optional.IsDefined(GradientAccumulationSteps))
             {
                 if (GradientAccumulationSteps != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("gradientAccumulationSteps");
                 }
             }
-            if (LearningRate != null)
+            if (Optional.IsDefined(LearningRate))
             {
                 if (LearningRate != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRate");
                 }
             }
-            if (LearningRateScheduler != null)
+            if (Optional.IsDefined(LearningRateScheduler))
             {
                 if (LearningRateScheduler != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("learningRateScheduler");
                 }
             }
-            if (ModelName != null)
+            if (Optional.IsDefined(ModelName))
             {
                 if (ModelName != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("modelName");
                 }
             }
-            if (NumberOfEpochs != null)
+            if (Optional.IsDefined(NumberOfEpochs))
             {
                 if (NumberOfEpochs != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("numberOfEpochs");
                 }
             }
-            if (TrainingBatchSize != null)
+            if (Optional.IsDefined(TrainingBatchSize))
             {
                 if (TrainingBatchSize != null)
                 {
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("trainingBatchSize");
                 }
             }
-            if (ValidationBatchSize != null)
+            if (Optional.IsDefined(ValidationBatchSize))
             {
                 if (ValidationBatchSize != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("validationBatchSize");
                 }
             }
-            if (WarmupRatio != null)
+            if (Optional.IsDefined(WarmupRatio))
             {
                 if (WarmupRatio != null)
                 {
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("warmupRatio");
                 }
             }
-            if (WeightDecay != null)
+            if (Optional.IsDefined(WeightDecay))
             {
                 if (WeightDecay != null)
                 {
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<NlpParameterSubspace>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeNlpParameterSubspace(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NlpParameterSubspace)} does not support reading '{options.Format}' format.");
             }
         }
 

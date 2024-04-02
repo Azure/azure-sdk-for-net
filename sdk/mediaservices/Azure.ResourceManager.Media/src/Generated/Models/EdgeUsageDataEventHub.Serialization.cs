@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (Token != null)
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeUsageDataEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeEdgeUsageDataEventHub(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeUsageDataEventHub)} does not support reading '{options.Format}' format.");
             }
         }
 

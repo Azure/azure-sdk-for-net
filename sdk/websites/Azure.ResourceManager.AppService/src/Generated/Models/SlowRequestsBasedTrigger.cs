@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Time taken. </summary>
+        [WirePath("timeTaken")]
         public string TimeTaken { get; set; }
         /// <summary> Request Path. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> Request Count. </summary>
+        [WirePath("count")]
         public int? Count { get; set; }
         /// <summary> Time interval. </summary>
+        [WirePath("timeInterval")]
         public string TimeInterval { get; set; }
     }
 }

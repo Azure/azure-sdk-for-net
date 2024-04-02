@@ -52,18 +52,9 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="permissions"/>, <paramref name="service"/> or <paramref name="resourceName"/> is null. </exception>
         public StoragePermissionScope(string permissions, string service, string resourceName)
         {
-            if (permissions == null)
-            {
-                throw new ArgumentNullException(nameof(permissions));
-            }
-            if (service == null)
-            {
-                throw new ArgumentNullException(nameof(service));
-            }
-            if (resourceName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceName));
-            }
+            Argument.AssertNotNull(permissions, nameof(permissions));
+            Argument.AssertNotNull(service, nameof(service));
+            Argument.AssertNotNull(resourceName, nameof(resourceName));
 
             Permissions = permissions;
             Service = service;
@@ -89,10 +80,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> The permissions for the local user. Possible values include: Read (r), Write (w), Delete (d), List (l), and Create (c). </summary>
+        [WirePath("permissions")]
         public string Permissions { get; set; }
         /// <summary> The service used by the local user, e.g. blob, file. </summary>
+        [WirePath("service")]
         public string Service { get; set; }
         /// <summary> The name of resource, normally the container name or the file share name, used by the local user. </summary>
+        [WirePath("resourceName")]
         public string ResourceName { get; set; }
     }
 }

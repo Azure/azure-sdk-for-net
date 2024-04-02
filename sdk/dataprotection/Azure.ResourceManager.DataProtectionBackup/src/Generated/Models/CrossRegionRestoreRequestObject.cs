@@ -55,14 +55,8 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="restoreRequestObject"/> or <paramref name="crossRegionRestoreDetails"/> is null. </exception>
         public CrossRegionRestoreRequestObject(BackupRestoreContent restoreRequestObject, CrossRegionRestoreDetails crossRegionRestoreDetails)
         {
-            if (restoreRequestObject == null)
-            {
-                throw new ArgumentNullException(nameof(restoreRequestObject));
-            }
-            if (crossRegionRestoreDetails == null)
-            {
-                throw new ArgumentNullException(nameof(crossRegionRestoreDetails));
-            }
+            Argument.AssertNotNull(restoreRequestObject, nameof(restoreRequestObject));
+            Argument.AssertNotNull(crossRegionRestoreDetails, nameof(crossRegionRestoreDetails));
 
             RestoreRequestObject = restoreRequestObject;
             CrossRegionRestoreDetails = crossRegionRestoreDetails;

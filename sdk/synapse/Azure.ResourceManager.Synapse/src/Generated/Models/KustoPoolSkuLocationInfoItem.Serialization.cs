@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoPoolSkuLocationInfoItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoPoolSkuLocationInfoItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoPoolSkuLocationInfoItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoPoolSkuLocationInfoItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoPoolSkuLocationInfoItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoPoolSkuLocationInfoItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoPoolSkuLocationInfoItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoPoolSkuLocationInfoItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeKustoPoolSkuLocationInfoItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoPoolSkuLocationInfoItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoPoolSkuLocationInfoItem)} does not support reading '{options.Format}' format.");
             }
         }
 

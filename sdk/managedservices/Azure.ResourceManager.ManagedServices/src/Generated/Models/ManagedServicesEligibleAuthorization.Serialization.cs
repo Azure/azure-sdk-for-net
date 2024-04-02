@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (PrincipalIdDisplayName != null)
+            if (Optional.IsDefined(PrincipalIdDisplayName))
             {
                 writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
             }
             writer.WritePropertyName("roleDefinitionId"u8);
             writer.WriteStringValue(RoleDefinitionId);
-            if (JustInTimeAccessPolicy != null)
+            if (Optional.IsDefined(JustInTimeAccessPolicy))
             {
                 writer.WritePropertyName("justInTimeAccessPolicy"u8);
-                writer.WriteObjectValue(JustInTimeAccessPolicy);
+                writer.WriteObjectValue<ManagedServicesJustInTimeAccessPolicy>(JustInTimeAccessPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         return DeserializeManagedServicesEligibleAuthorization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesEligibleAuthorization)} does not support reading '{options.Format}' format.");
             }
         }
 

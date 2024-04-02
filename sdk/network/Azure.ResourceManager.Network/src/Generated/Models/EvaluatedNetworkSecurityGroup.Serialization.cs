@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetworkSecurityGroupId != null)
+            if (Optional.IsDefined(NetworkSecurityGroupId))
             {
                 writer.WritePropertyName("networkSecurityGroupId"u8);
                 writer.WriteStringValue(NetworkSecurityGroupId);
             }
-            if (AppliedTo != null)
+            if (Optional.IsDefined(AppliedTo))
             {
                 writer.WritePropertyName("appliedTo"u8);
                 writer.WriteStringValue(AppliedTo);
             }
-            if (MatchedRule != null)
+            if (Optional.IsDefined(MatchedRule))
             {
                 writer.WritePropertyName("matchedRule"u8);
-                writer.WriteObjectValue(MatchedRule);
+                writer.WriteObjectValue<MatchedRule>(MatchedRule, options);
             }
-            if (options.Format != "W" && !(RulesEvaluationResult is ChangeTrackingList<NetworkSecurityRulesEvaluationResult> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RulesEvaluationResult))
             {
                 writer.WritePropertyName("rulesEvaluationResult"u8);
                 writer.WriteStartArray();
                 foreach (var item in RulesEvaluationResult)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<NetworkSecurityRulesEvaluationResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EvaluatedNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEvaluatedNetworkSecurityGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EvaluatedNetworkSecurityGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

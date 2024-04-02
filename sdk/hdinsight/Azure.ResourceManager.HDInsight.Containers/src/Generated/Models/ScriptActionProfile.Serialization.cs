@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("url"u8);
             writer.WriteStringValue(UriString);
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -44,12 +44,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (TimeoutInMinutes.HasValue)
+            if (Optional.IsDefined(TimeoutInMinutes))
             {
                 writer.WritePropertyName("timeoutInMinutes"u8);
                 writer.WriteNumberValue(TimeoutInMinutes.Value);
             }
-            if (ShouldPersist.HasValue)
+            if (Optional.IsDefined(ShouldPersist))
             {
                 writer.WritePropertyName("shouldPersist"u8);
                 writer.WriteBooleanValue(ShouldPersist.Value);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptActionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeScriptActionProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptActionProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

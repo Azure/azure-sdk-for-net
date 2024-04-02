@@ -7,6 +7,8 @@
 
 using System;
 using System.ClientModel.Primitives;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,7 +24,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -51,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataTransferDataSourceSink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -71,12 +73,39 @@ namespace Azure.ResourceManager.CosmosDB.Models
                 switch (discriminator.GetString())
                 {
                     case "AzureBlobStorage": return AzureBlobDataTransferDataSourceSink.DeserializeAzureBlobDataTransferDataSourceSink(element, options);
+                    case "BaseCosmosDataTransferDataSourceSink": return BaseCosmosDataTransferDataSourceSink.DeserializeBaseCosmosDataTransferDataSourceSink(element, options);
                     case "CosmosDBCassandra": return CosmosCassandraDataTransferDataSourceSink.DeserializeCosmosCassandraDataTransferDataSourceSink(element, options);
                     case "CosmosDBMongo": return CosmosMongoDataTransferDataSourceSink.DeserializeCosmosMongoDataTransferDataSourceSink(element, options);
                     case "CosmosDBSql": return CosmosSqlDataTransferDataSourceSink.DeserializeCosmosSqlDataTransferDataSourceSink(element, options);
                 }
             }
             return UnknownDataTransferDataSourceSink.DeserializeUnknownDataTransferDataSourceSink(element, options);
+        }
+
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Component), out propertyOverride);
+            builder.Append("  component: ");
+            if (hasPropertyOverride)
+            {
+                builder.AppendLine($"{propertyOverride}");
+            }
+            else
+            {
+                builder.AppendLine($"'{Component.ToString()}'");
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
         }
 
         BinaryData IPersistableModel<DataTransferDataSourceSink>.Write(ModelReaderWriterOptions options)
@@ -87,8 +116,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -104,7 +135,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializeDataTransferDataSourceSink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataTransferDataSourceSink)} does not support reading '{options.Format}' format.");
             }
         }
 

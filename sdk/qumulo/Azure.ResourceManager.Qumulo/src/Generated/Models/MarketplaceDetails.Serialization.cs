@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Qumulo.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MarketplaceSubscriptionId != null)
+            if (Optional.IsDefined(MarketplaceSubscriptionId))
             {
                 writer.WritePropertyName("marketplaceSubscriptionId"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionId);
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             writer.WriteStringValue(OfferId);
             writer.WritePropertyName("publisherId"u8);
             writer.WriteStringValue(PublisherId);
-            if (options.Format != "W" && MarketplaceSubscriptionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MarketplaceSubscriptionStatus))
             {
                 writer.WritePropertyName("marketplaceSubscriptionStatus"u8);
                 writer.WriteStringValue(MarketplaceSubscriptionStatus.Value.ToSerialString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Qumulo.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Qumulo.Models
                         return DeserializeMarketplaceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

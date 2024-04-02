@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNotebookResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (IsPrivateLinkEnabled.HasValue)
+            if (Optional.IsDefined(IsPrivateLinkEnabled))
             {
                 writer.WritePropertyName("isPrivateLinkEnabled"u8);
                 writer.WriteBooleanValue(IsPrivateLinkEnabled.Value);
             }
-            if (NotebookPreparationError != null)
+            if (Optional.IsDefined(NotebookPreparationError))
             {
                 writer.WritePropertyName("notebookPreparationError"u8);
-                writer.WriteObjectValue(NotebookPreparationError);
+                writer.WriteObjectValue<MachineLearningNotebookPreparationError>(NotebookPreparationError, options);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningNotebookResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningNotebookResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningNotebookResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

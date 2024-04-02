@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CategoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CategoryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CategoryConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MinimumSeverityLevel != null)
+            if (Optional.IsDefined(MinimumSeverityLevel))
             {
                 writer.WritePropertyName("minimumSeverityLevel"u8);
                 writer.WriteStringValue(MinimumSeverityLevel);
             }
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<CategoryConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CategoryConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CategoryConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CategoryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CategoryConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeCategoryConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CategoryConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CategoryConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

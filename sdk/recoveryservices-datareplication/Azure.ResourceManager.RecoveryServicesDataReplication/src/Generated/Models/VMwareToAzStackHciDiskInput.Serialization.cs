@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciDiskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (StorageContainerId != null)
+            if (Optional.IsDefined(StorageContainerId))
             {
                 writer.WritePropertyName("storageContainerId"u8);
                 writer.WriteStringValue(StorageContainerId);
             }
-            if (IsDynamic.HasValue)
+            if (Optional.IsDefined(IsDynamic))
             {
                 writer.WritePropertyName("isDynamic"u8);
                 writer.WriteBooleanValue(IsDynamic.Value);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciDiskInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeVMwareToAzStackHciDiskInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciDiskInput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataFactory.Mocking;
 using Azure.ResourceManager.DataFactory.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryResource"/> object. </returns>
         public static DataFactoryResource GetDataFactoryResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryIntegrationRuntimeResource"/> object. </returns>
         public static DataFactoryIntegrationRuntimeResource GetDataFactoryIntegrationRuntimeResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryIntegrationRuntimeResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryLinkedServiceResource"/> object. </returns>
         public static DataFactoryLinkedServiceResource GetDataFactoryLinkedServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryLinkedServiceResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryDatasetResource"/> object. </returns>
         public static DataFactoryDatasetResource GetDataFactoryDatasetResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryDatasetResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryPipelineResource"/> object. </returns>
         public static DataFactoryPipelineResource GetDataFactoryPipelineResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryPipelineResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryTriggerResource"/> object. </returns>
         public static DataFactoryTriggerResource GetDataFactoryTriggerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryTriggerResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryDataFlowResource"/> object. </returns>
         public static DataFactoryDataFlowResource GetDataFactoryDataFlowResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryDataFlowResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryManagedVirtualNetworkResource"/> object. </returns>
         public static DataFactoryManagedVirtualNetworkResource GetDataFactoryManagedVirtualNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryManagedVirtualNetworkResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryPrivateEndpointResource"/> object. </returns>
         public static DataFactoryPrivateEndpointResource GetDataFactoryPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryPrivateEndpointResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryManagedIdentityCredentialResource"/> object. </returns>
         public static DataFactoryManagedIdentityCredentialResource GetDataFactoryManagedIdentityCredentialResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryManagedIdentityCredentialResource(id);
         }
@@ -269,10 +237,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryPrivateEndpointConnectionResource"/> object. </returns>
         public static DataFactoryPrivateEndpointConnectionResource GetDataFactoryPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryPrivateEndpointConnectionResource(id);
         }
@@ -291,10 +256,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryGlobalParameterResource"/> object. </returns>
         public static DataFactoryGlobalParameterResource GetDataFactoryGlobalParameterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryGlobalParameterResource(id);
         }
@@ -313,10 +275,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> Returns a <see cref="DataFactoryChangeDataCaptureResource"/> object. </returns>
         public static DataFactoryChangeDataCaptureResource GetDataFactoryChangeDataCaptureResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableDataFactoryArmClient(client).GetDataFactoryChangeDataCaptureResource(id);
         }
@@ -333,10 +292,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An object representing collection of DataFactoryResources and their operations over a DataFactoryResource. </returns>
         public static DataFactoryCollection GetDataFactories(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDataFactoryResourceGroupResource(resourceGroupResource).GetDataFactories();
         }
@@ -375,10 +331,7 @@ namespace Azure.ResourceManager.DataFactory
         [ForwardsClientCalls]
         public static async Task<Response<DataFactoryResource>> GetDataFactoryAsync(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableDataFactoryResourceGroupResource(resourceGroupResource).GetDataFactoryAsync(factoryName, ifNoneMatch, cancellationToken).ConfigureAwait(false);
         }
@@ -417,10 +370,7 @@ namespace Azure.ResourceManager.DataFactory
         [ForwardsClientCalls]
         public static Response<DataFactoryResource> GetDataFactory(this ResourceGroupResource resourceGroupResource, string factoryName, string ifNoneMatch = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableDataFactoryResourceGroupResource(resourceGroupResource).GetDataFactory(factoryName, ifNoneMatch, cancellationToken);
         }
@@ -456,10 +406,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> An async collection of <see cref="DataFactoryResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<DataFactoryResource> GetDataFactoriesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataFactorySubscriptionResource(subscriptionResource).GetDataFactoriesAsync(cancellationToken);
         }
@@ -495,10 +442,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <returns> A collection of <see cref="DataFactoryResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<DataFactoryResource> GetDataFactories(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataFactorySubscriptionResource(subscriptionResource).GetDataFactories(cancellationToken);
         }
@@ -535,10 +479,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<DataFactoryResource>> ConfigureFactoryRepoInformationAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableDataFactorySubscriptionResource(subscriptionResource).ConfigureFactoryRepoInformationAsync(locationId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -575,10 +516,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<DataFactoryResource> ConfigureFactoryRepoInformation(this SubscriptionResource subscriptionResource, AzureLocation locationId, FactoryRepoContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataFactorySubscriptionResource(subscriptionResource).ConfigureFactoryRepoInformation(locationId, content, cancellationToken);
         }
@@ -611,10 +549,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<ExposureControlResult>> GetFeatureValueExposureControlAsync(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableDataFactorySubscriptionResource(subscriptionResource).GetFeatureValueExposureControlAsync(locationId, content, cancellationToken).ConfigureAwait(false);
         }
@@ -647,10 +582,7 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<ExposureControlResult> GetFeatureValueExposureControl(this SubscriptionResource subscriptionResource, AzureLocation locationId, ExposureControlContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableDataFactorySubscriptionResource(subscriptionResource).GetFeatureValueExposureControl(locationId, content, cancellationToken);
         }

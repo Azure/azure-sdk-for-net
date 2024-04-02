@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThrottlingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThrottlingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThrottlingRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,10 +32,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
             writer.WriteStartArray();
             foreach (var item in Metrics)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ThrottlingMetric>(item, options);
             }
             writer.WriteEndArray();
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThrottlingRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThrottlingRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThrottlingRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThrottlingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThrottlingRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeThrottlingRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThrottlingRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThrottlingRule)} does not support reading '{options.Format}' format.");
             }
         }
 

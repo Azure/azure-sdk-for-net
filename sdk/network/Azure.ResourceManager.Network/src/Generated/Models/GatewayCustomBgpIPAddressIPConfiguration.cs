@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="ipConfigurationId"/> or <paramref name="customBgpIPAddress"/> is null. </exception>
         public GatewayCustomBgpIPAddressIPConfiguration(string ipConfigurationId, string customBgpIPAddress)
         {
-            if (ipConfigurationId == null)
-            {
-                throw new ArgumentNullException(nameof(ipConfigurationId));
-            }
-            if (customBgpIPAddress == null)
-            {
-                throw new ArgumentNullException(nameof(customBgpIPAddress));
-            }
+            Argument.AssertNotNull(ipConfigurationId, nameof(ipConfigurationId));
+            Argument.AssertNotNull(customBgpIPAddress, nameof(customBgpIPAddress));
 
             IPConfigurationId = ipConfigurationId;
             CustomBgpIPAddress = customBgpIPAddress;

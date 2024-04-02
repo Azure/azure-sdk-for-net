@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationsDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (IsDataAction.HasValue)
+            if (Optional.IsDefined(IsDataAction))
             {
                 writer.WritePropertyName("isDataAction"u8);
                 writer.WriteBooleanValue(IsDataAction.Value);
             }
-            if (Display != null)
+            if (Optional.IsDefined(Display))
             {
                 writer.WritePropertyName("display"u8);
-                writer.WriteObjectValue(Display);
+                writer.WriteObjectValue<MoverDisplayInfo>(Display, options);
             }
-            if (Origin != null)
+            if (Optional.IsDefined(Origin))
             {
                 writer.WritePropertyName("origin"u8);
                 writer.WriteStringValue(Origin);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<MoverOperationsDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
                         return DeserializeMoverOperationsDiscovery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MoverOperationsDiscovery)} does not support reading '{options.Format}' format.");
             }
         }
 

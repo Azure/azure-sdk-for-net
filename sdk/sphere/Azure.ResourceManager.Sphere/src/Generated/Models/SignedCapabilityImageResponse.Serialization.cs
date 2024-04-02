@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignedCapabilityImageResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Image != null)
+            if (options.Format != "W" && Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
                 writer.WriteStringValue(Image);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Sphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<SignedCapabilityImageResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Sphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Sphere.Models
                         return DeserializeSignedCapabilityImageResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SignedCapabilityImageResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

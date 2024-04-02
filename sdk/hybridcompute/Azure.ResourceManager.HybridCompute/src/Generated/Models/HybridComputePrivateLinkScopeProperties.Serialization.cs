@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && PrivateLinkScopeId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateLinkScopeId))
             {
                 writer.WritePropertyName("privateLinkScopeId"u8);
                 writer.WriteStringValue(PrivateLinkScopeId);
             }
-            if (options.Format != "W" && !(PrivateEndpointConnections is ChangeTrackingList<PrivateEndpointConnectionDataModel> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PrivateEndpointConnectionDataModel>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputePrivateLinkScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputePrivateLinkScopeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputePrivateLinkScopeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

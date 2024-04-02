@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AutoUpgradeMinorVersion.HasValue)
+            if (Optional.IsDefined(AutoUpgradeMinorVersion))
             {
                 writer.WritePropertyName("autoUpgradeMinorVersion"u8);
                 writer.WriteBooleanValue(AutoUpgradeMinorVersion.Value);
             }
-            if (ReleaseTrain != null)
+            if (Optional.IsDefined(ReleaseTrain))
             {
                 writer.WritePropertyName("releaseTrain"u8);
                 writer.WriteStringValue(ReleaseTrain);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 if (Version != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("version");
                 }
             }
-            if (!(ConfigurationSettings is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationSettings))
             {
                 if (ConfigurationSettings != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("configurationSettings");
                 }
             }
-            if (!(ConfigurationProtectedSettings is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationProtectedSettings))
             {
                 if (ConfigurationProtectedSettings != null)
                 {
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesClusterExtensionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesClusterExtensionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesClusterExtensionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuZoneDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Name is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStartArray();
@@ -36,13 +36,13 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Capabilities is ChangeTrackingList<ResourceSkuCapability> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeSkuZoneDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeResourceTypeSkuZoneDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeSkuZoneDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

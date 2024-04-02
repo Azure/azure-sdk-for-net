@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrchestrationServiceSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrchestrationServiceSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrchestrationServiceSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ServiceName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServiceName))
             {
                 writer.WritePropertyName("serviceName"u8);
                 writer.WriteStringValue(ServiceName.Value.ToString());
             }
-            if (options.Format != "W" && ServiceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServiceState))
             {
                 writer.WritePropertyName("serviceState"u8);
                 writer.WriteStringValue(ServiceState.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OrchestrationServiceSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OrchestrationServiceSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OrchestrationServiceSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OrchestrationServiceSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrchestrationServiceSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeOrchestrationServiceSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OrchestrationServiceSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OrchestrationServiceSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

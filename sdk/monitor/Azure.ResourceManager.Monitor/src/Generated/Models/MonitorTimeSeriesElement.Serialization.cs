@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Metadatavalues is ChangeTrackingList<MonitorMetadataValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadatavalues))
             {
                 writer.WritePropertyName("metadatavalues"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metadatavalues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetadataValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Data is ChangeTrackingList<MonitorMetricValue> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorMetricValue>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorTimeSeriesElement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMonitorTimeSeriesElement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorTimeSeriesElement)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulesEngineMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("rulesEngineMatchVariable"u8);
             writer.WriteStringValue(RulesEngineMatchVariable.ToString());
-            if (Selector != null)
+            if (Optional.IsDefined(Selector))
             {
                 writer.WritePropertyName("selector"u8);
                 writer.WriteStringValue(Selector);
             }
             writer.WritePropertyName("rulesEngineOperator"u8);
             writer.WriteStringValue(RulesEngineOperator.ToString());
-            if (IsNegateCondition.HasValue)
+            if (Optional.IsDefined(IsNegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(IsNegateCondition.Value);
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Transforms is ChangeTrackingList<RulesEngineMatchTransform> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RulesEngineMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeRulesEngineMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RulesEngineMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

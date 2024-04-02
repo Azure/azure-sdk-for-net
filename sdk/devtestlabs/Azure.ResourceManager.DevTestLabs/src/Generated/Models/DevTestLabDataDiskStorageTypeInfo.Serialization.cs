@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskStorageTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Lun != null)
+            if (Optional.IsDefined(Lun))
             {
                 writer.WritePropertyName("lun"u8);
                 writer.WriteStringValue(Lun);
             }
-            if (StorageType.HasValue)
+            if (Optional.IsDefined(StorageType))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageType.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabDataDiskStorageTypeInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabDataDiskStorageTypeInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabDataDiskStorageTypeInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

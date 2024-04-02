@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExternalInstallationSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CentralServerVmId != null)
+            if (Optional.IsDefined(CentralServerVmId))
             {
                 writer.WritePropertyName("centralServerVmId"u8);
                 writer.WriteStringValue(CentralServerVmId);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExternalInstallationSoftwareConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeExternalInstallationSoftwareConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExternalInstallationSoftwareConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

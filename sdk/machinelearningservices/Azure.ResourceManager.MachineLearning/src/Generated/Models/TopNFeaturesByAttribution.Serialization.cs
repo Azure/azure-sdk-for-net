@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("top"u8);
                 writer.WriteNumberValue(Top.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<TopNFeaturesByAttribution>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeTopNFeaturesByAttribution(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TopNFeaturesByAttribution)} does not support reading '{options.Format}' format.");
             }
         }
 

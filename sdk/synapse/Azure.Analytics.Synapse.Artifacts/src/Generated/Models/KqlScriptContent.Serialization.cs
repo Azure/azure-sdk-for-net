@@ -15,20 +15,20 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<KqlScriptContentMetadata>(Metadata);
             }
-            if (CurrentConnection != null)
+            if (Optional.IsDefined(CurrentConnection))
             {
                 writer.WritePropertyName("currentConnection"u8);
-                writer.WriteObjectValue(CurrentConnection);
+                writer.WriteObjectValue<KqlScriptContentCurrentConnection>(CurrentConnection);
             }
             writer.WriteEndObject();
         }

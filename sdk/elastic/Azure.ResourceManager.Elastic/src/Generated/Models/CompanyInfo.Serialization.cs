@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<CompanyInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompanyInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Domain != null)
+            if (Optional.IsDefined(Domain))
             {
                 writer.WritePropertyName("domain"u8);
                 writer.WriteStringValue(Domain);
             }
-            if (Business != null)
+            if (Optional.IsDefined(Business))
             {
                 writer.WritePropertyName("business"u8);
                 writer.WriteStringValue(Business);
             }
-            if (EmployeesNumber != null)
+            if (Optional.IsDefined(EmployeesNumber))
             {
                 writer.WritePropertyName("employeesNumber"u8);
                 writer.WriteStringValue(EmployeesNumber);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (Country != null)
+            if (Optional.IsDefined(Country))
             {
                 writer.WritePropertyName("country"u8);
                 writer.WriteStringValue(Country);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<CompanyInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CompanyInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeCompanyInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CompanyInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionOutputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionOutputDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,27 +30,27 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(OutputDataSourceType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (FunctionAppName != null)
+            if (Optional.IsDefined(FunctionAppName))
             {
                 writer.WritePropertyName("functionAppName"u8);
                 writer.WriteStringValue(FunctionAppName);
             }
-            if (FunctionName != null)
+            if (Optional.IsDefined(FunctionName))
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (ApiKey != null)
+            if (Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (MaxBatchSize.HasValue)
+            if (Optional.IsDefined(MaxBatchSize))
             {
                 writer.WritePropertyName("maxBatchSize"u8);
                 writer.WriteNumberValue(MaxBatchSize.Value);
             }
-            if (MaxBatchCount.HasValue)
+            if (Optional.IsDefined(MaxBatchCount))
             {
                 writer.WritePropertyName("maxBatchCount"u8);
                 writer.WriteNumberValue(MaxBatchCount.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<FunctionOutputDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FunctionOutputDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FunctionOutputDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FunctionOutputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionOutputDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeFunctionOutputDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FunctionOutputDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FunctionOutputDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

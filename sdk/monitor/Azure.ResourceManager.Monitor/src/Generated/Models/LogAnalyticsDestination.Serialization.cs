@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
             }
-            if (options.Format != "W" && WorkspaceId != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeLogAnalyticsDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

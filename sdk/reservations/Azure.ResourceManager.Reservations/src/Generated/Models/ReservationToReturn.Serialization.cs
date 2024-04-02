@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationToReturn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationToReturn)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationToReturn)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReservationId != null)
+            if (Optional.IsDefined(ReservationId))
             {
                 writer.WritePropertyName("reservationId"u8);
                 writer.WriteStringValue(ReservationId);
             }
-            if (Quantity.HasValue)
+            if (Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationToReturn>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationToReturn)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationToReturn)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationToReturn)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationToReturn)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationToReturn(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationToReturn)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationToReturn)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningCustomModelJobInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningCustomModelJobInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningCustomModelJobInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningCustomModelJobInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningCustomModelJobInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningCustomModelJobInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningCustomModelJobInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningCustomModelJobInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningCustomModelJobInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningCustomModelJobInput)} does not support reading '{options.Format}' format.");
             }
         }
 

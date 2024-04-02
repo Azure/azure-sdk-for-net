@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmsChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.BotService.Models
             writer.WriteStringValue(Phone);
             writer.WritePropertyName("accountSID"u8);
             writer.WriteStringValue(AccountSID);
-            if (AuthToken != null)
+            if (Optional.IsDefined(AuthToken))
             {
                 writer.WritePropertyName("authToken"u8);
                 writer.WriteStringValue(AuthToken);
             }
-            if (IsValidated.HasValue)
+            if (Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("isValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmsChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeSmsChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmsChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

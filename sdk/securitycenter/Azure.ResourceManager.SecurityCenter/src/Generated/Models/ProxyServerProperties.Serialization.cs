@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProxyServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProxyServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IP != null)
+            if (Optional.IsDefined(IP))
             {
                 writer.WritePropertyName("ip"u8);
                 writer.WriteStringValue(IP);
             }
-            if (Port != null)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteStringValue(Port);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProxyServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProxyServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProxyServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProxyServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeProxyServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProxyServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProxyServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

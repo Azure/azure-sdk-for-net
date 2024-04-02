@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SelectedStorageClassName != null)
+            if (Optional.IsDefined(SelectedStorageClassName))
             {
                 writer.WritePropertyName("selectedStorageClassName"u8);
                 writer.WriteStringValue(SelectedStorageClassName);
             }
-            if (Provisioner != null)
+            if (Optional.IsDefined(Provisioner))
             {
                 writer.WritePropertyName("provisioner"u8);
                 writer.WriteStringValue(Provisioner);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesStorageClassRestoreCriteria>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeKubernetesStorageClassRestoreCriteria(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesStorageClassRestoreCriteria)} does not support reading '{options.Format}' format.");
             }
         }
 

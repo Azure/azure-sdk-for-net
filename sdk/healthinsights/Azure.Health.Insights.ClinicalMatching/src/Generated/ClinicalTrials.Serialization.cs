@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Health.Insights.ClinicalMatching
@@ -23,27 +22,27 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalTrials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalTrials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalTrials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(CustomTrials is ChangeTrackingList<ClinicalTrialDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomTrials))
             {
                 writer.WritePropertyName("customTrials"u8);
                 writer.WriteStartArray();
                 foreach (var item in CustomTrials)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClinicalTrialDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RegistryFilters is ChangeTrackingList<ClinicalTrialRegistryFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistryFilters))
             {
                 writer.WritePropertyName("registryFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in RegistryFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ClinicalTrialRegistryFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -70,7 +69,7 @@ namespace Azure.Health.Insights.ClinicalMatching
             var format = options.Format == "W" ? ((IPersistableModel<ClinicalTrials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClinicalTrials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClinicalTrials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +136,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalTrials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalTrials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +152,7 @@ namespace Azure.Health.Insights.ClinicalMatching
                         return DeserializeClinicalTrials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClinicalTrials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClinicalTrials)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -171,7 +170,7 @@ namespace Azure.Health.Insights.ClinicalMatching
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<ClinicalTrials>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

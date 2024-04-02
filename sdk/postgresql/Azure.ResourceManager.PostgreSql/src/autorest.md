@@ -16,6 +16,7 @@ use-model-reader-writer: true
 batch:
   - tag: package-2020-01-01
   - tag: package-flexibleserver-2023-03-01-preview
+enable-bicep-serialization: true
 ```
 
 ``` yaml $(tag) == 'package-2020-01-01'

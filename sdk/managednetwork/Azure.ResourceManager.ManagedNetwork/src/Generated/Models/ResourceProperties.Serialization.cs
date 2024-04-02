@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.ManagedNetwork.Models
@@ -23,16 +22,16 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -60,7 +59,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +116,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                         return DeserializeResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
         /// <exception cref="ArgumentNullException"> <paramref name="configString"/> is null. </exception>
         public FirewallPanoramaConfiguration(string configString)
         {
-            if (configString == null)
-            {
-                throw new ArgumentNullException(nameof(configString));
-            }
+            Argument.AssertNotNull(configString, nameof(configString));
 
             ConfigString = configString;
         }

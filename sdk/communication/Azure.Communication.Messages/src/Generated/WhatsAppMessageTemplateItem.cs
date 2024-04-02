@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Communication.Messages;
 
 namespace Azure.Communication.Messages.Models.Channels
 {
@@ -20,10 +19,7 @@ namespace Azure.Communication.Messages.Models.Channels
         /// <exception cref="ArgumentNullException"> <paramref name="language"/> is null. </exception>
         internal WhatsAppMessageTemplateItem(string language, MessageTemplateStatus status) : base(language, status)
         {
-            if (language == null)
-            {
-                throw new ArgumentNullException(nameof(language));
-            }
+            Argument.AssertNotNull(language, nameof(language));
 
             Kind = CommunicationMessagesChannel.WhatsApp;
         }

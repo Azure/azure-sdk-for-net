@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeinterlaceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeinterlaceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeinterlaceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Parity.HasValue)
+            if (Optional.IsDefined(Parity))
             {
                 writer.WritePropertyName("parity"u8);
                 writer.WriteStringValue(Parity.Value.ToString());
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeinterlaceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeinterlaceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeinterlaceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeinterlaceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeinterlaceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeDeinterlaceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeinterlaceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeinterlaceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

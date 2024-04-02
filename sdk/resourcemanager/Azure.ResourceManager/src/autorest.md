@@ -14,6 +14,7 @@ modelerfour:
   lenient-model-deduplication: true
 use-model-reader-writer: true
 deserialize-null-collection-as-null-value: true
+enable-bicep-serialization: true
 
 #mgmt-debug:
 #  show-serialized-names: true
@@ -703,7 +704,6 @@ operation-positions:
   Entities_List: collection
 operation-groups-to-omit:
   - HierarchySettings
-  - ManagementGroupSubscriptions
   - TenantBackfill
 no-property-type-replacement: DescendantParentGroupInfo
 
@@ -719,6 +719,10 @@ rename-mapping:
   Permissions: EntityPermission
   Permissions.noaccess: NoAccess
   SearchOptions: EntitySearchOption
+  SubscriptionUnderManagementGroup: ManagementGroupSubscription
+
+override-operation-name:
+  ManagementGroupSubscriptions_GetSubscription: GetManagementGroupSubscription
 
 acronym-mapping:
   CPU: Cpu

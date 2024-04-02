@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewUsageName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LocalizedValue != null)
+            if (Optional.IsDefined(LocalizedValue))
             {
                 writer.WritePropertyName("localizedValue"u8);
                 writer.WriteStringValue(LocalizedValue);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewUsageName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Purview.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewUsageName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Purview.Models
                         return DeserializePurviewUsageName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewUsageName)} does not support reading '{options.Format}' format.");
             }
         }
 

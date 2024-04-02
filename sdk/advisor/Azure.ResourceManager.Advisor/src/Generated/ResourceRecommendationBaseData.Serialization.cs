@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Advisor
             var format = options.Format == "W" ? ((IPersistableModel<ResourceRecommendationBaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Advisor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Category.HasValue)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (Impact.HasValue)
+            if (Optional.IsDefined(Impact))
             {
                 writer.WritePropertyName("impact"u8);
                 writer.WriteStringValue(Impact.Value.ToString());
             }
-            if (ImpactedField != null)
+            if (Optional.IsDefined(ImpactedField))
             {
                 writer.WritePropertyName("impactedField"u8);
                 writer.WriteStringValue(ImpactedField);
             }
-            if (ImpactedValue != null)
+            if (Optional.IsDefined(ImpactedValue))
             {
                 writer.WritePropertyName("impactedValue"u8);
                 writer.WriteStringValue(ImpactedValue);
             }
-            if (LastUpdated.HasValue)
+            if (Optional.IsDefined(LastUpdated))
             {
                 writer.WritePropertyName("lastUpdated"u8);
                 writer.WriteStringValue(LastUpdated.Value, "O");
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -98,22 +98,22 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (RecommendationTypeId != null)
+            if (Optional.IsDefined(RecommendationTypeId))
             {
                 writer.WritePropertyName("recommendationTypeId"u8);
                 writer.WriteStringValue(RecommendationTypeId);
             }
-            if (Risk.HasValue)
+            if (Optional.IsDefined(Risk))
             {
                 writer.WritePropertyName("risk"u8);
                 writer.WriteStringValue(Risk.Value.ToString());
             }
-            if (ShortDescription != null)
+            if (Optional.IsDefined(ShortDescription))
             {
                 writer.WritePropertyName("shortDescription"u8);
-                writer.WriteObjectValue(ShortDescription);
+                writer.WriteObjectValue<ShortDescription>(ShortDescription, options);
             }
-            if (!(SuppressionIds is ChangeTrackingList<Guid> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SuppressionIds))
             {
                 writer.WritePropertyName("suppressionIds"u8);
                 writer.WriteStartArray();
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (!(ExtendedProperties is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ExtendedProperties))
             {
                 writer.WritePropertyName("extendedProperties"u8);
                 writer.WriteStartObject();
@@ -134,32 +134,32 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (ResourceMetadata != null)
+            if (Optional.IsDefined(ResourceMetadata))
             {
                 writer.WritePropertyName("resourceMetadata"u8);
-                writer.WriteObjectValue(ResourceMetadata);
+                writer.WriteObjectValue<ResourceMetadata>(ResourceMetadata, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Label != null)
+            if (Optional.IsDefined(Label))
             {
                 writer.WritePropertyName("label"u8);
                 writer.WriteStringValue(Label);
             }
-            if (LearnMoreLink != null)
+            if (Optional.IsDefined(LearnMoreLink))
             {
                 writer.WritePropertyName("learnMoreLink"u8);
                 writer.WriteStringValue(LearnMoreLink);
             }
-            if (PotentialBenefits != null)
+            if (Optional.IsDefined(PotentialBenefits))
             {
                 writer.WritePropertyName("potentialBenefits"u8);
                 writer.WriteStringValue(PotentialBenefits);
             }
-            if (!(Actions is ChangeTrackingList<IDictionary<string, BinaryData>> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndArray();
             }
-            if (!(Remediation is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Remediation))
             {
                 writer.WritePropertyName("remediation"u8);
                 writer.WriteStartObject();
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.Advisor
                 }
                 writer.WriteEndObject();
             }
-            if (!(ExposedMetadataProperties is ChangeTrackingDictionary<string, BinaryData> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(ExposedMetadataProperties))
             {
                 writer.WritePropertyName("exposedMetadataProperties"u8);
                 writer.WriteStartObject();
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Advisor
             var format = options.Format == "W" ? ((IPersistableModel<ResourceRecommendationBaseData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.Advisor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -611,7 +611,7 @@ namespace Azure.ResourceManager.Advisor
                         return DeserializeResourceRecommendationBaseData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceRecommendationBaseData)} does not support reading '{options.Format}' format.");
             }
         }
 

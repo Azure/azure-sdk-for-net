@@ -22,44 +22,44 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RepoId != null)
+            if (Optional.IsDefined(RepoId))
             {
                 writer.WritePropertyName("repoId"u8);
                 writer.WriteStringValue(RepoId);
             }
-            if (RepoUri != null)
+            if (Optional.IsDefined(RepoUri))
             {
                 writer.WritePropertyName("repoUrl"u8);
                 writer.WriteStringValue(RepoUri.AbsoluteUri);
             }
-            if (OrgName != null)
+            if (Optional.IsDefined(OrgName))
             {
                 writer.WritePropertyName("orgName"u8);
                 writer.WriteStringValue(OrgName);
             }
-            if (ProjectName != null)
+            if (Optional.IsDefined(ProjectName))
             {
                 writer.WritePropertyName("projectName"u8);
                 writer.WriteStringValue(ProjectName);
             }
-            if (Visibility != null)
+            if (Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility);
             }
-            if (ActionableRemediation != null)
+            if (Optional.IsDefined(ActionableRemediation))
             {
                 writer.WritePropertyName("actionableRemediation"u8);
-                writer.WriteObjectValue(ActionableRemediation);
+                writer.WriteObjectValue<ActionableRemediation>(ActionableRemediation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureDevOpsRepoProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeAzureDevOpsRepoProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureDevOpsRepoProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

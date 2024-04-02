@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioEgressGateway>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (!(NodeSelector is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeSelector))
             {
                 writer.WritePropertyName("nodeSelector"u8);
                 writer.WriteStartObject();
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioEgressGateway>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeIstioEgressGateway(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioEgressGateway)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (DataCollectionMode.HasValue)
+            if (Optional.IsDefined(DataCollectionMode))
             {
                 writer.WritePropertyName("dataCollectionMode"u8);
                 writer.WriteStringValue(DataCollectionMode.Value.ToString());
             }
-            if (DataId != null)
+            if (Optional.IsDefined(DataId))
             {
                 if (DataId != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("dataId");
                 }
             }
-            if (SamplingRate.HasValue)
+            if (Optional.IsDefined(SamplingRate))
             {
                 writer.WritePropertyName("samplingRate"u8);
                 writer.WriteNumberValue(SamplingRate.Value);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCollectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeDataCollectionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCollectionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

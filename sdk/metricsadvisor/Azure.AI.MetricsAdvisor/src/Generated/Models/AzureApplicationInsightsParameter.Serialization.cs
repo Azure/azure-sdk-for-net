@@ -15,7 +15,7 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AzureCloud != null)
+            if (Optional.IsDefined(AzureCloud))
             {
                 if (AzureCloud != null)
                 {
@@ -27,7 +27,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("azureCloud");
                 }
             }
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 if (ApplicationId != null)
                 {
@@ -39,7 +39,7 @@ namespace Azure.AI.MetricsAdvisor.Models
                     writer.WriteNull("applicationId");
                 }
             }
-            if (ApiKey != null)
+            if (Optional.IsDefined(ApiKey))
             {
                 if (ApiKey != null)
                 {

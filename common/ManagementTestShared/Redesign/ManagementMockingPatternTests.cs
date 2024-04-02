@@ -13,6 +13,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 
+#nullable disable
+
 namespace Azure.ResourceManager.TestFramework
 {
     public sealed class ManagementMockingPatternTests

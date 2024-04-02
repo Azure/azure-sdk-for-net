@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalogMsrp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (P1Y != null)
+            if (Optional.IsDefined(P1Y))
             {
                 writer.WritePropertyName("p1Y"u8);
-                writer.WriteObjectValue(P1Y);
+                writer.WriteObjectValue<PurchasePrice>(P1Y, options);
             }
-            if (P3Y != null)
+            if (Optional.IsDefined(P3Y))
             {
                 writer.WritePropertyName("p3Y"u8);
-                writer.WriteObjectValue(P3Y);
+                writer.WriteObjectValue<PurchasePrice>(P3Y, options);
             }
-            if (P5Y != null)
+            if (Optional.IsDefined(P5Y))
             {
                 writer.WritePropertyName("p5Y"u8);
-                writer.WriteObjectValue(P5Y);
+                writer.WriteObjectValue<PurchasePrice>(P5Y, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationCatalogMsrp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationCatalogMsrp(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationCatalogMsrp)} does not support reading '{options.Format}' format.");
             }
         }
 

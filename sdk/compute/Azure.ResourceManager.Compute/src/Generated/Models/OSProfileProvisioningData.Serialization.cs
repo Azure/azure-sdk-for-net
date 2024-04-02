@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSProfileProvisioningData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AdminPassword != null)
+            if (Optional.IsDefined(AdminPassword))
             {
                 writer.WritePropertyName("adminPassword"u8);
                 writer.WriteStringValue(AdminPassword);
             }
-            if (CustomData != null)
+            if (Optional.IsDefined(CustomData))
             {
                 writer.WritePropertyName("customData"u8);
                 writer.WriteStringValue(CustomData);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSProfileProvisioningData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeOSProfileProvisioningData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSProfileProvisioningData)} does not support reading '{options.Format}' format.");
             }
         }
 

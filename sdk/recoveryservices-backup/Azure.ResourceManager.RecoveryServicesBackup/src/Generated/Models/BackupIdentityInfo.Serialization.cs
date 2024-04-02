@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsSystemAssignedIdentity.HasValue)
+            if (Optional.IsDefined(IsSystemAssignedIdentity))
             {
                 writer.WritePropertyName("isSystemAssignedIdentity"u8);
                 writer.WriteBooleanValue(IsSystemAssignedIdentity.Value);
             }
-            if (ManagedIdentityResourceId != null)
+            if (Optional.IsDefined(ManagedIdentityResourceId))
             {
                 writer.WritePropertyName("managedIdentityResourceId"u8);
                 writer.WriteStringValue(ManagedIdentityResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupIdentityInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupIdentityInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

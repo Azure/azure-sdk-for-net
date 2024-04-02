@@ -18,14 +18,8 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="s3LinkedServiceName"/> or <paramref name="bucketName"/> is null. </exception>
         public RedshiftUnloadSettings(LinkedServiceReference s3LinkedServiceName, object bucketName)
         {
-            if (s3LinkedServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(s3LinkedServiceName));
-            }
-            if (bucketName == null)
-            {
-                throw new ArgumentNullException(nameof(bucketName));
-            }
+            Argument.AssertNotNull(s3LinkedServiceName, nameof(s3LinkedServiceName));
+            Argument.AssertNotNull(bucketName, nameof(bucketName));
 
             S3LinkedServiceName = s3LinkedServiceName;
             BucketName = bucketName;

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeWindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ClassificationsToInclude is ChangeTrackingList<VmGuestPatchClassificationWindow> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClassificationsToInclude))
             {
                 writer.WritePropertyName("classificationsToInclude"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KbNumbersToInclude is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToInclude))
             {
                 writer.WritePropertyName("kbNumbersToInclude"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(KbNumbersToExclude is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(KbNumbersToExclude))
             {
                 writer.WritePropertyName("kbNumbersToExclude"u8);
                 writer.WriteStartArray();
@@ -56,12 +56,12 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ExcludeKbsRequiringReboot.HasValue)
+            if (Optional.IsDefined(ExcludeKbsRequiringReboot))
             {
                 writer.WritePropertyName("excludeKbsRequiringReboot"u8);
                 writer.WriteBooleanValue(ExcludeKbsRequiringReboot.Value);
             }
-            if (MaxPatchPublishOn.HasValue)
+            if (Optional.IsDefined(MaxPatchPublishOn))
             {
                 writer.WritePropertyName("maxPatchPublishDate"u8);
                 writer.WriteStringValue(MaxPatchPublishOn.Value, "O");
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeWindowsParameters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeWindowsParameters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeWindowsParameters)} does not support reading '{options.Format}' format.");
             }
         }
 

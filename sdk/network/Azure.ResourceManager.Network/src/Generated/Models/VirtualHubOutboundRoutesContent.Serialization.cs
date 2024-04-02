@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHubOutboundRoutesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHubOutboundRoutesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHubOutboundRoutesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceUri"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (ConnectionType != null)
+            if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("connectionType"u8);
                 writer.WriteStringValue(ConnectionType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHubOutboundRoutesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHubOutboundRoutesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHubOutboundRoutesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHubOutboundRoutesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHubOutboundRoutesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualHubOutboundRoutesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHubOutboundRoutesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHubOutboundRoutesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

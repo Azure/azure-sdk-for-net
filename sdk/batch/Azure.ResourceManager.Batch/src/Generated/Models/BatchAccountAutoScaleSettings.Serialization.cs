@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountAutoScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountAutoScaleSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("formula"u8);
             writer.WriteStringValue(Formula);
-            if (EvaluationInterval.HasValue)
+            if (Optional.IsDefined(EvaluationInterval))
             {
                 writer.WritePropertyName("evaluationInterval"u8);
                 writer.WriteStringValue(EvaluationInterval.Value, "P");
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchAccountAutoScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchAccountAutoScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchAccountAutoScaleSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountAutoScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountAutoScaleSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchAccountAutoScaleSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchAccountAutoScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchAccountAutoScaleSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

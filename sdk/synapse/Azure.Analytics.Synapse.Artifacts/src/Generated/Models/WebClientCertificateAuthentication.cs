@@ -27,18 +27,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="url"/>, <paramref name="pfx"/> or <paramref name="password"/> is null. </exception>
         public WebClientCertificateAuthentication(object url, SecretBase pfx, SecretBase password) : base(url)
         {
-            if (url == null)
-            {
-                throw new ArgumentNullException(nameof(url));
-            }
-            if (pfx == null)
-            {
-                throw new ArgumentNullException(nameof(pfx));
-            }
-            if (password == null)
-            {
-                throw new ArgumentNullException(nameof(password));
-            }
+            Argument.AssertNotNull(url, nameof(url));
+            Argument.AssertNotNull(pfx, nameof(pfx));
+            Argument.AssertNotNull(password, nameof(password));
 
             Pfx = pfx;
             Password = password;

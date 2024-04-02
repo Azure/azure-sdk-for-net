@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlanDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PlanId != null)
+            if (Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && RequestDate != null)
+            if (options.Format != "W" && Optional.IsDefined(RequestDate))
             {
                 writer.WritePropertyName("requestDate"u8);
 #if NET6_0_OR_GREATER
@@ -48,17 +48,17 @@ namespace Azure.ResourceManager.Marketplace.Models
                 }
 #endif
             }
-            if (Justification != null)
+            if (Optional.IsDefined(Justification))
             {
                 writer.WritePropertyName("justification"u8);
                 writer.WriteStringValue(Justification);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (SubscriptionName != null)
+            if (Optional.IsDefined(SubscriptionName))
             {
                 writer.WritePropertyName("subscriptionName"u8);
                 writer.WriteStringValue(SubscriptionName);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStorePlanDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePrivateStorePlanDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStorePlanDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -16,8 +16,10 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
-            if (ApiVersion != null)
+            writer.WriteObjectValue<EndpointBase>(Endpoint);
+            writer.WritePropertyName("methodName"u8);
+            writer.WriteStringValue(MethodName);
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("@apiVersion"u8);
                 writer.WriteStringValue(ApiVersion);

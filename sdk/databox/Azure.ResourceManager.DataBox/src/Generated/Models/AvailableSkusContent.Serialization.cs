@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableSkusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableSkusContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableSkusContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
             writer.WriteStringValue(Country);
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(SkuNames is ChangeTrackingList<DataBoxSkuName> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SkuNames))
             {
                 writer.WritePropertyName("skuNames"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableSkusContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableSkusContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableSkusContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableSkusContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableSkusContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeAvailableSkusContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableSkusContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableSkusContent)} does not support reading '{options.Format}' format.");
             }
         }
 

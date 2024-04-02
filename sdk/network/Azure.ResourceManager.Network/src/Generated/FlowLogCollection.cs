@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<FlowLogResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string flowLogName, FlowLogData data, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<FlowLogResource> CreateOrUpdate(WaitUntil waitUntil, string flowLogName, FlowLogData data, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
         public virtual async Task<Response<FlowLogResource>> GetAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
         public virtual Response<FlowLogResource> Get(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
         public virtual Response<bool> Exists(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
         public virtual async Task<NullableResponse<FlowLogResource>> GetIfExistsAsync(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="flowLogName"/> is null. </exception>
         public virtual NullableResponse<FlowLogResource> GetIfExists(string flowLogName, CancellationToken cancellationToken = default)
         {
-            if (flowLogName == null)
-            {
-                throw new ArgumentNullException(nameof(flowLogName));
-            }
-            if (flowLogName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(flowLogName));
-            }
+            Argument.AssertNotNullOrEmpty(flowLogName, nameof(flowLogName));
 
             using var scope = _flowLogClientDiagnostics.CreateScope("FlowLogCollection.GetIfExists");
             scope.Start();

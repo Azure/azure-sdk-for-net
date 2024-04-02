@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(VirtualMachines is ChangeTrackingList<VirtualMachineResourceNames> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualMachines))
             {
                 writer.WritePropertyName("virtualMachines"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualMachines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualMachineResourceNames>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AvailabilitySetName != null)
+            if (Optional.IsDefined(AvailabilitySetName))
             {
                 writer.WritePropertyName("availabilitySetName"u8);
                 writer.WriteStringValue(AvailabilitySetName);
             }
-            if (LoadBalancer != null)
+            if (Optional.IsDefined(LoadBalancer))
             {
                 writer.WritePropertyName("loadBalancer"u8);
-                writer.WriteObjectValue(LoadBalancer);
+                writer.WriteObjectValue<LoadBalancerResourceNames>(LoadBalancer, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseServerFullResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeDatabaseServerFullResourceNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseServerFullResourceNames)} does not support reading '{options.Format}' format.");
             }
         }
 

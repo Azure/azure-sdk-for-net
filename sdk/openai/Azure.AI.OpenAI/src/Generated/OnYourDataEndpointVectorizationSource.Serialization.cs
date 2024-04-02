@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,14 +22,14 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<OnYourDataEndpointVectorizationSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnYourDataEndpointVectorizationSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnYourDataEndpointVectorizationSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             writer.WriteStringValue(Endpoint.AbsoluteUri);
             writer.WritePropertyName("authentication"u8);
-            writer.WriteObjectValue(Authentication);
+            writer.WriteObjectValue<OnYourDataAuthenticationOptions>(Authentication, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -56,7 +55,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<OnYourDataEndpointVectorizationSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OnYourDataEndpointVectorizationSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OnYourDataEndpointVectorizationSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +110,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OnYourDataEndpointVectorizationSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnYourDataEndpointVectorizationSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +126,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeOnYourDataEndpointVectorizationSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OnYourDataEndpointVectorizationSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OnYourDataEndpointVectorizationSource)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -145,7 +144,7 @@ namespace Azure.AI.OpenAI
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<OnYourDataEndpointVectorizationSource>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

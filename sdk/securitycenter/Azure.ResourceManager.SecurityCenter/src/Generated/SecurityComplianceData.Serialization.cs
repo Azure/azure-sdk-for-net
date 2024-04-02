@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityComplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityComplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityComplianceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,30 +43,30 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AssessedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssessedOn))
             {
                 writer.WritePropertyName("assessmentTimestampUtcDate"u8);
                 writer.WriteStringValue(AssessedOn.Value, "O");
             }
-            if (options.Format != "W" && ResourceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceCount))
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (options.Format != "W" && !(AssessmentResult is ChangeTrackingList<ComplianceSegment> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentResult))
             {
                 writer.WritePropertyName("assessmentResult"u8);
                 writer.WriteStartArray();
                 foreach (var item in AssessmentResult)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComplianceSegment>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<SecurityComplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityComplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityComplianceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityComplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityComplianceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeSecurityComplianceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityComplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityComplianceData)} does not support reading '{options.Format}' format.");
             }
         }
 

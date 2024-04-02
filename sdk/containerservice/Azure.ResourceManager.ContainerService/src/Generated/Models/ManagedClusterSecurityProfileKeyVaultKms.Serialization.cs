@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileKeyVaultKms>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileKeyVaultKms)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileKeyVaultKms)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("keyId"u8);
                 writer.WriteStringValue(KeyId);
             }
-            if (KeyVaultNetworkAccess.HasValue)
+            if (Optional.IsDefined(KeyVaultNetworkAccess))
             {
                 writer.WritePropertyName("keyVaultNetworkAccess"u8);
                 writer.WriteStringValue(KeyVaultNetworkAccess.Value.ToString());
             }
-            if (KeyVaultResourceId != null)
+            if (Optional.IsDefined(KeyVaultResourceId))
             {
                 writer.WritePropertyName("keyVaultResourceId"u8);
                 writer.WriteStringValue(KeyVaultResourceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterSecurityProfileKeyVaultKms>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileKeyVaultKms)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileKeyVaultKms)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileKeyVaultKms)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileKeyVaultKms)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterSecurityProfileKeyVaultKms(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileKeyVaultKms)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterSecurityProfileKeyVaultKms)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SystemCreatedStorageAccount != null)
+            if (Optional.IsDefined(SystemCreatedStorageAccount))
             {
                 if (SystemCreatedStorageAccount != null)
                 {
                     writer.WritePropertyName("systemCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(SystemCreatedStorageAccount);
+                    writer.WriteObjectValue<SystemCreatedStorageAccount>(SystemCreatedStorageAccount, options);
                 }
                 else
                 {
                     writer.WriteNull("systemCreatedStorageAccount");
                 }
             }
-            if (UserCreatedStorageAccount != null)
+            if (Optional.IsDefined(UserCreatedStorageAccount))
             {
                 if (UserCreatedStorageAccount != null)
                 {
                     writer.WritePropertyName("userCreatedStorageAccount"u8);
-                    writer.WriteObjectValue(UserCreatedStorageAccount);
+                    writer.WriteObjectValue<UserCreatedStorageAccount>(UserCreatedStorageAccount, options);
                 }
                 else
                 {
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeStorageAccountDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

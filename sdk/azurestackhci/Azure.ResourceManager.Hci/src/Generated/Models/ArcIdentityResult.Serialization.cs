@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArcIdentityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ArcApplicationClientId.HasValue)
+            if (Optional.IsDefined(ArcApplicationClientId))
             {
                 writer.WritePropertyName("arcApplicationClientId"u8);
                 writer.WriteStringValue(ArcApplicationClientId.Value);
             }
-            if (ArcApplicationTenantId.HasValue)
+            if (Optional.IsDefined(ArcApplicationTenantId))
             {
                 writer.WritePropertyName("arcApplicationTenantId"u8);
                 writer.WriteStringValue(ArcApplicationTenantId.Value);
             }
-            if (ArcServicePrincipalObjectId.HasValue)
+            if (Optional.IsDefined(ArcServicePrincipalObjectId))
             {
                 writer.WritePropertyName("arcServicePrincipalObjectId"u8);
                 writer.WriteStringValue(ArcServicePrincipalObjectId.Value);
             }
-            if (ArcApplicationObjectId.HasValue)
+            if (Optional.IsDefined(ArcApplicationObjectId))
             {
                 writer.WritePropertyName("arcApplicationObjectId"u8);
                 writer.WriteStringValue(ArcApplicationObjectId.Value);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArcIdentityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeArcIdentityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArcIdentityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

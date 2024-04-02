@@ -18,10 +18,7 @@ namespace Azure.AI.OpenAI
         /// <exception cref="ArgumentNullException"> <paramref name="accessToken"/> is null. </exception>
         public OnYourDataAccessTokenAuthenticationOptions(string accessToken)
         {
-            if (accessToken == null)
-            {
-                throw new ArgumentNullException(nameof(accessToken));
-            }
+            Argument.AssertNotNull(accessToken, nameof(accessToken));
 
             Type = OnYourDataAuthenticationType.AccessToken;
             AccessToken = accessToken;

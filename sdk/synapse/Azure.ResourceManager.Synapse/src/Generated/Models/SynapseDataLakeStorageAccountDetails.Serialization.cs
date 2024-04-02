@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDataLakeStorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDataLakeStorageAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDataLakeStorageAccountDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AccountUri != null)
+            if (Optional.IsDefined(AccountUri))
             {
                 writer.WritePropertyName("accountUrl"u8);
                 writer.WriteStringValue(AccountUri.AbsoluteUri);
             }
-            if (Filesystem != null)
+            if (Optional.IsDefined(Filesystem))
             {
                 writer.WritePropertyName("filesystem"u8);
                 writer.WriteStringValue(Filesystem);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (CreateManagedPrivateEndpoint.HasValue)
+            if (Optional.IsDefined(CreateManagedPrivateEndpoint))
             {
                 writer.WritePropertyName("createManagedPrivateEndpoint"u8);
                 writer.WriteBooleanValue(CreateManagedPrivateEndpoint.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDataLakeStorageAccountDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDataLakeStorageAccountDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDataLakeStorageAccountDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDataLakeStorageAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDataLakeStorageAccountDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseDataLakeStorageAccountDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDataLakeStorageAccountDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDataLakeStorageAccountDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,18 +23,18 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPlatformConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(PlatformType.ToString());
-            if (AzureStackEdgeDevice != null)
+            if (Optional.IsDefined(AzureStackEdgeDevice))
             {
                 writer.WritePropertyName("azureStackEdgeDevice"u8);
                 JsonSerializer.Serialize(writer, AzureStackEdgeDevice);
             }
-            if (options.Format != "W" && !(AzureStackEdgeDevices is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AzureStackEdgeDevices))
             {
                 writer.WritePropertyName("azureStackEdgeDevices"u8);
                 writer.WriteStartArray();
@@ -44,17 +44,17 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AzureStackHciCluster != null)
+            if (Optional.IsDefined(AzureStackHciCluster))
             {
                 writer.WritePropertyName("azureStackHciCluster"u8);
                 JsonSerializer.Serialize(writer, AzureStackHciCluster);
             }
-            if (ConnectedCluster != null)
+            if (Optional.IsDefined(ConnectedCluster))
             {
                 writer.WritePropertyName("connectedCluster"u8);
                 JsonSerializer.Serialize(writer, ConnectedCluster);
             }
-            if (CustomLocation != null)
+            if (Optional.IsDefined(CustomLocation))
             {
                 writer.WritePropertyName("customLocation"u8);
                 JsonSerializer.Serialize(writer, CustomLocation);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkPlatformConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkPlatformConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkPlatformConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

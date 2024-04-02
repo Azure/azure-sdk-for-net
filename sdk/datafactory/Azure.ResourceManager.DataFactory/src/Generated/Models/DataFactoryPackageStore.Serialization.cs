@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPackageStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPackageStore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPackageStore)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("packageStoreLinkedService"u8);
-            writer.WriteObjectValue(PackageStoreLinkedService);
+            writer.WriteObjectValue<EntityReference>(PackageStoreLinkedService, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryPackageStore>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryPackageStore)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryPackageStore)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPackageStore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPackageStore)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryPackageStore(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryPackageStore)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryPackageStore)} does not support reading '{options.Format}' format.");
             }
         }
 

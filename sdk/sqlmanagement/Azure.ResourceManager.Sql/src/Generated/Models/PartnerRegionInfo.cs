@@ -63,8 +63,10 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Geo location of the partner managed instances. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> Replication role of the partner managed instances. </summary>
+        [WirePath("replicationRole")]
         public InstanceFailoverGroupReplicationRole? ReplicationRole { get; }
     }
 }

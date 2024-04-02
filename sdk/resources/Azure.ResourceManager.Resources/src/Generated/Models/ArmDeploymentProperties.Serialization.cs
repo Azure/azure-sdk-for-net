@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Template != null)
+            if (Optional.IsDefined(Template))
             {
                 writer.WritePropertyName("template"u8);
 #if NET6_0_OR_GREATER
@@ -38,12 +38,12 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (TemplateLink != null)
+            if (Optional.IsDefined(TemplateLink))
             {
                 writer.WritePropertyName("templateLink"u8);
-                writer.WriteObjectValue(TemplateLink);
+                writer.WriteObjectValue<ArmDeploymentTemplateLink>(TemplateLink, options);
             }
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
 #if NET6_0_OR_GREATER
@@ -55,27 +55,27 @@ namespace Azure.ResourceManager.Resources.Models
                 }
 #endif
             }
-            if (ParametersLink != null)
+            if (Optional.IsDefined(ParametersLink))
             {
                 writer.WritePropertyName("parametersLink"u8);
-                writer.WriteObjectValue(ParametersLink);
+                writer.WriteObjectValue<ArmDeploymentParametersLink>(ParametersLink, options);
             }
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToSerialString());
-            if (DebugSetting != null)
+            if (Optional.IsDefined(DebugSetting))
             {
                 writer.WritePropertyName("debugSetting"u8);
-                writer.WriteObjectValue(DebugSetting);
+                writer.WriteObjectValue<DebugSetting>(DebugSetting, options);
             }
-            if (ErrorDeployment != null)
+            if (Optional.IsDefined(ErrorDeployment))
             {
                 writer.WritePropertyName("onErrorDeployment"u8);
-                writer.WriteObjectValue(ErrorDeployment);
+                writer.WriteObjectValue<ErrorDeployment>(ErrorDeployment, options);
             }
-            if (ExpressionEvaluation != null)
+            if (Optional.IsDefined(ExpressionEvaluation))
             {
                 writer.WritePropertyName("expressionEvaluationOptions"u8);
-                writer.WriteObjectValue(ExpressionEvaluation);
+                writer.WriteObjectValue<ExpressionEvaluationOptions>(ExpressionEvaluation, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -100,7 +100,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmDeploymentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -222,7 +222,7 @@ namespace Azure.ResourceManager.Resources.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeArmDeploymentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmDeploymentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

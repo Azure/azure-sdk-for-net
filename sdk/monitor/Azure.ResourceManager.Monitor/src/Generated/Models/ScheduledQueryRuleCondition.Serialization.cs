@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Query != null)
+            if (Optional.IsDefined(Query))
             {
                 writer.WritePropertyName("query"u8);
                 writer.WriteStringValue(Query);
             }
-            if (TimeAggregation.HasValue)
+            if (Optional.IsDefined(TimeAggregation))
             {
                 writer.WritePropertyName("timeAggregation"u8);
                 writer.WriteStringValue(TimeAggregation.Value.ToString());
             }
-            if (MetricMeasureColumn != null)
+            if (Optional.IsDefined(MetricMeasureColumn))
             {
                 writer.WritePropertyName("metricMeasureColumn"u8);
                 writer.WriteStringValue(MetricMeasureColumn);
             }
-            if (ResourceIdColumn != null)
+            if (Optional.IsDefined(ResourceIdColumn))
             {
                 writer.WritePropertyName("resourceIdColumn"u8);
                 writer.WriteStringValue(ResourceIdColumn);
             }
-            if (!(Dimensions is ChangeTrackingList<MonitorDimension> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Dimensions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MonitorDimension>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Operator.HasValue)
+            if (Optional.IsDefined(Operator))
             {
                 writer.WritePropertyName("operator"u8);
                 writer.WriteStringValue(Operator.Value.ToSerialString());
             }
-            if (Threshold.HasValue)
+            if (Optional.IsDefined(Threshold))
             {
                 writer.WritePropertyName("threshold"u8);
                 writer.WriteNumberValue(Threshold.Value);
             }
-            if (FailingPeriods != null)
+            if (Optional.IsDefined(FailingPeriods))
             {
                 writer.WritePropertyName("failingPeriods"u8);
-                writer.WriteObjectValue(FailingPeriods);
+                writer.WriteObjectValue<ConditionFailingPeriods>(FailingPeriods, options);
             }
-            if (MetricName != null)
+            if (Optional.IsDefined(MetricName))
             {
                 writer.WritePropertyName("metricName"u8);
                 writer.WriteStringValue(MetricName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScheduledQueryRuleCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeScheduledQueryRuleCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScheduledQueryRuleCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

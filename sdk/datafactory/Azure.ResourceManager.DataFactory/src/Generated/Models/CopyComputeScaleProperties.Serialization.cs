@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopyComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DataIntegrationUnit.HasValue)
+            if (Optional.IsDefined(DataIntegrationUnit))
             {
                 writer.WritePropertyName("dataIntegrationUnit"u8);
                 writer.WriteNumberValue(DataIntegrationUnit.Value);
             }
-            if (TimeToLive.HasValue)
+            if (Optional.IsDefined(TimeToLive))
             {
                 writer.WritePropertyName("timeToLive"u8);
                 writer.WriteNumberValue(TimeToLive.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<CopyComputeScaleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeCopyComputeScaleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CopyComputeScaleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

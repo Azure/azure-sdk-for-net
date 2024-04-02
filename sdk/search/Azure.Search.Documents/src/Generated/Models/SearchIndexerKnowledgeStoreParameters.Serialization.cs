@@ -16,7 +16,7 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SynthesizeGeneratedKeyName.HasValue)
+            if (Optional.IsDefined(SynthesizeGeneratedKeyName))
             {
                 writer.WritePropertyName("synthesizeGeneratedKeyName"u8);
                 writer.WriteBooleanValue(SynthesizeGeneratedKeyName.Value);
@@ -24,7 +24,7 @@ namespace Azure.Search.Documents.Indexes.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }

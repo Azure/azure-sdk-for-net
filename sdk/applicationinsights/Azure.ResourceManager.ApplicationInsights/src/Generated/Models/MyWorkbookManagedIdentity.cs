@@ -62,8 +62,10 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> Customer Managed Identity. </summary>
+        [WirePath("userAssignedIdentities")]
         public MyWorkbookUserAssignedIdentities UserAssignedIdentities { get; set; }
         /// <summary> The identity type. </summary>
+        [WirePath("type")]
         public MyWorkbookManagedIdentityType? IdentityType { get; set; }
     }
 }

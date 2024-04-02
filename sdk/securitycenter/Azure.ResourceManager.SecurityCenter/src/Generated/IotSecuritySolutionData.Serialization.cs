@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,29 +56,29 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Workspace != null)
+            if (Optional.IsDefined(Workspace))
             {
                 writer.WritePropertyName("workspace"u8);
                 writer.WriteStringValue(Workspace);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (!(Export is ChangeTrackingList<IotSecuritySolutionExportOption> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Export))
             {
                 writer.WritePropertyName("export"u8);
                 writer.WriteStartArray();
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(DisabledDataSources is ChangeTrackingList<IotSecuritySolutionDataSource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(DisabledDataSources))
             {
                 writer.WritePropertyName("disabledDataSources"u8);
                 writer.WriteStartArray();
@@ -98,7 +98,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(IotHubs is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(IotHubs))
             {
                 writer.WritePropertyName("iotHubs"u8);
                 writer.WriteStartArray();
@@ -108,12 +108,12 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (UserDefinedResources != null)
+            if (Optional.IsDefined(UserDefinedResources))
             {
                 writer.WritePropertyName("userDefinedResources"u8);
-                writer.WriteObjectValue(UserDefinedResources);
+                writer.WriteObjectValue<UserDefinedResourcesProperties>(UserDefinedResources, options);
             }
-            if (options.Format != "W" && !(AutoDiscoveredResources is ChangeTrackingList<string> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AutoDiscoveredResources))
             {
                 writer.WritePropertyName("autoDiscoveredResources"u8);
                 writer.WriteStartArray();
@@ -123,28 +123,28 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(RecommendationsConfiguration is ChangeTrackingList<RecommendationConfigurationProperties> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(RecommendationsConfiguration))
             {
                 writer.WritePropertyName("recommendationsConfiguration"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecommendationsConfiguration)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendationConfigurationProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (UnmaskedIPLoggingStatus.HasValue)
+            if (Optional.IsDefined(UnmaskedIPLoggingStatus))
             {
                 writer.WritePropertyName("unmaskedIpLoggingStatus"u8);
                 writer.WriteStringValue(UnmaskedIPLoggingStatus.Value.ToString());
             }
-            if (!(AdditionalWorkspaces is ChangeTrackingList<AdditionalWorkspacesProperties> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalWorkspaces))
             {
                 writer.WritePropertyName("additionalWorkspaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalWorkspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdditionalWorkspacesProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<IotSecuritySolutionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -420,7 +420,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -436,7 +436,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeIotSecuritySolutionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecuritySolutionData)} does not support reading '{options.Format}' format.");
             }
         }
 

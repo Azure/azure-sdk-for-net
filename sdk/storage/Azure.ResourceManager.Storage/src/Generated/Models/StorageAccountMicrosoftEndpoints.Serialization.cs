@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,36 +23,36 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountMicrosoftEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountMicrosoftEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountMicrosoftEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && BlobUri != null)
+            if (options.Format != "W" && Optional.IsDefined(BlobUri))
             {
                 writer.WritePropertyName("blob"u8);
                 writer.WriteStringValue(BlobUri.AbsoluteUri);
             }
-            if (options.Format != "W" && QueueUri != null)
+            if (options.Format != "W" && Optional.IsDefined(QueueUri))
             {
                 writer.WritePropertyName("queue"u8);
                 writer.WriteStringValue(QueueUri.AbsoluteUri);
             }
-            if (options.Format != "W" && TableUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TableUri))
             {
                 writer.WritePropertyName("table"u8);
                 writer.WriteStringValue(TableUri.AbsoluteUri);
             }
-            if (options.Format != "W" && FileUri != null)
+            if (options.Format != "W" && Optional.IsDefined(FileUri))
             {
                 writer.WritePropertyName("file"u8);
                 writer.WriteStringValue(FileUri.AbsoluteUri);
             }
-            if (options.Format != "W" && WebUri != null)
+            if (options.Format != "W" && Optional.IsDefined(WebUri))
             {
                 writer.WritePropertyName("web"u8);
                 writer.WriteStringValue(WebUri.AbsoluteUri);
             }
-            if (options.Format != "W" && DfsUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DfsUri))
             {
                 writer.WritePropertyName("dfs"u8);
                 writer.WriteStringValue(DfsUri.AbsoluteUri);
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.Storage.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountMicrosoftEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageAccountMicrosoftEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageAccountMicrosoftEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -174,6 +175,105 @@ namespace Azure.ResourceManager.Storage.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(BlobUri), out propertyOverride);
+            if (Optional.IsDefined(BlobUri) || hasPropertyOverride)
+            {
+                builder.Append("  blob: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{BlobUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(QueueUri), out propertyOverride);
+            if (Optional.IsDefined(QueueUri) || hasPropertyOverride)
+            {
+                builder.Append("  queue: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{QueueUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TableUri), out propertyOverride);
+            if (Optional.IsDefined(TableUri) || hasPropertyOverride)
+            {
+                builder.Append("  table: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{TableUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(FileUri), out propertyOverride);
+            if (Optional.IsDefined(FileUri) || hasPropertyOverride)
+            {
+                builder.Append("  file: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{FileUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(WebUri), out propertyOverride);
+            if (Optional.IsDefined(WebUri) || hasPropertyOverride)
+            {
+                builder.Append("  web: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{WebUri.AbsoluteUri}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DfsUri), out propertyOverride);
+            if (Optional.IsDefined(DfsUri) || hasPropertyOverride)
+            {
+                builder.Append("  dfs: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{DfsUri.AbsoluteUri}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<StorageAccountMicrosoftEndpoints>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<StorageAccountMicrosoftEndpoints>)this).GetFormatFromOptions(options) : options.Format;
@@ -182,8 +282,10 @@ namespace Azure.ResourceManager.Storage.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountMicrosoftEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountMicrosoftEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +301,7 @@ namespace Azure.ResourceManager.Storage.Models
                         return DeserializeStorageAccountMicrosoftEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageAccountMicrosoftEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageAccountMicrosoftEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

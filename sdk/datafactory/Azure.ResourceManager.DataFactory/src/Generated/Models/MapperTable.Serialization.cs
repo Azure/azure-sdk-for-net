@@ -22,34 +22,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperTable)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Schema is ChangeTrackingList<MapperTableSchema> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Schema))
             {
                 writer.WritePropertyName("schema"u8);
                 writer.WriteStartArray();
                 foreach (var item in Schema)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperTableSchema>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(DslConnectorProperties is ChangeTrackingList<MapperDslConnectorProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DslConnectorProperties))
             {
                 writer.WritePropertyName("dslConnectorProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in DslConnectorProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperDslConnectorProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperTable>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperTable)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperTable)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapperTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperTable)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeMapperTable(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapperTable)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperTable)} does not support reading '{options.Format}' format.");
             }
         }
 

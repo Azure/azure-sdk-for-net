@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using Azure.Core;
 using Azure.Core.GeoJson;
 using Azure.Core.Pipeline;
+using Azure.Maps.Common;
 
 namespace Azure.Maps.Rendering
 {
@@ -181,7 +182,7 @@ namespace Azure.Maps.Rendering
                 List<string> paths = null;
                 if (options?.ImagePathStyles != null)
                 {
-                    pushpins = new List<string>();
+                    paths = new List<string>();
                     foreach (var path in options?.ImagePathStyles)
                     {
                         paths.Add(path.ToQueryString());

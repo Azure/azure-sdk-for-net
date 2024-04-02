@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<SupportAzureServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.Support
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (!(ResourceTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
@@ -63,6 +63,17 @@ namespace Azure.ResourceManager.Support
                     writer.WriteStringValue(item);
                 }
                 writer.WriteEndArray();
+            }
+            if (options.Format != "W" && Optional.IsCollectionDefined(Metadata))
+            {
+                writer.WritePropertyName("metadata"u8);
+                writer.WriteStartObject();
+                foreach (var item in Metadata)
+                {
+                    writer.WritePropertyName(item.Key);
+                    writer.WriteStringValue(item.Value);
+                }
+                writer.WriteEndObject();
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -88,7 +99,7 @@ namespace Azure.ResourceManager.Support
             var format = options.Format == "W" ? ((IPersistableModel<SupportAzureServiceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,6 +120,7 @@ namespace Azure.ResourceManager.Support
             SystemData systemData = default;
             string displayName = default;
             IReadOnlyList<string> resourceTypes = default;
+            IReadOnlyDictionary<string, string> metadata = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -165,6 +177,20 @@ namespace Azure.ResourceManager.Support
                             resourceTypes = array;
                             continue;
                         }
+                        if (property0.NameEquals("metadata"u8))
+                        {
+                            if (property0.Value.ValueKind == JsonValueKind.Null)
+                            {
+                                continue;
+                            }
+                            Dictionary<string, string> dictionary = new Dictionary<string, string>();
+                            foreach (var property1 in property0.Value.EnumerateObject())
+                            {
+                                dictionary.Add(property1.Name, property1.Value.GetString());
+                            }
+                            metadata = dictionary;
+                            continue;
+                        }
                     }
                     continue;
                 }
@@ -181,6 +207,7 @@ namespace Azure.ResourceManager.Support
                 systemData,
                 displayName,
                 resourceTypes ?? new ChangeTrackingList<string>(),
+                metadata ?? new ChangeTrackingDictionary<string, string>(),
                 serializedAdditionalRawData);
         }
 
@@ -193,7 +220,7 @@ namespace Azure.ResourceManager.Support
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -209,7 +236,7 @@ namespace Azure.ResourceManager.Support
                         return DeserializeSupportAzureServiceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportAzureServiceData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,18 +24,18 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<InboundEndpointIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("subnet"u8);
             JsonSerializer.Serialize(writer, Subnet);
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIpAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<InboundEndpointIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         return DeserializeInboundEndpointIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InboundEndpointIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

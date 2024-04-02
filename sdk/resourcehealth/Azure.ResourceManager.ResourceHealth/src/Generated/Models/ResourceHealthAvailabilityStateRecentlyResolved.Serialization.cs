@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UnavailableOccuredOn.HasValue)
+            if (Optional.IsDefined(UnavailableOccuredOn))
             {
                 writer.WritePropertyName("unavailableOccuredTime"u8);
                 writer.WriteStringValue(UnavailableOccuredOn.Value, "O");
             }
-            if (ResolvedOn.HasValue)
+            if (Optional.IsDefined(ResolvedOn))
             {
                 writer.WritePropertyName("resolvedTime"u8);
                 writer.WriteStringValue(ResolvedOn.Value, "O");
             }
-            if (UnavailableSummary != null)
+            if (Optional.IsDefined(UnavailableSummary))
             {
                 writer.WritePropertyName("unavailableSummary"u8);
                 writer.WriteStringValue(UnavailableSummary);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthAvailabilityStateRecentlyResolved>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthAvailabilityStateRecentlyResolved(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthAvailabilityStateRecentlyResolved)} does not support reading '{options.Format}' format.");
             }
         }
 

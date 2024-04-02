@@ -50,7 +50,7 @@ namespace Azure.Core
             {
                 return optional.Value;
             }
-            return new ChangeTrackingDictionary<TKey, TValue>(optional);
+            return new ChangeTrackingDictionary<TKey, TValue>(optional.Value);
         }
 
         public static IDictionary<TKey, TValue> ToDictionary<TKey, TValue>(Optional<IDictionary<TKey, TValue>> optional)
@@ -59,7 +59,7 @@ namespace Azure.Core
             {
                 return optional.Value;
             }
-            return new ChangeTrackingDictionary<TKey, TValue>(optional);
+            return new ChangeTrackingDictionary<TKey, TValue>(optional.Value);
         }
         public static IReadOnlyList<T> ToList<T>(Optional<IReadOnlyList<T>> optional)
         {
@@ -67,7 +67,7 @@ namespace Azure.Core
             {
                 return optional.Value;
             }
-            return new ChangeTrackingList<T>(optional);
+            return new ChangeTrackingList<T>(optional.Value);
         }
 
         public static IList<T> ToList<T>(Optional<IList<T>> optional)
@@ -76,7 +76,7 @@ namespace Azure.Core
             {
                 return optional.Value;
             }
-            return new ChangeTrackingList<T>(optional);
+            return new ChangeTrackingList<T>(optional.Value);
         }
 
         public static T? ToNullable<T>(Optional<T> optional) where T: struct

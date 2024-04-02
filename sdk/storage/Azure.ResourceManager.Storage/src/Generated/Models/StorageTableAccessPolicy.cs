@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="permission"/> is null. </exception>
         public StorageTableAccessPolicy(string permission)
         {
-            if (permission == null)
-            {
-                throw new ArgumentNullException(nameof(permission));
-            }
+            Argument.AssertNotNull(permission, nameof(permission));
 
             Permission = permission;
         }
@@ -77,10 +74,13 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> Start time of the access policy. </summary>
+        [WirePath("startTime")]
         public DateTimeOffset? StartOn { get; set; }
         /// <summary> Expiry time of the access policy. </summary>
+        [WirePath("expiryTime")]
         public DateTimeOffset? ExpireOn { get; set; }
         /// <summary> Required. List of abbreviated permissions. Supported permission values include 'r','a','u','d'. </summary>
+        [WirePath("permission")]
         public string Permission { get; set; }
     }
 }

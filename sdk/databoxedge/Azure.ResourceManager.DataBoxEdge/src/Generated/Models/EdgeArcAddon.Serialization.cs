@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -59,22 +59,22 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             writer.WriteStringValue(ResourceName);
             writer.WritePropertyName("resourceLocation"u8);
             writer.WriteStringValue(ResourceLocation);
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (options.Format != "W" && HostPlatform.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HostPlatform))
             {
                 writer.WritePropertyName("hostPlatform"u8);
                 writer.WriteStringValue(HostPlatform.Value.ToString());
             }
-            if (options.Format != "W" && HostPlatformType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HostPlatformType))
             {
                 writer.WritePropertyName("hostPlatformType"u8);
                 writer.WriteStringValue(HostPlatformType.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeArcAddon>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeEdgeArcAddon(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeArcAddon)} does not support reading '{options.Format}' format.");
             }
         }
 

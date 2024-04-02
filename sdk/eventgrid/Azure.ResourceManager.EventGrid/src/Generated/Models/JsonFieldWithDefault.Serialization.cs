@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonFieldWithDefault>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceField != null)
+            if (Optional.IsDefined(SourceField))
             {
                 writer.WritePropertyName("sourceField"u8);
                 writer.WriteStringValue(SourceField);
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<JsonFieldWithDefault>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeJsonFieldWithDefault(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JsonFieldWithDefault)} does not support reading '{options.Format}' format.");
             }
         }
 

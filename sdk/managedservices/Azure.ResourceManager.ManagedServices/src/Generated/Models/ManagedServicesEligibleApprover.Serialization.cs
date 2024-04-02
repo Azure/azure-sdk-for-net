@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleApprover>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("principalId"u8);
             writer.WriteStringValue(PrincipalId);
-            if (PrincipalIdDisplayName != null)
+            if (Optional.IsDefined(PrincipalIdDisplayName))
             {
                 writer.WritePropertyName("principalIdDisplayName"u8);
                 writer.WriteStringValue(PrincipalIdDisplayName);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServicesEligibleApprover>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.ManagedServices.Models
                         return DeserializeManagedServicesEligibleApprover(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServicesEligibleApprover)} does not support reading '{options.Format}' format.");
             }
         }
 

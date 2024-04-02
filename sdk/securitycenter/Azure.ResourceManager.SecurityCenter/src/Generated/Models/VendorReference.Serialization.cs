@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<VendorReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VendorReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VendorReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Title != null)
+            if (options.Format != "W" && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Link != null)
+            if (options.Format != "W" && Optional.IsDefined(Link))
             {
                 writer.WritePropertyName("link"u8);
                 writer.WriteStringValue(Link);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<VendorReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VendorReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VendorReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VendorReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VendorReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeVendorReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VendorReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VendorReference)} does not support reading '{options.Format}' format.");
             }
         }
 

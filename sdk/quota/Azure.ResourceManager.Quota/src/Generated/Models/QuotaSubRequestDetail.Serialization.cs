@@ -22,44 +22,44 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaSubRequestDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaSubRequestDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaSubRequestDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<QuotaRequestResourceName>(Name, options);
             }
-            if (options.Format != "W" && ResourceTypeName != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName);
             }
-            if (Unit != null)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && SubRequestId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubRequestId))
             {
                 writer.WritePropertyName("subRequestId"u8);
                 writer.WriteStringValue(SubRequestId.Value);
             }
-            if (Limit != null)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
-                writer.WriteObjectValue(Limit);
+                writer.WriteObjectValue<QuotaLimitJsonObject>(Limit, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaSubRequestDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaSubRequestDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaSubRequestDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.Quota.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaSubRequestDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaSubRequestDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return DeserializeQuotaSubRequestDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaSubRequestDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaSubRequestDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

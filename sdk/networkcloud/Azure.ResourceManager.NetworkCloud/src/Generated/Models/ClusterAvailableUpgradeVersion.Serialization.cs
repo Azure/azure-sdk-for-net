@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAvailableUpgradeVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAvailableUpgradeVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterAvailableUpgradeVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ControlImpact.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ControlImpact))
             {
                 writer.WritePropertyName("controlImpact"u8);
                 writer.WriteStringValue(ControlImpact.Value.ToString());
             }
-            if (options.Format != "W" && ExpectedDuration != null)
+            if (options.Format != "W" && Optional.IsDefined(ExpectedDuration))
             {
                 writer.WritePropertyName("expectedDuration"u8);
                 writer.WriteStringValue(ExpectedDuration);
             }
-            if (options.Format != "W" && ImpactDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ImpactDescription))
             {
                 writer.WritePropertyName("impactDescription"u8);
                 writer.WriteStringValue(ImpactDescription);
             }
-            if (options.Format != "W" && SupportExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SupportExpireOn))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpireOn.Value, "O");
             }
-            if (options.Format != "W" && TargetClusterVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetClusterVersion))
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);
             }
-            if (options.Format != "W" && WorkloadImpact.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkloadImpact))
             {
                 writer.WritePropertyName("workloadImpact"u8);
                 writer.WriteStringValue(WorkloadImpact.Value.ToString());
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAvailableUpgradeVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAvailableUpgradeVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterAvailableUpgradeVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAvailableUpgradeVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterAvailableUpgradeVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeClusterAvailableUpgradeVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAvailableUpgradeVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterAvailableUpgradeVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

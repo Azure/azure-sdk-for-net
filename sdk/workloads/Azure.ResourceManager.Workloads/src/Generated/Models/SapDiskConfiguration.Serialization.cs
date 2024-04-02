@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecommendedConfiguration != null)
+            if (Optional.IsDefined(RecommendedConfiguration))
             {
                 writer.WritePropertyName("recommendedConfiguration"u8);
-                writer.WriteObjectValue(RecommendedConfiguration);
+                writer.WriteObjectValue<DiskVolumeConfiguration>(RecommendedConfiguration, options);
             }
-            if (!(SupportedConfigurations is ChangeTrackingList<SupportedConfigurationsDiskDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedConfigurations))
             {
                 writer.WritePropertyName("supportedConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SupportedConfigurationsDiskDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapDiskConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapDiskConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapDiskConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

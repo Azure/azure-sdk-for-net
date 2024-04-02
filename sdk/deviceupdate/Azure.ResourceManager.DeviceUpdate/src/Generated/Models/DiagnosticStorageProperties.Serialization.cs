@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticStorageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticStorageProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("authenticationType"u8);
             writer.WriteStringValue(AuthenticationType.ToString());
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DiagnosticStorageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DiagnosticStorageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DiagnosticStorageProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticStorageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticStorageProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeDiagnosticStorageProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DiagnosticStorageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DiagnosticStorageProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,38 +22,38 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaintenanceScope.HasValue)
+            if (Optional.IsDefined(MaintenanceScope))
             {
                 writer.WritePropertyName("maintenanceScope"u8);
                 writer.WriteStringValue(MaintenanceScope.Value.ToString());
             }
-            if (ImpactType.HasValue)
+            if (Optional.IsDefined(ImpactType))
             {
                 writer.WritePropertyName("impactType"u8);
                 writer.WriteStringValue(ImpactType.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (ImpactDurationInSec.HasValue)
+            if (Optional.IsDefined(ImpactDurationInSec))
             {
                 writer.WritePropertyName("impactDurationInSec"u8);
                 writer.WriteNumberValue(ImpactDurationInSec.Value);
             }
-            if (NotBefore.HasValue)
+            if (Optional.IsDefined(NotBefore))
             {
                 writer.WritePropertyName("notBefore"u8);
                 writer.WriteStringValue(NotBefore.Value, "O");
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<MaintenanceUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeMaintenanceUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MaintenanceUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

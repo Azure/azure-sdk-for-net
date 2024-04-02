@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolUpgradeProfilePropertiesUpgradesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolUpgradeProfilePropertiesUpgradesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KubernetesVersion != null)
+            if (Optional.IsDefined(KubernetesVersion))
             {
                 writer.WritePropertyName("kubernetesVersion"u8);
                 writer.WriteStringValue(KubernetesVersion);
             }
-            if (IsPreview.HasValue)
+            if (Optional.IsDefined(IsPreview))
             {
                 writer.WritePropertyName("isPreview"u8);
                 writer.WriteBooleanValue(IsPreview.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpgradeProfilePropertiesUpgradesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolUpgradeProfilePropertiesUpgradesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolUpgradeProfilePropertiesUpgradesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolUpgradeProfilePropertiesUpgradesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolUpgradeProfilePropertiesUpgradesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeAgentPoolUpgradeProfilePropertiesUpgradesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolUpgradeProfilePropertiesUpgradesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolUpgradeProfilePropertiesUpgradesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using Azure.Core;
-using Azure.ResourceManager.Blueprint;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Blueprint.Models
@@ -22,14 +21,8 @@ namespace Azure.ResourceManager.Blueprint.Models
         /// <exception cref="ArgumentNullException"> <paramref name="template"/> or <paramref name="parameters"/> is null. </exception>
         public TemplateArtifact(BinaryData template, IDictionary<string, ParameterValue> parameters)
         {
-            if (template == null)
-            {
-                throw new ArgumentNullException(nameof(template));
-            }
-            if (parameters == null)
-            {
-                throw new ArgumentNullException(nameof(parameters));
-            }
+            Argument.AssertNotNull(template, nameof(template));
+            Argument.AssertNotNull(parameters, nameof(parameters));
 
             DependsOn = new ChangeTrackingList<string>();
             Template = template;

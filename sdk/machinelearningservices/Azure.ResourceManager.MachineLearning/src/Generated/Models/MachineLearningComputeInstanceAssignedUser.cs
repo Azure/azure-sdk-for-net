@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="objectId"/> is null. </exception>
         public MachineLearningComputeInstanceAssignedUser(string objectId, Guid tenantId)
         {
-            if (objectId == null)
-            {
-                throw new ArgumentNullException(nameof(objectId));
-            }
+            Argument.AssertNotNull(objectId, nameof(objectId));
 
             ObjectId = objectId;
             TenantId = tenantId;

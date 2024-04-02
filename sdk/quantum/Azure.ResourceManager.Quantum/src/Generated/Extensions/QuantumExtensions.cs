@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Quantum.Mocking;
 using Azure.ResourceManager.Quantum.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> Returns a <see cref="QuantumWorkspaceResource"/> object. </returns>
         public static QuantumWorkspaceResource GetQuantumWorkspaceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableQuantumArmClient(client).GetQuantumWorkspaceResource(id);
         }
@@ -69,10 +64,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An object representing collection of QuantumWorkspaceResources and their operations over a QuantumWorkspaceResource. </returns>
         public static QuantumWorkspaceCollection GetQuantumWorkspaces(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableQuantumResourceGroupResource(resourceGroupResource).GetQuantumWorkspaces();
         }
@@ -90,7 +82,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -110,10 +102,7 @@ namespace Azure.ResourceManager.Quantum
         [ForwardsClientCalls]
         public static async Task<Response<QuantumWorkspaceResource>> GetQuantumWorkspaceAsync(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableQuantumResourceGroupResource(resourceGroupResource).GetQuantumWorkspaceAsync(workspaceName, cancellationToken).ConfigureAwait(false);
         }
@@ -131,7 +120,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -151,10 +140,7 @@ namespace Azure.ResourceManager.Quantum
         [ForwardsClientCalls]
         public static Response<QuantumWorkspaceResource> GetQuantumWorkspace(this ResourceGroupResource resourceGroupResource, string workspaceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableQuantumResourceGroupResource(resourceGroupResource).GetQuantumWorkspace(workspaceName, cancellationToken);
         }
@@ -172,7 +158,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -190,10 +176,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> An async collection of <see cref="QuantumWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<QuantumWorkspaceResource> GetQuantumWorkspacesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableQuantumSubscriptionResource(subscriptionResource).GetQuantumWorkspacesAsync(cancellationToken);
         }
@@ -211,7 +194,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -229,10 +212,7 @@ namespace Azure.ResourceManager.Quantum
         /// <returns> A collection of <see cref="QuantumWorkspaceResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<QuantumWorkspaceResource> GetQuantumWorkspaces(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableQuantumSubscriptionResource(subscriptionResource).GetQuantumWorkspaces(cancellationToken);
         }
@@ -250,7 +230,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -263,13 +243,10 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="locationName"/> is null. </exception>
-        /// <returns> An async collection of <see cref="ProviderDescription"/> that may take multiple service requests to iterate over. </returns>
-        public static AsyncPageable<ProviderDescription> GetOfferingsAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        /// <returns> An async collection of <see cref="QuantumProviderDescription"/> that may take multiple service requests to iterate over. </returns>
+        public static AsyncPageable<QuantumProviderDescription> GetOfferingsAsync(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableQuantumSubscriptionResource(subscriptionResource).GetOfferingsAsync(locationName, cancellationToken);
         }
@@ -287,7 +264,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// </list>
         /// <item>
@@ -300,13 +277,10 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="locationName"/> is null. </exception>
-        /// <returns> A collection of <see cref="ProviderDescription"/> that may take multiple service requests to iterate over. </returns>
-        public static Pageable<ProviderDescription> GetOfferings(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
+        /// <returns> A collection of <see cref="QuantumProviderDescription"/> that may take multiple service requests to iterate over. </returns>
+        public static Pageable<QuantumProviderDescription> GetOfferings(this SubscriptionResource subscriptionResource, string locationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableQuantumSubscriptionResource(subscriptionResource).GetOfferings(locationName, cancellationToken);
         }
@@ -324,12 +298,12 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.CheckNameAvailabilityWorkspace(string,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.CheckWorkspaceNameAvailability(string,WorkspaceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -338,14 +312,11 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static async Task<Response<CheckNameAvailabilityResult>> CheckNameAvailabilityWorkspaceAsync(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static async Task<Response<WorkspaceNameAvailabilityResult>> CheckWorkspaceNameAvailabilityAsync(this SubscriptionResource subscriptionResource, string locationName, WorkspaceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return await GetMockableQuantumSubscriptionResource(subscriptionResource).CheckNameAvailabilityWorkspaceAsync(locationName, content, cancellationToken).ConfigureAwait(false);
+            return await GetMockableQuantumSubscriptionResource(subscriptionResource).CheckWorkspaceNameAvailabilityAsync(locationName, content, cancellationToken).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -361,12 +332,12 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// </list>
         /// <item>
         /// <term>Mocking</term>
-        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.CheckNameAvailabilityWorkspace(string,CheckNameAvailabilityContent,CancellationToken)"/> instead.</description>
+        /// <description>To mock this method, please mock <see cref="MockableQuantumSubscriptionResource.CheckWorkspaceNameAvailability(string,WorkspaceNameAvailabilityContent,CancellationToken)"/> instead.</description>
         /// </item>
         /// </summary>
         /// <param name="subscriptionResource"> The <see cref="SubscriptionResource" /> instance the method will execute against. </param>
@@ -375,14 +346,11 @@ namespace Azure.ResourceManager.Quantum
         /// <param name="cancellationToken"> The cancellation token to use. </param>
         /// <exception cref="ArgumentException"> <paramref name="locationName"/> is an empty string, and was expected to be non-empty. </exception>
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/>, <paramref name="locationName"/> or <paramref name="content"/> is null. </exception>
-        public static Response<CheckNameAvailabilityResult> CheckNameAvailabilityWorkspace(this SubscriptionResource subscriptionResource, string locationName, CheckNameAvailabilityContent content, CancellationToken cancellationToken = default)
+        public static Response<WorkspaceNameAvailabilityResult> CheckWorkspaceNameAvailability(this SubscriptionResource subscriptionResource, string locationName, WorkspaceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
-            return GetMockableQuantumSubscriptionResource(subscriptionResource).CheckNameAvailabilityWorkspace(locationName, content, cancellationToken);
+            return GetMockableQuantumSubscriptionResource(subscriptionResource).CheckWorkspaceNameAvailability(locationName, content, cancellationToken);
         }
     }
 }

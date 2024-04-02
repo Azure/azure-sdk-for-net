@@ -22,43 +22,43 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WorkLoadType.HasValue)
+            if (Optional.IsDefined(WorkLoadType))
             {
                 writer.WritePropertyName("workLoadType"u8);
                 writer.WriteStringValue(WorkLoadType.Value.ToString());
             }
-            if (Settings != null)
+            if (Optional.IsDefined(Settings))
             {
                 writer.WritePropertyName("settings"u8);
-                writer.WriteObjectValue(Settings);
+                writer.WriteObjectValue<BackupCommonSettings>(Settings, options);
             }
-            if (!(SubProtectionPolicy is ChangeTrackingList<SubProtectionPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubProtectionPolicy))
             {
                 writer.WritePropertyName("subProtectionPolicy"u8);
                 writer.WriteStartArray();
                 foreach (var item in SubProtectionPolicy)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SubProtectionPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DoesMakePolicyConsistent.HasValue)
+            if (Optional.IsDefined(DoesMakePolicyConsistent))
             {
                 writer.WritePropertyName("makePolicyConsistent"u8);
                 writer.WriteBooleanValue(DoesMakePolicyConsistent.Value);
             }
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
             writer.WritePropertyName("backupManagementType"u8);
             writer.WriteStringValue(BackupManagementType);
-            if (!(ResourceGuardOperationRequests is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationRequests))
             {
                 writer.WritePropertyName("resourceGuardOperationRequests"u8);
                 writer.WriteStartArray();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmWorkloadProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmWorkloadProtectionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmWorkloadProtectionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

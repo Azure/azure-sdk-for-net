@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAzureActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAzureActiveDirectory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAzureActiveDirectory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (ClusterApplication != null)
+            if (Optional.IsDefined(ClusterApplication))
             {
                 writer.WritePropertyName("clusterApplication"u8);
                 writer.WriteStringValue(ClusterApplication);
             }
-            if (ClientApplication != null)
+            if (Optional.IsDefined(ClientApplication))
             {
                 writer.WritePropertyName("clientApplication"u8);
                 writer.WriteStringValue(ClientApplication);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterAzureActiveDirectory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterAzureActiveDirectory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterAzureActiveDirectory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAzureActiveDirectory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAzureActiveDirectory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedClusterAzureActiveDirectory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterAzureActiveDirectory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterAzureActiveDirectory)} does not support reading '{options.Format}' format.");
             }
         }
 

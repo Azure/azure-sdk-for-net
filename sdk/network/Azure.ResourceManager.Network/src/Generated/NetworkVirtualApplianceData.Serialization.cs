@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.Network.Models;
@@ -26,41 +25,41 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -73,17 +72,17 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NvaSku != null)
+            if (Optional.IsDefined(NvaSku))
             {
                 writer.WritePropertyName("nvaSku"u8);
-                writer.WriteObjectValue(NvaSku);
+                writer.WriteObjectValue<VirtualApplianceSkuProperties>(NvaSku, options);
             }
-            if (options.Format != "W" && AddressPrefix != null)
+            if (options.Format != "W" && Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (!(BootStrapConfigurationBlobs is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BootStrapConfigurationBlobs))
             {
                 writer.WritePropertyName("bootStrapConfigurationBlobs"u8);
                 writer.WriteStartArray();
@@ -93,12 +92,12 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (VirtualHub != null)
+            if (Optional.IsDefined(VirtualHub))
             {
                 writer.WritePropertyName("virtualHub"u8);
                 JsonSerializer.Serialize(writer, VirtualHub);
             }
-            if (!(CloudInitConfigurationBlobs is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(CloudInitConfigurationBlobs))
             {
                 writer.WritePropertyName("cloudInitConfigurationBlobs"u8);
                 writer.WriteStartArray();
@@ -108,42 +107,42 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (CloudInitConfiguration != null)
+            if (Optional.IsDefined(CloudInitConfiguration))
             {
                 writer.WritePropertyName("cloudInitConfiguration"u8);
                 writer.WriteStringValue(CloudInitConfiguration);
             }
-            if (VirtualApplianceAsn.HasValue)
+            if (Optional.IsDefined(VirtualApplianceAsn))
             {
                 writer.WritePropertyName("virtualApplianceAsn"u8);
                 writer.WriteNumberValue(VirtualApplianceAsn.Value);
             }
-            if (SshPublicKey != null)
+            if (Optional.IsDefined(SshPublicKey))
             {
                 writer.WritePropertyName("sshPublicKey"u8);
                 writer.WriteStringValue(SshPublicKey);
             }
-            if (options.Format != "W" && !(VirtualApplianceNics is ChangeTrackingList<VirtualApplianceNicProperties> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceNics))
             {
                 writer.WritePropertyName("virtualApplianceNics"u8);
                 writer.WriteStartArray();
                 foreach (var item in VirtualApplianceNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualApplianceNicProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdditionalNics is ChangeTrackingList<VirtualApplianceAdditionalNicProperties> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalNics))
             {
                 writer.WritePropertyName("additionalNics"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualApplianceAdditionalNicProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(InternetIngressPublicIPs is ChangeTrackingList<WritableSubResource> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(InternetIngressPublicIPs))
             {
                 writer.WritePropertyName("internetIngressPublicIps"u8);
                 writer.WriteStartArray();
@@ -153,7 +152,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(VirtualApplianceSites is ChangeTrackingList<WritableSubResource> collection5 && collection5.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceSites))
             {
                 writer.WritePropertyName("virtualApplianceSites"u8);
                 writer.WriteStartArray();
@@ -163,7 +162,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(VirtualApplianceConnections is ChangeTrackingList<WritableSubResource> collection6 && collection6.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualApplianceConnections))
             {
                 writer.WritePropertyName("virtualApplianceConnections"u8);
                 writer.WriteStartArray();
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(InboundSecurityRules is ChangeTrackingList<WritableSubResource> collection7 && collection7.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(InboundSecurityRules))
             {
                 writer.WritePropertyName("inboundSecurityRules"u8);
                 writer.WriteStartArray();
@@ -183,25 +182,25 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && DeploymentType != null)
+            if (options.Format != "W" && Optional.IsDefined(DeploymentType))
             {
                 writer.WritePropertyName("deploymentType"u8);
                 writer.WriteStringValue(DeploymentType);
             }
-            if (Delegation != null)
+            if (Optional.IsDefined(Delegation))
             {
                 writer.WritePropertyName("delegation"u8);
-                writer.WriteObjectValue(Delegation);
+                writer.WriteObjectValue<VirtualApplianceDelegationProperties>(Delegation, options);
             }
-            if (PartnerManagedResource != null)
+            if (Optional.IsDefined(PartnerManagedResource))
             {
                 writer.WritePropertyName("partnerManagedResource"u8);
-                writer.WriteObjectValue(PartnerManagedResource);
+                writer.WriteObjectValue<PartnerManagedResourceProperties>(PartnerManagedResource, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -227,7 +226,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<NetworkVirtualApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -577,7 +576,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -593,7 +592,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeNetworkVirtualApplianceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkVirtualApplianceData)} does not support reading '{options.Format}' format.");
             }
         }
 

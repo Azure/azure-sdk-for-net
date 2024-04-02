@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.ResourceMover.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceArmResourceId"/> is null. </exception>
         public NetworkSecurityGroupResourceReferenceInfo(ResourceIdentifier sourceArmResourceId) : base(sourceArmResourceId)
         {
-            if (sourceArmResourceId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceArmResourceId));
-            }
+            Argument.AssertNotNull(sourceArmResourceId, nameof(sourceArmResourceId));
         }
 
         /// <summary> Initializes a new instance of <see cref="NetworkSecurityGroupResourceReferenceInfo"/>. </summary>

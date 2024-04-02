@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrepareDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             writer.WriteStringValue(TargetRegion);
             writer.WritePropertyName("dataMoveLevel"u8);
             writer.WriteStringValue(DataMoveLevel.ToString());
-            if (!(SourceContainerArmIds is ChangeTrackingList<ResourceIdentifier> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceContainerArmIds))
             {
                 writer.WritePropertyName("sourceContainerArmIds"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IgnoreMoved.HasValue)
+            if (Optional.IsDefined(IgnoreMoved))
             {
                 writer.WritePropertyName("ignoreMoved"u8);
                 writer.WriteBooleanValue(IgnoreMoved.Value);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrepareDataMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializePrepareDataMoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrepareDataMoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

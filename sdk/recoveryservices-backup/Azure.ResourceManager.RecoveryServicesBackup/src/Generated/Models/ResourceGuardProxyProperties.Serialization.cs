@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProxyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProxyProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("resourceGuardResourceId"u8);
             writer.WriteStringValue(ResourceGuardResourceId);
-            if (!(ResourceGuardOperationDetails is ChangeTrackingList<ResourceGuardOperationDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceGuardOperationDetails))
             {
                 writer.WritePropertyName("resourceGuardOperationDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceGuardOperationDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceGuardOperationDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTime"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardProxyProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardProxyProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardProxyProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProxyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeResourceGuardProxyProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardProxyProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardProxyProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

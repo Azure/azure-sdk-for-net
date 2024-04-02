@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TicketNumber.HasValue)
+            if (Optional.IsDefined(TicketNumber))
             {
                 writer.WritePropertyName("ticketNumber"u8);
                 writer.WriteNumberValue(TicketNumber.Value);
             }
-            if (TicketLink != null)
+            if (Optional.IsDefined(TicketLink))
             {
                 writer.WritePropertyName("ticketLink"u8);
                 writer.WriteStringValue(TicketLink);
             }
-            if (TicketStatus != null)
+            if (Optional.IsDefined(TicketStatus))
             {
                 writer.WritePropertyName("ticketStatus"u8);
                 writer.WriteStringValue(TicketStatus);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentAdditionalInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeGovernanceAssignmentAdditionalInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GovernanceAssignmentAdditionalInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

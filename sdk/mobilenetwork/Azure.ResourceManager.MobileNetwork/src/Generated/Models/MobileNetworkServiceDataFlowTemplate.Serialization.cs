@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkServiceDataFlowTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Ports is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkServiceDataFlowTemplate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkServiceDataFlowTemplate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkServiceDataFlowTemplate)} does not support reading '{options.Format}' format.");
             }
         }
 

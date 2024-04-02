@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringBandwidthOffer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OfferName != null)
+            if (Optional.IsDefined(OfferName))
             {
                 writer.WritePropertyName("offerName"u8);
                 writer.WriteStringValue(OfferName);
             }
-            if (ValueInMbps.HasValue)
+            if (Optional.IsDefined(ValueInMbps))
             {
                 writer.WritePropertyName("valueInMbps"u8);
                 writer.WriteNumberValue(ValueInMbps.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringBandwidthOffer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringBandwidthOffer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringBandwidthOffer)} does not support reading '{options.Format}' format.");
             }
         }
 

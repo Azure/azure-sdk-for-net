@@ -51,14 +51,8 @@ namespace Azure.Health.Insights.ClinicalMatching
         /// <exception cref="ArgumentNullException"> <paramref name="system"/> or <paramref name="code"/> is null. </exception>
         internal ExtendedClinicalCodedElement(string system, string code)
         {
-            if (system == null)
-            {
-                throw new ArgumentNullException(nameof(system));
-            }
-            if (code == null)
-            {
-                throw new ArgumentNullException(nameof(code));
-            }
+            Argument.AssertNotNull(system, nameof(system));
+            Argument.AssertNotNull(code, nameof(code));
 
             System = system;
             Code = code;

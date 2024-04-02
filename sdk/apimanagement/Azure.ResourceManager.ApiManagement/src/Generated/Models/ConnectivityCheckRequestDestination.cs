@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
         /// <exception cref="ArgumentNullException"> <paramref name="address"/> is null. </exception>
         public ConnectivityCheckRequestDestination(string address, long port)
         {
-            if (address == null)
-            {
-                throw new ArgumentNullException(nameof(address));
-            }
+            Argument.AssertNotNull(address, nameof(address));
 
             Address = address;
             Port = port;

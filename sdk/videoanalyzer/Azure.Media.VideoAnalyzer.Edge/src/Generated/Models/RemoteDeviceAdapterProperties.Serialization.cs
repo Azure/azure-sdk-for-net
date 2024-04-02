@@ -15,15 +15,15 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
             writer.WritePropertyName("target"u8);
-            writer.WriteObjectValue(Target);
+            writer.WriteObjectValue<RemoteDeviceAdapterTarget>(Target);
             writer.WritePropertyName("iotHubDeviceConnection"u8);
-            writer.WriteObjectValue(IotHubDeviceConnection);
+            writer.WriteObjectValue<IotHubDeviceConnection>(IotHubDeviceConnection);
             writer.WriteEndObject();
         }
 

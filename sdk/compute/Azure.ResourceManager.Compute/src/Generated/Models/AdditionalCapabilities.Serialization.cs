@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UltraSsdEnabled.HasValue)
+            if (Optional.IsDefined(UltraSsdEnabled))
             {
                 writer.WritePropertyName("ultraSSDEnabled"u8);
                 writer.WriteBooleanValue(UltraSsdEnabled.Value);
             }
-            if (HibernationEnabled.HasValue)
+            if (Optional.IsDefined(HibernationEnabled))
             {
                 writer.WritePropertyName("hibernationEnabled"u8);
                 writer.WriteBooleanValue(HibernationEnabled.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdditionalCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAdditionalCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdditionalCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

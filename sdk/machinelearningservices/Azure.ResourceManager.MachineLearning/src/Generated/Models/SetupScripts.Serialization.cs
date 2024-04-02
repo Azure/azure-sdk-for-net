@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SetupScripts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SetupScripts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SetupScripts)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Scripts != null)
+            if (Optional.IsDefined(Scripts))
             {
                 writer.WritePropertyName("scripts"u8);
-                writer.WriteObjectValue(Scripts);
+                writer.WriteObjectValue<MachineLearningScriptsToExecute>(Scripts, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SetupScripts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SetupScripts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SetupScripts)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SetupScripts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SetupScripts)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeSetupScripts(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SetupScripts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SetupScripts)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,42 +42,42 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && LastModifiedUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedUtc))
             {
                 writer.WritePropertyName("lastModifiedUtc"u8);
                 writer.WriteStringValue(LastModifiedUtc.Value, "O");
             }
-            if (options.Format != "W" && Version != null)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (!(Labels is ChangeTrackingDictionary<string, SensitivityLabel> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
                 foreach (var item in Labels)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SensitivityLabel>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(InformationTypes is ChangeTrackingDictionary<string, SecurityInformationTypeInfo> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(InformationTypes))
             {
                 writer.WritePropertyName("informationTypes"u8);
                 writer.WriteStartObject();
                 foreach (var item in InformationTypes)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SecurityInformationTypeInfo>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<InformationProtectionPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InformationProtectionPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InformationProtectionPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -237,7 +237,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -253,7 +253,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeInformationProtectionPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InformationProtectionPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InformationProtectionPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

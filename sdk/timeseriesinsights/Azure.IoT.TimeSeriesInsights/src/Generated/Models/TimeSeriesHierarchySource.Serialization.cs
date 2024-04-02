@@ -16,7 +16,7 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(InstanceFieldNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(InstanceFieldNames))
             {
                 writer.WritePropertyName("instanceFieldNames"u8);
                 writer.WriteStartArray();

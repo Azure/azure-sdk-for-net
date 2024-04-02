@@ -24,27 +24,27 @@ namespace Azure.ResourceManager.MachineLearning
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRegistryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 var serializeOptions = new JsonSerializerOptions { Converters = { new ManagedServiceIdentityTypeV3Converter() } };
                 JsonSerializer.Serialize(writer, Identity, serializeOptions);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<MachineLearningSku>(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -72,14 +72,14 @@ namespace Azure.ResourceManager.MachineLearning
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DiscoveryUri != null)
+            if (Optional.IsDefined(DiscoveryUri))
             {
                 if (DiscoveryUri != null)
                 {
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("discoveryUrl");
                 }
             }
-            if (IntellectualPropertyPublisher != null)
+            if (Optional.IsDefined(IntellectualPropertyPublisher))
             {
                 if (IntellectualPropertyPublisher != null)
                 {
@@ -103,19 +103,19 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("intellectualPropertyPublisher");
                 }
             }
-            if (ManagedResourceGroup != null)
+            if (Optional.IsDefined(ManagedResourceGroup))
             {
                 if (ManagedResourceGroup != null)
                 {
                     writer.WritePropertyName("managedResourceGroup"u8);
-                    writer.WriteObjectValue(ManagedResourceGroup);
+                    writer.WriteObjectValue<ArmResourceId>(ManagedResourceGroup, options);
                 }
                 else
                 {
                     writer.WriteNull("managedResourceGroup");
                 }
             }
-            if (MlFlowRegistryUri != null)
+            if (Optional.IsDefined(MlFlowRegistryUri))
             {
                 if (MlFlowRegistryUri != null)
                 {
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("mlFlowRegistryUri");
                 }
             }
-            if (!(PrivateEndpointConnections is ChangeTrackingList<RegistryPrivateEndpointConnection> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 if (PrivateEndpointConnections != null)
                 {
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteStartArray();
                     foreach (var item in PrivateEndpointConnections)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<RegistryPrivateEndpointConnection>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("privateEndpointConnections");
                 }
             }
-            if (PublicNetworkAccess != null)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 if (PublicNetworkAccess != null)
                 {
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteNull("publicNetworkAccess");
                 }
             }
-            if (!(RegionDetails is ChangeTrackingList<RegistryRegionArmDetails> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(RegionDetails))
             {
                 if (RegionDetails != null)
                 {
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.MachineLearning
                     writer.WriteStartArray();
                     foreach (var item in RegionDetails)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<RegistryRegionArmDetails>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.MachineLearning
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRegistryData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -426,7 +426,7 @@ namespace Azure.ResourceManager.MachineLearning
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -442,7 +442,7 @@ namespace Azure.ResourceManager.MachineLearning
                         return DeserializeMachineLearningRegistryData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningRegistryData)} does not support reading '{options.Format}' format.");
             }
         }
 

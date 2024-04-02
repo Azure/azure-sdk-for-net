@@ -5,7 +5,8 @@
 ### Features Added
 
 - Introduced model factory `Azure.AI.Translation.Text.TextTranslationModelFactory` for mocking.
-- Added options overloads to Translate and Transliterate.  TextTranslationTranslateOptions and TextTranslationTransliterateOptions roll up method parameters into a single object.
+- Added options overloads to Translate and Transliterate. TextTranslationTranslateOptions and TextTranslationTransliterateOptions roll up method parameters into a single object.
+- Add support for using AAD authentication.
 
 ### Breaking Changes
 

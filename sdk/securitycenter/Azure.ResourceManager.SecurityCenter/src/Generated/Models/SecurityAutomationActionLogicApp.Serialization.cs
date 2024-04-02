@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionLogicApp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LogicAppResourceId != null)
+            if (Optional.IsDefined(LogicAppResourceId))
             {
                 writer.WritePropertyName("logicAppResourceId"u8);
                 writer.WriteStringValue(LogicAppResourceId);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionLogicApp>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationActionLogicApp(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionLogicApp)} does not support reading '{options.Format}' format.");
             }
         }
 

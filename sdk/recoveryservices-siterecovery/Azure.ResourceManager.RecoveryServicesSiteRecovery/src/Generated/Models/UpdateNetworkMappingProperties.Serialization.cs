@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateNetworkMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateNetworkMappingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateNetworkMappingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryFabricName != null)
+            if (Optional.IsDefined(RecoveryFabricName))
             {
                 writer.WritePropertyName("recoveryFabricName"u8);
                 writer.WriteStringValue(RecoveryFabricName);
             }
-            if (RecoveryNetworkId != null)
+            if (Optional.IsDefined(RecoveryNetworkId))
             {
                 writer.WritePropertyName("recoveryNetworkId"u8);
                 writer.WriteStringValue(RecoveryNetworkId);
             }
-            if (FabricSpecificDetails != null)
+            if (Optional.IsDefined(FabricSpecificDetails))
             {
                 writer.WritePropertyName("fabricSpecificDetails"u8);
-                writer.WriteObjectValue(FabricSpecificDetails);
+                writer.WriteObjectValue<FabricSpecificUpdateNetworkMappingContent>(FabricSpecificDetails, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateNetworkMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateNetworkMappingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateNetworkMappingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateNetworkMappingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateNetworkMappingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeUpdateNetworkMappingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateNetworkMappingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateNetworkMappingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

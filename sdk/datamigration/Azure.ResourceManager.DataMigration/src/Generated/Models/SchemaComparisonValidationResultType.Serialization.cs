@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SchemaComparisonValidationResultType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ObjectName != null)
+            if (Optional.IsDefined(ObjectName))
             {
                 writer.WritePropertyName("objectName"u8);
                 writer.WriteStringValue(ObjectName);
             }
-            if (ObjectType.HasValue)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType.Value.ToString());
             }
-            if (UpdateAction.HasValue)
+            if (Optional.IsDefined(UpdateAction))
             {
                 writer.WritePropertyName("updateAction"u8);
                 writer.WriteStringValue(UpdateAction.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SchemaComparisonValidationResultType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSchemaComparisonValidationResultType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResultType)} does not support reading '{options.Format}' format.");
             }
         }
 

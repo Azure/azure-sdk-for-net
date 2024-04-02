@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanHyperVReplicaAzureFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryKekCertificatePfx != null)
+            if (Optional.IsDefined(PrimaryKekCertificatePfx))
             {
                 writer.WritePropertyName("primaryKekCertificatePfx"u8);
                 writer.WriteStringValue(PrimaryKekCertificatePfx);
             }
-            if (SecondaryKekCertificatePfx != null)
+            if (Optional.IsDefined(SecondaryKekCertificatePfx))
             {
                 writer.WritePropertyName("secondaryKekCertificatePfx"u8);
                 writer.WriteStringValue(SecondaryKekCertificatePfx);
             }
-            if (RecoveryPointType.HasValue)
+            if (Optional.IsDefined(RecoveryPointType))
             {
                 writer.WritePropertyName("recoveryPointType"u8);
                 writer.WriteStringValue(RecoveryPointType.Value.ToString());
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryPlanHyperVReplicaAzureFailoverContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeRecoveryPlanHyperVReplicaAzureFailoverContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryPlanHyperVReplicaAzureFailoverContent)} does not support reading '{options.Format}' format.");
             }
         }
 

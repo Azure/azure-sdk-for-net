@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExecResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerExecResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerExecResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WebSocketUri != null)
+            if (Optional.IsDefined(WebSocketUri))
             {
                 writer.WritePropertyName("webSocketUri"u8);
                 writer.WriteStringValue(WebSocketUri.AbsoluteUri);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerExecResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerExecResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerExecResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerExecResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerExecResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerExecResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerExecResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerExecResult)} does not support reading '{options.Format}' format.");
             }
         }
 

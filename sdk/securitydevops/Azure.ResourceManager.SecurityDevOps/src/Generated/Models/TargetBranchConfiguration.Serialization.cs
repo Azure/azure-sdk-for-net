@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetBranchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Names is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Names))
             {
                 writer.WritePropertyName("names"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetBranchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeTargetBranchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

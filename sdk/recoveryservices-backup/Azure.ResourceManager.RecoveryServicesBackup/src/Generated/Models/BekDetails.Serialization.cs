@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BekDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BekDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BekDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SecretUri != null)
+            if (Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUrl"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
             }
-            if (SecretVaultId != null)
+            if (Optional.IsDefined(SecretVaultId))
             {
                 writer.WritePropertyName("secretVaultId"u8);
                 writer.WriteStringValue(SecretVaultId);
             }
-            if (SecretData != null)
+            if (Optional.IsDefined(SecretData))
             {
                 writer.WritePropertyName("secretData"u8);
                 writer.WriteStringValue(SecretData);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BekDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BekDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BekDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BekDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BekDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBekDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BekDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BekDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientCertificateAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ValidationScheme.HasValue)
+            if (Optional.IsDefined(ValidationScheme))
             {
                 writer.WritePropertyName("validationScheme"u8);
                 writer.WriteStringValue(ValidationScheme.Value.ToString());
             }
-            if (!(AllowedThumbprints is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedThumbprints))
             {
                 writer.WritePropertyName("allowedThumbprints"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClientCertificateAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeClientCertificateAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClientCertificateAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 

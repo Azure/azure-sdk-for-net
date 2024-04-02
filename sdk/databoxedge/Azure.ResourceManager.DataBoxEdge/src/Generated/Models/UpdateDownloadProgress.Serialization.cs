@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateDownloadProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && DownloadPhase.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DownloadPhase))
             {
                 writer.WritePropertyName("downloadPhase"u8);
                 writer.WriteStringValue(DownloadPhase.Value.ToString());
             }
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && TotalBytesToDownload.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalBytesToDownload))
             {
                 writer.WritePropertyName("totalBytesToDownload"u8);
                 writer.WriteNumberValue(TotalBytesToDownload.Value);
             }
-            if (options.Format != "W" && TotalBytesDownloaded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalBytesDownloaded))
             {
                 writer.WritePropertyName("totalBytesDownloaded"u8);
                 writer.WriteNumberValue(TotalBytesDownloaded.Value);
             }
-            if (options.Format != "W" && NumberOfUpdatesToDownload.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesToDownload))
             {
                 writer.WritePropertyName("numberOfUpdatesToDownload"u8);
                 writer.WriteNumberValue(NumberOfUpdatesToDownload.Value);
             }
-            if (options.Format != "W" && NumberOfUpdatesDownloaded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesDownloaded))
             {
                 writer.WritePropertyName("numberOfUpdatesDownloaded"u8);
                 writer.WriteNumberValue(NumberOfUpdatesDownloaded.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateDownloadProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeUpdateDownloadProgress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateDownloadProgress)} does not support reading '{options.Format}' format.");
             }
         }
 

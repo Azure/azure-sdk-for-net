@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -23,91 +22,91 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<GranularCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GranularCopyProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GranularCopyProgress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && StorageAccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
             }
-            if (options.Format != "W" && TransferType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransferType))
             {
                 writer.WritePropertyName("transferType"u8);
                 writer.WriteStringValue(TransferType.Value.ToSerialString());
             }
-            if (options.Format != "W" && DataAccountType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataAccountType))
             {
                 writer.WritePropertyName("dataAccountType"u8);
                 writer.WriteStringValue(DataAccountType.Value.ToSerialString());
             }
-            if (options.Format != "W" && AccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (options.Format != "W" && BytesProcessed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BytesProcessed))
             {
                 writer.WritePropertyName("bytesProcessed"u8);
                 writer.WriteNumberValue(BytesProcessed.Value);
             }
-            if (options.Format != "W" && TotalBytesToProcess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalBytesToProcess))
             {
                 writer.WritePropertyName("totalBytesToProcess"u8);
                 writer.WriteNumberValue(TotalBytesToProcess.Value);
             }
-            if (options.Format != "W" && FilesProcessed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FilesProcessed))
             {
                 writer.WritePropertyName("filesProcessed"u8);
                 writer.WriteNumberValue(FilesProcessed.Value);
             }
-            if (options.Format != "W" && TotalFilesToProcess.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalFilesToProcess))
             {
                 writer.WritePropertyName("totalFilesToProcess"u8);
                 writer.WriteNumberValue(TotalFilesToProcess.Value);
             }
-            if (options.Format != "W" && InvalidFilesProcessed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InvalidFilesProcessed))
             {
                 writer.WritePropertyName("invalidFilesProcessed"u8);
                 writer.WriteNumberValue(InvalidFilesProcessed.Value);
             }
-            if (options.Format != "W" && InvalidFileBytesUploaded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InvalidFileBytesUploaded))
             {
                 writer.WritePropertyName("invalidFileBytesUploaded"u8);
                 writer.WriteNumberValue(InvalidFileBytesUploaded.Value);
             }
-            if (options.Format != "W" && RenamedContainerCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RenamedContainerCount))
             {
                 writer.WritePropertyName("renamedContainerCount"u8);
                 writer.WriteNumberValue(RenamedContainerCount.Value);
             }
-            if (options.Format != "W" && FilesErroredOut.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FilesErroredOut))
             {
                 writer.WritePropertyName("filesErroredOut"u8);
                 writer.WriteNumberValue(FilesErroredOut.Value);
             }
-            if (options.Format != "W" && DirectoriesErroredOut.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DirectoriesErroredOut))
             {
                 writer.WritePropertyName("directoriesErroredOut"u8);
                 writer.WriteNumberValue(DirectoriesErroredOut.Value);
             }
-            if (options.Format != "W" && InvalidDirectoriesProcessed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InvalidDirectoriesProcessed))
             {
                 writer.WritePropertyName("invalidDirectoriesProcessed"u8);
                 writer.WriteNumberValue(InvalidDirectoriesProcessed.Value);
             }
-            if (options.Format != "W" && IsEnumerationInProgress.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEnumerationInProgress))
             {
                 writer.WritePropertyName("isEnumerationInProgress"u8);
                 writer.WriteBooleanValue(IsEnumerationInProgress.Value);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
             }
-            if (options.Format != "W" && !(Actions is ChangeTrackingList<CustomerResolutionCode> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -140,7 +139,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<GranularCopyProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GranularCopyProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GranularCopyProgress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -366,7 +365,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GranularCopyProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GranularCopyProgress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -382,7 +381,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeGranularCopyProgress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GranularCopyProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GranularCopyProgress)} does not support reading '{options.Format}' format.");
             }
         }
 

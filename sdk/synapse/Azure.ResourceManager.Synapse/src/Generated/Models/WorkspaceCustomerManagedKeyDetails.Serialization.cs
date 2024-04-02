@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
-                writer.WriteObjectValue(Key);
+                writer.WriteObjectValue<SynapseWorkspaceKeyDetails>(Key, options);
             }
-            if (KekIdentity != null)
+            if (Optional.IsDefined(KekIdentity))
             {
                 writer.WritePropertyName("kekIdentity"u8);
-                writer.WriteObjectValue(KekIdentity);
+                writer.WriteObjectValue<KekIdentityProperties>(KekIdentity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkspaceCustomerManagedKeyDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeWorkspaceCustomerManagedKeyDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkspaceCustomerManagedKeyDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

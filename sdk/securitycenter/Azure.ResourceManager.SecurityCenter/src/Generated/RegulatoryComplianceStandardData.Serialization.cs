@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<RegulatoryComplianceStandardData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegulatoryComplianceStandardData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegulatoryComplianceStandardData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && PassedControls.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PassedControls))
             {
                 writer.WritePropertyName("passedControls"u8);
                 writer.WriteNumberValue(PassedControls.Value);
             }
-            if (options.Format != "W" && FailedControls.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FailedControls))
             {
                 writer.WritePropertyName("failedControls"u8);
                 writer.WriteNumberValue(FailedControls.Value);
             }
-            if (options.Format != "W" && SkippedControls.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SkippedControls))
             {
                 writer.WritePropertyName("skippedControls"u8);
                 writer.WriteNumberValue(SkippedControls.Value);
             }
-            if (options.Format != "W" && UnsupportedControls.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UnsupportedControls))
             {
                 writer.WritePropertyName("unsupportedControls"u8);
                 writer.WriteNumberValue(UnsupportedControls.Value);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<RegulatoryComplianceStandardData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegulatoryComplianceStandardData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegulatoryComplianceStandardData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegulatoryComplianceStandardData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegulatoryComplianceStandardData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeRegulatoryComplianceStandardData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegulatoryComplianceStandardData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegulatoryComplianceStandardData)} does not support reading '{options.Format}' format.");
             }
         }
 

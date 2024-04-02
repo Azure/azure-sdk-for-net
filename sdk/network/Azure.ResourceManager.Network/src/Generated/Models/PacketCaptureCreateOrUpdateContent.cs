@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -52,14 +51,8 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="target"/> or <paramref name="storageLocation"/> is null. </exception>
         public PacketCaptureCreateOrUpdateContent(string target, PacketCaptureStorageLocation storageLocation)
         {
-            if (target == null)
-            {
-                throw new ArgumentNullException(nameof(target));
-            }
-            if (storageLocation == null)
-            {
-                throw new ArgumentNullException(nameof(storageLocation));
-            }
+            Argument.AssertNotNull(target, nameof(target));
+            Argument.AssertNotNull(storageLocation, nameof(storageLocation));
 
             Target = target;
             StorageLocation = storageLocation;

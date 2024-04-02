@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual async Task<Response<ServiceObjectiveResource>> GetAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-            if (serviceObjectiveName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual Response<ServiceObjectiveResource> Get(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-            if (serviceObjectiveName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Get");
             scope.Start();
@@ -242,14 +226,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-            if (serviceObjectiveName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
             scope.Start();
@@ -292,14 +269,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual Response<bool> Exists(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-            if (serviceObjectiveName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.Exists");
             scope.Start();
@@ -342,14 +312,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual async Task<NullableResponse<ServiceObjectiveResource>> GetIfExistsAsync(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-            if (serviceObjectiveName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
             scope.Start();
@@ -394,14 +357,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="serviceObjectiveName"/> is null. </exception>
         public virtual NullableResponse<ServiceObjectiveResource> GetIfExists(string serviceObjectiveName, CancellationToken cancellationToken = default)
         {
-            if (serviceObjectiveName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceObjectiveName));
-            }
-            if (serviceObjectiveName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceObjectiveName));
-            }
+            Argument.AssertNotNullOrEmpty(serviceObjectiveName, nameof(serviceObjectiveName));
 
             using var scope = _serviceObjectiveClientDiagnostics.CreateScope("ServiceObjectiveCollection.GetIfExists");
             scope.Start();

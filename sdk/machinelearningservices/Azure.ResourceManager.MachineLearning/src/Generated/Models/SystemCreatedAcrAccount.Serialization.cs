@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AcrAccountName != null)
+            if (Optional.IsDefined(AcrAccountName))
             {
                 if (AcrAccountName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrAccountName");
                 }
             }
-            if (AcrAccountSku != null)
+            if (Optional.IsDefined(AcrAccountSku))
             {
                 if (AcrAccountSku != null)
                 {
@@ -50,12 +50,12 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("acrAccountSku");
                 }
             }
-            if (ArmResourceIdentifier != null)
+            if (Optional.IsDefined(ArmResourceIdentifier))
             {
                 if (ArmResourceIdentifier != null)
                 {
                     writer.WritePropertyName("armResourceId"u8);
-                    writer.WriteObjectValue(ArmResourceIdentifier);
+                    writer.WriteObjectValue<ArmResourceId>(ArmResourceIdentifier, options);
                 }
                 else
                 {
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SystemCreatedAcrAccount>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeSystemCreatedAcrAccount(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SystemCreatedAcrAccount)} does not support reading '{options.Format}' format.");
             }
         }
 

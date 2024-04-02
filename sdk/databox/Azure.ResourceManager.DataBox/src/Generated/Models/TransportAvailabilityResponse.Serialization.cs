@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(TransportAvailabilityDetails is ChangeTrackingList<TransportAvailabilityDetails> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(TransportAvailabilityDetails))
             {
                 writer.WritePropertyName("transportAvailabilityDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in TransportAvailabilityDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TransportAvailabilityDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeTransportAvailabilityResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

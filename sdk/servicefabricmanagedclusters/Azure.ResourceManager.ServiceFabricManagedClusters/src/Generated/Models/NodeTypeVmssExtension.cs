@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
 {
@@ -54,22 +53,10 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/>, <paramref name="publisher"/>, <paramref name="vmssExtensionPropertiesType"/> or <paramref name="typeHandlerVersion"/> is null. </exception>
         public NodeTypeVmssExtension(string name, string publisher, string vmssExtensionPropertiesType, string typeHandlerVersion)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (publisher == null)
-            {
-                throw new ArgumentNullException(nameof(publisher));
-            }
-            if (vmssExtensionPropertiesType == null)
-            {
-                throw new ArgumentNullException(nameof(vmssExtensionPropertiesType));
-            }
-            if (typeHandlerVersion == null)
-            {
-                throw new ArgumentNullException(nameof(typeHandlerVersion));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(publisher, nameof(publisher));
+            Argument.AssertNotNull(vmssExtensionPropertiesType, nameof(vmssExtensionPropertiesType));
+            Argument.AssertNotNull(typeHandlerVersion, nameof(typeHandlerVersion));
 
             Name = name;
             Publisher = publisher;
