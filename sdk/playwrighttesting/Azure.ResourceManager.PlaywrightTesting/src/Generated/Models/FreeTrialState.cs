@@ -24,11 +24,17 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
 
         private const string ActiveValue = "Active";
         private const string ExpiredValue = "Expired";
+        private const string NotEligibleValue = "NotEligible";
+        private const string NotRegisteredValue = "NotRegistered";
 
         /// <summary> The free-trial is Active. </summary>
         public static FreeTrialState Active { get; } = new FreeTrialState(ActiveValue);
         /// <summary> The free-trial is Expired. </summary>
         public static FreeTrialState Expired { get; } = new FreeTrialState(ExpiredValue);
+        /// <summary> The free-trial is Not Eligible. </summary>
+        public static FreeTrialState NotEligible { get; } = new FreeTrialState(NotEligibleValue);
+        /// <summary> The free-trial is Not Registered. </summary>
+        public static FreeTrialState NotRegistered { get; } = new FreeTrialState(NotRegisteredValue);
         /// <summary> Determines if two <see cref="FreeTrialState"/> values are the same. </summary>
         public static bool operator ==(FreeTrialState left, FreeTrialState right) => left.Equals(right);
         /// <summary> Determines if two <see cref="FreeTrialState"/> values are not the same. </summary>

@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Models
                 writer.WriteObjectValue<PlaywrightTestingQuotaData>(item, options);
             }
             writer.WriteEndArray();
-            if (Optional.IsDefined(NextLink))
+            if (options.Format != "W" && Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink.AbsoluteUri);

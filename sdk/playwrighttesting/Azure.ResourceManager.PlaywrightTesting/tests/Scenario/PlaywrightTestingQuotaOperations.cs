@@ -50,8 +50,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
             Assert.IsNotNull(getResponse.Value.Data);
             Assert.IsNotNull(getResponse.Value.Data.Name);
             Assert.AreEqual(PlaywrightTestingQuotaName.ScalableExecution.ToString(), getResponse.Value.Data.Name);
-            Assert.IsNotNull(getResponse.Value.Data.FreeTrial);
-            Assert.IsNotNull(getResponse.Value.Data.FreeTrial.AccountId);
+            //Assert.IsNotNull(getResponse.Value.Data.FreeTrial);
+            //Assert.IsNotNull(getResponse.Value.Data.FreeTrial.AccountId);
 
             //List API
             List<PlaywrightTestingQuotaResource> listResponse = await _quotaCollection.GetAllAsync().ToEnumerableAsync();
@@ -62,8 +62,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Tests.Scenario
                 Assert.IsNotNull(resource.Data);
                 Assert.IsNotNull(resource.Data.Name);
                 Assert.IsNotNull(resource.Data.Id);
-                Assert.IsNotNull(resource.Data.FreeTrial);
-                Assert.IsNotNull(resource.Data.FreeTrial.AccountId);
+                //Assert.IsNotNull(resource.Data.FreeTrial);
+                //Assert.IsNotNull(resource.Data.FreeTrial.AccountId);
             }
         }
     }

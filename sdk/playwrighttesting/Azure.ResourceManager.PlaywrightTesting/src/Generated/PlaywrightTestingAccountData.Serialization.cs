@@ -28,6 +28,11 @@ namespace Azure.ResourceManager.PlaywrightTesting
             }
 
             writer.WriteStartObject();
+            if (Optional.IsDefined(Properties))
+            {
+                writer.WritePropertyName("properties"u8);
+                writer.WriteObjectValue<AccountProperties>(Properties, options);
+            }
             if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
@@ -61,34 +66,6 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
-            writer.WritePropertyName("properties"u8);
-            writer.WriteStartObject();
-            if (options.Format != "W" && Optional.IsDefined(DashboardUri))
-            {
-                writer.WritePropertyName("dashboardUri"u8);
-                writer.WriteStringValue(DashboardUri.AbsoluteUri);
-            }
-            if (Optional.IsDefined(RegionalAffinity))
-            {
-                writer.WritePropertyName("regionalAffinity"u8);
-                writer.WriteStringValue(RegionalAffinity.Value.ToString());
-            }
-            if (Optional.IsDefined(ScalableExecution))
-            {
-                writer.WritePropertyName("scalableExecution"u8);
-                writer.WriteStringValue(ScalableExecution.Value.ToString());
-            }
-            if (Optional.IsDefined(Reporting))
-            {
-                writer.WritePropertyName("reporting"u8);
-                writer.WriteStringValue(Reporting.Value.ToString());
-            }
-            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
-            {
-                writer.WritePropertyName("provisioningState"u8);
-                writer.WriteStringValue(ProvisioningState.Value.ToString());
-            }
-            writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -127,21 +104,26 @@ namespace Azure.ResourceManager.PlaywrightTesting
             {
                 return null;
             }
+            AccountProperties properties = default;
             IDictionary<string, string> tags = default;
             AzureLocation location = default;
             ResourceIdentifier id = default;
             string name = default;
             ResourceType type = default;
             SystemData systemData = default;
-            Uri dashboardUri = default;
-            EnablementStatus? regionalAffinity = default;
-            EnablementStatus? scalableExecution = default;
-            EnablementStatus? reporting = default;
-            PlaywrightTestingProvisioningState? provisioningState = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
+                if (property.NameEquals("properties"u8))
+                {
+                    if (property.Value.ValueKind == JsonValueKind.Null)
+                    {
+                        continue;
+                    }
+                    properties = AccountProperties.DeserializeAccountProperties(property.Value, options);
+                    continue;
+                }
                 if (property.NameEquals("tags"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
@@ -185,63 +167,6 @@ namespace Azure.ResourceManager.PlaywrightTesting
                     systemData = JsonSerializer.Deserialize<SystemData>(property.Value.GetRawText());
                     continue;
                 }
-                if (property.NameEquals("properties"u8))
-                {
-                    if (property.Value.ValueKind == JsonValueKind.Null)
-                    {
-                        property.ThrowNonNullablePropertyIsNull();
-                        continue;
-                    }
-                    foreach (var property0 in property.Value.EnumerateObject())
-                    {
-                        if (property0.NameEquals("dashboardUri"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            dashboardUri = new Uri(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("regionalAffinity"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            regionalAffinity = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("scalableExecution"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            scalableExecution = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("reporting"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            reporting = new EnablementStatus(property0.Value.GetString());
-                            continue;
-                        }
-                        if (property0.NameEquals("provisioningState"u8))
-                        {
-                            if (property0.Value.ValueKind == JsonValueKind.Null)
-                            {
-                                continue;
-                            }
-                            provisioningState = new PlaywrightTestingProvisioningState(property0.Value.GetString());
-                            continue;
-                        }
-                    }
-                    continue;
-                }
                 if (options.Format != "W")
                 {
                     additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
@@ -255,11 +180,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 systemData,
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 location,
-                dashboardUri,
-                regionalAffinity,
-                scalableExecution,
-                reporting,
-                provisioningState,
+                properties,
                 serializedAdditionalRawData);
         }
 

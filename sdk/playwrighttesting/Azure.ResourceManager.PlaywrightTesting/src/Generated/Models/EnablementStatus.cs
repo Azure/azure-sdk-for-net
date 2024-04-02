@@ -10,7 +10,7 @@ using System.ComponentModel;
 
 namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary> The enablement status of a feature. </summary>
+    /// <summary> This property sets the connection region for Playwright client workers to cloud-hosted browsers. If enabled, workers connect to browsers in the closest Azure region, ensuring lower latency. If disabled, workers connect to browsers in the Azure region in which the workspace was initially created. </summary>
     public readonly partial struct EnablementStatus : IEquatable<EnablementStatus>
     {
         private readonly string _value;

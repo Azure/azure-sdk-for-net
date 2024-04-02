@@ -28,10 +28,10 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <summary> Generate the resource identifier of a <see cref="PlaywrightTestingAccountResource"/> instance. </summary>
         /// <param name="subscriptionId"> The subscriptionId. </param>
         /// <param name="resourceGroupName"> The resourceGroupName. </param>
-        /// <param name="name"> The name. </param>
-        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string name)
+        /// <param name="accountName"> The accountName. </param>
+        public static ResourceIdentifier CreateResourceIdentifier(string subscriptionId, string resourceGroupName, string accountName)
         {
-            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}";
+            var resourceId = $"/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}";
             return new ResourceIdentifier(resourceId);
         }
 
@@ -90,12 +90,77 @@ namespace Azure.ResourceManager.PlaywrightTesting
                 throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "Invalid resource type {0} expected {1}", id.ResourceType, ResourceType), nameof(id));
         }
 
+        /// <summary> Gets a collection of AccountQuotumResources in the PlaywrightTestingAccount. </summary>
+        /// <returns> An object representing collection of AccountQuotumResources and their operations over a AccountQuotumResource. </returns>
+        public virtual AccountQuotumCollection GetAccountQuota()
+        {
+            return GetCachedClient(client => new AccountQuotumCollection(client, Id));
+        }
+
+        /// <summary>
+        /// Get quota by name for an account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}/quotas/{quotaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountQuotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AccountQuotumResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="quotaName"> The Playwright service account quota name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual async Task<Response<AccountQuotumResource>> GetAccountQuotumAsync(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        {
+            return await GetAccountQuota().GetAsync(quotaName, cancellationToken).ConfigureAwait(false);
+        }
+
+        /// <summary>
+        /// Get quota by name for an account.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}/quotas/{quotaName}</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>AccountQuotas_Get</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2024-02-01-preview</description>
+        /// </item>
+        /// <item>
+        /// <term>Resource</term>
+        /// <description><see cref="AccountQuotumResource"/></description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="quotaName"> The Playwright service account quota name. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        [ForwardsClientCalls]
+        public virtual Response<AccountQuotumResource> GetAccountQuotum(PlaywrightTestingQuotaName quotaName, CancellationToken cancellationToken = default)
+        {
+            return GetAccountQuota().Get(quotaName, cancellationToken);
+        }
+
         /// <summary>
         /// Get a Account
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -103,7 +168,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -135,7 +200,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -143,7 +208,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -175,7 +240,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -183,7 +248,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -217,7 +282,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -225,7 +290,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -259,7 +324,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -267,7 +332,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -301,7 +366,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -309,7 +374,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -343,7 +408,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -351,7 +416,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -405,7 +470,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -413,7 +478,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -467,7 +532,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -475,7 +540,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -524,7 +589,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -532,7 +597,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -581,7 +646,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -589,7 +654,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -641,7 +706,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// <list type="bullet">
         /// <item>
         /// <term>Request Path</term>
-        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{name}</description>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.AzurePlaywrightService/accounts/{accountName}</description>
         /// </item>
         /// <item>
         /// <term>Operation Id</term>
@@ -649,7 +714,7 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-10-01-preview</description>
+        /// <description>2024-02-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

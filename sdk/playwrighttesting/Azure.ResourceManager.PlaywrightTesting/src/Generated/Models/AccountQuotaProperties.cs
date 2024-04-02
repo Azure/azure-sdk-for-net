@@ -7,17 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
-using Azure.ResourceManager.PlaywrightTesting.Models;
 
-namespace Azure.ResourceManager.PlaywrightTesting
+namespace Azure.ResourceManager.PlaywrightTesting.Models
 {
-    /// <summary>
-    /// A class representing the PlaywrightTestingQuota data model.
-    /// A subscription quota resource.
-    /// </summary>
-    public partial class PlaywrightTestingQuotaData : ResourceData
+    /// <summary> The Playwright service account quota resource properties. </summary>
+    public partial class AccountQuotaProperties
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -51,25 +45,25 @@ namespace Azure.ResourceManager.PlaywrightTesting
         /// </summary>
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        public PlaywrightTestingQuotaData()
+        /// <summary> Initializes a new instance of <see cref="AccountQuotaProperties"/>. </summary>
+        public AccountQuotaProperties()
         {
         }
 
-        /// <summary> Initializes a new instance of <see cref="PlaywrightTestingQuotaData"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="properties"> The resource-specific properties for this resource. </param>
+        /// <summary> Initializes a new instance of <see cref="AccountQuotaProperties"/>. </summary>
+        /// <param name="freeTrial"> The Playwright service account quota resource free-trial properties. </param>
+        /// <param name="provisioningState"> The status of the last operation. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal PlaywrightTestingQuotaData(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, QuotaProperties properties, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData)
+        internal AccountQuotaProperties(AccountFreeTrialProperties freeTrial, PlaywrightTestingProvisioningState? provisioningState, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
-            Properties = properties;
+            FreeTrial = freeTrial;
+            ProvisioningState = provisioningState;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> The resource-specific properties for this resource. </summary>
-        public QuotaProperties Properties { get; set; }
+        /// <summary> The Playwright service account quota resource free-trial properties. </summary>
+        public AccountFreeTrialProperties FreeTrial { get; set; }
+        /// <summary> The status of the last operation. </summary>
+        public PlaywrightTestingProvisioningState? ProvisioningState { get; }
     }
 }

@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task GetPlaywrightTestingAccounts_AccountsListBySubscription()
         {
-            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_ListBySubscription.json
+            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2024-02-01-preview/examples/Accounts_ListBySubscription.json
             // this example is just showing the usage of "Accounts_ListBySubscription" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -48,12 +48,42 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             Console.WriteLine($"Succeeded");
         }
 
+        // Accounts_CheckNameAvailability
+        [NUnit.Framework.Test]
+        [NUnit.Framework.Ignore("Only verifying that the sample builds")]
+        public async Task CheckNameAvailabilityAccount_AccountsCheckNameAvailability()
+        {
+            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2024-02-01-preview/examples/Accounts_CheckNameAvailability.json
+            // this example is just showing the usage of "Accounts_CheckNameAvailability" operation, for the dependent resources, they will have to be created separately.
+
+            // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
+            TokenCredential cred = new DefaultAzureCredential();
+            // authenticate your client
+            ArmClient client = new ArmClient(cred);
+
+            // this example assumes you already have this SubscriptionResource created on azure
+            // for more information of creating SubscriptionResource, please refer to the document of SubscriptionResource
+            string subscriptionId = "00000000-0000-0000-0000-000000000000";
+            ResourceIdentifier subscriptionResourceId = SubscriptionResource.CreateResourceIdentifier(subscriptionId);
+            SubscriptionResource subscriptionResource = client.GetSubscriptionResource(subscriptionResourceId);
+
+            // invoke the operation
+            CheckNameAvailabilityContent content = new CheckNameAvailabilityContent()
+            {
+                Name = "dummyName",
+                ResourceType = "Microsoft.AzurePlaywrightService/Accounts",
+            };
+            CheckNameAvailabilityResult result = await subscriptionResource.CheckNameAvailabilityAccountAsync(content);
+
+            Console.WriteLine($"Succeeded: {result}");
+        }
+
         // Accounts_Get
         [NUnit.Framework.Test]
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_AccountsGet()
         {
-            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_Get.json
+            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2024-02-01-preview/examples/Accounts_Get.json
             // this example is just showing the usage of "Accounts_Get" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -65,8 +95,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // for more information of creating PlaywrightTestingAccountResource, please refer to the document of PlaywrightTestingAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
-            string name = "myPlaywrightAccount";
-            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string accountName = "myPlaywrightAccount";
+            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
             // invoke the operation
@@ -84,7 +114,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Update_AccountsUpdate()
         {
-            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_Update.json
+            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2024-02-01-preview/examples/Accounts_Update.json
             // this example is just showing the usage of "Accounts_Update" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -96,8 +126,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // for more information of creating PlaywrightTestingAccountResource, please refer to the document of PlaywrightTestingAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
-            string name = "myPlaywrightAccount";
-            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string accountName = "myPlaywrightAccount";
+            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
             // invoke the operation
@@ -108,7 +138,10 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
 ["Division"] = "LT",
 ["Team"] = "Dev Exp",
 },
-                RegionalAffinity = EnablementStatus.Enabled,
+                Properties = new AccountUpdateProperties()
+                {
+                    RegionalAffinity = EnablementStatus.Enabled,
+                },
             };
             PlaywrightTestingAccountResource result = await playwrightTestingAccount.UpdateAsync(patch);
 
@@ -124,7 +157,7 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Delete_AccountsDelete()
         {
-            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2023-10-01-preview/examples/Accounts_Delete.json
+            // Generated from example definition: specification/playwrighttesting/resource-manager/Microsoft.AzurePlaywrightService/preview/2024-02-01-preview/examples/Accounts_Delete.json
             // this example is just showing the usage of "Accounts_Delete" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -136,8 +169,8 @@ namespace Azure.ResourceManager.PlaywrightTesting.Samples
             // for more information of creating PlaywrightTestingAccountResource, please refer to the document of PlaywrightTestingAccountResource
             string subscriptionId = "00000000-0000-0000-0000-000000000000";
             string resourceGroupName = "dummyrg";
-            string name = "myPlaywrightAccount";
-            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, name);
+            string accountName = "myPlaywrightAccount";
+            ResourceIdentifier playwrightTestingAccountResourceId = PlaywrightTestingAccountResource.CreateResourceIdentifier(subscriptionId, resourceGroupName, accountName);
             PlaywrightTestingAccountResource playwrightTestingAccount = client.GetPlaywrightTestingAccountResource(playwrightTestingAccountResourceId);
 
             // invoke the operation
