@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             IReadOnlyList<ResourceHealthEventRecommendedActionsItem> actions = default;
             string localeCode = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("message"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ResourceHealthEventRecommendedActions(message, actions ?? new ChangeTrackingList<ResourceHealthEventRecommendedActionsItem>(), localeCode, serializedAdditionalRawData);
         }
 
