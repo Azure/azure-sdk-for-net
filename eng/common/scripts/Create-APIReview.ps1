@@ -125,10 +125,10 @@ function Upload-ReviewTokenFile($packageName, $apiLabel, $releaseStatus, $review
     return $StatusCode
 }
 
-function Get-APITokenFileName($artifactName)
+function Get-APITokenFileName($packageArtifactName)
 {
-    $reviewTokenFileName = "${artifactName}_${LanguageShort}.json"
-    $tokenFilePath = Join-Path $ArtifactPath $artifactName $reviewTokenFileName
+    $reviewTokenFileName = "${packageArtifactName}_${LanguageShort}.json"
+    $tokenFilePath = Join-Path $ArtifactPath $packageArtifactName $reviewTokenFileName
     if (Test-Path $tokenFilePath) {
         Write-Host "Review token file is present at $tokenFilePath"
         return $reviewTokenFileName
@@ -139,14 +139,14 @@ function Get-APITokenFileName($artifactName)
     }
 }
 
-function Submit-APIReview($packageInfo, $packagePath, $artifactName)
+function Submit-APIReview($packageInfo, $packagePath, $packageArtifactName)
 {
     $packageName = $packageInfo.Name    
     $apiLabel = "Source Branch:${SourceBranch}"
 
     # Get generated review token file if present
     # APIView processes request using different API if token file is already generated
-    $reviewTokenFileName =  Get-APITokenFileName $artifactName
+    $reviewTokenFileName =  Get-APITokenFileName $packageArtifactName
     if ($reviewTokenFileName) {
         Write-Host "Uploading review token file $reviewTokenFileName to APIView."
         return Upload-ReviewTokenFile $packageName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
