@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Communication.ShortCodes.Models;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -121,7 +120,7 @@ namespace Azure.Communication.ShortCodes
             {
                 request.Headers.Add("Content-Type", "application/merge-patch+json");
                 var content = new Utf8JsonRequestContent();
-                content.JsonWriter.WriteObjectValue(body);
+                content.JsonWriter.WriteObjectValue<USProgramBrief>(body);
                 request.Content = content;
             }
             return message;

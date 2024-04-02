@@ -53,22 +53,10 @@ namespace Azure.ResourceManager.Batch.Models
         /// <exception cref="ArgumentNullException"> <paramref name="accountName"/>, <paramref name="fileUri"/>, <paramref name="accountKey"/> or <paramref name="relativeMountPath"/> is null. </exception>
         public BatchFileShareConfiguration(string accountName, Uri fileUri, string accountKey, string relativeMountPath)
         {
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (fileUri == null)
-            {
-                throw new ArgumentNullException(nameof(fileUri));
-            }
-            if (accountKey == null)
-            {
-                throw new ArgumentNullException(nameof(accountKey));
-            }
-            if (relativeMountPath == null)
-            {
-                throw new ArgumentNullException(nameof(relativeMountPath));
-            }
+            Argument.AssertNotNull(accountName, nameof(accountName));
+            Argument.AssertNotNull(fileUri, nameof(fileUri));
+            Argument.AssertNotNull(accountKey, nameof(accountKey));
+            Argument.AssertNotNull(relativeMountPath, nameof(relativeMountPath));
 
             AccountName = accountName;
             FileUri = fileUri;

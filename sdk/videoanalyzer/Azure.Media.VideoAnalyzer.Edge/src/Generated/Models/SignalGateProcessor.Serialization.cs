@@ -16,22 +16,22 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ActivationEvaluationWindow != null)
+            if (Optional.IsDefined(ActivationEvaluationWindow))
             {
                 writer.WritePropertyName("activationEvaluationWindow"u8);
                 writer.WriteStringValue(ActivationEvaluationWindow);
             }
-            if (ActivationSignalOffset != null)
+            if (Optional.IsDefined(ActivationSignalOffset))
             {
                 writer.WritePropertyName("activationSignalOffset"u8);
                 writer.WriteStringValue(ActivationSignalOffset);
             }
-            if (MinimumActivationTime != null)
+            if (Optional.IsDefined(MinimumActivationTime))
             {
                 writer.WritePropertyName("minimumActivationTime"u8);
                 writer.WriteStringValue(MinimumActivationTime);
             }
-            if (MaximumActivationTime != null)
+            if (Optional.IsDefined(MaximumActivationTime))
             {
                 writer.WritePropertyName("maximumActivationTime"u8);
                 writer.WriteStringValue(MaximumActivationTime);
@@ -44,7 +44,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

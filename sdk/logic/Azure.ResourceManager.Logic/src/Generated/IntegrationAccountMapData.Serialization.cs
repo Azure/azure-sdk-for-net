@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountMapData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountMapData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountMapData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -65,22 +65,22 @@ namespace Azure.ResourceManager.Logic
             writer.WriteStartObject();
             writer.WritePropertyName("mapType"u8);
             writer.WriteStringValue(MapType.ToString());
-            if (ParametersSchema != null)
+            if (Optional.IsDefined(ParametersSchema))
             {
                 writer.WritePropertyName("parametersSchema"u8);
-                writer.WriteObjectValue(ParametersSchema);
+                writer.WriteObjectValue<IntegrationAccountMapPropertiesParametersSchema>(ParametersSchema, options);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ChangedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ChangedOn))
             {
                 writer.WritePropertyName("changedTime"u8);
                 writer.WriteStringValue(ChangedOn.Value, "O");
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -92,17 +92,17 @@ namespace Azure.ResourceManager.Logic
                 }
 #endif
             }
-            if (ContentType.HasValue)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (options.Format != "W" && ContentLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentLink))
             {
                 writer.WritePropertyName("contentLink"u8);
-                writer.WriteObjectValue(ContentLink);
+                writer.WriteObjectValue<LogicContentLink>(ContentLink, options);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountMapData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountMapData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountMapData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -327,7 +327,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountMapData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountMapData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -343,7 +343,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeIntegrationAccountMapData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountMapData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountMapData)} does not support reading '{options.Format}' format.");
             }
         }
 

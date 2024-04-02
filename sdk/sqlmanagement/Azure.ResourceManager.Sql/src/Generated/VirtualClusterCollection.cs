@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Sql
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual async Task<Response<VirtualClusterResource>> GetAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
-            if (virtualClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _virtualClusterClientDiagnostics.CreateScope("VirtualClusterCollection.Get");
             scope.Start();
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual Response<VirtualClusterResource> Get(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
-            if (virtualClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _virtualClusterClientDiagnostics.CreateScope("VirtualClusterCollection.Get");
             scope.Start();
@@ -245,14 +229,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
-            if (virtualClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _virtualClusterClientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
             scope.Start();
@@ -295,14 +272,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
-            if (virtualClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _virtualClusterClientDiagnostics.CreateScope("VirtualClusterCollection.Exists");
             scope.Start();
@@ -345,14 +315,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual async Task<NullableResponse<VirtualClusterResource>> GetIfExistsAsync(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
-            if (virtualClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _virtualClusterClientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
             scope.Start();
@@ -397,14 +360,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="virtualClusterName"/> is null. </exception>
         public virtual NullableResponse<VirtualClusterResource> GetIfExists(string virtualClusterName, CancellationToken cancellationToken = default)
         {
-            if (virtualClusterName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualClusterName));
-            }
-            if (virtualClusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualClusterName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualClusterName, nameof(virtualClusterName));
 
             using var scope = _virtualClusterClientDiagnostics.CreateScope("VirtualClusterCollection.GetIfExists");
             scope.Start();

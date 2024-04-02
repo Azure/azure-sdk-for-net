@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Resources.Models
 {
@@ -68,18 +67,22 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The name of the resource group. </summary>
+        [WirePath("name")]
         public string Name { get; set; }
         /// <summary> The resource group properties. </summary>
         internal ResourceGroupProperties Properties { get; set; }
         /// <summary> The provisioning state. </summary>
+        [WirePath("properties.provisioningState")]
         public string ResourceGroupProvisioningState
         {
             get => Properties is null ? default : Properties.ProvisioningState;
         }
 
         /// <summary> The ID of the resource that manages this resource group. </summary>
+        [WirePath("managedBy")]
         public string ManagedBy { get; set; }
         /// <summary> The tags attached to the resource group. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
     }
 }

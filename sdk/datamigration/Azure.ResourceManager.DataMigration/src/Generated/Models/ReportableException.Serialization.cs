@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportableException>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportableException)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportableException)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (ActionableMessage != null)
+            if (Optional.IsDefined(ActionableMessage))
             {
                 writer.WritePropertyName("actionableMessage"u8);
                 writer.WriteStringValue(ActionableMessage);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (LineNumber != null)
+            if (Optional.IsDefined(LineNumber))
             {
                 writer.WritePropertyName("lineNumber"u8);
                 writer.WriteStringValue(LineNumber);
             }
-            if (HResult.HasValue)
+            if (Optional.IsDefined(HResult))
             {
                 writer.WritePropertyName("hResult"u8);
                 writer.WriteNumberValue(HResult.Value);
             }
-            if (StackTrace != null)
+            if (Optional.IsDefined(StackTrace))
             {
                 writer.WritePropertyName("stackTrace"u8);
                 writer.WriteStringValue(StackTrace);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportableException>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportableException)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportableException)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportableException)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportableException)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeReportableException(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportableException)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportableException)} does not support reading '{options.Format}' format.");
             }
         }
 

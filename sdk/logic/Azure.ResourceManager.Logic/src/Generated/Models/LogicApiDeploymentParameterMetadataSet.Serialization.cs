@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiDeploymentParameterMetadataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PackageContentLink != null)
+            if (Optional.IsDefined(PackageContentLink))
             {
                 writer.WritePropertyName("packageContentLink"u8);
-                writer.WriteObjectValue(PackageContentLink);
+                writer.WriteObjectValue<LogicApiDeploymentParameterMetadata>(PackageContentLink, options);
             }
-            if (RedisCacheConnectionString != null)
+            if (Optional.IsDefined(RedisCacheConnectionString))
             {
                 writer.WritePropertyName("redisCacheConnectionString"u8);
-                writer.WriteObjectValue(RedisCacheConnectionString);
+                writer.WriteObjectValue<LogicApiDeploymentParameterMetadata>(RedisCacheConnectionString, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiDeploymentParameterMetadataSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiDeploymentParameterMetadataSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiDeploymentParameterMetadataSet)} does not support reading '{options.Format}' format.");
             }
         }
 

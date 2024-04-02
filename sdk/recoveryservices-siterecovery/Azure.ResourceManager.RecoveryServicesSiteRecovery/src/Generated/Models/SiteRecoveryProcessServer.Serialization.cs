@@ -23,196 +23,196 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (OSType != null)
+            if (Optional.IsDefined(OSType))
             {
                 writer.WritePropertyName("osType"u8);
                 writer.WriteStringValue(OSType);
             }
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (LastHeartbeatReceivedOn.HasValue)
+            if (Optional.IsDefined(LastHeartbeatReceivedOn))
             {
                 writer.WritePropertyName("lastHeartbeat"u8);
                 writer.WriteStringValue(LastHeartbeatReceivedOn.Value, "O");
             }
-            if (VersionStatus != null)
+            if (Optional.IsDefined(VersionStatus))
             {
                 writer.WritePropertyName("versionStatus"u8);
                 writer.WriteStringValue(VersionStatus);
             }
-            if (!(MobilityServiceUpdates is ChangeTrackingList<MobilityServiceUpdate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MobilityServiceUpdates))
             {
                 writer.WritePropertyName("mobilityServiceUpdates"u8);
                 writer.WriteStartArray();
                 foreach (var item in MobilityServiceUpdates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MobilityServiceUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (HostId != null)
+            if (Optional.IsDefined(HostId))
             {
                 writer.WritePropertyName("hostId"u8);
                 writer.WriteStringValue(HostId);
             }
-            if (MachineCount != null)
+            if (Optional.IsDefined(MachineCount))
             {
                 writer.WritePropertyName("machineCount"u8);
                 writer.WriteStringValue(MachineCount);
             }
-            if (ReplicationPairCount != null)
+            if (Optional.IsDefined(ReplicationPairCount))
             {
                 writer.WritePropertyName("replicationPairCount"u8);
                 writer.WriteStringValue(ReplicationPairCount);
             }
-            if (SystemLoad != null)
+            if (Optional.IsDefined(SystemLoad))
             {
                 writer.WritePropertyName("systemLoad"u8);
                 writer.WriteStringValue(SystemLoad);
             }
-            if (SystemLoadStatus != null)
+            if (Optional.IsDefined(SystemLoadStatus))
             {
                 writer.WritePropertyName("systemLoadStatus"u8);
                 writer.WriteStringValue(SystemLoadStatus);
             }
-            if (CpuLoad != null)
+            if (Optional.IsDefined(CpuLoad))
             {
                 writer.WritePropertyName("cpuLoad"u8);
                 writer.WriteStringValue(CpuLoad);
             }
-            if (CpuLoadStatus != null)
+            if (Optional.IsDefined(CpuLoadStatus))
             {
                 writer.WritePropertyName("cpuLoadStatus"u8);
                 writer.WriteStringValue(CpuLoadStatus);
             }
-            if (TotalMemoryInBytes.HasValue)
+            if (Optional.IsDefined(TotalMemoryInBytes))
             {
                 writer.WritePropertyName("totalMemoryInBytes"u8);
                 writer.WriteNumberValue(TotalMemoryInBytes.Value);
             }
-            if (AvailableMemoryInBytes.HasValue)
+            if (Optional.IsDefined(AvailableMemoryInBytes))
             {
                 writer.WritePropertyName("availableMemoryInBytes"u8);
                 writer.WriteNumberValue(AvailableMemoryInBytes.Value);
             }
-            if (MemoryUsageStatus != null)
+            if (Optional.IsDefined(MemoryUsageStatus))
             {
                 writer.WritePropertyName("memoryUsageStatus"u8);
                 writer.WriteStringValue(MemoryUsageStatus);
             }
-            if (TotalSpaceInBytes.HasValue)
+            if (Optional.IsDefined(TotalSpaceInBytes))
             {
                 writer.WritePropertyName("totalSpaceInBytes"u8);
                 writer.WriteNumberValue(TotalSpaceInBytes.Value);
             }
-            if (AvailableSpaceInBytes.HasValue)
+            if (Optional.IsDefined(AvailableSpaceInBytes))
             {
                 writer.WritePropertyName("availableSpaceInBytes"u8);
                 writer.WriteNumberValue(AvailableSpaceInBytes.Value);
             }
-            if (SpaceUsageStatus != null)
+            if (Optional.IsDefined(SpaceUsageStatus))
             {
                 writer.WritePropertyName("spaceUsageStatus"u8);
                 writer.WriteStringValue(SpaceUsageStatus);
             }
-            if (PsServiceStatus != null)
+            if (Optional.IsDefined(PsServiceStatus))
             {
                 writer.WritePropertyName("psServiceStatus"u8);
                 writer.WriteStringValue(PsServiceStatus);
             }
-            if (SslCertExpireOn.HasValue)
+            if (Optional.IsDefined(SslCertExpireOn))
             {
                 writer.WritePropertyName("sslCertExpiryDate"u8);
                 writer.WriteStringValue(SslCertExpireOn.Value, "O");
             }
-            if (SslCertExpiryRemainingDays.HasValue)
+            if (Optional.IsDefined(SslCertExpiryRemainingDays))
             {
                 writer.WritePropertyName("sslCertExpiryRemainingDays"u8);
                 writer.WriteNumberValue(SslCertExpiryRemainingDays.Value);
             }
-            if (OSVersion != null)
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
             }
-            if (!(HealthErrors is ChangeTrackingList<SiteRecoveryHealthError> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthErrors))
             {
                 writer.WritePropertyName("healthErrors"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthErrors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AgentExpireOn.HasValue)
+            if (Optional.IsDefined(AgentExpireOn))
             {
                 writer.WritePropertyName("agentExpiryDate"u8);
                 writer.WriteStringValue(AgentExpireOn.Value, "O");
             }
-            if (AgentVersionDetails != null)
+            if (Optional.IsDefined(AgentVersionDetails))
             {
                 writer.WritePropertyName("agentVersionDetails"u8);
-                writer.WriteObjectValue(AgentVersionDetails);
+                writer.WriteObjectValue<SiteRecoveryVersionDetails>(AgentVersionDetails, options);
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
             }
-            if (options.Format != "W" && PsStatsRefreshOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PsStatsRefreshOn))
             {
                 writer.WritePropertyName("psStatsRefreshTime"u8);
                 writer.WriteStringValue(PsStatsRefreshOn.Value, "O");
             }
-            if (options.Format != "W" && ThroughputUploadPendingDataInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ThroughputUploadPendingDataInBytes))
             {
                 writer.WritePropertyName("throughputUploadPendingDataInBytes"u8);
                 writer.WriteNumberValue(ThroughputUploadPendingDataInBytes.Value);
             }
-            if (options.Format != "W" && ThroughputInMBps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ThroughputInMBps))
             {
                 writer.WritePropertyName("throughputInMBps"u8);
                 writer.WriteNumberValue(ThroughputInMBps.Value);
             }
-            if (options.Format != "W" && ThroughputInBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ThroughputInBytes))
             {
                 writer.WritePropertyName("throughputInBytes"u8);
                 writer.WriteNumberValue(ThroughputInBytes.Value);
             }
-            if (options.Format != "W" && ThroughputStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(ThroughputStatus))
             {
                 writer.WritePropertyName("throughputStatus"u8);
                 writer.WriteStringValue(ThroughputStatus);
             }
-            if (options.Format != "W" && MarsCommunicationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(MarsCommunicationStatus))
             {
                 writer.WritePropertyName("marsCommunicationStatus"u8);
                 writer.WriteStringValue(MarsCommunicationStatus);
             }
-            if (options.Format != "W" && MarsRegistrationStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(MarsRegistrationStatus))
             {
                 writer.WritePropertyName("marsRegistrationStatus"u8);
                 writer.WriteStringValue(MarsRegistrationStatus);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryProcessServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -608,7 +608,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -624,7 +624,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryProcessServer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryProcessServer)} does not support reading '{options.Format}' format.");
             }
         }
 

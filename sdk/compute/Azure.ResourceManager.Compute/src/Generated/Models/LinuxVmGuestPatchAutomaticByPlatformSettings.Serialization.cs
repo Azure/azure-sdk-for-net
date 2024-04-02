@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinuxVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxVmGuestPatchAutomaticByPlatformSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinuxVmGuestPatchAutomaticByPlatformSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RebootSetting.HasValue)
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting.Value.ToString());
             }
-            if (BypassPlatformSafetyChecksOnUserSchedule.HasValue)
+            if (Optional.IsDefined(BypassPlatformSafetyChecksOnUserSchedule))
             {
                 writer.WritePropertyName("bypassPlatformSafetyChecksOnUserSchedule"u8);
                 writer.WriteBooleanValue(BypassPlatformSafetyChecksOnUserSchedule.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinuxVmGuestPatchAutomaticByPlatformSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinuxVmGuestPatchAutomaticByPlatformSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinuxVmGuestPatchAutomaticByPlatformSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinuxVmGuestPatchAutomaticByPlatformSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinuxVmGuestPatchAutomaticByPlatformSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeLinuxVmGuestPatchAutomaticByPlatformSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinuxVmGuestPatchAutomaticByPlatformSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinuxVmGuestPatchAutomaticByPlatformSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

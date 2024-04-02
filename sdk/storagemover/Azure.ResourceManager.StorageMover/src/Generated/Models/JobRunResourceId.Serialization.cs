@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobRunResourceId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobRunResourceId)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobRunResourceId)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && JobRunResourceIdValue != null)
+            if (options.Format != "W" && Optional.IsDefined(JobRunResourceIdValue))
             {
                 writer.WritePropertyName("jobRunResourceId"u8);
                 writer.WriteStringValue(JobRunResourceIdValue);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobRunResourceId>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobRunResourceId)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobRunResourceId)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JobRunResourceId)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobRunResourceId)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeJobRunResourceId(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobRunResourceId)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobRunResourceId)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Hci.Models
@@ -23,31 +22,31 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestAgentInstallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VmUuid != null)
+            if (options.Format != "W" && Optional.IsDefined(VmUuid))
             {
                 writer.WritePropertyName("vmUuid"u8);
                 writer.WriteStringValue(VmUuid);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && LastStatusChange.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastStatusChange))
             {
                 writer.WritePropertyName("lastStatusChange"u8);
                 writer.WriteStringValue(LastStatusChange.Value, "O");
             }
-            if (options.Format != "W" && AgentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (options.Format != "W" && !(ErrorDetails is ChangeTrackingList<ResponseError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStartArray();
@@ -80,7 +79,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<GuestAgentInstallStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +185,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeGuestAgentInstallStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GuestAgentInstallStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

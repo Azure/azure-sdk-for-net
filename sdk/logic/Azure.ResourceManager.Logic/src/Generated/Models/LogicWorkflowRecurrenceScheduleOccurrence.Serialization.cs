@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRecurrenceScheduleOccurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Day.HasValue)
+            if (Optional.IsDefined(Day))
             {
                 writer.WritePropertyName("day"u8);
                 writer.WriteStringValue(Day.Value.ToSerialString());
             }
-            if (Occurrence.HasValue)
+            if (Optional.IsDefined(Occurrence))
             {
                 writer.WritePropertyName("occurrence"u8);
                 writer.WriteNumberValue(Occurrence.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowRecurrenceScheduleOccurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowRecurrenceScheduleOccurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowRecurrenceScheduleOccurrence)} does not support reading '{options.Format}' format.");
             }
         }
 

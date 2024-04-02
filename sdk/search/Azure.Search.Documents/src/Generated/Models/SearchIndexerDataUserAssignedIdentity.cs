@@ -17,10 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="userAssignedIdentity"/> is null. </exception>
         public SearchIndexerDataUserAssignedIdentity(string userAssignedIdentity)
         {
-            if (userAssignedIdentity == null)
-            {
-                throw new ArgumentNullException(nameof(userAssignedIdentity));
-            }
+            Argument.AssertNotNull(userAssignedIdentity, nameof(userAssignedIdentity));
 
             UserAssignedIdentity = userAssignedIdentity;
             ODataType = "#Microsoft.Azure.Search.DataUserAssignedIdentity";

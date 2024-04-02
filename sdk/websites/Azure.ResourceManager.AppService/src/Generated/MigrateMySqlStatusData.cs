@@ -76,12 +76,16 @@ namespace Azure.ResourceManager.AppService
         }
 
         /// <summary> Status of the migration task. </summary>
+        [WirePath("properties.migrationOperationStatus")]
         public AppServiceOperationStatus? MigrationOperationStatus { get; }
         /// <summary> Operation ID for the migration task. </summary>
+        [WirePath("properties.operationId")]
         public string OperationId { get; }
         /// <summary> True if the web app has in app MySql enabled. </summary>
+        [WirePath("properties.localMySqlEnabled")]
         public bool? IsLocalMySqlEnabled { get; }
         /// <summary> Kind of resource. </summary>
+        [WirePath("kind")]
         public string Kind { get; set; }
     }
 }

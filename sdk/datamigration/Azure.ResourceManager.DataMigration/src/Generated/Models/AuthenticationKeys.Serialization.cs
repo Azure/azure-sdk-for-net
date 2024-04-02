@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AuthKey1 != null)
+            if (Optional.IsDefined(AuthKey1))
             {
                 writer.WritePropertyName("authKey1"u8);
                 writer.WriteStringValue(AuthKey1);
             }
-            if (AuthKey2 != null)
+            if (Optional.IsDefined(AuthKey2))
             {
                 writer.WritePropertyName("authKey2"u8);
                 writer.WriteStringValue(AuthKey2);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AuthenticationKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AuthenticationKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AuthenticationKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeAuthenticationKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AuthenticationKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AuthenticationKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

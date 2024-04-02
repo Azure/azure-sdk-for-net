@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProductImageInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderProductImageInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderProductImageInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ImageType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ImageType))
             {
                 writer.WritePropertyName("imageType"u8);
                 writer.WriteStringValue(ImageType.Value.ToString());
             }
-            if (options.Format != "W" && ImageUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ImageUri))
             {
                 writer.WritePropertyName("imageUrl"u8);
                 writer.WriteStringValue(ImageUri.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdgeOrderProductImageInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdgeOrderProductImageInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdgeOrderProductImageInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderProductImageInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderProductImageInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeEdgeOrderProductImageInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdgeOrderProductImageInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdgeOrderProductImageInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

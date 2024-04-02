@@ -23,56 +23,56 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteNetworkServicePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<ManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
             }
-            if (SiteReference != null)
+            if (Optional.IsDefined(SiteReference))
             {
                 writer.WritePropertyName("siteReference"u8);
                 JsonSerializer.Serialize(writer, SiteReference);
             }
-            if (options.Format != "W" && PublisherName != null)
+            if (options.Format != "W" && Optional.IsDefined(PublisherName))
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
             }
-            if (options.Format != "W" && PublisherScope.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PublisherScope))
             {
                 writer.WritePropertyName("publisherScope"u8);
                 writer.WriteStringValue(PublisherScope.Value.ToString());
             }
-            if (options.Format != "W" && NetworkServiceDesignGroupName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkServiceDesignGroupName))
             {
                 writer.WritePropertyName("networkServiceDesignGroupName"u8);
                 writer.WriteStringValue(NetworkServiceDesignGroupName);
             }
-            if (options.Format != "W" && NetworkServiceDesignVersionName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkServiceDesignVersionName))
             {
                 writer.WritePropertyName("networkServiceDesignVersionName"u8);
                 writer.WriteStringValue(NetworkServiceDesignVersionName);
             }
-            if (options.Format != "W" && NetworkServiceDesignVersionOfferingLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkServiceDesignVersionOfferingLocation))
             {
                 writer.WritePropertyName("networkServiceDesignVersionOfferingLocation"u8);
                 writer.WriteStringValue(NetworkServiceDesignVersionOfferingLocation);
             }
-            if (NetworkServiceDesignVersionResourceReference != null)
+            if (Optional.IsDefined(NetworkServiceDesignVersionResourceReference))
             {
                 writer.WritePropertyName("networkServiceDesignVersionResourceReference"u8);
-                writer.WriteObjectValue(NetworkServiceDesignVersionResourceReference);
+                writer.WriteObjectValue<DeploymentResourceIdReference>(NetworkServiceDesignVersionResourceReference, options);
             }
-            if (!(DesiredStateConfigurationGroupValueReferences is ChangeTrackingDictionary<string, WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DesiredStateConfigurationGroupValueReferences))
             {
                 writer.WritePropertyName("desiredStateConfigurationGroupValueReferences"u8);
                 writer.WriteStartObject();
@@ -83,12 +83,12 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && LastStateNetworkServiceDesignVersionName != null)
+            if (options.Format != "W" && Optional.IsDefined(LastStateNetworkServiceDesignVersionName))
             {
                 writer.WritePropertyName("lastStateNetworkServiceDesignVersionName"u8);
                 writer.WriteStringValue(LastStateNetworkServiceDesignVersionName);
             }
-            if (options.Format != "W" && !(LastStateConfigurationGroupValueReferences is ChangeTrackingDictionary<string, WritableSubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LastStateConfigurationGroupValueReferences))
             {
                 writer.WritePropertyName("lastStateConfigurationGroupValueReferences"u8);
                 writer.WriteStartObject();
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteNetworkServicePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -282,7 +282,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeSiteNetworkServicePropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteNetworkServicePropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

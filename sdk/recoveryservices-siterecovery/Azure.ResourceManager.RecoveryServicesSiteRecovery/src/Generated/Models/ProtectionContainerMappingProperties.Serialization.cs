@@ -22,66 +22,66 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TargetProtectionContainerId != null)
+            if (Optional.IsDefined(TargetProtectionContainerId))
             {
                 writer.WritePropertyName("targetProtectionContainerId"u8);
                 writer.WriteStringValue(TargetProtectionContainerId);
             }
-            if (TargetProtectionContainerFriendlyName != null)
+            if (Optional.IsDefined(TargetProtectionContainerFriendlyName))
             {
                 writer.WritePropertyName("targetProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(TargetProtectionContainerFriendlyName);
             }
-            if (ProviderSpecificDetails != null)
+            if (Optional.IsDefined(ProviderSpecificDetails))
             {
                 writer.WritePropertyName("providerSpecificDetails"u8);
-                writer.WriteObjectValue(ProviderSpecificDetails);
+                writer.WriteObjectValue<ProtectionContainerMappingProviderSpecificDetails>(ProviderSpecificDetails, options);
             }
-            if (Health != null)
+            if (Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health);
             }
-            if (!(HealthErrorDetails is ChangeTrackingList<SiteRecoveryHealthError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthErrorDetails))
             {
                 writer.WritePropertyName("healthErrorDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in HealthErrorDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SiteRecoveryHealthError>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (PolicyId != null)
+            if (Optional.IsDefined(PolicyId))
             {
                 writer.WritePropertyName("policyId"u8);
                 writer.WriteStringValue(PolicyId);
             }
-            if (State != null)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
             }
-            if (SourceProtectionContainerFriendlyName != null)
+            if (Optional.IsDefined(SourceProtectionContainerFriendlyName))
             {
                 writer.WritePropertyName("sourceProtectionContainerFriendlyName"u8);
                 writer.WriteStringValue(SourceProtectionContainerFriendlyName);
             }
-            if (SourceFabricFriendlyName != null)
+            if (Optional.IsDefined(SourceFabricFriendlyName))
             {
                 writer.WritePropertyName("sourceFabricFriendlyName"u8);
                 writer.WriteStringValue(SourceFabricFriendlyName);
             }
-            if (TargetFabricFriendlyName != null)
+            if (Optional.IsDefined(TargetFabricFriendlyName))
             {
                 writer.WritePropertyName("targetFabricFriendlyName"u8);
                 writer.WriteStringValue(TargetFabricFriendlyName);
             }
-            if (PolicyFriendlyName != null)
+            if (Optional.IsDefined(PolicyFriendlyName))
             {
                 writer.WritePropertyName("policyFriendlyName"u8);
                 writer.WriteStringValue(PolicyFriendlyName);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProtectionContainerMappingProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -245,7 +245,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -261,7 +261,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeProtectionContainerMappingProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProtectionContainerMappingProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

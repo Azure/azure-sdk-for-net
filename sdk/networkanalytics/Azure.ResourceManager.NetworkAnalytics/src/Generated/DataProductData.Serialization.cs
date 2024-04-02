@@ -24,16 +24,16 @@ namespace Azure.ResourceManager.NetworkAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataProductData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProductData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProductData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -61,39 +61,39 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceGuid != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Product != null)
+            if (Optional.IsDefined(Product))
             {
                 writer.WritePropertyName("product"u8);
                 writer.WriteStringValue(Product);
             }
-            if (MajorVersion != null)
+            if (Optional.IsDefined(MajorVersion))
             {
                 writer.WritePropertyName("majorVersion"u8);
                 writer.WriteStringValue(MajorVersion);
             }
-            if (!(Owners is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Owners))
             {
                 writer.WritePropertyName("owners"u8);
                 writer.WriteStartArray();
@@ -103,52 +103,52 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (Redundancy.HasValue)
+            if (Optional.IsDefined(Redundancy))
             {
                 writer.WritePropertyName("redundancy"u8);
                 writer.WriteStringValue(Redundancy.Value.ToString());
             }
-            if (PurviewAccount != null)
+            if (Optional.IsDefined(PurviewAccount))
             {
                 writer.WritePropertyName("purviewAccount"u8);
                 writer.WriteStringValue(PurviewAccount);
             }
-            if (PurviewCollection != null)
+            if (Optional.IsDefined(PurviewCollection))
             {
                 writer.WritePropertyName("purviewCollection"u8);
                 writer.WriteStringValue(PurviewCollection);
             }
-            if (PrivateLinksEnabled.HasValue)
+            if (Optional.IsDefined(PrivateLinksEnabled))
             {
                 writer.WritePropertyName("privateLinksEnabled"u8);
                 writer.WriteStringValue(PrivateLinksEnabled.Value.ToString());
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (CustomerManagedKeyEncryptionEnabled.HasValue)
+            if (Optional.IsDefined(CustomerManagedKeyEncryptionEnabled))
             {
                 writer.WritePropertyName("customerManagedKeyEncryptionEnabled"u8);
                 writer.WriteStringValue(CustomerManagedKeyEncryptionEnabled.Value.ToString());
             }
-            if (CustomerEncryptionKey != null)
+            if (Optional.IsDefined(CustomerEncryptionKey))
             {
                 writer.WritePropertyName("customerEncryptionKey"u8);
-                writer.WriteObjectValue(CustomerEncryptionKey);
+                writer.WriteObjectValue<EncryptionKeyDetails>(CustomerEncryptionKey, options);
             }
-            if (Networkacls != null)
+            if (Optional.IsDefined(Networkacls))
             {
                 writer.WritePropertyName("networkacls"u8);
-                writer.WriteObjectValue(Networkacls);
+                writer.WriteObjectValue<DataProductNetworkAcls>(Networkacls, options);
             }
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<NetworkAnalyticsManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
             }
-            if (options.Format != "W" && !(AvailableMinorVersions is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AvailableMinorVersions))
             {
                 writer.WritePropertyName("availableMinorVersions"u8);
                 writer.WriteStartArray();
@@ -158,22 +158,22 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 }
                 writer.WriteEndArray();
             }
-            if (CurrentMinorVersion != null)
+            if (Optional.IsDefined(CurrentMinorVersion))
             {
                 writer.WritePropertyName("currentMinorVersion"u8);
                 writer.WriteStringValue(CurrentMinorVersion);
             }
-            if (options.Format != "W" && Documentation != null)
+            if (options.Format != "W" && Optional.IsDefined(Documentation))
             {
                 writer.WritePropertyName("documentation"u8);
                 writer.WriteStringValue(Documentation);
             }
-            if (options.Format != "W" && ConsumptionEndpoints != null)
+            if (options.Format != "W" && Optional.IsDefined(ConsumptionEndpoints))
             {
                 writer.WritePropertyName("consumptionEndpoints"u8);
-                writer.WriteObjectValue(ConsumptionEndpoints);
+                writer.WriteObjectValue<ConsumptionEndpointsProperties>(ConsumptionEndpoints, options);
             }
-            if (options.Format != "W" && KeyVaultUri != null)
+            if (options.Format != "W" && Optional.IsDefined(KeyVaultUri))
             {
                 writer.WritePropertyName("keyVaultUrl"u8);
                 writer.WriteStringValue(KeyVaultUri.AbsoluteUri);
@@ -202,7 +202,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
             var format = options.Format == "W" ? ((IPersistableModel<DataProductData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProductData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProductData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -516,7 +516,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProductData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProductData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -532,7 +532,7 @@ namespace Azure.ResourceManager.NetworkAnalytics
                         return DeserializeDataProductData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProductData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProductData)} does not support reading '{options.Format}' format.");
             }
         }
 

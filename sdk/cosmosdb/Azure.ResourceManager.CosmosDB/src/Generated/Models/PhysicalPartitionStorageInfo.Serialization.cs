@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +23,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionStorageInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && StorageInKB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StorageInKB))
             {
                 writer.WritePropertyName("storageInKB"u8);
                 writer.WriteNumberValue(StorageInKB.Value);
@@ -59,7 +60,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
             var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionStorageInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,6 +104,57 @@ namespace Azure.ResourceManager.CosmosDB.Models
             return new PhysicalPartitionStorageInfo(id, storageInKB, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(StorageInKB), out propertyOverride);
+            if (Optional.IsDefined(StorageInKB) || hasPropertyOverride)
+            {
+                builder.Append("  storageInKB: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{StorageInKB.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<PhysicalPartitionStorageInfo>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<PhysicalPartitionStorageInfo>)this).GetFormatFromOptions(options) : options.Format;
@@ -111,8 +163,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +182,7 @@ namespace Azure.ResourceManager.CosmosDB.Models
                         return DeserializePhysicalPartitionStorageInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PhysicalPartitionStorageInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

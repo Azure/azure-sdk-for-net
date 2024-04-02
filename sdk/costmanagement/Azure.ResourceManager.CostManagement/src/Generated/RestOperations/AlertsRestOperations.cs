@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.CostManagement.Models;
@@ -60,10 +60,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<CostManagementAlertsResult>> ListAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -87,10 +84,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<CostManagementAlertsResult> List(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -133,14 +127,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="alertId"/> is null. </exception>
         public async Task<Response<CostManagementAlertData>> GetAsync(string scope, string alertId, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(alertId, nameof(alertId));
 
             using var message = CreateGetRequest(scope, alertId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -167,14 +155,8 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> or <paramref name="alertId"/> is null. </exception>
         public Response<CostManagementAlertData> Get(string scope, string alertId, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(alertId, nameof(alertId));
 
             using var message = CreateGetRequest(scope, alertId);
             _pipeline.Send(message, cancellationToken);
@@ -210,7 +192,7 @@ namespace Azure.ResourceManager.CostManagement
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<CostManagementAlertPatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -224,18 +206,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="alertId"/> or <paramref name="patch"/> is null. </exception>
         public async Task<Response<CostManagementAlertData>> DismissAsync(string scope, string alertId, CostManagementAlertPatch patch, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(alertId, nameof(alertId));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateDismissRequest(scope, alertId, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -261,18 +234,9 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/>, <paramref name="alertId"/> or <paramref name="patch"/> is null. </exception>
         public Response<CostManagementAlertData> Dismiss(string scope, string alertId, CostManagementAlertPatch patch, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (alertId == null)
-            {
-                throw new ArgumentNullException(nameof(alertId));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNull(alertId, nameof(alertId));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateDismissRequest(scope, alertId, patch);
             _pipeline.Send(message, cancellationToken);
@@ -317,14 +281,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CostManagementAlertsResult>> ListExternalAsync(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
             using var message = CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -350,14 +307,7 @@ namespace Azure.ResourceManager.CostManagement
         /// <exception cref="ArgumentException"> <paramref name="externalCloudProviderId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CostManagementAlertsResult> ListExternal(ExternalCloudProviderType externalCloudProviderType, string externalCloudProviderId, CancellationToken cancellationToken = default)
         {
-            if (externalCloudProviderId == null)
-            {
-                throw new ArgumentNullException(nameof(externalCloudProviderId));
-            }
-            if (externalCloudProviderId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(externalCloudProviderId));
-            }
+            Argument.AssertNotNullOrEmpty(externalCloudProviderId, nameof(externalCloudProviderId));
 
             using var message = CreateListExternalRequest(externalCloudProviderType, externalCloudProviderId);
             _pipeline.Send(message, cancellationToken);

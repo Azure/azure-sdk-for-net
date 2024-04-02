@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
             }
-            if (LoadBalancerId != null)
+            if (Optional.IsDefined(LoadBalancerId))
             {
                 writer.WritePropertyName("loadBalancerId"u8);
                 writer.WriteStringValue(LoadBalancerId);
             }
-            if (PublicIPId != null)
+            if (Optional.IsDefined(PublicIPId))
             {
                 writer.WritePropertyName("publicIpId"u8);
                 writer.WriteStringValue(PublicIPId);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

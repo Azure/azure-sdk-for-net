@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeVmInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeVmInstanceViewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeVmInstanceViewStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (DisplayStatus != null)
+            if (Optional.IsDefined(DisplayStatus))
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeVmInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeVmInstanceViewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeVmInstanceViewStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeVmInstanceViewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeVmInstanceViewStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeComputeVmInstanceViewStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeVmInstanceViewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeVmInstanceViewStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -4,15 +4,23 @@
 
 ### Features Added
 
-- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
-
 ### Breaking Changes
 
 ### Bugs Fixed
 
-- Change ResourceType from `Microsoft.Authorization/roleManagementPolicyAssignment` to `Microsoft.Authorization/roleManagementPolicyAssignments`
-
 ### Other Changes
+
+## 1.1.1 (2024-03-23)
+
+### Features Added
+
+- Enable the new model serialization by using the System.ClientModel, refer this [document](https://aka.ms/azsdk/net/mrw) for more details.
+- Added experimental Bicep serialization.
+
+### Bugs Fixed
+
+- Change ResourceType from `Microsoft.Authorization/roleManagementPolicyAssignment` to `Microsoft.Authorization/roleManagementPolicyAssignments`
+- Fixed [the issue](https://github.com/Azure/azure-sdk-for-net/issues/40050) by removing the three extra operations of `DenyAssignments_ListForResource` , `DenyAssignments_ListForResourceGroup` , and `DenyAssignments_List`.
 
 ## 1.1.0 (2023-11-21)
 

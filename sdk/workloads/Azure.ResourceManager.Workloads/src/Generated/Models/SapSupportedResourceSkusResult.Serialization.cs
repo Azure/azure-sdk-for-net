@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapSupportedResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(SupportedSkus is ChangeTrackingList<SapSupportedSku> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportedSkus))
             {
                 writer.WritePropertyName("supportedSkus"u8);
                 writer.WriteStartArray();
                 foreach (var item in SupportedSkus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SapSupportedSku>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapSupportedResourceSkusResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapSupportedResourceSkusResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapSupportedResourceSkusResult)} does not support reading '{options.Format}' format.");
             }
         }
 

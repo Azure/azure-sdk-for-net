@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EventHubResourceId != null)
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (options.Format != "W" && SasPolicyName != null)
+            if (options.Format != "W" && Optional.IsDefined(SasPolicyName))
             {
                 writer.WritePropertyName("sasPolicyName"u8);
                 writer.WriteStringValue(SasPolicyName);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAutomationActionEventHub>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAutomationActionEventHub(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAutomationActionEventHub)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpAdvertisement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpAdvertisement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpAdvertisement)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AdvertiseToFabric.HasValue)
+            if (Optional.IsDefined(AdvertiseToFabric))
             {
                 writer.WritePropertyName("advertiseToFabric"u8);
                 writer.WriteStringValue(AdvertiseToFabric.Value.ToString());
             }
-            if (!(Communities is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Communities))
             {
                 writer.WritePropertyName("communities"u8);
                 writer.WriteStartArray();
@@ -48,7 +48,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (!(Peers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Peers))
             {
                 writer.WritePropertyName("peers"u8);
                 writer.WriteStartArray();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpAdvertisement>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpAdvertisement)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpAdvertisement)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpAdvertisement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpAdvertisement)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeBgpAdvertisement(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpAdvertisement)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpAdvertisement)} does not support reading '{options.Format}' format.");
             }
         }
 

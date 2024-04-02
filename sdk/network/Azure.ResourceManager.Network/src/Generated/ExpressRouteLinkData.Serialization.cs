@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -24,76 +23,76 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteLinkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && RouterName != null)
+            if (options.Format != "W" && Optional.IsDefined(RouterName))
             {
                 writer.WritePropertyName("routerName"u8);
                 writer.WriteStringValue(RouterName);
             }
-            if (options.Format != "W" && InterfaceName != null)
+            if (options.Format != "W" && Optional.IsDefined(InterfaceName))
             {
                 writer.WritePropertyName("interfaceName"u8);
                 writer.WriteStringValue(InterfaceName);
             }
-            if (options.Format != "W" && PatchPanelId != null)
+            if (options.Format != "W" && Optional.IsDefined(PatchPanelId))
             {
                 writer.WritePropertyName("patchPanelId"u8);
                 writer.WriteStringValue(PatchPanelId);
             }
-            if (options.Format != "W" && RackId != null)
+            if (options.Format != "W" && Optional.IsDefined(RackId))
             {
                 writer.WritePropertyName("rackId"u8);
                 writer.WriteStringValue(RackId);
             }
-            if (options.Format != "W" && ColoLocation != null)
+            if (options.Format != "W" && Optional.IsDefined(ColoLocation))
             {
                 writer.WritePropertyName("coloLocation"u8);
                 writer.WriteStringValue(ColoLocation);
             }
-            if (options.Format != "W" && ConnectorType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectorType))
             {
                 writer.WritePropertyName("connectorType"u8);
                 writer.WriteStringValue(ConnectorType.Value.ToString());
             }
-            if (AdminState.HasValue)
+            if (Optional.IsDefined(AdminState))
             {
                 writer.WritePropertyName("adminState"u8);
                 writer.WriteStringValue(AdminState.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (MacSecConfig != null)
+            if (Optional.IsDefined(MacSecConfig))
             {
                 writer.WritePropertyName("macSecConfig"u8);
-                writer.WriteObjectValue(MacSecConfig);
+                writer.WriteObjectValue<ExpressRouteLinkMacSecConfig>(MacSecConfig, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -119,7 +118,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteLinkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -288,7 +287,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteLinkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +303,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeExpressRouteLinkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteLinkData)} does not support reading '{options.Format}' format.");
             }
         }
 

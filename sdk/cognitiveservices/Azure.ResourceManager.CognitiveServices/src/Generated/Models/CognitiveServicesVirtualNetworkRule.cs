@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public CognitiveServicesVirtualNetworkRule(ResourceIdentifier id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
@@ -78,10 +75,13 @@ namespace Azure.ResourceManager.CognitiveServices.Models
         }
 
         /// <summary> Full resource id of a vnet subnet, such as '/subscriptions/subid/resourceGroups/rg1/providers/Microsoft.Network/virtualNetworks/test-vnet/subnets/subnet1'. </summary>
+        [WirePath("id")]
         public ResourceIdentifier Id { get; set; }
         /// <summary> Gets the state of virtual network rule. </summary>
+        [WirePath("state")]
         public string State { get; set; }
         /// <summary> Ignore missing vnet service endpoint or not. </summary>
+        [WirePath("ignoreMissingVnetServiceEndpoint")]
         public bool? IgnoreMissingVnetServiceEndpoint { get; set; }
     }
 }

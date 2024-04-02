@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -52,7 +51,7 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(playRequest);
+            content.JsonWriter.WriteObjectValue<PlayRequestInternal>(playRequest);
             request.Content = content;
             return message;
         }
@@ -184,7 +183,7 @@ namespace Azure.Communication.CallingServer
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(recognizeRequest);
+            content.JsonWriter.WriteObjectValue<RecognizeRequestInternal>(recognizeRequest);
             request.Content = content;
             return message;
         }
@@ -258,7 +257,7 @@ namespace Azure.Communication.CallingServer
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(startCallRecording);
+            content.JsonWriter.WriteObjectValue<StartCallRecordingRequestInternal>(startCallRecording);
             request.Content = content;
             return message;
         }

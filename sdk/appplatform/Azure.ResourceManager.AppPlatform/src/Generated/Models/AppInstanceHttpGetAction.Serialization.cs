@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceHttpGetAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Scheme.HasValue)
+            if (Optional.IsDefined(Scheme))
             {
                 writer.WritePropertyName("scheme"u8);
                 writer.WriteStringValue(Scheme.Value.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppInstanceHttpGetAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppInstanceHttpGetAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppInstanceHttpGetAction)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureADPartnerClientAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.EventGrid.Models
             writer.WriteStringValue(ClientAuthenticationType.ToString());
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AzureActiveDirectoryTenantId != null)
+            if (Optional.IsDefined(AzureActiveDirectoryTenantId))
             {
                 writer.WritePropertyName("azureActiveDirectoryTenantId"u8);
                 writer.WriteStringValue(AzureActiveDirectoryTenantId);
             }
-            if (AzureActiveDirectoryApplicationIdOrUri != null)
+            if (Optional.IsDefined(AzureActiveDirectoryApplicationIdOrUri))
             {
                 writer.WritePropertyName("azureActiveDirectoryApplicationIdOrUri"u8);
                 writer.WriteStringValue(AzureActiveDirectoryApplicationIdOrUri.AbsoluteUri);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureADPartnerClientAuthentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeAzureADPartnerClientAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureADPartnerClientAuthentication)} does not support reading '{options.Format}' format.");
             }
         }
 

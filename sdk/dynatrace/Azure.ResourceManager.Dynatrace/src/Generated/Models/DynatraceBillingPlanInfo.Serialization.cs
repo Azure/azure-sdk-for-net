@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UsageType != null)
+            if (Optional.IsDefined(UsageType))
             {
                 writer.WritePropertyName("usageType"u8);
                 writer.WriteStringValue(UsageType);
             }
-            if (BillingCycle != null)
+            if (Optional.IsDefined(BillingCycle))
             {
                 writer.WritePropertyName("billingCycle"u8);
                 writer.WriteStringValue(BillingCycle);
             }
-            if (PlanDetails != null)
+            if (Optional.IsDefined(PlanDetails))
             {
                 writer.WritePropertyName("planDetails"u8);
                 writer.WriteStringValue(PlanDetails);
             }
-            if (EffectiveOn.HasValue)
+            if (Optional.IsDefined(EffectiveOn))
             {
                 writer.WritePropertyName("effectiveDate"u8);
                 writer.WriteStringValue(EffectiveOn.Value, "O");
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceBillingPlanInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceBillingPlanInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceBillingPlanInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

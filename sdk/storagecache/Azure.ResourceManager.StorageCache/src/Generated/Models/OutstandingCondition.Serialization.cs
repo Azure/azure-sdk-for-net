@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutstandingCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutstandingCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutstandingCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutstandingCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutstandingCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutstandingCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OutstandingCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutstandingCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeOutstandingCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutstandingCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutstandingCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Models;
@@ -24,16 +26,16 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlAdvisorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -53,45 +55,45 @@ namespace Azure.ResourceManager.Sql
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && AdvisorStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AdvisorStatus))
             {
                 writer.WritePropertyName("advisorStatus"u8);
                 writer.WriteStringValue(AdvisorStatus.Value.ToSerialString());
             }
-            if (AutoExecuteStatus.HasValue)
+            if (Optional.IsDefined(AutoExecuteStatus))
             {
                 writer.WritePropertyName("autoExecuteStatus"u8);
                 writer.WriteStringValue(AutoExecuteStatus.Value.ToSerialString());
             }
-            if (options.Format != "W" && AutoExecuteStatusInheritedFrom.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AutoExecuteStatusInheritedFrom))
             {
                 writer.WritePropertyName("autoExecuteStatusInheritedFrom"u8);
                 writer.WriteStringValue(AutoExecuteStatusInheritedFrom.Value.ToSerialString());
             }
-            if (options.Format != "W" && RecommendationsStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationsStatus))
             {
                 writer.WritePropertyName("recommendationsStatus"u8);
                 writer.WriteStringValue(RecommendationsStatus);
             }
-            if (options.Format != "W" && LastCheckedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastCheckedOn))
             {
                 writer.WritePropertyName("lastChecked"u8);
                 writer.WriteStringValue(LastCheckedOn.Value, "O");
             }
-            if (options.Format != "W" && !(RecommendedActions is ChangeTrackingList<RecommendedActionData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendedActionData>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.Sql
             var format = options.Format == "W" ? ((IPersistableModel<SqlAdvisorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -277,6 +279,211 @@ namespace Azure.ResourceManager.Sql
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Location), out propertyOverride);
+            if (Optional.IsDefined(Location) || hasPropertyOverride)
+            {
+                builder.Append("  location: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Location.Value.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AdvisorStatus), out propertyOverride);
+            if (Optional.IsDefined(AdvisorStatus) || hasPropertyOverride)
+            {
+                builder.Append("    advisorStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AdvisorStatus.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoExecuteStatus), out propertyOverride);
+            if (Optional.IsDefined(AutoExecuteStatus) || hasPropertyOverride)
+            {
+                builder.Append("    autoExecuteStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AutoExecuteStatus.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AutoExecuteStatusInheritedFrom), out propertyOverride);
+            if (Optional.IsDefined(AutoExecuteStatusInheritedFrom) || hasPropertyOverride)
+            {
+                builder.Append("    autoExecuteStatusInheritedFrom: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{AutoExecuteStatusInheritedFrom.Value.ToSerialString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecommendationsStatus), out propertyOverride);
+            if (Optional.IsDefined(RecommendationsStatus) || hasPropertyOverride)
+            {
+                builder.Append("    recommendationsStatus: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RecommendationsStatus.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RecommendationsStatus}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RecommendationsStatus}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(LastCheckedOn), out propertyOverride);
+            if (Optional.IsDefined(LastCheckedOn) || hasPropertyOverride)
+            {
+                builder.Append("    lastChecked: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(LastCheckedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RecommendedActions), out propertyOverride);
+            if (Optional.IsCollectionDefined(RecommendedActions) || hasPropertyOverride)
+            {
+                if (RecommendedActions.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    recommendedActions: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in RecommendedActions)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    recommendedActions: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SqlAdvisorData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SqlAdvisorData>)this).GetFormatFromOptions(options) : options.Format;
@@ -285,8 +492,10 @@ namespace Azure.ResourceManager.Sql
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -302,7 +511,7 @@ namespace Azure.ResourceManager.Sql
                         return DeserializeSqlAdvisorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlAdvisorData)} does not support reading '{options.Format}' format.");
             }
         }
 

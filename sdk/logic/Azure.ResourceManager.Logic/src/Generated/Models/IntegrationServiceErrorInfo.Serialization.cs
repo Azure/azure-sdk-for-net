@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(Code.ToString());
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (!(Details is ChangeTrackingList<IntegrationServiceErrorInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStartArray();
                 foreach (var item in Details)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IntegrationServiceErrorInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (InnerError != null)
+            if (Optional.IsDefined(InnerError))
             {
                 writer.WritePropertyName("innerError"u8);
 #if NET6_0_OR_GREATER
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationServiceErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.DataBox.Models
@@ -23,18 +22,18 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionIsAllowedToCreateJobValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToSerialString());
             }
             writer.WritePropertyName("validationType"u8);
             writer.WriteStringValue(ValidationType.ToSerialString());
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -62,7 +61,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionIsAllowedToCreateJobValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -125,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -141,7 +140,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeSubscriptionIsAllowedToCreateJobValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionIsAllowedToCreateJobValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

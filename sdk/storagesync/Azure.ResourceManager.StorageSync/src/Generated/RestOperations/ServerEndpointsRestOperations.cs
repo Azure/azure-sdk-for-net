@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.StorageSync.Models;
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<StorageSyncServerEndpointCreateOrUpdateContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -77,50 +77,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, StorageSyncServerEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -146,50 +108,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, StorageSyncServerEndpointCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, content);
             _pipeline.Send(message, cancellationToken);
@@ -225,7 +149,7 @@ namespace Azure.ResourceManager.StorageSync
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<StorageSyncServerEndpointPatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -243,50 +167,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, StorageSyncServerEndpointPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -312,50 +198,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, StorageSyncServerEndpointPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -404,46 +252,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<StorageSyncServerEndpointData>> GetAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -474,46 +287,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<StorageSyncServerEndpointData> Get(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -568,46 +346,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -632,46 +375,11 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName);
             _pipeline.Send(message, cancellationToken);
@@ -718,38 +426,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ServerEndpointArray>> ListBySyncGroupAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
 
             using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -777,38 +457,10 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/> or <paramref name="syncGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ServerEndpointArray> ListBySyncGroup(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
 
             using var message = CreateListBySyncGroupRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -849,7 +501,7 @@ namespace Azure.ResourceManager.StorageSync
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<RecallActionContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -867,50 +519,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RecallActionAsync(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRecallActionRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -936,50 +550,12 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="storageSyncServiceName"/>, <paramref name="syncGroupName"/> or <paramref name="serverEndpointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RecallAction(string subscriptionId, string resourceGroupName, string storageSyncServiceName, string syncGroupName, string serverEndpointName, RecallActionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (storageSyncServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(storageSyncServiceName));
-            }
-            if (storageSyncServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(storageSyncServiceName));
-            }
-            if (syncGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(syncGroupName));
-            }
-            if (syncGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(syncGroupName));
-            }
-            if (serverEndpointName == null)
-            {
-                throw new ArgumentNullException(nameof(serverEndpointName));
-            }
-            if (serverEndpointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serverEndpointName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(storageSyncServiceName, nameof(storageSyncServiceName));
+            Argument.AssertNotNullOrEmpty(syncGroupName, nameof(syncGroupName));
+            Argument.AssertNotNullOrEmpty(serverEndpointName, nameof(serverEndpointName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateRecallActionRequest(subscriptionId, resourceGroupName, storageSyncServiceName, syncGroupName, serverEndpointName, content);
             _pipeline.Send(message, cancellationToken);

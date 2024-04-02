@@ -68,13 +68,19 @@ public partial class PageableList<T>
 
 [CodeGenType("OpenAIPageableListOfAssistant")]
 internal partial class InternalOpenAIPageableListOfAssistant { }
+internal readonly partial struct OpenAIPageableListOfAssistantObject { }
 [CodeGenType("OpenAIPageableListOfAssistantFile")]
 internal partial class InternalOpenAIPageableListOfAssistantFile { }
+internal readonly partial struct OpenAIPageableListOfAssistantFileObject { }
 [CodeGenType("OpenAIPageableListOfThreadMessage")]
 internal partial class InternalOpenAIPageableListOfThreadMessage { }
+internal readonly partial struct OpenAIPageableListOfThreadMessageObject { }
 [CodeGenType("OpenAIPageableListOfMessageFile")]
 internal partial class InternalOpenAIPageableListOfMessageFile { }
+internal readonly partial struct OpenAIPageableListOfMessageFileObject { }
 [CodeGenType("OpenAIPageableListOfRunStep")]
 internal partial class InternalOpenAIPageableListOfRunStep { }
+internal readonly partial struct OpenAIPageableListOfRunStepObject { }
 [CodeGenType("OpenAIPageableListOfThreadRun")]
 internal partial class InternalOpenAIPageableListOfThreadRun { }
+internal readonly partial struct OpenAIPageableListOfThreadRunObject { }

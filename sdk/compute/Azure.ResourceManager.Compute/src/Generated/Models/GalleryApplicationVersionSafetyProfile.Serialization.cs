@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationVersionSafetyProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationVersionSafetyProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AllowDeletionOfReplicatedLocations.HasValue)
+            if (Optional.IsDefined(AllowDeletionOfReplicatedLocations))
             {
                 writer.WritePropertyName("allowDeletionOfReplicatedLocations"u8);
                 writer.WriteBooleanValue(AllowDeletionOfReplicatedLocations.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationVersionSafetyProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationVersionSafetyProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationVersionSafetyProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationVersionSafetyProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionSafetyProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryApplicationVersionSafetyProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationVersionSafetyProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationVersionSafetyProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

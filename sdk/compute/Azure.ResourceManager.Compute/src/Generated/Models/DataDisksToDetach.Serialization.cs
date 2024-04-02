@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataDisksToDetach>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("diskId"u8);
             writer.WriteStringValue(DiskId);
-            if (DetachOption.HasValue)
+            if (Optional.IsDefined(DetachOption))
             {
                 writer.WritePropertyName("detachOption"u8);
                 writer.WriteStringValue(DetachOption.Value.ToString());
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataDisksToDetach>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeDataDisksToDetach(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataDisksToDetach)} does not support reading '{options.Format}' format.");
             }
         }
 

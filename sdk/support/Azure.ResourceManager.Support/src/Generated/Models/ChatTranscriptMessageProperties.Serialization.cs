@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChatTranscriptMessageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ContentType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType.Value.ToString());
             }
-            if (options.Format != "W" && CommunicationDirection.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CommunicationDirection))
             {
                 writer.WritePropertyName("communicationDirection"u8);
                 writer.WriteStringValue(CommunicationDirection.Value.ToString());
             }
-            if (Sender != null)
+            if (Optional.IsDefined(Sender))
             {
                 writer.WritePropertyName("sender"u8);
                 writer.WriteStringValue(Sender);
             }
             writer.WritePropertyName("body"u8);
             writer.WriteStringValue(Body);
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<ChatTranscriptMessageProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeChatTranscriptMessageProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ChatTranscriptMessageProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

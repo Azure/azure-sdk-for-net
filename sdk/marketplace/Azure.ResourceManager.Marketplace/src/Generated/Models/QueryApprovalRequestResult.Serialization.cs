@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Marketplace.Models
@@ -23,32 +22,32 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryApprovalRequestResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UniqueOfferId != null)
+            if (Optional.IsDefined(UniqueOfferId))
             {
                 writer.WritePropertyName("uniqueOfferId"u8);
                 writer.WriteStringValue(UniqueOfferId);
             }
-            if (!(PlansDetails is ChangeTrackingDictionary<string, PrivateStorePlanDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PlansDetails))
             {
                 writer.WritePropertyName("plansDetails"u8);
                 writer.WriteStartObject();
                 foreach (var item in PlansDetails)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<PrivateStorePlanDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (MessageCode.HasValue)
+            if (Optional.IsDefined(MessageCode))
             {
                 writer.WritePropertyName("messageCode"u8);
                 writer.WriteNumberValue(MessageCode.Value);
@@ -76,7 +75,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<QueryApprovalRequestResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +153,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +169,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeQueryApprovalRequestResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QueryApprovalRequestResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The Application ID for the Application Insights component. </summary>
+        [WirePath("AppId")]
         public string AppId { get; }
         /// <summary> The daily data volume cap is met, and data ingestion will be stopped. </summary>
+        [WirePath("ShouldBeThrottled")]
         public bool? ShouldBeThrottled { get; }
         /// <summary> Date and time when the daily data volume cap will be reset, and data ingestion will resume. </summary>
+        [WirePath("ExpirationTime")]
         public string ExpirationTime { get; }
     }
 }

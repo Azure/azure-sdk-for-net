@@ -15,15 +15,15 @@ namespace Azure.Communication.CallingServer
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Channel.HasValue)
+            if (Optional.IsDefined(Channel))
             {
                 writer.WritePropertyName("channel"u8);
                 writer.WriteNumberValue(Channel.Value);
             }
-            if (Participant != null)
+            if (Optional.IsDefined(Participant))
             {
                 writer.WritePropertyName("participant"u8);
-                writer.WriteObjectValue(Participant);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(Participant);
             }
             writer.WriteEndObject();
         }

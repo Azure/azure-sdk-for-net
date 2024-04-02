@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BindDistinguishedName != null)
+            if (Optional.IsDefined(BindDistinguishedName))
             {
                 writer.WritePropertyName("bindDn"u8);
                 writer.WriteStringValue(BindDistinguishedName);
             }
-            if (BindPassword != null)
+            if (Optional.IsDefined(BindPassword))
             {
                 writer.WritePropertyName("bindPassword"u8);
                 writer.WriteStringValue(BindPassword);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheUsernameDownloadCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

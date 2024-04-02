@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (RetentionDurationInDays.HasValue)
+            if (Optional.IsDefined(RetentionDurationInDays))
             {
                 writer.WritePropertyName("retentionDurationInDays"u8);
                 writer.WriteNumberValue(RetentionDurationInDays.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupVaultSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupVaultSoftDeleteSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupVaultSoftDeleteSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

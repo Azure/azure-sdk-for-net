@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -23,7 +22,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterJob)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -37,67 +36,67 @@ namespace Azure.Communication.JobRouter
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ChannelReference != null)
+            if (Optional.IsDefined(ChannelReference))
             {
                 writer.WritePropertyName("channelReference"u8);
                 writer.WriteStringValue(ChannelReference);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && EnqueuedAt.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EnqueuedAt))
             {
                 writer.WritePropertyName("enqueuedAt"u8);
                 writer.WriteStringValue(EnqueuedAt.Value, "O");
             }
-            if (ChannelId != null)
+            if (Optional.IsDefined(ChannelId))
             {
                 writer.WritePropertyName("channelId"u8);
                 writer.WriteStringValue(ChannelId);
             }
-            if (ClassificationPolicyId != null)
+            if (Optional.IsDefined(ClassificationPolicyId))
             {
                 writer.WritePropertyName("classificationPolicyId"u8);
                 writer.WriteStringValue(ClassificationPolicyId);
             }
-            if (QueueId != null)
+            if (Optional.IsDefined(QueueId))
             {
                 writer.WritePropertyName("queueId"u8);
                 writer.WriteStringValue(QueueId);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (DispositionCode != null)
+            if (Optional.IsDefined(DispositionCode))
             {
                 writer.WritePropertyName("dispositionCode"u8);
                 writer.WriteStringValue(DispositionCode);
             }
-            if (!(RequestedWorkerSelectors is ChangeTrackingList<RouterWorkerSelector> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RequestedWorkerSelectors))
             {
                 writer.WritePropertyName("requestedWorkerSelectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequestedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(AttachedWorkerSelectors is ChangeTrackingList<RouterWorkerSelector> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AttachedWorkerSelectors))
             {
                 writer.WritePropertyName("attachedWorkerSelectors"u8);
                 writer.WriteStartArray();
                 foreach (var item in AttachedWorkerSelectors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterWorkerSelector>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(_labels is ChangeTrackingDictionary<string, BinaryData> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(_labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartObject();
@@ -120,18 +119,18 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(Assignments is ChangeTrackingDictionary<string, RouterJobAssignment> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Assignments))
             {
                 writer.WritePropertyName("assignments"u8);
                 writer.WriteStartObject();
                 foreach (var item in Assignments)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<RouterJobAssignment>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(_tags is ChangeTrackingDictionary<string, BinaryData> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(_tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -154,25 +153,25 @@ namespace Azure.Communication.JobRouter
                 }
                 writer.WriteEndObject();
             }
-            if (!(Notes is ChangeTrackingList<RouterJobNote> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Notes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RouterJobNote>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ScheduledAt.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScheduledAt))
             {
                 writer.WritePropertyName("scheduledAt"u8);
                 writer.WriteStringValue(ScheduledAt.Value, "O");
             }
-            if (MatchingMode != null)
+            if (Optional.IsDefined(MatchingMode))
             {
                 writer.WritePropertyName("matchingMode"u8);
-                writer.WriteObjectValue(MatchingMode);
+                writer.WriteObjectValue<JobMatchingMode>(MatchingMode, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -197,7 +196,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterJob>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterJob)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterJob)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -449,7 +448,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouterJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterJob)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -465,7 +464,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeRouterJob(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterJob)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterJob)} does not support reading '{options.Format}' format.");
             }
         }
 

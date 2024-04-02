@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeConfigurationExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeConfigurationExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeConfigurationExtension)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Publisher != null)
+            if (options.Format != "W" && Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (options.Format != "W" && ConfigurationExtensionType != null)
+            if (options.Format != "W" && Optional.IsDefined(ConfigurationExtensionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConfigurationExtensionType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridComputeConfigurationExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridComputeConfigurationExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridComputeConfigurationExtension)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeConfigurationExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeConfigurationExtension)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeHybridComputeConfigurationExtension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridComputeConfigurationExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridComputeConfigurationExtension)} does not support reading '{options.Format}' format.");
             }
         }
 

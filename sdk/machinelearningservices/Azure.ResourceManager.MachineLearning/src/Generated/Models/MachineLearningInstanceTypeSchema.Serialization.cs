@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInstanceTypeSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchema)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(NodeSelector is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(NodeSelector))
             {
                 if (NodeSelector != null)
                 {
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("nodeSelector");
                 }
             }
-            if (Resources != null)
+            if (Optional.IsDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
-                writer.WriteObjectValue(Resources);
+                writer.WriteObjectValue<MachineLearningInstanceTypeSchemaResources>(Resources, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningInstanceTypeSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchema)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningInstanceTypeSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningInstanceTypeSchema)} does not support reading '{options.Format}' format.");
             }
         }
 

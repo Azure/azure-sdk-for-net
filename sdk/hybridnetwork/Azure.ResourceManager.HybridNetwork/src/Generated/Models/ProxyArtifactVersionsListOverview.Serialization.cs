@@ -23,14 +23,14 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProxyArtifactVersionsListOverview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyArtifactVersionsListOverview)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProxyArtifactVersionsListOverview)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Properties != null)
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<ProxyArtifactOverviewPropertiesValue>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProxyArtifactVersionsListOverview>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProxyArtifactVersionsListOverview)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProxyArtifactVersionsListOverview)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProxyArtifactVersionsListOverview)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProxyArtifactVersionsListOverview)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeProxyArtifactVersionsListOverview(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProxyArtifactVersionsListOverview)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProxyArtifactVersionsListOverview)} does not support reading '{options.Format}' format.");
             }
         }
 

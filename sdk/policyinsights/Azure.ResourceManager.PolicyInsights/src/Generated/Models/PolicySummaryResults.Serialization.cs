@@ -22,52 +22,52 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySummaryResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (QueryResultsUri != null)
+            if (Optional.IsDefined(QueryResultsUri))
             {
                 writer.WritePropertyName("queryResultsUri"u8);
                 writer.WriteStringValue(QueryResultsUri.AbsoluteUri);
             }
-            if (NonCompliantResources.HasValue)
+            if (Optional.IsDefined(NonCompliantResources))
             {
                 writer.WritePropertyName("nonCompliantResources"u8);
                 writer.WriteNumberValue(NonCompliantResources.Value);
             }
-            if (NonCompliantPolicies.HasValue)
+            if (Optional.IsDefined(NonCompliantPolicies))
             {
                 writer.WritePropertyName("nonCompliantPolicies"u8);
                 writer.WriteNumberValue(NonCompliantPolicies.Value);
             }
-            if (!(ResourceDetails is ChangeTrackingList<ComplianceDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceDetails))
             {
                 writer.WritePropertyName("resourceDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComplianceDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(PolicyDetails is ChangeTrackingList<ComplianceDetail> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyDetails))
             {
                 writer.WritePropertyName("policyDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in PolicyDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComplianceDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(PolicyGroupDetails is ChangeTrackingList<ComplianceDetail> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyGroupDetails))
             {
                 writer.WritePropertyName("policyGroupDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in PolicyGroupDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ComplianceDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySummaryResults>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -229,7 +229,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicySummaryResults(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySummaryResults)} does not support reading '{options.Format}' format.");
             }
         }
 

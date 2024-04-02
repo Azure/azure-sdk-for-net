@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataStoreUtilizationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataStoreUtilizationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataStoreUtilizationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TotalSnapshotsSupported.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSnapshotsSupported))
             {
                 writer.WritePropertyName("totalSnapshotsSupported"u8);
                 writer.WriteNumberValue(TotalSnapshotsSupported.Value);
             }
-            if (options.Format != "W" && TotalSnapshotsCreated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalSnapshotsCreated))
             {
                 writer.WritePropertyName("totalSnapshotsCreated"u8);
                 writer.WriteNumberValue(TotalSnapshotsCreated.Value);
             }
-            if (options.Format != "W" && DataStoreName != null)
+            if (options.Format != "W" && Optional.IsDefined(DataStoreName))
             {
                 writer.WritePropertyName("dataStoreName"u8);
                 writer.WriteStringValue(DataStoreName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataStoreUtilizationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataStoreUtilizationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataStoreUtilizationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataStoreUtilizationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataStoreUtilizationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeDataStoreUtilizationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataStoreUtilizationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataStoreUtilizationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

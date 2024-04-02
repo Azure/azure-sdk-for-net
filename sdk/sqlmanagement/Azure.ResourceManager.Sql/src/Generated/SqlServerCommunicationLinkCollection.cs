@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Sql
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SqlServerCommunicationLinkResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string communicationLinkName, SqlServerCommunicationLinkData data, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
-            if (communicationLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationLinkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SqlServerCommunicationLinkResource> CreateOrUpdate(WaitUntil waitUntil, string communicationLinkName, SqlServerCommunicationLinkData data, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
-            if (communicationLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationLinkName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual async Task<Response<SqlServerCommunicationLinkResource>> GetAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
-            if (communicationLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual Response<SqlServerCommunicationLinkResource> Get(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
-            if (communicationLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
-            if (communicationLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual Response<bool> Exists(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
-            if (communicationLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual async Task<NullableResponse<SqlServerCommunicationLinkResource>> GetIfExistsAsync(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
-            if (communicationLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentNullException"> <paramref name="communicationLinkName"/> is null. </exception>
         public virtual NullableResponse<SqlServerCommunicationLinkResource> GetIfExists(string communicationLinkName, CancellationToken cancellationToken = default)
         {
-            if (communicationLinkName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationLinkName));
-            }
-            if (communicationLinkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationLinkName));
-            }
+            Argument.AssertNotNullOrEmpty(communicationLinkName, nameof(communicationLinkName));
 
             using var scope = _sqlServerCommunicationLinkServerCommunicationLinksClientDiagnostics.CreateScope("SqlServerCommunicationLinkCollection.GetIfExists");
             scope.Start();

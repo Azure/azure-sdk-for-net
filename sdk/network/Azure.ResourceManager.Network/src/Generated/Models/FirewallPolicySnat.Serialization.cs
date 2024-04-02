@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicySnat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicySnat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicySnat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(PrivateRanges is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateRanges))
             {
                 writer.WritePropertyName("privateRanges"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AutoLearnPrivateRanges.HasValue)
+            if (Optional.IsDefined(AutoLearnPrivateRanges))
             {
                 writer.WritePropertyName("autoLearnPrivateRanges"u8);
                 writer.WriteStringValue(AutoLearnPrivateRanges.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicySnat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicySnat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicySnat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicySnat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicySnat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicySnat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicySnat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicySnat)} does not support reading '{options.Format}' format.");
             }
         }
 

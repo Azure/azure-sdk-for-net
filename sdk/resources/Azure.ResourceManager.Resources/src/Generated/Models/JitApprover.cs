@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> is null. </exception>
         public JitApprover(string id)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
+            Argument.AssertNotNull(id, nameof(id));
 
             Id = id;
         }
@@ -77,10 +74,13 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The approver service principal Id. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> The approver type. </summary>
+        [WirePath("type")]
         public JitApproverType? ApproverType { get; set; }
         /// <summary> The approver display name. </summary>
+        [WirePath("displayName")]
         public string DisplayName { get; set; }
     }
 }

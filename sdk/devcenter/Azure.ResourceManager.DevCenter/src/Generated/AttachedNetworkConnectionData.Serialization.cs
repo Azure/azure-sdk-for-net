@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttachedNetworkConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttachedNetworkConnectionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.DevCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (NetworkConnectionId != null)
+            if (Optional.IsDefined(NetworkConnectionId))
             {
                 writer.WritePropertyName("networkConnectionId"u8);
                 writer.WriteStringValue(NetworkConnectionId);
             }
-            if (options.Format != "W" && NetworkConnectionLocation.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NetworkConnectionLocation))
             {
                 writer.WritePropertyName("networkConnectionLocation"u8);
                 writer.WriteStringValue(NetworkConnectionLocation.Value);
             }
-            if (options.Format != "W" && HealthCheckStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(HealthCheckStatus))
             {
                 writer.WritePropertyName("healthCheckStatus"u8);
                 writer.WriteStringValue(HealthCheckStatus.Value.ToString());
             }
-            if (options.Format != "W" && DomainJoinType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DomainJoinType))
             {
                 writer.WritePropertyName("domainJoinType"u8);
                 writer.WriteStringValue(DomainJoinType.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.DevCenter
             var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConnectionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttachedNetworkConnectionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttachedNetworkConnectionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -236,7 +236,7 @@ namespace Azure.ResourceManager.DevCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AttachedNetworkConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttachedNetworkConnectionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -252,7 +252,7 @@ namespace Azure.ResourceManager.DevCenter
                         return DeserializeAttachedNetworkConnectionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttachedNetworkConnectionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttachedNetworkConnectionData)} does not support reading '{options.Format}' format.");
             }
         }
 

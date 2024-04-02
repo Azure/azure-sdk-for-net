@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationDiagnosticContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AppInstance != null)
+            if (Optional.IsDefined(AppInstance))
             {
                 writer.WritePropertyName("appInstance"u8);
                 writer.WriteStringValue(AppInstance);
             }
-            if (FilePath != null)
+            if (Optional.IsDefined(FilePath))
             {
                 writer.WritePropertyName("filePath"u8);
                 writer.WriteStringValue(FilePath);
             }
-            if (DurationValue != null)
+            if (Optional.IsDefined(DurationValue))
             {
                 writer.WritePropertyName("duration"u8);
                 writer.WriteStringValue(DurationValue);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationDiagnosticContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeApplicationDiagnosticContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationDiagnosticContent)} does not support reading '{options.Format}' format.");
             }
         }
 

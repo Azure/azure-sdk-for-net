@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseDataConnectionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string dataConnectionName, SynapseDataConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseDataConnectionResource> CreateOrUpdate(WaitUntil waitUntil, string dataConnectionName, SynapseDataConnectionData data, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual async Task<Response<SynapseDataConnectionResource>> GetAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual Response<SynapseDataConnectionResource> Get(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual Response<bool> Exists(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual async Task<NullableResponse<SynapseDataConnectionResource>> GetIfExistsAsync(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="dataConnectionName"/> is null. </exception>
         public virtual NullableResponse<SynapseDataConnectionResource> GetIfExists(string dataConnectionName, CancellationToken cancellationToken = default)
         {
-            if (dataConnectionName == null)
-            {
-                throw new ArgumentNullException(nameof(dataConnectionName));
-            }
-            if (dataConnectionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(dataConnectionName));
-            }
+            Argument.AssertNotNullOrEmpty(dataConnectionName, nameof(dataConnectionName));
 
             using var scope = _synapseDataConnectionKustoPoolDataConnectionsClientDiagnostics.CreateScope("SynapseDataConnectionCollection.GetIfExists");
             scope.Start();

@@ -9,9 +9,9 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
+using Azure.MixedReality.Common;
 
 namespace Azure.MixedReality.ObjectAnchors.Conversion
 {
@@ -57,8 +57,8 @@ namespace Azure.MixedReality.ObjectAnchors.Conversion
             }
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
-            var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AssetConversionProperties>(body);
             request.Content = content;
             return message;
         }

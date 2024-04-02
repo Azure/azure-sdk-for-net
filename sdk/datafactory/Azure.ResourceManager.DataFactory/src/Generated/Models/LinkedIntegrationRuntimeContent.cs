@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.DataFactory.Models
         /// <exception cref="ArgumentNullException"> <paramref name="linkedFactoryName"/> is null. </exception>
         public LinkedIntegrationRuntimeContent(string linkedFactoryName)
         {
-            if (linkedFactoryName == null)
-            {
-                throw new ArgumentNullException(nameof(linkedFactoryName));
-            }
+            Argument.AssertNotNull(linkedFactoryName, nameof(linkedFactoryName));
 
             LinkedFactoryName = linkedFactoryName;
         }

@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProviderHubMetadata != null)
+            if (Optional.IsDefined(ProviderHubMetadata))
             {
                 writer.WritePropertyName("providerHubMetadata"u8);
-                writer.WriteObjectValue(ProviderHubMetadata);
+                writer.WriteObjectValue<ProviderHubMetadata>(ProviderHubMetadata, options);
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (SubscriptionLifecycleNotificationSpecifications != null)
+            if (Optional.IsDefined(SubscriptionLifecycleNotificationSpecifications))
             {
                 writer.WritePropertyName("subscriptionLifecycleNotificationSpecifications"u8);
-                writer.WriteObjectValue(SubscriptionLifecycleNotificationSpecifications);
+                writer.WriteObjectValue<SubscriptionLifecycleNotificationSpecifications>(SubscriptionLifecycleNotificationSpecifications, options);
             }
-            if (ProviderAuthentication != null)
+            if (Optional.IsDefined(ProviderAuthentication))
             {
                 writer.WritePropertyName("providerAuthentication"u8);
-                writer.WriteObjectValue(ProviderAuthentication);
+                writer.WriteObjectValue<ResourceProviderAuthentication>(ProviderAuthentication, options);
             }
-            if (!(ProviderAuthorizations is ChangeTrackingList<ResourceProviderAuthorization> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ProviderAuthorizations))
             {
                 writer.WritePropertyName("providerAuthorizations"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProviderAuthorizations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceProviderAuthorization>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (ProviderVersion != null)
+            if (Optional.IsDefined(ProviderVersion))
             {
                 writer.WritePropertyName("providerVersion"u8);
                 writer.WriteStringValue(ProviderVersion);
             }
-            if (ProviderType.HasValue)
+            if (Optional.IsDefined(ProviderType))
             {
                 writer.WritePropertyName("providerType"u8);
                 writer.WriteStringValue(ProviderType.Value.ToString());
             }
-            if (!(RequiredFeatures is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredFeatures))
             {
                 writer.WritePropertyName("requiredFeatures"u8);
                 writer.WriteStartArray();
@@ -81,32 +81,32 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (FeaturesRule != null)
+            if (Optional.IsDefined(FeaturesRule))
             {
                 writer.WritePropertyName("featuresRule"u8);
-                writer.WriteObjectValue(FeaturesRule);
+                writer.WriteObjectValue<FeaturesRule>(FeaturesRule, options);
             }
-            if (RequestHeaderOptions != null)
+            if (Optional.IsDefined(RequestHeaderOptions))
             {
                 writer.WritePropertyName("requestHeaderOptions"u8);
-                writer.WriteObjectValue(RequestHeaderOptions);
+                writer.WriteObjectValue<RequestHeaderOptions>(RequestHeaderOptions, options);
             }
-            if (Management != null)
+            if (Optional.IsDefined(Management))
             {
                 writer.WritePropertyName("management"u8);
-                writer.WriteObjectValue(Management);
+                writer.WriteObjectValue<ResourceProviderManagement>(Management, options);
             }
-            if (!(Capabilities is ChangeTrackingList<ResourceProviderCapabilities> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceProviderCapabilities>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -118,10 +118,10 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
 #endif
             }
-            if (TemplateDeploymentOptions != null)
+            if (Optional.IsDefined(TemplateDeploymentOptions))
             {
                 writer.WritePropertyName("templateDeploymentOptions"u8);
-                writer.WriteObjectValue(TemplateDeploymentOptions);
+                writer.WriteObjectValue<TemplateDeploymentOptions>(TemplateDeploymentOptions, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProviderRegistrationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -372,7 +372,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeProviderRegistrationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProviderRegistrationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

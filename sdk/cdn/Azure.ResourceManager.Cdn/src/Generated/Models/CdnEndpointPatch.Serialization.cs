@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,12 +39,12 @@ namespace Azure.ResourceManager.Cdn.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OriginPath != null)
+            if (Optional.IsDefined(OriginPath))
             {
                 writer.WritePropertyName("originPath"u8);
                 writer.WriteStringValue(OriginPath);
             }
-            if (!(ContentTypesToCompress is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ContentTypesToCompress))
             {
                 writer.WritePropertyName("contentTypesToCompress"u8);
                 writer.WriteStartArray();
@@ -54,32 +54,32 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (OriginHostHeader != null)
+            if (Optional.IsDefined(OriginHostHeader))
             {
                 writer.WritePropertyName("originHostHeader"u8);
                 writer.WriteStringValue(OriginHostHeader);
             }
-            if (IsCompressionEnabled.HasValue)
+            if (Optional.IsDefined(IsCompressionEnabled))
             {
                 writer.WritePropertyName("isCompressionEnabled"u8);
                 writer.WriteBooleanValue(IsCompressionEnabled.Value);
             }
-            if (IsHttpAllowed.HasValue)
+            if (Optional.IsDefined(IsHttpAllowed))
             {
                 writer.WritePropertyName("isHttpAllowed"u8);
                 writer.WriteBooleanValue(IsHttpAllowed.Value);
             }
-            if (IsHttpsAllowed.HasValue)
+            if (Optional.IsDefined(IsHttpsAllowed))
             {
                 writer.WritePropertyName("isHttpsAllowed"u8);
                 writer.WriteBooleanValue(IsHttpsAllowed.Value);
             }
-            if (QueryStringCachingBehavior.HasValue)
+            if (Optional.IsDefined(QueryStringCachingBehavior))
             {
                 writer.WritePropertyName("queryStringCachingBehavior"u8);
                 writer.WriteStringValue(QueryStringCachingBehavior.Value.ToSerialString());
             }
-            if (OptimizationType.HasValue)
+            if (Optional.IsDefined(OptimizationType))
             {
                 if (OptimizationType != null)
                 {
@@ -91,34 +91,34 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("optimizationType");
                 }
             }
-            if (ProbePath != null)
+            if (Optional.IsDefined(ProbePath))
             {
                 writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
-            if (!(GeoFilters is ChangeTrackingList<GeoFilter> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(GeoFilters))
             {
                 writer.WritePropertyName("geoFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in GeoFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GeoFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultOriginGroup != null)
+            if (Optional.IsDefined(DefaultOriginGroup))
             {
                 if (DefaultOriginGroup != null)
                 {
                     writer.WritePropertyName("defaultOriginGroup"u8);
-                    writer.WriteObjectValue(DefaultOriginGroup);
+                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersDefaultOriginGroup>(DefaultOriginGroup, options);
                 }
                 else
                 {
                     writer.WriteNull("defaultOriginGroup");
                 }
             }
-            if (!(UriSigningKeys is ChangeTrackingList<UriSigningKey> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(UriSigningKeys))
             {
                 if (UriSigningKeys != null)
                 {
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteStartArray();
                     foreach (var item in UriSigningKeys)
                     {
-                        writer.WriteObjectValue(item);
+                        writer.WriteObjectValue<UriSigningKey>(item, options);
                     }
                     writer.WriteEndArray();
                 }
@@ -135,24 +135,24 @@ namespace Azure.ResourceManager.Cdn.Models
                     writer.WriteNull("urlSigningKeys");
                 }
             }
-            if (DeliveryPolicy != null)
+            if (Optional.IsDefined(DeliveryPolicy))
             {
                 if (DeliveryPolicy != null)
                 {
                     writer.WritePropertyName("deliveryPolicy"u8);
-                    writer.WriteObjectValue(DeliveryPolicy);
+                    writer.WriteObjectValue<EndpointDeliveryPolicy>(DeliveryPolicy, options);
                 }
                 else
                 {
                     writer.WriteNull("deliveryPolicy");
                 }
             }
-            if (WebApplicationFirewallPolicyLink != null)
+            if (Optional.IsDefined(WebApplicationFirewallPolicyLink))
             {
                 if (WebApplicationFirewallPolicyLink != null)
                 {
                     writer.WritePropertyName("webApplicationFirewallPolicyLink"u8);
-                    writer.WriteObjectValue(WebApplicationFirewallPolicyLink);
+                    writer.WriteObjectValue<EndpointPropertiesUpdateParametersWebApplicationFirewallPolicyLink>(WebApplicationFirewallPolicyLink, options);
                 }
                 else
                 {
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CdnEndpointPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -411,7 +411,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -427,7 +427,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCdnEndpointPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CdnEndpointPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

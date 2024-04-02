@@ -20,14 +20,8 @@ namespace Azure.Search.Documents.Indexes.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> or <paramref name="wordList"/> is null. </exception>
         public DictionaryDecompounderTokenFilter(string name, IEnumerable<string> wordList) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (wordList == null)
-            {
-                throw new ArgumentNullException(nameof(wordList));
-            }
+            Argument.AssertNotNull(name, nameof(name));
+            Argument.AssertNotNull(wordList, nameof(wordList));
 
             WordList = wordList.ToList();
             ODataType = "#Microsoft.Azure.Search.DictionaryDecompounderTokenFilter";

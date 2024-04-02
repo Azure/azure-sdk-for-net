@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -23,10 +22,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="line"/> is null. </exception>
         public SpatialAnalysisPersonLineCrossingLineEvents(NamedLineBase line)
         {
-            if (line == null)
-            {
-                throw new ArgumentNullException(nameof(line));
-            }
+            Argument.AssertNotNull(line, nameof(line));
 
             Line = line;
             Events = new ChangeTrackingList<SpatialAnalysisPersonLineCrossingEvent>();

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (AzureFile != null)
+            if (Optional.IsDefined(AzureFile))
             {
                 writer.WritePropertyName("azureFile"u8);
-                writer.WriteObjectValue(AzureFile);
+                writer.WriteObjectValue<ContainerInstanceAzureFileVolume>(AzureFile, options);
             }
-            if (EmptyDir != null)
+            if (Optional.IsDefined(EmptyDir))
             {
                 writer.WritePropertyName("emptyDir"u8);
 #if NET6_0_OR_GREATER
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
 #endif
             }
-            if (!(Secret is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Secret))
             {
                 writer.WritePropertyName("secret"u8);
                 writer.WriteStartObject();
@@ -56,10 +56,10 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (GitRepo != null)
+            if (Optional.IsDefined(GitRepo))
             {
                 writer.WritePropertyName("gitRepo"u8);
-                writer.WriteObjectValue(GitRepo);
+                writer.WriteObjectValue<ContainerInstanceGitRepoVolume>(GitRepo, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

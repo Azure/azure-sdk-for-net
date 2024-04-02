@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HelmPackageName != null)
+            if (Optional.IsDefined(HelmPackageName))
             {
                 writer.WritePropertyName("helmPackageName"u8);
                 writer.WriteStringValue(HelmPackageName);
             }
-            if (HelmPackageVersionRange != null)
+            if (Optional.IsDefined(HelmPackageVersionRange))
             {
                 writer.WritePropertyName("helmPackageVersionRange"u8);
                 writer.WriteStringValue(HelmPackageVersionRange);
             }
-            if (!(RegistryValuesPaths is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RegistryValuesPaths))
             {
                 writer.WritePropertyName("registryValuesPaths"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ImagePullSecretsValuesPaths is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ImagePullSecretsValuesPaths))
             {
                 writer.WritePropertyName("imagePullSecretsValuesPaths"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<HelmArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeHelmArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HelmArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityDevOps.Models;
@@ -67,30 +66,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureDevOpsConnectorStatsListResponse>> GetAsync(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +95,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureDevOpsConnectorStatsListResponse> Get(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName);
             _pipeline.Send(message, cancellationToken);

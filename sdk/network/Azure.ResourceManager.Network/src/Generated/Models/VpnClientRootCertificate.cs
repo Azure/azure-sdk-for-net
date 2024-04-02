@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
@@ -20,10 +19,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="publicCertData"/> is null. </exception>
         public VpnClientRootCertificate(BinaryData publicCertData)
         {
-            if (publicCertData == null)
-            {
-                throw new ArgumentNullException(nameof(publicCertData));
-            }
+            Argument.AssertNotNull(publicCertData, nameof(publicCertData));
 
             PublicCertData = publicCertData;
         }

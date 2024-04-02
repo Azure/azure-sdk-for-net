@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SupportedSourceOSVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportedSourceOSVersion))
             {
                 writer.WritePropertyName("supportedSourceOsVersion"u8);
                 writer.WriteStringValue(SupportedSourceOSVersion);
             }
-            if (options.Format != "W" && !(SupportedTargetOSVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedTargetOSVersions))
             {
                 writer.WritePropertyName("supportedTargetOsVersions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSUpgradeSupportedVersions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeOSUpgradeSupportedVersions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSUpgradeSupportedVersions)} does not support reading '{options.Format}' format.");
             }
         }
 

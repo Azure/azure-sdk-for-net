@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PathRecommendation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
             }
-            if (IotSecurityRecommendationType.HasValue)
+            if (Optional.IsDefined(IotSecurityRecommendationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IotSecurityRecommendationType.Value.ToString());
             }
-            if (PublisherInfo != null)
+            if (Optional.IsDefined(PublisherInfo))
             {
                 writer.WritePropertyName("publisherInfo"u8);
-                writer.WriteObjectValue(PublisherInfo);
+                writer.WriteObjectValue<SecurityCenterPublisherInfo>(PublisherInfo, options);
             }
-            if (IsCommon.HasValue)
+            if (Optional.IsDefined(IsCommon))
             {
                 writer.WritePropertyName("common"u8);
                 writer.WriteBooleanValue(IsCommon.Value);
             }
-            if (!(UserSids is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserSids))
             {
                 writer.WritePropertyName("userSids"u8);
                 writer.WriteStartArray();
@@ -61,22 +61,22 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Usernames is ChangeTrackingList<UserRecommendation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Usernames))
             {
                 writer.WritePropertyName("usernames"u8);
                 writer.WriteStartArray();
                 foreach (var item in Usernames)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<UserRecommendation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (FileType.HasValue)
+            if (Optional.IsDefined(FileType))
             {
                 writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
-            if (ConfigurationStatus.HasValue)
+            if (Optional.IsDefined(ConfigurationStatus))
             {
                 writer.WritePropertyName("configurationStatus"u8);
                 writer.WriteStringValue(ConfigurationStatus.Value.ToString());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<PathRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PathRecommendation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializePathRecommendation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PathRecommendation)} does not support reading '{options.Format}' format.");
             }
         }
 

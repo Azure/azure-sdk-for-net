@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Tags is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartArray();
@@ -52,124 +52,124 @@ namespace Azure.ResourceManager.Consumption.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TransactOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TransactOn))
             {
                 writer.WritePropertyName("eventDate"u8);
                 writer.WriteStringValue(TransactOn.Value, "O");
             }
-            if (options.Format != "W" && ReservationOrderId != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderId))
             {
                 writer.WritePropertyName("reservationOrderId"u8);
                 writer.WriteStringValue(ReservationOrderId);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && EventType != null)
+            if (options.Format != "W" && Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (options.Format != "W" && Quantity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Quantity))
             {
                 writer.WritePropertyName("quantity"u8);
                 writer.WriteNumberValue(Quantity.Value);
             }
-            if (options.Format != "W" && Amount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Amount))
             {
                 writer.WritePropertyName("amount"u8);
                 writer.WriteNumberValue(Amount.Value);
             }
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && ReservationOrderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ReservationOrderName))
             {
                 writer.WritePropertyName("reservationOrderName"u8);
                 writer.WriteStringValue(ReservationOrderName);
             }
-            if (options.Format != "W" && PurchasingEnrollment != null)
+            if (options.Format != "W" && Optional.IsDefined(PurchasingEnrollment))
             {
                 writer.WritePropertyName("purchasingEnrollment"u8);
                 writer.WriteStringValue(PurchasingEnrollment);
             }
-            if (options.Format != "W" && PurchasingSubscriptionGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PurchasingSubscriptionGuid))
             {
                 writer.WritePropertyName("purchasingSubscriptionGuid"u8);
                 writer.WriteStringValue(PurchasingSubscriptionGuid.Value);
             }
-            if (options.Format != "W" && PurchasingSubscriptionName != null)
+            if (options.Format != "W" && Optional.IsDefined(PurchasingSubscriptionName))
             {
                 writer.WritePropertyName("purchasingSubscriptionName"u8);
                 writer.WriteStringValue(PurchasingSubscriptionName);
             }
-            if (options.Format != "W" && ArmSkuName != null)
+            if (options.Format != "W" && Optional.IsDefined(ArmSkuName))
             {
                 writer.WritePropertyName("armSkuName"u8);
                 writer.WriteStringValue(ArmSkuName);
             }
-            if (options.Format != "W" && Term != null)
+            if (options.Format != "W" && Optional.IsDefined(Term))
             {
                 writer.WritePropertyName("term"u8);
                 writer.WriteStringValue(Term);
             }
-            if (options.Format != "W" && Region != null)
+            if (options.Format != "W" && Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && AccountOwnerEmail != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountOwnerEmail))
             {
                 writer.WritePropertyName("accountOwnerEmail"u8);
                 writer.WriteStringValue(AccountOwnerEmail);
             }
-            if (options.Format != "W" && DepartmentName != null)
+            if (options.Format != "W" && Optional.IsDefined(DepartmentName))
             {
                 writer.WritePropertyName("departmentName"u8);
                 writer.WriteStringValue(DepartmentName);
             }
-            if (options.Format != "W" && CostCenter != null)
+            if (options.Format != "W" && Optional.IsDefined(CostCenter))
             {
                 writer.WritePropertyName("costCenter"u8);
                 writer.WriteStringValue(CostCenter);
             }
-            if (options.Format != "W" && CurrentEnrollment != null)
+            if (options.Format != "W" && Optional.IsDefined(CurrentEnrollment))
             {
                 writer.WritePropertyName("currentEnrollment"u8);
                 writer.WriteStringValue(CurrentEnrollment);
             }
-            if (options.Format != "W" && BillingFrequency != null)
+            if (options.Format != "W" && Optional.IsDefined(BillingFrequency))
             {
                 writer.WritePropertyName("billingFrequency"u8);
                 writer.WriteStringValue(BillingFrequency);
             }
-            if (options.Format != "W" && BillingMonth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(BillingMonth))
             {
                 writer.WritePropertyName("billingMonth"u8);
                 writer.WriteNumberValue(BillingMonth.Value);
             }
-            if (options.Format != "W" && MonetaryCommitment.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MonetaryCommitment))
             {
                 writer.WritePropertyName("monetaryCommitment"u8);
                 writer.WriteNumberValue(MonetaryCommitment.Value);
             }
-            if (options.Format != "W" && Overage.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Overage))
             {
                 writer.WritePropertyName("overage"u8);
                 writer.WriteNumberValue(Overage.Value);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionReservationTransaction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -485,7 +485,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -501,7 +501,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionReservationTransaction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionReservationTransaction)} does not support reading '{options.Format}' format.");
             }
         }
 

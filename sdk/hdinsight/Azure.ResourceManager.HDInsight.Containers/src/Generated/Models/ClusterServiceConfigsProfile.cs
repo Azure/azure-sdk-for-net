@@ -52,14 +52,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         /// <exception cref="ArgumentNullException"> <paramref name="serviceName"/> or <paramref name="configs"/> is null. </exception>
         public ClusterServiceConfigsProfile(string serviceName, IEnumerable<ClusterServiceConfig> configs)
         {
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (configs == null)
-            {
-                throw new ArgumentNullException(nameof(configs));
-            }
+            Argument.AssertNotNull(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(configs, nameof(configs));
 
             ServiceName = serviceName;
             Configs = configs.ToList();

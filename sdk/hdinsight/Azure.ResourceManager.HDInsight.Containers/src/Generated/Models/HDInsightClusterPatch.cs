@@ -7,13 +7,11 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
-using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.HDInsight.Containers.Models
 {
     /// <summary> The patch for a cluster. </summary>
-    public partial class HDInsightClusterPatch : TrackedResourceData
+    public partial class HDInsightClusterPatch
     {
         /// <summary>
         /// Keeps track of any properties unknown to the library.
@@ -48,31 +46,24 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
         private IDictionary<string, BinaryData> _serializedAdditionalRawData;
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
-        /// <param name="location"> The location. </param>
-        public HDInsightClusterPatch(AzureLocation location) : base(location)
+        public HDInsightClusterPatch()
         {
+            Tags = new ChangeTrackingDictionary<string, string>();
         }
 
         /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/>. </summary>
-        /// <param name="id"> The id. </param>
-        /// <param name="name"> The name. </param>
-        /// <param name="resourceType"> The resourceType. </param>
-        /// <param name="systemData"> The systemData. </param>
-        /// <param name="tags"> The tags. </param>
-        /// <param name="location"> The location. </param>
+        /// <param name="tags"> Resource tags. </param>
         /// <param name="clusterProfile"> Cluster resource patch properties. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal HDInsightClusterPatch(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, IDictionary<string, string> tags, AzureLocation location, UpdatableClusterProfile clusterProfile, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(id, name, resourceType, systemData, tags, location)
+        internal HDInsightClusterPatch(IDictionary<string, string> tags, UpdatableClusterProfile clusterProfile, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
+            Tags = tags;
             ClusterProfile = clusterProfile;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
-        /// <summary> Initializes a new instance of <see cref="HDInsightClusterPatch"/> for deserialization. </summary>
-        internal HDInsightClusterPatch()
-        {
-        }
-
+        /// <summary> Resource tags. </summary>
+        public IDictionary<string, string> Tags { get; }
         /// <summary> Cluster resource patch properties. </summary>
         public UpdatableClusterProfile ClusterProfile { get; set; }
     }

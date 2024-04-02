@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuResourceArmPaginatedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuResourceArmPaginatedResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
             }
-            if (!(Value is ChangeTrackingList<MachineLearningSkuDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningSkuDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<SkuResourceArmPaginatedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SkuResourceArmPaginatedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SkuResourceArmPaginatedResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SkuResourceArmPaginatedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuResourceArmPaginatedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeSkuResourceArmPaginatedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SkuResourceArmPaginatedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SkuResourceArmPaginatedResult)} does not support reading '{options.Format}' format.");
             }
         }
 

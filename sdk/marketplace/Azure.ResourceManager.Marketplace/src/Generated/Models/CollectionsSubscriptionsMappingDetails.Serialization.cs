@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<CollectionsSubscriptionsMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectionsSubscriptionsMappingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CollectionsSubscriptionsMappingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CollectionName != null)
+            if (Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("collectionName"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (!(Subscriptions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<CollectionsSubscriptionsMappingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CollectionsSubscriptionsMappingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CollectionsSubscriptionsMappingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CollectionsSubscriptionsMappingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CollectionsSubscriptionsMappingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeCollectionsSubscriptionsMappingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CollectionsSubscriptionsMappingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CollectionsSubscriptionsMappingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

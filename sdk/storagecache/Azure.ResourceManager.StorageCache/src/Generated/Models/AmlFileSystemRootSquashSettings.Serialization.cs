@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemRootSquashSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemRootSquashSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemRootSquashSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (NoSquashNidLists != null)
+            if (Optional.IsDefined(NoSquashNidLists))
             {
                 writer.WritePropertyName("noSquashNidLists"u8);
                 writer.WriteStringValue(NoSquashNidLists);
             }
-            if (SquashUID.HasValue)
+            if (Optional.IsDefined(SquashUID))
             {
                 writer.WritePropertyName("squashUID"u8);
                 writer.WriteNumberValue(SquashUID.Value);
             }
-            if (SquashGID.HasValue)
+            if (Optional.IsDefined(SquashGID))
             {
                 writer.WritePropertyName("squashGID"u8);
                 writer.WriteNumberValue(SquashGID.Value);
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlFileSystemRootSquashSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlFileSystemRootSquashSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlFileSystemRootSquashSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemRootSquashSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemRootSquashSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeAmlFileSystemRootSquashSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlFileSystemRootSquashSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlFileSystemRootSquashSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

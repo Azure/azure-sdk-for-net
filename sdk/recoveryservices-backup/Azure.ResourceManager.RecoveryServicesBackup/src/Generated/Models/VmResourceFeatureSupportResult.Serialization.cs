@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmResourceFeatureSupportResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmResourceFeatureSupportResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmResourceFeatureSupportResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SupportStatus.HasValue)
+            if (Optional.IsDefined(SupportStatus))
             {
                 writer.WritePropertyName("supportStatus"u8);
                 writer.WriteStringValue(SupportStatus.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmResourceFeatureSupportResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmResourceFeatureSupportResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmResourceFeatureSupportResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmResourceFeatureSupportResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmResourceFeatureSupportResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeVmResourceFeatureSupportResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmResourceFeatureSupportResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmResourceFeatureSupportResult)} does not support reading '{options.Format}' format.");
             }
         }
 

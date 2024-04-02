@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Network.Models;
 
 namespace Azure.ResourceManager.Network
@@ -293,10 +291,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SubnetResource>> UpdateAsync(WaitUntil waitUntil, SubnetData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetResource.Update");
             scope.Start();
@@ -342,10 +337,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SubnetResource> Update(WaitUntil waitUntil, SubnetData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetResource.Update");
             scope.Start();
@@ -391,10 +383,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> PrepareNetworkPoliciesAsync(WaitUntil waitUntil, PrepareNetworkPoliciesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetResource.PrepareNetworkPolicies");
             scope.Start();
@@ -440,10 +429,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation PrepareNetworkPolicies(WaitUntil waitUntil, PrepareNetworkPoliciesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetResource.PrepareNetworkPolicies");
             scope.Start();
@@ -489,10 +475,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> UnprepareNetworkPoliciesAsync(WaitUntil waitUntil, UnprepareNetworkPoliciesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetResource.UnprepareNetworkPolicies");
             scope.Start();
@@ -538,10 +521,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation UnprepareNetworkPolicies(WaitUntil waitUntil, UnprepareNetworkPoliciesContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _subnetClientDiagnostics.CreateScope("SubnetResource.UnprepareNetworkPolicies");
             scope.Start();

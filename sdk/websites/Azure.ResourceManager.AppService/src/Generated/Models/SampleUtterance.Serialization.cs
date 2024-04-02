@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +24,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SampleUtterance)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Text != null)
+            if (Optional.IsDefined(Text))
             {
                 writer.WritePropertyName("text"u8);
                 writer.WriteStringValue(Text);
             }
-            if (!(Links is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Links))
             {
                 writer.WritePropertyName("links"u8);
                 writer.WriteStartArray();
@@ -41,7 +43,7 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Qid != null)
+            if (Optional.IsDefined(Qid))
             {
                 writer.WritePropertyName("qid"u8);
                 writer.WriteStringValue(Qid);
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SampleUtterance)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,6 +126,100 @@ namespace Azure.ResourceManager.AppService.Models
             return new SampleUtterance(text, links ?? new ChangeTrackingList<string>(), qid, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Text), out propertyOverride);
+            if (Optional.IsDefined(Text) || hasPropertyOverride)
+            {
+                builder.Append("  text: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Text.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Text}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Text}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Links), out propertyOverride);
+            if (Optional.IsCollectionDefined(Links) || hasPropertyOverride)
+            {
+                if (Links.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  links: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Links)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Qid), out propertyOverride);
+            if (Optional.IsDefined(Qid) || hasPropertyOverride)
+            {
+                builder.Append("  qid: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Qid.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Qid}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Qid}'");
+                    }
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<SampleUtterance>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<SampleUtterance>)this).GetFormatFromOptions(options) : options.Format;
@@ -132,8 +228,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +247,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeSampleUtterance(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SampleUtterance)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceComplianceReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Phrase != null)
+            if (options.Format != "W" && Optional.IsDefined(Phrase))
             {
                 writer.WritePropertyName("phrase"u8);
                 writer.WriteStringValue(Phrase);
             }
-            if (options.Format != "W" && Code != null)
+            if (options.Format != "W" && Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<AssignmentReportResourceComplianceReason>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.GuestConfiguration.Models
                         return DeserializeAssignmentReportResourceComplianceReason(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AssignmentReportResourceComplianceReason)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,39 +22,39 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactProtocolSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactProtocolSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            writer.WriteObjectValue<EdifactValidationSettings>(ValidationSettings, options);
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue(FramingSettings);
+            writer.WriteObjectValue<EdifactFramingSettings>(FramingSettings, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            writer.WriteObjectValue<EdifactEnvelopeSettings>(EnvelopeSettings, options);
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue(AcknowledgementSettings);
+            writer.WriteObjectValue<EdifactAcknowledgementSettings>(AcknowledgementSettings, options);
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue(MessageFilter);
+            writer.WriteObjectValue<EdifactMessageFilter>(MessageFilter, options);
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue(ProcessingSettings);
-            if (!(EnvelopeOverrides is ChangeTrackingList<EdifactEnvelopeOverride> collection && collection.IsUndefined))
+            writer.WriteObjectValue<EdifactProcessingSettings>(ProcessingSettings, options);
+            if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdifactEnvelopeOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MessageFilterList is ChangeTrackingList<EdifactMessageIdentifier> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(MessageFilterList))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdifactMessageIdentifier>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -62,26 +62,26 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<EdifactSchemaReference>(item, options);
             }
             writer.WriteEndArray();
-            if (!(ValidationOverrides is ChangeTrackingList<EdifactValidationOverride> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationOverrides))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdifactValidationOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(EdifactDelimiterOverrides is ChangeTrackingList<EdifactDelimiterOverride> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(EdifactDelimiterOverrides))
             {
                 writer.WritePropertyName("edifactDelimiterOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EdifactDelimiterOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EdifactDelimiterOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactProtocolSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactProtocolSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdifactProtocolSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactProtocolSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -280,7 +280,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeEdifactProtocolSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdifactProtocolSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactProtocolSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

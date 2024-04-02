@@ -15,10 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("exhaustiveKnnParameters"u8);
-                writer.WriteObjectValue(Parameters);
+                writer.WriteObjectValue<ExhaustiveKnnParameters>(Parameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);

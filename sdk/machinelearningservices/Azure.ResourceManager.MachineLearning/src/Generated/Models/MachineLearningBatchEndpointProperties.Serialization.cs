@@ -22,30 +22,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Defaults != null)
+            if (Optional.IsDefined(Defaults))
             {
                 if (Defaults != null)
                 {
                     writer.WritePropertyName("defaults"u8);
-                    writer.WriteObjectValue(Defaults);
+                    writer.WriteObjectValue<BatchEndpointDefaults>(Defaults, options);
                 }
                 else
                 {
                     writer.WriteNull("defaults");
                 }
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
             writer.WritePropertyName("authMode"u8);
             writer.WriteStringValue(AuthMode.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -57,19 +57,19 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Keys != null)
+            if (Optional.IsDefined(Keys))
             {
                 if (Keys != null)
                 {
                     writer.WritePropertyName("keys"u8);
-                    writer.WriteObjectValue(Keys);
+                    writer.WriteObjectValue<MachineLearningEndpointAuthKeys>(Keys, options);
                 }
                 else
                 {
                     writer.WriteNull("keys");
                 }
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("properties");
                 }
             }
-            if (options.Format != "W" && ScoringUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ScoringUri))
             {
                 if (ScoringUri != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("scoringUri");
                 }
             }
-            if (options.Format != "W" && SwaggerUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SwaggerUri))
             {
                 if (SwaggerUri != null)
                 {
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningBatchEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningBatchEndpointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningBatchEndpointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

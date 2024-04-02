@@ -10,10 +10,8 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Quantum.Models;
 using Azure.ResourceManager.Resources;
 
@@ -39,6 +37,8 @@ namespace Azure.ResourceManager.Quantum
 
         private readonly ClientDiagnostics _quantumWorkspaceWorkspacesClientDiagnostics;
         private readonly WorkspacesRestOperations _quantumWorkspaceWorkspacesRestClient;
+        private readonly ClientDiagnostics _workspaceClientDiagnostics;
+        private readonly WorkspaceRestOperations _workspaceRestClient;
         private readonly QuantumWorkspaceData _data;
 
         /// <summary> Gets the resource type for the operations. </summary>
@@ -66,6 +66,8 @@ namespace Azure.ResourceManager.Quantum
             _quantumWorkspaceWorkspacesClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quantum", ResourceType.Namespace, Diagnostics);
             TryGetApiVersion(ResourceType, out string quantumWorkspaceWorkspacesApiVersion);
             _quantumWorkspaceWorkspacesRestClient = new WorkspacesRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint, quantumWorkspaceWorkspacesApiVersion);
+            _workspaceClientDiagnostics = new ClientDiagnostics("Azure.ResourceManager.Quantum", ProviderConstants.DefaultProviderNamespace, Diagnostics);
+            _workspaceRestClient = new WorkspaceRestOperations(Pipeline, Diagnostics.ApplicationId, Endpoint);
 #if DEBUG
 			ValidateResourceId(Id);
 #endif
@@ -105,7 +107,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -145,7 +147,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -185,7 +187,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -227,7 +229,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -269,7 +271,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -282,10 +284,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual async Task<Response<QuantumWorkspaceResource>> UpdateAsync(QuantumWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceResource.Update");
             scope.Start();
@@ -314,7 +313,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -327,10 +326,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="patch"/> is null. </exception>
         public virtual Response<QuantumWorkspaceResource> Update(QuantumWorkspacePatch patch, CancellationToken cancellationToken = default)
         {
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceResource.Update");
             scope.Start();
@@ -338,6 +334,150 @@ namespace Azure.ResourceManager.Quantum
             {
                 var response = _quantumWorkspaceWorkspacesRestClient.UpdateTags(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, patch, cancellationToken);
                 return Response.FromValue(new QuantumWorkspaceResource(Client, response.Value), response.GetRawResponse());
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the keys to use with the Quantum APIs. A key is used to authenticate and authorize access to the Quantum REST APIs. Only one key is needed at a time; two are given to provide seamless key regeneration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual async Task<Response<WorkspaceKeyListResult>> GetKeysWorkspaceAsync(CancellationToken cancellationToken = default)
+        {
+            using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.GetKeysWorkspace");
+            scope.Start();
+            try
+            {
+                var response = await _workspaceRestClient.ListKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Get the keys to use with the Quantum APIs. A key is used to authenticate and authorize access to the Quantum REST APIs. Only one key is needed at a time; two are given to provide seamless key regeneration.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/listKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_ListKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        public virtual Response<WorkspaceKeyListResult> GetKeysWorkspace(CancellationToken cancellationToken = default)
+        {
+            using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.GetKeysWorkspace");
+            scope.Start();
+            try
+            {
+                var response = _workspaceRestClient.ListKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, cancellationToken);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate either the primary or secondary key for use with the Quantum APIs. The old key will stop working immediately.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keySpecification"> Which key to regenerate:  primary or secondary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keySpecification"/> is null. </exception>
+        public virtual async Task<Response> RegenerateKeysWorkspaceAsync(WorkspaceApiKeys keySpecification, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(keySpecification, nameof(keySpecification));
+
+            using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.RegenerateKeysWorkspace");
+            scope.Start();
+            try
+            {
+                var response = await _workspaceRestClient.RegenerateKeysAsync(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keySpecification, cancellationToken).ConfigureAwait(false);
+                return response;
+            }
+            catch (Exception e)
+            {
+                scope.Failed(e);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Regenerate either the primary or secondary key for use with the Quantum APIs. The old key will stop working immediately.
+        /// <list type="bullet">
+        /// <item>
+        /// <term>Request Path</term>
+        /// <description>/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Quantum/workspaces/{workspaceName}/regenerateKey</description>
+        /// </item>
+        /// <item>
+        /// <term>Operation Id</term>
+        /// <description>Workspace_RegenerateKeys</description>
+        /// </item>
+        /// <item>
+        /// <term>Default Api Version</term>
+        /// <description>2023-11-13-preview</description>
+        /// </item>
+        /// </list>
+        /// </summary>
+        /// <param name="keySpecification"> Which key to regenerate:  primary or secondary. </param>
+        /// <param name="cancellationToken"> The cancellation token to use. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="keySpecification"/> is null. </exception>
+        public virtual Response RegenerateKeysWorkspace(WorkspaceApiKeys keySpecification, CancellationToken cancellationToken = default)
+        {
+            Argument.AssertNotNull(keySpecification, nameof(keySpecification));
+
+            using var scope = _workspaceClientDiagnostics.CreateScope("QuantumWorkspaceResource.RegenerateKeysWorkspace");
+            scope.Start();
+            try
+            {
+                var response = _workspaceRestClient.RegenerateKeys(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, keySpecification, cancellationToken);
+                return response;
             }
             catch (Exception e)
             {
@@ -359,7 +499,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -373,14 +513,8 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual async Task<Response<QuantumWorkspaceResource>> AddTagAsync(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceResource.AddTag");
             scope.Start();
@@ -427,7 +561,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -441,14 +575,8 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> or <paramref name="value"/> is null. </exception>
         public virtual Response<QuantumWorkspaceResource> AddTag(string key, string value, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(key, nameof(key));
+            Argument.AssertNotNull(value, nameof(value));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceResource.AddTag");
             scope.Start();
@@ -495,7 +623,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -508,10 +636,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual async Task<Response<QuantumWorkspaceResource>> SetTagsAsync(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceResource.SetTags");
             scope.Start();
@@ -555,7 +680,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -568,10 +693,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="tags"/> is null. </exception>
         public virtual Response<QuantumWorkspaceResource> SetTags(IDictionary<string, string> tags, CancellationToken cancellationToken = default)
         {
-            if (tags == null)
-            {
-                throw new ArgumentNullException(nameof(tags));
-            }
+            Argument.AssertNotNull(tags, nameof(tags));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceResource.SetTags");
             scope.Start();
@@ -615,7 +737,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -628,10 +750,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual async Task<Response<QuantumWorkspaceResource>> RemoveTagAsync(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceResource.RemoveTag");
             scope.Start();
@@ -678,7 +797,7 @@ namespace Azure.ResourceManager.Quantum
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2022-01-10-preview</description>
+        /// <description>2023-11-13-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -691,10 +810,7 @@ namespace Azure.ResourceManager.Quantum
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public virtual Response<QuantumWorkspaceResource> RemoveTag(string key, CancellationToken cancellationToken = default)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             using var scope = _quantumWorkspaceWorkspacesClientDiagnostics.CreateScope("QuantumWorkspaceResource.RemoveTag");
             scope.Start();

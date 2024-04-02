@@ -37,12 +37,11 @@ public partial class AudioTranscriptionOptions
             content.Add(MultipartContent.Create(Language), "language", new Dictionary<string, string>());
         }
 
-        string filename = Optional.IsDefined(Filename) ? Filename : "file";
-        content.Add(MultipartContent.Create(AudioData), new Dictionary<string, string>()
-        {
-            ["Content-Disposition"] = $"form-data; name=file; filename={filename}",
-            ["Content-Type"] = "text/plain",
-        });
+        content.Add(
+            MultipartContent.Create(AudioData),
+            name: "file",
+            fileName: string.IsNullOrEmpty(Filename) ? "file.wav" : Filename,
+            headers: new Dictionary<string, string>());
 
         return content;
     }

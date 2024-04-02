@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationUtilization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentCapacity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentCapacity))
             {
                 writer.WritePropertyName("currentCapacity"u8);
                 writer.WriteNumberValue(CurrentCapacity.Value);
             }
-            if (options.Format != "W" && !(VirtualMachinesAllocated is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(VirtualMachinesAllocated))
             {
                 writer.WritePropertyName("virtualMachinesAllocated"u8);
                 writer.WriteStartArray();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CapacityReservationUtilization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCapacityReservationUtilization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CapacityReservationUtilization)} does not support reading '{options.Format}' format.");
             }
         }
 

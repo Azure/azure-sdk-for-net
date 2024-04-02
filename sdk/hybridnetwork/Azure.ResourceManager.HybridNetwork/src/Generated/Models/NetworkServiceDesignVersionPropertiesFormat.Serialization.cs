@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && VersionState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VersionState))
             {
                 writer.WritePropertyName("versionState"u8);
                 writer.WriteStringValue(VersionState.Value.ToString());
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(ConfigurationGroupSchemaReferences is ChangeTrackingDictionary<string, WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfigurationGroupSchemaReferences))
             {
                 writer.WritePropertyName("configurationGroupSchemaReferences"u8);
                 writer.WriteStartObject();
@@ -53,24 +53,24 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(NfvisFromSite is ChangeTrackingDictionary<string, NfviDetails> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(NfvisFromSite))
             {
                 writer.WritePropertyName("nfvisFromSite"u8);
                 writer.WriteStartObject();
                 foreach (var item in NfvisFromSite)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<NfviDetails>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(ResourceElementTemplates is ChangeTrackingList<ResourceElementTemplate> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceElementTemplates))
             {
                 writer.WritePropertyName("resourceElementTemplates"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceElementTemplates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceElementTemplate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkServiceDesignVersionPropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeNetworkServiceDesignVersionPropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkServiceDesignVersionPropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

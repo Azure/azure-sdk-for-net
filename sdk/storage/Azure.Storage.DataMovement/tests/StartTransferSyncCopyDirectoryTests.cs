@@ -13,16 +13,85 @@ using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
 using Azure.Storage.Blobs.Tests;
+using Azure.Storage.Test;
 using DMBlobs::Azure.Storage.DataMovement.Blobs;
 using NUnit.Framework;
+using Metadata = System.Collections.Generic.Dictionary<string,string>;
 
 namespace Azure.Storage.DataMovement.Tests
 {
     public class StartTransferSyncCopyDirectoryTests : DataMovementBlobTestBase
     {
+        private static AccessTier DefaultAccessTier = AccessTier.Cold;
+        private const string DefaultContentType = "text/plain";
+        private const string DefaultContentEncoding = "gzip";
+        private const string DefaultContentLanguage = "en-US";
+        private const string DefaultContentDisposition = "inline";
+        private const string DefaultCacheControl = "no-cache";
         public StartTransferSyncCopyDirectoryTests(bool async, BlobClientOptions.ServiceVersion serviceVersion)
             : base(async, serviceVersion, null /* RecordedTestMode.Record /* to re-record */)
         { }
+
+        private async Task VerifyBlobDirectoryCopyAsync(
+            DataTransfer transfer,
+            BlobContainerClient container,
+            string sourcePrefix,
+            string destinationPrefix,
+            TestEventsRaised testEventsRaised,
+            bool verifyPropertiesMatch)
+        {
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+
+            // List all files in source blob folder path
+            List<string> sourceblobNames = new List<string>();
+            await foreach (Page<BlobItem> page in container.GetBlobsAsync(prefix: sourcePrefix).AsPages())
+            {
+                sourceblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
+            }
+
+            // List all files in the destination blob folder path
+            List<string> destblobNames = new List<string>();
+            await foreach (Page<BlobItem> page in container.GetBlobsAsync(prefix: destinationPrefix).AsPages())
+            {
+                destblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
+            }
+            await testEventsRaised.AssertContainerCompletedCheck(sourceblobNames.Count);
+            Assert.AreEqual(sourceblobNames.Count, destblobNames.Count);
+            sourceblobNames.Sort();
+            destblobNames.Sort();
+            for (int i = 0; i < sourceblobNames.Count; i++)
+            {
+                // Verify file name to match the
+                // (prefix folder path) + (the blob name without the blob folder prefix)
+                string sourceNonPrefixed = sourceblobNames[i].Substring(sourcePrefix.Length + 1);
+                Assert.AreEqual(
+                    sourceNonPrefixed,
+                    destblobNames[i].Substring(destinationPrefix.Length + 1));
+
+                // Verify Copy
+                BlockBlobClient sourceBlob = container.GetBlockBlobClient(sourceblobNames[i]);
+                BlockBlobClient destinationBlob = container.GetBlockBlobClient(destblobNames[i]);
+                using (Stream sourceStream = await sourceBlob.OpenReadAsync())
+                {
+                    Assert.IsTrue(await destinationBlob.ExistsAsync());
+                    await DownloadAndAssertAsync(sourceStream, destinationBlob);
+                }
+                if (verifyPropertiesMatch)
+                {
+                    BlobProperties sourceProperties = await sourceBlob.GetPropertiesAsync();
+                    BlobProperties destinationProperties = await destinationBlob.GetPropertiesAsync();
+
+                    Assert.That(sourceProperties.Metadata, Is.EqualTo(destinationProperties.Metadata));
+                    Assert.AreEqual(sourceProperties.ContentDisposition, destinationProperties.ContentDisposition);
+                    Assert.AreEqual(sourceProperties.ContentEncoding, destinationProperties.ContentEncoding);
+                    Assert.AreEqual(sourceProperties.ContentLanguage, destinationProperties.ContentLanguage);
+                    Assert.AreEqual(sourceProperties.CacheControl, destinationProperties.CacheControl);
+                    Assert.AreEqual(sourceProperties.AccessTier, destinationProperties.AccessTier);
+                    Assert.Zero(destinationProperties.TagCount);
+                }
+            }
+        }
 
         /// <summary>
         /// Upload and verify the contents of the blob
@@ -32,8 +101,6 @@ namespace Azure.Storage.DataMovement.Tests
         /// </summary>
         /// <param name="container">The source container which will contains the source blobs</param>
         /// <param name="sourceBlobPrefix">The source blob prefix/folder</param>
-        /// <param name="sourceFilePrefix">The local source file prefix to join together with the source prefixes below.</param>
-        /// <param name="sourceFiles">The source file paths relative to the sourceFilePrefix</param>
         /// <param name="destinationBlobPrefix">The destination local path to download the blobs to</param>
         /// <param name="waitTimeInSec">
         /// How long we should wait until we cancel the operation. If this timeout is reached the test will fail.
@@ -44,12 +111,11 @@ namespace Azure.Storage.DataMovement.Tests
         private async Task CopyBlobDirectoryAndVerify(
             BlobContainerClient container,
             string sourceBlobPrefix,
-            string sourceFilePrefix,
             string destinationBlobPrefix,
-            List<string> sourceFiles,
             int waitTimeInSec = 30,
             TransferManagerOptions transferManagerOptions = default,
-            DataTransferOptions options = default)
+            DataTransferOptions options = default,
+            bool verifyPropertiesMatch = false)
         {
             // Set transfer options
             options ??= new DataTransferOptions();
@@ -81,45 +147,14 @@ namespace Azure.Storage.DataMovement.Tests
                 testEventFailed,
                 tokenSource.Token);
 
-            await testEventFailed.AssertContainerCompletedCheck(sourceFiles.Count);
-            Assert.IsTrue(transfer.HasCompleted);
-            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
-
-            // List all files in source blob folder path
-            List<string> sourceblobNames = new List<string>();
-            await foreach (Page<BlobItem> page in container.GetBlobsAsync(prefix: sourceBlobPrefix).AsPages())
-            {
-                sourceblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
-            }
-
-            // List all files in the destination blob folder path
-            List<string> destblobNames = new List<string>();
-            await foreach (Page<BlobItem> page in container.GetBlobsAsync(prefix: destinationBlobPrefix).AsPages())
-            {
-                destblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
-            }
-            Assert.AreEqual(sourceblobNames.Count, destblobNames.Count);
-            sourceFiles.Sort();
-            sourceblobNames.Sort();
-            destblobNames.Sort();
-            for (int i = 0; i < sourceFiles.Count; i++)
-            {
-                // Verify file name to match the
-                // (prefix folder path) + (the blob name without the blob folder prefix)
-                string sourceNonPrefixed = sourceblobNames[i].Substring(sourceBlobPrefix.Length + 1);
-                Assert.AreEqual(
-                    sourceNonPrefixed,
-                    destblobNames[i].Substring(destinationBlobPrefix.Length+1));
-
-                // Verify Download
-                string sourceFileName = Path.Combine(sourceFilePrefix, sourceNonPrefixed);
-                using (FileStream fileStream = File.OpenRead(sourceFileName))
-                {
-                    BlockBlobClient destinationBlob = container.GetBlockBlobClient(destblobNames[i]);
-                    Assert.IsTrue(await destinationBlob.ExistsAsync());
-                    await DownloadAndAssertAsync(fileStream, destinationBlob);
-                }
-            }
+            // Verify
+            await VerifyBlobDirectoryCopyAsync(
+                transfer,
+                container,
+                sourceBlobPrefix,
+                destinationBlobPrefix,
+                testEventFailed,
+                verifyPropertiesMatch).ConfigureAwait(false);
         }
 
         [Test]
@@ -161,9 +196,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyBlobDirectoryAndVerify(
                 test.Container,
                 sourceBlobDirectoryName,
-                sourceFolderPath,
                 destinationFolder,
-                blobNames,
                 waitTimeInSec).ConfigureAwait(false);
         }
 
@@ -208,9 +241,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyBlobDirectoryAndVerify(
                 test.Container,
                 sourceBlobDirectoryName,
-                sourceFolderPath,
                 destinationFolder,
-                blobNames,
                 waitTimeInSec).ConfigureAwait(false);
         }
 
@@ -283,9 +314,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyBlobDirectoryAndVerify(
                 container: test.Container,
                 sourceBlobPrefix: sourceFolderName,
-                sourceFilePrefix: sourceFolderPath,
-                destinationBlobPrefix: destinationFolder,
-                blobNames).ConfigureAwait(false);
+                destinationBlobPrefix: destinationFolder).ConfigureAwait(false);
         }
 
         [Test]
@@ -320,9 +349,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyBlobDirectoryAndVerify(
                 container: test.Container,
                 sourceBlobPrefix: sourceBlobPrefix,
-                sourceFilePrefix: fullSourceFolderPath,
-                destinationBlobPrefix: destinationFolder,
-                blobNames).ConfigureAwait(false);
+                destinationBlobPrefix: destinationFolder).ConfigureAwait(false);
         }
 
         [Test]
@@ -355,9 +382,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyBlobDirectoryAndVerify(
                 test.Container,
                 sourceBlobDirectoryName,
-                fullSourceFolderPath,
-                destinationBlobPrefix: destinationFolder,
-                blobNames).ConfigureAwait(false);
+                destinationBlobPrefix: destinationFolder).ConfigureAwait(false);
         }
 
         [Test]
@@ -403,9 +428,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyBlobDirectoryAndVerify(
                 test.Container,
                 sourceBlobDirectoryName,
-                sourceFolderPath,
                 destinationBlobPrefix: destinationFolder,
-                blobNames,
                 options: options).ConfigureAwait(false);
         }
 
@@ -452,9 +475,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyBlobDirectoryAndVerify(
                 test.Container,
                 sourceBlobDirectoryName,
-                sourceFolderPath,
                 destinationBlobPrefix: destinationFolder,
-                blobNames,
                 options: options).ConfigureAwait(false);
         }
 
@@ -501,9 +522,7 @@ namespace Azure.Storage.DataMovement.Tests
             await CopyBlobDirectoryAndVerify(
                 testContainer.Container,
                 sourceBlobDirectoryName,
-                sourceFolderPath,
                 destinationFolder,
-                blobNames,
                 waitTimeInSec).ConfigureAwait(false);
         }
 
@@ -512,22 +531,23 @@ namespace Azure.Storage.DataMovement.Tests
             BlobContainerClient client,
             string sourceFolderPath,
             string sourceBlobDirectoryName,
-            int size)
+            int size,
+            BlobUploadOptions uploadOptions = default)
         {
             string blobName1 = Path.Combine(sourceBlobDirectoryName, "blob1");
             string blobName2 = Path.Combine(sourceBlobDirectoryName, "blob2");
-            await CreateBlockBlob(client, Path.GetTempFileName(), blobName1, size);
-            await CreateBlockBlob(client, Path.GetTempFileName(), blobName2, size);
+            await CreateBlockBlob(client, Path.GetTempFileName(), blobName1, size, uploadOptions);
+            await CreateBlockBlob(client, Path.GetTempFileName(), blobName2, size, uploadOptions);
 
             string subDirName = "bar";
             CreateRandomDirectory(sourceFolderPath, subDirName).Substring(sourceFolderPath.Length + 1);
             string blobName3 = Path.Combine(sourceBlobDirectoryName, subDirName, "blob3");
-            await CreateBlockBlob(client, Path.GetTempFileName(), blobName3, size);
+            await CreateBlockBlob(client, Path.GetTempFileName(), blobName3, size, uploadOptions);
 
             string subDirName2 = "pik";
             CreateRandomDirectory(sourceFolderPath, subDirName2).Substring(sourceFolderPath.Length + 1);
             string blobName4 = Path.Combine(sourceBlobDirectoryName, subDirName2, "blob4");
-            await CreateBlockBlob(client, Path.GetTempFileName(), blobName4, size);
+            await CreateBlockBlob(client, Path.GetTempFileName(), blobName4, size, uploadOptions);
         }
 
         private async Task<DataTransfer> CreateStartTransfer(
@@ -812,5 +832,330 @@ namespace Azure.Storage.DataMovement.Tests
             await testEventsRaised.AssertContainerCompletedWithFailedCheck(1);
         }
         #endregion
+
+        #region Properties
+        private async Task<DataTransfer> CreateStartTransferPropertiesAsync(
+            BlobContainerClient containerClient,
+            Metadata metadata,
+            string sourcePrefix,
+            string destinationPrefix,
+            DataTransferOptions transferOptions,
+            BlobStorageResourceOptions destinationBlobOptions = default)
+        {
+            // Arrange
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            BlobUploadOptions uploadOptions = new()
+            {
+                AccessTier = DefaultAccessTier,
+                Metadata = metadata,
+                HttpHeaders = new()
+                {
+                    CacheControl = DefaultCacheControl,
+                    ContentDisposition = DefaultContentDisposition,
+                    ContentEncoding = DefaultContentEncoding,
+                    ContentLanguage = DefaultContentLanguage,
+                    ContentType = DefaultContentType
+                }
+            };
+            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourcePrefix);
+            // Create source blob directory tree with properties.
+            await CreateBlobDirectoryTree(
+                containerClient,
+                sourceFolderPath,
+                sourcePrefix,
+                Constants.KB,
+                uploadOptions);
+
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(containerClient, new() { BlobDirectoryPrefix = sourcePrefix });
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(containerClient, new()
+            {
+                BlobDirectoryPrefix = destinationPrefix,
+                BlobOptions = destinationBlobOptions
+            });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            return await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                transferOptions).ConfigureAwait(false);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task BlobDirectoryToDirectoryAsync_DefaultProperties()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            string sourceBlobPrefix = "sourceFolder";
+            string destBlobPrefix = "destFolder";
+
+            Metadata metadata = DataProvider.BuildMetadata();
+
+            // Act
+            DataTransferOptions transferOptions = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            DataTransfer transfer = await CreateStartTransferPropertiesAsync(
+                test.Container,
+                metadata,
+                sourcePrefix: sourceBlobPrefix,
+                destinationPrefix: destBlobPrefix,
+                transferOptions: transferOptions);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Verify
+            await VerifyBlobDirectoryCopyAsync(
+                transfer,
+                test.Container,
+                sourceBlobPrefix,
+                destBlobPrefix,
+                testEventsRaised,
+                verifyPropertiesMatch: true).ConfigureAwait(false);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task BlobDirectoryToDirectoryAsync_PropertiesPreserve()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            string sourceBlobPrefix = "sourceFolder";
+            string destBlobPrefix = "destFolder";
+
+            Metadata metadata = DataProvider.BuildMetadata();
+
+            // Act
+            DataTransferOptions transferOptions = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            DataTransfer transfer = await CreateStartTransferPropertiesAsync(
+                test.Container,
+                metadata,
+                sourcePrefix: sourceBlobPrefix,
+                destinationPrefix: destBlobPrefix,
+                transferOptions: transferOptions,
+                destinationBlobOptions: new() // Preserve all properties
+                {
+                    AccessTier = new(true),
+                    CacheControl = new(true),
+                    ContentDisposition = new(true),
+                    ContentEncoding = new(true),
+                    ContentLanguage = new(true),
+                    ContentType = new(true),
+                    Metadata = new(true)
+                });
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Verify
+            await VerifyBlobDirectoryCopyAsync(
+                transfer,
+                test.Container,
+                sourceBlobPrefix,
+                destBlobPrefix,
+                testEventsRaised,
+                verifyPropertiesMatch: true).ConfigureAwait(false);
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task BlobDirectoryToDirectoryAsync_PropertiesNoPreserve()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            string sourceBlobPrefix = "sourceFolder";
+            string destBlobPrefix = "destFolder";
+
+            Metadata metadata = DataProvider.BuildMetadata();
+
+            // Act
+            DataTransferOptions transferOptions = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            DataTransfer transfer = await CreateStartTransferPropertiesAsync(
+                test.Container,
+                metadata,
+                sourcePrefix: sourceBlobPrefix,
+                destinationPrefix: destBlobPrefix,
+                transferOptions: transferOptions,
+                destinationBlobOptions: new() // Do NOT preserve any property
+                {
+                    AccessTier = new(false),
+                    CacheControl = new(false),
+                    ContentDisposition = new(false),
+                    ContentEncoding = new(false),
+                    ContentLanguage = new(false),
+                    ContentType = new(false),
+                    Metadata = new(false)
+                });
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Verify
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+
+            // List all files in source blob folder path
+            List<string> sourceblobNames = new List<string>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(prefix: sourceBlobPrefix).AsPages())
+            {
+                sourceblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
+            }
+
+            // List all files in the destination blob folder path
+            List<string> destblobNames = new List<string>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(prefix: destBlobPrefix).AsPages())
+            {
+                destblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
+            }
+            await testEventsRaised.AssertContainerCompletedCheck(sourceblobNames.Count);
+            Assert.AreEqual(sourceblobNames.Count, destblobNames.Count);
+            sourceblobNames.Sort();
+            destblobNames.Sort();
+            for (int i = 0; i < sourceblobNames.Count; i++)
+            {
+                // Verify file name to match the
+                // (prefix folder path) + (the blob name without the blob folder prefix)
+                string sourceNonPrefixed = sourceblobNames[i].Substring(sourceBlobPrefix.Length + 1);
+                Assert.AreEqual(
+                    sourceNonPrefixed,
+                    destblobNames[i].Substring(destBlobPrefix.Length + 1));
+
+                // Verify Copy
+                BlockBlobClient sourceBlob = test.Container.GetBlockBlobClient(sourceblobNames[i]);
+                BlockBlobClient destinationBlob = test.Container.GetBlockBlobClient(destblobNames[i]);
+                using (Stream sourceStream = await sourceBlob.OpenReadAsync())
+                {
+                    Assert.IsTrue(await destinationBlob.ExistsAsync());
+                    await DownloadAndAssertAsync(sourceStream, destinationBlob);
+                }
+                BlobProperties destinationProperties = await destinationBlob.GetPropertiesAsync();
+
+                // Check if the properties are empty on the destination
+                Assert.IsEmpty(destinationProperties.Metadata);
+                Assert.IsNull(destinationProperties.ContentDisposition);
+                Assert.IsNull(destinationProperties.ContentEncoding);
+                Assert.IsNull(destinationProperties.ContentLanguage);
+                Assert.IsNull(destinationProperties.CacheControl);
+                Assert.AreEqual(AccessTier.Hot.ToString(), destinationProperties.AccessTier);
+                Assert.Zero(destinationProperties.TagCount);
+            }
+        }
+
+        [LiveOnly]
+        [Test]
+        public async Task BlobDirectoryToDirectoryAsync_SetProperties()
+        {
+            // Arrange
+            await using DisposingContainer test = await GetTestContainerAsync(publicAccessType: PublicAccessType.BlobContainer);
+            string sourceBlobPrefix = "sourceFolder";
+            string destBlobPrefix = "destFolder";
+
+            Metadata metadata = DataProvider.BuildMetadata();
+
+            // Act
+            DataTransferOptions transferOptions = new DataTransferOptions();
+            TestEventsRaised testEventsRaised = new TestEventsRaised(transferOptions);
+            // Arrange
+            using DisposingLocalDirectory testDirectory = DisposingLocalDirectory.GetTestDirectory();
+            string sourceFolderPath = CreateRandomDirectory(testDirectory.DirectoryPath, sourceBlobPrefix);
+            // Upload without any properties set on the source blobs.
+            await CreateBlobDirectoryTree(
+                test.Container,
+                sourceFolderPath,
+                sourceBlobPrefix,
+                Constants.KB);
+
+            StorageResourceContainer sourceResource = new BlobStorageResourceContainer(test.Container, new() { BlobDirectoryPrefix = sourceBlobPrefix });
+            StorageResourceContainer destinationResource = new BlobStorageResourceContainer(test.Container, new()
+            {
+                BlobDirectoryPrefix = destBlobPrefix,
+                BlobOptions = new()
+                {
+                    AccessTier = new(DefaultAccessTier),
+                    CacheControl = new(DefaultCacheControl),
+                    ContentDisposition = new(DefaultContentDisposition),
+                    ContentEncoding = new(DefaultContentEncoding),
+                    ContentLanguage = new(DefaultContentLanguage),
+                    ContentType = new(DefaultContentType),
+                    Metadata = new(metadata)
+                }
+            });
+
+            // Create Transfer Manager with single threaded operation
+            TransferManager transferManager = new TransferManager();
+
+            // Start transfer and await for completion.
+            DataTransfer transfer = await transferManager.StartTransferAsync(
+                sourceResource,
+                destinationResource,
+                transferOptions).ConfigureAwait(false);
+            CancellationTokenSource cancellationTokenSource = new CancellationTokenSource(TimeSpan.FromSeconds(30));
+            await TestTransferWithTimeout.WaitForCompletionAsync(
+                transfer,
+                testEventsRaised,
+                cancellationTokenSource.Token);
+
+            // Verify
+            Assert.IsTrue(transfer.HasCompleted);
+            Assert.AreEqual(DataTransferState.Completed, transfer.TransferStatus.State);
+
+            // List all files in source blob folder path
+            List<string> sourceblobNames = new List<string>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(prefix: sourceBlobPrefix).AsPages())
+            {
+                sourceblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
+            }
+
+            // List all files in the destination blob folder path
+            List<string> destblobNames = new List<string>();
+            await foreach (Page<BlobItem> page in test.Container.GetBlobsAsync(prefix: destBlobPrefix).AsPages())
+            {
+                destblobNames.AddRange(page.Values.Select((BlobItem item) => item.Name));
+            }
+            await testEventsRaised.AssertContainerCompletedCheck(sourceblobNames.Count);
+            Assert.AreEqual(sourceblobNames.Count, destblobNames.Count);
+            sourceblobNames.Sort();
+            destblobNames.Sort();
+            for (int i = 0; i < sourceblobNames.Count; i++)
+            {
+                // Verify file name to match the
+                // (prefix folder path) + (the blob name without the blob folder prefix)
+                string sourceNonPrefixed = sourceblobNames[i].Substring(sourceBlobPrefix.Length + 1);
+                Assert.AreEqual(
+                    sourceNonPrefixed,
+                    destblobNames[i].Substring(destBlobPrefix.Length + 1));
+
+                // Verify Copy
+                BlockBlobClient sourceBlob = test.Container.GetBlockBlobClient(sourceblobNames[i]);
+                BlockBlobClient destinationBlob = test.Container.GetBlockBlobClient(destblobNames[i]);
+                using (Stream sourceStream = await sourceBlob.OpenReadAsync())
+                {
+                    Assert.IsTrue(await destinationBlob.ExistsAsync());
+                    await DownloadAndAssertAsync(sourceStream, destinationBlob);
+                }
+                // Check if the properties are correct on destination
+                BlobProperties destinationProperties = await destinationBlob.GetPropertiesAsync();
+
+                Assert.That(metadata, Is.EqualTo(destinationProperties.Metadata));;
+                Assert.AreEqual(DefaultContentDisposition, destinationProperties.ContentDisposition);
+                Assert.AreEqual(DefaultContentEncoding, destinationProperties.ContentEncoding);
+                Assert.AreEqual(DefaultContentLanguage, destinationProperties.ContentLanguage);
+                Assert.AreEqual(DefaultCacheControl, destinationProperties.CacheControl);
+                Assert.AreEqual(DefaultAccessTier.ToString(), destinationProperties.AccessTier);
+                Assert.Zero(destinationProperties.TagCount);
+            }
+        }
+        #endregion Properties
     }
 }

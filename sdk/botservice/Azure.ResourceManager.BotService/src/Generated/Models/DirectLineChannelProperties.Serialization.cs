@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Sites is ChangeTrackingList<DirectLineSite> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Sites))
             {
                 writer.WritePropertyName("sites"u8);
                 writer.WriteStartArray();
                 foreach (var item in Sites)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DirectLineSite>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ExtensionKey1 != null)
+            if (Optional.IsDefined(ExtensionKey1))
             {
                 writer.WritePropertyName("extensionKey1"u8);
                 writer.WriteStringValue(ExtensionKey1);
             }
-            if (ExtensionKey2 != null)
+            if (Optional.IsDefined(ExtensionKey2))
             {
                 writer.WritePropertyName("extensionKey2"u8);
                 writer.WriteStringValue(ExtensionKey2);
             }
-            if (DirectLineEmbedCode != null)
+            if (Optional.IsDefined(DirectLineEmbedCode))
             {
                 writer.WritePropertyName("DirectLineEmbedCode"u8);
                 writer.WriteStringValue(DirectLineEmbedCode);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DirectLineChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeDirectLineChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DirectLineChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

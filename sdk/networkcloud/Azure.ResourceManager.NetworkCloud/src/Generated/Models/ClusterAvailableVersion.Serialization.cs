@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SupportExpiryDate != null)
+            if (options.Format != "W" && Optional.IsDefined(SupportExpiryDate))
             {
                 writer.WritePropertyName("supportExpiryDate"u8);
                 writer.WriteStringValue(SupportExpiryDate);
             }
-            if (options.Format != "W" && TargetClusterVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetClusterVersion))
             {
                 writer.WritePropertyName("targetClusterVersion"u8);
                 writer.WriteStringValue(TargetClusterVersion);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterAvailableVersion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeClusterAvailableVersion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterAvailableVersion)} does not support reading '{options.Format}' format.");
             }
         }
 

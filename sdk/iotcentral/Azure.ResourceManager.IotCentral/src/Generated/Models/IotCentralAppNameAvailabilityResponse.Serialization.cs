@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppNameAvailabilityResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppNameAvailabilityResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsNameAvailable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsNameAvailable))
             {
                 writer.WritePropertyName("nameAvailable"u8);
                 writer.WriteBooleanValue(IsNameAvailable.Value);
             }
-            if (options.Format != "W" && IotCentralAppNameUnavailableReason != null)
+            if (options.Format != "W" && Optional.IsDefined(IotCentralAppNameUnavailableReason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(IotCentralAppNameUnavailableReason);
             }
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.IotCentral.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotCentralAppNameAvailabilityResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotCentralAppNameAvailabilityResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotCentralAppNameAvailabilityResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppNameAvailabilityResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppNameAvailabilityResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.IotCentral.Models
                         return DeserializeIotCentralAppNameAvailabilityResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotCentralAppNameAvailabilityResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotCentralAppNameAvailabilityResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

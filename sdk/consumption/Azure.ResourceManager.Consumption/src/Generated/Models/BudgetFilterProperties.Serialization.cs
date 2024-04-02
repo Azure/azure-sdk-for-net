@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<BudgetFilterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BudgetFilterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BudgetFilterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Dimensions != null)
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue<BudgetComparisonExpression>(Dimensions, options);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue<BudgetComparisonExpression>(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<BudgetFilterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BudgetFilterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BudgetFilterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BudgetFilterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BudgetFilterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeBudgetFilterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BudgetFilterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BudgetFilterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

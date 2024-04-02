@@ -17,30 +17,24 @@ namespace Azure.Core
         {
         }
 
-        public ChangeTrackingDictionary(Optional<IReadOnlyDictionary<TKey, TValue>> optionalDictionary) : this(optionalDictionary.Value)
+        public ChangeTrackingDictionary(IReadOnlyDictionary<TKey, TValue> dictionary)
         {
-        }
-
-        public ChangeTrackingDictionary(Optional<IDictionary<TKey, TValue>> optionalDictionary) : this(optionalDictionary.Value)
-        {
-        }
-
-        private ChangeTrackingDictionary(IDictionary<TKey, TValue> dictionary)
-        {
-            if (dictionary == null) return;
-
-            _innerDictionary = new Dictionary<TKey, TValue>(dictionary);
-        }
-
-        private ChangeTrackingDictionary(IReadOnlyDictionary<TKey, TValue> dictionary)
-        {
-            if (dictionary == null) return;
+            if (dictionary == null)
+                return;
 
             _innerDictionary = new Dictionary<TKey, TValue>();
             foreach (KeyValuePair<TKey, TValue> pair in dictionary)
             {
                 _innerDictionary.Add(pair);
             }
+        }
+
+        public ChangeTrackingDictionary(IDictionary<TKey, TValue> dictionary)
+        {
+            if (dictionary == null)
+                return;
+
+            _innerDictionary = new Dictionary<TKey, TValue>(dictionary);
         }
 
         public bool IsUndefined => _innerDictionary == null;

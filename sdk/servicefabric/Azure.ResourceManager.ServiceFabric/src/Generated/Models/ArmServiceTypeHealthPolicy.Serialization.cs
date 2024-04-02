@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmServiceTypeHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxPercentUnhealthyServices.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyServices))
             {
                 writer.WritePropertyName("maxPercentUnhealthyServices"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyServices.Value);
             }
-            if (MaxPercentUnhealthyPartitionsPerService.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyPartitionsPerService))
             {
                 writer.WritePropertyName("maxPercentUnhealthyPartitionsPerService"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyPartitionsPerService.Value);
             }
-            if (MaxPercentUnhealthyReplicasPerPartition.HasValue)
+            if (Optional.IsDefined(MaxPercentUnhealthyReplicasPerPartition))
             {
                 writer.WritePropertyName("maxPercentUnhealthyReplicasPerPartition"u8);
                 writer.WriteNumberValue(MaxPercentUnhealthyReplicasPerPartition.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmServiceTypeHealthPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
                         return DeserializeArmServiceTypeHealthPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmServiceTypeHealthPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

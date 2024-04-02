@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringDataSegment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Feature != null)
+            if (Optional.IsDefined(Feature))
             {
                 if (Feature != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("feature");
                 }
             }
-            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 if (Values != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoringDataSegment>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMonitoringDataSegment(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoringDataSegment)} does not support reading '{options.Format}' format.");
             }
         }
 

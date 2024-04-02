@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreJobRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryPointId != null)
+            if (Optional.IsDefined(RecoveryPointId))
             {
                 writer.WritePropertyName("recoveryPointID"u8);
                 writer.WriteStringValue(RecoveryPointId);
             }
-            if (RecoverOn.HasValue)
+            if (Optional.IsDefined(RecoverOn))
             {
                 writer.WritePropertyName("recoveryPointTime"u8);
                 writer.WriteStringValue(RecoverOn.Value, "O");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreJobRecoveryPointDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeRestoreJobRecoveryPointDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreJobRecoveryPointDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

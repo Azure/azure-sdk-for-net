@@ -22,69 +22,69 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnableExtendedGroups.HasValue)
+            if (Optional.IsDefined(EnableExtendedGroups))
             {
                 writer.WritePropertyName("extendedGroups"u8);
                 writer.WriteBooleanValue(EnableExtendedGroups.Value);
             }
-            if (UsernameSource.HasValue)
+            if (Optional.IsDefined(UsernameSource))
             {
                 writer.WritePropertyName("usernameSource"u8);
                 writer.WriteStringValue(UsernameSource.Value.ToString());
             }
-            if (GroupFileUri != null)
+            if (Optional.IsDefined(GroupFileUri))
             {
                 writer.WritePropertyName("groupFileURI"u8);
                 writer.WriteStringValue(GroupFileUri.AbsoluteUri);
             }
-            if (UserFileUri != null)
+            if (Optional.IsDefined(UserFileUri))
             {
                 writer.WritePropertyName("userFileURI"u8);
                 writer.WriteStringValue(UserFileUri.AbsoluteUri);
             }
-            if (LdapServer != null)
+            if (Optional.IsDefined(LdapServer))
             {
                 writer.WritePropertyName("ldapServer"u8);
                 writer.WriteStringValue(LdapServer);
             }
-            if (LdapBaseDN != null)
+            if (Optional.IsDefined(LdapBaseDN))
             {
                 writer.WritePropertyName("ldapBaseDN"u8);
                 writer.WriteStringValue(LdapBaseDN);
             }
-            if (EncryptLdapConnection.HasValue)
+            if (Optional.IsDefined(EncryptLdapConnection))
             {
                 writer.WritePropertyName("encryptLdapConnection"u8);
                 writer.WriteBooleanValue(EncryptLdapConnection.Value);
             }
-            if (RequireValidCertificate.HasValue)
+            if (Optional.IsDefined(RequireValidCertificate))
             {
                 writer.WritePropertyName("requireValidCertificate"u8);
                 writer.WriteBooleanValue(RequireValidCertificate.Value);
             }
-            if (AutoDownloadCertificate.HasValue)
+            if (Optional.IsDefined(AutoDownloadCertificate))
             {
                 writer.WritePropertyName("autoDownloadCertificate"u8);
                 writer.WriteBooleanValue(AutoDownloadCertificate.Value);
             }
-            if (CaCertificateUri != null)
+            if (Optional.IsDefined(CaCertificateUri))
             {
                 writer.WritePropertyName("caCertificateURI"u8);
                 writer.WriteStringValue(CaCertificateUri.AbsoluteUri);
             }
-            if (options.Format != "W" && UsernameDownloaded.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UsernameDownloaded))
             {
                 writer.WritePropertyName("usernameDownloaded"u8);
                 writer.WriteStringValue(UsernameDownloaded.Value.ToString());
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<StorageCacheUsernameDownloadCredential>(Credentials, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.StorageCache.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageCacheUsernameDownloadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -271,7 +271,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.StorageCache.Models
                         return DeserializeStorageCacheUsernameDownloadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageCacheUsernameDownloadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<DeviceSecurityGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,50 +43,50 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(ThresholdRules is ChangeTrackingList<ThresholdCustomAlertRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ThresholdRules))
             {
                 writer.WritePropertyName("thresholdRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in ThresholdRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThresholdCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TimeWindowRules is ChangeTrackingList<TimeWindowCustomAlertRule> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TimeWindowRules))
             {
                 writer.WritePropertyName("timeWindowRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in TimeWindowRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TimeWindowCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AllowlistRules is ChangeTrackingList<AllowlistCustomAlertRule> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowlistRules))
             {
                 writer.WritePropertyName("allowlistRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in AllowlistRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AllowlistCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(DenylistRules is ChangeTrackingList<DenylistCustomAlertRule> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(DenylistRules))
             {
                 writer.WritePropertyName("denylistRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in DenylistRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DenylistCustomAlertRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<DeviceSecurityGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeDeviceSecurityGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceSecurityGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

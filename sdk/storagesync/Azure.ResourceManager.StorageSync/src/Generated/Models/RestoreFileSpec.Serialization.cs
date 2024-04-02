@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreFileSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (IsDirectory.HasValue)
+            if (Optional.IsDefined(IsDirectory))
             {
                 writer.WritePropertyName("isdir"u8);
                 writer.WriteBooleanValue(IsDirectory.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreFileSpec>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeRestoreFileSpec(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreFileSpec)} does not support reading '{options.Format}' format.");
             }
         }
 

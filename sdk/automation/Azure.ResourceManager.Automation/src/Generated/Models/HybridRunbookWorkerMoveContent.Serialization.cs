@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridRunbookWorkerMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridRunbookWorkerMoveContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HybridRunbookWorkerGroupName != null)
+            if (Optional.IsDefined(HybridRunbookWorkerGroupName))
             {
                 writer.WritePropertyName("hybridRunbookWorkerGroupName"u8);
                 writer.WriteStringValue(HybridRunbookWorkerGroupName);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridRunbookWorkerMoveContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridRunbookWorkerMoveContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridRunbookWorkerMoveContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridRunbookWorkerMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridRunbookWorkerMoveContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeHybridRunbookWorkerMoveContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridRunbookWorkerMoveContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridRunbookWorkerMoveContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringLowDiskMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringLowDiskMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringLowDiskMode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringLowDiskMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringLowDiskMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringLowDiskMode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringLowDiskMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringLowDiskMode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudTieringLowDiskMode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringLowDiskMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringLowDiskMode)} does not support reading '{options.Format}' format.");
             }
         }
 

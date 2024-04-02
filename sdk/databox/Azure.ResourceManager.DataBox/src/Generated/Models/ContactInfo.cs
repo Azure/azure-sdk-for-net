@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <exception cref="ArgumentNullException"> <paramref name="contactName"/> or <paramref name="phone"/> is null. </exception>
         public ContactInfo(string contactName, string phone)
         {
-            if (contactName == null)
-            {
-                throw new ArgumentNullException(nameof(contactName));
-            }
-            if (phone == null)
-            {
-                throw new ArgumentNullException(nameof(phone));
-            }
+            Argument.AssertNotNull(contactName, nameof(contactName));
+            Argument.AssertNotNull(phone, nameof(phone));
 
             ContactName = contactName;
             Phone = phone;

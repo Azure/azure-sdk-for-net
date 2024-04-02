@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.ManagedNetwork.Models;
@@ -69,38 +69,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedNetworkGroupData>> GetAsync(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +102,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedNetworkGroupData> Get(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -201,7 +145,7 @@ namespace Azure.ResourceManager.ManagedNetwork
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<ManagedNetworkGroupData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -218,42 +162,11 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName, ManagedNetworkGroupData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkGroupName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,42 +191,11 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName, ManagedNetworkGroupData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkGroupName, data);
             _pipeline.Send(message, cancellationToken);
@@ -359,38 +241,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -415,38 +269,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedNetworkName"/> or <paramref name="managedNetworkGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string managedNetworkName, string managedNetworkGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
-            if (managedNetworkGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkGroupName));
-            }
-            if (managedNetworkGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
+            Argument.AssertNotNullOrEmpty(managedNetworkGroupName, nameof(managedNetworkGroupName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedNetworkName, managedNetworkGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -501,30 +327,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedNetworkGroupListResult>> ListByManagedNetworkAsync(string subscriptionId, string resourceGroupName, string managedNetworkName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var message = CreateListByManagedNetworkRequest(subscriptionId, resourceGroupName, managedNetworkName, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -553,30 +358,9 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedNetworkGroupListResult> ListByManagedNetwork(string subscriptionId, string resourceGroupName, string managedNetworkName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var message = CreateListByManagedNetworkRequest(subscriptionId, resourceGroupName, managedNetworkName, top, skiptoken);
             _pipeline.Send(message, cancellationToken);
@@ -620,34 +404,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedNetworkGroupListResult>> ListByManagedNetworkNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedNetworkName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var message = CreateListByManagedNetworkNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedNetworkName, top, skiptoken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -677,34 +437,10 @@ namespace Azure.ResourceManager.ManagedNetwork
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedNetworkName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedNetworkGroupListResult> ListByManagedNetworkNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedNetworkName, int? top = null, string skiptoken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedNetworkName == null)
-            {
-                throw new ArgumentNullException(nameof(managedNetworkName));
-            }
-            if (managedNetworkName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedNetworkName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedNetworkName, nameof(managedNetworkName));
 
             using var message = CreateListByManagedNetworkNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedNetworkName, top, skiptoken);
             _pipeline.Send(message, cancellationToken);

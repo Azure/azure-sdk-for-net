@@ -75,12 +75,16 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The version of the deleted server. </summary>
+        [WirePath("properties.version")]
         public string Version { get; }
         /// <summary> The deletion time of the deleted server. </summary>
+        [WirePath("properties.deletionTime")]
         public DateTimeOffset? DeletedOn { get; }
         /// <summary> The original ID of the server before deletion. </summary>
+        [WirePath("properties.originalId")]
         public ResourceIdentifier OriginalId { get; }
         /// <summary> The fully qualified domain name of the server. </summary>
+        [WirePath("properties.fullyQualifiedDomainName")]
         public string FullyQualifiedDomainName { get; }
     }
 }

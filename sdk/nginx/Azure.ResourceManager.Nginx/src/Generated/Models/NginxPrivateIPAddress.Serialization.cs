@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxPrivateIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (PrivateIPAllocationMethod.HasValue)
+            if (Optional.IsDefined(PrivateIPAllocationMethod))
             {
                 writer.WritePropertyName("privateIPAllocationMethod"u8);
                 writer.WriteStringValue(PrivateIPAllocationMethod.Value.ToString());
             }
-            if (SubnetId != null)
+            if (Optional.IsDefined(SubnetId))
             {
                 writer.WritePropertyName("subnetId"u8);
                 writer.WriteStringValue(SubnetId);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Nginx.Models
             var format = options.Format == "W" ? ((IPersistableModel<NginxPrivateIPAddress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Nginx.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Nginx.Models
                         return DeserializeNginxPrivateIPAddress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NginxPrivateIPAddress)} does not support reading '{options.Format}' format.");
             }
         }
 

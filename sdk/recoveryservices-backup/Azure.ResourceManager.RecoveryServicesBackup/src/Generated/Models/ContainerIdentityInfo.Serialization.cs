@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UniqueName != null)
+            if (Optional.IsDefined(UniqueName))
             {
                 writer.WritePropertyName("uniqueName"u8);
                 writer.WriteStringValue(UniqueName);
             }
-            if (AadTenantId.HasValue)
+            if (Optional.IsDefined(AadTenantId))
             {
                 writer.WritePropertyName("aadTenantId"u8);
                 writer.WriteStringValue(AadTenantId.Value);
             }
-            if (ServicePrincipalClientId != null)
+            if (Optional.IsDefined(ServicePrincipalClientId))
             {
                 writer.WritePropertyName("servicePrincipalClientId"u8);
                 writer.WriteStringValue(ServicePrincipalClientId);
             }
-            if (Audience != null)
+            if (Optional.IsDefined(Audience))
             {
                 writer.WritePropertyName("audience"u8);
                 writer.WriteStringValue(Audience);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeContainerIdentityInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerIdentityInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyVaultId != null)
+            if (Optional.IsDefined(KeyVaultId))
             {
                 writer.WritePropertyName("keyVaultId"u8);
                 writer.WriteStringValue(KeyVaultId);
             }
-            if (CertObjectName != null)
+            if (Optional.IsDefined(CertObjectName))
             {
                 writer.WritePropertyName("certObjectName"u8);
                 writer.WriteStringValue(CertObjectName);
             }
-            if (KeyObjectName != null)
+            if (Optional.IsDefined(KeyObjectName))
             {
                 writer.WritePropertyName("keyObjectName"u8);
                 writer.WriteStringValue(KeyObjectName);
             }
-            if (RootCertObjectName != null)
+            if (Optional.IsDefined(RootCertObjectName))
             {
                 writer.WritePropertyName("rootCertObjectName"u8);
                 writer.WriteStringValue(RootCertObjectName);
             }
-            if (CertChainObjectName != null)
+            if (Optional.IsDefined(CertChainObjectName))
             {
                 writer.WritePropertyName("certChainObjectName"u8);
                 writer.WriteStringValue(CertChainObjectName);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<IstioPluginCertificateAuthority>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeIstioPluginCertificateAuthority(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IstioPluginCertificateAuthority)} does not support reading '{options.Format}' format.");
             }
         }
 

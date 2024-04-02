@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.NetworkCloud.Models
 {
@@ -55,10 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
         /// <exception cref="ArgumentNullException"> <paramref name="script"/> is null. </exception>
         public BareMetalMachineRunCommandContent(long limitTimeSeconds, string script)
         {
-            if (script == null)
-            {
-                throw new ArgumentNullException(nameof(script));
-            }
+            Argument.AssertNotNull(script, nameof(script));
 
             Arguments = new ChangeTrackingList<string>();
             LimitTimeSeconds = limitTimeSeconds;

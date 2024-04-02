@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiResourceBackendService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiResourceBackendService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiResourceBackendService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUrl"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicApiResourceBackendService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicApiResourceBackendService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicApiResourceBackendService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiResourceBackendService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiResourceBackendService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicApiResourceBackendService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicApiResourceBackendService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicApiResourceBackendService)} does not support reading '{options.Format}' format.");
             }
         }
 

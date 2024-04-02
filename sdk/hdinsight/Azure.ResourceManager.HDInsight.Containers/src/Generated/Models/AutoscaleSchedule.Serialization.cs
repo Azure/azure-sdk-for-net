@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("startTime"u8);
-            writer.WriteStringValue(StartOn, "O");
+            writer.WriteStringValue(StartOn);
             writer.WritePropertyName("endTime"u8);
-            writer.WriteStringValue(EndOn, "O");
+            writer.WriteStringValue(EndOn);
             writer.WritePropertyName("count"u8);
             writer.WriteNumberValue(Count);
             writer.WritePropertyName("days"u8);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoscaleSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -77,8 +77,8 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 return null;
             }
-            DateTimeOffset startTime = default;
-            DateTimeOffset endTime = default;
+            string startTime = default;
+            string endTime = default;
             int count = default;
             IList<AutoscaleScheduleDay> days = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
@@ -87,12 +87,12 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
             {
                 if (property.NameEquals("startTime"u8))
                 {
-                    startTime = property.Value.GetDateTimeOffset("O");
+                    startTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("endTime"u8))
                 {
-                    endTime = property.Value.GetDateTimeOffset("O");
+                    endTime = property.Value.GetString();
                     continue;
                 }
                 if (property.NameEquals("count"u8))
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HDInsight.Containers.Models
                         return DeserializeAutoscaleSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoscaleSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

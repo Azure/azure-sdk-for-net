@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,59 +43,59 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (RemediationTimeframe != null)
+            if (Optional.IsDefined(RemediationTimeframe))
             {
                 writer.WritePropertyName("remediationTimeframe"u8);
                 writer.WriteStringValue(RemediationTimeframe);
             }
-            if (IsGracePeriod.HasValue)
+            if (Optional.IsDefined(IsGracePeriod))
             {
                 writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
-            if (RulePriority.HasValue)
+            if (Optional.IsDefined(RulePriority))
             {
                 writer.WritePropertyName("rulePriority"u8);
                 writer.WriteNumberValue(RulePriority.Value);
             }
-            if (IsDisabled.HasValue)
+            if (Optional.IsDefined(IsDisabled))
             {
                 writer.WritePropertyName("isDisabled"u8);
                 writer.WriteBooleanValue(IsDisabled.Value);
             }
-            if (RuleType.HasValue)
+            if (Optional.IsDefined(RuleType))
             {
                 writer.WritePropertyName("ruleType"u8);
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
-            if (SourceResourceType.HasValue)
+            if (Optional.IsDefined(SourceResourceType))
             {
                 writer.WritePropertyName("sourceResourceType"u8);
                 writer.WriteStringValue(SourceResourceType.Value.ToString());
             }
-            if (!(ExcludedScopes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedScopes))
             {
                 writer.WritePropertyName("excludedScopes"u8);
                 writer.WriteStartArray();
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConditionSets is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConditionSets))
             {
                 writer.WritePropertyName("conditionSets"u8);
                 writer.WriteStartArray();
@@ -127,25 +127,25 @@ namespace Azure.ResourceManager.SecurityCenter
                 }
                 writer.WriteEndArray();
             }
-            if (IncludeMemberScopes.HasValue)
+            if (Optional.IsDefined(IncludeMemberScopes))
             {
                 writer.WritePropertyName("includeMemberScopes"u8);
                 writer.WriteBooleanValue(IncludeMemberScopes.Value);
             }
-            if (OwnerSource != null)
+            if (Optional.IsDefined(OwnerSource))
             {
                 writer.WritePropertyName("ownerSource"u8);
-                writer.WriteObjectValue(OwnerSource);
+                writer.WriteObjectValue<GovernanceRuleOwnerSource>(OwnerSource, options);
             }
-            if (GovernanceEmailNotification != null)
+            if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
-                writer.WriteObjectValue(GovernanceEmailNotification);
+                writer.WriteObjectValue<GovernanceRuleEmailNotification>(GovernanceEmailNotification, options);
             }
-            if (Metadata != null)
+            if (Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<GovernanceRuleMetadata>(Metadata, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceRuleData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -423,7 +423,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -439,7 +439,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeGovernanceRuleData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GovernanceRuleData)} does not support reading '{options.Format}' format.");
             }
         }
 

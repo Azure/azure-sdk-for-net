@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParquetFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParquetFormatSerialization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeParquetFormatSerialization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParquetFormatSerialization)} does not support reading '{options.Format}' format.");
             }
         }
 

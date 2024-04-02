@@ -23,13 +23,13 @@ namespace Azure.Communication.CallAutomation
             }
             writer.WriteEndArray();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
-            if (OperationContext != null)
+            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);
             }
-            if (OperationCallbackUri != null)
+            if (Optional.IsDefined(OperationCallbackUri))
             {
                 writer.WritePropertyName("operationCallbackUri"u8);
                 writer.WriteStringValue(OperationCallbackUri);

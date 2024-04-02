@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="uri"/> is null. </exception>
         public FixedInputData(JobInputType jobInputType, Uri uri) : base(jobInputType, uri)
         {
-            if (uri == null)
-            {
-                throw new ArgumentNullException(nameof(uri));
-            }
+            Argument.AssertNotNull(uri, nameof(uri));
 
             InputDataType = MonitoringInputDataType.Fixed;
         }

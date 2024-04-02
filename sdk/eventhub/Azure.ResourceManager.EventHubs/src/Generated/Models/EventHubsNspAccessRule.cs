@@ -66,6 +66,7 @@ namespace Azure.ResourceManager.EventHubs.Models
         }
 
         /// <summary> Properties of Access Rule. </summary>
+        [WirePath("properties")]
         public EventHubsNspAccessRuleProperties Properties { get; }
     }
 }

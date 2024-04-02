@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvelopeEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnabledProtocols != null)
+            if (Optional.IsDefined(EnabledProtocols))
             {
                 writer.WritePropertyName("enabledProtocols"u8);
-                writer.WriteObjectValue(EnabledProtocols);
+                writer.WriteObjectValue<MediaEnabledProtocols>(EnabledProtocols, options);
             }
-            if (!(ClearTracks is ChangeTrackingList<MediaTrackSelection> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ClearTracks))
             {
                 writer.WritePropertyName("clearTracks"u8);
                 writer.WriteStartArray();
                 foreach (var item in ClearTracks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MediaTrackSelection>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ContentKeys != null)
+            if (Optional.IsDefined(ContentKeys))
             {
                 writer.WritePropertyName("contentKeys"u8);
-                writer.WriteObjectValue(ContentKeys);
+                writer.WriteObjectValue<StreamingPolicyContentKeys>(ContentKeys, options);
             }
-            if (CustomKeyAcquisitionUriTemplate != null)
+            if (Optional.IsDefined(CustomKeyAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeyAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeyAcquisitionUriTemplate);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvelopeEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeEnvelopeEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvelopeEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

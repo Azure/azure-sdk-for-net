@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,15 +30,15 @@ namespace Azure.ResourceManager.HybridCompute.Models
             writer.WriteStringValue(MaximumDuration, "P");
             writer.WritePropertyName("rebootSetting"u8);
             writer.WriteStringValue(RebootSetting.ToString());
-            if (WindowsParameters != null)
+            if (Optional.IsDefined(WindowsParameters))
             {
                 writer.WritePropertyName("windowsParameters"u8);
-                writer.WriteObjectValue(WindowsParameters);
+                writer.WriteObjectValue<HybridComputeWindowsParameters>(WindowsParameters, options);
             }
-            if (LinuxParameters != null)
+            if (Optional.IsDefined(LinuxParameters))
             {
                 writer.WritePropertyName("linuxParameters"u8);
-                writer.WriteObjectValue(LinuxParameters);
+                writer.WriteObjectValue<HybridComputeLinuxParameters>(LinuxParameters, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineInstallPatchesContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineInstallPatchesContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineInstallPatchesContent)} does not support reading '{options.Format}' format.");
             }
         }
 

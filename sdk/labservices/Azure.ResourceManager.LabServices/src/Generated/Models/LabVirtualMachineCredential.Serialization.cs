@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineCredential)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("username"u8);
             writer.WriteStringValue(Username);
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineCredential>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineCredential)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineCredential)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineCredential)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabVirtualMachineCredential(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineCredential)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineCredential)} does not support reading '{options.Format}' format.");
             }
         }
 

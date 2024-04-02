@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UpdateType != null)
+            if (Optional.IsDefined(UpdateType))
             {
                 writer.WritePropertyName("updateType"u8);
                 writer.WriteStringValue(UpdateType);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (PackageName != null)
+            if (Optional.IsDefined(PackageName))
             {
                 writer.WritePropertyName("packageName"u8);
                 writer.WriteStringValue(PackageName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdatePrerequisite>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeUpdatePrerequisite(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdatePrerequisite)} does not support reading '{options.Format}' format.");
             }
         }
 

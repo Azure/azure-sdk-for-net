@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SendAadLogs.HasValue)
+            if (Optional.IsDefined(SendAadLogs))
             {
                 writer.WritePropertyName("sendAadLogs"u8);
                 writer.WriteBooleanValue(SendAadLogs.Value);
             }
-            if (SendSubscriptionLogs.HasValue)
+            if (Optional.IsDefined(SendSubscriptionLogs))
             {
                 writer.WritePropertyName("sendSubscriptionLogs"u8);
                 writer.WriteBooleanValue(SendSubscriptionLogs.Value);
             }
-            if (SendResourceLogs.HasValue)
+            if (Optional.IsDefined(SendResourceLogs))
             {
                 writer.WritePropertyName("sendResourceLogs"u8);
                 writer.WriteBooleanValue(SendResourceLogs.Value);
             }
-            if (!(FilteringTags is ChangeTrackingList<FilteringTag> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FilteringTags))
             {
                 writer.WritePropertyName("filteringTags"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilteringTags)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilteringTag>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeLogRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogRules)} does not support reading '{options.Format}' format.");
             }
         }
 

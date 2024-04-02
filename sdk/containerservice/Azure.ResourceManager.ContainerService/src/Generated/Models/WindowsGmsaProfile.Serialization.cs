@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsGmsaProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (DnsServer != null)
+            if (Optional.IsDefined(DnsServer))
             {
                 writer.WritePropertyName("dnsServer"u8);
                 writer.WriteStringValue(DnsServer);
             }
-            if (RootDomainName != null)
+            if (Optional.IsDefined(RootDomainName))
             {
                 writer.WritePropertyName("rootDomainName"u8);
                 writer.WriteStringValue(RootDomainName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsGmsaProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeWindowsGmsaProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsGmsaProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

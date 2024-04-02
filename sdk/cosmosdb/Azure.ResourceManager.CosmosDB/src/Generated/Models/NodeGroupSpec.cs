@@ -32,8 +32,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> The node type deployed in the node group. </summary>
+        [WirePath("kind")]
         public NodeKind? Kind { get; set; }
         /// <summary> The number of nodes in the node group. </summary>
+        [WirePath("nodeCount")]
         public int? NodeCount { get; set; }
     }
 }

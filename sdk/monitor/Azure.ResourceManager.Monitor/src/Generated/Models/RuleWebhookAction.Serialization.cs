@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleWebhookAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleWebhookAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleWebhookAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ServiceUri != null)
+            if (Optional.IsDefined(ServiceUri))
             {
                 writer.WritePropertyName("serviceUri"u8);
                 writer.WriteStringValue(ServiceUri.AbsoluteUri);
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuleWebhookAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuleWebhookAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuleWebhookAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuleWebhookAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleWebhookAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeRuleWebhookAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuleWebhookAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuleWebhookAction)} does not support reading '{options.Format}' format.");
             }
         }
 

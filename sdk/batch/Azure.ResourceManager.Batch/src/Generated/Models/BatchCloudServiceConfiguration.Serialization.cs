@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchCloudServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("osFamily"u8);
             writer.WriteStringValue(OSFamily);
-            if (OSVersion != null)
+            if (Optional.IsDefined(OSVersion))
             {
                 writer.WritePropertyName("osVersion"u8);
                 writer.WriteStringValue(OSVersion);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Batch.Models
             var format = options.Format == "W" ? ((IPersistableModel<BatchCloudServiceConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Batch.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Batch.Models
                         return DeserializeBatchCloudServiceConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BatchCloudServiceConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.ApiManagement
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         public virtual async Task<Response<ApiManagementPrivateLinkResource>> GetAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkSubResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkSubResourceName));
-            }
-            if (privateLinkSubResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkSubResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
             using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         public virtual Response<ApiManagementPrivateLinkResource> Get(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkSubResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkSubResourceName));
-            }
-            if (privateLinkSubResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkSubResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
             using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.Get");
             scope.Start();
@@ -242,14 +226,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkSubResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkSubResourceName));
-            }
-            if (privateLinkSubResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkSubResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
             using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -292,14 +269,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         public virtual Response<bool> Exists(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkSubResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkSubResourceName));
-            }
-            if (privateLinkSubResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkSubResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
             using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.Exists");
             scope.Start();
@@ -342,14 +312,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         public virtual async Task<NullableResponse<ApiManagementPrivateLinkResource>> GetIfExistsAsync(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkSubResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkSubResourceName));
-            }
-            if (privateLinkSubResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkSubResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
             using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.GetIfExists");
             scope.Start();
@@ -394,14 +357,7 @@ namespace Azure.ResourceManager.ApiManagement
         /// <exception cref="ArgumentNullException"> <paramref name="privateLinkSubResourceName"/> is null. </exception>
         public virtual NullableResponse<ApiManagementPrivateLinkResource> GetIfExists(string privateLinkSubResourceName, CancellationToken cancellationToken = default)
         {
-            if (privateLinkSubResourceName == null)
-            {
-                throw new ArgumentNullException(nameof(privateLinkSubResourceName));
-            }
-            if (privateLinkSubResourceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(privateLinkSubResourceName));
-            }
+            Argument.AssertNotNullOrEmpty(privateLinkSubResourceName, nameof(privateLinkSubResourceName));
 
             using var scope = _apiManagementPrivateLinkResourcePrivateEndpointConnectionClientDiagnostics.CreateScope("ApiManagementPrivateLinkResourceCollection.GetIfExists");
             scope.Start();

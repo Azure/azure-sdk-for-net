@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,36 +22,36 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentStyle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentStyle)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentStyle)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsHandwritten.HasValue)
+            if (Optional.IsDefined(IsHandwritten))
             {
                 writer.WritePropertyName("isHandwritten"u8);
                 writer.WriteBooleanValue(IsHandwritten.Value);
             }
-            if (SimilarFontFamily != null)
+            if (Optional.IsDefined(SimilarFontFamily))
             {
                 writer.WritePropertyName("similarFontFamily"u8);
                 writer.WriteStringValue(SimilarFontFamily);
             }
-            if (FontStyle.HasValue)
+            if (Optional.IsDefined(FontStyle))
             {
                 writer.WritePropertyName("fontStyle"u8);
                 writer.WriteStringValue(FontStyle.Value.ToString());
             }
-            if (FontWeight.HasValue)
+            if (Optional.IsDefined(FontWeight))
             {
                 writer.WritePropertyName("fontWeight"u8);
                 writer.WriteStringValue(FontWeight.Value.ToString());
             }
-            if (Color != null)
+            if (Optional.IsDefined(Color))
             {
                 writer.WritePropertyName("color"u8);
                 writer.WriteStringValue(Color);
             }
-            if (BackgroundColor != null)
+            if (Optional.IsDefined(BackgroundColor))
             {
                 writer.WritePropertyName("backgroundColor"u8);
                 writer.WriteStringValue(BackgroundColor);
@@ -61,7 +60,7 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("confidence"u8);
@@ -89,7 +88,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentStyle>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentStyle)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentStyle)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,8 +105,8 @@ namespace Azure.AI.DocumentIntelligence
             }
             bool? isHandwritten = default;
             string similarFontFamily = default;
-            FontStyle? fontStyle = default;
-            FontWeight? fontWeight = default;
+            DocumentFontStyle? fontStyle = default;
+            DocumentFontWeight? fontWeight = default;
             string color = default;
             string backgroundColor = default;
             IReadOnlyList<DocumentSpan> spans = default;
@@ -136,7 +135,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontStyle = new FontStyle(property.Value.GetString());
+                    fontStyle = new DocumentFontStyle(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("fontWeight"u8))
@@ -145,7 +144,7 @@ namespace Azure.AI.DocumentIntelligence
                     {
                         continue;
                     }
-                    fontWeight = new FontWeight(property.Value.GetString());
+                    fontWeight = new DocumentFontWeight(property.Value.GetString());
                     continue;
                 }
                 if (property.NameEquals("color"u8))
@@ -200,7 +199,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentStyle)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentStyle)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -216,7 +215,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentStyle(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentStyle)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentStyle)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -234,7 +233,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentStyle>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<QosPortRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QosPortRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QosPortRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Start.HasValue)
+            if (Optional.IsDefined(Start))
             {
                 writer.WritePropertyName("start"u8);
                 writer.WriteNumberValue(Start.Value);
             }
-            if (End.HasValue)
+            if (Optional.IsDefined(End))
             {
                 writer.WritePropertyName("end"u8);
                 writer.WriteNumberValue(End.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<QosPortRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QosPortRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QosPortRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QosPortRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QosPortRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeQosPortRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QosPortRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QosPortRange)} does not support reading '{options.Format}' format.");
             }
         }
 

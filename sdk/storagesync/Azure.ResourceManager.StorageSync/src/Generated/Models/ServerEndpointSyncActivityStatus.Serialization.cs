@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncActivityStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Timestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Timestamp))
             {
                 writer.WritePropertyName("timestamp"u8);
                 writer.WriteStringValue(Timestamp.Value, "O");
             }
-            if (options.Format != "W" && PerItemErrorCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PerItemErrorCount))
             {
                 writer.WritePropertyName("perItemErrorCount"u8);
                 writer.WriteNumberValue(PerItemErrorCount.Value);
             }
-            if (options.Format != "W" && AppliedItemCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppliedItemCount))
             {
                 writer.WritePropertyName("appliedItemCount"u8);
                 writer.WriteNumberValue(AppliedItemCount.Value);
             }
-            if (options.Format != "W" && TotalItemCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalItemCount))
             {
                 writer.WritePropertyName("totalItemCount"u8);
                 writer.WriteNumberValue(TotalItemCount.Value);
             }
-            if (options.Format != "W" && AppliedBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AppliedBytes))
             {
                 writer.WritePropertyName("appliedBytes"u8);
                 writer.WriteNumberValue(AppliedBytes.Value);
             }
-            if (options.Format != "W" && TotalBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalBytes))
             {
                 writer.WritePropertyName("totalBytes"u8);
                 writer.WriteNumberValue(TotalBytes.Value);
             }
-            if (options.Format != "W" && SyncMode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SyncMode))
             {
                 writer.WritePropertyName("syncMode"u8);
                 writer.WriteStringValue(SyncMode.Value.ToString());
             }
-            if (options.Format != "W" && SessionMinutesRemaining.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SessionMinutesRemaining))
             {
                 writer.WritePropertyName("sessionMinutesRemaining"u8);
                 writer.WriteNumberValue(SessionMinutesRemaining.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServerEndpointSyncActivityStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -215,7 +215,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -231,7 +231,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeServerEndpointSyncActivityStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServerEndpointSyncActivityStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

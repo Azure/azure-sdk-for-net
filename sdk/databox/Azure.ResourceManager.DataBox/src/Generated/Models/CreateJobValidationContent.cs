@@ -17,15 +17,12 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="individualRequestDetails">
         /// List of request details contain validationType and its request as key and value respectively.
         /// Please note <see cref="DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/> and <see cref="DataBoxValidateAddressContent"/>.
+        /// The available derived classes include <see cref="DataBoxValidateAddressContent"/>, <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/> and <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>.
         /// </param>
         /// <exception cref="ArgumentNullException"> <paramref name="individualRequestDetails"/> is null. </exception>
         public CreateJobValidationContent(IEnumerable<DataBoxValidationInputContent> individualRequestDetails) : base(individualRequestDetails)
         {
-            if (individualRequestDetails == null)
-            {
-                throw new ArgumentNullException(nameof(individualRequestDetails));
-            }
+            Argument.AssertNotNull(individualRequestDetails, nameof(individualRequestDetails));
 
             ValidationCategory = DataBoxValidationCategory.JobCreationValidation;
         }
@@ -35,7 +32,7 @@ namespace Azure.ResourceManager.DataBox.Models
         /// <param name="individualRequestDetails">
         /// List of request details contain validationType and its request as key and value respectively.
         /// Please note <see cref="DataBoxValidationInputContent"/> is the base class. According to the scenario, a derived class of the base class might need to be assigned here, or this property needs to be casted to one of the possible derived classes.
-        /// The available derived classes include <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/>, <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/> and <see cref="DataBoxValidateAddressContent"/>.
+        /// The available derived classes include <see cref="DataBoxValidateAddressContent"/>, <see cref="CreateOrderLimitForSubscriptionValidationContent"/>, <see cref="DataTransferDetailsValidationContent"/>, <see cref="PreferencesValidationContent"/>, <see cref="SkuAvailabilityValidationContent"/> and <see cref="SubscriptionIsAllowedToCreateJobValidationContent"/>.
         /// </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         internal CreateJobValidationContent(DataBoxValidationCategory validationCategory, IList<DataBoxValidationInputContent> individualRequestDetails, IDictionary<string, BinaryData> serializedAdditionalRawData) : base(validationCategory, individualRequestDetails, serializedAdditionalRawData)

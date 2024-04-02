@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SchemaMigrationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SchemaOption.HasValue)
+            if (Optional.IsDefined(SchemaOption))
             {
                 writer.WritePropertyName("schemaOption"u8);
                 writer.WriteStringValue(SchemaOption.Value.ToString());
             }
-            if (FileId != null)
+            if (Optional.IsDefined(FileId))
             {
                 writer.WritePropertyName("fileId"u8);
                 writer.WriteStringValue(FileId);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 writer.WriteStringValue(FileName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SchemaMigrationSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSchemaMigrationSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchemaMigrationSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

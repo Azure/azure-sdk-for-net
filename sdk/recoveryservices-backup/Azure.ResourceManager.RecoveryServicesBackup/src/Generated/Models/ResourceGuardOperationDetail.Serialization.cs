@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardOperationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardOperationDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardOperationDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VaultCriticalOperation != null)
+            if (Optional.IsDefined(VaultCriticalOperation))
             {
                 writer.WritePropertyName("vaultCriticalOperation"u8);
                 writer.WriteStringValue(VaultCriticalOperation);
             }
-            if (DefaultResourceId != null)
+            if (Optional.IsDefined(DefaultResourceId))
             {
                 writer.WritePropertyName("defaultResourceRequest"u8);
                 writer.WriteStringValue(DefaultResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceGuardOperationDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceGuardOperationDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceGuardOperationDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardOperationDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardOperationDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeResourceGuardOperationDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceGuardOperationDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceGuardOperationDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

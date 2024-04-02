@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI
@@ -23,19 +22,24 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureChatExtensionsMessageContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Messages is ChangeTrackingList<ChatResponseMessage> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Citations))
             {
-                writer.WritePropertyName("messages"u8);
+                writer.WritePropertyName("citations"u8);
                 writer.WriteStartArray();
-                foreach (var item in Messages)
+                foreach (var item in Citations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AzureChatExtensionDataSourceResponseCitation>(item, options);
                 }
                 writer.WriteEndArray();
+            }
+            if (Optional.IsDefined(Intent))
+            {
+                writer.WritePropertyName("intent"u8);
+                writer.WriteStringValue(Intent);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -60,7 +64,7 @@ namespace Azure.AI.OpenAI
             var format = options.Format == "W" ? ((IPersistableModel<AzureChatExtensionsMessageContext>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -75,23 +79,29 @@ namespace Azure.AI.OpenAI
             {
                 return null;
             }
-            IReadOnlyList<ChatResponseMessage> messages = default;
+            IReadOnlyList<AzureChatExtensionDataSourceResponseCitation> citations = default;
+            string intent = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
-                if (property.NameEquals("messages"u8))
+                if (property.NameEquals("citations"u8))
                 {
                     if (property.Value.ValueKind == JsonValueKind.Null)
                     {
                         continue;
                     }
-                    List<ChatResponseMessage> array = new List<ChatResponseMessage>();
+                    List<AzureChatExtensionDataSourceResponseCitation> array = new List<AzureChatExtensionDataSourceResponseCitation>();
                     foreach (var item in property.Value.EnumerateArray())
                     {
-                        array.Add(ChatResponseMessage.DeserializeChatResponseMessage(item, options));
+                        array.Add(AzureChatExtensionDataSourceResponseCitation.DeserializeAzureChatExtensionDataSourceResponseCitation(item, options));
                     }
-                    messages = array;
+                    citations = array;
+                    continue;
+                }
+                if (property.NameEquals("intent"u8))
+                {
+                    intent = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -100,7 +110,7 @@ namespace Azure.AI.OpenAI
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new AzureChatExtensionsMessageContext(messages ?? new ChangeTrackingList<ChatResponseMessage>(), serializedAdditionalRawData);
+            return new AzureChatExtensionsMessageContext(citations ?? new ChangeTrackingList<AzureChatExtensionDataSourceResponseCitation>(), intent, serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<AzureChatExtensionsMessageContext>.Write(ModelReaderWriterOptions options)
@@ -112,7 +122,7 @@ namespace Azure.AI.OpenAI
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +138,7 @@ namespace Azure.AI.OpenAI
                         return DeserializeAzureChatExtensionsMessageContext(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureChatExtensionsMessageContext)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -146,7 +156,7 @@ namespace Azure.AI.OpenAI
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AzureChatExtensionsMessageContext>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

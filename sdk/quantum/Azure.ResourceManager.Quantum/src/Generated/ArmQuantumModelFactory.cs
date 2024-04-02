@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
 using Azure.ResourceManager.Models;
-using Azure.ResourceManager.Quantum;
 
 namespace Azure.ResourceManager.Quantum.Models
 {
@@ -30,11 +29,12 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="provisioningState"> Provisioning status field. </param>
         /// <param name="storageAccount"> ARM Resource Id of the storage account associated with this workspace. </param>
         /// <param name="endpointUri"> The URI of the workspace endpoint. </param>
+        /// <param name="isApiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
         /// <returns> A new <see cref="Quantum.QuantumWorkspaceData"/> instance for mocking. </returns>
-        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IEnumerable<Provider> providers = null, UsableStatus? usable = null, ProvisioningStatus? provisioningState = null, string storageAccount = null, Uri endpointUri = null)
+        public static QuantumWorkspaceData QuantumWorkspaceData(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, IDictionary<string, string> tags = null, AzureLocation location = default, ManagedServiceIdentity identity = null, IEnumerable<QuantumProvider> providers = null, WorkspaceUsableStatus? usable = null, QuantumProvisioningStatus? provisioningState = null, string storageAccount = null, Uri endpointUri = null, bool? isApiKeyEnabled = null)
         {
             tags ??= new Dictionary<string, string>();
-            providers ??= new List<Provider>();
+            providers ??= new List<QuantumProvider>();
 
             return new QuantumWorkspaceData(
                 id,
@@ -49,20 +49,21 @@ namespace Azure.ResourceManager.Quantum.Models
                 provisioningState,
                 storageAccount,
                 endpointUri,
+                isApiKeyEnabled,
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderDescription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuantumProviderDescription"/>. </summary>
         /// <param name="id"> Unique provider's id. </param>
         /// <param name="name"> Provider's display name. </param>
-        /// <param name="properties"> A list of provider-specific properties. </param>
-        /// <returns> A new <see cref="Models.ProviderDescription"/> instance for mocking. </returns>
-        public static ProviderDescription ProviderDescription(string id = null, string name = null, ProviderProperties properties = null)
+        /// <param name="properties"> Provider properties. </param>
+        /// <returns> A new <see cref="Models.QuantumProviderDescription"/> instance for mocking. </returns>
+        public static QuantumProviderDescription QuantumProviderDescription(string id = null, string name = null, QuantumProviderProperties properties = null)
         {
-            return new ProviderDescription(id, name, properties, serializedAdditionalRawData: null);
+            return new QuantumProviderDescription(id, name, properties, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderProperties"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuantumProviderProperties"/>. </summary>
         /// <param name="description"> A description about this provider. </param>
         /// <param name="providerType"> Provider type. </param>
         /// <param name="company"> Company name. </param>
@@ -73,15 +74,15 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="skus"> The list of skus available from this provider. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions from the provider. </param>
         /// <param name="pricingDimensions"> The list of pricing dimensions from the provider. </param>
-        /// <returns> A new <see cref="Models.ProviderProperties"/> instance for mocking. </returns>
-        public static ProviderProperties ProviderProperties(string description = null, string providerType = null, string company = null, string defaultEndpoint = null, ProviderPropertiesAad aad = null, ProviderPropertiesManagedApplication managedApplication = null, IEnumerable<TargetDescription> targets = null, IEnumerable<SkuDescription> skus = null, IEnumerable<QuotaDimension> quotaDimensions = null, IEnumerable<PricingDimension> pricingDimensions = null)
+        /// <returns> A new <see cref="Models.QuantumProviderProperties"/> instance for mocking. </returns>
+        public static QuantumProviderProperties QuantumProviderProperties(string description = null, string providerType = null, string company = null, string defaultEndpoint = null, ProviderAadInfo aad = null, ProviderApplicationInfo managedApplication = null, IEnumerable<ProviderTargetDescription> targets = null, IEnumerable<ProviderSkuDescription> skus = null, IEnumerable<QuantumQuotaDimension> quotaDimensions = null, IEnumerable<ProviderPricingDimension> pricingDimensions = null)
         {
-            targets ??= new List<TargetDescription>();
-            skus ??= new List<SkuDescription>();
-            quotaDimensions ??= new List<QuotaDimension>();
-            pricingDimensions ??= new List<PricingDimension>();
+            targets ??= new List<ProviderTargetDescription>();
+            skus ??= new List<ProviderSkuDescription>();
+            quotaDimensions ??= new List<QuantumQuotaDimension>();
+            pricingDimensions ??= new List<ProviderPricingDimension>();
 
-            return new ProviderProperties(
+            return new QuantumProviderProperties(
                 description,
                 providerType,
                 company,
@@ -95,37 +96,37 @@ namespace Azure.ResourceManager.Quantum.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderPropertiesAad"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderAadInfo"/>. </summary>
         /// <param name="applicationId"> Provider's application id. </param>
         /// <param name="tenantId"> Provider's tenant id. </param>
-        /// <returns> A new <see cref="Models.ProviderPropertiesAad"/> instance for mocking. </returns>
-        public static ProviderPropertiesAad ProviderPropertiesAad(string applicationId = null, Guid? tenantId = null)
+        /// <returns> A new <see cref="Models.ProviderAadInfo"/> instance for mocking. </returns>
+        public static ProviderAadInfo ProviderAadInfo(string applicationId = null, Guid? tenantId = null)
         {
-            return new ProviderPropertiesAad(applicationId, tenantId, serializedAdditionalRawData: null);
+            return new ProviderAadInfo(applicationId, tenantId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.ProviderPropertiesManagedApplication"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderApplicationInfo"/>. </summary>
         /// <param name="publisherId"> Provider's publisher id. </param>
         /// <param name="offerId"> Provider's offer id. </param>
-        /// <returns> A new <see cref="Models.ProviderPropertiesManagedApplication"/> instance for mocking. </returns>
-        public static ProviderPropertiesManagedApplication ProviderPropertiesManagedApplication(string publisherId = null, string offerId = null)
+        /// <returns> A new <see cref="Models.ProviderApplicationInfo"/> instance for mocking. </returns>
+        public static ProviderApplicationInfo ProviderApplicationInfo(string publisherId = null, string offerId = null)
         {
-            return new ProviderPropertiesManagedApplication(publisherId, offerId, serializedAdditionalRawData: null);
+            return new ProviderApplicationInfo(publisherId, offerId, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.TargetDescription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderTargetDescription"/>. </summary>
         /// <param name="id"> Unique target id. </param>
         /// <param name="name"> Display name of this target. </param>
         /// <param name="description"> A description about this target. </param>
         /// <param name="acceptedDataFormats"> List of data formats accepted by this target. </param>
         /// <param name="acceptedContentEncodings"> List of content encodings accepted by this target. </param>
-        /// <returns> A new <see cref="Models.TargetDescription"/> instance for mocking. </returns>
-        public static TargetDescription TargetDescription(string id = null, string name = null, string description = null, IEnumerable<string> acceptedDataFormats = null, IEnumerable<string> acceptedContentEncodings = null)
+        /// <returns> A new <see cref="Models.ProviderTargetDescription"/> instance for mocking. </returns>
+        public static ProviderTargetDescription ProviderTargetDescription(string id = null, string name = null, string description = null, IEnumerable<string> acceptedDataFormats = null, IEnumerable<string> acceptedContentEncodings = null)
         {
             acceptedDataFormats ??= new List<string>();
             acceptedContentEncodings ??= new List<string>();
 
-            return new TargetDescription(
+            return new ProviderTargetDescription(
                 id,
                 name,
                 description,
@@ -134,7 +135,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.SkuDescription"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderSkuDescription"/>. </summary>
         /// <param name="id"> Unique sku id. </param>
         /// <param name="name"> Display name of this sku. </param>
         /// <param name="version"> Display name of this sku. </param>
@@ -144,14 +145,14 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="targets"> The list of targets available for this sku. </param>
         /// <param name="quotaDimensions"> The list of quota dimensions for this sku. </param>
         /// <param name="pricingDetails"> The list of pricing details for the sku. </param>
-        /// <returns> A new <see cref="Models.SkuDescription"/> instance for mocking. </returns>
-        public static SkuDescription SkuDescription(string id = null, string name = null, string version = null, string description = null, Uri restrictedAccessUri = null, bool? autoAdd = null, IEnumerable<string> targets = null, IEnumerable<QuotaDimension> quotaDimensions = null, IEnumerable<PricingDetail> pricingDetails = null)
+        /// <returns> A new <see cref="Models.ProviderSkuDescription"/> instance for mocking. </returns>
+        public static ProviderSkuDescription ProviderSkuDescription(string id = null, string name = null, string version = null, string description = null, Uri restrictedAccessUri = null, bool? autoAdd = null, IEnumerable<string> targets = null, IEnumerable<QuantumQuotaDimension> quotaDimensions = null, IEnumerable<QuantumPricingDetail> pricingDetails = null)
         {
             targets ??= new List<string>();
-            quotaDimensions ??= new List<QuotaDimension>();
-            pricingDetails ??= new List<PricingDetail>();
+            quotaDimensions ??= new List<QuantumQuotaDimension>();
+            pricingDetails ??= new List<QuantumPricingDetail>();
 
-            return new SkuDescription(
+            return new ProviderSkuDescription(
                 id,
                 name,
                 version,
@@ -164,7 +165,7 @@ namespace Azure.ResourceManager.Quantum.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.QuotaDimension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuantumQuotaDimension"/>. </summary>
         /// <param name="id"> Unique id of this dimension. </param>
         /// <param name="scope"> The scope of this quota dimension. </param>
         /// <param name="period"> The reset period of this quota dimension. </param>
@@ -173,10 +174,10 @@ namespace Azure.ResourceManager.Quantum.Models
         /// <param name="description"> A description about this quota dimension. </param>
         /// <param name="unit"> The standard unit of measurement used for this quota dimension. </param>
         /// <param name="unitPlural"> The standard unit of measurement used for this quota dimension in plural form. </param>
-        /// <returns> A new <see cref="Models.QuotaDimension"/> instance for mocking. </returns>
-        public static QuotaDimension QuotaDimension(string id = null, string scope = null, string period = null, float? quota = null, string name = null, string description = null, string unit = null, string unitPlural = null)
+        /// <returns> A new <see cref="Models.QuantumQuotaDimension"/> instance for mocking. </returns>
+        public static QuantumQuotaDimension QuantumQuotaDimension(string id = null, string scope = null, string period = null, float? quota = null, string name = null, string description = null, string unit = null, string unitPlural = null)
         {
-            return new QuotaDimension(
+            return new QuantumQuotaDimension(
                 id,
                 scope,
                 period,
@@ -188,32 +189,59 @@ namespace Azure.ResourceManager.Quantum.Models
                 serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PricingDetail"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.QuantumPricingDetail"/>. </summary>
         /// <param name="id"> Unique id for this pricing information. </param>
         /// <param name="value"> The unit cost of this sku. </param>
-        /// <returns> A new <see cref="Models.PricingDetail"/> instance for mocking. </returns>
-        public static PricingDetail PricingDetail(string id = null, string value = null)
+        /// <returns> A new <see cref="Models.QuantumPricingDetail"/> instance for mocking. </returns>
+        public static QuantumPricingDetail QuantumPricingDetail(string id = null, string value = null)
         {
-            return new PricingDetail(id, value, serializedAdditionalRawData: null);
+            return new QuantumPricingDetail(id, value, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.PricingDimension"/>. </summary>
+        /// <summary> Initializes a new instance of <see cref="Models.ProviderPricingDimension"/>. </summary>
         /// <param name="id"> Unique id of this pricing dimension. </param>
         /// <param name="name"> The display name of this pricing dimension. </param>
-        /// <returns> A new <see cref="Models.PricingDimension"/> instance for mocking. </returns>
-        public static PricingDimension PricingDimension(string id = null, string name = null)
+        /// <returns> A new <see cref="Models.ProviderPricingDimension"/> instance for mocking. </returns>
+        public static ProviderPricingDimension ProviderPricingDimension(string id = null, string name = null)
         {
-            return new PricingDimension(id, name, serializedAdditionalRawData: null);
+            return new ProviderPricingDimension(id, name, serializedAdditionalRawData: null);
         }
 
-        /// <summary> Initializes a new instance of <see cref="Models.CheckNameAvailabilityResult"/>. </summary>
-        /// <param name="nameAvailable"> Indicator of availability of the Quantum Workspace resource name. </param>
+        /// <summary> Initializes a new instance of <see cref="Models.WorkspaceNameAvailabilityResult"/>. </summary>
+        /// <param name="isNameAvailable"> Indicator of availability of the Quantum Workspace resource name. </param>
         /// <param name="reason"> The reason of unavailability. </param>
         /// <param name="message"> The detailed info regarding the reason associated with the Namespace. </param>
-        /// <returns> A new <see cref="Models.CheckNameAvailabilityResult"/> instance for mocking. </returns>
-        public static CheckNameAvailabilityResult CheckNameAvailabilityResult(bool? nameAvailable = null, string reason = null, string message = null)
+        /// <returns> A new <see cref="Models.WorkspaceNameAvailabilityResult"/> instance for mocking. </returns>
+        public static WorkspaceNameAvailabilityResult WorkspaceNameAvailabilityResult(bool? isNameAvailable = null, string reason = null, string message = null)
         {
-            return new CheckNameAvailabilityResult(nameAvailable, reason, message, serializedAdditionalRawData: null);
+            return new WorkspaceNameAvailabilityResult(isNameAvailable, reason, message, serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkspaceKeyListResult"/>. </summary>
+        /// <param name="isApiKeyEnabled"> Indicator of enablement of the Quantum workspace Api keys. </param>
+        /// <param name="primaryKey"> The quantum workspace primary api key. </param>
+        /// <param name="secondaryKey"> The quantum workspace secondary api key. </param>
+        /// <param name="primaryConnectionString"> The connection string of the primary api key. </param>
+        /// <param name="secondaryConnectionString"> The connection string of the secondary api key. </param>
+        /// <returns> A new <see cref="Models.WorkspaceKeyListResult"/> instance for mocking. </returns>
+        public static WorkspaceKeyListResult WorkspaceKeyListResult(bool? isApiKeyEnabled = null, WorkspaceApiKey primaryKey = null, WorkspaceApiKey secondaryKey = null, string primaryConnectionString = null, string secondaryConnectionString = null)
+        {
+            return new WorkspaceKeyListResult(
+                isApiKeyEnabled,
+                primaryKey,
+                secondaryKey,
+                primaryConnectionString,
+                secondaryConnectionString,
+                serializedAdditionalRawData: null);
+        }
+
+        /// <summary> Initializes a new instance of <see cref="Models.WorkspaceApiKey"/>. </summary>
+        /// <param name="createdOn"> The creation time of the api key. </param>
+        /// <param name="key"> The Api key. </param>
+        /// <returns> A new <see cref="Models.WorkspaceApiKey"/> instance for mocking. </returns>
+        public static WorkspaceApiKey WorkspaceApiKey(DateTimeOffset? createdOn = null, string key = null)
+        {
+            return new WorkspaceApiKey(createdOn, key, serializedAdditionalRawData: null);
         }
     }
 }

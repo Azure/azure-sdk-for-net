@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelCategory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelCategory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelCategory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Classes is ChangeTrackingDictionary<string, LabelClass> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Classes))
             {
                 if (Classes != null)
                 {
@@ -35,7 +35,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     foreach (var item in Classes)
                     {
                         writer.WritePropertyName(item.Key);
-                        writer.WriteObjectValue(item.Value);
+                        writer.WriteObjectValue<LabelClass>(item.Value, options);
                     }
                     writer.WriteEndObject();
                 }
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("classes");
                 }
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 if (DisplayName != null)
                 {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("displayName");
                 }
             }
-            if (MultiSelect.HasValue)
+            if (Optional.IsDefined(MultiSelect))
             {
                 writer.WritePropertyName("multiSelect"u8);
                 writer.WriteStringValue(MultiSelect.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabelCategory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabelCategory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabelCategory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabelCategory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelCategory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeLabelCategory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabelCategory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabelCategory)} does not support reading '{options.Format}' format.");
             }
         }
 

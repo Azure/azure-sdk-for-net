@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetBranchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(BranchNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BranchNames))
             {
                 writer.WritePropertyName("branchNames"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AnnotateDefaultBranch.HasValue)
+            if (Optional.IsDefined(AnnotateDefaultBranch))
             {
                 writer.WritePropertyName("annotateDefaultBranch"u8);
                 writer.WriteStringValue(AnnotateDefaultBranch.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<TargetBranchConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeTargetBranchConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TargetBranchConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

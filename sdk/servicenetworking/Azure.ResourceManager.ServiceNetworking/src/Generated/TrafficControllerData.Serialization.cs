@@ -25,11 +25,11 @@ namespace Azure.ResourceManager.ServiceNetworking
             var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficControllerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficControllerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,14 +57,14 @@ namespace Azure.ResourceManager.ServiceNetworking
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(ConfigurationEndpoints is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConfigurationEndpoints))
             {
                 writer.WritePropertyName("configurationEndpoints"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Frontends is ChangeTrackingList<SubResource> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Frontends))
             {
                 writer.WritePropertyName("frontends"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Associations is ChangeTrackingList<SubResource> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Associations))
             {
                 writer.WritePropertyName("associations"u8);
                 writer.WriteStartArray();
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.ServiceNetworking
             var format = options.Format == "W" ? ((IPersistableModel<TrafficControllerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrafficControllerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrafficControllerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -287,7 +287,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrafficControllerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficControllerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.ServiceNetworking
                         return DeserializeTrafficControllerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrafficControllerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrafficControllerData)} does not support reading '{options.Format}' format.");
             }
         }
 

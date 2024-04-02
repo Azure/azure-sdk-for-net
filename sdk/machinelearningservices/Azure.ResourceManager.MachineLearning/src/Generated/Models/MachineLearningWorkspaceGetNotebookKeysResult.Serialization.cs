@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceGetNotebookKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetNotebookKeysResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetNotebookKeysResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrimaryAccessKey != null)
+            if (options.Format != "W" && Optional.IsDefined(PrimaryAccessKey))
             {
                 writer.WritePropertyName("primaryAccessKey"u8);
                 writer.WriteStringValue(PrimaryAccessKey);
             }
-            if (options.Format != "W" && SecondaryAccessKey != null)
+            if (options.Format != "W" && Optional.IsDefined(SecondaryAccessKey))
             {
                 writer.WritePropertyName("secondaryAccessKey"u8);
                 writer.WriteStringValue(SecondaryAccessKey);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningWorkspaceGetNotebookKeysResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetNotebookKeysResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetNotebookKeysResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetNotebookKeysResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetNotebookKeysResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningWorkspaceGetNotebookKeysResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetNotebookKeysResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningWorkspaceGetNotebookKeysResult)} does not support reading '{options.Format}' format.");
             }
         }
 

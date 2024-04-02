@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FirewallRuleName != null)
+            if (Optional.IsDefined(FirewallRuleName))
             {
                 writer.WritePropertyName("firewallRuleName"u8);
                 writer.WriteStringValue(FirewallRuleName);
             }
-            if (RangeStart != null)
+            if (Optional.IsDefined(RangeStart))
             {
                 writer.WritePropertyName("rangeStart"u8);
                 writer.WriteStringValue(RangeStart);
             }
-            if (RangeEnd != null)
+            if (Optional.IsDefined(RangeEnd))
             {
                 writer.WritePropertyName("rangeEnd"u8);
                 writer.WriteStringValue(RangeEnd);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Analysis.Models
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisIPv4FirewallRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Analysis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Analysis.Models
                         return DeserializeAnalysisIPv4FirewallRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisIPv4FirewallRule)} does not support reading '{options.Format}' format.");
             }
         }
 

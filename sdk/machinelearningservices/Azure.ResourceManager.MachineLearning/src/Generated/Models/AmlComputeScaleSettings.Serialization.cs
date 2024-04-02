@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("maxNodeCount"u8);
             writer.WriteNumberValue(MaxNodeCount);
-            if (MinNodeCount.HasValue)
+            if (Optional.IsDefined(MinNodeCount))
             {
                 writer.WritePropertyName("minNodeCount"u8);
                 writer.WriteNumberValue(MinNodeCount.Value);
             }
-            if (NodeIdleTimeBeforeScaleDown.HasValue)
+            if (Optional.IsDefined(NodeIdleTimeBeforeScaleDown))
             {
                 if (NodeIdleTimeBeforeScaleDown != null)
                 {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AmlComputeScaleSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeAmlComputeScaleSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AmlComputeScaleSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Catalog != null)
+            if (options.Format != "W" && Optional.IsDefined(Catalog))
             {
                 writer.WritePropertyName("catalog"u8);
                 writer.WriteStringValue(Catalog);
             }
-            if (options.Format != "W" && Scan != null)
+            if (options.Format != "W" && Optional.IsDefined(Scan))
             {
                 writer.WritePropertyName("scan"u8);
                 writer.WriteStringValue(Scan);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewAccountEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Purview.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Purview.Models
                         return DeserializePurviewAccountEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewAccountEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,7 +15,11 @@
     <PackageReference Include="Azure.Messaging.EventHubs" />
     <PackageReference Include="Azure.Storage.Blobs" />
   </ItemGroup>
-
+<!-- Remove before shipping GA -->
+  <!-- <PropertyGroup>
+        <DefineConstants>PREVIEW_FEATURE_FLAG</DefineConstants>
+  </PropertyGroup> -->
+<!-- End remove before shipping GA -->
   <ItemGroup>
     <ProjectReference Include="$(AzureCoreTestFramework)" />
     <ProjectReference Include="..\src\Azure.Identity.csproj" />

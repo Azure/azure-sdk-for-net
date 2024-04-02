@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdAuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OpenIdProviderId != null)
+            if (Optional.IsDefined(OpenIdProviderId))
             {
                 writer.WritePropertyName("openidProviderId"u8);
                 writer.WriteStringValue(OpenIdProviderId);
             }
-            if (!(BearerTokenSendingMethods is ChangeTrackingList<BearerTokenSendingMethod> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BearerTokenSendingMethods))
             {
                 writer.WritePropertyName("bearerTokenSendingMethods"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<OpenIdAuthenticationSettingsContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeOpenIdAuthenticationSettingsContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OpenIdAuthenticationSettingsContract)} does not support reading '{options.Format}' format.");
             }
         }
 

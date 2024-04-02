@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SkipAttachAndMount.HasValue)
+            if (Optional.IsDefined(SkipAttachAndMount))
             {
                 writer.WritePropertyName("skipAttachAndMount"u8);
                 writer.WriteBooleanValue(SkipAttachAndMount.Value);
             }
-            if (LogPointInTimeForDBRecovery != null)
+            if (Optional.IsDefined(LogPointInTimeForDBRecovery))
             {
                 writer.WritePropertyName("logPointInTimeForDBRecovery"u8);
                 writer.WriteStringValue(LogPointInTimeForDBRecovery);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSnapshotRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

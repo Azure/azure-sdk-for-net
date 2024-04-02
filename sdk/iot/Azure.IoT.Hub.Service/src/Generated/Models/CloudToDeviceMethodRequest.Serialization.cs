@@ -15,22 +15,22 @@ namespace Azure.IoT.Hub.Service.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (MethodName != null)
+            if (Optional.IsDefined(MethodName))
             {
                 writer.WritePropertyName("methodName"u8);
                 writer.WriteStringValue(MethodName);
             }
-            if (Payload != null)
+            if (Optional.IsDefined(Payload))
             {
                 writer.WritePropertyName("payload"u8);
-                writer.WriteObjectValue(Payload);
+                writer.WriteObjectValue<object>(Payload);
             }
-            if (ResponseTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(ResponseTimeoutInSeconds))
             {
                 writer.WritePropertyName("responseTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ResponseTimeoutInSeconds.Value);
             }
-            if (ConnectTimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(ConnectTimeoutInSeconds))
             {
                 writer.WritePropertyName("connectTimeoutInSeconds"u8);
                 writer.WriteNumberValue(ConnectTimeoutInSeconds.Value);

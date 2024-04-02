@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacetRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SortBy != null)
+            if (Optional.IsDefined(SortBy))
             {
                 writer.WritePropertyName("sortBy"u8);
                 writer.WriteStringValue(SortBy);
             }
-            if (SortOrder.HasValue)
+            if (Optional.IsDefined(SortOrder))
             {
                 writer.WritePropertyName("sortOrder"u8);
                 writer.WriteStringValue(SortOrder.Value.ToSerialString());
             }
-            if (Filter != null)
+            if (Optional.IsDefined(Filter))
             {
                 writer.WritePropertyName("filter"u8);
                 writer.WriteStringValue(Filter);
             }
-            if (Top.HasValue)
+            if (Optional.IsDefined(Top))
             {
                 writer.WritePropertyName("$top"u8);
                 writer.WriteNumberValue(Top.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
             var format = options.Format == "W" ? ((IPersistableModel<FacetRequestOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ResourceGraph.Models
                         return DeserializeFacetRequestOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FacetRequestOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

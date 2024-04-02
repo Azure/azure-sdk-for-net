@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (Enforcement.HasValue)
+            if (Optional.IsDefined(Enforcement))
             {
                 writer.WritePropertyName("enforcement"u8);
                 writer.WriteStringValue(Enforcement.Value.ToString());
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualNetworkEncryption>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVirtualNetworkEncryption(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualNetworkEncryption)} does not support reading '{options.Format}' format.");
             }
         }
 

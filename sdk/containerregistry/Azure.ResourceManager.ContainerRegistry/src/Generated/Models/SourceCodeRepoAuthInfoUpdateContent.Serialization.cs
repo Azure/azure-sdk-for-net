@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceCodeRepoAuthInfoUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TokenType.HasValue)
+            if (Optional.IsDefined(TokenType))
             {
                 writer.WritePropertyName("tokenType"u8);
                 writer.WriteStringValue(TokenType.Value.ToString());
             }
-            if (Token != null)
+            if (Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
             }
-            if (RefreshToken != null)
+            if (Optional.IsDefined(RefreshToken))
             {
                 writer.WritePropertyName("refreshToken"u8);
                 writer.WriteStringValue(RefreshToken);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (ExpiresIn.HasValue)
+            if (Optional.IsDefined(ExpiresIn))
             {
                 writer.WritePropertyName("expiresIn"u8);
                 writer.WriteNumberValue(ExpiresIn.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceCodeRepoAuthInfoUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeSourceCodeRepoAuthInfoUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceCodeRepoAuthInfoUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

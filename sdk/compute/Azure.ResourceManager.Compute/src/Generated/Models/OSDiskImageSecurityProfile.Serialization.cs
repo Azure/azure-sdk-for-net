@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConfidentialVmEncryptionType.HasValue)
+            if (Optional.IsDefined(ConfidentialVmEncryptionType))
             {
                 writer.WritePropertyName("confidentialVMEncryptionType"u8);
                 writer.WriteStringValue(ConfidentialVmEncryptionType.Value.ToString());
             }
-            if (SecureVmDiskEncryptionSetId != null)
+            if (Optional.IsDefined(SecureVmDiskEncryptionSetId))
             {
                 writer.WritePropertyName("secureVMDiskEncryptionSetId"u8);
                 writer.WriteStringValue(SecureVmDiskEncryptionSetId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSDiskImageSecurityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeOSDiskImageSecurityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSDiskImageSecurityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

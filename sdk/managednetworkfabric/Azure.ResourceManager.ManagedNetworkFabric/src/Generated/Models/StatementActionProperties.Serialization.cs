@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatementActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatementActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatementActionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LocalPreference.HasValue)
+            if (Optional.IsDefined(LocalPreference))
             {
                 writer.WritePropertyName("localPreference"u8);
                 writer.WriteNumberValue(LocalPreference.Value);
             }
             writer.WritePropertyName("actionType"u8);
             writer.WriteStringValue(ActionType.ToString());
-            if (IPCommunityProperties != null)
+            if (Optional.IsDefined(IPCommunityProperties))
             {
                 writer.WritePropertyName("ipCommunityProperties"u8);
-                writer.WriteObjectValue(IPCommunityProperties);
+                writer.WriteObjectValue<ActionIPCommunityProperties>(IPCommunityProperties, options);
             }
-            if (IPExtendedCommunityProperties != null)
+            if (Optional.IsDefined(IPExtendedCommunityProperties))
             {
                 writer.WritePropertyName("ipExtendedCommunityProperties"u8);
-                writer.WriteObjectValue(IPExtendedCommunityProperties);
+                writer.WriteObjectValue<ActionIPExtendedCommunityProperties>(IPExtendedCommunityProperties, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<StatementActionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StatementActionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StatementActionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StatementActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatementActionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeStatementActionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StatementActionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StatementActionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

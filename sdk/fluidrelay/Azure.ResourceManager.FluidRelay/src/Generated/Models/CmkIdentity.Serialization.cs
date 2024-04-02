@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<CmkIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CmkIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CmkIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IdentityType.HasValue)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("identityType"u8);
                 writer.WriteStringValue(IdentityType.Value.ToSerialString());
             }
-            if (UserAssignedIdentityResourceId != null)
+            if (Optional.IsDefined(UserAssignedIdentityResourceId))
             {
                 writer.WritePropertyName("userAssignedIdentityResourceId"u8);
                 writer.WriteStringValue(UserAssignedIdentityResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<CmkIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CmkIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CmkIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CmkIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CmkIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         return DeserializeCmkIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CmkIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CmkIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

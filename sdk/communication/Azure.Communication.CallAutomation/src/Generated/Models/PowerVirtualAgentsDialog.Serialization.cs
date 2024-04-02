@@ -18,7 +18,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("botAppId"u8);
             writer.WriteStringValue(BotAppId);
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
@@ -35,7 +35,7 @@ namespace Azure.Communication.CallAutomation
                     writer.WriteNullValue();
                     continue;
                 }
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
             writer.WriteEndObject();

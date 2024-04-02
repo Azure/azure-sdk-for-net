@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.SecurityCenter
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityAlertsSuppressionRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string alertsSuppressionRuleName, SecurityAlertsSuppressionRuleData data, CancellationToken cancellationToken = default)
         {
-            if (alertsSuppressionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertsSuppressionRuleName));
-            }
-            if (alertsSuppressionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertsSuppressionRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityAlertsSuppressionRuleResource> CreateOrUpdate(WaitUntil waitUntil, string alertsSuppressionRuleName, SecurityAlertsSuppressionRuleData data, CancellationToken cancellationToken = default)
         {
-            if (alertsSuppressionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertsSuppressionRuleName));
-            }
-            if (alertsSuppressionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertsSuppressionRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         public virtual async Task<Response<SecurityAlertsSuppressionRuleResource>> GetAsync(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertsSuppressionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertsSuppressionRuleName));
-            }
-            if (alertsSuppressionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertsSuppressionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         public virtual Response<SecurityAlertsSuppressionRuleResource> Get(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertsSuppressionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertsSuppressionRuleName));
-            }
-            if (alertsSuppressionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertsSuppressionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.Get");
             scope.Start();
@@ -365,14 +329,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertsSuppressionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertsSuppressionRuleName));
-            }
-            if (alertsSuppressionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertsSuppressionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.Exists");
             scope.Start();
@@ -415,14 +372,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertsSuppressionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertsSuppressionRuleName));
-            }
-            if (alertsSuppressionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertsSuppressionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.Exists");
             scope.Start();
@@ -465,14 +415,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityAlertsSuppressionRuleResource>> GetIfExistsAsync(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertsSuppressionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertsSuppressionRuleName));
-            }
-            if (alertsSuppressionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertsSuppressionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetIfExists");
             scope.Start();
@@ -517,14 +460,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="alertsSuppressionRuleName"/> is null. </exception>
         public virtual NullableResponse<SecurityAlertsSuppressionRuleResource> GetIfExists(string alertsSuppressionRuleName, CancellationToken cancellationToken = default)
         {
-            if (alertsSuppressionRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(alertsSuppressionRuleName));
-            }
-            if (alertsSuppressionRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(alertsSuppressionRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(alertsSuppressionRuleName, nameof(alertsSuppressionRuleName));
 
             using var scope = _securityAlertsSuppressionRuleAlertsSuppressionRulesClientDiagnostics.CreateScope("SecurityAlertsSuppressionRuleCollection.GetIfExists");
             scope.Start();

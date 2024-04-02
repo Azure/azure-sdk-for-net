@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertSimulatorBundlesRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertSimulatorBundlesRequestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertSimulatorBundlesRequestProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Bundles is ChangeTrackingList<SecurityAlertSimulatorBundleType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Bundles))
             {
                 writer.WritePropertyName("bundles"u8);
                 writer.WriteStartArray();
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAlertSimulatorBundlesRequestProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAlertSimulatorBundlesRequestProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAlertSimulatorBundlesRequestProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertSimulatorBundlesRequestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertSimulatorBundlesRequestProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAlertSimulatorBundlesRequestProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAlertSimulatorBundlesRequestProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAlertSimulatorBundlesRequestProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

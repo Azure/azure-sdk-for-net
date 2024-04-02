@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentRegistration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DscMetaConfiguration != null)
+            if (Optional.IsDefined(DscMetaConfiguration))
             {
                 writer.WritePropertyName("dscMetaConfiguration"u8);
                 writer.WriteStringValue(DscMetaConfiguration);
             }
-            if (Endpoint != null)
+            if (Optional.IsDefined(Endpoint))
             {
                 writer.WritePropertyName("endpoint"u8);
                 writer.WriteStringValue(Endpoint.AbsoluteUri);
             }
-            if (Keys != null)
+            if (Optional.IsDefined(Keys))
             {
                 writer.WritePropertyName("keys"u8);
-                writer.WriteObjectValue(Keys);
+                writer.WriteObjectValue<AgentRegistrationKeys>(Keys, options);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentRegistration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentRegistration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentRegistration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentRegistration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAgentRegistration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentRegistration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentRegistration)} does not support reading '{options.Format}' format.");
             }
         }
 
