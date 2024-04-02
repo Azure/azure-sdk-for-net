@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.Workloads.Models
             string availabilitySetName = default;
             LoadBalancerResourceNames loadBalancer = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("virtualMachines"u8))
@@ -121,10 +121,10 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CentralServerFullResourceNames(virtualMachines ?? new ChangeTrackingList<VirtualMachineResourceNames>(), availabilitySetName, loadBalancer, serializedAdditionalRawData);
         }
 
