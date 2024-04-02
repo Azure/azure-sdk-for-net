@@ -14,6 +14,7 @@ using Azure.Core.Pipeline;
 
 namespace Azure.Analytics.Purview.DataMap;
 
+#if NET6_0_OR_GREATER
 internal class MultipartFormDataBinaryContent : RequestContent
 {
     private readonly MultipartFormDataContent _multipartContent;
@@ -134,22 +135,22 @@ internal class MultipartFormDataBinaryContent : RequestContent
         // TODO: polyfill sync-over-async for netstandard2.0 for Azure clients.
         // Tracked by https://github.com/Azure/azure-sdk-for-net/issues/42674
 
-#if NET6_0_OR_GREATER
+//#if NET6_0_OR_GREATER
         _multipartContent.CopyTo(stream, default, cancellationToken);
-#else
-#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
-        _multipartContent.CopyToAsync(stream).EnsureCompleted();
-#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
-#endif
+//#else
+//#pragma warning disable AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+//        _multipartContent.CopyToAsync(stream).EnsureCompleted();
+//#pragma warning restore AZC0107 // DO NOT call public asynchronous method in synchronous scope.
+//#endif
     }
 
     public override async Task WriteToAsync(Stream stream, CancellationToken cancellationToken = default)
     {
-#if NET6_0_OR_GREATER
+//#if NET6_0_OR_GREATER
         await _multipartContent.CopyToAsync(stream, cancellationToken).ConfigureAwait(false);
-#else
-    await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
-#endif
+//#else
+//    await _multipartContent.CopyToAsync(stream).ConfigureAwait(false);
+//#endif
     }
 
     public override void Dispose()
@@ -157,3 +158,4 @@ internal class MultipartFormDataBinaryContent : RequestContent
         _multipartContent.Dispose();
     }
 }
+#endif
