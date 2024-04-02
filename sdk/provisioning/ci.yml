@@ -33,8 +33,6 @@ extends:
       safeName: AzureProvisioningAppConfiguration
     - name: Azure.Provisioning.ApplicationInsights
       safeName: AzureProvisioningApplicationInsights
-    - name: Azure.Provisioning.Authorization
-      safeName: AzureProvisioningAuthorization
     - name: Azure.Provisioning.CognitiveServices
       safeName: AzureProvisioningCognitiveServices
     - name: Azure.Provisioning.CosmosDB
@@ -43,8 +41,6 @@ extends:
       safeName: AzureProvisioningEventHubs
     - name: Azure.Provisioning.KeyVault
       safeName: AzureProvisioningKeyVault
-    - name: Azure.Provisioning.ManagedIdentities
-      safeName: AzureProvisioningManagedIdentities
     - name: Azure.Provisioning.OperationalInsights
       safeName: AzureProvisioningOperationalInsights
     - name: Azure.Provisioning.PostgreSql

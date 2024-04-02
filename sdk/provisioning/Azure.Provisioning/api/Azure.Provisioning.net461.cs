@@ -100,6 +100,7 @@ namespace Azure.Provisioning
         protected object ResourceData { get { throw null; } }
         public Azure.Provisioning.IConstruct Scope { get { throw null; } }
         public string Version { get { throw null; } }
+        public Azure.Provisioning.RoleAssignment AssignRole(Azure.Provisioning.RoleDefinition roleDefinition, System.Guid? principalId = default(System.Guid?), Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType? principalType = default(Azure.ResourceManager.Authorization.Models.RoleManagementPrincipalType?)) { throw null; }
         protected virtual Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
         protected virtual string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
         protected virtual string GetBicepName(Azure.Provisioning.Resource resource) { throw null; }
@@ -118,6 +119,44 @@ namespace Azure.Provisioning
         public Azure.Provisioning.Output AddOutput(string outputName, string formattedString, System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, bool isLiteral = false, bool isSecure = false) { throw null; }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, Azure.Provisioning.Parameter parameter) { }
         public void AssignProperty(System.Linq.Expressions.Expression<System.Func<T, object?>> propertySelector, string propertyValue) { }
+    }
+    public partial class RoleAssignment : Azure.Provisioning.Resource<Azure.ResourceManager.Authorization.RoleAssignmentData>
+    {
+        internal RoleAssignment() : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Authorization.RoleAssignmentData>), default(bool)) { }
+        protected override string GetBicepName(Azure.Provisioning.Resource resource) { throw null; }
+        protected override bool NeedsParent() { throw null; }
+        protected override bool NeedsScope() { throw null; }
+    }
+    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
+    public readonly partial struct RoleDefinition : System.IEquatable<Azure.Provisioning.RoleDefinition>
+    {
+        private readonly object _dummy;
+        private readonly int _dummyPrimitive;
+        public RoleDefinition(string value) { throw null; }
+        public static Azure.Provisioning.RoleDefinition AppConfigurationDataOwner { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition CognitiveServicesOpenAIContributor { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition EventHubsDataOwner { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition KeyVaultAdministrator { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition SearchIndexDataContributor { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition SearchServiceContributor { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition ServiceBusDataOwner { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition SignalRAppServer { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition StorageBlobDataContributor { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition StorageQueueDataContributor { get { throw null; } }
+        public static Azure.Provisioning.RoleDefinition StorageTableDataContributor { get { throw null; } }
+        public bool Equals(Azure.Provisioning.RoleDefinition other) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override bool Equals(object? obj) { throw null; }
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Never)]
+        public override int GetHashCode() { throw null; }
+        public static implicit operator Azure.Provisioning.RoleDefinition (string value) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    public partial class UserAssignedIdentity : Azure.Provisioning.Resource<Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>
+    {
+        public UserAssignedIdentity(Azure.Provisioning.IConstruct scope, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string name = "useridentity", string version = "2023-01-31", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.ManagedServiceIdentities.UserAssignedIdentityData>), default(bool)) { }
+        public static Azure.Provisioning.UserAssignedIdentity FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
+        protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
 }
 namespace Azure.Provisioning.ResourceManager
