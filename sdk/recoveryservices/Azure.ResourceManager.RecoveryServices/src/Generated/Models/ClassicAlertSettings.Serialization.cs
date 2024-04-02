@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AlertsForCriticalOperations.HasValue)
+            if (Optional.IsDefined(AlertsForCriticalOperations))
             {
                 writer.WritePropertyName("alertsForCriticalOperations"u8);
                 writer.WriteStringValue(AlertsForCriticalOperations.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClassicAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeClassicAlertSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClassicAlertSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CollectionName != null)
+            if (Optional.IsDefined(CollectionName))
             {
                 writer.WritePropertyName("collectionName"u8);
                 writer.WriteStringValue(CollectionName);
             }
-            if (CollectionId.HasValue)
+            if (Optional.IsDefined(CollectionId))
             {
                 writer.WritePropertyName("collectionId"u8);
                 writer.WriteStringValue(CollectionId.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<PrivateStoreCollectionDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializePrivateStoreCollectionDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateStoreCollectionDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

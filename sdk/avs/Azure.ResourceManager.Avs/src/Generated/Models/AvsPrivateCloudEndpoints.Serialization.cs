@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && NsxtManager != null)
+            if (options.Format != "W" && Optional.IsDefined(NsxtManager))
             {
                 writer.WritePropertyName("nsxtManager"u8);
                 writer.WriteStringValue(NsxtManager);
             }
-            if (options.Format != "W" && Vcsa != null)
+            if (options.Format != "W" && Optional.IsDefined(Vcsa))
             {
                 writer.WritePropertyName("vcsa"u8);
                 writer.WriteStringValue(Vcsa);
             }
-            if (options.Format != "W" && HcxCloudManager != null)
+            if (options.Format != "W" && Optional.IsDefined(HcxCloudManager))
             {
                 writer.WritePropertyName("hcxCloudManager"u8);
                 writer.WriteStringValue(HcxCloudManager);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvsPrivateCloudEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeAvsPrivateCloudEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvsPrivateCloudEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilesNotTieringError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && FileCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(FileCount))
             {
                 writer.WritePropertyName("fileCount"u8);
                 writer.WriteNumberValue(FileCount.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<FilesNotTieringError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeFilesNotTieringError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FilesNotTieringError)} does not support reading '{options.Format}' format.");
             }
         }
 

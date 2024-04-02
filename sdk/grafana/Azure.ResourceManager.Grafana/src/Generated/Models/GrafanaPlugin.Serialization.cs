@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<GrafanaPlugin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GrafanaPlugin)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaPlugin)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PluginId != null)
+            if (options.Format != "W" && Optional.IsDefined(PluginId))
             {
                 writer.WritePropertyName("pluginId"u8);
                 writer.WriteStringValue(PluginId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<GrafanaPlugin>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GrafanaPlugin)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GrafanaPlugin)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GrafanaPlugin)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaPlugin)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeGrafanaPlugin(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GrafanaPlugin)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GrafanaPlugin)} does not support reading '{options.Format}' format.");
             }
         }
 

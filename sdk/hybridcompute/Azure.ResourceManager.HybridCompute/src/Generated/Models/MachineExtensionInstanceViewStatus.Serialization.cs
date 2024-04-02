@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Level.HasValue)
+            if (Optional.IsDefined(Level))
             {
                 writer.WritePropertyName("level"u8);
                 writer.WriteStringValue(Level.Value.ToString());
             }
-            if (DisplayStatus != null)
+            if (Optional.IsDefined(DisplayStatus))
             {
                 writer.WritePropertyName("displayStatus"u8);
                 writer.WriteStringValue(DisplayStatus);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Time.HasValue)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time.Value, "O");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineExtensionInstanceViewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeMachineExtensionInstanceViewStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineExtensionInstanceViewStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

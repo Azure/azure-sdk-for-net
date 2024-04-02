@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VnetConfiguration != null)
+            if (Optional.IsDefined(VnetConfiguration))
             {
                 writer.WritePropertyName("vnetConfiguration"u8);
-                writer.WriteObjectValue(VnetConfiguration);
+                writer.WriteObjectValue<FirewallVnetConfiguration>(VnetConfiguration, options);
             }
-            if (VwanConfiguration != null)
+            if (Optional.IsDefined(VwanConfiguration))
             {
                 writer.WritePropertyName("vwanConfiguration"u8);
-                writer.WriteObjectValue(VwanConfiguration);
+                writer.WriteObjectValue<FirewallVwanConfiguration>(VwanConfiguration, options);
             }
             writer.WritePropertyName("networkType"u8);
             writer.WriteStringValue(NetworkType.ToString());
@@ -42,22 +42,22 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             writer.WriteStartArray();
             foreach (var item in PublicIPs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<IPAddressInfo>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("enableEgressNat"u8);
             writer.WriteStringValue(EnableEgressNat.ToString());
-            if (!(EgressNatIP is ChangeTrackingList<IPAddressInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EgressNatIP))
             {
                 writer.WritePropertyName("egressNatIp"u8);
                 writer.WriteStartArray();
                 foreach (var item in EgressNatIP)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPAddressInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrustedRanges is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TrustedRanges))
             {
                 writer.WritePropertyName("trustedRanges"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallNetworkProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallNetworkProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallNetworkProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

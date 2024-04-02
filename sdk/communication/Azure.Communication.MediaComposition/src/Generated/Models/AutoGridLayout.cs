@@ -20,10 +20,7 @@ namespace Azure.Communication.MediaComposition
         /// <exception cref="ArgumentNullException"> <paramref name="inputIds"/> is null. </exception>
         public AutoGridLayout(IEnumerable<string> inputIds)
         {
-            if (inputIds == null)
-            {
-                throw new ArgumentNullException(nameof(inputIds));
-            }
+            Argument.AssertNotNull(inputIds, nameof(inputIds));
 
             InputIds = inputIds.ToList();
             Kind = LayoutType.AutoGrid;

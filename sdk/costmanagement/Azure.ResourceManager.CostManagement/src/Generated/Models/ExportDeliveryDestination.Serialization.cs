@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportDeliveryDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
             writer.WritePropertyName("container"u8);
             writer.WriteStringValue(Container);
-            if (RootFolderPath != null)
+            if (Optional.IsDefined(RootFolderPath))
             {
                 writer.WritePropertyName("rootFolderPath"u8);
                 writer.WriteStringValue(RootFolderPath);
             }
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
                 writer.WriteStringValue(SasToken);
             }
-            if (StorageAccount != null)
+            if (Optional.IsDefined(StorageAccount))
             {
                 writer.WritePropertyName("storageAccount"u8);
                 writer.WriteStringValue(StorageAccount);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportDeliveryDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeExportDeliveryDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportDeliveryDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

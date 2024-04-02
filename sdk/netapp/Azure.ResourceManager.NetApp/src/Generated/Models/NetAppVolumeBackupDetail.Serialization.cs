@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VolumeName != null)
+            if (Optional.IsDefined(VolumeName))
             {
                 writer.WritePropertyName("volumeName"u8);
                 writer.WriteStringValue(VolumeName);
             }
-            if (BackupsCount.HasValue)
+            if (Optional.IsDefined(BackupsCount))
             {
                 writer.WritePropertyName("backupsCount"u8);
                 writer.WriteNumberValue(BackupsCount.Value);
             }
-            if (IsPolicyEnabled.HasValue)
+            if (Optional.IsDefined(IsPolicyEnabled))
             {
                 writer.WritePropertyName("policyEnabled"u8);
                 writer.WriteBooleanValue(IsPolicyEnabled.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppVolumeBackupDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppVolumeBackupDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppVolumeBackupDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,19 +17,19 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
-            writer.WriteObjectValue(Endpoint);
-            if (Image != null)
+            writer.WriteObjectValue<EndpointBase>(Endpoint);
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                writer.WriteObjectValue<ImageProperties>(Image);
             }
-            if (SamplingOptions != null)
+            if (Optional.IsDefined(SamplingOptions))
             {
                 writer.WritePropertyName("samplingOptions"u8);
-                writer.WriteObjectValue(SamplingOptions);
+                writer.WriteObjectValue<SamplingOptions>(SamplingOptions);
             }
             writer.WritePropertyName("operation"u8);
-            writer.WriteObjectValue(Operation);
+            writer.WriteObjectValue<SpatialAnalysisOperationBase>(Operation);
             writer.WritePropertyName("@type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("name"u8);
@@ -38,7 +38,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             writer.WriteStartArray();
             foreach (var item in Inputs)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<NodeInput>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

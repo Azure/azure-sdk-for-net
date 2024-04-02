@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MappingType.HasValue)
+            if (Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("mappingType"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (SourceLogicalName != null)
+            if (Optional.IsDefined(SourceLogicalName))
             {
                 writer.WritePropertyName("sourceLogicalName"u8);
                 writer.WriteStringValue(SourceLogicalName);
             }
-            if (SourcePath != null)
+            if (Optional.IsDefined(SourcePath))
             {
                 writer.WritePropertyName("sourcePath"u8);
                 writer.WriteStringValue(SourcePath);
             }
-            if (TargetPath != null)
+            if (Optional.IsDefined(TargetPath))
             {
                 writer.WritePropertyName("targetPath"u8);
                 writer.WriteStringValue(TargetPath);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlDataDirectoryMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeSqlDataDirectoryMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlDataDirectoryMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Compute.Models;
@@ -72,46 +72,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiskRestorePointData>> GetAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -142,46 +107,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiskRestorePointData> Get(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
             _pipeline.Send(message, cancellationToken);
@@ -234,38 +164,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiskRestorePointList>> ListByRestorePointAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
 
             using var message = CreateListByRestorePointRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -293,38 +195,10 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiskRestorePointList> ListByRestorePoint(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
 
             using var message = CreateListByRestorePointRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
             _pipeline.Send(message, cancellationToken);
@@ -365,7 +239,7 @@ namespace Azure.ResourceManager.Compute
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<GrantAccessData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -383,50 +257,12 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> GrantAccessAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName, GrantAccessData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateGrantAccessRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -452,50 +288,12 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response GrantAccess(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName, GrantAccessData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateGrantAccessRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName, data);
             _pipeline.Send(message, cancellationToken);
@@ -545,46 +343,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> RevokeAccessAsync(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var message = CreateRevokeAccessRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -609,46 +372,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/>, <paramref name="vmRestorePointName"/> or <paramref name="diskRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response RevokeAccess(string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, string diskRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
-            if (diskRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(diskRestorePointName));
-            }
-            if (diskRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskRestorePointName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
+            Argument.AssertNotNullOrEmpty(diskRestorePointName, nameof(diskRestorePointName));
 
             using var message = CreateRevokeAccessRequest(subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName, diskRestorePointName);
             _pipeline.Send(message, cancellationToken);
@@ -687,42 +415,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiskRestorePointList>> ListByRestorePointNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
 
             using var message = CreateListByRestorePointNextPageRequest(nextLink, subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -751,42 +448,11 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="restorePointGroupName"/> or <paramref name="vmRestorePointName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiskRestorePointList> ListByRestorePointNextPage(string nextLink, string subscriptionId, string resourceGroupName, string restorePointGroupName, string vmRestorePointName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (restorePointGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(restorePointGroupName));
-            }
-            if (restorePointGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(restorePointGroupName));
-            }
-            if (vmRestorePointName == null)
-            {
-                throw new ArgumentNullException(nameof(vmRestorePointName));
-            }
-            if (vmRestorePointName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vmRestorePointName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(restorePointGroupName, nameof(restorePointGroupName));
+            Argument.AssertNotNullOrEmpty(vmRestorePointName, nameof(vmRestorePointName));
 
             using var message = CreateListByRestorePointNextPageRequest(nextLink, subscriptionId, resourceGroupName, restorePointGroupName, vmRestorePointName);
             _pipeline.Send(message, cancellationToken);

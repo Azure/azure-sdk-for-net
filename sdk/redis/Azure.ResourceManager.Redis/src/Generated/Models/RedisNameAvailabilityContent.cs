@@ -52,10 +52,7 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public RedisNameAvailabilityContent(string name, ResourceType resourceType)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
             Name = name;
             ResourceType = resourceType;
@@ -78,8 +75,10 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> Resource name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Resource type. The only legal value of this property for checking redis cache name availability is 'Microsoft.Cache/redis'. </summary>
+        [WirePath("type")]
         public ResourceType ResourceType { get; }
     }
 }

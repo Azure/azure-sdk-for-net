@@ -23,31 +23,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<XmlReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CompressionProperties != null)
+            if (Optional.IsDefined(CompressionProperties))
             {
                 writer.WritePropertyName("compressionProperties"u8);
-                writer.WriteObjectValue(CompressionProperties);
+                writer.WriteObjectValue<CompressionReadSettings>(CompressionProperties, options);
             }
-            if (ValidationMode != null)
+            if (Optional.IsDefined(ValidationMode))
             {
                 writer.WritePropertyName("validationMode"u8);
                 JsonSerializer.Serialize(writer, ValidationMode);
             }
-            if (DetectDataType != null)
+            if (Optional.IsDefined(DetectDataType))
             {
                 writer.WritePropertyName("detectDataType"u8);
                 JsonSerializer.Serialize(writer, DetectDataType);
             }
-            if (Namespaces != null)
+            if (Optional.IsDefined(Namespaces))
             {
                 writer.WritePropertyName("namespaces"u8);
                 JsonSerializer.Serialize(writer, Namespaces);
             }
-            if (NamespacePrefixes != null)
+            if (Optional.IsDefined(NamespacePrefixes))
             {
                 writer.WritePropertyName("namespacePrefixes"u8);
                 JsonSerializer.Serialize(writer, NamespacePrefixes);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<XmlReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(XmlReadSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(XmlReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(XmlReadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeXmlReadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(XmlReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(XmlReadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

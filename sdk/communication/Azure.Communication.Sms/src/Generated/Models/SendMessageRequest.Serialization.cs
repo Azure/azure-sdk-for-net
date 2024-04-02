@@ -21,15 +21,15 @@ namespace Azure.Communication.Sms.Models
             writer.WriteStartArray();
             foreach (var item in SmsRecipients)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SmsRecipient>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("message"u8);
             writer.WriteStringValue(Message);
-            if (SmsSendOptions != null)
+            if (Optional.IsDefined(SmsSendOptions))
             {
                 writer.WritePropertyName("smsSendOptions"u8);
-                writer.WriteObjectValue(SmsSendOptions);
+                writer.WriteObjectValue<SmsSendOptions>(SmsSendOptions);
             }
             writer.WriteEndObject();
         }

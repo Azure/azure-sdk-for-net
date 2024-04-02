@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("keyType"u8);
             writer.WriteStringValue(KeyType.ToString());
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayRegenerateAccessKeyContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Relay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Relay.Models
                         return DeserializeRelayRegenerateAccessKeyContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayRegenerateAccessKeyContent)} does not support reading '{options.Format}' format.");
             }
         }
 

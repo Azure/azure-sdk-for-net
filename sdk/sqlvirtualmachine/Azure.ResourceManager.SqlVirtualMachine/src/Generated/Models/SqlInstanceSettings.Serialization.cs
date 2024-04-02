@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Collation != null)
+            if (Optional.IsDefined(Collation))
             {
                 writer.WritePropertyName("collation"u8);
                 writer.WriteStringValue(Collation);
             }
-            if (MaxDop.HasValue)
+            if (Optional.IsDefined(MaxDop))
             {
                 writer.WritePropertyName("maxDop"u8);
                 writer.WriteNumberValue(MaxDop.Value);
             }
-            if (IsOptimizeForAdHocWorkloadsEnabled.HasValue)
+            if (Optional.IsDefined(IsOptimizeForAdHocWorkloadsEnabled))
             {
                 writer.WritePropertyName("isOptimizeForAdHocWorkloadsEnabled"u8);
                 writer.WriteBooleanValue(IsOptimizeForAdHocWorkloadsEnabled.Value);
             }
-            if (MinServerMemoryInMB.HasValue)
+            if (Optional.IsDefined(MinServerMemoryInMB))
             {
                 writer.WritePropertyName("minServerMemoryMB"u8);
                 writer.WriteNumberValue(MinServerMemoryInMB.Value);
             }
-            if (MaxServerMemoryInMB.HasValue)
+            if (Optional.IsDefined(MaxServerMemoryInMB))
             {
                 writer.WritePropertyName("maxServerMemoryMB"u8);
                 writer.WriteNumberValue(MaxServerMemoryInMB.Value);
             }
-            if (IsLpimEnabled.HasValue)
+            if (Optional.IsDefined(IsLpimEnabled))
             {
                 writer.WritePropertyName("isLpimEnabled"u8);
                 writer.WriteBooleanValue(IsLpimEnabled.Value);
             }
-            if (IsIfiEnabled.HasValue)
+            if (Optional.IsDefined(IsIfiEnabled))
             {
                 writer.WritePropertyName("isIfiEnabled"u8);
                 writer.WriteBooleanValue(IsIfiEnabled.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlInstanceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlInstanceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlInstanceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

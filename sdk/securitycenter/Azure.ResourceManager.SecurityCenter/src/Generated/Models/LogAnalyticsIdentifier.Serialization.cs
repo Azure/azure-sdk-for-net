@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && WorkspaceId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId.Value);
             }
-            if (options.Format != "W" && WorkspaceSubscriptionId != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceSubscriptionId))
             {
                 writer.WritePropertyName("workspaceSubscriptionId"u8);
                 writer.WriteStringValue(WorkspaceSubscriptionId);
             }
-            if (options.Format != "W" && WorkspaceResourceGroup != null)
+            if (options.Format != "W" && Optional.IsDefined(WorkspaceResourceGroup))
             {
                 writer.WritePropertyName("workspaceResourceGroup"u8);
                 writer.WriteStringValue(WorkspaceResourceGroup);
             }
-            if (options.Format != "W" && AgentId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentId))
             {
                 writer.WritePropertyName("agentId"u8);
                 writer.WriteStringValue(AgentId.Value);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogAnalyticsIdentifier>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeLogAnalyticsIdentifier(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogAnalyticsIdentifier)} does not support reading '{options.Format}' format.");
             }
         }
 

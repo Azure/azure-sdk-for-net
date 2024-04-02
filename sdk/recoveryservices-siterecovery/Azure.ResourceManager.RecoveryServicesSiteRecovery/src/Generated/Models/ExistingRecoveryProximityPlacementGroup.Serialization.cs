@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryProximityPlacementGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExistingRecoveryProximityPlacementGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExistingRecoveryProximityPlacementGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecoveryProximityPlacementGroupId != null)
+            if (Optional.IsDefined(RecoveryProximityPlacementGroupId))
             {
                 writer.WritePropertyName("recoveryProximityPlacementGroupId"u8);
                 writer.WriteStringValue(RecoveryProximityPlacementGroupId);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExistingRecoveryProximityPlacementGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExistingRecoveryProximityPlacementGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExistingRecoveryProximityPlacementGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExistingRecoveryProximityPlacementGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExistingRecoveryProximityPlacementGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeExistingRecoveryProximityPlacementGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExistingRecoveryProximityPlacementGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExistingRecoveryProximityPlacementGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountKeyVaultKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KeyId != null)
+            if (Optional.IsDefined(KeyId))
             {
                 writer.WritePropertyName("kid"u8);
                 writer.WriteStringValue(KeyId.AbsoluteUri);
             }
             writer.WritePropertyName("attributes"u8);
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteNumberValue(CreatedOn.Value, "U");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteNumberValue(UpdatedOn.Value, "U");
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountKeyVaultKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountKeyVaultKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountKeyVaultKey)} does not support reading '{options.Format}' format.");
             }
         }
 

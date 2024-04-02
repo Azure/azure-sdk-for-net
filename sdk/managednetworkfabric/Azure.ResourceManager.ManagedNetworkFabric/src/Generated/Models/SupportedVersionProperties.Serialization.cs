@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportedVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
             }
-            if (VendorOSVersion != null)
+            if (Optional.IsDefined(VendorOSVersion))
             {
                 writer.WritePropertyName("vendorOsVersion"u8);
                 writer.WriteStringValue(VendorOSVersion);
             }
-            if (VendorFirmwareVersion != null)
+            if (Optional.IsDefined(VendorFirmwareVersion))
             {
                 writer.WritePropertyName("vendorFirmwareVersion"u8);
                 writer.WriteStringValue(VendorFirmwareVersion);
             }
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteStringValue(IsDefault.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportedVersionProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeSupportedVersionProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportedVersionProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

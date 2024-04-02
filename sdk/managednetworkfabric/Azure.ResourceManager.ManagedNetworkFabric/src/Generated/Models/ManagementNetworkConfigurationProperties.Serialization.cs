@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("infrastructureVpnConfiguration"u8);
-            writer.WriteObjectValue(InfrastructureVpnConfiguration);
+            writer.WriteObjectValue<VpnConfigurationProperties>(InfrastructureVpnConfiguration, options);
             writer.WritePropertyName("workloadVpnConfiguration"u8);
-            writer.WriteObjectValue(WorkloadVpnConfiguration);
+            writer.WriteObjectValue<VpnConfigurationProperties>(WorkloadVpnConfiguration, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagementNetworkConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeManagementNetworkConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagementNetworkConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

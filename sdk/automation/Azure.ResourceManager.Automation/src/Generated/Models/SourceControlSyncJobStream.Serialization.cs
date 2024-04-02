@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobStream>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJobStream)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJobStream)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SourceControlSyncJobStreamId != null)
+            if (Optional.IsDefined(SourceControlSyncJobStreamId))
             {
                 writer.WritePropertyName("sourceControlSyncJobStreamId"u8);
                 writer.WriteStringValue(SourceControlSyncJobStreamId);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (options.Format != "W" && Time.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Time))
             {
                 if (Time != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.Automation.Models
                     writer.WriteNull("time");
                 }
             }
-            if (StreamType.HasValue)
+            if (Optional.IsDefined(StreamType))
             {
                 writer.WritePropertyName("streamType"u8);
                 writer.WriteStringValue(StreamType.Value.ToString());
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SourceControlSyncJobStream>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SourceControlSyncJobStream)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SourceControlSyncJobStream)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJobStream)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobStream)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSourceControlSyncJobStream(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SourceControlSyncJobStream)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SourceControlSyncJobStream)} does not support reading '{options.Format}' format.");
             }
         }
 

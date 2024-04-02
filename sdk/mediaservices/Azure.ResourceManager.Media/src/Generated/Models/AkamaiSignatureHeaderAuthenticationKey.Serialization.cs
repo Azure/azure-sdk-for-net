@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AkamaiSignatureHeaderAuthenticationKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identifier != null)
+            if (Optional.IsDefined(Identifier))
             {
                 writer.WritePropertyName("identifier"u8);
                 writer.WriteStringValue(Identifier);
             }
-            if (Base64Key != null)
+            if (Optional.IsDefined(Base64Key))
             {
                 writer.WritePropertyName("base64Key"u8);
                 writer.WriteStringValue(Base64Key);
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiration"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<AkamaiSignatureHeaderAuthenticationKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeAkamaiSignatureHeaderAuthenticationKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AkamaiSignatureHeaderAuthenticationKey)} does not support reading '{options.Format}' format.");
             }
         }
 

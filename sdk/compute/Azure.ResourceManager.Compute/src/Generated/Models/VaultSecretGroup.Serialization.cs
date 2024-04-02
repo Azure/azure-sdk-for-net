@@ -23,22 +23,22 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultSecretGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultSecretGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultSecretGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceVault != null)
+            if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
             }
-            if (!(VaultCertificates is ChangeTrackingList<VaultCertificate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VaultCertificates))
             {
                 writer.WritePropertyName("vaultCertificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in VaultCertificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VaultCertificate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultSecretGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultSecretGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultSecretGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultSecretGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultSecretGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVaultSecretGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultSecretGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultSecretGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

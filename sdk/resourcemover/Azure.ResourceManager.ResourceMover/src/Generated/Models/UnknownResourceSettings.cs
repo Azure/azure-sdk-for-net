@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.ResourceMover.Models
 {
-    /// <summary> The UnknownResourceSettings. </summary>
+    /// <summary> Unknown version of ResourceSettings. </summary>
     internal partial class UnknownResourceSettings : MoverResourceSettings
     {
         /// <summary> Initializes a new instance of <see cref="UnknownResourceSettings"/>. </summary>

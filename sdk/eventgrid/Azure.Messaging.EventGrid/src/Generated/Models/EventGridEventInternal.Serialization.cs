@@ -20,7 +20,7 @@ namespace Azure.Messaging.EventGrid.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (Topic != null)
+            if (Optional.IsDefined(Topic))
             {
                 writer.WritePropertyName("topic"u8);
                 writer.WriteStringValue(Topic);
@@ -110,7 +110,7 @@ namespace Azure.Messaging.EventGrid.Models
         {
             public override void Write(Utf8JsonWriter writer, EventGridEventInternal model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<EventGridEventInternal>(model);
             }
             public override EventGridEventInternal Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

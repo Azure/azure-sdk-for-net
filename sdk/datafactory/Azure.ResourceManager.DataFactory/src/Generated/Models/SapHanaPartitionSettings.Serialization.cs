@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapHanaPartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PartitionColumnName != null)
+            if (Optional.IsDefined(PartitionColumnName))
             {
                 writer.WritePropertyName("partitionColumnName"u8);
                 JsonSerializer.Serialize(writer, PartitionColumnName);
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapHanaPartitionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSapHanaPartitionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapHanaPartitionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -88,24 +88,34 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> The name of the target database. </summary>
+        [WirePath("properties.targetDatabase")]
         public string TargetDatabase { get; set; }
         /// <summary> The source endpoint. </summary>
+        [WirePath("properties.sourceEndpoint")]
         public string SourceEndpoint { get; set; }
         /// <summary> The primary availability group name. </summary>
+        [WirePath("properties.primaryAvailabilityGroupName")]
         public string PrimaryAvailabilityGroupName { get; set; }
         /// <summary> The secondary availability group name. </summary>
+        [WirePath("properties.secondaryAvailabilityGroupName")]
         public string SecondaryAvailabilityGroupName { get; set; }
         /// <summary> The replication mode of a distributed availability group. Parameter will be ignored during link creation. </summary>
+        [WirePath("properties.replicationMode")]
         public DistributedAvailabilityGroupReplicationMode? ReplicationMode { get; set; }
         /// <summary> The distributed availability group id. </summary>
+        [WirePath("properties.distributedAvailabilityGroupId")]
         public Guid? DistributedAvailabilityGroupId { get; }
         /// <summary> The source replica id. </summary>
+        [WirePath("properties.sourceReplicaId")]
         public Guid? SourceReplicaId { get; }
         /// <summary> The target replica id. </summary>
+        [WirePath("properties.targetReplicaId")]
         public Guid? TargetReplicaId { get; }
         /// <summary> The link state. </summary>
+        [WirePath("properties.linkState")]
         public string LinkState { get; }
         /// <summary> The last hardened lsn. </summary>
+        [WirePath("properties.lastHardenedLsn")]
         public string LastHardenedLsn { get; }
     }
 }

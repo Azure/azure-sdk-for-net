@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Disks is ChangeTrackingList<VMwareVirtualDisk> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareVirtualDisk>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ScsiControllers is ChangeTrackingList<VirtualScsiController> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ScsiControllers))
             {
                 writer.WritePropertyName("scsiControllers"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScsiControllers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VirtualScsiController>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareStorageProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeVMwareStorageProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareStorageProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

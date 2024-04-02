@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdaptiveApplicationControlIssueSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdaptiveApplicationControlIssueSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdaptiveApplicationControlIssueSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Issue.HasValue)
+            if (Optional.IsDefined(Issue))
             {
                 writer.WritePropertyName("issue"u8);
                 writer.WriteStringValue(Issue.Value.ToString());
             }
-            if (NumberOfVms.HasValue)
+            if (Optional.IsDefined(NumberOfVms))
             {
                 writer.WritePropertyName("numberOfVms"u8);
                 writer.WriteNumberValue(NumberOfVms.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AdaptiveApplicationControlIssueSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdaptiveApplicationControlIssueSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdaptiveApplicationControlIssueSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdaptiveApplicationControlIssueSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdaptiveApplicationControlIssueSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAdaptiveApplicationControlIssueSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdaptiveApplicationControlIssueSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdaptiveApplicationControlIssueSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.AI.MetricsAdvisor.Administration;
 using Azure.AI.MetricsAdvisor.Models;
 using Azure.Core;
@@ -162,7 +161,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<AnomalyAlertingConfigurationPatch>(body);
             request.Content = content;
             return message;
         }
@@ -283,7 +282,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<AnomalyAlertConfiguration>(body);
             request.Content = content;
             return message;
         }
@@ -357,7 +356,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<AlertingResultQuery>(body);
             request.Content = content;
             return message;
         }
@@ -665,7 +664,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<AnomalyDetectionConfigurationPatch>(body);
             request.Content = content;
             return message;
         }
@@ -786,7 +785,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<AnomalyDetectionConfiguration>(body);
             request.Content = content;
             return message;
         }
@@ -922,7 +921,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<DetectionSeriesQuery>(body);
             request.Content = content;
             return message;
         }
@@ -1006,7 +1005,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<DetectionAnomalyResultQuery>(body);
             request.Content = content;
             return message;
         }
@@ -1094,7 +1093,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<AnomalyDimensionQuery>(body);
             request.Content = content;
             return message;
         }
@@ -1178,7 +1177,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<DetectionIncidentResultQuery>(body);
             request.Content = content;
             return message;
         }
@@ -1398,7 +1397,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<DataSourceCredentialEntity>(body);
             request.Content = content;
             return message;
         }
@@ -1529,7 +1528,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<DataSourceCredentialPatch>(body);
             request.Content = content;
             return message;
         }
@@ -1803,7 +1802,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<DataFeedDetail>(body);
             request.Content = content;
             return message;
         }
@@ -1925,7 +1924,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<DataFeedDetailPatch>(body);
             request.Content = content;
             return message;
         }
@@ -2111,7 +2110,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<MetricFeedbackFilter>(body);
             request.Content = content;
             return message;
         }
@@ -2187,7 +2186,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<MetricFeedback>(body);
             request.Content = content;
             return message;
         }
@@ -2323,7 +2322,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<NotificationHook>(body);
             request.Content = content;
             return message;
         }
@@ -2445,7 +2444,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/merge-patch+json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<HookInfoPatch>(body);
             request.Content = content;
             return message;
         }
@@ -2576,7 +2575,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<IngestionStatusQueryOptions>(body);
             request.Content = content;
             return message;
         }
@@ -2656,7 +2655,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<IngestionProgressResetOptions>(body);
             request.Content = content;
             return message;
         }
@@ -2780,7 +2779,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<MetricDataQueryOptions>(body);
             request.Content = content;
             return message;
         }
@@ -2864,7 +2863,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<MetricSeriesQueryOptions>(body);
             request.Content = content;
             return message;
         }
@@ -2952,7 +2951,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<MetricDimensionQueryOptions>(body);
             request.Content = content;
             return message;
         }
@@ -3110,7 +3109,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<EnrichmentStatusQueryOption>(body);
             request.Content = content;
             return message;
         }
@@ -3189,7 +3188,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<AlertingResultQuery>(body);
             request.Content = content;
             return message;
         }
@@ -3272,7 +3271,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<DetectionAnomalyResultQuery>(body);
             request.Content = content;
             return message;
         }
@@ -3355,7 +3354,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<AnomalyDimensionQuery>(body);
             request.Content = content;
             return message;
         }
@@ -3438,7 +3437,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<MetricFeedbackFilter>(body);
             request.Content = content;
             return message;
         }
@@ -3521,7 +3520,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<IngestionStatusQueryOptions>(body);
             request.Content = content;
             return message;
         }
@@ -3604,7 +3603,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<MetricSeriesQueryOptions>(body);
             request.Content = content;
             return message;
         }
@@ -3687,7 +3686,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<MetricDimensionQueryOptions>(body);
             request.Content = content;
             return message;
         }
@@ -3770,7 +3769,7 @@ namespace Azure.AI.MetricsAdvisor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(body);
+            content.JsonWriter.WriteObjectValue<EnrichmentStatusQueryOption>(body);
             request.Content = content;
             return message;
         }

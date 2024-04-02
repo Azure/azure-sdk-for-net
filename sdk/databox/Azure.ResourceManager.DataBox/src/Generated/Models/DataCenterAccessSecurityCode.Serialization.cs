@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReverseDataCenterAccessCode != null)
+            if (Optional.IsDefined(ReverseDataCenterAccessCode))
             {
                 writer.WritePropertyName("reverseDCAccessCode"u8);
                 writer.WriteStringValue(ReverseDataCenterAccessCode);
             }
-            if (ForwardDataCenterAccessCode != null)
+            if (Optional.IsDefined(ForwardDataCenterAccessCode))
             {
                 writer.WritePropertyName("forwardDCAccessCode"u8);
                 writer.WriteStringValue(ForwardDataCenterAccessCode);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataCenterAccessSecurityCode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataCenterAccessSecurityCode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataCenterAccessSecurityCode)} does not support reading '{options.Format}' format.");
             }
         }
 

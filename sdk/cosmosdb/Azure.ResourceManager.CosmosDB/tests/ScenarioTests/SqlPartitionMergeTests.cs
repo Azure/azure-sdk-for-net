@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
         }
 
         [Test]
-        //[RecordedTest]
+        [RecordedTest]
         public async Task SqlDatabasePartitionMerge()
         {
             var database = await CreateSqlDatabase(new AutoscaleSettings()
@@ -83,11 +83,11 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             try
             {
                 PhysicalPartitionStorageInfoCollection physicalPartitionCollection = (await database.SqlDatabasePartitionMergeAsync(WaitUntil.Completed, mergeParameters)).Value;
-                Assert.IsTrue(physicalPartitionCollection.PhysicalPartitionStorageInfoCollectionValue.Count > 1);
+                Assert.IsTrue(physicalPartitionCollection.PhysicalPartitionStorageInfoCollectionValue.Count == 1);
             }
             catch (Exception e)
             {
-                Assert.IsTrue(e.Message.Contains("Merge operation feature is not available/enabled"));
+                Assert.IsTrue(e.Message.Contains("Merge feature is not available") || e.Message.Contains("Merge operation feature is not available/enabled"));
             }
         }
 

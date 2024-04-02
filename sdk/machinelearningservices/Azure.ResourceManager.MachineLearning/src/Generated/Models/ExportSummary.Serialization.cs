@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 if (EndOn != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("endDateTime");
                 }
             }
-            if (options.Format != "W" && ExportedRowCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExportedRowCount))
             {
                 if (ExportedRowCount != null)
                 {
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             }
             writer.WritePropertyName("format"u8);
             writer.WriteStringValue(Format.ToString());
-            if (options.Format != "W" && LabelingJobId != null)
+            if (options.Format != "W" && Optional.IsDefined(LabelingJobId))
             {
                 if (LabelingJobId != null)
                 {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("labelingJobId");
                 }
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 if (StartOn != null)
                 {
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExportSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExportSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExportSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,8 +118,8 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 switch (discriminator.GetString())
                 {
-                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element, options);
                     case "Coco": return CocoExportSummary.DeserializeCocoExportSummary(element, options);
+                    case "CSV": return CsvExportSummary.DeserializeCsvExportSummary(element, options);
                     case "Dataset": return DatasetExportSummary.DeserializeDatasetExportSummary(element, options);
                 }
             }
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExportSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeExportSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExportSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExportSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

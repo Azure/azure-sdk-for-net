@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<WithdrawPlanContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PlanId != null)
+            if (Optional.IsDefined(PlanId))
             {
                 writer.WritePropertyName("planId"u8);
                 writer.WriteStringValue(PlanId);
             }
-            if (PublisherId != null)
+            if (Optional.IsDefined(PublisherId))
             {
                 writer.WritePropertyName("publisherId"u8);
                 writer.WriteStringValue(PublisherId);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<WithdrawPlanContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeWithdrawPlanContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WithdrawPlanContent)} does not support reading '{options.Format}' format.");
             }
         }
 

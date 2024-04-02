@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmartGroupModificationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmartGroupModificationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmartGroupModificationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SmartGroupId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SmartGroupId))
             {
                 writer.WritePropertyName("smartGroupId"u8);
                 writer.WriteStringValue(SmartGroupId.Value);
             }
-            if (!(Modifications is ChangeTrackingList<SmartGroupModificationItemInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Modifications))
             {
                 writer.WritePropertyName("modifications"u8);
                 writer.WriteStartArray();
                 foreach (var item in Modifications)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SmartGroupModificationItemInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<SmartGroupModificationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SmartGroupModificationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SmartGroupModificationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SmartGroupModificationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmartGroupModificationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeSmartGroupModificationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SmartGroupModificationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SmartGroupModificationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

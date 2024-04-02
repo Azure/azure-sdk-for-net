@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SchemaComparisonValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SchemaDifferences != null)
+            if (Optional.IsDefined(SchemaDifferences))
             {
                 writer.WritePropertyName("schemaDifferences"u8);
-                writer.WriteObjectValue(SchemaDifferences);
+                writer.WriteObjectValue<SchemaComparisonValidationResultType>(SchemaDifferences, options);
             }
-            if (ValidationErrors != null)
+            if (Optional.IsDefined(ValidationErrors))
             {
                 writer.WritePropertyName("validationErrors"u8);
-                writer.WriteObjectValue(ValidationErrors);
+                writer.WriteObjectValue<ValidationError>(ValidationErrors, options);
             }
-            if (!(SourceDatabaseObjectCount is ChangeTrackingDictionary<string, long> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceDatabaseObjectCount))
             {
                 writer.WritePropertyName("sourceDatabaseObjectCount"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetDatabaseObjectCount is ChangeTrackingDictionary<string, long> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetDatabaseObjectCount))
             {
                 writer.WritePropertyName("targetDatabaseObjectCount"u8);
                 writer.WriteStartObject();
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<SchemaComparisonValidationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeSchemaComparisonValidationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SchemaComparisonValidationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

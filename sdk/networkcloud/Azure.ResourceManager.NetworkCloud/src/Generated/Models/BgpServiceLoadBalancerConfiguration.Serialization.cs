@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(BgpAdvertisements is ChangeTrackingList<BgpAdvertisement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BgpAdvertisements))
             {
                 writer.WritePropertyName("bgpAdvertisements"u8);
                 writer.WriteStartArray();
                 foreach (var item in BgpAdvertisements)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BgpAdvertisement>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(BgpPeers is ChangeTrackingList<ServiceLoadBalancerBgpPeer> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BgpPeers))
             {
                 writer.WritePropertyName("bgpPeers"u8);
                 writer.WriteStartArray();
                 foreach (var item in BgpPeers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ServiceLoadBalancerBgpPeer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (FabricPeeringEnabled.HasValue)
+            if (Optional.IsDefined(FabricPeeringEnabled))
             {
                 writer.WritePropertyName("fabricPeeringEnabled"u8);
                 writer.WriteStringValue(FabricPeeringEnabled.Value.ToString());
             }
-            if (!(IPAddressPools is ChangeTrackingList<IPAddressPool> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAddressPools))
             {
                 writer.WritePropertyName("ipAddressPools"u8);
                 writer.WriteStartArray();
                 foreach (var item in IPAddressPools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<IPAddressPool>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<BgpServiceLoadBalancerConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -176,7 +176,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeBgpServiceLoadBalancerConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BgpServiceLoadBalancerConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

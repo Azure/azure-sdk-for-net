@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewBatchFeatureStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewBatchFeatureStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewBatchFeatureStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Features is ChangeTrackingDictionary<string, bool> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Features))
             {
                 writer.WritePropertyName("features"u8);
                 writer.WriteStartObject();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Purview.Models
             var format = options.Format == "W" ? ((IPersistableModel<PurviewBatchFeatureStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewBatchFeatureStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewBatchFeatureStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Purview.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewBatchFeatureStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewBatchFeatureStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Purview.Models
                         return DeserializePurviewBatchFeatureStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewBatchFeatureStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewBatchFeatureStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

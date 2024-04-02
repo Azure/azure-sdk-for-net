@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceKillChainPhase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceKillChainPhase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceKillChainPhase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (KillChainName != null)
+            if (Optional.IsDefined(KillChainName))
             {
                 writer.WritePropertyName("killChainName"u8);
                 writer.WriteStringValue(KillChainName);
             }
-            if (PhaseName != null)
+            if (Optional.IsDefined(PhaseName))
             {
                 writer.WritePropertyName("phaseName"u8);
                 writer.WriteStringValue(PhaseName);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ThreatIntelligenceKillChainPhase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ThreatIntelligenceKillChainPhase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ThreatIntelligenceKillChainPhase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceKillChainPhase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceKillChainPhase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeThreatIntelligenceKillChainPhase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ThreatIntelligenceKillChainPhase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ThreatIntelligenceKillChainPhase)} does not support reading '{options.Format}' format.");
             }
         }
 

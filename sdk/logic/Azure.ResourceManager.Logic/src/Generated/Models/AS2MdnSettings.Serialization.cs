@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2MdnSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,19 +32,19 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteBooleanValue(SignMdn);
             writer.WritePropertyName("sendMDNAsynchronously"u8);
             writer.WriteBooleanValue(SendMdnAsynchronously);
-            if (ReceiptDeliveryUri != null)
+            if (Optional.IsDefined(ReceiptDeliveryUri))
             {
                 writer.WritePropertyName("receiptDeliveryUrl"u8);
                 writer.WriteStringValue(ReceiptDeliveryUri.AbsoluteUri);
             }
-            if (DispositionNotificationTo != null)
+            if (Optional.IsDefined(DispositionNotificationTo))
             {
                 writer.WritePropertyName("dispositionNotificationTo"u8);
                 writer.WriteStringValue(DispositionNotificationTo);
             }
             writer.WritePropertyName("signOutboundMDNIfOptional"u8);
             writer.WriteBooleanValue(SignOutboundMdnIfOptional);
-            if (MdnText != null)
+            if (Optional.IsDefined(MdnText))
             {
                 writer.WritePropertyName("mdnText"u8);
                 writer.WriteStringValue(MdnText);
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<AS2MdnSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeAS2MdnSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AS2MdnSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

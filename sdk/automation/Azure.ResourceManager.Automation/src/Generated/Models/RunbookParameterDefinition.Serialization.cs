@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RunbookParameterType != null)
+            if (Optional.IsDefined(RunbookParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RunbookParameterType);
             }
-            if (IsMandatory.HasValue)
+            if (Optional.IsDefined(IsMandatory))
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (Position.HasValue)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunbookParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeRunbookParameterDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunbookParameterDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

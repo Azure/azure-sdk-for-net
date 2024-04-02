@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScriptReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ScriptSource != null)
+            if (Optional.IsDefined(ScriptSource))
             {
                 writer.WritePropertyName("scriptSource"u8);
                 writer.WriteStringValue(ScriptSource);
             }
-            if (ScriptData != null)
+            if (Optional.IsDefined(ScriptData))
             {
                 writer.WritePropertyName("scriptData"u8);
                 writer.WriteStringValue(ScriptData);
             }
-            if (ScriptArguments != null)
+            if (Optional.IsDefined(ScriptArguments))
             {
                 writer.WritePropertyName("scriptArguments"u8);
                 writer.WriteStringValue(ScriptArguments);
             }
-            if (Timeout != null)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningScriptReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningScriptReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningScriptReference)} does not support reading '{options.Format}' format.");
             }
         }
 

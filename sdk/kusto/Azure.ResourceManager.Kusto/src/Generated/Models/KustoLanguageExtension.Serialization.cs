@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoLanguageExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LanguageExtensionName.HasValue)
+            if (Optional.IsDefined(LanguageExtensionName))
             {
                 writer.WritePropertyName("languageExtensionName"u8);
                 writer.WriteStringValue(LanguageExtensionName.Value.ToString());
             }
-            if (LanguageExtensionImageName.HasValue)
+            if (Optional.IsDefined(LanguageExtensionImageName))
             {
                 writer.WritePropertyName("languageExtensionImageName"u8);
                 writer.WriteStringValue(LanguageExtensionImageName.Value.ToString());
             }
-            if (LanguageExtensionCustomImageName != null)
+            if (Optional.IsDefined(LanguageExtensionCustomImageName))
             {
                 writer.WritePropertyName("languageExtensionCustomImageName"u8);
                 writer.WriteStringValue(LanguageExtensionCustomImageName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoLanguageExtension>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoLanguageExtension(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoLanguageExtension)} does not support reading '{options.Format}' format.");
             }
         }
 

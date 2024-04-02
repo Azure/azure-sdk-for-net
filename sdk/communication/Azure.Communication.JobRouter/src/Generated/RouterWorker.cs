@@ -7,8 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure;
-using Azure.Core;
 
 namespace Azure.Communication.JobRouter
 {
@@ -71,8 +69,9 @@ namespace Azure.Communication.JobRouter
         /// <param name="assignedJobs"> A list of assigned jobs attached to this worker. </param>
         /// <param name="loadRatio"> A value indicating the workers capacity. A value of '1' means all capacity is consumed. A value of '0' means no capacity is currently consumed. </param>
         /// <param name="availableForOffers"> A flag indicating this worker is open to receive offers or not. </param>
+        /// <param name="maxConcurrentOffers"> If this is set, the worker will only receive up to this many new offers at a time. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RouterWorker(ETag eTag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RouterWorker(ETag eTag, string id, RouterWorkerState? state, IList<string> queues, int? capacity, IDictionary<string, BinaryData> labels, IDictionary<string, BinaryData> tags, IList<RouterChannel> channels, IReadOnlyList<RouterJobOffer> offers, IReadOnlyList<RouterWorkerAssignment> assignedJobs, double? loadRatio, bool? availableForOffers, int? maxConcurrentOffers, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             ETag = eTag;
             Id = id;
@@ -86,6 +85,7 @@ namespace Azure.Communication.JobRouter
             AssignedJobs = assignedJobs;
             LoadRatio = loadRatio;
             AvailableForOffers = availableForOffers;
+            MaxConcurrentOffers = maxConcurrentOffers;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
         /// <summary> Id of a worker. </summary>

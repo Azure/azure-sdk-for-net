@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<OverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OverviewStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PassedCount.HasValue)
+            if (Optional.IsDefined(PassedCount))
             {
                 writer.WritePropertyName("passedCount"u8);
                 writer.WriteNumberValue(PassedCount.Value);
             }
-            if (FailedCount.HasValue)
+            if (Optional.IsDefined(FailedCount))
             {
                 writer.WritePropertyName("failedCount"u8);
                 writer.WriteNumberValue(FailedCount.Value);
             }
-            if (ManualCount.HasValue)
+            if (Optional.IsDefined(ManualCount))
             {
                 writer.WritePropertyName("manualCount"u8);
                 writer.WriteNumberValue(ManualCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<OverviewStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OverviewStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OverviewStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeOverviewStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OverviewStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OverviewStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

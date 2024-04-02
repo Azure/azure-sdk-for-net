@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,16 +23,16 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationProfileAssignmentReportResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationProfileAssignmentReportResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationProfileAssignmentReportResourceDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Error != null)
+            if (options.Format != "W" && Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -53,7 +52,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Automanage.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationProfileAssignmentReportResourceDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationProfileAssignmentReportResourceDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationProfileAssignmentReportResourceDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +168,7 @@ namespace Azure.ResourceManager.Automanage.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationProfileAssignmentReportResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationProfileAssignmentReportResourceDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.Automanage.Models
                         return DeserializeConfigurationProfileAssignmentReportResourceDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationProfileAssignmentReportResourceDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationProfileAssignmentReportResourceDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

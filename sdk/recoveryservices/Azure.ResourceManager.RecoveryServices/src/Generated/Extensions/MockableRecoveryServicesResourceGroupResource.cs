@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.RecoveryServices;
 using Azure.ResourceManager.RecoveryServices.Models;
 
 namespace Azure.ResourceManager.RecoveryServices.Mocking
@@ -138,10 +135,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RecoveryServicesNameAvailabilityResult>> CheckRecoveryServicesNameAvailabilityAsync(AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = RecoveryServicesClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.CheckRecoveryServicesNameAvailability");
             scope.Start();
@@ -182,10 +176,7 @@ namespace Azure.ResourceManager.RecoveryServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RecoveryServicesNameAvailabilityResult> CheckRecoveryServicesNameAvailability(AzureLocation location, RecoveryServicesNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = RecoveryServicesClientDiagnostics.CreateScope("MockableRecoveryServicesResourceGroupResource.CheckRecoveryServicesNameAvailability");
             scope.Start();

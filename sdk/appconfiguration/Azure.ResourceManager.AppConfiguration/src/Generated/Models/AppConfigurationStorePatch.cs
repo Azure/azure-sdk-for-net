@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.AppConfiguration.Models
@@ -75,10 +74,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The managed identity information for the configuration store. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The SKU of the configuration store. </summary>
         internal AppConfigurationSku Sku { get; set; }
         /// <summary> The SKU name of the configuration store. </summary>
+        [WirePath("sku.name")]
         public string SkuName
         {
             get => Sku is null ? default : Sku.Name;
@@ -86,10 +87,12 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> The ARM resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The encryption settings of the configuration store. </summary>
         internal AppConfigurationStoreEncryptionProperties Encryption { get; set; }
         /// <summary> Key vault properties. </summary>
+        [WirePath("properties.encryption.keyVaultProperties")]
         public AppConfigurationKeyVaultProperties EncryptionKeyVaultProperties
         {
             get => Encryption is null ? default : Encryption.KeyVaultProperties;
@@ -102,10 +105,13 @@ namespace Azure.ResourceManager.AppConfiguration.Models
         }
 
         /// <summary> Disables all authentication methods other than AAD authentication. </summary>
+        [WirePath("properties.disableLocalAuth")]
         public bool? DisableLocalAuth { get; set; }
         /// <summary> Control permission for data plane traffic coming from public networks while private endpoint is enabled. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public AppConfigurationPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Property specifying whether protection against purge is enabled for this configuration store. </summary>
+        [WirePath("properties.enablePurgeProtection")]
         public bool? EnablePurgeProtection { get; set; }
     }
 }

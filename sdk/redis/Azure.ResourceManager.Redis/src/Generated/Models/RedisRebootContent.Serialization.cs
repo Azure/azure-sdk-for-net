@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisRebootContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisRebootContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisRebootContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RebootType.HasValue)
+            if (Optional.IsDefined(RebootType))
             {
                 writer.WritePropertyName("rebootType"u8);
                 writer.WriteStringValue(RebootType.Value.ToString());
             }
-            if (ShardId.HasValue)
+            if (Optional.IsDefined(ShardId))
             {
                 writer.WritePropertyName("shardId"u8);
                 writer.WriteNumberValue(ShardId.Value);
             }
-            if (!(Ports is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Redis.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisRebootContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisRebootContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisRebootContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Redis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisRebootContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisRebootContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Redis.Models
                         return DeserializeRedisRebootContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisRebootContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisRebootContent)} does not support reading '{options.Format}' format.");
             }
         }
 

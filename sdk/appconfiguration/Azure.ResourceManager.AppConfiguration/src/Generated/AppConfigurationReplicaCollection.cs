@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppConfiguration
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AppConfigurationReplicaResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string replicaName, AppConfigurationReplicaData data, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AppConfigurationReplicaResource> CreateOrUpdate(WaitUntil waitUntil, string replicaName, AppConfigurationReplicaData data, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual async Task<Response<AppConfigurationReplicaResource>> GetAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual Response<AppConfigurationReplicaResource> Get(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual Response<bool> Exists(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual async Task<NullableResponse<AppConfigurationReplicaResource>> GetIfExistsAsync(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.AppConfiguration
         /// <exception cref="ArgumentNullException"> <paramref name="replicaName"/> is null. </exception>
         public virtual NullableResponse<AppConfigurationReplicaResource> GetIfExists(string replicaName, CancellationToken cancellationToken = default)
         {
-            if (replicaName == null)
-            {
-                throw new ArgumentNullException(nameof(replicaName));
-            }
-            if (replicaName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(replicaName));
-            }
+            Argument.AssertNotNullOrEmpty(replicaName, nameof(replicaName));
 
             using var scope = _appConfigurationReplicaReplicasClientDiagnostics.CreateScope("AppConfigurationReplicaCollection.GetIfExists");
             scope.Start();

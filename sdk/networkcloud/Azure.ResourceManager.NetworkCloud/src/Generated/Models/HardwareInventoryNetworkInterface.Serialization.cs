@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareInventoryNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LinkStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(LinkStatus))
             {
                 writer.WritePropertyName("linkStatus"u8);
                 writer.WriteStringValue(LinkStatus);
             }
-            if (options.Format != "W" && MacAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(MacAddress))
             {
                 writer.WritePropertyName("macAddress"u8);
                 writer.WriteStringValue(MacAddress);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && NetworkInterfaceId != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkInterfaceId))
             {
                 writer.WritePropertyName("networkInterfaceId"u8);
                 writer.WriteStringValue(NetworkInterfaceId);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<HardwareInventoryNetworkInterface>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeHardwareInventoryNetworkInterface(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HardwareInventoryNetworkInterface)} does not support reading '{options.Format}' format.");
             }
         }
 

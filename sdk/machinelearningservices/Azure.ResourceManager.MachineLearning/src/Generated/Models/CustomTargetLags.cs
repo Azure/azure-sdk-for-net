@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="values"/> is null. </exception>
         public CustomTargetLags(IEnumerable<int> values)
         {
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
+            Argument.AssertNotNull(values, nameof(values));
 
             Values = values.ToList();
             Mode = TargetLagsMode.Custom;

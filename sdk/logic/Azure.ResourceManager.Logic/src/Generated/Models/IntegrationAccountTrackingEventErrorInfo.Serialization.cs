@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountTrackingEventErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountTrackingEventErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountTrackingEventErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountTrackingEventErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountTrackingEventErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountTrackingEventErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountTrackingEventErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountTrackingEventErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountTrackingEventErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountTrackingEventErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountTrackingEventErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

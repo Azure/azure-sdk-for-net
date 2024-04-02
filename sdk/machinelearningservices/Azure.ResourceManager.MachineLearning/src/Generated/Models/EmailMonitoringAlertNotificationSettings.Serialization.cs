@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmailMonitoringAlertNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EmailNotificationSetting != null)
+            if (Optional.IsDefined(EmailNotificationSetting))
             {
                 if (EmailNotificationSetting != null)
                 {
                     writer.WritePropertyName("emailNotificationSetting"u8);
-                    writer.WriteObjectValue(EmailNotificationSetting);
+                    writer.WriteObjectValue<NotificationSetting>(EmailNotificationSetting, options);
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<EmailMonitoringAlertNotificationSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeEmailMonitoringAlertNotificationSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EmailMonitoringAlertNotificationSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

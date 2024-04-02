@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegionalSharingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Region != null)
+            if (Optional.IsDefined(Region))
             {
                 writer.WritePropertyName("region"u8);
                 writer.WriteStringValue(Region);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (Details != null)
+            if (Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RegionalSharingStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRegionalSharingStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RegionalSharingStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

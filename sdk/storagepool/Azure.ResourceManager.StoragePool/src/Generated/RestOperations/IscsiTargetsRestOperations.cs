@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.StoragePool.Models;
@@ -67,30 +67,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiskPoolIscsiTargetList>> ListByDiskPoolAsync(string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var message = CreateListByDiskPoolRequest(subscriptionId, resourceGroupName, diskPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +96,9 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiskPoolIscsiTargetList> ListByDiskPool(string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var message = CreateListByDiskPoolRequest(subscriptionId, resourceGroupName, diskPoolName);
             _pipeline.Send(message, cancellationToken);
@@ -178,7 +136,7 @@ namespace Azure.ResourceManager.StoragePool
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<DiskPoolIscsiTargetCreateOrUpdateContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -195,42 +153,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, DiskPoolIscsiTargetCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
-            if (iscsiTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -255,42 +182,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, DiskPoolIscsiTargetCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
-            if (iscsiTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, content);
             _pipeline.Send(message, cancellationToken);
@@ -324,7 +220,7 @@ namespace Azure.ResourceManager.StoragePool
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<DiskPoolIscsiTargetPatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -341,42 +237,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, DiskPoolIscsiTargetPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
-            if (iscsiTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -401,42 +266,11 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, DiskPoolIscsiTargetPatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
-            if (iscsiTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -482,38 +316,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
-            if (iscsiTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -538,38 +344,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
-            if (iscsiTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -616,38 +394,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiskPoolIscsiTargetData>> GetAsync(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
-            if (iscsiTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -677,38 +427,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="diskPoolName"/> or <paramref name="iscsiTargetName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiskPoolIscsiTargetData> Get(string subscriptionId, string resourceGroupName, string diskPoolName, string iscsiTargetName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
-            if (iscsiTargetName == null)
-            {
-                throw new ArgumentNullException(nameof(iscsiTargetName));
-            }
-            if (iscsiTargetName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(iscsiTargetName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
+            Argument.AssertNotNullOrEmpty(iscsiTargetName, nameof(iscsiTargetName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, diskPoolName, iscsiTargetName);
             _pipeline.Send(message, cancellationToken);
@@ -752,34 +474,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiskPoolIscsiTargetList>> ListByDiskPoolNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var message = CreateListByDiskPoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, diskPoolName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -807,34 +505,10 @@ namespace Azure.ResourceManager.StoragePool
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="diskPoolName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiskPoolIscsiTargetList> ListByDiskPoolNextPage(string nextLink, string subscriptionId, string resourceGroupName, string diskPoolName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (diskPoolName == null)
-            {
-                throw new ArgumentNullException(nameof(diskPoolName));
-            }
-            if (diskPoolName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(diskPoolName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(diskPoolName, nameof(diskPoolName));
 
             using var message = CreateListByDiskPoolNextPageRequest(nextLink, subscriptionId, resourceGroupName, diskPoolName);
             _pipeline.Send(message, cancellationToken);

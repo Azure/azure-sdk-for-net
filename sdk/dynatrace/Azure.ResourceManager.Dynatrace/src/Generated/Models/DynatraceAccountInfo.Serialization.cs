@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceAccountInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceAccountInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AccountId != null)
+            if (Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (RegionId != null)
+            if (Optional.IsDefined(RegionId))
             {
                 writer.WritePropertyName("regionId"u8);
                 writer.WriteStringValue(RegionId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceAccountInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceAccountInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceAccountInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceAccountInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceAccountInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceAccountInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceAccountInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceAccountInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -15,20 +15,20 @@ namespace Azure.AI.MetricsAdvisor.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(DimensionFilter is ChangeTrackingList<DimensionKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DimensionFilter))
             {
                 writer.WritePropertyName("dimensionFilter"u8);
                 writer.WriteStartArray();
                 foreach (var item in DimensionFilter)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DimensionKey>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (SeverityFilter != null)
+            if (Optional.IsDefined(SeverityFilter))
             {
                 writer.WritePropertyName("severityFilter"u8);
-                writer.WriteObjectValue(SeverityFilter);
+                writer.WriteObjectValue<SeverityFilterCondition>(SeverityFilter);
             }
             writer.WriteEndObject();
         }

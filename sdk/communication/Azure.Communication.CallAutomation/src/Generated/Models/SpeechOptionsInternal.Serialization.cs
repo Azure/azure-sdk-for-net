@@ -15,7 +15,7 @@ namespace Azure.Communication.CallAutomation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (EndSilenceTimeoutInMs.HasValue)
+            if (Optional.IsDefined(EndSilenceTimeoutInMs))
             {
                 writer.WritePropertyName("endSilenceTimeoutInMs"u8);
                 writer.WriteNumberValue(EndSilenceTimeoutInMs.Value);

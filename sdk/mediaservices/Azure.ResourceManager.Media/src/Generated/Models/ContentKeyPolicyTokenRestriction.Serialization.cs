@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyTokenRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,35 +33,35 @@ namespace Azure.ResourceManager.Media.Models
             if (PrimaryVerificationKey != null)
             {
                 writer.WritePropertyName("primaryVerificationKey"u8);
-                writer.WriteObjectValue(PrimaryVerificationKey);
+                writer.WriteObjectValue<ContentKeyPolicyRestrictionTokenKey>(PrimaryVerificationKey, options);
             }
             else
             {
                 writer.WriteNull("primaryVerificationKey");
             }
-            if (!(AlternateVerificationKeys is ChangeTrackingList<ContentKeyPolicyRestrictionTokenKey> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AlternateVerificationKeys))
             {
                 writer.WritePropertyName("alternateVerificationKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in AlternateVerificationKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContentKeyPolicyRestrictionTokenKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(RequiredClaims is ChangeTrackingList<ContentKeyPolicyTokenClaim> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(RequiredClaims))
             {
                 writer.WritePropertyName("requiredClaims"u8);
                 writer.WriteStartArray();
                 foreach (var item in RequiredClaims)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContentKeyPolicyTokenClaim>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("restrictionTokenType"u8);
             writer.WriteStringValue(RestrictionTokenType.ToString());
-            if (OpenIdConnectDiscoveryDocument != null)
+            if (Optional.IsDefined(OpenIdConnectDiscoveryDocument))
             {
                 writer.WritePropertyName("openIdConnectDiscoveryDocument"u8);
                 writer.WriteStringValue(OpenIdConnectDiscoveryDocument);
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyTokenRestriction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyTokenRestriction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyTokenRestriction)} does not support reading '{options.Format}' format.");
             }
         }
 

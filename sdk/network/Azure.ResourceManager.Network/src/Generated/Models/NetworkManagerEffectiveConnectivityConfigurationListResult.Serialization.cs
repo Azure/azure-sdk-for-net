@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerEffectiveConnectivityConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<EffectiveConnectivityConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EffectiveConnectivityConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagerEffectiveConnectivityConfigurationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkManagerEffectiveConnectivityConfigurationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagerEffectiveConnectivityConfigurationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

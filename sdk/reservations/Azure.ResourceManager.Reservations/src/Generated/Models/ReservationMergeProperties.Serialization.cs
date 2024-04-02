@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationMergeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MergeDestination != null)
+            if (Optional.IsDefined(MergeDestination))
             {
                 writer.WritePropertyName("mergeDestination"u8);
                 writer.WriteStringValue(MergeDestination);
             }
-            if (!(MergeSources is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MergeSources))
             {
                 writer.WritePropertyName("mergeSources"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReservationMergeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeReservationMergeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReservationMergeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

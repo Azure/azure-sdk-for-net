@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceHealthStatus.HasValue)
+            if (Optional.IsDefined(ResourceHealthStatus))
             {
                 writer.WritePropertyName("resourceHealthStatus"u8);
                 writer.WriteStringValue(ResourceHealthStatus.Value.ToString());
             }
-            if (!(ResourceHealthDetails is ChangeTrackingList<ResourceHealthDetails> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ResourceHealthDetails))
             {
                 writer.WritePropertyName("resourceHealthDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceHealthDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceHealthDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<KpiResourceHealthDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeKpiResourceHealthDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KpiResourceHealthDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && RecommendationDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(RecommendationDisplayName))
             {
                 writer.WritePropertyName("recommendationDisplayName"u8);
                 writer.WriteStringValue(RecommendationDisplayName);
             }
-            if (options.Format != "W" && ReportedSeverity.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReportedSeverity))
             {
                 writer.WritePropertyName("reportedSeverity"u8);
                 writer.WriteStringValue(ReportedSeverity.Value.ToString());
             }
-            if (options.Format != "W" && DevicesCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DevicesCount))
             {
                 writer.WritePropertyName("devicesCount"u8);
                 writer.WriteNumberValue(DevicesCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotSecurityDeviceRecommendation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeIotSecurityDeviceRecommendation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotSecurityDeviceRecommendation)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.CostManagement.Models;
 using Azure.ResourceManager.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.CostManagement
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementViewData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("eTag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,101 +48,101 @@ namespace Azure.ResourceManager.CostManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdOn"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && ModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ModifiedOn))
             {
                 writer.WritePropertyName("modifiedOn"u8);
                 writer.WriteStringValue(ModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && DateRange != null)
+            if (options.Format != "W" && Optional.IsDefined(DateRange))
             {
                 writer.WritePropertyName("dateRange"u8);
                 writer.WriteStringValue(DateRange);
             }
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (Chart.HasValue)
+            if (Optional.IsDefined(Chart))
             {
                 writer.WritePropertyName("chart"u8);
                 writer.WriteStringValue(Chart.Value.ToString());
             }
-            if (Accumulated.HasValue)
+            if (Optional.IsDefined(Accumulated))
             {
                 writer.WritePropertyName("accumulated"u8);
                 writer.WriteStringValue(Accumulated.Value.ToString());
             }
-            if (Metric.HasValue)
+            if (Optional.IsDefined(Metric))
             {
                 writer.WritePropertyName("metric"u8);
                 writer.WriteStringValue(Metric.Value.ToString());
             }
-            if (!(Kpis is ChangeTrackingList<ViewKpiProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Kpis))
             {
                 writer.WritePropertyName("kpis"u8);
                 writer.WriteStartArray();
                 foreach (var item in Kpis)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ViewKpiProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Pivots is ChangeTrackingList<ViewPivotProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Pivots))
             {
                 writer.WritePropertyName("pivots"u8);
                 writer.WriteStartArray();
                 foreach (var item in Pivots)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ViewPivotProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("query"u8);
             writer.WriteStartObject();
-            if (TypePropertiesQueryType.HasValue)
+            if (Optional.IsDefined(TypePropertiesQueryType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesQueryType.Value.ToString());
             }
-            if (Timeframe.HasValue)
+            if (Optional.IsDefined(Timeframe))
             {
                 writer.WritePropertyName("timeframe"u8);
                 writer.WriteStringValue(Timeframe.Value.ToString());
             }
-            if (TimePeriod != null)
+            if (Optional.IsDefined(TimePeriod))
             {
                 writer.WritePropertyName("timePeriod"u8);
-                writer.WriteObjectValue(TimePeriod);
+                writer.WriteObjectValue<ReportConfigTimePeriod>(TimePeriod, options);
             }
-            if (DataSet != null)
+            if (Optional.IsDefined(DataSet))
             {
                 writer.WritePropertyName("dataSet"u8);
-                writer.WriteObjectValue(DataSet);
+                writer.WriteObjectValue<ReportConfigDataset>(DataSet, options);
             }
-            if (IncludeMonetaryCommitment.HasValue)
+            if (Optional.IsDefined(IncludeMonetaryCommitment))
             {
                 writer.WritePropertyName("includeMonetaryCommitment"u8);
                 writer.WriteBooleanValue(IncludeMonetaryCommitment.Value);
@@ -173,7 +172,7 @@ namespace Azure.ResourceManager.CostManagement
             var format = options.Format == "W" ? ((IPersistableModel<CostManagementViewData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CostManagementViewData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -452,7 +451,7 @@ namespace Azure.ResourceManager.CostManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -468,7 +467,7 @@ namespace Azure.ResourceManager.CostManagement
                         return DeserializeCostManagementViewData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CostManagementViewData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.StorageSync
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,14 +43,14 @@ namespace Azure.ResourceManager.StorageSync
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ServerCertificate != null)
+            if (Optional.IsDefined(ServerCertificate))
             {
                 writer.WritePropertyName("serverCertificate"u8);
 #if NET6_0_OR_GREATER
@@ -62,112 +62,112 @@ namespace Azure.ResourceManager.StorageSync
                 }
 #endif
             }
-            if (AgentVersion != null)
+            if (Optional.IsDefined(AgentVersion))
             {
                 writer.WritePropertyName("agentVersion"u8);
                 writer.WriteStringValue(AgentVersion);
             }
-            if (options.Format != "W" && AgentVersionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentVersionStatus))
             {
                 writer.WritePropertyName("agentVersionStatus"u8);
                 writer.WriteStringValue(AgentVersionStatus.Value.ToString());
             }
-            if (options.Format != "W" && AgentVersionExpireOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AgentVersionExpireOn))
             {
                 writer.WritePropertyName("agentVersionExpirationDate"u8);
                 writer.WriteStringValue(AgentVersionExpireOn.Value, "O");
             }
-            if (ServerOSVersion != null)
+            if (Optional.IsDefined(ServerOSVersion))
             {
                 writer.WritePropertyName("serverOSVersion"u8);
                 writer.WriteStringValue(ServerOSVersion);
             }
-            if (ServerManagementErrorCode.HasValue)
+            if (Optional.IsDefined(ServerManagementErrorCode))
             {
                 writer.WritePropertyName("serverManagementErrorCode"u8);
                 writer.WriteNumberValue(ServerManagementErrorCode.Value);
             }
-            if (LastHeartbeat != null)
+            if (Optional.IsDefined(LastHeartbeat))
             {
                 writer.WritePropertyName("lastHeartBeat"u8);
                 writer.WriteStringValue(LastHeartbeat);
             }
-            if (ProvisioningState != null)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (ServerRole != null)
+            if (Optional.IsDefined(ServerRole))
             {
                 writer.WritePropertyName("serverRole"u8);
                 writer.WriteStringValue(ServerRole);
             }
-            if (ClusterId.HasValue)
+            if (Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId.Value);
             }
-            if (ClusterName != null)
+            if (Optional.IsDefined(ClusterName))
             {
                 writer.WritePropertyName("clusterName"u8);
                 writer.WriteStringValue(ClusterName);
             }
-            if (ServerId.HasValue)
+            if (Optional.IsDefined(ServerId))
             {
                 writer.WritePropertyName("serverId"u8);
                 writer.WriteStringValue(ServerId.Value);
             }
-            if (StorageSyncServiceUid.HasValue)
+            if (Optional.IsDefined(StorageSyncServiceUid))
             {
                 writer.WritePropertyName("storageSyncServiceUid"u8);
                 writer.WriteStringValue(StorageSyncServiceUid.Value);
             }
-            if (LastWorkflowId != null)
+            if (Optional.IsDefined(LastWorkflowId))
             {
                 writer.WritePropertyName("lastWorkflowId"u8);
                 writer.WriteStringValue(LastWorkflowId);
             }
-            if (LastOperationName != null)
+            if (Optional.IsDefined(LastOperationName))
             {
                 writer.WritePropertyName("lastOperationName"u8);
                 writer.WriteStringValue(LastOperationName);
             }
-            if (DiscoveryEndpointUri != null)
+            if (Optional.IsDefined(DiscoveryEndpointUri))
             {
                 writer.WritePropertyName("discoveryEndpointUri"u8);
                 writer.WriteStringValue(DiscoveryEndpointUri.AbsoluteUri);
             }
-            if (ResourceLocation.HasValue)
+            if (Optional.IsDefined(ResourceLocation))
             {
                 writer.WritePropertyName("resourceLocation"u8);
                 writer.WriteStringValue(ResourceLocation.Value);
             }
-            if (ServiceLocation.HasValue)
+            if (Optional.IsDefined(ServiceLocation))
             {
                 writer.WritePropertyName("serviceLocation"u8);
                 writer.WriteStringValue(ServiceLocation.Value);
             }
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ManagementEndpointUri != null)
+            if (Optional.IsDefined(ManagementEndpointUri))
             {
                 writer.WritePropertyName("managementEndpointUri"u8);
                 writer.WriteStringValue(ManagementEndpointUri.AbsoluteUri);
             }
-            if (MonitoringEndpointUri != null)
+            if (Optional.IsDefined(MonitoringEndpointUri))
             {
                 writer.WritePropertyName("monitoringEndpointUri"u8);
                 writer.WriteStringValue(MonitoringEndpointUri.AbsoluteUri);
             }
-            if (MonitoringConfiguration != null)
+            if (Optional.IsDefined(MonitoringConfiguration))
             {
                 writer.WritePropertyName("monitoringConfiguration"u8);
                 writer.WriteStringValue(MonitoringConfiguration);
             }
-            if (options.Format != "W" && ServerName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerName))
             {
                 writer.WritePropertyName("serverName"u8);
                 writer.WriteStringValue(ServerName);
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.StorageSync
             var format = options.Format == "W" ? ((IPersistableModel<StorageSyncRegisteredServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -487,7 +487,7 @@ namespace Azure.ResourceManager.StorageSync
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -503,7 +503,7 @@ namespace Azure.ResourceManager.StorageSync
                         return DeserializeStorageSyncRegisteredServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageSyncRegisteredServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicContentLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicContentLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicContentLink)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (options.Format != "W" && ContentVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentVersion))
             {
                 writer.WritePropertyName("contentVersion"u8);
                 writer.WriteStringValue(ContentVersion);
             }
-            if (options.Format != "W" && ContentSize.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ContentSize))
             {
                 writer.WritePropertyName("contentSize"u8);
                 writer.WriteNumberValue(ContentSize.Value);
             }
-            if (options.Format != "W" && ContentHash != null)
+            if (options.Format != "W" && Optional.IsDefined(ContentHash))
             {
                 writer.WritePropertyName("contentHash"u8);
-                writer.WriteObjectValue(ContentHash);
+                writer.WriteObjectValue<LogicContentHash>(ContentHash, options);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicContentLink>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicContentLink)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicContentLink)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicContentLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicContentLink)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -186,7 +186,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicContentLink(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicContentLink)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicContentLink)} does not support reading '{options.Format}' format.");
             }
         }
 

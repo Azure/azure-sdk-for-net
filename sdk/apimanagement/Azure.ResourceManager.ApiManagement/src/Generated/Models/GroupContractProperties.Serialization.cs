@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GroupContractProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupContractProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupContractProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("displayName"u8);
             writer.WriteStringValue(DisplayName);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && IsBuiltIn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsBuiltIn))
             {
                 writer.WritePropertyName("builtIn"u8);
                 writer.WriteBooleanValue(IsBuiltIn.Value);
             }
-            if (ApiManagementGroupType.HasValue)
+            if (Optional.IsDefined(ApiManagementGroupType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ApiManagementGroupType.Value.ToSerialString());
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<GroupContractProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupContractProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupContractProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GroupContractProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupContractProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeGroupContractProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupContractProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupContractProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

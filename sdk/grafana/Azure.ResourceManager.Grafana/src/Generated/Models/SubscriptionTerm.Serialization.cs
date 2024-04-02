@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionTerm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TermUnit != null)
+            if (Optional.IsDefined(TermUnit))
             {
                 writer.WritePropertyName("termUnit"u8);
                 writer.WriteStringValue(TermUnit);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Grafana.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionTerm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Grafana.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Grafana.Models
                         return DeserializeSubscriptionTerm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionTerm)} does not support reading '{options.Format}' format.");
             }
         }
 

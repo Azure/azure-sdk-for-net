@@ -17,7 +17,7 @@ namespace Azure.AI.MetricsAdvisor
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (StartsOn.HasValue)
+            if (Optional.IsDefined(StartsOn))
             {
                 if (StartsOn != null)
                 {
@@ -29,7 +29,7 @@ namespace Azure.AI.MetricsAdvisor
                     writer.WriteNull("startTime");
                 }
             }
-            if (EndsOn.HasValue)
+            if (Optional.IsDefined(EndsOn))
             {
                 if (EndsOn != null)
                 {
@@ -42,13 +42,13 @@ namespace Azure.AI.MetricsAdvisor
                 }
             }
             writer.WritePropertyName("value"u8);
-            writer.WriteObjectValue(ValueInternal);
+            writer.WriteObjectValue<CommentFeedbackValue>(ValueInternal);
             writer.WritePropertyName("feedbackType"u8);
             writer.WriteStringValue(FeedbackKind.ToString());
             writer.WritePropertyName("metricId"u8);
             writer.WriteStringValue(MetricId);
             writer.WritePropertyName("dimensionFilter"u8);
-            writer.WriteObjectValue(DimensionFilter);
+            writer.WriteObjectValue<FeedbackFilter>(DimensionFilter);
             writer.WriteEndObject();
         }
 

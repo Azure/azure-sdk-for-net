@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterFileProtectionMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Exe.HasValue)
+            if (Optional.IsDefined(Exe))
             {
                 writer.WritePropertyName("exe"u8);
                 writer.WriteStringValue(Exe.Value.ToString());
             }
-            if (Msi.HasValue)
+            if (Optional.IsDefined(Msi))
             {
                 writer.WritePropertyName("msi"u8);
                 writer.WriteStringValue(Msi.Value.ToString());
             }
-            if (Script.HasValue)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script.Value.ToString());
             }
-            if (Executable.HasValue)
+            if (Optional.IsDefined(Executable))
             {
                 writer.WritePropertyName("executable"u8);
                 writer.WriteStringValue(Executable.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityCenterFileProtectionMode>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityCenterFileProtectionMode(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityCenterFileProtectionMode)} does not support reading '{options.Format}' format.");
             }
         }
 

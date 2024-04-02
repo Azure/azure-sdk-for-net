@@ -22,61 +22,61 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupSetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupSetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupSetInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BackupSetId != null)
+            if (Optional.IsDefined(BackupSetId))
             {
                 writer.WritePropertyName("backupSetId"u8);
                 writer.WriteStringValue(BackupSetId);
             }
-            if (FirstLsn != null)
+            if (Optional.IsDefined(FirstLsn))
             {
                 writer.WritePropertyName("firstLsn"u8);
                 writer.WriteStringValue(FirstLsn);
             }
-            if (LastLsn != null)
+            if (Optional.IsDefined(LastLsn))
             {
                 writer.WritePropertyName("lastLsn"u8);
                 writer.WriteStringValue(LastLsn);
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (BackupType.HasValue)
+            if (Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (!(ListOfBackupFiles is ChangeTrackingList<BackupFileInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ListOfBackupFiles))
             {
                 writer.WritePropertyName("listOfBackupFiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ListOfBackupFiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BackupFileInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (BackupStartOn.HasValue)
+            if (Optional.IsDefined(BackupStartOn))
             {
                 writer.WritePropertyName("backupStartDate"u8);
                 writer.WriteStringValue(BackupStartOn.Value, "O");
             }
-            if (BackupFinishedOn.HasValue)
+            if (Optional.IsDefined(BackupFinishedOn))
             {
                 writer.WritePropertyName("backupFinishedDate"u8);
                 writer.WriteStringValue(BackupFinishedOn.Value, "O");
             }
-            if (IsBackupRestored.HasValue)
+            if (Optional.IsDefined(IsBackupRestored))
             {
                 writer.WritePropertyName("isBackupRestored"u8);
                 writer.WriteBooleanValue(IsBackupRestored.Value);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupSetInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupSetInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupSetInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -241,7 +241,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupSetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupSetInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeBackupSetInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupSetInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupSetInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

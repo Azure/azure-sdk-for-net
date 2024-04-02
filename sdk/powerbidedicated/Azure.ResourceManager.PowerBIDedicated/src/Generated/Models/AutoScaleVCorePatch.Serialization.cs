@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCorePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<AutoScaleVCoreSku>(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CapacityLimit.HasValue)
+            if (Optional.IsDefined(CapacityLimit))
             {
                 writer.WritePropertyName("capacityLimit"u8);
                 writer.WriteNumberValue(CapacityLimit.Value);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCorePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.PowerBIDedicated.Models
                         return DeserializeAutoScaleVCorePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoScaleVCorePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

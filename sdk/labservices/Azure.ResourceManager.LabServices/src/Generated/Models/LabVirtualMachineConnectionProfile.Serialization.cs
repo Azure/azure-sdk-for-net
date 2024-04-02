@@ -23,41 +23,41 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineConnectionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineConnectionProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrivateIPAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIpAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
             }
-            if (options.Format != "W" && SshAuthority != null)
+            if (options.Format != "W" && Optional.IsDefined(SshAuthority))
             {
                 writer.WritePropertyName("sshAuthority"u8);
                 writer.WriteStringValue(SshAuthority);
             }
-            if (options.Format != "W" && SshInBrowserUri != null)
+            if (options.Format != "W" && Optional.IsDefined(SshInBrowserUri))
             {
                 writer.WritePropertyName("sshInBrowserUrl"u8);
                 writer.WriteStringValue(SshInBrowserUri.AbsoluteUri);
             }
-            if (options.Format != "W" && RdpAuthority != null)
+            if (options.Format != "W" && Optional.IsDefined(RdpAuthority))
             {
                 writer.WritePropertyName("rdpAuthority"u8);
                 writer.WriteStringValue(RdpAuthority);
             }
-            if (options.Format != "W" && RdpInBrowserUri != null)
+            if (options.Format != "W" && Optional.IsDefined(RdpInBrowserUri))
             {
                 writer.WritePropertyName("rdpInBrowserUrl"u8);
                 writer.WriteStringValue(RdpInBrowserUri.AbsoluteUri);
             }
-            if (options.Format != "W" && AdminUsername != null)
+            if (options.Format != "W" && Optional.IsDefined(AdminUsername))
             {
                 writer.WritePropertyName("adminUsername"u8);
                 writer.WriteStringValue(AdminUsername);
             }
-            if (options.Format != "W" && NonAdminUsername != null)
+            if (options.Format != "W" && Optional.IsDefined(NonAdminUsername))
             {
                 writer.WritePropertyName("nonAdminUsername"u8);
                 writer.WriteStringValue(NonAdminUsername);
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabVirtualMachineConnectionProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabVirtualMachineConnectionProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabVirtualMachineConnectionProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -184,7 +184,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineConnectionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineConnectionProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -200,7 +200,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabVirtualMachineConnectionProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabVirtualMachineConnectionProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabVirtualMachineConnectionProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -14,25 +14,22 @@ namespace Azure.Communication.Messages
     public partial class MessageTemplateQuickAction : MessageTemplateValue
     {
         /// <summary> Initializes a new instance of <see cref="MessageTemplateQuickAction"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <exception cref="ArgumentNullException"> <paramref name="name"/> is null. </exception>
         public MessageTemplateQuickAction(string name) : base(name)
         {
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
+            Argument.AssertNotNull(name, nameof(name));
 
-            Kind = "quickAction";
+            Kind = MessageTemplateValueKind.QuickAction;
         }
 
         /// <summary> Initializes a new instance of <see cref="MessageTemplateQuickAction"/>. </summary>
-        /// <param name="name"> Name of the Template value. </param>
+        /// <param name="name"> Template binding reference name. </param>
         /// <param name="kind"> The type discriminator describing a template parameter type. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
         /// <param name="text"> The [Optional] quick action text. </param>
         /// <param name="payload"> The [Optional] quick action payload. </param>
-        internal MessageTemplateQuickAction(string name, string kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text, string payload) : base(name, kind, serializedAdditionalRawData)
+        internal MessageTemplateQuickAction(string name, MessageTemplateValueKind kind, IDictionary<string, BinaryData> serializedAdditionalRawData, string text, string payload) : base(name, kind, serializedAdditionalRawData)
         {
             Text = text;
             Payload = payload;

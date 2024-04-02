@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIPFirewallRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIPFirewallRuleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIPFirewallRuleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EndIPAddress != null)
+            if (Optional.IsDefined(EndIPAddress))
             {
                 writer.WritePropertyName("endIpAddress"u8);
                 writer.WriteStringValue(EndIPAddress.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (StartIPAddress != null)
+            if (Optional.IsDefined(StartIPAddress))
             {
                 writer.WritePropertyName("startIpAddress"u8);
                 writer.WriteStringValue(StartIPAddress.ToString());
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseIPFirewallRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseIPFirewallRuleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseIPFirewallRuleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIPFirewallRuleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIPFirewallRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseIPFirewallRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseIPFirewallRuleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseIPFirewallRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

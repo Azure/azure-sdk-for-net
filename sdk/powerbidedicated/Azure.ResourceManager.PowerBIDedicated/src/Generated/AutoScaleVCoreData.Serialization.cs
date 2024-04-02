@@ -23,30 +23,30 @@ namespace Azure.ResourceManager.PowerBIDedicated
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(Sku);
-            if (options.Format != "W" && Id != null)
+            writer.WriteObjectValue<AutoScaleVCoreSku>(Sku, options);
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
             writer.WritePropertyName("location"u8);
             writer.WriteStringValue(Location);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -57,24 +57,24 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 }
                 writer.WriteEndObject();
             }
-            if (SystemData != null)
+            if (Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
-                writer.WriteObjectValue(SystemData);
+                writer.WriteObjectValue<SystemData>(SystemData, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (CapacityLimit.HasValue)
+            if (Optional.IsDefined(CapacityLimit))
             {
                 writer.WritePropertyName("capacityLimit"u8);
                 writer.WriteNumberValue(CapacityLimit.Value);
             }
-            if (CapacityObjectId != null)
+            if (Optional.IsDefined(CapacityObjectId))
             {
                 writer.WritePropertyName("capacityObjectId"u8);
                 writer.WriteStringValue(CapacityObjectId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
             var format = options.Format == "W" ? ((IPersistableModel<AutoScaleVCoreData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
                         return DeserializeAutoScaleVCoreData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoScaleVCoreData)} does not support reading '{options.Format}' format.");
             }
         }
 

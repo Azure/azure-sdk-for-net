@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PendingUploadResponseDto>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BlobReferenceForConsumption != null)
+            if (Optional.IsDefined(BlobReferenceForConsumption))
             {
                 if (BlobReferenceForConsumption != null)
                 {
                     writer.WritePropertyName("blobReferenceForConsumption"u8);
-                    writer.WriteObjectValue(BlobReferenceForConsumption);
+                    writer.WriteObjectValue<BlobReferenceForConsumptionDto>(BlobReferenceForConsumption, options);
                 }
                 else
                 {
                     writer.WriteNull("blobReferenceForConsumption");
                 }
             }
-            if (PendingUploadId != null)
+            if (Optional.IsDefined(PendingUploadId))
             {
                 if (PendingUploadId != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("pendingUploadId");
                 }
             }
-            if (PendingUploadType.HasValue)
+            if (Optional.IsDefined(PendingUploadType))
             {
                 writer.WritePropertyName("pendingUploadType"u8);
                 writer.WriteStringValue(PendingUploadType.Value.ToString());
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<PendingUploadResponseDto>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializePendingUploadResponseDto(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PendingUploadResponseDto)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -24,13 +23,13 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -50,14 +49,14 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && !(AdditionalData is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
                 writer.WriteStartObject();
@@ -80,12 +79,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && FriendlyName != null)
+            if (options.Format != "W" && Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (!(ThreatIntelligenceTags is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatIntelligenceTags))
             {
                 writer.WritePropertyName("threatIntelligenceTags"u8);
                 writer.WriteStartArray();
@@ -95,27 +94,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (LastUpdatedOn.HasValue)
+            if (Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(IndicatorTypes is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(IndicatorTypes))
             {
                 writer.WritePropertyName("indicatorTypes"u8);
                 writer.WriteStartArray();
@@ -125,82 +124,82 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Pattern != null)
+            if (Optional.IsDefined(Pattern))
             {
                 writer.WritePropertyName("pattern"u8);
                 writer.WriteStringValue(Pattern);
             }
-            if (PatternType != null)
+            if (Optional.IsDefined(PatternType))
             {
                 writer.WritePropertyName("patternType"u8);
                 writer.WriteStringValue(PatternType);
             }
-            if (PatternVersion != null)
+            if (Optional.IsDefined(PatternVersion))
             {
                 writer.WritePropertyName("patternVersion"u8);
                 writer.WriteStringValue(PatternVersion);
             }
-            if (!(KillChainPhases is ChangeTrackingList<ThreatIntelligenceKillChainPhase> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(KillChainPhases))
             {
                 writer.WritePropertyName("killChainPhases"u8);
                 writer.WriteStartArray();
                 foreach (var item in KillChainPhases)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThreatIntelligenceKillChainPhase>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ParsedPattern is ChangeTrackingList<ThreatIntelligenceParsedPattern> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ParsedPattern))
             {
                 writer.WritePropertyName("parsedPattern"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParsedPattern)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThreatIntelligenceParsedPattern>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ExternalId != null)
+            if (Optional.IsDefined(ExternalId))
             {
                 writer.WritePropertyName("externalId"u8);
                 writer.WriteStringValue(ExternalId);
             }
-            if (CreatedByRef != null)
+            if (Optional.IsDefined(CreatedByRef))
             {
                 writer.WritePropertyName("createdByRef"u8);
                 writer.WriteStringValue(CreatedByRef);
             }
-            if (IsDefanged.HasValue)
+            if (Optional.IsDefined(IsDefanged))
             {
                 writer.WritePropertyName("defanged"u8);
                 writer.WriteBooleanValue(IsDefanged.Value);
             }
-            if (ExternalLastUpdatedOn.HasValue)
+            if (Optional.IsDefined(ExternalLastUpdatedOn))
             {
                 writer.WritePropertyName("externalLastUpdatedTimeUtc"u8);
                 writer.WriteStringValue(ExternalLastUpdatedOn.Value, "O");
             }
-            if (!(ExternalReferences is ChangeTrackingList<ThreatIntelligenceExternalReference> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(ExternalReferences))
             {
                 writer.WritePropertyName("externalReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExternalReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThreatIntelligenceExternalReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(GranularMarkings is ChangeTrackingList<ThreatIntelligenceGranularMarkingEntity> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(GranularMarkings))
             {
                 writer.WritePropertyName("granularMarkings"u8);
                 writer.WriteStartArray();
                 foreach (var item in GranularMarkings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ThreatIntelligenceGranularMarkingEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Labels is ChangeTrackingList<string> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -210,17 +209,17 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (IsRevoked.HasValue)
+            if (Optional.IsDefined(IsRevoked))
             {
                 writer.WritePropertyName("revoked"u8);
                 writer.WriteBooleanValue(IsRevoked.Value);
             }
-            if (Confidence.HasValue)
+            if (Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (!(ObjectMarkingRefs is ChangeTrackingList<string> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(ObjectMarkingRefs))
             {
                 writer.WritePropertyName("objectMarkingRefs"u8);
                 writer.WriteStartArray();
@@ -230,12 +229,12 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Language != null)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language);
             }
-            if (!(ThreatTypes is ChangeTrackingList<string> collection8 && collection8.IsUndefined))
+            if (Optional.IsCollectionDefined(ThreatTypes))
             {
                 writer.WritePropertyName("threatTypes"u8);
                 writer.WriteStartArray();
@@ -245,27 +244,27 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (ValidFrom.HasValue)
+            if (Optional.IsDefined(ValidFrom))
             {
                 writer.WritePropertyName("validFrom"u8);
                 writer.WriteStringValue(ValidFrom.Value, "O");
             }
-            if (ValidUntil.HasValue)
+            if (Optional.IsDefined(ValidUntil))
             {
                 writer.WritePropertyName("validUntil"u8);
                 writer.WriteStringValue(ValidUntil.Value, "O");
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (Modified != null)
+            if (Optional.IsDefined(Modified))
             {
                 writer.WritePropertyName("modified"u8);
                 writer.WriteStringValue(Modified);
             }
-            if (!(Extensions is ChangeTrackingDictionary<string, BinaryData> collection9 && collection9.IsUndefined))
+            if (Optional.IsCollectionDefined(Extensions))
             {
                 writer.WritePropertyName("extensions"u8);
                 writer.WriteStartObject();
@@ -312,7 +311,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligenceIndicatorData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -767,7 +766,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -783,7 +782,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsThreatIntelligenceIndicatorData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligenceIndicatorData)} does not support reading '{options.Format}' format.");
             }
         }
 

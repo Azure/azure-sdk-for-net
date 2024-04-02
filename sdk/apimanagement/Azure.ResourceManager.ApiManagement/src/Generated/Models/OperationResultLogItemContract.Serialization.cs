@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationResultLogItemContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationResultLogItemContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationResultLogItemContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
             }
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (ObjectKey != null)
+            if (Optional.IsDefined(ObjectKey))
             {
                 writer.WritePropertyName("objectKey"u8);
                 writer.WriteStringValue(ObjectKey);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationResultLogItemContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationResultLogItemContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationResultLogItemContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationResultLogItemContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationResultLogItemContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeOperationResultLogItemContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationResultLogItemContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationResultLogItemContract)} does not support reading '{options.Format}' format.");
             }
         }
 

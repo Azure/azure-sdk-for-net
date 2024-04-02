@@ -22,58 +22,58 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Definition != null)
+            if (Optional.IsDefined(Definition))
             {
                 writer.WritePropertyName("definition"u8);
                 writer.WriteStringValue(Definition);
             }
-            if (!(ParameterSets is ChangeTrackingList<AutomationActivityParameterSet> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ParameterSets))
             {
                 writer.WritePropertyName("parameterSets"u8);
                 writer.WriteStartArray();
                 foreach (var item in ParameterSets)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationActivityParameterSet>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(OutputTypes is ChangeTrackingList<AutomationActivityOutputType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(OutputTypes))
             {
                 writer.WritePropertyName("outputTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in OutputTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AutomationActivityOutputType>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

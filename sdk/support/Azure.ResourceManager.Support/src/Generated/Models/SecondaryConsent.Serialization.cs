@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecondaryConsent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecondaryConsent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecondaryConsent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UserConsent.HasValue)
+            if (Optional.IsDefined(UserConsent))
             {
                 writer.WritePropertyName("userConsent"u8);
                 writer.WriteStringValue(UserConsent.Value.ToString());
             }
-            if (SecondaryConsentType != null)
+            if (Optional.IsDefined(SecondaryConsentType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SecondaryConsentType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Support.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecondaryConsent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecondaryConsent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecondaryConsent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Support.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecondaryConsent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecondaryConsent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Support.Models
                         return DeserializeSecondaryConsent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecondaryConsent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecondaryConsent)} does not support reading '{options.Format}' format.");
             }
         }
 

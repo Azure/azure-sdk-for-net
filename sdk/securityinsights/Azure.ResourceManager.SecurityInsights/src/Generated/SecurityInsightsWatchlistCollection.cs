@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityInsights
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityInsightsWatchlistResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string watchlistAlias, SecurityInsightsWatchlistData data, CancellationToken cancellationToken = default)
         {
-            if (watchlistAlias == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistAlias));
-            }
-            if (watchlistAlias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistAlias));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityInsightsWatchlistResource> CreateOrUpdate(WaitUntil waitUntil, string watchlistAlias, SecurityInsightsWatchlistData data, CancellationToken cancellationToken = default)
         {
-            if (watchlistAlias == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistAlias));
-            }
-            if (watchlistAlias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistAlias));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> is null. </exception>
         public virtual async Task<Response<SecurityInsightsWatchlistResource>> GetAsync(string watchlistAlias, CancellationToken cancellationToken = default)
         {
-            if (watchlistAlias == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistAlias));
-            }
-            if (watchlistAlias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistAlias));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> is null. </exception>
         public virtual Response<SecurityInsightsWatchlistResource> Get(string watchlistAlias, CancellationToken cancellationToken = default)
         {
-            if (watchlistAlias == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistAlias));
-            }
-            if (watchlistAlias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistAlias));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistCollection.Get");
             scope.Start();
@@ -364,14 +328,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string watchlistAlias, CancellationToken cancellationToken = default)
         {
-            if (watchlistAlias == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistAlias));
-            }
-            if (watchlistAlias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistAlias));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistCollection.Exists");
             scope.Start();
@@ -414,14 +371,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> is null. </exception>
         public virtual Response<bool> Exists(string watchlistAlias, CancellationToken cancellationToken = default)
         {
-            if (watchlistAlias == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistAlias));
-            }
-            if (watchlistAlias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistAlias));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistCollection.Exists");
             scope.Start();
@@ -464,14 +414,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityInsightsWatchlistResource>> GetIfExistsAsync(string watchlistAlias, CancellationToken cancellationToken = default)
         {
-            if (watchlistAlias == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistAlias));
-            }
-            if (watchlistAlias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistAlias));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistCollection.GetIfExists");
             scope.Start();
@@ -516,14 +459,7 @@ namespace Azure.ResourceManager.SecurityInsights
         /// <exception cref="ArgumentNullException"> <paramref name="watchlistAlias"/> is null. </exception>
         public virtual NullableResponse<SecurityInsightsWatchlistResource> GetIfExists(string watchlistAlias, CancellationToken cancellationToken = default)
         {
-            if (watchlistAlias == null)
-            {
-                throw new ArgumentNullException(nameof(watchlistAlias));
-            }
-            if (watchlistAlias.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(watchlistAlias));
-            }
+            Argument.AssertNotNullOrEmpty(watchlistAlias, nameof(watchlistAlias));
 
             using var scope = _securityInsightsWatchlistWatchlistsClientDiagnostics.CreateScope("SecurityInsightsWatchlistCollection.GetIfExists");
             scope.Start();

@@ -9,9 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.ApplicationInsights.Mocking;
 using Azure.ResourceManager.ApplicationInsights.Models;
 using Azure.ResourceManager.Resources;
@@ -63,10 +61,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static async Task<Response<LiveTokenResponse>> GetLiveTokenAsync(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return await GetMockableApplicationInsightsArmClient(client).GetLiveTokenAsync(scope, cancellationToken).ConfigureAwait(false);
         }
@@ -98,10 +93,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
         public static Response<LiveTokenResponse> GetLiveToken(this ArmClient client, ResourceIdentifier scope, CancellationToken cancellationToken = default)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApplicationInsightsArmClient(client).GetLiveToken(scope, cancellationToken);
         }
@@ -120,10 +112,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="ApplicationInsightsComponentResource"/> object. </returns>
         public static ApplicationInsightsComponentResource GetApplicationInsightsComponentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApplicationInsightsArmClient(client).GetApplicationInsightsComponentResource(id);
         }
@@ -142,10 +131,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="WebTestResource"/> object. </returns>
         public static WebTestResource GetWebTestResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApplicationInsightsArmClient(client).GetWebTestResource(id);
         }
@@ -164,10 +150,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="WorkbookTemplateResource"/> object. </returns>
         public static WorkbookTemplateResource GetWorkbookTemplateResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApplicationInsightsArmClient(client).GetWorkbookTemplateResource(id);
         }
@@ -186,10 +169,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="MyWorkbookResource"/> object. </returns>
         public static MyWorkbookResource GetMyWorkbookResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApplicationInsightsArmClient(client).GetMyWorkbookResource(id);
         }
@@ -208,10 +188,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="WorkbookResource"/> object. </returns>
         public static WorkbookResource GetWorkbookResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApplicationInsightsArmClient(client).GetWorkbookResource(id);
         }
@@ -230,10 +207,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="WorkbookRevisionResource"/> object. </returns>
         public static WorkbookRevisionResource GetWorkbookRevisionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApplicationInsightsArmClient(client).GetWorkbookRevisionResource(id);
         }
@@ -252,10 +226,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> Returns a <see cref="ComponentLinkedStorageAccountResource"/> object. </returns>
         public static ComponentLinkedStorageAccountResource GetComponentLinkedStorageAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableApplicationInsightsArmClient(client).GetComponentLinkedStorageAccountResource(id);
         }
@@ -272,10 +243,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of ApplicationInsightsComponentResources and their operations over a ApplicationInsightsComponentResource. </returns>
         public static ApplicationInsightsComponentCollection GetApplicationInsightsComponents(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponents();
         }
@@ -313,10 +281,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<ApplicationInsightsComponentResource>> GetApplicationInsightsComponentAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponentAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -354,10 +319,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<ApplicationInsightsComponentResource> GetApplicationInsightsComponent(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetApplicationInsightsComponent(resourceName, cancellationToken);
         }
@@ -374,10 +336,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of WebTestResources and their operations over a WebTestResource. </returns>
         public static WebTestCollection GetWebTests(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWebTests();
         }
@@ -415,10 +374,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<WebTestResource>> GetWebTestAsync(this ResourceGroupResource resourceGroupResource, string webTestName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWebTestAsync(webTestName, cancellationToken).ConfigureAwait(false);
         }
@@ -456,10 +412,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<WebTestResource> GetWebTest(this ResourceGroupResource resourceGroupResource, string webTestName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWebTest(webTestName, cancellationToken);
         }
@@ -476,10 +429,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of WorkbookTemplateResources and their operations over a WorkbookTemplateResource. </returns>
         public static WorkbookTemplateCollection GetWorkbookTemplates(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbookTemplates();
         }
@@ -517,10 +467,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<WorkbookTemplateResource>> GetWorkbookTemplateAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbookTemplateAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -558,10 +505,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<WorkbookTemplateResource> GetWorkbookTemplate(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbookTemplate(resourceName, cancellationToken);
         }
@@ -578,10 +522,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of MyWorkbookResources and their operations over a MyWorkbookResource. </returns>
         public static MyWorkbookCollection GetMyWorkbooks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetMyWorkbooks();
         }
@@ -619,10 +560,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<MyWorkbookResource>> GetMyWorkbookAsync(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetMyWorkbookAsync(resourceName, cancellationToken).ConfigureAwait(false);
         }
@@ -660,10 +598,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<MyWorkbookResource> GetMyWorkbook(this ResourceGroupResource resourceGroupResource, string resourceName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetMyWorkbook(resourceName, cancellationToken);
         }
@@ -680,10 +615,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An object representing collection of WorkbookResources and their operations over a WorkbookResource. </returns>
         public static WorkbookCollection GetWorkbooks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbooks();
         }
@@ -722,10 +654,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static async Task<Response<WorkbookResource>> GetWorkbookAsync(this ResourceGroupResource resourceGroupResource, string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbookAsync(resourceName, canFetchContent, cancellationToken).ConfigureAwait(false);
         }
@@ -764,10 +693,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         [ForwardsClientCalls]
         public static Response<WorkbookResource> GetWorkbook(this ResourceGroupResource resourceGroupResource, string resourceName, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableApplicationInsightsResourceGroupResource(resourceGroupResource).GetWorkbook(resourceName, canFetchContent, cancellationToken);
         }
@@ -803,10 +729,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponentsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsComponentsAsync(cancellationToken);
         }
@@ -842,10 +765,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="ApplicationInsightsComponentResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<ApplicationInsightsComponentResource> GetApplicationInsightsComponents(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetApplicationInsightsComponents(cancellationToken);
         }
@@ -881,10 +801,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="WebTestResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WebTestResource> GetWebTestsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetWebTestsAsync(cancellationToken);
         }
@@ -920,10 +837,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="WebTestResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WebTestResource> GetWebTests(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetWebTests(cancellationToken);
         }
@@ -962,10 +876,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="MyWorkbookResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MyWorkbookResource> GetMyWorkbooksAsync(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetMyWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
         }
@@ -1004,10 +915,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="MyWorkbookResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MyWorkbookResource> GetMyWorkbooks(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetMyWorkbooks(category, tags, canFetchContent, cancellationToken);
         }
@@ -1046,10 +954,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> An async collection of <see cref="WorkbookResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<WorkbookResource> GetWorkbooksAsync(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetWorkbooksAsync(category, tags, canFetchContent, cancellationToken);
         }
@@ -1088,10 +993,7 @@ namespace Azure.ResourceManager.ApplicationInsights
         /// <returns> A collection of <see cref="WorkbookResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<WorkbookResource> GetWorkbooks(this SubscriptionResource subscriptionResource, CategoryType category, IEnumerable<string> tags = null, bool? canFetchContent = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableApplicationInsightsSubscriptionResource(subscriptionResource).GetWorkbooks(category, tags, canFetchContent, cancellationToken);
         }

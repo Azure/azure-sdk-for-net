@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && MaxScore.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxScore))
             {
                 writer.WritePropertyName("maxScore"u8);
                 writer.WriteNumberValue(MaxScore.Value);
             }
-            if (options.Format != "W" && Source != null)
+            if (options.Format != "W" && Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<SecureScoreControlDefinitionSource>(Source, options);
             }
-            if (options.Format != "W" && !(AssessmentDefinitions is ChangeTrackingList<SubResource> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AssessmentDefinitions))
             {
                 writer.WritePropertyName("assessmentDefinitions"u8);
                 writer.WriteStartArray();
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecureScoreControlDefinitionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecureScoreControlDefinitionItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecureScoreControlDefinitionItem)} does not support reading '{options.Format}' format.");
             }
         }
 

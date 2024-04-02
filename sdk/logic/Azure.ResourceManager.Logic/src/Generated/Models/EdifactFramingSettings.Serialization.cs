@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactFramingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ServiceCodeListDirectoryVersion != null)
+            if (Optional.IsDefined(ServiceCodeListDirectoryVersion))
             {
                 writer.WritePropertyName("serviceCodeListDirectoryVersion"u8);
                 writer.WriteStringValue(ServiceCodeListDirectoryVersion);
             }
-            if (CharacterEncoding != null)
+            if (Optional.IsDefined(CharacterEncoding))
             {
                 writer.WritePropertyName("characterEncoding"u8);
                 writer.WriteStringValue(CharacterEncoding);
@@ -77,7 +77,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactFramingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -192,7 +192,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeEdifactFramingSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactFramingSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Disks is ChangeTrackingList<VMwareVirtualDiskUpdate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Disks))
             {
                 writer.WritePropertyName("disks"u8);
                 writer.WriteStartArray();
                 foreach (var item in Disks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareVirtualDiskUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
             var format = options.Format == "W" ? ((IPersistableModel<StorageProfileUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere.Models
                         return DeserializeStorageProfileUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StorageProfileUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

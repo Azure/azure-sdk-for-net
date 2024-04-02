@@ -9,7 +9,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Azure.Core;
-using Azure.ResourceManager.ContainerRegistry;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
@@ -778,11 +777,11 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <param name="contextPath"> The URL(absolute or relative) of the source context for the task step. </param>
         /// <param name="contextAccessToken"> The token (git PAT or SAS token of storage account blob) associated with the context for a step. </param>
         /// <returns> A new <see cref="Models.ContainerRegistryTaskStepProperties"/> instance for mocking. </returns>
-        public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(string containerRegistryTaskStepType = "Unknown", IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null)
+        public static ContainerRegistryTaskStepProperties ContainerRegistryTaskStepProperties(string containerRegistryTaskStepType = null, IEnumerable<ContainerRegistryBaseImageDependency> baseImageDependencies = null, string contextPath = null, string contextAccessToken = null)
         {
             baseImageDependencies ??= new List<ContainerRegistryBaseImageDependency>();
 
-            return new UnknownTaskStepProperties(containerRegistryTaskStepType, baseImageDependencies?.ToList(), contextPath, contextAccessToken, serializedAdditionalRawData: null);
+            return new UnknownTaskStepProperties(containerRegistryTaskStepType == null ? default : new ContainerRegistryTaskStepType(containerRegistryTaskStepType), baseImageDependencies?.ToList(), contextPath, contextAccessToken, serializedAdditionalRawData: null);
         }
 
         /// <summary> Initializes a new instance of <see cref="Models.ContainerRegistryBaseImageDependency"/>. </summary>

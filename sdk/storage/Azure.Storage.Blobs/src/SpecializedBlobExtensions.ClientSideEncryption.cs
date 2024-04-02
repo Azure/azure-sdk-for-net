@@ -10,6 +10,7 @@ using Azure.Core;
 using Azure.Core.Cryptography;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography.Models;
 
 namespace Azure.Storage.Blobs.Specialized

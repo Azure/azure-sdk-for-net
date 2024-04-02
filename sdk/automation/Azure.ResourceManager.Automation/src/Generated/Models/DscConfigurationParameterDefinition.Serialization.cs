@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DscConfigurationParameterType != null)
+            if (Optional.IsDefined(DscConfigurationParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(DscConfigurationParameterType);
             }
-            if (IsMandatory.HasValue)
+            if (Optional.IsDefined(IsMandatory))
             {
                 writer.WritePropertyName("isMandatory"u8);
                 writer.WriteBooleanValue(IsMandatory.Value);
             }
-            if (Position.HasValue)
+            if (Optional.IsDefined(Position))
             {
                 writer.WritePropertyName("position"u8);
                 writer.WriteNumberValue(Position.Value);
             }
-            if (DefaultValue != null)
+            if (Optional.IsDefined(DefaultValue))
             {
                 writer.WritePropertyName("defaultValue"u8);
                 writer.WriteStringValue(DefaultValue);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationParameterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscConfigurationParameterDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationParameterDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

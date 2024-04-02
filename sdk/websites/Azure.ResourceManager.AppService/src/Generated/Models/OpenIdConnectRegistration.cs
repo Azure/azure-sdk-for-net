@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> The client id of the custom Open ID Connect provider. </summary>
+        [WirePath("clientId")]
         public string ClientId { get; set; }
         /// <summary> The authentication credentials of the custom Open ID Connect provider. </summary>
+        [WirePath("clientCredential")]
         public OpenIdConnectClientCredential ClientCredential { get; set; }
         /// <summary> The configuration settings of the endpoints used for the custom Open ID Connect provider. </summary>
+        [WirePath("openIdConnectConfiguration")]
         public OpenIdConnectConfig OpenIdConnectConfiguration { get; set; }
     }
 }

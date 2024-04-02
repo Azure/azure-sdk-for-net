@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResultProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(RestorableTimeRanges is ChangeTrackingList<RestorableTimeRange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RestorableTimeRanges))
             {
                 writer.WritePropertyName("restorableTimeRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in RestorableTimeRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RestorableTimeRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ObjectType != null)
+            if (Optional.IsDefined(ObjectType))
             {
                 writer.WritePropertyName("objectType"u8);
                 writer.WriteStringValue(ObjectType);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupFindRestorableTimeRangeResultProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResultProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResultProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResultProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeBackupFindRestorableTimeRangeResultProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResultProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupFindRestorableTimeRangeResultProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

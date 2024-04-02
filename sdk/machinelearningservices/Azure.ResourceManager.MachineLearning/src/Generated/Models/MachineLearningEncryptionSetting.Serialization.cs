@@ -22,30 +22,30 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CosmosDBResourceId != null)
+            if (Optional.IsDefined(CosmosDBResourceId))
             {
                 writer.WritePropertyName("cosmosDbResourceId"u8);
                 writer.WriteStringValue(CosmosDBResourceId);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<MachineLearningCmkIdentity>(Identity, options);
             }
             writer.WritePropertyName("keyVaultProperties"u8);
-            writer.WriteObjectValue(KeyVaultProperties);
-            if (SearchAccountResourceId != null)
+            writer.WriteObjectValue<MachineLearningEncryptionKeyVaultProperties>(KeyVaultProperties, options);
+            if (Optional.IsDefined(SearchAccountResourceId))
             {
                 writer.WritePropertyName("searchAccountResourceId"u8);
                 writer.WriteStringValue(SearchAccountResourceId);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (StorageAccountResourceId != null)
+            if (Optional.IsDefined(StorageAccountResourceId))
             {
                 writer.WritePropertyName("storageAccountResourceId"u8);
                 writer.WriteStringValue(StorageAccountResourceId);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningEncryptionSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningEncryptionSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningEncryptionSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

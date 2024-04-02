@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneProfileControlPlaneEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlPlaneProfileControlPlaneEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlPlaneProfileControlPlaneEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (HostIP != null)
+            if (Optional.IsDefined(HostIP))
             {
                 writer.WritePropertyName("hostIP"u8);
                 writer.WriteStringValue(HostIP);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ControlPlaneProfileControlPlaneEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ControlPlaneProfileControlPlaneEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ControlPlaneProfileControlPlaneEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ControlPlaneProfileControlPlaneEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlPlaneProfileControlPlaneEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeControlPlaneProfileControlPlaneEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ControlPlaneProfileControlPlaneEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ControlPlaneProfileControlPlaneEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

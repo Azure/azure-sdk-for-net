@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskStatusProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OperationId != null)
+            if (Optional.IsDefined(OperationId))
             {
                 writer.WritePropertyName("operationId"u8);
                 writer.WriteStringValue(OperationId);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualHardDiskStatusProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeVirtualHardDiskStatusProvisioningStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualHardDiskStatusProvisioningStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

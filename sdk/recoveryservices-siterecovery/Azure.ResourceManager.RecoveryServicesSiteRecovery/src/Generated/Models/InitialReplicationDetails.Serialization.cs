@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InitialReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (InitialReplicationType != null)
+            if (Optional.IsDefined(InitialReplicationType))
             {
                 writer.WritePropertyName("initialReplicationType"u8);
                 writer.WriteStringValue(InitialReplicationType);
             }
-            if (InitialReplicationProgressPercentage != null)
+            if (Optional.IsDefined(InitialReplicationProgressPercentage))
             {
                 writer.WritePropertyName("initialReplicationProgressPercentage"u8);
                 writer.WriteStringValue(InitialReplicationProgressPercentage);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InitialReplicationDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInitialReplicationDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InitialReplicationDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

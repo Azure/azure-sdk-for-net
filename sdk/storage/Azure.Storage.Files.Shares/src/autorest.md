@@ -10,6 +10,8 @@ generation1-convenience-client: true
 skip-semantics-validation: true
 modelerfour:
     seal-single-value-enum-by-default: true
+
+helper-namespace: Azure.Storage.Common
 ```
 
 ### Don't include share name, directory, or file name in path - we have direct URIs.

@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightApplicationEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightApplicationEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightApplicationEndpoint)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EndpointLocation != null)
+            if (Optional.IsDefined(EndpointLocation))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(EndpointLocation);
             }
-            if (DestinationPort.HasValue)
+            if (Optional.IsDefined(DestinationPort))
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (PublicPort.HasValue)
+            if (Optional.IsDefined(PublicPort))
             {
                 writer.WritePropertyName("publicPort"u8);
                 writer.WriteNumberValue(PublicPort.Value);
             }
-            if (PrivateIPAddress != null)
+            if (Optional.IsDefined(PrivateIPAddress))
             {
                 writer.WritePropertyName("privateIPAddress"u8);
                 writer.WriteStringValue(PrivateIPAddress.ToString());
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightApplicationEndpoint>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightApplicationEndpoint)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightApplicationEndpoint)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightApplicationEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightApplicationEndpoint)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightApplicationEndpoint(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightApplicationEndpoint)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightApplicationEndpoint)} does not support reading '{options.Format}' format.");
             }
         }
 

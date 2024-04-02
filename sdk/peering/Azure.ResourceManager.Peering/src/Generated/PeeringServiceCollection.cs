@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Peering
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<PeeringServiceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string peeringServiceName, PeeringServiceData data, CancellationToken cancellationToken = default)
         {
-            if (peeringServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringServiceName));
-            }
-            if (peeringServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<PeeringServiceResource> CreateOrUpdate(WaitUntil waitUntil, string peeringServiceName, PeeringServiceData data, CancellationToken cancellationToken = default)
         {
-            if (peeringServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringServiceName));
-            }
-            if (peeringServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringServiceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
         public virtual async Task<Response<PeeringServiceResource>> GetAsync(string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            if (peeringServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringServiceName));
-            }
-            if (peeringServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
         public virtual Response<PeeringServiceResource> Get(string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            if (peeringServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringServiceName));
-            }
-            if (peeringServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            if (peeringServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringServiceName));
-            }
-            if (peeringServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
         public virtual Response<bool> Exists(string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            if (peeringServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringServiceName));
-            }
-            if (peeringServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
         public virtual async Task<NullableResponse<PeeringServiceResource>> GetIfExistsAsync(string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            if (peeringServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringServiceName));
-            }
-            if (peeringServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Peering
         /// <exception cref="ArgumentNullException"> <paramref name="peeringServiceName"/> is null. </exception>
         public virtual NullableResponse<PeeringServiceResource> GetIfExists(string peeringServiceName, CancellationToken cancellationToken = default)
         {
-            if (peeringServiceName == null)
-            {
-                throw new ArgumentNullException(nameof(peeringServiceName));
-            }
-            if (peeringServiceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(peeringServiceName));
-            }
+            Argument.AssertNotNullOrEmpty(peeringServiceName, nameof(peeringServiceName));
 
             using var scope = _peeringServiceClientDiagnostics.CreateScope("PeeringServiceCollection.GetIfExists");
             scope.Start();

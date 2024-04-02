@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Resources.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleDefinitionId"/> is null. </exception>
         public ArmApplicationAuthorization(Guid principalId, string roleDefinitionId)
         {
-            if (roleDefinitionId == null)
-            {
-                throw new ArgumentNullException(nameof(roleDefinitionId));
-            }
+            Argument.AssertNotNull(roleDefinitionId, nameof(roleDefinitionId));
 
             PrincipalId = principalId;
             RoleDefinitionId = roleDefinitionId;
@@ -77,8 +74,10 @@ namespace Azure.ResourceManager.Resources.Models
         }
 
         /// <summary> The provider's principal identifier. This is the identity that the provider will use to call ARM to manage the managed application resources. </summary>
+        [WirePath("principalId")]
         public Guid PrincipalId { get; set; }
         /// <summary> The provider's role definition identifier. This role will define all the permissions that the provider must have on the managed application's container resource group. This role definition cannot have permission to delete the resource group. </summary>
+        [WirePath("roleDefinitionId")]
         public string RoleDefinitionId { get; set; }
     }
 }

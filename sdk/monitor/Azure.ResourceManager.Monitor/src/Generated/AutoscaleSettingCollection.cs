@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Monitor
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutoscaleSettingResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string autoscaleSettingName, AutoscaleSettingData data, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (autoscaleSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutoscaleSettingResource> CreateOrUpdate(WaitUntil waitUntil, string autoscaleSettingName, AutoscaleSettingData data, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (autoscaleSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual async Task<Response<AutoscaleSettingResource>> GetAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (autoscaleSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual Response<AutoscaleSettingResource> Get(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (autoscaleSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (autoscaleSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual Response<bool> Exists(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (autoscaleSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutoscaleSettingResource>> GetIfExistsAsync(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (autoscaleSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="autoscaleSettingName"/> is null. </exception>
         public virtual NullableResponse<AutoscaleSettingResource> GetIfExists(string autoscaleSettingName, CancellationToken cancellationToken = default)
         {
-            if (autoscaleSettingName == null)
-            {
-                throw new ArgumentNullException(nameof(autoscaleSettingName));
-            }
-            if (autoscaleSettingName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(autoscaleSettingName));
-            }
+            Argument.AssertNotNullOrEmpty(autoscaleSettingName, nameof(autoscaleSettingName));
 
             using var scope = _autoscaleSettingClientDiagnostics.CreateScope("AutoscaleSettingCollection.GetIfExists");
             scope.Start();

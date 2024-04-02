@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyPlayReadyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CustomLicenseAcquisitionUriTemplate != null)
+            if (Optional.IsDefined(CustomLicenseAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customLicenseAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomLicenseAcquisitionUriTemplate);
             }
-            if (PlayReadyCustomAttributes != null)
+            if (Optional.IsDefined(PlayReadyCustomAttributes))
             {
                 writer.WritePropertyName("playReadyCustomAttributes"u8);
                 writer.WriteStringValue(PlayReadyCustomAttributes);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<StreamingPolicyPlayReadyConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeStreamingPolicyPlayReadyConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StreamingPolicyPlayReadyConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

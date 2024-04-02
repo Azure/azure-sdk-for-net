@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.SecurityDevOps.Models;
@@ -66,30 +66,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureDevOpsOrgListResponse>> ListAsync(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -115,30 +94,9 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureDevOpsOrgListResponse> List(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName);
             _pipeline.Send(message, cancellationToken);
@@ -188,38 +146,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureDevOpsConnectorName"/> or <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureDevOpsOrgData>> GetAsync(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName, azureDevOpsOrgName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -249,38 +179,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureDevOpsConnectorName"/> or <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureDevOpsOrgData> Get(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName, azureDevOpsOrgName);
             _pipeline.Send(message, cancellationToken);
@@ -320,7 +222,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<AzureDevOpsOrgData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -337,42 +239,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureDevOpsConnectorName"/> or <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, AzureDevOpsOrgData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName, azureDevOpsOrgName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -397,42 +268,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureDevOpsConnectorName"/> or <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, AzureDevOpsOrgData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName, azureDevOpsOrgName, data);
             _pipeline.Send(message, cancellationToken);
@@ -466,7 +306,7 @@ namespace Azure.ResourceManager.SecurityDevOps
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<AzureDevOpsOrgData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -483,42 +323,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureDevOpsConnectorName"/> or <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, AzureDevOpsOrgData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName, azureDevOpsOrgName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -542,42 +351,11 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="azureDevOpsConnectorName"/> or <paramref name="azureDevOpsOrgName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, string azureDevOpsOrgName, AzureDevOpsOrgData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsOrgName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsOrgName));
-            }
-            if (azureDevOpsOrgName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsOrgName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsOrgName, nameof(azureDevOpsOrgName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, azureDevOpsConnectorName, azureDevOpsOrgName, data);
             _pipeline.Send(message, cancellationToken);
@@ -613,34 +391,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureDevOpsOrgListResponse>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, azureDevOpsConnectorName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -667,34 +421,10 @@ namespace Azure.ResourceManager.SecurityDevOps
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureDevOpsConnectorName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureDevOpsOrgListResponse> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string azureDevOpsConnectorName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureDevOpsConnectorName == null)
-            {
-                throw new ArgumentNullException(nameof(azureDevOpsConnectorName));
-            }
-            if (azureDevOpsConnectorName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureDevOpsConnectorName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureDevOpsConnectorName, nameof(azureDevOpsConnectorName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, azureDevOpsConnectorName);
             _pipeline.Send(message, cancellationToken);

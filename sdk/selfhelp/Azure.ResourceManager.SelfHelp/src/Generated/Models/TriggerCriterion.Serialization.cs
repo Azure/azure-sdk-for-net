@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<TriggerCriterion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerCriterion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggerCriterion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name.HasValue)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
             var format = options.Format == "W" ? ((IPersistableModel<TriggerCriterion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TriggerCriterion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TriggerCriterion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TriggerCriterion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggerCriterion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
                         return DeserializeTriggerCriterion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TriggerCriterion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TriggerCriterion)} does not support reading '{options.Format}' format.");
             }
         }
 

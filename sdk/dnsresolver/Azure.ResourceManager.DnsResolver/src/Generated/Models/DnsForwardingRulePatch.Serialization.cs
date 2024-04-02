@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsForwardingRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(TargetDnsServers is ChangeTrackingList<TargetDnsServer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetDnsServers))
             {
                 writer.WritePropertyName("targetDnsServers"u8);
                 writer.WriteStartArray();
                 foreach (var item in TargetDnsServers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TargetDnsServer>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
                 writer.WriteStartObject();
@@ -49,7 +49,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 }
                 writer.WriteEndObject();
             }
-            if (DnsForwardingRuleState.HasValue)
+            if (Optional.IsDefined(DnsForwardingRuleState))
             {
                 writer.WritePropertyName("forwardingRuleState"u8);
                 writer.WriteStringValue(DnsForwardingRuleState.Value.ToString());
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsForwardingRulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DnsResolver.Models
                         return DeserializeDnsForwardingRulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsForwardingRulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

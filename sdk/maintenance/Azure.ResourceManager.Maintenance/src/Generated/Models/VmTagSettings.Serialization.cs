@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmTagSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmTagSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmTagSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, IList<string>> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 }
                 writer.WriteEndObject();
             }
-            if (FilterOperator.HasValue)
+            if (Optional.IsDefined(FilterOperator))
             {
                 writer.WritePropertyName("filterOperator"u8);
                 writer.WriteStringValue(FilterOperator.Value.ToSerialString());
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Maintenance.Models
             var format = options.Format == "W" ? ((IPersistableModel<VmTagSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmTagSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmTagSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmTagSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmTagSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Maintenance.Models
                         return DeserializeVmTagSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmTagSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmTagSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

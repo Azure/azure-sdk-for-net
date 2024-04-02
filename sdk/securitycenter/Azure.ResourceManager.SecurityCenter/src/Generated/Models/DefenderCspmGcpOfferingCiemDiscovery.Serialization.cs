@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmGcpOfferingCiemDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WorkloadIdentityProviderId != null)
+            if (Optional.IsDefined(WorkloadIdentityProviderId))
             {
                 writer.WritePropertyName("workloadIdentityProviderId"u8);
                 writer.WriteStringValue(WorkloadIdentityProviderId);
             }
-            if (ServiceAccountEmailAddress != null)
+            if (Optional.IsDefined(ServiceAccountEmailAddress))
             {
                 writer.WritePropertyName("serviceAccountEmailAddress"u8);
                 writer.WriteStringValue(ServiceAccountEmailAddress);
             }
-            if (AzureActiveDirectoryAppName != null)
+            if (Optional.IsDefined(AzureActiveDirectoryAppName))
             {
                 writer.WritePropertyName("azureActiveDirectoryAppName"u8);
                 writer.WriteStringValue(AzureActiveDirectoryAppName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DefenderCspmGcpOfferingCiemDiscovery>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDefenderCspmGcpOfferingCiemDiscovery(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DefenderCspmGcpOfferingCiemDiscovery)} does not support reading '{options.Format}' format.");
             }
         }
 

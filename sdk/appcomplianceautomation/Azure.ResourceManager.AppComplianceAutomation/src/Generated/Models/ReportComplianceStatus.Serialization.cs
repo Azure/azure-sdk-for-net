@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportComplianceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (M365 != null)
+            if (Optional.IsDefined(M365))
             {
                 writer.WritePropertyName("m365"u8);
-                writer.WriteObjectValue(M365);
+                writer.WriteObjectValue<OverviewStatus>(M365, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReportComplianceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeReportComplianceStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReportComplianceStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

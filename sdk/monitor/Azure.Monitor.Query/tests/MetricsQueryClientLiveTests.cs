@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Azure.Core;
 using Azure.Core.TestFramework;
 using Azure.Monitor.Query.Models;
 using NUnit.Framework;
@@ -31,12 +32,12 @@ namespace Azure.Monitor.Query.Tests
             ));
         }
 
-        private MetricsBatchQueryClient CreateBatchClient()
+        private MetricsClient CreateMetricsClient()
         {
-            return InstrumentClient(new MetricsBatchQueryClient(
+            return InstrumentClient(new MetricsClient(
                 new Uri(TestEnvironment.DataplaneEndpoint),
                 TestEnvironment.Credential,
-                InstrumentClientOptions(new MetricsBatchQueryClientOptions())
+                InstrumentClientOptions(new MetricsClientOptions())
             ));
         }
 
@@ -323,23 +324,23 @@ namespace Azure.Monitor.Query.Tests
         }
 
         [RecordedTest]
-        public async Task MetricsBatchQueryAsync()
+        public async Task MetricsQueryResourcesAsync()
         {
-            // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
+            // MetricsQueryResources endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
             if (TestEnvironment.GetMetricsAudience() == MetricsQueryAudience.AzurePublicCloud)
             {
-                MetricsBatchQueryClient client = CreateBatchClient();
+                MetricsClient client = CreateMetricsClient();
 
                 var resourceId = TestEnvironment.StorageAccountId;
 
-                Response<MetricsBatchResult> metricsResultsResponse = await client.QueryBatchAsync(
-                    resourceIds: new List<string> { resourceId },
+                Response<MetricsQueryResourcesResult> metricsResultsResponse = await client.QueryResourcesAsync(
+                    resourceIds: new List<ResourceIdentifier> { new ResourceIdentifier(resourceId) },
                     metricNames: new List<string> { "Ingress" },
                     metricNamespace: "Microsoft.Storage/storageAccounts").ConfigureAwait(false);
 
-                MetricsBatchResult metricsQueryResults = metricsResultsResponse.Value;
+                MetricsQueryResourcesResult metricsQueryResults = metricsResultsResponse.Value;
                 Assert.AreEqual(1, metricsQueryResults.Values.Count);
-                Assert.AreEqual(TestEnvironment.StorageAccountId, metricsQueryResults.Values[0].ResourceId.ToString());
+                Assert.AreEqual(TestEnvironment.StorageAccountId + "/providers/Microsoft.Insights/metrics/Ingress", metricsQueryResults.Values[0].Metrics[0].Id);
                 Assert.AreEqual("Microsoft.Storage/storageAccounts", metricsQueryResults.Values[0].Namespace);
                 for (int i = 0; i < metricsQueryResults.Values.Count; i++)
                 {
@@ -356,16 +357,16 @@ namespace Azure.Monitor.Query.Tests
 
         [Test]
         [SyncOnly]
-        public void MetricsBatchInvalid()
+        public void MetricsQueryResourcesInvalid()
         {
             // MetricsBatch endpoint currently exists only for Azure Public Cloud, so we do not want to run this test when we are in other clouds
             if (TestEnvironment.GetMetricsAudience() == MetricsQueryAudience.AzurePublicCloud)
             {
-                MetricsBatchQueryClient client = CreateBatchClient();
+                MetricsClient client = CreateMetricsClient();
 
                 Assert.Throws<ArgumentException>(() =>
-                    client.QueryBatch(
-                    resourceIds: new List<string>(),
+                    client.QueryResources(
+                    resourceIds: new List<ResourceIdentifier>(),
                     metricNames: new List<string> { "Ingress" },
                     metricNamespace: "Microsoft.Storage/storageAccounts"));
             }

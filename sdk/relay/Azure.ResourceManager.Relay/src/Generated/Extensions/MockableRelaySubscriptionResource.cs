@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.Relay;
 using Azure.ResourceManager.Relay.Models;
 
 namespace Azure.ResourceManager.Relay.Mocking
@@ -71,10 +68,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<RelayNameAvailabilityResult>> CheckRelayNamespaceNameAvailabilityAsync(RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("MockableRelaySubscriptionResource.CheckRelayNamespaceNameAvailability");
             scope.Start();
@@ -116,10 +110,7 @@ namespace Azure.ResourceManager.Relay.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<RelayNameAvailabilityResult> CheckRelayNamespaceNameAvailability(RelayNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = RelayNamespaceNamespacesClientDiagnostics.CreateScope("MockableRelaySubscriptionResource.CheckRelayNamespaceNameAvailability");
             scope.Start();

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeCountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeCountProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeCountProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NameCount.HasValue)
+            if (Optional.IsDefined(NameCount))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(NameCount.Value);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeCountProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeCountProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeCountProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeCountProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeCountProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscNodeCountProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeCountProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeCountProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppRestoreStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsHealthy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsHealthy))
             {
                 writer.WritePropertyName("healthy"u8);
                 writer.WriteBooleanValue(IsHealthy.Value);
             }
-            if (options.Format != "W" && RelationshipStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RelationshipStatus))
             {
                 writer.WritePropertyName("relationshipStatus"u8);
                 writer.WriteStringValue(RelationshipStatus.Value.ToString());
             }
-            if (options.Format != "W" && MirrorState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MirrorState))
             {
                 writer.WritePropertyName("mirrorState"u8);
                 writer.WriteStringValue(MirrorState.Value.ToString());
             }
-            if (options.Format != "W" && UnhealthyReason != null)
+            if (options.Format != "W" && Optional.IsDefined(UnhealthyReason))
             {
                 writer.WritePropertyName("unhealthyReason"u8);
                 writer.WriteStringValue(UnhealthyReason);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && TotalTransferBytes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalTransferBytes))
             {
                 writer.WritePropertyName("totalTransferBytes"u8);
                 writer.WriteNumberValue(TotalTransferBytes.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppRestoreStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppRestoreStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppRestoreStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             {
                 return null;
             }
-            Optional<IReadOnlyList<MachineLearningComputeStartStopSchedule>> computeStartStop = default;
+            IReadOnlyList<MachineLearningComputeStartStopSchedule> computeStartStop = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             serializedAdditionalRawData = additionalPropertiesDictionary;
-            return new ComputeSchedules(Optional.ToList(computeStartStop), serializedAdditionalRawData);
+            return new ComputeSchedules(computeStartStop ?? new ChangeTrackingList<MachineLearningComputeStartStopSchedule>(), serializedAdditionalRawData);
         }
 
         BinaryData IPersistableModel<ComputeSchedules>.Write(ModelReaderWriterOptions options)

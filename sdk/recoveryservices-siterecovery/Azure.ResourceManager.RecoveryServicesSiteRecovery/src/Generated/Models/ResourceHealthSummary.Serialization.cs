@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceCount.HasValue)
+            if (Optional.IsDefined(ResourceCount))
             {
                 writer.WritePropertyName("resourceCount"u8);
                 writer.WriteNumberValue(ResourceCount.Value);
             }
-            if (!(Issues is ChangeTrackingList<HealthErrorSummary> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Issues))
             {
                 writer.WritePropertyName("issues"u8);
                 writer.WriteStartArray();
                 foreach (var item in Issues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HealthErrorSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(CategorizedResourceCounts is ChangeTrackingDictionary<string, int> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CategorizedResourceCounts))
             {
                 writer.WritePropertyName("categorizedResourceCounts"u8);
                 writer.WriteStartObject();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeResourceHealthSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

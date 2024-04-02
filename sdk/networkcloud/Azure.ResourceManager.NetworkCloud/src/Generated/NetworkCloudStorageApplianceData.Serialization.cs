@@ -25,13 +25,13 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("extendedLocation"u8);
-            writer.WriteObjectValue(ExtendedLocation);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            writer.WriteObjectValue<ExtendedLocation>(ExtendedLocation, options);
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -67,38 +67,38 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("administratorCredentials"u8);
-            writer.WriteObjectValue(AdministratorCredentials);
-            if (options.Format != "W" && Capacity.HasValue)
+            writer.WriteObjectValue<AdministrativeCredentials>(AdministratorCredentials, options);
+            if (options.Format != "W" && Optional.IsDefined(Capacity))
             {
                 writer.WritePropertyName("capacity"u8);
                 writer.WriteNumberValue(Capacity.Value);
             }
-            if (options.Format != "W" && CapacityUsed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CapacityUsed))
             {
                 writer.WritePropertyName("capacityUsed"u8);
                 writer.WriteNumberValue(CapacityUsed.Value);
             }
-            if (options.Format != "W" && ClusterId != null)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteStringValue(ClusterId);
             }
-            if (options.Format != "W" && DetailedStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatus))
             {
                 writer.WritePropertyName("detailedStatus"u8);
                 writer.WriteStringValue(DetailedStatus.Value.ToString());
             }
-            if (options.Format != "W" && DetailedStatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(DetailedStatusMessage))
             {
                 writer.WritePropertyName("detailedStatusMessage"u8);
                 writer.WriteStringValue(DetailedStatusMessage);
             }
-            if (options.Format != "W" && ManagementIPv4Address != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagementIPv4Address))
             {
                 writer.WritePropertyName("managementIpv4Address"u8);
                 writer.WriteStringValue(ManagementIPv4Address.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -107,12 +107,12 @@ namespace Azure.ResourceManager.NetworkCloud
             writer.WriteStringValue(RackId);
             writer.WritePropertyName("rackSlot"u8);
             writer.WriteNumberValue(RackSlot);
-            if (options.Format != "W" && RemoteVendorManagementFeature.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RemoteVendorManagementFeature))
             {
                 writer.WritePropertyName("remoteVendorManagementFeature"u8);
                 writer.WriteStringValue(RemoteVendorManagementFeature.Value.ToString());
             }
-            if (options.Format != "W" && RemoteVendorManagementStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RemoteVendorManagementStatus))
             {
                 writer.WritePropertyName("remoteVendorManagementStatus"u8);
                 writer.WriteStringValue(RemoteVendorManagementStatus.Value.ToString());
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.NetworkCloud
             var format = options.Format == "W" ? ((IPersistableModel<NetworkCloudStorageApplianceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.NetworkCloud
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -403,7 +403,7 @@ namespace Azure.ResourceManager.NetworkCloud
                         return DeserializeNetworkCloudStorageApplianceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkCloudStorageApplianceData)} does not support reading '{options.Format}' format.");
             }
         }
 

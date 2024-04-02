@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsAofEnabled.HasValue)
+            if (Optional.IsDefined(IsAofEnabled))
             {
                 writer.WritePropertyName("aofEnabled"u8);
                 writer.WriteBooleanValue(IsAofEnabled.Value);
             }
-            if (IsRdbEnabled.HasValue)
+            if (Optional.IsDefined(IsRdbEnabled))
             {
                 writer.WritePropertyName("rdbEnabled"u8);
                 writer.WriteBooleanValue(IsRdbEnabled.Value);
             }
-            if (AofFrequency.HasValue)
+            if (Optional.IsDefined(AofFrequency))
             {
                 writer.WritePropertyName("aofFrequency"u8);
                 writer.WriteStringValue(AofFrequency.Value.ToString());
             }
-            if (RdbFrequency.HasValue)
+            if (Optional.IsDefined(RdbFrequency))
             {
                 writer.WritePropertyName("rdbFrequency"u8);
                 writer.WriteStringValue(RdbFrequency.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
             var format = options.Format == "W" ? ((IPersistableModel<RedisPersistenceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.RedisEnterprise.Models
                         return DeserializeRedisPersistenceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RedisPersistenceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

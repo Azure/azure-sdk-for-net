@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
         /// <exception cref="ArgumentNullException"> <paramref name="repeatingTimeIntervals"/> is null. </exception>
         public DataProtectionBackupSchedule(IEnumerable<string> repeatingTimeIntervals)
         {
-            if (repeatingTimeIntervals == null)
-            {
-                throw new ArgumentNullException(nameof(repeatingTimeIntervals));
-            }
+            Argument.AssertNotNull(repeatingTimeIntervals, nameof(repeatingTimeIntervals));
 
             RepeatingTimeIntervals = repeatingTimeIntervals.ToList();
         }

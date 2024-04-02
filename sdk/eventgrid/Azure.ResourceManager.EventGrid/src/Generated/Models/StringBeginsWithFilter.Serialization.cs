@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<StringBeginsWithFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StringBeginsWithFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StringBeginsWithFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Values is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("values"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             }
             writer.WritePropertyName("operatorType"u8);
             writer.WriteStringValue(OperatorType.ToString());
-            if (Key != null)
+            if (Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<StringBeginsWithFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StringBeginsWithFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StringBeginsWithFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StringBeginsWithFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StringBeginsWithFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeStringBeginsWithFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StringBeginsWithFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StringBeginsWithFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

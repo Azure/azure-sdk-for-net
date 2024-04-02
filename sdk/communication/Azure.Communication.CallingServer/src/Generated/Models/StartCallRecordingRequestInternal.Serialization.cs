@@ -16,34 +16,34 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("callLocator"u8);
-            writer.WriteObjectValue(CallLocator);
-            if (RecordingStateCallbackUri != null)
+            writer.WriteObjectValue<CallLocatorInternal>(CallLocator);
+            if (Optional.IsDefined(RecordingStateCallbackUri))
             {
                 writer.WritePropertyName("recordingStateCallbackUri"u8);
                 writer.WriteStringValue(RecordingStateCallbackUri);
             }
-            if (RecordingContentType.HasValue)
+            if (Optional.IsDefined(RecordingContentType))
             {
                 writer.WritePropertyName("recordingContentType"u8);
                 writer.WriteStringValue(RecordingContentType.Value.ToString());
             }
-            if (RecordingChannelType.HasValue)
+            if (Optional.IsDefined(RecordingChannelType))
             {
                 writer.WritePropertyName("recordingChannelType"u8);
                 writer.WriteStringValue(RecordingChannelType.Value.ToString());
             }
-            if (RecordingFormatType.HasValue)
+            if (Optional.IsDefined(RecordingFormatType))
             {
                 writer.WritePropertyName("recordingFormatType"u8);
                 writer.WriteStringValue(RecordingFormatType.Value.ToString());
             }
-            if (!(ChannelAffinity is ChangeTrackingList<ChannelAffinityInternal> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ChannelAffinity))
             {
                 writer.WritePropertyName("channelAffinity"u8);
                 writer.WriteStartArray();
                 foreach (var item in ChannelAffinity)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChannelAffinityInternal>(item);
                 }
                 writer.WriteEndArray();
             }

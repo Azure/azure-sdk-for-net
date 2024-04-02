@@ -18,10 +18,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="protectionProfileId"/> is null. </exception>
         public ExistingProtectionProfile(string protectionProfileId)
         {
-            if (protectionProfileId == null)
-            {
-                throw new ArgumentNullException(nameof(protectionProfileId));
-            }
+            Argument.AssertNotNull(protectionProfileId, nameof(protectionProfileId));
 
             ProtectionProfileId = protectionProfileId;
             ResourceType = "Existing";

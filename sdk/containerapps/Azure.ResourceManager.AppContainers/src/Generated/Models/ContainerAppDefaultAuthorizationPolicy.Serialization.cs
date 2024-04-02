@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDefaultAuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AllowedPrincipals != null)
+            if (Optional.IsDefined(AllowedPrincipals))
             {
                 writer.WritePropertyName("allowedPrincipals"u8);
-                writer.WriteObjectValue(AllowedPrincipals);
+                writer.WriteObjectValue<ContainerAppAllowedPrincipals>(AllowedPrincipals, options);
             }
-            if (!(AllowedApplications is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedApplications))
             {
                 writer.WritePropertyName("allowedApplications"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppDefaultAuthorizationPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppDefaultAuthorizationPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppDefaultAuthorizationPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

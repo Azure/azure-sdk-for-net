@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<CorsRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CorsRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CorsRules)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(CorsRulesValue is ChangeTrackingList<MapsCorsRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CorsRulesValue))
             {
                 writer.WritePropertyName("corsRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in CorsRulesValue)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapsCorsRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Maps.Models
             var format = options.Format == "W" ? ((IPersistableModel<CorsRules>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CorsRules)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CorsRules)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Maps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CorsRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CorsRules)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Maps.Models
                         return DeserializeCorsRules(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CorsRules)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CorsRules)} does not support reading '{options.Format}' format.");
             }
         }
 

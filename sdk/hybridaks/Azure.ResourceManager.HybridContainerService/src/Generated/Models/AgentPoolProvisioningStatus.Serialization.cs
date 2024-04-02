@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && CurrentState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentState))
             {
                 writer.WritePropertyName("currentState"u8);
                 writer.WriteStringValue(CurrentState.Value.ToString());
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (!(ReadyReplicas is ChangeTrackingList<AgentPoolUpdateProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ReadyReplicas))
             {
                 writer.WritePropertyName("readyReplicas"u8);
                 writer.WriteStartArray();
                 foreach (var item in ReadyReplicas)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AgentPoolUpdateProfile>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolProvisioningStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeAgentPoolProvisioningStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolProvisioningStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

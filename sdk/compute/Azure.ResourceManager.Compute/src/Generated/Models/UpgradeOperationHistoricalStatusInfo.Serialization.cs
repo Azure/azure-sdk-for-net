@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpgradeOperationHistoricalStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Properties != null)
+            if (options.Format != "W" && Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<UpgradeOperationHistoricalStatusInfoProperties>(Properties, options);
             }
-            if (options.Format != "W" && UpgradeOperationHistoricalStatusInfoType != null)
+            if (options.Format != "W" && Optional.IsDefined(UpgradeOperationHistoricalStatusInfoType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(UpgradeOperationHistoricalStatusInfoType);
             }
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpgradeOperationHistoricalStatusInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeUpgradeOperationHistoricalStatusInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpgradeOperationHistoricalStatusInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

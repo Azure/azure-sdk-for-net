@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Workloads
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SapApplicationServerInstanceResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationInstanceName, SapApplicationServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SapApplicationServerInstanceResource> CreateOrUpdate(WaitUntil waitUntil, string applicationInstanceName, SapApplicationServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
         public virtual async Task<Response<SapApplicationServerInstanceResource>> GetAsync(string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
         public virtual Response<SapApplicationServerInstanceResource> Get(string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
         public virtual async Task<NullableResponse<SapApplicationServerInstanceResource>> GetIfExistsAsync(string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentNullException"> <paramref name="applicationInstanceName"/> is null. </exception>
         public virtual NullableResponse<SapApplicationServerInstanceResource> GetIfExists(string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var scope = _sapApplicationServerInstanceSapApplicationServerInstancesClientDiagnostics.CreateScope("SapApplicationServerInstanceCollection.GetIfExists");
             scope.Start();

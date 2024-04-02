@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DomainNameLabel != null)
+            if (Optional.IsDefined(DomainNameLabel))
             {
                 writer.WritePropertyName("domainNameLabel"u8);
                 writer.WriteStringValue(DomainNameLabel);
             }
-            if (DomainNameLabelScope.HasValue)
+            if (Optional.IsDefined(DomainNameLabelScope))
             {
                 writer.WritePropertyName("domainNameLabelScope"u8);
                 writer.WriteStringValue(DomainNameLabelScope.Value.ToSerialString());
             }
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (ReverseFqdn != null)
+            if (Optional.IsDefined(ReverseFqdn))
             {
                 writer.WritePropertyName("reverseFqdn"u8);
                 writer.WriteStringValue(ReverseFqdn);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PublicIPAddressDnsSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePublicIPAddressDnsSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PublicIPAddressDnsSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

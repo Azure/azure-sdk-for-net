@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CcePolicy != null)
+            if (Optional.IsDefined(CcePolicy))
             {
                 writer.WritePropertyName("ccePolicy"u8);
                 writer.WriteStringValue(CcePolicy);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialComputeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeConfidentialComputeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialComputeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

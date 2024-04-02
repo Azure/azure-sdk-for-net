@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwitchCaseActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (!(Activities is ChangeTrackingList<PipelineActivity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Activities))
             {
                 writer.WritePropertyName("activities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Activities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SwitchCaseActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSwitchCaseActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SwitchCaseActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

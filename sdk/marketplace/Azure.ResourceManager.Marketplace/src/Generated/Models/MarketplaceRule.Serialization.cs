@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RuleType.HasValue)
+            if (Optional.IsDefined(RuleType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(RuleType.Value.ToString());
             }
-            if (!(Value is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<MarketplaceRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MarketplaceRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MarketplaceRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeMarketplaceRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MarketplaceRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MarketplaceRule)} does not support reading '{options.Format}' format.");
             }
         }
 

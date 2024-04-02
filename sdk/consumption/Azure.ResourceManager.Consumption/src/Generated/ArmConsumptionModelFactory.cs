@@ -8,9 +8,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager.Consumption;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.Consumption.Models
@@ -27,7 +25,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="etag"> The etag for the resource. </param>
         /// <param name="tags"> Resource tags. </param>
         /// <returns> A new <see cref="Models.ConsumptionUsageDetail"/> instance for mocking. </returns>
-        public static ConsumptionUsageDetail ConsumptionUsageDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
+        public static ConsumptionUsageDetail ConsumptionUsageDetail(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -36,7 +34,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new UsageDetailsKind(kind),
                 etag,
                 tags,
                 serializedAdditionalRawData: null);
@@ -204,14 +202,14 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="kind"> Specifies the kind of charge summary. </param>
         /// <param name="etag"> eTag of the resource. To handle concurrent update scenario, this field will be used to determine whether the user is updating the latest version or not. </param>
         /// <returns> A new <see cref="Models.ConsumptionChargeSummary"/> instance for mocking. </returns>
-        public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null)
+        public static ConsumptionChargeSummary ConsumptionChargeSummary(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null)
         {
             return new UnknownChargeSummary(
                 id,
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new ChargeSummaryKind(kind),
                 etag,
                 serializedAdditionalRawData: null);
         }
@@ -395,7 +393,7 @@ namespace Azure.ResourceManager.Consumption.Models
         /// <param name="location"> Resource location. </param>
         /// <param name="sku"> Resource sku. </param>
         /// <returns> A new <see cref="Models.ConsumptionReservationRecommendation"/> instance for mocking. </returns>
-        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = "Unknown", ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
+        public static ConsumptionReservationRecommendation ConsumptionReservationRecommendation(ResourceIdentifier id = null, string name = null, ResourceType resourceType = default, SystemData systemData = null, string kind = null, ETag? etag = null, IReadOnlyDictionary<string, string> tags = null, AzureLocation? location = null, string sku = null)
         {
             tags ??= new Dictionary<string, string>();
 
@@ -404,7 +402,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 name,
                 resourceType,
                 systemData,
-                kind,
+                kind == null ? default : new ReservationRecommendationKind(kind),
                 etag,
                 tags,
                 location,

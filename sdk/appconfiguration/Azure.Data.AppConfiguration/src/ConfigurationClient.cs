@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
@@ -655,10 +656,23 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
+            int nextConditionsIndex = 0;
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, null, context);
-            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
+            context.AddClassifier(304, false);
+
+            HttpMessage FirstPageRequest(int? pageSizeHint)
+            {
+                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
+                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, conditions, context);
+            };
+
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            {
+                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
+                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
+            }
+
+            return PageableHelpers.CreateAsyncPageable(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>
@@ -675,10 +689,23 @@ namespace Azure.Data.AppConfiguration
 
             RequestContext context = CreateRequestContext(ErrorOptions.Default, cancellationToken);
             IEnumerable<string> fieldsString = selector.Fields.Split();
+            int nextConditionsIndex = 0;
 
-            HttpMessage FirstPageRequest(int? pageSizeHint) => CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, null, context);
-            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, null, context);
-            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ConfigurationServiceSerializer.ReadSetting, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", "items", "@nextLink", context);
+            context.AddClassifier(304, false);
+
+            HttpMessage FirstPageRequest(int? pageSizeHint)
+            {
+                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
+                return CreateGetConfigurationSettingsRequest(key, label, null, dateTime, fieldsString, null, conditions, context);
+            };
+
+            HttpMessage NextPageRequest(int? pageSizeHint, string nextLink)
+            {
+                MatchConditions conditions = (nextConditionsIndex < selector.MatchConditions.Count) ? selector.MatchConditions[nextConditionsIndex++] : null;
+                return CreateGetConfigurationSettingsNextPageRequest(nextLink, key, label, null, dateTime, fieldsString, null, conditions, context);
+            }
+
+            return PageableHelpers.CreatePageable(FirstPageRequest, NextPageRequest, ParseGetConfigurationSettingsResponse, ClientDiagnostics, _pipeline, "ConfigurationClient.GetConfigurationSettings", context);
         }
 
         /// <summary>
@@ -1401,6 +1428,46 @@ namespace Azure.Data.AppConfiguration
         {
             Argument.AssertNotNull(token, nameof(token));
             _syncTokenPolicy.AddToken(token);
+        }
+
+        /// <summary>
+        /// Parses the response of a <see cref="GetConfigurationSettings(SettingSelector, CancellationToken)"/> request.
+        /// The "@nextLink" JSON property is not reliable since the service does not return a response body for 304
+        /// responses. This method also attempts to extract the next link address from the "Link" header.
+        /// </summary>
+        private (List<ConfigurationSetting> Values, string NextLink) ParseGetConfigurationSettingsResponse(Response response)
+        {
+            var values = new List<ConfigurationSetting>();
+            string nextLink = null;
+
+            if (response.Status == 200)
+            {
+                var document = response.ContentStream != null ? JsonDocument.Parse(response.ContentStream) : JsonDocument.Parse(response.Content);
+
+                if (document.RootElement.TryGetProperty("items", out var itemsValue))
+                {
+                    foreach (var jsonItem in itemsValue.EnumerateArray())
+                    {
+                        ConfigurationSetting setting = ConfigurationServiceSerializer.ReadSetting(jsonItem);
+                        values.Add(setting);
+                    }
+                }
+
+                if (document.RootElement.TryGetProperty("@nextLink", out var nextLinkValue))
+                {
+                    nextLink = nextLinkValue.GetString();
+                }
+            }
+
+            // The "Link" header is formatted as:
+            // <nextLink>; rel="next"
+            if (nextLink == null && response.Headers.TryGetValue("Link", out string linkHeader))
+            {
+                int nextLinkEndIndex = linkHeader.IndexOf('>');
+                nextLink = linkHeader.Substring(1, nextLinkEndIndex - 1);
+            }
+
+            return (values, nextLink);
         }
 
         private static RequestContext CreateRequestContext(ErrorOptions errorOptions, CancellationToken cancellationToken)

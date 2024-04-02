@@ -17,7 +17,7 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -25,56 +25,56 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("credentials"u8);
-            writer.WriteObjectValue(CredentialsInternal);
+            writer.WriteObjectValue<DataSourceCredentials>(CredentialsInternal);
             writer.WritePropertyName("container"u8);
-            writer.WriteObjectValue(Container);
-            if (Identity != null)
+            writer.WriteObjectValue<SearchIndexerDataContainer>(Container);
+            if (Optional.IsDefined(Identity))
             {
                 if (Identity != null)
                 {
                     writer.WritePropertyName("identity"u8);
-                    writer.WriteObjectValue(Identity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(Identity);
                 }
                 else
                 {
                     writer.WriteNull("identity");
                 }
             }
-            if (DataChangeDetectionPolicy != null)
+            if (Optional.IsDefined(DataChangeDetectionPolicy))
             {
                 if (DataChangeDetectionPolicy != null)
                 {
                     writer.WritePropertyName("dataChangeDetectionPolicy"u8);
-                    writer.WriteObjectValue(DataChangeDetectionPolicy);
+                    writer.WriteObjectValue<DataChangeDetectionPolicy>(DataChangeDetectionPolicy);
                 }
                 else
                 {
                     writer.WriteNull("dataChangeDetectionPolicy");
                 }
             }
-            if (DataDeletionDetectionPolicy != null)
+            if (Optional.IsDefined(DataDeletionDetectionPolicy))
             {
                 if (DataDeletionDetectionPolicy != null)
                 {
                     writer.WritePropertyName("dataDeletionDetectionPolicy"u8);
-                    writer.WriteObjectValue(DataDeletionDetectionPolicy);
+                    writer.WriteObjectValue<DataDeletionDetectionPolicy>(DataDeletionDetectionPolicy);
                 }
                 else
                 {
                     writer.WriteNull("dataDeletionDetectionPolicy");
                 }
             }
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);
             }
-            if (EncryptionKey != null)
+            if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {

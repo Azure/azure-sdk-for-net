@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,11 +24,11 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainPurchaseConsent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(AgreementKeys is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AgreementKeys))
             {
                 writer.WritePropertyName("agreementKeys"u8);
                 writer.WriteStartArray();
@@ -36,12 +38,12 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (AgreedBy != null)
+            if (Optional.IsDefined(AgreedBy))
             {
                 writer.WritePropertyName("agreedBy"u8);
                 writer.WriteStringValue(AgreedBy);
             }
-            if (AgreedOn.HasValue)
+            if (Optional.IsDefined(AgreedOn))
             {
                 writer.WritePropertyName("agreedAt"u8);
                 writer.WriteStringValue(AgreedOn.Value, "O");
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DomainPurchaseConsent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,6 +130,93 @@ namespace Azure.ResourceManager.AppService.Models
             return new DomainPurchaseConsent(agreementKeys ?? new ChangeTrackingList<string>(), agreedBy, agreedAt, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreementKeys), out propertyOverride);
+            if (Optional.IsCollectionDefined(AgreementKeys) || hasPropertyOverride)
+            {
+                if (AgreementKeys.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  agreementKeys: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AgreementKeys)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedBy), out propertyOverride);
+            if (Optional.IsDefined(AgreedBy) || hasPropertyOverride)
+            {
+                builder.Append("  agreedBy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (AgreedBy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{AgreedBy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{AgreedBy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AgreedOn), out propertyOverride);
+            if (Optional.IsDefined(AgreedOn) || hasPropertyOverride)
+            {
+                builder.Append("  agreedAt: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var formattedDateTimeString = TypeFormatters.ToString(AgreedOn.Value, "o");
+                    builder.AppendLine($"'{formattedDateTimeString}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DomainPurchaseConsent>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DomainPurchaseConsent>)this).GetFormatFromOptions(options) : options.Format;
@@ -136,8 +225,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +244,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeDomainPurchaseConsent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DomainPurchaseConsent)} does not support reading '{options.Format}' format.");
             }
         }
 

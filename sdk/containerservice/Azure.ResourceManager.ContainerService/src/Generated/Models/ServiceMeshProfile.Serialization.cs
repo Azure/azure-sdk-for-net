@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceMeshProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceMeshProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceMeshProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("mode"u8);
             writer.WriteStringValue(Mode.ToString());
-            if (Istio != null)
+            if (Optional.IsDefined(Istio))
             {
                 writer.WritePropertyName("istio"u8);
-                writer.WriteObjectValue(Istio);
+                writer.WriteObjectValue<IstioServiceMesh>(Istio, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceMeshProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceMeshProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceMeshProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceMeshProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceMeshProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeServiceMeshProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceMeshProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceMeshProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

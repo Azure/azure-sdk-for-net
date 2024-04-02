@@ -22,33 +22,33 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startAt"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (StopOn.HasValue)
+            if (Optional.IsDefined(StopOn))
             {
                 writer.WritePropertyName("stopAt"u8);
                 writer.WriteStringValue(StopOn.Value, "O");
             }
-            if (RecurrencePattern != null)
+            if (Optional.IsDefined(RecurrencePattern))
             {
                 writer.WritePropertyName("recurrencePattern"u8);
-                writer.WriteObjectValue(RecurrencePattern);
+                writer.WriteObjectValue<LabServicesRecurrencePattern>(RecurrencePattern, options);
             }
-            if (TimeZoneId != null)
+            if (Optional.IsDefined(TimeZoneId))
             {
                 writer.WritePropertyName("timeZoneId"u8);
                 writer.WriteStringValue(TimeZoneId);
             }
-            if (Notes != null)
+            if (Optional.IsDefined(Notes))
             {
                 writer.WritePropertyName("notes"u8);
 #if NET6_0_OR_GREATER
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesSchedulePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -201,7 +201,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabServicesSchedulePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesSchedulePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

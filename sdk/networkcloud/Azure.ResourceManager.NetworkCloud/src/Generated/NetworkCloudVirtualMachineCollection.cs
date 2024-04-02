@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.NetworkCloud
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkCloudVirtualMachineResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkCloudVirtualMachineResource> CreateOrUpdate(WaitUntil waitUntil, string virtualMachineName, NetworkCloudVirtualMachineData data, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkCloudVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual async Task<Response<NetworkCloudVirtualMachineResource>> GetAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var scope = _networkCloudVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual Response<NetworkCloudVirtualMachineResource> Get(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var scope = _networkCloudVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var scope = _networkCloudVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual Response<bool> Exists(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var scope = _networkCloudVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkCloudVirtualMachineResource>> GetIfExistsAsync(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var scope = _networkCloudVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.NetworkCloud
         /// <exception cref="ArgumentNullException"> <paramref name="virtualMachineName"/> is null. </exception>
         public virtual NullableResponse<NetworkCloudVirtualMachineResource> GetIfExists(string virtualMachineName, CancellationToken cancellationToken = default)
         {
-            if (virtualMachineName == null)
-            {
-                throw new ArgumentNullException(nameof(virtualMachineName));
-            }
-            if (virtualMachineName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(virtualMachineName));
-            }
+            Argument.AssertNotNullOrEmpty(virtualMachineName, nameof(virtualMachineName));
 
             using var scope = _networkCloudVirtualMachineVirtualMachinesClientDiagnostics.CreateScope("NetworkCloudVirtualMachineCollection.GetIfExists");
             scope.Start();

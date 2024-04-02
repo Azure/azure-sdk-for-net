@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpgradeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxSurge != null)
+            if (Optional.IsDefined(MaxSurge))
             {
                 writer.WritePropertyName("maxSurge"u8);
                 writer.WriteStringValue(MaxSurge);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<AgentPoolUpgradeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeAgentPoolUpgradeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AgentPoolUpgradeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

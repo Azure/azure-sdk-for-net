@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("isAdmin"u8);
             writer.WriteBooleanValue(IsAdmin);
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -40,12 +40,12 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 }
 #endif
             }
-            if (CommonName != null)
+            if (Optional.IsDefined(CommonName))
             {
                 writer.WritePropertyName("commonName"u8);
                 writer.WriteStringValue(CommonName);
             }
-            if (IssuerThumbprint != null)
+            if (Optional.IsDefined(IssuerThumbprint))
             {
                 writer.WritePropertyName("issuerThumbprint"u8);
 #if NET6_0_OR_GREATER
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterClientCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedClusterClientCertificate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterClientCertificate)} does not support reading '{options.Format}' format.");
             }
         }
 

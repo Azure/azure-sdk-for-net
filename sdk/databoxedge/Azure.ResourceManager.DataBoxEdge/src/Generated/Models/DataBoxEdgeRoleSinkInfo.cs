@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="roleId"/> is null. </exception>
         public DataBoxEdgeRoleSinkInfo(ResourceIdentifier roleId)
         {
-            if (roleId == null)
-            {
-                throw new ArgumentNullException(nameof(roleId));
-            }
+            Argument.AssertNotNull(roleId, nameof(roleId));
 
             RoleId = roleId;
         }

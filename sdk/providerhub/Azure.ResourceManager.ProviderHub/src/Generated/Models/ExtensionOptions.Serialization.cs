@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Request is ChangeTrackingList<ExtensionOptionType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Request))
             {
                 writer.WritePropertyName("request"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Response is ChangeTrackingList<ExtensionOptionType> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Response))
             {
                 writer.WritePropertyName("response"u8);
                 writer.WriteStartArray();
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExtensionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExtensionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExtensionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeExtensionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExtensionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExtensionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
