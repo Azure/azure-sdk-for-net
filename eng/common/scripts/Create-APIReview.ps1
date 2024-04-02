@@ -149,7 +149,7 @@ function Submit-APIReview($packageInfo, $packagePath, $packageArtifactName)
     $reviewTokenFileName =  Get-APITokenFileName $packageArtifactName
     if ($reviewTokenFileName) {
         Write-Host "Uploading review token file $reviewTokenFileName to APIView."
-        return Upload-ReviewTokenFile $packageName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
+        return Upload-ReviewTokenFile $packageArtifactName $apiLabel $packageInfo.ReleaseStatus $reviewTokenFileName $packageInfo.Version $packagePath
     }
     else {
         Write-Host "Uploading $packagePath to APIView."
