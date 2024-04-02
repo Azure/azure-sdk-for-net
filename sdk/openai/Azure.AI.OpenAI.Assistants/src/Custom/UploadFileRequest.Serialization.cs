@@ -3,12 +3,11 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants;
 
-internal partial class UploadFileRequest : IUtf8JsonSerializable
+internal partial class UploadFileRequest
 {
     /*
      * CUSTOM CODE DESCRIPTION:
@@ -17,17 +16,11 @@ internal partial class UploadFileRequest : IUtf8JsonSerializable
      *
      */
 
-    internal virtual RequestContent ToRequestContent()
+    internal MultipartFormDataBinaryContent ToMultipartContent()
     {
-        MultipartFormDataContent content = new();
-
-        content.Add(MultipartContent.Create(Purpose.ToString()), "\"purpose\"", new Dictionary<string, string>());
-        content.Add(
-            MultipartContent.Create(Data),
-            name: "file",
-            fileName: string.IsNullOrEmpty(Filename) ? "file" : Filename,
-            headers: new Dictionary<string, string>());
-
+        MultipartFormDataBinaryContent content = new();
+        content.Add(Data, "file", Filename);
+        content.Add(Purpose.ToString(), "\"purpose\"");
         return content;
     }
 }

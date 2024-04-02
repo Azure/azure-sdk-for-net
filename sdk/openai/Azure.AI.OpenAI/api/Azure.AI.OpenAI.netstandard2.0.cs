@@ -33,22 +33,17 @@ namespace Azure.AI.OpenAI
         public static bool operator !=(Azure.AI.OpenAI.AudioTranscriptionFormat left, Azure.AI.OpenAI.AudioTranscriptionFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AudioTranscriptionOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AudioTranscriptionOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranscriptionOptions>
+    public partial class AudioTranscriptionOptions
     {
         public AudioTranscriptionOptions() { }
-        public AudioTranscriptionOptions(string deploymentName, System.BinaryData audioData) { }
-        public System.BinaryData AudioData { get { throw null; } set { } }
+        public AudioTranscriptionOptions(string deploymentName, System.IO.Stream audioData) { }
+        public System.IO.Stream AudioData { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
         public string Filename { get { throw null; } set { } }
         public string Language { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.AudioTranscriptionFormat? ResponseFormat { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
-        Azure.AI.OpenAI.AudioTranscriptionOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AudioTranscriptionOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AudioTranscriptionOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.OpenAI.AudioTranscriptionOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranscriptionOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranscriptionOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranscriptionOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AudioTranscriptionSegment : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AudioTranscriptionSegment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranscriptionSegment>
     {
@@ -102,21 +97,16 @@ namespace Azure.AI.OpenAI
         public static bool operator !=(Azure.AI.OpenAI.AudioTranslationFormat left, Azure.AI.OpenAI.AudioTranslationFormat right) { throw null; }
         public override string ToString() { throw null; }
     }
-    public partial class AudioTranslationOptions : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AudioTranslationOptions>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranslationOptions>
+    public partial class AudioTranslationOptions
     {
         public AudioTranslationOptions() { }
-        public AudioTranslationOptions(string deploymentName, System.BinaryData audioData) { }
-        public System.BinaryData AudioData { get { throw null; } set { } }
+        public AudioTranslationOptions(string deploymentName, System.IO.Stream audioData) { }
+        public System.IO.Stream AudioData { get { throw null; } set { } }
         public string DeploymentName { get { throw null; } set { } }
         public string Filename { get { throw null; } set { } }
         public string Prompt { get { throw null; } set { } }
         public Azure.AI.OpenAI.AudioTranslationFormat? ResponseFormat { get { throw null; } set { } }
         public float? Temperature { get { throw null; } set { } }
-        Azure.AI.OpenAI.AudioTranslationOptions System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AudioTranslationOptions>.Create(ref System.Text.Json.Utf8JsonReader reader, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        void System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AudioTranslationOptions>.Write(System.Text.Json.Utf8JsonWriter writer, System.ClientModel.Primitives.ModelReaderWriterOptions options) { }
-        Azure.AI.OpenAI.AudioTranslationOptions System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranslationOptions>.Create(System.BinaryData data, System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        string System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranslationOptions>.GetFormatFromOptions(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
-        System.BinaryData System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranslationOptions>.Write(System.ClientModel.Primitives.ModelReaderWriterOptions options) { throw null; }
     }
     public partial class AudioTranslationSegment : System.ClientModel.Primitives.IJsonModel<Azure.AI.OpenAI.AudioTranslationSegment>, System.ClientModel.Primitives.IPersistableModel<Azure.AI.OpenAI.AudioTranslationSegment>
     {

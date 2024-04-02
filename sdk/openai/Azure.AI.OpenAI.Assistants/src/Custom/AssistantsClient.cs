@@ -561,6 +561,19 @@ public partial class AssistantsClient
     internal HttpMessage CreateRequestMessage(
         string operationPath,
         RequestContent content,
+        string contentType,
+        RequestContext context,
+        RequestMethod method,
+        params (string QueryParameterName, string QueryParameterValue)[] queryParameters)
+    {
+        HttpMessage message = CreateRequestMessage(operationPath, content, context, method, queryParameters);
+        message.Request.Headers.SetValue("Content-Type", contentType);
+        return message;
+    }
+
+    internal HttpMessage CreateRequestMessage(
+        string operationPath,
+        RequestContent content,
         RequestContext context,
         RequestMethod method,
         params (string QueryParameterName, string QueryParameterValue)[] queryParameters)
@@ -745,12 +758,8 @@ public partial class AssistantsClient
     internal HttpMessage CreateInternalListFilesRequest(string purpose, RequestContext context)
         => CreateRequestMessage("/files", content: null, context, RequestMethod.Get, ("purpose", purpose));
 
-    internal HttpMessage CreateUploadFileRequest(RequestContent content, RequestContext context)
-    {
-        HttpMessage message = CreateRequestMessage("/files", content, context, RequestMethod.Post);
-        (content as Azure.Core.MultipartFormDataContent).ApplyToRequest(message.Request);
-        return message;
-    }
+    internal HttpMessage CreateUploadFileRequest(RequestContent content, string contentType, RequestContext context)
+        => CreateRequestMessage("/files", content, contentType, context, RequestMethod.Post);
 
     internal HttpMessage CreateInternalDeleteFileRequest(string fileId, RequestContext context)
         => CreateRequestMessage($"/files/{fileId}", content: null, context, RequestMethod.Delete);
