@@ -65,9 +65,10 @@ internal class PrototypeMultipartContent : RequestContent
 
         foreach ((string Name, string Value) in headers)
         {
-            bufferLength += GetLength(Name, Value);
             ThrowIfNotAscii(Name);
             ThrowIfNotAscii(Value);
+
+            bufferLength += GetLength(Name, Value);
         }
 
         bufferLength += 2;
@@ -80,6 +81,8 @@ internal class PrototypeMultipartContent : RequestContent
         }
 
         written += WriteCRLF(headersBytes.AsSpan(written));
+
+        Debug.Assert(bufferLength == written);
 
         _parts.Add(new Part(content, headersBytes));
     }
@@ -198,7 +201,9 @@ internal class PrototypeMultipartContent : RequestContent
     //    => headerName.Length + headerValue.Length + 4; // ": " + "\r\n"
 
     private int GetLength(string headerName, string headerValue)
-        => headerName.Length + headerValue.Length + 4; // ": " + "\r\n"
+    {
+        return headerName.Length + headerValue.Length + 4; // ": " + "\r\n"
+    }
 
     //private int WriteHeader(Span<byte> buffer, ReadOnlySpan<byte> headerName, ReadOnlySpan<byte> headerValue)
     //{
@@ -216,6 +221,7 @@ internal class PrototypeMultipartContent : RequestContent
 
     private static int WriteHeader(byte[] buffer, int bufferIndex, string headerName, string headerValue)
     {
+        int start = bufferIndex;
         bufferIndex += Encoding.UTF8.GetBytes(headerName, 0, headerName.Length, buffer, bufferIndex);
 
         ": "u8.CopyTo(buffer.AsSpan(bufferIndex));
@@ -226,7 +232,8 @@ internal class PrototypeMultipartContent : RequestContent
         "\r\n"u8.CopyTo(buffer.AsSpan(bufferIndex));
         bufferIndex += 2;
 
-        return bufferIndex;
+        // return number of bytes written
+        return bufferIndex - start;
     }
 
     private static int WriteCRLF(Span<byte> buffer)
@@ -314,8 +321,8 @@ internal class PrototypeMultipartContent : RequestContent
                 await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
             }
 
-            await stream.WriteAsync(_headers, 0, _headers.Length).ConfigureAwait(false);
-            await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
+            await stream.WriteAsync(_headers, 0, _headers.Length).ConfigureAwait(false); // CRLF was added already.
+            //await stream.WriteAsync(CRLF8, 0, CRLF8.Length).ConfigureAwait(false);
             await _content.WriteToAsync(stream, cancellationToken).ConfigureAwait(false);
         }
 
@@ -329,8 +336,8 @@ internal class PrototypeMultipartContent : RequestContent
                 stream.Write(CRLF8, 0, CRLF8.Length);
             }
 
-            stream.Write(_headers, 0, _headers.Length);
-            stream.Write(CRLF8, 0, CRLF8.Length);
+            stream.Write(_headers, 0, _headers.Length); // CRLF was added already.
+            //stream.Write(CRLF8, 0, CRLF8.Length);
             _content.WriteTo(stream, cancellationToken);
         }
 

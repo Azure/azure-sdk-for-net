@@ -100,7 +100,7 @@ public class MultipartFormDataRequestContent : RequestContent
 
         if (header != default)
         {
-            _multipartContent.Add(content, ("Content-Disposition", contentDispositionHeader.ToString()), header);
+            _multipartContent.Add(content, header, ("Content-Disposition", contentDispositionHeader.ToString()));
         }
         else
         {
