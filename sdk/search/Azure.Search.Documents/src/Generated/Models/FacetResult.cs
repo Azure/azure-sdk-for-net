@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.Search.Documents.Models
@@ -15,13 +16,13 @@ namespace Azure.Search.Documents.Models
         /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
         internal FacetResult()
         {
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="FacetResult"/>. </summary>
         /// <param name="count"> The approximate count of documents falling within the bucket described by this facet. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal FacetResult(long? count, IReadOnlyDictionary<string, object> additionalProperties)
+        internal FacetResult(long? count, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             Count = count;
             AdditionalProperties = additionalProperties;
