@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPortalDelegationSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementPortalDelegationSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementPortalDelegationSettingData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,32 +43,32 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (ValidationKey != null)
+            if (Optional.IsDefined(ValidationKey))
             {
                 writer.WritePropertyName("validationKey"u8);
                 writer.WriteStringValue(ValidationKey);
             }
-            if (Subscriptions != null)
+            if (Optional.IsDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
-                writer.WriteObjectValue(Subscriptions);
+                writer.WriteObjectValue<SubscriptionDelegationSettingProperties>(Subscriptions, options);
             }
-            if (UserRegistration != null)
+            if (Optional.IsDefined(UserRegistration))
             {
                 writer.WritePropertyName("userRegistration"u8);
-                writer.WriteObjectValue(UserRegistration);
+                writer.WriteObjectValue<RegistrationDelegationSettingProperties>(UserRegistration, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementPortalDelegationSettingData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementPortalDelegationSettingData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementPortalDelegationSettingData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -216,7 +216,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementPortalDelegationSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementPortalDelegationSettingData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementPortalDelegationSettingData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementPortalDelegationSettingData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementPortalDelegationSettingData)} does not support reading '{options.Format}' format.");
             }
         }
 

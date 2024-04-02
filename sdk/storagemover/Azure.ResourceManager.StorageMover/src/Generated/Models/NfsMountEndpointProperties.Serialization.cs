@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NfsMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("host"u8);
             writer.WriteStringValue(Host);
-            if (NfsVersion.HasValue)
+            if (Optional.IsDefined(NfsVersion))
             {
                 writer.WritePropertyName("nfsVersion"u8);
                 writer.WriteStringValue(NfsVersion.Value.ToString());
@@ -37,12 +37,12 @@ namespace Azure.ResourceManager.StorageMover.Models
             writer.WriteStringValue(Export);
             writer.WritePropertyName("endpointType"u8);
             writer.WriteStringValue(EndpointType.ToString());
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StorageMover.Models
             var format = options.Format == "W" ? ((IPersistableModel<NfsMountEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Azure.ResourceManager.StorageMover.Models
                         return DeserializeNfsMountEndpointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NfsMountEndpointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

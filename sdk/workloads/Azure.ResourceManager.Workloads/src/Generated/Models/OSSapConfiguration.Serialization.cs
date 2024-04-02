@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSSapConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DeployerVmPackages != null)
+            if (Optional.IsDefined(DeployerVmPackages))
             {
                 writer.WritePropertyName("deployerVmPackages"u8);
-                writer.WriteObjectValue(DeployerVmPackages);
+                writer.WriteObjectValue<DeployerVmPackages>(DeployerVmPackages, options);
             }
-            if (SapFqdn != null)
+            if (Optional.IsDefined(SapFqdn))
             {
                 writer.WritePropertyName("sapFqdn"u8);
                 writer.WriteStringValue(SapFqdn);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSSapConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeOSSapConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSSapConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

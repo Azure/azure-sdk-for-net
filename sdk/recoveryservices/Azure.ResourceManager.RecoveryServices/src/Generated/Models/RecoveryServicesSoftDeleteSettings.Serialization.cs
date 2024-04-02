@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SoftDeleteState.HasValue)
+            if (Optional.IsDefined(SoftDeleteState))
             {
                 writer.WritePropertyName("softDeleteState"u8);
                 writer.WriteStringValue(SoftDeleteState.Value.ToString());
             }
-            if (SoftDeleteRetentionPeriodInDays.HasValue)
+            if (Optional.IsDefined(SoftDeleteRetentionPeriodInDays))
             {
                 writer.WritePropertyName("softDeleteRetentionPeriodInDays"u8);
                 writer.WriteNumberValue(SoftDeleteRetentionPeriodInDays.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecoveryServicesSoftDeleteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeRecoveryServicesSoftDeleteSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecoveryServicesSoftDeleteSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

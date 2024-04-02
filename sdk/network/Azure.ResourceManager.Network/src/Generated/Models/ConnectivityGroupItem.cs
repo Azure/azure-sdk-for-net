@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="networkGroupId"/> is null. </exception>
         public ConnectivityGroupItem(string networkGroupId, GroupConnectivity groupConnectivity)
         {
-            if (networkGroupId == null)
-            {
-                throw new ArgumentNullException(nameof(networkGroupId));
-            }
+            Argument.AssertNotNull(networkGroupId, nameof(networkGroupId));
 
             NetworkGroupId = networkGroupId;
             GroupConnectivity = groupConnectivity;

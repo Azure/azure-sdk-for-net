@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareCredentialDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ShareName != null)
+            if (options.Format != "W" && Optional.IsDefined(ShareName))
             {
                 writer.WritePropertyName("shareName"u8);
                 writer.WriteStringValue(ShareName);
             }
-            if (options.Format != "W" && ShareType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShareType))
             {
                 writer.WritePropertyName("shareType"u8);
                 writer.WriteStringValue(ShareType.Value.ToSerialString());
             }
-            if (options.Format != "W" && UserName != null)
+            if (options.Format != "W" && Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (options.Format != "W" && Password != null)
+            if (options.Format != "W" && Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (options.Format != "W" && !(SupportedAccessProtocols is ChangeTrackingList<DataBoxAccessProtocol> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedAccessProtocols))
             {
                 writer.WritePropertyName("supportedAccessProtocols"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<ShareCredentialDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeShareCredentialDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ShareCredentialDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

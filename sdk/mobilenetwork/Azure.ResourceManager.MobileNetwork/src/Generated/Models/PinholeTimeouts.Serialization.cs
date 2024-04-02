@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PinholeTimeouts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Tcp.HasValue)
+            if (Optional.IsDefined(Tcp))
             {
                 writer.WritePropertyName("tcp"u8);
                 writer.WriteNumberValue(Tcp.Value);
             }
-            if (Udp.HasValue)
+            if (Optional.IsDefined(Udp))
             {
                 writer.WritePropertyName("udp"u8);
                 writer.WriteNumberValue(Udp.Value);
             }
-            if (Icmp.HasValue)
+            if (Optional.IsDefined(Icmp))
             {
                 writer.WritePropertyName("icmp"u8);
                 writer.WriteNumberValue(Icmp.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<PinholeTimeouts>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializePinholeTimeouts(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PinholeTimeouts)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePortsLocationBandwidths>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && OfferName != null)
+            if (options.Format != "W" && Optional.IsDefined(OfferName))
             {
                 writer.WritePropertyName("offerName"u8);
                 writer.WriteStringValue(OfferName);
             }
-            if (options.Format != "W" && ValueInGbps.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ValueInGbps))
             {
                 writer.WritePropertyName("valueInGbps"u8);
                 writer.WriteNumberValue(ValueInGbps.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRoutePortsLocationBandwidths>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRoutePortsLocationBandwidths(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRoutePortsLocationBandwidths)} does not support reading '{options.Format}' format.");
             }
         }
 

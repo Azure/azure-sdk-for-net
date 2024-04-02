@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.FluidRelay.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -48,10 +46,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> Returns a <see cref="FluidRelayServerResource"/> object. </returns>
         public static FluidRelayServerResource GetFluidRelayServerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableFluidRelayArmClient(client).GetFluidRelayServerResource(id);
         }
@@ -70,10 +65,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> Returns a <see cref="FluidRelayContainerResource"/> object. </returns>
         public static FluidRelayContainerResource GetFluidRelayContainerResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableFluidRelayArmClient(client).GetFluidRelayContainerResource(id);
         }
@@ -90,10 +82,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> An object representing collection of FluidRelayServerResources and their operations over a FluidRelayServerResource. </returns>
         public static FluidRelayServerCollection GetFluidRelayServers(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableFluidRelayResourceGroupResource(resourceGroupResource).GetFluidRelayServers();
         }
@@ -131,10 +120,7 @@ namespace Azure.ResourceManager.FluidRelay
         [ForwardsClientCalls]
         public static async Task<Response<FluidRelayServerResource>> GetFluidRelayServerAsync(this ResourceGroupResource resourceGroupResource, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableFluidRelayResourceGroupResource(resourceGroupResource).GetFluidRelayServerAsync(fluidRelayServerName, cancellationToken).ConfigureAwait(false);
         }
@@ -172,10 +158,7 @@ namespace Azure.ResourceManager.FluidRelay
         [ForwardsClientCalls]
         public static Response<FluidRelayServerResource> GetFluidRelayServer(this ResourceGroupResource resourceGroupResource, string fluidRelayServerName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableFluidRelayResourceGroupResource(resourceGroupResource).GetFluidRelayServer(fluidRelayServerName, cancellationToken);
         }
@@ -211,10 +194,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> An async collection of <see cref="FluidRelayServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<FluidRelayServerResource> GetFluidRelayServersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableFluidRelaySubscriptionResource(subscriptionResource).GetFluidRelayServersAsync(cancellationToken);
         }
@@ -250,10 +230,7 @@ namespace Azure.ResourceManager.FluidRelay
         /// <returns> A collection of <see cref="FluidRelayServerResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<FluidRelayServerResource> GetFluidRelayServers(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableFluidRelaySubscriptionResource(subscriptionResource).GetFluidRelayServers(cancellationToken);
         }

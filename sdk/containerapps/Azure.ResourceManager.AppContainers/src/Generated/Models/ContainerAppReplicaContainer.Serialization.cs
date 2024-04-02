@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppReplicaContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ContainerId != null)
+            if (Optional.IsDefined(ContainerId))
             {
                 writer.WritePropertyName("containerId"u8);
                 writer.WriteStringValue(ContainerId);
             }
-            if (IsReady.HasValue)
+            if (Optional.IsDefined(IsReady))
             {
                 writer.WritePropertyName("ready"u8);
                 writer.WriteBooleanValue(IsReady.Value);
             }
-            if (IsStarted.HasValue)
+            if (Optional.IsDefined(IsStarted))
             {
                 writer.WritePropertyName("started"u8);
                 writer.WriteBooleanValue(IsStarted.Value);
             }
-            if (RestartCount.HasValue)
+            if (Optional.IsDefined(RestartCount))
             {
                 writer.WritePropertyName("restartCount"u8);
                 writer.WriteNumberValue(RestartCount.Value);
             }
-            if (options.Format != "W" && RunningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RunningState))
             {
                 writer.WritePropertyName("runningState"u8);
                 writer.WriteStringValue(RunningState.Value.ToString());
             }
-            if (options.Format != "W" && RunningStateDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(RunningStateDetails))
             {
                 writer.WritePropertyName("runningStateDetails"u8);
                 writer.WriteStringValue(RunningStateDetails);
             }
-            if (options.Format != "W" && LogStreamEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(LogStreamEndpoint))
             {
                 writer.WritePropertyName("logStreamEndpoint"u8);
                 writer.WriteStringValue(LogStreamEndpoint);
             }
-            if (options.Format != "W" && ExecEndpoint != null)
+            if (options.Format != "W" && Optional.IsDefined(ExecEndpoint))
             {
                 writer.WritePropertyName("execEndpoint"u8);
                 writer.WriteStringValue(ExecEndpoint);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppReplicaContainer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppReplicaContainer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppReplicaContainer)} does not support reading '{options.Format}' format.");
             }
         }
 

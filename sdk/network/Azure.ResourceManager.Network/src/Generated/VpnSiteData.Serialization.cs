@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,36 +24,36 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnSiteData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnSiteData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,60 +66,60 @@ namespace Azure.ResourceManager.Network
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VirtualWan != null)
+            if (Optional.IsDefined(VirtualWan))
             {
                 writer.WritePropertyName("virtualWan"u8);
                 JsonSerializer.Serialize(writer, VirtualWan);
             }
-            if (DeviceProperties != null)
+            if (Optional.IsDefined(DeviceProperties))
             {
                 writer.WritePropertyName("deviceProperties"u8);
-                writer.WriteObjectValue(DeviceProperties);
+                writer.WriteObjectValue<DeviceProperties>(DeviceProperties, options);
             }
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress);
             }
-            if (SiteKey != null)
+            if (Optional.IsDefined(SiteKey))
             {
                 writer.WritePropertyName("siteKey"u8);
                 writer.WriteStringValue(SiteKey);
             }
-            if (AddressSpace != null)
+            if (Optional.IsDefined(AddressSpace))
             {
                 writer.WritePropertyName("addressSpace"u8);
-                writer.WriteObjectValue(AddressSpace);
+                writer.WriteObjectValue<AddressSpace>(AddressSpace, options);
             }
-            if (BgpProperties != null)
+            if (Optional.IsDefined(BgpProperties))
             {
                 writer.WritePropertyName("bgpProperties"u8);
-                writer.WriteObjectValue(BgpProperties);
+                writer.WriteObjectValue<BgpSettings>(BgpProperties, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (IsSecuritySite.HasValue)
+            if (Optional.IsDefined(IsSecuritySite))
             {
                 writer.WritePropertyName("isSecuritySite"u8);
                 writer.WriteBooleanValue(IsSecuritySite.Value);
             }
-            if (!(VpnSiteLinks is ChangeTrackingList<VpnSiteLinkData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VpnSiteLinks))
             {
                 writer.WritePropertyName("vpnSiteLinks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VpnSiteLinks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnSiteLinkData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (O365Policy != null)
+            if (Optional.IsDefined(O365Policy))
             {
                 writer.WritePropertyName("o365Policy"u8);
-                writer.WriteObjectValue(O365Policy);
+                writer.WriteObjectValue<O365PolicyProperties>(O365Policy, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -146,7 +145,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VpnSiteData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnSiteData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnSiteData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -370,7 +369,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnSiteData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnSiteData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -386,7 +385,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVpnSiteData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnSiteData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnSiteData)} does not support reading '{options.Format}' format.");
             }
         }
 

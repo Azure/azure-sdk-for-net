@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,21 +23,21 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Phrase != null)
+            if (Optional.IsDefined(Phrase))
             {
                 writer.WritePropertyName("phrase"u8);
                 writer.WriteStringValue(Phrase);
             }
-            if (Variable != null)
+            if (Optional.IsDefined(Variable))
             {
                 writer.WritePropertyName("variable"u8);
                 writer.WriteStringValue(Variable);
             }
-            if (PatternType.HasValue)
+            if (Optional.IsDefined(PatternType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(PatternType.Value.ToSerialString());
@@ -64,7 +65,7 @@ namespace Azure.ResourceManager.Resources.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPattern>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -114,6 +115,79 @@ namespace Azure.ResourceManager.Resources.Models
             return new ResourceTypeAliasPattern(phrase, variable, type, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Phrase), out propertyOverride);
+            if (Optional.IsDefined(Phrase) || hasPropertyOverride)
+            {
+                builder.Append("  phrase: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Phrase.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Phrase}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Phrase}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Variable), out propertyOverride);
+            if (Optional.IsDefined(Variable) || hasPropertyOverride)
+            {
+                builder.Append("  variable: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Variable.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Variable}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Variable}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PatternType), out propertyOverride);
+            if (Optional.IsDefined(PatternType) || hasPropertyOverride)
+            {
+                builder.Append("  type: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{PatternType.Value.ToSerialString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ResourceTypeAliasPattern>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceTypeAliasPattern>)this).GetFormatFromOptions(options) : options.Format;
@@ -122,8 +196,10 @@ namespace Azure.ResourceManager.Resources.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +215,7 @@ namespace Azure.ResourceManager.Resources.Models
                         return DeserializeResourceTypeAliasPattern(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceTypeAliasPattern)} does not support reading '{options.Format}' format.");
             }
         }
 

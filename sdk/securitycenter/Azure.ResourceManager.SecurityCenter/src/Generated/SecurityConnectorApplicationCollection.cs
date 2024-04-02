@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.SecurityCenter
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SecurityConnectorApplicationResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SecurityConnectorApplicationResource> CreateOrUpdate(WaitUntil waitUntil, string applicationId, SecurityApplicationData data, CancellationToken cancellationToken = default)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public virtual async Task<Response<SecurityConnectorApplicationResource>> GetAsync(string applicationId, CancellationToken cancellationToken = default)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public virtual Response<SecurityConnectorApplicationResource> Get(string applicationId, CancellationToken cancellationToken = default)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string applicationId, CancellationToken cancellationToken = default)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public virtual Response<bool> Exists(string applicationId, CancellationToken cancellationToken = default)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public virtual async Task<NullableResponse<SecurityConnectorApplicationResource>> GetIfExistsAsync(string applicationId, CancellationToken cancellationToken = default)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.SecurityCenter
         /// <exception cref="ArgumentNullException"> <paramref name="applicationId"/> is null. </exception>
         public virtual NullableResponse<SecurityConnectorApplicationResource> GetIfExists(string applicationId, CancellationToken cancellationToken = default)
         {
-            if (applicationId == null)
-            {
-                throw new ArgumentNullException(nameof(applicationId));
-            }
-            if (applicationId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationId));
-            }
+            Argument.AssertNotNullOrEmpty(applicationId, nameof(applicationId));
 
             using var scope = _securityConnectorApplicationClientDiagnostics.CreateScope("SecurityConnectorApplicationCollection.GetIfExists");
             scope.Start();

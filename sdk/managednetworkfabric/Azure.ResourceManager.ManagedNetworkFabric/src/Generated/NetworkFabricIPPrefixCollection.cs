@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.ManagedNetworkFabric
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<NetworkFabricIPPrefixResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string ipPrefixName, NetworkFabricIPPrefixData data, CancellationToken cancellationToken = default)
         {
-            if (ipPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(ipPrefixName));
-            }
-            if (ipPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipPrefixName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<NetworkFabricIPPrefixResource> CreateOrUpdate(WaitUntil waitUntil, string ipPrefixName, NetworkFabricIPPrefixData data, CancellationToken cancellationToken = default)
         {
-            if (ipPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(ipPrefixName));
-            }
-            if (ipPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipPrefixName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
         public virtual async Task<Response<NetworkFabricIPPrefixResource>> GetAsync(string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            if (ipPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(ipPrefixName));
-            }
-            if (ipPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
             using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
         public virtual Response<NetworkFabricIPPrefixResource> Get(string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            if (ipPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(ipPrefixName));
-            }
-            if (ipPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
             using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Get");
             scope.Start();
@@ -363,14 +327,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            if (ipPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(ipPrefixName));
-            }
-            if (ipPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
             using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Exists");
             scope.Start();
@@ -413,14 +370,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
         public virtual Response<bool> Exists(string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            if (ipPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(ipPrefixName));
-            }
-            if (ipPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
             using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.Exists");
             scope.Start();
@@ -463,14 +413,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
         public virtual async Task<NullableResponse<NetworkFabricIPPrefixResource>> GetIfExistsAsync(string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            if (ipPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(ipPrefixName));
-            }
-            if (ipPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
             using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.GetIfExists");
             scope.Start();
@@ -515,14 +458,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
         /// <exception cref="ArgumentNullException"> <paramref name="ipPrefixName"/> is null. </exception>
         public virtual NullableResponse<NetworkFabricIPPrefixResource> GetIfExists(string ipPrefixName, CancellationToken cancellationToken = default)
         {
-            if (ipPrefixName == null)
-            {
-                throw new ArgumentNullException(nameof(ipPrefixName));
-            }
-            if (ipPrefixName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(ipPrefixName));
-            }
+            Argument.AssertNotNullOrEmpty(ipPrefixName, nameof(ipPrefixName));
 
             using var scope = _networkFabricIPPrefixIPPrefixesClientDiagnostics.CreateScope("NetworkFabricIPPrefixCollection.GetIfExists");
             scope.Start();

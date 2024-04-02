@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -51,14 +50,8 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <exception cref="ArgumentNullException"> <paramref name="endpoint"/> or <paramref name="credential"/> is null. </exception>
         public CancerProfilingClient(Uri endpoint, AzureKeyCredential credential, CancerProfilingClientOptions options)
         {
-            if (endpoint == null)
-            {
-                throw new ArgumentNullException(nameof(endpoint));
-            }
-            if (credential == null)
-            {
-                throw new ArgumentNullException(nameof(credential));
-            }
+            Argument.AssertNotNull(endpoint, nameof(endpoint));
+            Argument.AssertNotNull(credential, nameof(credential));
             options ??= new CancerProfilingClientOptions();
 
             ClientDiagnostics = new ClientDiagnostics(options, true);
@@ -77,10 +70,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,OncoPhenotypeData,CancellationToken)']/*" />
         public virtual async Task<Operation<OncoPhenotypeResults>> InferCancerProfileAsync(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
         {
-            if (oncoPhenotypeData == null)
-            {
-                throw new ArgumentNullException(nameof(oncoPhenotypeData));
-            }
+            Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = oncoPhenotypeData.ToRequestContent();
@@ -97,10 +87,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,OncoPhenotypeData,CancellationToken)']/*" />
         public virtual Operation<OncoPhenotypeResults> InferCancerProfile(WaitUntil waitUntil, OncoPhenotypeData oncoPhenotypeData, CancellationToken cancellationToken = default)
         {
-            if (oncoPhenotypeData == null)
-            {
-                throw new ArgumentNullException(nameof(oncoPhenotypeData));
-            }
+            Argument.AssertNotNull(oncoPhenotypeData, nameof(oncoPhenotypeData));
 
             RequestContext context = FromCancellationToken(cancellationToken);
             using RequestContent content = oncoPhenotypeData.ToRequestContent();
@@ -132,10 +119,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfileAsync(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual async Task<Operation<BinaryData>> InferCancerProfileAsync(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("CancerProfilingClient.InferCancerProfile");
             scope.Start();
@@ -175,10 +159,7 @@ namespace Azure.Health.Insights.CancerProfiling
         /// <include file="Docs/CancerProfilingClient.xml" path="doc/members/member[@name='InferCancerProfile(WaitUntil,RequestContent,RequestContext)']/*" />
         public virtual Operation<BinaryData> InferCancerProfile(WaitUntil waitUntil, RequestContent content, RequestContext context = null)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = ClientDiagnostics.CreateScope("CancerProfilingClient.InferCancerProfile");
             scope.Start();

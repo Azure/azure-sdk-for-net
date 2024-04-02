@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogInstallMethod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Tool != null)
+            if (Optional.IsDefined(Tool))
             {
                 writer.WritePropertyName("tool"u8);
                 writer.WriteStringValue(Tool);
             }
-            if (ToolVersion != null)
+            if (Optional.IsDefined(ToolVersion))
             {
                 writer.WritePropertyName("toolVersion"u8);
                 writer.WriteStringValue(ToolVersion);
             }
-            if (InstallerVersion != null)
+            if (Optional.IsDefined(InstallerVersion))
             {
                 writer.WritePropertyName("installerVersion"u8);
                 writer.WriteStringValue(InstallerVersion);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Datadog.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatadogInstallMethod>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Datadog.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Datadog.Models
                         return DeserializeDatadogInstallMethod(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatadogInstallMethod)} does not support reading '{options.Format}' format.");
             }
         }
 

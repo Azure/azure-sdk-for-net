@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineSize)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineSize)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (NumberOfCores.HasValue)
+            if (Optional.IsDefined(NumberOfCores))
             {
                 writer.WritePropertyName("numberOfCores"u8);
                 writer.WriteNumberValue(NumberOfCores.Value);
             }
-            if (OSDiskSizeInMB.HasValue)
+            if (Optional.IsDefined(OSDiskSizeInMB))
             {
                 writer.WritePropertyName("osDiskSizeInMB"u8);
                 writer.WriteNumberValue(OSDiskSizeInMB.Value);
             }
-            if (ResourceDiskSizeInMB.HasValue)
+            if (Optional.IsDefined(ResourceDiskSizeInMB))
             {
                 writer.WritePropertyName("resourceDiskSizeInMB"u8);
                 writer.WriteNumberValue(ResourceDiskSizeInMB.Value);
             }
-            if (MemoryInMB.HasValue)
+            if (Optional.IsDefined(MemoryInMB))
             {
                 writer.WritePropertyName("memoryInMB"u8);
                 writer.WriteNumberValue(MemoryInMB.Value);
             }
-            if (MaxDataDiskCount.HasValue)
+            if (Optional.IsDefined(MaxDataDiskCount))
             {
                 writer.WritePropertyName("maxDataDiskCount"u8);
                 writer.WriteNumberValue(MaxDataDiskCount.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineSize>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineSize)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineSize)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineSize)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineSize)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineSize(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineSize)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineSize)} does not support reading '{options.Format}' format.");
             }
         }
 

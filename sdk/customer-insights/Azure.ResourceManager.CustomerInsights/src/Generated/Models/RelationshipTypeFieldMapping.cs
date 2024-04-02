@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.CustomerInsights.Models
         /// <exception cref="ArgumentNullException"> <paramref name="profileFieldName"/> or <paramref name="relatedProfileKeyProperty"/> is null. </exception>
         public RelationshipTypeFieldMapping(string profileFieldName, string relatedProfileKeyProperty)
         {
-            if (profileFieldName == null)
-            {
-                throw new ArgumentNullException(nameof(profileFieldName));
-            }
-            if (relatedProfileKeyProperty == null)
-            {
-                throw new ArgumentNullException(nameof(relatedProfileKeyProperty));
-            }
+            Argument.AssertNotNull(profileFieldName, nameof(profileFieldName));
+            Argument.AssertNotNull(relatedProfileKeyProperty, nameof(relatedProfileKeyProperty));
 
             ProfileFieldName = profileFieldName;
             RelatedProfileKeyProperty = relatedProfileKeyProperty;

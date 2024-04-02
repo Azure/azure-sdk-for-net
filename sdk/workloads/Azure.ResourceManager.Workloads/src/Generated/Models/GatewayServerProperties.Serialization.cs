@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayServerProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Port.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Port))
             {
                 if (Port != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Workloads.Models
                     writer.WriteNull("port");
                 }
             }
-            if (options.Format != "W" && Health.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Health))
             {
                 writer.WritePropertyName("health"u8);
                 writer.WriteStringValue(Health.Value.ToString());
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<GatewayServerProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GatewayServerProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GatewayServerProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GatewayServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayServerProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeGatewayServerProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GatewayServerProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GatewayServerProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

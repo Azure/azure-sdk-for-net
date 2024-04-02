@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HierarchyInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HierarchyInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProductFamilyName != null)
+            if (Optional.IsDefined(ProductFamilyName))
             {
                 writer.WritePropertyName("productFamilyName"u8);
                 writer.WriteStringValue(ProductFamilyName);
             }
-            if (ProductLineName != null)
+            if (Optional.IsDefined(ProductLineName))
             {
                 writer.WritePropertyName("productLineName"u8);
                 writer.WriteStringValue(ProductLineName);
             }
-            if (ProductName != null)
+            if (Optional.IsDefined(ProductName))
             {
                 writer.WritePropertyName("productName"u8);
                 writer.WriteStringValue(ProductName);
             }
-            if (ConfigurationName != null)
+            if (Optional.IsDefined(ConfigurationName))
             {
                 writer.WritePropertyName("configurationName"u8);
                 writer.WriteStringValue(ConfigurationName);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<HierarchyInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HierarchyInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HierarchyInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeHierarchyInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HierarchyInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

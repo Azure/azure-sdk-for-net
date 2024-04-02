@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrustedIdProviderForDataLakeStoreAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrustedIdProviderForDataLakeStoreAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedIdProviderForDataLakeStoreAccountUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IdProvider != null)
+            if (Optional.IsDefined(IdProvider))
             {
                 writer.WritePropertyName("idProvider"u8);
                 writer.WriteStringValue(IdProvider.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
             var format = options.Format == "W" ? ((IPersistableModel<TrustedIdProviderForDataLakeStoreAccountUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TrustedIdProviderForDataLakeStoreAccountUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TrustedIdProviderForDataLakeStoreAccountUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TrustedIdProviderForDataLakeStoreAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedIdProviderForDataLakeStoreAccountUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.DataLakeStore.Models
                         return DeserializeTrustedIdProviderForDataLakeStoreAccountUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TrustedIdProviderForDataLakeStoreAccountUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TrustedIdProviderForDataLakeStoreAccountUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConditionFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NumberOfEvaluationPeriods.HasValue)
+            if (Optional.IsDefined(NumberOfEvaluationPeriods))
             {
                 writer.WritePropertyName("numberOfEvaluationPeriods"u8);
                 writer.WriteNumberValue(NumberOfEvaluationPeriods.Value);
             }
-            if (MinFailingPeriodsToAlert.HasValue)
+            if (Optional.IsDefined(MinFailingPeriodsToAlert))
             {
                 writer.WritePropertyName("minFailingPeriodsToAlert"u8);
                 writer.WriteNumberValue(MinFailingPeriodsToAlert.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConditionFailingPeriods>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeConditionFailingPeriods(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConditionFailingPeriods)} does not support reading '{options.Format}' format.");
             }
         }
 

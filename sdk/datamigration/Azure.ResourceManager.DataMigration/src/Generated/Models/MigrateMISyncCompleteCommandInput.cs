@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceDatabaseName"/> is null. </exception>
         public MigrateMISyncCompleteCommandInput(string sourceDatabaseName)
         {
-            if (sourceDatabaseName == null)
-            {
-                throw new ArgumentNullException(nameof(sourceDatabaseName));
-            }
+            Argument.AssertNotNull(sourceDatabaseName, nameof(sourceDatabaseName));
 
             SourceDatabaseName = sourceDatabaseName;
         }

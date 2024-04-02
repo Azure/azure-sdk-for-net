@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.EdgeOrder.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
         /// <exception cref="ArgumentNullException"> <paramref name="hierarchyInformation"/> is null. </exception>
         public ConfigurationFilters(HierarchyInformation hierarchyInformation)
         {
-            if (hierarchyInformation == null)
-            {
-                throw new ArgumentNullException(nameof(hierarchyInformation));
-            }
+            Argument.AssertNotNull(hierarchyInformation, nameof(hierarchyInformation));
 
             HierarchyInformation = hierarchyInformation;
             FilterableProperty = new ChangeTrackingList<FilterableProperty>();

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceExportConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceExportConfigurationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceExportConfigurationInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (StorageAccountName != null)
+            if (Optional.IsDefined(StorageAccountName))
             {
                 writer.WritePropertyName("storageAccountName"u8);
                 writer.WriteStringValue(StorageAccountName);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
             var format = options.Format == "W" ? ((IPersistableModel<ServiceExportConfigurationInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceExportConfigurationInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceExportConfigurationInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceExportConfigurationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceExportConfigurationInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.HealthcareApis.Models
                         return DeserializeServiceExportConfigurationInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceExportConfigurationInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceExportConfigurationInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

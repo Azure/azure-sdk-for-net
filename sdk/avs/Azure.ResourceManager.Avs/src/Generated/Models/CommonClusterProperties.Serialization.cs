@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClusterSize.HasValue)
+            if (Optional.IsDefined(ClusterSize))
             {
                 writer.WritePropertyName("clusterSize"u8);
                 writer.WriteNumberValue(ClusterSize.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ClusterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ClusterId))
             {
                 writer.WritePropertyName("clusterId"u8);
                 writer.WriteNumberValue(ClusterId.Value);
             }
-            if (!(Hosts is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Hosts))
             {
                 writer.WritePropertyName("hosts"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonClusterProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeCommonClusterProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonClusterProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

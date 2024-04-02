@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BackupManagementType != null)
+            if (Optional.IsDefined(BackupManagementType))
             {
                 writer.WritePropertyName("backupManagementType"u8);
                 writer.WriteStringValue(BackupManagementType);
             }
-            if (WorkloadType != null)
+            if (Optional.IsDefined(WorkloadType))
             {
                 writer.WritePropertyName("workloadType"u8);
                 writer.WriteStringValue(WorkloadType);
             }
             writer.WritePropertyName("workloadItemType"u8);
             writer.WriteStringValue(WorkloadItemType);
-            if (FriendlyName != null)
+            if (Optional.IsDefined(FriendlyName))
             {
                 writer.WritePropertyName("friendlyName"u8);
                 writer.WriteStringValue(FriendlyName);
             }
-            if (ProtectionState.HasValue)
+            if (Optional.IsDefined(ProtectionState))
             {
                 writer.WritePropertyName("protectionState"u8);
                 writer.WriteStringValue(ProtectionState.Value.ToString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadItem)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyArrayChangedValuesCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ArrayType.HasValue)
+            if (Optional.IsDefined(ArrayType))
             {
                 writer.WritePropertyName("arrayType"u8);
                 writer.WriteStringValue(ArrayType.Value.ToString());
             }
-            if (ChangeType.HasValue)
+            if (Optional.IsDefined(ChangeType))
             {
                 writer.WritePropertyName("changeType"u8);
                 writer.WriteStringValue(ChangeType.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationRulePropertyArrayChangedValuesCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeAutomationRulePropertyArrayChangedValuesCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationRulePropertyArrayChangedValuesCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

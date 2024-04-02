@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrationEligibilityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationEligibilityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationEligibilityInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && IsEligibleForMigration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsEligibleForMigration))
             {
                 writer.WritePropertyName("isEligibleForMigration"u8);
                 writer.WriteBooleanValue(IsEligibleForMigration.Value);
             }
-            if (options.Format != "W" && !(ValidationMessages is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ValidationMessages))
             {
                 writer.WritePropertyName("validationMessages"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrationEligibilityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrationEligibilityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrationEligibilityInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrationEligibilityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationEligibilityInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrationEligibilityInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrationEligibilityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrationEligibilityInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

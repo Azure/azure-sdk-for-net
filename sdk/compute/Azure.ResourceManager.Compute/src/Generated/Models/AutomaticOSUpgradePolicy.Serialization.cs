@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticOSUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticOSUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticOSUpgradePolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnableAutomaticOSUpgrade.HasValue)
+            if (Optional.IsDefined(EnableAutomaticOSUpgrade))
             {
                 writer.WritePropertyName("enableAutomaticOSUpgrade"u8);
                 writer.WriteBooleanValue(EnableAutomaticOSUpgrade.Value);
             }
-            if (DisableAutomaticRollback.HasValue)
+            if (Optional.IsDefined(DisableAutomaticRollback))
             {
                 writer.WritePropertyName("disableAutomaticRollback"u8);
                 writer.WriteBooleanValue(DisableAutomaticRollback.Value);
             }
-            if (UseRollingUpgradePolicy.HasValue)
+            if (Optional.IsDefined(UseRollingUpgradePolicy))
             {
                 writer.WritePropertyName("useRollingUpgradePolicy"u8);
                 writer.WriteBooleanValue(UseRollingUpgradePolicy.Value);
             }
-            if (OSRollingUpgradeDeferral.HasValue)
+            if (Optional.IsDefined(OSRollingUpgradeDeferral))
             {
                 writer.WritePropertyName("osRollingUpgradeDeferral"u8);
                 writer.WriteBooleanValue(OSRollingUpgradeDeferral.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomaticOSUpgradePolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomaticOSUpgradePolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomaticOSUpgradePolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticOSUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticOSUpgradePolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeAutomaticOSUpgradePolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomaticOSUpgradePolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomaticOSUpgradePolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

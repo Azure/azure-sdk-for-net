@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TimeGrain.HasValue)
+            if (Optional.IsDefined(TimeGrain))
             {
                 writer.WritePropertyName("timeGrain"u8);
                 writer.WriteStringValue(TimeGrain.Value, "P");
             }
-            if (Category != null)
+            if (Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (RetentionPolicy != null)
+            if (Optional.IsDefined(RetentionPolicy))
             {
                 writer.WritePropertyName("retentionPolicy"u8);
-                writer.WriteObjectValue(RetentionPolicy);
+                writer.WriteObjectValue<RetentionPolicy>(RetentionPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<MetricSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MetricSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MetricSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MetricSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeMetricSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MetricSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MetricSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

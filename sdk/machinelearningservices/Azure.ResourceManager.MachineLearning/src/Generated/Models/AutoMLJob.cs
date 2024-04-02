@@ -27,10 +27,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="taskDetails"/> is null. </exception>
         public AutoMLJob(AutoMLVertical taskDetails)
         {
-            if (taskDetails == null)
-            {
-                throw new ArgumentNullException(nameof(taskDetails));
-            }
+            Argument.AssertNotNull(taskDetails, nameof(taskDetails));
 
             EnvironmentVariables = new ChangeTrackingDictionary<string, string>();
             Outputs = new ChangeTrackingDictionary<string, MachineLearningJobOutput>();

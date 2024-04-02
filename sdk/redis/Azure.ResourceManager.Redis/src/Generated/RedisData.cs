@@ -59,10 +59,7 @@ namespace Azure.ResourceManager.Redis
         /// <exception cref="ArgumentNullException"> <paramref name="sku"/> is null. </exception>
         public RedisData(AzureLocation location, RedisSku sku) : base(location)
         {
-            if (sku == null)
-            {
-                throw new ArgumentNullException(nameof(sku));
-            }
+            Argument.AssertNotNull(sku, nameof(sku));
 
             Zones = new ChangeTrackingList<string>();
             TenantSettings = new ChangeTrackingDictionary<string, string>();
@@ -137,50 +134,73 @@ namespace Azure.ResourceManager.Redis
         }
 
         /// <summary> A list of availability zones denoting where the resource needs to come from. </summary>
+        [WirePath("zones")]
         public IList<string> Zones { get; }
         /// <summary> The identity of the resource. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> All Redis Settings. Few possible keys: rdb-backup-enabled,rdb-storage-connection-string,rdb-backup-frequency,maxmemory-delta,maxmemory-policy,notify-keyspace-events,maxmemory-samples,slowlog-log-slower-than,slowlog-max-len,list-max-ziplist-entries,list-max-ziplist-value,hash-max-ziplist-entries,hash-max-ziplist-value,set-max-intset-entries,zset-max-ziplist-entries,zset-max-ziplist-value etc. </summary>
+        [WirePath("properties.redisConfiguration")]
         public RedisCommonConfiguration RedisConfiguration { get; set; }
         /// <summary> Redis version. This should be in the form 'major[.minor]' (only 'major' is required) or the value 'latest' which refers to the latest stable Redis version that is available. Supported versions: 4.0, 6.0 (latest). Default value is 'latest'. </summary>
+        [WirePath("properties.redisVersion")]
         public string RedisVersion { get; set; }
         /// <summary> Specifies whether the non-ssl Redis server port (6379) is enabled. </summary>
+        [WirePath("properties.enableNonSslPort")]
         public bool? EnableNonSslPort { get; set; }
         /// <summary> The number of replicas to be created per primary. </summary>
+        [WirePath("properties.replicasPerMaster")]
         public int? ReplicasPerMaster { get; set; }
         /// <summary> The number of replicas to be created per primary. </summary>
+        [WirePath("properties.replicasPerPrimary")]
         public int? ReplicasPerPrimary { get; set; }
         /// <summary> A dictionary of tenant settings. </summary>
+        [WirePath("properties.tenantSettings")]
         public IDictionary<string, string> TenantSettings { get; }
         /// <summary> The number of shards to be created on a Premium Cluster Cache. </summary>
+        [WirePath("properties.shardCount")]
         public int? ShardCount { get; set; }
         /// <summary> Optional: requires clients to use a specified TLS version (or higher) to connect (e,g, '1.0', '1.1', '1.2'). </summary>
+        [WirePath("properties.minimumTlsVersion")]
         public RedisTlsVersion? MinimumTlsVersion { get; set; }
         /// <summary> Whether or not public endpoint access is allowed for this cache.  Value is optional but if passed in, must be 'Enabled' or 'Disabled'. If 'Disabled', private endpoints are the exclusive access method. Default value is 'Enabled'. </summary>
+        [WirePath("properties.publicNetworkAccess")]
         public RedisPublicNetworkAccess? PublicNetworkAccess { get; set; }
         /// <summary> Optional: Specifies the update channel for the monthly Redis updates your Redis Cache will receive. Caches using 'Preview' update channel get latest Redis updates at least 4 weeks ahead of 'Stable' channel caches. Default value is 'Stable'. </summary>
+        [WirePath("properties.updateChannel")]
         public UpdateChannel? UpdateChannel { get; set; }
         /// <summary> The SKU of the Redis cache to deploy. </summary>
+        [WirePath("properties.sku")]
         public RedisSku Sku { get; set; }
         /// <summary> The full resource ID of a subnet in a virtual network to deploy the Redis cache in. Example format: /subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/Microsoft.{Network|ClassicNetwork}/VirtualNetworks/vnet1/subnets/subnet1. </summary>
+        [WirePath("properties.subnetId")]
         public ResourceIdentifier SubnetId { get; set; }
         /// <summary> Static IP address. Optionally, may be specified when deploying a Redis cache inside an existing Azure Virtual Network; auto assigned by default. </summary>
+        [WirePath("properties.staticIP")]
         public IPAddress StaticIP { get; set; }
         /// <summary> Redis instance provisioning status. </summary>
+        [WirePath("properties.provisioningState")]
         public RedisProvisioningState? ProvisioningState { get; }
         /// <summary> Redis host name. </summary>
+        [WirePath("properties.hostName")]
         public string HostName { get; }
         /// <summary> Redis non-SSL port. </summary>
+        [WirePath("properties.port")]
         public int? Port { get; }
         /// <summary> Redis SSL port. </summary>
+        [WirePath("properties.sslPort")]
         public int? SslPort { get; }
         /// <summary> The keys of the Redis cache - not set if this object is not the response to Create or Update redis cache. </summary>
+        [WirePath("properties.accessKeys")]
         public RedisAccessKeys AccessKeys { get; }
         /// <summary> List of the linked servers associated with the cache. </summary>
+        [WirePath("properties.linkedServers")]
         public IReadOnlyList<SubResource> LinkedServers { get; }
         /// <summary> List of the Redis instances associated with the cache. </summary>
+        [WirePath("properties.instances")]
         public IReadOnlyList<RedisInstanceDetails> Instances { get; }
         /// <summary> List of private endpoint connection associated with the specified redis cache. </summary>
+        [WirePath("properties.privateEndpointConnections")]
         public IReadOnlyList<RedisPrivateEndpointConnectionData> PrivateEndpointConnections { get; }
     }
 }

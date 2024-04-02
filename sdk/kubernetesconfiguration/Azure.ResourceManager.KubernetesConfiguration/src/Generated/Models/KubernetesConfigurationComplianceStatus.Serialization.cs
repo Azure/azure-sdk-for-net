@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationComplianceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesConfigurationComplianceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationComplianceStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ComplianceState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ComplianceState))
             {
                 writer.WritePropertyName("complianceState"u8);
                 writer.WriteStringValue(ComplianceState.Value.ToString());
             }
-            if (LastConfigAppliedOn.HasValue)
+            if (Optional.IsDefined(LastConfigAppliedOn))
             {
                 writer.WritePropertyName("lastConfigApplied"u8);
                 writer.WriteStringValue(LastConfigAppliedOn.Value, "O");
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (MessageLevel.HasValue)
+            if (Optional.IsDefined(MessageLevel))
             {
                 writer.WritePropertyName("messageLevel"u8);
                 writer.WriteStringValue(MessageLevel.Value.ToString());
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesConfigurationComplianceStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesConfigurationComplianceStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesConfigurationComplianceStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesConfigurationComplianceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationComplianceStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesConfigurationComplianceStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesConfigurationComplianceStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesConfigurationComplianceStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

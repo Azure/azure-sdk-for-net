@@ -23,108 +23,108 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LinkedServiceName != null)
+            if (Optional.IsDefined(LinkedServiceName))
             {
                 writer.WritePropertyName("linkedServiceName"u8);
                 JsonSerializer.Serialize(writer, LinkedServiceName);
             }
-            if (Policy != null)
+            if (Optional.IsDefined(Policy))
             {
                 writer.WritePropertyName("policy"u8);
-                writer.WriteObjectValue(Policy);
+                writer.WriteObjectValue<PipelineActivityPolicy>(Policy, options);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(ActivityType);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (OnInactiveMarkAs.HasValue)
+            if (Optional.IsDefined(OnInactiveMarkAs))
             {
                 writer.WritePropertyName("onInactiveMarkAs"u8);
                 writer.WriteStringValue(OnInactiveMarkAs.Value.ToString());
             }
-            if (!(DependsOn is ChangeTrackingList<PipelineActivityDependency> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DependsOn))
             {
                 writer.WritePropertyName("dependsOn"u8);
                 writer.WriteStartArray();
                 foreach (var item in DependsOn)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityDependency>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserProperties is ChangeTrackingList<PipelineActivityUserProperty> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserProperties))
             {
                 writer.WritePropertyName("userProperties"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserProperties)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<PipelineActivityUserProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
             writer.WritePropertyName("packageLocation"u8);
-            writer.WriteObjectValue(PackageLocation);
-            if (Runtime != null)
+            writer.WriteObjectValue<SsisPackageLocation>(PackageLocation, options);
+            if (Optional.IsDefined(Runtime))
             {
                 writer.WritePropertyName("runtime"u8);
                 JsonSerializer.Serialize(writer, Runtime);
             }
-            if (LoggingLevel != null)
+            if (Optional.IsDefined(LoggingLevel))
             {
                 writer.WritePropertyName("loggingLevel"u8);
                 JsonSerializer.Serialize(writer, LoggingLevel);
             }
-            if (EnvironmentPath != null)
+            if (Optional.IsDefined(EnvironmentPath))
             {
                 writer.WritePropertyName("environmentPath"u8);
                 JsonSerializer.Serialize(writer, EnvironmentPath);
             }
-            if (ExecutionCredential != null)
+            if (Optional.IsDefined(ExecutionCredential))
             {
                 writer.WritePropertyName("executionCredential"u8);
-                writer.WriteObjectValue(ExecutionCredential);
+                writer.WriteObjectValue<SsisExecutionCredential>(ExecutionCredential, options);
             }
             writer.WritePropertyName("connectVia"u8);
-            writer.WriteObjectValue(ConnectVia);
-            if (!(ProjectParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection1 && collection1.IsUndefined))
+            writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
+            if (Optional.IsCollectionDefined(ProjectParameters))
             {
                 writer.WritePropertyName("projectParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in ProjectParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisExecutionParameter>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(PackageParameters is ChangeTrackingDictionary<string, SsisExecutionParameter> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageParameters))
             {
                 writer.WritePropertyName("packageParameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in PackageParameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisExecutionParameter>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(ProjectConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(ProjectConnectionManagers))
             {
                 writer.WritePropertyName("projectConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -140,13 +140,13 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        writer.WriteObjectValue<SsisExecutionParameter>(item0.Value, options);
                     }
                     writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
-            if (!(PackageConnectionManagers is ChangeTrackingDictionary<string, IDictionary<string, SsisExecutionParameter>> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(PackageConnectionManagers))
             {
                 writer.WritePropertyName("packageConnectionManagers"u8);
                 writer.WriteStartObject();
@@ -162,27 +162,27 @@ namespace Azure.ResourceManager.DataFactory.Models
                     foreach (var item0 in item.Value)
                     {
                         writer.WritePropertyName(item0.Key);
-                        writer.WriteObjectValue(item0.Value);
+                        writer.WriteObjectValue<SsisExecutionParameter>(item0.Value, options);
                     }
                     writer.WriteEndObject();
                 }
                 writer.WriteEndObject();
             }
-            if (!(PropertyOverrides is ChangeTrackingDictionary<string, SsisPropertyOverride> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(PropertyOverrides))
             {
                 writer.WritePropertyName("propertyOverrides"u8);
                 writer.WriteStartObject();
                 foreach (var item in PropertyOverrides)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<SsisPropertyOverride>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (LogLocation != null)
+            if (Optional.IsDefined(LogLocation))
             {
                 writer.WritePropertyName("logLocation"u8);
-                writer.WriteObjectValue(LogLocation);
+                writer.WriteObjectValue<SsisLogLocation>(LogLocation, options);
             }
             writer.WriteEndObject();
             foreach (var item in AdditionalProperties)
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExecuteSsisPackageActivity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -522,7 +522,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -538,7 +538,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeExecuteSsisPackageActivity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExecuteSsisPackageActivity)} does not support reading '{options.Format}' format.");
             }
         }
 

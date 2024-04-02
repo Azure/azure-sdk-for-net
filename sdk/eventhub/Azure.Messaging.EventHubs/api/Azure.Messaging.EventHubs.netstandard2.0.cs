@@ -394,6 +394,7 @@ namespace Azure.Messaging.EventHubs.Primitives
         public string EventHubName { get { throw null; } }
         public string FullyQualifiedNamespace { get { throw null; } }
         public string Identifier { get { throw null; } }
+        protected virtual bool? IsBatchTracingEnabled { get { throw null; } set { } }
         public bool IsRunning { get { throw null; } protected set { } }
         protected Azure.Messaging.EventHubs.EventHubsRetryPolicy RetryPolicy { get { throw null; } }
         protected abstract System.Threading.Tasks.Task<System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership>> ClaimOwnershipAsync(System.Collections.Generic.IEnumerable<Azure.Messaging.EventHubs.Primitives.EventProcessorPartitionOwnership> desiredOwnership, System.Threading.CancellationToken cancellationToken);

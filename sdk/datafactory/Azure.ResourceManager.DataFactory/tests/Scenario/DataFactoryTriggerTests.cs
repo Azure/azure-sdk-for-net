@@ -81,7 +81,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
             if (string.IsNullOrEmpty(datasetName))
                 return null;
 
-            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName)));
+            DataFactoryDatasetData data = new DataFactoryDatasetData(new AzureBlobDataset(new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName)));
             var result = await dataFactory.GetDataFactoryDatasets().CreateOrUpdateAsync(WaitUntil.Completed, datasetName, data);
             return result.Value;
         }
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.DataFactory.Tests.Scenario
         {
             await TriggerCreate("blobtrigger", (DataFactoryResource dataFactory, string linkedServiceName, string pipelineName1, string pipelineName2, string pipelineName3) =>
             {
-                return new DataFactoryTriggerData(new DataFactoryBlobTrigger("blobtriggertestpath", 10, new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceType.LinkedServiceReference, linkedServiceName))
+                return new DataFactoryTriggerData(new DataFactoryBlobTrigger("blobtriggertestpath", 10, new DataFactoryLinkedServiceReference(DataFactoryLinkedServiceReferenceKind.LinkedServiceReference, linkedServiceName))
                 {
                     MaxConcurrency = 10,
                     Pipelines =

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabSubnetOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabSubnetOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabSubnetOverride)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (LabSubnetName != null)
+            if (Optional.IsDefined(LabSubnetName))
             {
                 writer.WritePropertyName("labSubnetName"u8);
                 writer.WriteStringValue(LabSubnetName);
             }
-            if (UseInVmCreationPermission.HasValue)
+            if (Optional.IsDefined(UseInVmCreationPermission))
             {
                 writer.WritePropertyName("useInVmCreationPermission"u8);
                 writer.WriteStringValue(UseInVmCreationPermission.Value.ToString());
             }
-            if (UsePublicIPAddressPermission.HasValue)
+            if (Optional.IsDefined(UsePublicIPAddressPermission))
             {
                 writer.WritePropertyName("usePublicIpAddressPermission"u8);
                 writer.WriteStringValue(UsePublicIPAddressPermission.Value.ToString());
             }
-            if (SharedPublicIPAddressConfiguration != null)
+            if (Optional.IsDefined(SharedPublicIPAddressConfiguration))
             {
                 writer.WritePropertyName("sharedPublicIpAddressConfiguration"u8);
-                writer.WriteObjectValue(SharedPublicIPAddressConfiguration);
+                writer.WriteObjectValue<SubnetSharedPublicIPAddressConfiguration>(SharedPublicIPAddressConfiguration, options);
             }
-            if (VirtualNetworkPoolName != null)
+            if (Optional.IsDefined(VirtualNetworkPoolName))
             {
                 writer.WritePropertyName("virtualNetworkPoolName"u8);
                 writer.WriteStringValue(VirtualNetworkPoolName);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabSubnetOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabSubnetOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabSubnetOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabSubnetOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabSubnetOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -191,7 +191,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabSubnetOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabSubnetOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabSubnetOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

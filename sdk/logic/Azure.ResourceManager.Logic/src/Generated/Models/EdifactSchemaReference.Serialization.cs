@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactSchemaReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(MessageVersion);
             writer.WritePropertyName("messageRelease"u8);
             writer.WriteStringValue(MessageRelease);
-            if (SenderApplicationId != null)
+            if (Optional.IsDefined(SenderApplicationId))
             {
                 writer.WritePropertyName("senderApplicationId"u8);
                 writer.WriteStringValue(SenderApplicationId);
             }
-            if (SenderApplicationQualifier != null)
+            if (Optional.IsDefined(SenderApplicationQualifier))
             {
                 writer.WritePropertyName("senderApplicationQualifier"u8);
                 writer.WriteStringValue(SenderApplicationQualifier);
             }
-            if (AssociationAssignedCode != null)
+            if (Optional.IsDefined(AssociationAssignedCode))
             {
                 writer.WritePropertyName("associationAssignedCode"u8);
                 writer.WriteStringValue(AssociationAssignedCode);
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<EdifactSchemaReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeEdifactSchemaReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EdifactSchemaReference)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (UnHealthyVmCount.HasValue)
+            if (Optional.IsDefined(UnHealthyVmCount))
             {
                 writer.WritePropertyName("unHealthyVmCount"u8);
                 writer.WriteNumberValue(UnHealthyVmCount.Value);
             }
-            if (UnHealthyProviderCount.HasValue)
+            if (Optional.IsDefined(UnHealthyProviderCount))
             {
                 writer.WritePropertyName("unHealthyProviderCount"u8);
                 writer.WriteNumberValue(UnHealthyProviderCount.Value);
             }
-            if (EventsCount.HasValue)
+            if (Optional.IsDefined(EventsCount))
             {
                 writer.WritePropertyName("eventsCount"u8);
                 writer.WriteNumberValue(EventsCount.Value);
             }
-            if (DeprecatedProviderCount.HasValue)
+            if (Optional.IsDefined(DeprecatedProviderCount))
             {
                 writer.WritePropertyName("deprecatedProviderCount"u8);
                 writer.WriteNumberValue(DeprecatedProviderCount.Value);
             }
-            if (SupportedProviderCount.HasValue)
+            if (Optional.IsDefined(SupportedProviderCount))
             {
                 writer.WritePropertyName("supportedProviderCount"u8);
                 writer.WriteNumberValue(SupportedProviderCount.Value);
             }
-            if (UnsupportedProviderCount.HasValue)
+            if (Optional.IsDefined(UnsupportedProviderCount))
             {
                 writer.WritePropertyName("unsupportedProviderCount"u8);
                 writer.WriteNumberValue(UnsupportedProviderCount.Value);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<VaultMonitoringSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServices.Models
                         return DeserializeVaultMonitoringSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VaultMonitoringSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

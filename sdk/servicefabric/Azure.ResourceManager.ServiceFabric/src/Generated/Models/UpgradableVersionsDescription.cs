@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.ServiceFabric.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetVersion"/> is null. </exception>
         public UpgradableVersionsDescription(string targetVersion)
         {
-            if (targetVersion == null)
-            {
-                throw new ArgumentNullException(nameof(targetVersion));
-            }
+            Argument.AssertNotNull(targetVersion, nameof(targetVersion));
 
             TargetVersion = targetVersion;
         }

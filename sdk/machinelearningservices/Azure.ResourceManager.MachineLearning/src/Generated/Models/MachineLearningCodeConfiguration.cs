@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
         /// <exception cref="ArgumentNullException"> <paramref name="scoringScript"/> is null. </exception>
         public MachineLearningCodeConfiguration(string scoringScript)
         {
-            if (scoringScript == null)
-            {
-                throw new ArgumentNullException(nameof(scoringScript));
-            }
+            Argument.AssertNotNull(scoringScript, nameof(scoringScript));
 
             ScoringScript = scoringScript;
         }

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PolicyDefinitionId != null)
+            if (Optional.IsDefined(PolicyDefinitionId))
             {
                 writer.WritePropertyName("policyDefinitionId"u8);
                 writer.WriteStringValue(PolicyDefinitionId);
             }
-            if (PolicyDefinitionReferenceId != null)
+            if (Optional.IsDefined(PolicyDefinitionReferenceId))
             {
                 writer.WritePropertyName("policyDefinitionReferenceId"u8);
                 writer.WriteStringValue(PolicyDefinitionReferenceId);
             }
-            if (!(PolicyDefinitionGroupNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyDefinitionGroupNames))
             {
                 writer.WritePropertyName("policyDefinitionGroupNames"u8);
                 writer.WriteStartArray();
@@ -46,15 +46,15 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Effect != null)
+            if (Optional.IsDefined(Effect))
             {
                 writer.WritePropertyName("effect"u8);
                 writer.WriteStringValue(Effect);
             }
-            if (Results != null)
+            if (Optional.IsDefined(Results))
             {
                 writer.WritePropertyName("results"u8);
-                writer.WriteObjectValue(Results);
+                writer.WriteObjectValue<PolicySummaryResults>(Results, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicyDefinitionSummary>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializePolicyDefinitionSummary(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicyDefinitionSummary)} does not support reading '{options.Format}' format.");
             }
         }
 

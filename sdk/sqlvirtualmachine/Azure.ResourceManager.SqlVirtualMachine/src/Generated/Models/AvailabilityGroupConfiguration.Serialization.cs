@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Replicas is ChangeTrackingList<AvailabilityGroupReplica> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Replicas))
             {
                 writer.WritePropertyName("replicas"u8);
                 writer.WriteStartArray();
                 foreach (var item in Replicas)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvailabilityGroupReplica>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeAvailabilityGroupConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityGroupConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

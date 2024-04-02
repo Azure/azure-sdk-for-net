@@ -354,16 +354,22 @@ namespace Azure.Messaging.EventHubs
         internal EventProcessorClientEventSource Logger { get; set; } = EventProcessorClientEventSource.Log;
 
         /// <summary>
-        ///   Responsible for creation of checkpoints and for ownership claim.
-        /// </summary>
-        ///
-        private CheckpointStore CheckpointStore { get; }
-
-        /// <summary>
         ///   The client diagnostics for this processor.
         /// </summary>
         ///
         internal MessagingClientDiagnostics ClientDiagnostics { get; }
+
+        /// <summary>
+        ///   Indicates whether or not this processor should instrument batch event processing calls with distributed tracing.
+        /// </summary>
+        ///
+        protected override bool? IsBatchTracingEnabled { get => false; }
+
+        /// <summary>
+        ///   Responsible for creation of checkpoints and for ownership claim.
+        /// </summary>
+        ///
+        private CheckpointStore CheckpointStore { get; }
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="EventProcessorClient" /> class.
@@ -1114,6 +1120,8 @@ namespace Azure.Messaging.EventHubs
 
                     emptyBatch = false;
 
+                    using var scope = StartProcessorScope(eventData);
+
                     try
                     {
                         Logger.EventBatchProcessingHandlerCall(eventData.SequenceNumber.ToString(), partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation);
@@ -1132,6 +1140,12 @@ namespace Azure.Messaging.EventHubs
 
                         caughtExceptions ??= new List<Exception>();
                         caughtExceptions.Add(ex);
+                        scope.Failed(ex);
+                    }
+                    catch (Exception ex)
+                    {
+                        scope.Failed(ex);
+                        throw;
                     }
                 }
 
@@ -1390,6 +1404,44 @@ namespace Azure.Messaging.EventHubs
             }
 
             throw new InvalidOperationException(Resources.RunningEventProcessorCannotPerformOperation);
+        }
+
+        /// <summary>
+        ///    Creates, starts, and enriches a processing diagnostics scope.
+        /// </summary>
+        ///
+        /// <param name="eventData">The instance of <see cref="EventData"/> which is being processed.</param>
+        ///
+        /// <returns>The instance of <see cref="DiagnosticScope"/>.</returns>
+        ///
+        private DiagnosticScope StartProcessorScope(EventData eventData)
+        {
+            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+            if (!diagnosticScope.IsEnabled)
+            {
+                return diagnosticScope;
+            }
+
+            if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
+            {
+                // Set link in all cases.
+
+                diagnosticScope.AddLink(traceparent, tracestate);
+
+                // Parent is not required, but allowed and helps to correlate producer and consumers.
+
+                diagnosticScope.SetTraceContext(traceparent, tracestate);
+            }
+
+            if (eventData.EnqueuedTime != default)
+            {
+                diagnosticScope.AddLongAttribute(
+                    DiagnosticProperty.EnqueuedTimeAttribute,
+                    eventData.EnqueuedTime.ToUnixTimeMilliseconds());
+            }
+
+            diagnosticScope.Start();
+            return diagnosticScope;
         }
 
         /// <summary>

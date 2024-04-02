@@ -22,30 +22,30 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Format.HasValue)
+            if (Optional.IsDefined(Format))
             {
                 writer.WritePropertyName("format"u8);
                 writer.WriteStringValue(Format.Value.ToString());
             }
             writer.WritePropertyName("deliveryInfo"u8);
-            writer.WriteObjectValue(DeliveryInfo);
+            writer.WriteObjectValue<ExportDeliveryInfo>(DeliveryInfo, options);
             writer.WritePropertyName("definition"u8);
-            writer.WriteObjectValue(Definition);
-            if (RunHistory != null)
+            writer.WriteObjectValue<ExportDefinition>(Definition, options);
+            if (Optional.IsDefined(RunHistory))
             {
                 writer.WritePropertyName("runHistory"u8);
-                writer.WriteObjectValue(RunHistory);
+                writer.WriteObjectValue<ExportExecutionListResult>(RunHistory, options);
             }
-            if (PartitionData.HasValue)
+            if (Optional.IsDefined(PartitionData))
             {
                 writer.WritePropertyName("partitionData"u8);
                 writer.WriteBooleanValue(PartitionData.Value);
             }
-            if (options.Format != "W" && NextRunTimeEstimate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NextRunTimeEstimate))
             {
                 writer.WritePropertyName("nextRunTimeEstimate"u8);
                 writer.WriteStringValue(NextRunTimeEstimate.Value, "O");
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<CommonExportProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -185,7 +185,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeCommonExportProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CommonExportProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceDestinationType.HasValue)
+            if (Optional.IsDefined(SourceDestinationType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(SourceDestinationType.Value.ToString());
             }
-            if (PrefixType.HasValue)
+            if (Optional.IsDefined(PrefixType))
             {
                 writer.WritePropertyName("prefixType"u8);
                 writer.WriteStringValue(PrefixType.Value.ToString());
             }
-            if (!(IPPrefixValues is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPPrefixValues))
             {
                 writer.WritePropertyName("ipPrefixValues"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPGroupNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPGroupNames))
             {
                 writer.WritePropertyName("ipGroupNames"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeIPMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

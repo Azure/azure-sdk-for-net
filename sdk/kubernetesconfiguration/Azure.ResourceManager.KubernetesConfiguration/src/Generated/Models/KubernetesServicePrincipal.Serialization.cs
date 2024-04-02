@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClientId.HasValue)
+            if (Optional.IsDefined(ClientId))
             {
                 if (ClientId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientId");
                 }
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 if (TenantId != null)
                 {
@@ -50,7 +50,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("tenantId");
                 }
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 if (ClientSecret != null)
                 {
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientSecret");
                 }
             }
-            if (ClientCertificate != null)
+            if (Optional.IsDefined(ClientCertificate))
             {
                 if (ClientCertificate != null)
                 {
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientCertificate");
                 }
             }
-            if (ClientCertificatePassword != null)
+            if (Optional.IsDefined(ClientCertificatePassword))
             {
                 if (ClientCertificatePassword != null)
                 {
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                     writer.WriteNull("clientCertificatePassword");
                 }
             }
-            if (ClientCertificateSendChain.HasValue)
+            if (Optional.IsDefined(ClientCertificateSendChain))
             {
                 writer.WritePropertyName("clientCertificateSendChain"u8);
                 writer.WriteBooleanValue(ClientCertificateSendChain.Value);
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesServicePrincipal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -223,7 +223,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -239,7 +239,7 @@ namespace Azure.ResourceManager.KubernetesConfiguration.Models
                         return DeserializeKubernetesServicePrincipal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesServicePrincipal)} does not support reading '{options.Format}' format.");
             }
         }
 

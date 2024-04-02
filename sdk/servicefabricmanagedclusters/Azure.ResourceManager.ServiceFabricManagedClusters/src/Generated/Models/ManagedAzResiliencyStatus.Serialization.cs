@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(BaseResourceStatus is ChangeTrackingList<ResourceAzStatus> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BaseResourceStatus))
             {
                 writer.WritePropertyName("baseResourceStatus"u8);
                 writer.WriteStartArray();
                 foreach (var item in BaseResourceStatus)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ResourceAzStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsClusterZoneResilient.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsClusterZoneResilient))
             {
                 writer.WritePropertyName("isClusterZoneResilient"u8);
                 writer.WriteBooleanValue(IsClusterZoneResilient.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedAzResiliencyStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedAzResiliencyStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedAzResiliencyStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

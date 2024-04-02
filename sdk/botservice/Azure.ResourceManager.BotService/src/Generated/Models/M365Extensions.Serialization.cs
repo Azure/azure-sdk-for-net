@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.BotService.Models
@@ -23,13 +22,13 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<M365Extensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(M365Extensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(M365Extensions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("channelName"u8);
             writer.WriteStringValue(ChannelName);
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 if (ETag != null)
                 {
@@ -41,12 +40,12 @@ namespace Azure.ResourceManager.BotService.Models
                     writer.WriteNull("etag");
                 }
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -74,7 +73,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<M365Extensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(M365Extensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(M365Extensions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +143,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(M365Extensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(M365Extensions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +159,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeM365Extensions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(M365Extensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(M365Extensions)} does not support reading '{options.Format}' format.");
             }
         }
 

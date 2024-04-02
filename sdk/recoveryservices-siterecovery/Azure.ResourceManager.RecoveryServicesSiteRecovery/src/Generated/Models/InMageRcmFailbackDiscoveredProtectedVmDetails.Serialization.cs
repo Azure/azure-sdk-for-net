@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VCenterId != null)
+            if (options.Format != "W" && Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (options.Format != "W" && VCenterFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(VCenterFqdn))
             {
                 writer.WritePropertyName("vCenterFqdn"u8);
                 writer.WriteStringValue(VCenterFqdn);
             }
-            if (options.Format != "W" && !(Datastores is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Datastores))
             {
                 writer.WritePropertyName("datastores"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(IPAddresses is ChangeTrackingList<IPAddress> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -62,42 +62,42 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && VMwareToolsStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(VMwareToolsStatus))
             {
                 writer.WritePropertyName("vmwareToolsStatus"u8);
                 writer.WriteStringValue(VMwareToolsStatus);
             }
-            if (options.Format != "W" && PowerStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(PowerStatus))
             {
                 writer.WritePropertyName("powerStatus"u8);
                 writer.WriteStringValue(PowerStatus);
             }
-            if (options.Format != "W" && VmFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(VmFqdn))
             {
                 writer.WritePropertyName("vmFqdn"u8);
                 writer.WriteStringValue(VmFqdn);
             }
-            if (options.Format != "W" && OSName != null)
+            if (options.Format != "W" && Optional.IsDefined(OSName))
             {
                 writer.WritePropertyName("osName"u8);
                 writer.WriteStringValue(OSName);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdTimestamp"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && UpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updatedTimestamp"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && IsDeleted.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (options.Format != "W" && LastDiscoveredOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastDiscoveredOn))
             {
                 writer.WritePropertyName("lastDiscoveryTimeInUtc"u8);
                 writer.WriteStringValue(LastDiscoveredOn.Value, "O");
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageRcmFailbackDiscoveredProtectedVmDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -288,7 +288,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -304,7 +304,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageRcmFailbackDiscoveredProtectedVmDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageRcmFailbackDiscoveredProtectedVmDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

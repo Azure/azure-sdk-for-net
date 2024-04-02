@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationListForBatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationListForBatchUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationListForBatchUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Values is ChangeTrackingList<MySqlFlexibleServerConfigurationForBatchUpdate> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Values))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Values)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MySqlFlexibleServerConfigurationForBatchUpdate>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ResetAllToDefault.HasValue)
+            if (Optional.IsDefined(ResetAllToDefault))
             {
                 writer.WritePropertyName("resetAllToDefault"u8);
                 writer.WriteStringValue(ResetAllToDefault.Value.ToString());
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerConfigurationListForBatchUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationListForBatchUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationListForBatchUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationListForBatchUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationListForBatchUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeMySqlFlexibleServerConfigurationListForBatchUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationListForBatchUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerConfigurationListForBatchUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

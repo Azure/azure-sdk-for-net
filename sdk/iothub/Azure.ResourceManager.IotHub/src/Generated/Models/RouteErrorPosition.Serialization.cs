@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteErrorPosition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Line.HasValue)
+            if (Optional.IsDefined(Line))
             {
                 writer.WritePropertyName("line"u8);
                 writer.WriteNumberValue(Line.Value);
             }
-            if (Column.HasValue)
+            if (Optional.IsDefined(Column))
             {
                 writer.WritePropertyName("column"u8);
                 writer.WriteNumberValue(Column.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RouteErrorPosition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRouteErrorPosition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouteErrorPosition)} does not support reading '{options.Format}' format.");
             }
         }
 

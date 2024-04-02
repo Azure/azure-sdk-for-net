@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupReplica>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityGroupReplica)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityGroupReplica)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SqlVmInstanceId != null)
+            if (Optional.IsDefined(SqlVmInstanceId))
             {
                 writer.WritePropertyName("sqlVirtualMachineInstanceId"u8);
                 writer.WriteStringValue(SqlVmInstanceId);
             }
-            if (Role.HasValue)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role.Value.ToString());
             }
-            if (Commit.HasValue)
+            if (Optional.IsDefined(Commit))
             {
                 writer.WritePropertyName("commit"u8);
                 writer.WriteStringValue(Commit.Value.ToString());
             }
-            if (Failover.HasValue)
+            if (Optional.IsDefined(Failover))
             {
                 writer.WritePropertyName("failover"u8);
                 writer.WriteStringValue(Failover.Value.ToString());
             }
-            if (ReadableSecondary.HasValue)
+            if (Optional.IsDefined(ReadableSecondary))
             {
                 writer.WritePropertyName("readableSecondary"u8);
                 writer.WriteStringValue(ReadableSecondary.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailabilityGroupReplica>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailabilityGroupReplica)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailabilityGroupReplica)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupReplica)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityGroupReplica)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeAvailabilityGroupReplica(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailabilityGroupReplica)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailabilityGroupReplica)} does not support reading '{options.Format}' format.");
             }
         }
 

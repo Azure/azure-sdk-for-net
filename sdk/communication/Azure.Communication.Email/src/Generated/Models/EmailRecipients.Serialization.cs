@@ -19,26 +19,26 @@ namespace Azure.Communication.Email
             writer.WriteStartArray();
             foreach (var item in To)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<EmailAddress>(item);
             }
             writer.WriteEndArray();
-            if (!(CC is ChangeTrackingList<EmailAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CC))
             {
                 writer.WritePropertyName("cc"u8);
                 writer.WriteStartArray();
                 foreach (var item in CC)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmailAddress>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(BCC is ChangeTrackingList<EmailAddress> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BCC))
             {
                 writer.WritePropertyName("bcc"u8);
                 writer.WriteStartArray();
                 foreach (var item in BCC)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EmailAddress>(item);
                 }
                 writer.WriteEndArray();
             }

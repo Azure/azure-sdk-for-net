@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsUpdateConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IncludedUpdateClassifications.HasValue)
+            if (Optional.IsDefined(IncludedUpdateClassifications))
             {
                 writer.WritePropertyName("includedUpdateClassifications"u8);
                 writer.WriteStringValue(IncludedUpdateClassifications.Value.ToString());
             }
-            if (!(ExcludedKBNumbers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ExcludedKBNumbers))
             {
                 writer.WritePropertyName("excludedKbNumbers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IncludedKBNumbers is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IncludedKBNumbers))
             {
                 writer.WritePropertyName("includedKbNumbers"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndArray();
             }
-            if (RebootSetting != null)
+            if (Optional.IsDefined(RebootSetting))
             {
                 writer.WritePropertyName("rebootSetting"u8);
                 writer.WriteStringValue(RebootSetting);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<WindowsUpdateConfigurationProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeWindowsUpdateConfigurationProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WindowsUpdateConfigurationProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

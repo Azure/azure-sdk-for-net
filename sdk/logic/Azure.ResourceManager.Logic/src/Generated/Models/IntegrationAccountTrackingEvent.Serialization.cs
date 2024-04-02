@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountTrackingEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountTrackingEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountTrackingEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,7 +32,7 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStringValue(EventOn, "O");
             writer.WritePropertyName("recordType"u8);
             writer.WriteStringValue(RecordType.ToString());
-            if (Record != null)
+            if (Optional.IsDefined(Record))
             {
                 writer.WritePropertyName("record"u8);
 #if NET6_0_OR_GREATER
@@ -44,10 +44,10 @@ namespace Azure.ResourceManager.Logic.Models
                 }
 #endif
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
-                writer.WriteObjectValue(Error);
+                writer.WriteObjectValue<IntegrationAccountTrackingEventErrorInfo>(Error, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationAccountTrackingEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationAccountTrackingEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationAccountTrackingEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountTrackingEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountTrackingEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationAccountTrackingEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationAccountTrackingEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationAccountTrackingEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -3,13 +3,9 @@
 
 using System;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
-using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
 using Azure.Core;
-using Azure.Core.Pipeline;
 
 namespace Azure.Identity
 {
@@ -93,7 +89,14 @@ namespace Azure.Identity
             }
             catch (RequestFailedException e) when (e.Status == 0)
             {
-                throw new CredentialUnavailableException(NoResponseError, e);
+                if (e.InnerException is TaskCanceledException)
+                {
+                    throw;
+                }
+                else
+                {
+                    throw new CredentialUnavailableException(NoResponseError, e);
+                }
             }
             catch (TaskCanceledException e)
             {

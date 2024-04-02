@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricSkuData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && TypePropertiesType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TypePropertiesType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(TypePropertiesType.Value.ToString());
             }
-            if (MaxComputeRacks.HasValue)
+            if (Optional.IsDefined(MaxComputeRacks))
             {
                 writer.WritePropertyName("maxComputeRacks"u8);
                 writer.WriteNumberValue(MaxComputeRacks.Value);
             }
-            if (MaximumServerCount.HasValue)
+            if (Optional.IsDefined(MaximumServerCount))
             {
                 writer.WritePropertyName("maximumServerCount"u8);
                 writer.WriteNumberValue(MaximumServerCount.Value);
             }
-            if (options.Format != "W" && !(SupportedVersions is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(SupportedVersions))
             {
                 writer.WritePropertyName("supportedVersions"u8);
                 writer.WriteStartArray();
@@ -75,12 +75,12 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Details != null)
+            if (options.Format != "W" && Optional.IsDefined(Details))
             {
                 writer.WritePropertyName("details"u8);
                 writer.WriteStringValue(Details);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricSkuData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricSkuData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricSkuData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricSkuData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric
                         return DeserializeNetworkFabricSkuData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricSkuData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricSkuData)} does not support reading '{options.Format}' format.");
             }
         }
 

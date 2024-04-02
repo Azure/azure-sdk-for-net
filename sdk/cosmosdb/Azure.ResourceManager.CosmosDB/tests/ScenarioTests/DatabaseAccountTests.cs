@@ -63,6 +63,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
                 EnableBurstCapacity = true,
                 EnablePriorityBasedExecution = true,
                 DefaultPriorityLevel = DefaultPriorityLevel.Low,
+                EnablePerRegionPerPartitionAutoscale = true
             };
             updateOptions.Tags.Add("key3", "value3");
             updateOptions.Tags.Add("key4", "value4");
@@ -238,6 +239,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(expectedData.EnableBurstCapacity, actualData.EnableBurstCapacity);
             Assert.AreEqual(expectedData.EnablePriorityBasedExecution, actualData.EnablePriorityBasedExecution);
             Assert.AreEqual(expectedData.DefaultPriorityLevel, actualData.DefaultPriorityLevel);
+            Assert.AreEqual(expectedData.EnablePerRegionPerPartitionAutoscale, actualData.EnablePerRegionPerPartitionAutoscale);
         }
 
         private void VerifyCosmosDBAccount(CosmosDBAccountResource databaseAccount, CosmosDBAccountPatch parameters)
@@ -249,6 +251,7 @@ namespace Azure.ResourceManager.CosmosDB.Tests
             Assert.AreEqual(databaseAccount.Data.EnableBurstCapacity, parameters.EnableBurstCapacity);
             Assert.AreEqual(databaseAccount.Data.EnablePriorityBasedExecution, parameters.EnablePriorityBasedExecution);
             Assert.AreEqual(databaseAccount.Data.DefaultPriorityLevel, parameters.DefaultPriorityLevel);
+            Assert.AreEqual(databaseAccount.Data.EnablePerRegionPerPartitionAutoscale, parameters.EnablePerRegionPerPartitionAutoscale);
         }
 
         private void VerifyLocations(IReadOnlyList<CosmosDBAccountLocation> expectedData, IReadOnlyList<CosmosDBAccountLocation> actualData)

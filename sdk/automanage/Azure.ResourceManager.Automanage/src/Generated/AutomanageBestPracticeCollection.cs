@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.Automanage
@@ -81,14 +79,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         public virtual async Task<Response<AutomanageBestPracticeResource>> GetAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (bestPracticeName == null)
-            {
-                throw new ArgumentNullException(nameof(bestPracticeName));
-            }
-            if (bestPracticeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bestPracticeName));
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
             using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.Get");
             scope.Start();
@@ -133,14 +124,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         public virtual Response<AutomanageBestPracticeResource> Get(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (bestPracticeName == null)
-            {
-                throw new ArgumentNullException(nameof(bestPracticeName));
-            }
-            if (bestPracticeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bestPracticeName));
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
             using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.Get");
             scope.Start();
@@ -243,14 +227,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (bestPracticeName == null)
-            {
-                throw new ArgumentNullException(nameof(bestPracticeName));
-            }
-            if (bestPracticeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bestPracticeName));
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
             using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.Exists");
             scope.Start();
@@ -293,14 +270,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         public virtual Response<bool> Exists(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (bestPracticeName == null)
-            {
-                throw new ArgumentNullException(nameof(bestPracticeName));
-            }
-            if (bestPracticeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bestPracticeName));
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
             using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.Exists");
             scope.Start();
@@ -343,14 +313,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutomanageBestPracticeResource>> GetIfExistsAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (bestPracticeName == null)
-            {
-                throw new ArgumentNullException(nameof(bestPracticeName));
-            }
-            if (bestPracticeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bestPracticeName));
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
             using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.GetIfExists");
             scope.Start();
@@ -395,14 +358,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentNullException"> <paramref name="bestPracticeName"/> is null. </exception>
         public virtual NullableResponse<AutomanageBestPracticeResource> GetIfExists(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (bestPracticeName == null)
-            {
-                throw new ArgumentNullException(nameof(bestPracticeName));
-            }
-            if (bestPracticeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bestPracticeName));
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
             using var scope = _automanageBestPracticeBestPracticesClientDiagnostics.CreateScope("AutomanageBestPracticeCollection.GetIfExists");
             scope.Start();

@@ -37,16 +37,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             Get
         }
 
-        /// <summary>The validating JSON schema type.</summary>
-        public enum TestSchemaType
-        {
-            /// <summary>Request Schema</summary>
-            Request,
-
-            /// <summary>Response Schema</summary>
-            Response
-        }
-
         /// <summary>
         /// This function will create action results based on incoming httpStatusCode
         /// </summary>
@@ -83,14 +73,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
             }
 
             return requestMessage;
-        }
-
-        /// <summary>Sets up the boilerplate code for running end to end system tests.<br /><br />Sets the HTTP methods as post and a default function URL called OnTokenIssuanceStart</summary>
-        /// <param name="action">Action to emulate the external function call.</param>
-        /// <returns>A HttpResponseMessage containing the a result pertaining to the action expectations.</returns>
-        public static async Task<HttpResponseMessage> BaseTest(Action<ActionParameters> action)
-        {
-            return await BaseTest(HttpMethods.Post, "http://test/mock?function=onTokenissuancestart", action);
         }
 
         /// <summary>
@@ -157,7 +139,10 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         {
             HttpRequestMessage requestMessage = CreateHttpRequestMessage(httpMethods == HttpMethods.Post ? HttpMethod.Post : HttpMethod.Get, url);
 
-            AuthenticationEventsTriggerAttribute attr = CreateAuthenticationEventTriggerAttribute("Tenant", "App");
+            AuthenticationEventsTriggerAttribute attr = CreateAuthenticationEventTriggerAttribute(
+                testAuthorizedPartyAppId: "testAuthorizedPartyAppId",
+                testAudienceAppId: "testAudienceAppId",
+                testAuthorityUrl: "testAuthorityUrl");
 
             Mock<ITriggeredFunctionExecutor> mockObject = new Mock<ITriggeredFunctionExecutor>();
 
@@ -192,26 +177,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
         /// <summary>
         /// This function creates AuthenticationEventTriggerAttribute using the incoming params
         /// </summary>
-        /// <param name="versions">Available version</param>
-        /// <param name="eventTypes">Available Event type</param>
+        /// <param name="testAuthorizedPartyAppId"></param>
+        /// <param name="testAudienceAppId"></param>
         /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
-        internal static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(EventDefinition versions, EventType eventTypes)
-        {
-            return CreateAuthenticationEventTriggerAttribute(string.Empty, string.Empty);
-        }
-
-        /// <summary>
-        /// This function creates AuthenticationEventTriggerAttribute using the incoming params
-        /// </summary>
-        /// <param name="tenantId"></param>
-        /// <param name="audienceAppId"></param>
-        /// <returns>A newly create AuthenticationEventTriggerAttribute</returns>
-        public static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(string tenantId, string audienceAppId)
+        public static AuthenticationEventsTriggerAttribute CreateAuthenticationEventTriggerAttribute(
+            string testAuthorizedPartyAppId,
+            string testAudienceAppId,
+            string testAuthorityUrl)
         {
             return new AuthenticationEventsTriggerAttribute()
             {
-                TenantId = tenantId,
-                AudienceAppId = audienceAppId
+                AuthorizedPartyAppId = testAuthorizedPartyAppId,
+                AudienceAppId = testAudienceAppId,
+                AuthorityUrl = testAuthorityUrl
             };
         }
 
@@ -248,21 +226,6 @@ namespace Microsoft.Azure.WebJobs.Extensions.AuthenticationEvents.Tests
                     stream = null;
                 }
             }
-        }
-
-        /// <summary>Gets an attribute from an enumerator field</summary>
-        /// <typeparam name="TAttribute">The Type of the attribute on the enumerator field.</typeparam>
-        /// <param name="value">The enum that the field is on</param>
-        /// <returns>The Attribute if found.</returns>
-        public static TAttribute GetAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
-        {
-            var type = value.GetType();
-            var name = Enum.GetName(type, value);
-
-            return type.GetField(name)
-                .GetCustomAttributes(false)
-                .OfType<TAttribute>()
-                .SingleOrDefault();
         }
 
         /// <summary>Creates the issuance start Legacy response.</summary>

@@ -22,42 +22,42 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperAttributeMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (MappingType.HasValue)
+            if (Optional.IsDefined(MappingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(MappingType.Value.ToString());
             }
-            if (FunctionName != null)
+            if (Optional.IsDefined(FunctionName))
             {
                 writer.WritePropertyName("functionName"u8);
                 writer.WriteStringValue(FunctionName);
             }
-            if (Expression != null)
+            if (Optional.IsDefined(Expression))
             {
                 writer.WritePropertyName("expression"u8);
                 writer.WriteStringValue(Expression);
             }
-            if (AttributeReference != null)
+            if (Optional.IsDefined(AttributeReference))
             {
                 writer.WritePropertyName("attributeReference"u8);
-                writer.WriteObjectValue(AttributeReference);
+                writer.WriteObjectValue<MapperAttributeReference>(AttributeReference, options);
             }
-            if (!(AttributeReferences is ChangeTrackingList<MapperAttributeReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AttributeReferences))
             {
                 writer.WritePropertyName("attributeReferences"u8);
                 writer.WriteStartArray();
                 foreach (var item in AttributeReferences)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MapperAttributeReference>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperAttributeMapping>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeMapperAttributeMapping(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperAttributeMapping)} does not support reading '{options.Format}' format.");
             }
         }
 

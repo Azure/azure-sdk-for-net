@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsCnameRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsCnameRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsCnameRecordInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Cname != null)
+            if (Optional.IsDefined(Cname))
             {
                 writer.WritePropertyName("cname"u8);
                 writer.WriteStringValue(Cname);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Dns.Models
             var format = options.Format == "W" ? ((IPersistableModel<DnsCnameRecordInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsCnameRecordInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsCnameRecordInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Dns.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsCnameRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsCnameRecordInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Dns.Models
                         return DeserializeDnsCnameRecordInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsCnameRecordInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsCnameRecordInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

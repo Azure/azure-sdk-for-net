@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
         /// <exception cref="ArgumentNullException"> <paramref name="azureStorageAccountId"/> is null. </exception>
         public ExistingStorageAccount(ResourceIdentifier azureStorageAccountId)
         {
-            if (azureStorageAccountId == null)
-            {
-                throw new ArgumentNullException(nameof(azureStorageAccountId));
-            }
+            Argument.AssertNotNull(azureStorageAccountId, nameof(azureStorageAccountId));
 
             AzureStorageAccountId = azureStorageAccountId;
             ResourceType = "Existing";

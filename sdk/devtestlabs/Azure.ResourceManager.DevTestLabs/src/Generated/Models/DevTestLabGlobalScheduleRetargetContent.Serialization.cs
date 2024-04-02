@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGlobalScheduleRetargetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabGlobalScheduleRetargetContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabGlobalScheduleRetargetContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CurrentResourceId != null)
+            if (Optional.IsDefined(CurrentResourceId))
             {
                 writer.WritePropertyName("currentResourceId"u8);
                 writer.WriteStringValue(CurrentResourceId);
             }
-            if (TargetResourceId != null)
+            if (Optional.IsDefined(TargetResourceId))
             {
                 writer.WritePropertyName("targetResourceId"u8);
                 writer.WriteStringValue(TargetResourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevTestLabGlobalScheduleRetargetContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevTestLabGlobalScheduleRetargetContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevTestLabGlobalScheduleRetargetContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabGlobalScheduleRetargetContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabGlobalScheduleRetargetContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeDevTestLabGlobalScheduleRetargetContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevTestLabGlobalScheduleRetargetContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevTestLabGlobalScheduleRetargetContent)} does not support reading '{options.Format}' format.");
             }
         }
 

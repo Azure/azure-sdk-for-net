@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppEncryptionIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppEncryptionIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PrincipalId != null)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalId))
             {
                 writer.WritePropertyName("principalId"u8);
                 writer.WriteStringValue(PrincipalId);
             }
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppEncryptionIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppEncryptionIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppEncryptionIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppEncryptionIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppEncryptionIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppEncryptionIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppEncryptionIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppEncryptionIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,13 +24,13 @@ namespace Azure.ResourceManager.Analysis
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("sku"u8);
-            writer.WriteObjectValue(AnalysisSku);
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            writer.WriteObjectValue<AnalysisResourceSku>(AnalysisSku, options);
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -58,67 +58,67 @@ namespace Azure.ResourceManager.Analysis
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (AsAdministrators != null)
+            if (Optional.IsDefined(AsAdministrators))
             {
                 writer.WritePropertyName("asAdministrators"u8);
-                writer.WriteObjectValue(AsAdministrators);
+                writer.WriteObjectValue<ServerAdministrators>(AsAdministrators, options);
             }
-            if (BackupBlobContainerUri != null)
+            if (Optional.IsDefined(BackupBlobContainerUri))
             {
                 writer.WritePropertyName("backupBlobContainerUri"u8);
                 writer.WriteStringValue(BackupBlobContainerUri.AbsoluteUri);
             }
-            if (GatewayDetails != null)
+            if (Optional.IsDefined(GatewayDetails))
             {
                 writer.WritePropertyName("gatewayDetails"u8);
-                writer.WriteObjectValue(GatewayDetails);
+                writer.WriteObjectValue<AnalysisGatewayDetails>(GatewayDetails, options);
             }
-            if (IPv4FirewallSettings != null)
+            if (Optional.IsDefined(IPv4FirewallSettings))
             {
                 writer.WritePropertyName("ipV4FirewallSettings"u8);
-                writer.WriteObjectValue(IPv4FirewallSettings);
+                writer.WriteObjectValue<AnalysisIPv4FirewallSettings>(IPv4FirewallSettings, options);
             }
-            if (QueryPoolConnectionMode.HasValue)
+            if (Optional.IsDefined(QueryPoolConnectionMode))
             {
                 writer.WritePropertyName("querypoolConnectionMode"u8);
                 writer.WriteStringValue(QueryPoolConnectionMode.Value.ToSerialString());
             }
-            if (ManagedMode.HasValue)
+            if (Optional.IsDefined(ManagedMode))
             {
                 writer.WritePropertyName("managedMode"u8);
                 writer.WriteNumberValue(ManagedMode.Value.ToSerialInt32());
             }
-            if (ServerMonitorMode.HasValue)
+            if (Optional.IsDefined(ServerMonitorMode))
             {
                 writer.WritePropertyName("serverMonitorMode"u8);
                 writer.WriteNumberValue(ServerMonitorMode.Value.ToSerialInt32());
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ServerFullName != null)
+            if (options.Format != "W" && Optional.IsDefined(ServerFullName))
             {
                 writer.WritePropertyName("serverFullName"u8);
                 writer.WriteStringValue(ServerFullName);
             }
-            if (AnalysisServerSku != null)
+            if (Optional.IsDefined(AnalysisServerSku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(AnalysisServerSku);
+                writer.WriteObjectValue<AnalysisResourceSku>(AnalysisServerSku, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Analysis
             var format = options.Format == "W" ? ((IPersistableModel<AnalysisServerData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalysisServerData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -373,7 +373,7 @@ namespace Azure.ResourceManager.Analysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -389,7 +389,7 @@ namespace Azure.ResourceManager.Analysis
                         return DeserializeAnalysisServerData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalysisServerData)} does not support reading '{options.Format}' format.");
             }
         }
 

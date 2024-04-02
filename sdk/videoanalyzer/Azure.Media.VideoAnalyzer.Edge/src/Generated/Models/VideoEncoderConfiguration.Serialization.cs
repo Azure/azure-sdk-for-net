@@ -15,35 +15,35 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Encoding.HasValue)
+            if (Optional.IsDefined(Encoding))
             {
                 writer.WritePropertyName("encoding"u8);
                 writer.WriteStringValue(Encoding.Value.ToString());
             }
-            if (Quality.HasValue)
+            if (Optional.IsDefined(Quality))
             {
                 writer.WritePropertyName("quality"u8);
                 writer.WriteNumberValue(Quality.Value);
             }
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<VideoResolution>(Resolution);
             }
-            if (RateControl != null)
+            if (Optional.IsDefined(RateControl))
             {
                 writer.WritePropertyName("rateControl"u8);
-                writer.WriteObjectValue(RateControl);
+                writer.WriteObjectValue<RateControl>(RateControl);
             }
-            if (H264 != null)
+            if (Optional.IsDefined(H264))
             {
                 writer.WritePropertyName("h264"u8);
-                writer.WriteObjectValue(H264);
+                writer.WriteObjectValue<H264Configuration>(H264);
             }
-            if (Mpeg4 != null)
+            if (Optional.IsDefined(Mpeg4))
             {
                 writer.WritePropertyName("mpeg4"u8);
-                writer.WriteObjectValue(Mpeg4);
+                writer.WriteObjectValue<Mpeg4Configuration>(Mpeg4);
             }
             writer.WriteEndObject();
         }

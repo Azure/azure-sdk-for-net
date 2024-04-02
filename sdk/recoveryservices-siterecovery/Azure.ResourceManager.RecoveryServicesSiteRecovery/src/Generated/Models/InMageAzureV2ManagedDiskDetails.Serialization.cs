@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2ManagedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2ManagedDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (SeedManagedDiskId != null)
+            if (Optional.IsDefined(SeedManagedDiskId))
             {
                 writer.WritePropertyName("seedManagedDiskId"u8);
                 writer.WriteStringValue(SeedManagedDiskId);
             }
-            if (ReplicaDiskType != null)
+            if (Optional.IsDefined(ReplicaDiskType))
             {
                 writer.WritePropertyName("replicaDiskType"u8);
                 writer.WriteStringValue(ReplicaDiskType);
             }
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (TargetDiskName != null)
+            if (Optional.IsDefined(TargetDiskName))
             {
                 writer.WritePropertyName("targetDiskName"u8);
                 writer.WriteStringValue(TargetDiskName);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageAzureV2ManagedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageAzureV2ManagedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageAzureV2ManagedDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2ManagedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2ManagedDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageAzureV2ManagedDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageAzureV2ManagedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageAzureV2ManagedDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

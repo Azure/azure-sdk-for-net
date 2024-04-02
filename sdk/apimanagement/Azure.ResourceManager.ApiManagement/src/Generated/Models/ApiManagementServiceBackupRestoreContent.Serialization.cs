@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -32,17 +32,17 @@ namespace Azure.ResourceManager.ApiManagement.Models
             writer.WriteStringValue(ContainerName);
             writer.WritePropertyName("backupName"u8);
             writer.WriteStringValue(BackupName);
-            if (AccessType.HasValue)
+            if (Optional.IsDefined(AccessType))
             {
                 writer.WritePropertyName("accessType"u8);
                 writer.WriteStringValue(AccessType.Value.ToString());
             }
-            if (AccessKey != null)
+            if (Optional.IsDefined(AccessKey))
             {
                 writer.WritePropertyName("accessKey"u8);
                 writer.WriteStringValue(AccessKey);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServiceBackupRestoreContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -170,7 +170,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementServiceBackupRestoreContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServiceBackupRestoreContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayNetworkRuleSetIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPMask != null)
+            if (Optional.IsDefined(IPMask))
             {
                 writer.WritePropertyName("ipMask"u8);
                 writer.WriteStringValue(IPMask);
             }
-            if (Action.HasValue)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Relay.Models
             var format = options.Format == "W" ? ((IPersistableModel<RelayNetworkRuleSetIPRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Relay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Relay.Models
                         return DeserializeRelayNetworkRuleSetIPRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RelayNetworkRuleSetIPRule)} does not support reading '{options.Format}' format.");
             }
         }
 

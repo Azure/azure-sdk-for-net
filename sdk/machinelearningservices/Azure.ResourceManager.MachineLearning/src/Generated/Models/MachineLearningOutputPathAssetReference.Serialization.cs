@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOutputPathAssetReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (JobId != null)
+            if (Optional.IsDefined(JobId))
             {
                 if (JobId != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("jobId");
                 }
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 if (Path != null)
                 {
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningOutputPathAssetReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningOutputPathAssetReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningOutputPathAssetReference)} does not support reading '{options.Format}' format.");
             }
         }
 

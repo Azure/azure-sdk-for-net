@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MixedReality.Mocking;
 using Azure.ResourceManager.MixedReality.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> Returns a <see cref="SpatialAnchorsAccountResource"/> object. </returns>
         public static SpatialAnchorsAccountResource GetSpatialAnchorsAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMixedRealityArmClient(client).GetSpatialAnchorsAccountResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> Returns a <see cref="RemoteRenderingAccountResource"/> object. </returns>
         public static RemoteRenderingAccountResource GetRemoteRenderingAccountResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMixedRealityArmClient(client).GetRemoteRenderingAccountResource(id);
         }
@@ -91,10 +83,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An object representing collection of SpatialAnchorsAccountResources and their operations over a SpatialAnchorsAccountResource. </returns>
         public static SpatialAnchorsAccountCollection GetSpatialAnchorsAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMixedRealityResourceGroupResource(resourceGroupResource).GetSpatialAnchorsAccounts();
         }
@@ -132,10 +121,7 @@ namespace Azure.ResourceManager.MixedReality
         [ForwardsClientCalls]
         public static async Task<Response<SpatialAnchorsAccountResource>> GetSpatialAnchorsAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableMixedRealityResourceGroupResource(resourceGroupResource).GetSpatialAnchorsAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -173,10 +159,7 @@ namespace Azure.ResourceManager.MixedReality
         [ForwardsClientCalls]
         public static Response<SpatialAnchorsAccountResource> GetSpatialAnchorsAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMixedRealityResourceGroupResource(resourceGroupResource).GetSpatialAnchorsAccount(accountName, cancellationToken);
         }
@@ -193,10 +176,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An object representing collection of RemoteRenderingAccountResources and their operations over a RemoteRenderingAccountResource. </returns>
         public static RemoteRenderingAccountCollection GetRemoteRenderingAccounts(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMixedRealityResourceGroupResource(resourceGroupResource).GetRemoteRenderingAccounts();
         }
@@ -234,10 +214,7 @@ namespace Azure.ResourceManager.MixedReality
         [ForwardsClientCalls]
         public static async Task<Response<RemoteRenderingAccountResource>> GetRemoteRenderingAccountAsync(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableMixedRealityResourceGroupResource(resourceGroupResource).GetRemoteRenderingAccountAsync(accountName, cancellationToken).ConfigureAwait(false);
         }
@@ -275,10 +252,7 @@ namespace Azure.ResourceManager.MixedReality
         [ForwardsClientCalls]
         public static Response<RemoteRenderingAccountResource> GetRemoteRenderingAccount(this ResourceGroupResource resourceGroupResource, string accountName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMixedRealityResourceGroupResource(resourceGroupResource).GetRemoteRenderingAccount(accountName, cancellationToken);
         }
@@ -311,10 +285,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<MixedRealityNameAvailabilityResult>> CheckMixedRealityNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, MixedRealityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableMixedRealitySubscriptionResource(subscriptionResource).CheckMixedRealityNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -347,10 +318,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<MixedRealityNameAvailabilityResult> CheckMixedRealityNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, MixedRealityNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMixedRealitySubscriptionResource(subscriptionResource).CheckMixedRealityNameAvailability(location, content, cancellationToken);
         }
@@ -386,10 +354,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An async collection of <see cref="SpatialAnchorsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMixedRealitySubscriptionResource(subscriptionResource).GetSpatialAnchorsAccountsAsync(cancellationToken);
         }
@@ -425,10 +390,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> A collection of <see cref="SpatialAnchorsAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<SpatialAnchorsAccountResource> GetSpatialAnchorsAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMixedRealitySubscriptionResource(subscriptionResource).GetSpatialAnchorsAccounts(cancellationToken);
         }
@@ -464,10 +426,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> An async collection of <see cref="RemoteRenderingAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<RemoteRenderingAccountResource> GetRemoteRenderingAccountsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMixedRealitySubscriptionResource(subscriptionResource).GetRemoteRenderingAccountsAsync(cancellationToken);
         }
@@ -503,10 +462,7 @@ namespace Azure.ResourceManager.MixedReality
         /// <returns> A collection of <see cref="RemoteRenderingAccountResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<RemoteRenderingAccountResource> GetRemoteRenderingAccounts(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMixedRealitySubscriptionResource(subscriptionResource).GetRemoteRenderingAccounts(cancellationToken);
         }

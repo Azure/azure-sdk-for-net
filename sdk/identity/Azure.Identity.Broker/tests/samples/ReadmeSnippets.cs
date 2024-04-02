@@ -38,7 +38,7 @@ namespace Azure.Identity.Samples
             var credential = new InteractiveBrowserCredential(
                 new InteractiveBrowserCredentialBrokerOptions(parentWindowHandle)
                 {
-                    UseOperatingSystemAccount = true,
+                    UseDefaultBrokerAccount = true,
                 });
             #endregion
 

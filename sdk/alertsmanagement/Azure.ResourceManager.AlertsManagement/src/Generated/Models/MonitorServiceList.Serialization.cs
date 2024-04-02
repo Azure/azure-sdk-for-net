@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorServiceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorServiceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorServiceList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteStartArray();
             foreach (var item in Data)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitorServiceDetails>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("metadataIdentifier"u8);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitorServiceList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitorServiceList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitorServiceList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitorServiceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorServiceList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeMonitorServiceList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitorServiceList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitorServiceList)} does not support reading '{options.Format}' format.");
             }
         }
 

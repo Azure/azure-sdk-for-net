@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeDataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CreateSource.HasValue)
+            if (Optional.IsDefined(CreateSource))
             {
                 writer.WritePropertyName("createSource"u8);
                 writer.WriteStringValue(CreateSource.Value.ToString());
             }
-            if (SourceId != null)
+            if (Optional.IsDefined(SourceId))
             {
                 writer.WritePropertyName("sourceId"u8);
                 writer.WriteStringValue(SourceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanVolumeDataSourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeElasticSanVolumeDataSourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanVolumeDataSourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

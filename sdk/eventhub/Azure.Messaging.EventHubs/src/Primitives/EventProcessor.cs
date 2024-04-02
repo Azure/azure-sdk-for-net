@@ -207,6 +207,13 @@ namespace Azure.Messaging.EventHubs.Primitives
         protected EventHubsRetryPolicy RetryPolicy { get; }
 
         /// <summary>
+        ///   Indicates whether or not this event processor should instrument batch event processing calls with distributed tracing.
+        ///   Implementations that instrument event processing themselves should set this to <c>false</c>.
+        /// </summary>
+        ///
+        protected virtual bool? IsBatchTracingEnabled { get; set; }
+
+        /// <summary>
         ///   The set of currently active partition processing tasks issued by this event processor and their associated
         ///   token sources that can be used to cancel the operation.  Partition identifiers are used as keys.
         /// </summary>
@@ -639,45 +646,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             }
 
             // Create the diagnostics scope used for distributed tracing and instrument the events in the batch.
-
-            using var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
-
-            if ((diagnosticScope.IsEnabled) && (eventBatch.Count > 0))
-            {
-                var isBatch = (EventBatchMaximumCount > 1);
-
-                if (isBatch && ActivityExtensions.SupportsActivitySource)
-                {
-                    diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
-                }
-
-                foreach (var eventData in eventBatch)
-                {
-                    if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
-                    {
-                        if (isBatch)
-                        {
-                            var attributes = new Dictionary<string, string>(1)
-                            {
-                                { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture) }
-                            };
-
-                            // Use links only when the batch size is not set to a single event.
-
-                            diagnosticScope.AddLink(traceparent, tracestate, attributes);
-                        }
-                        else
-                        {
-                            diagnosticScope.SetTraceContext(traceparent, tracestate);
-                            diagnosticScope.AddAttribute(
-                                DiagnosticProperty.EnqueuedTimeAttribute,
-                                eventData.EnqueuedTime.ToUnixTimeMilliseconds().ToString(CultureInfo.InvariantCulture));
-                        }
-                    }
-                }
-            }
-
-            diagnosticScope.Start();
+            using var diagnosticScope = StartProcessorScope(eventBatch);
 
             // Dispatch the batch to the handler for processing.  Exceptions in the handler code are intended to be
             // unhandled by the processor; explicitly signal that the exception was observed in developer-provided
@@ -703,7 +672,7 @@ namespace Azure.Messaging.EventHubs.Primitives
             catch (Exception ex)
             {
                 Logger.EventProcessorProcessingHandlerError(partition.PartitionId, Identifier, EventHubName, ConsumerGroup, operation, ex.Message);
-                diagnosticScope.Failed(ex);
+                diagnosticScope?.Failed(ex);
 
                 throw new DeveloperCodeException(ex);
             }
@@ -2282,6 +2251,71 @@ namespace Azure.Messaging.EventHubs.Primitives
         /// </remarks>
         ///
         private static int CalculateMaximumAdvisedOwnedPartitions() => (Environment.ProcessorCount * 2);
+
+        /// <summary>
+        ///   Creates, starts, and enriches s processing diagnostics scope in case batch tracing is enabled.
+        /// </summary>
+        ///
+        /// <param name="eventBatch">A collection of <see cref="EventData"/> which is being processed.</param>
+        ///
+        /// <returns>An instance of <see cref="DiagnosticScope" />, if tracing is enabled; otherwise, <c>null</c>.</returns>
+        ///
+        private DiagnosticScope? StartProcessorScope(IReadOnlyList<EventData> eventBatch)
+        {
+            if (IsBatchTracingEnabled != null && !IsBatchTracingEnabled.Value)
+            {
+                return null;
+            }
+
+            var diagnosticScope = ClientDiagnostics.CreateScope(DiagnosticProperty.EventProcessorProcessingActivityName, ActivityKind.Consumer, MessagingDiagnosticOperation.Process);
+
+            if ((diagnosticScope.IsEnabled) && (eventBatch.Count > 0))
+            {
+                var isBatch = (EventBatchMaximumCount > 1);
+
+                if (isBatch && ActivityExtensions.SupportsActivitySource)
+                {
+                    diagnosticScope.AddIntegerAttribute(MessagingClientDiagnostics.BatchCount, eventBatch.Count);
+                }
+
+                foreach (var eventData in eventBatch)
+                {
+                    Dictionary<string, object> linkAttributes = null;
+
+                    if (isBatch)
+                    {
+                        linkAttributes = new Dictionary<string, object>(1)
+                        {
+                            { DiagnosticProperty.EnqueuedTimeAttribute, eventData.EnqueuedTime.ToUnixTimeMilliseconds() }
+                        };
+                    }
+                    else if (eventData.EnqueuedTime != default)
+                    {
+                        diagnosticScope.AddLongAttribute(
+                            DiagnosticProperty.EnqueuedTimeAttribute,
+                            eventData.EnqueuedTime.ToUnixTimeMilliseconds());
+                    }
+
+                    if (MessagingClientDiagnostics.TryExtractTraceContext(eventData.Properties, out var traceparent, out var tracestate))
+                    {
+                        // Set link in all cases.
+
+                        diagnosticScope.AddLink(traceparent, tracestate, linkAttributes);
+
+                        if (!isBatch)
+                        {
+                            // Parent is not required, but allowed when there is just one message.
+                            // It helps to correlate producer and consumers.
+
+                            diagnosticScope.SetTraceContext(traceparent, tracestate);
+                        }
+                    }
+                }
+            }
+
+            diagnosticScope.Start();
+            return diagnosticScope;
+        }
 
         /// <summary>
         ///   The set of information needed to track and manage the active processing

@@ -96,36 +96,52 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> The geo-location where the resource lives. </summary>
+        [WirePath("location")]
         public AzureLocation? Location { get; set; }
         /// <summary> The database name. </summary>
+        [WirePath("properties.databaseName")]
         public string DatabaseName { get; }
         /// <summary> The time the operation finished (ISO8601 format). </summary>
+        [WirePath("properties.endTime")]
         public DateTimeOffset? EndOn { get; }
         /// <summary> The error code if available. </summary>
+        [WirePath("properties.errorCode")]
         public int? ErrorCode { get; }
         /// <summary> The error message if available. </summary>
+        [WirePath("properties.errorMessage")]
         public string ErrorMessage { get; }
         /// <summary> The error severity if available. </summary>
+        [WirePath("properties.errorSeverity")]
         public int? ErrorSeverity { get; }
         /// <summary> The operation name. </summary>
+        [WirePath("properties.operation")]
         public string Operation { get; }
         /// <summary> The unique operation ID. </summary>
+        [WirePath("properties.operationId")]
         public Guid? OperationId { get; }
         /// <summary> The percentage complete if available. </summary>
+        [WirePath("properties.percentComplete")]
         public int? PercentComplete { get; }
         /// <summary> The name for the elastic pool the database is moving into if available. </summary>
+        [WirePath("properties.requestedElasticPoolName")]
         public string RequestedElasticPoolName { get; }
         /// <summary> The name of the current elastic pool the database is in if available. </summary>
+        [WirePath("properties.currentElasticPoolName")]
         public string CurrentElasticPoolName { get; }
         /// <summary> The name of the current service objective if available. </summary>
+        [WirePath("properties.currentServiceObjective")]
         public string CurrentServiceObjective { get; }
         /// <summary> The name of the requested service objective if available. </summary>
+        [WirePath("properties.requestedServiceObjective")]
         public string RequestedServiceObjective { get; }
         /// <summary> The name of the server the elastic pool is in. </summary>
+        [WirePath("properties.serverName")]
         public string ServerName { get; }
         /// <summary> The time the operation started (ISO8601 format). </summary>
+        [WirePath("properties.startTime")]
         public DateTimeOffset? StartOn { get; }
         /// <summary> The current state of the operation. </summary>
+        [WirePath("properties.state")]
         public string State { get; }
     }
 }

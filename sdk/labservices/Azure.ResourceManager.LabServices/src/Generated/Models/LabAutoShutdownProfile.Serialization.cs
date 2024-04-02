@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabAutoShutdownProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ShutdownOnDisconnect.HasValue)
+            if (Optional.IsDefined(ShutdownOnDisconnect))
             {
                 writer.WritePropertyName("shutdownOnDisconnect"u8);
                 writer.WriteStringValue(ShutdownOnDisconnect.Value.ToSerialString());
             }
-            if (ShutdownWhenNotConnected.HasValue)
+            if (Optional.IsDefined(ShutdownWhenNotConnected))
             {
                 writer.WritePropertyName("shutdownWhenNotConnected"u8);
                 writer.WriteStringValue(ShutdownWhenNotConnected.Value.ToSerialString());
             }
-            if (ShutdownOnIdle.HasValue)
+            if (Optional.IsDefined(ShutdownOnIdle))
             {
                 writer.WritePropertyName("shutdownOnIdle"u8);
                 writer.WriteStringValue(ShutdownOnIdle.Value.ToSerialString());
             }
-            if (DisconnectDelay.HasValue)
+            if (Optional.IsDefined(DisconnectDelay))
             {
                 writer.WritePropertyName("disconnectDelay"u8);
                 writer.WriteStringValue(DisconnectDelay.Value, "P");
             }
-            if (NoConnectDelay.HasValue)
+            if (Optional.IsDefined(NoConnectDelay))
             {
                 writer.WritePropertyName("noConnectDelay"u8);
                 writer.WriteStringValue(NoConnectDelay.Value, "P");
             }
-            if (IdleDelay.HasValue)
+            if (Optional.IsDefined(IdleDelay))
             {
                 writer.WritePropertyName("idleDelay"u8);
                 writer.WriteStringValue(IdleDelay.Value, "P");
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabAutoShutdownProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabAutoShutdownProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabAutoShutdownProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

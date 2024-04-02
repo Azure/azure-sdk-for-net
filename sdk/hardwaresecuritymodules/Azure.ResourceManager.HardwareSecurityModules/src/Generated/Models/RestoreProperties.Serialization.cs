@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Foldername != null)
+            if (Optional.IsDefined(Foldername))
             {
                 writer.WritePropertyName("foldername"u8);
                 writer.WriteStringValue(Foldername);
             }
-            if (AzureStorageResourceUri != null)
+            if (Optional.IsDefined(AzureStorageResourceUri))
             {
                 writer.WritePropertyName("azureStorageResourceUri"u8);
                 writer.WriteStringValue(AzureStorageResourceUri.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<RestoreProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RestoreProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RestoreProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RestoreProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeRestoreProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RestoreProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RestoreProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

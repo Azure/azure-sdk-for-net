@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ANetworkMappingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ANetworkMappingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ANetworkMappingSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrimaryFabricLocation.HasValue)
+            if (Optional.IsDefined(PrimaryFabricLocation))
             {
                 writer.WritePropertyName("primaryFabricLocation"u8);
                 writer.WriteStringValue(PrimaryFabricLocation.Value);
             }
-            if (RecoveryFabricLocation.HasValue)
+            if (Optional.IsDefined(RecoveryFabricLocation))
             {
                 writer.WritePropertyName("recoveryFabricLocation"u8);
                 writer.WriteStringValue(RecoveryFabricLocation.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2ANetworkMappingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2ANetworkMappingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2ANetworkMappingSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2ANetworkMappingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ANetworkMappingSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2ANetworkMappingSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2ANetworkMappingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2ANetworkMappingSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

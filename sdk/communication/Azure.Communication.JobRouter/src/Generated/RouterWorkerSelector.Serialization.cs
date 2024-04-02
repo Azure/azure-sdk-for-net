@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.JobRouter
@@ -23,7 +22,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterWorkerSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -31,7 +30,7 @@ namespace Azure.Communication.JobRouter
             writer.WriteStringValue(Key);
             writer.WritePropertyName("labelOperator"u8);
             writer.WriteStringValue(LabelOperator.ToString());
-            if (_value != null)
+            if (Optional.IsDefined(_value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -43,22 +42,22 @@ namespace Azure.Communication.JobRouter
                 }
 #endif
             }
-            if (ExpiresAfter.HasValue)
+            if (Optional.IsDefined(ExpiresAfter))
             {
                 writer.WritePropertyName("expiresAfterSeconds"u8);
                 WriteExpiresAfter(writer);
             }
-            if (Expedite.HasValue)
+            if (Optional.IsDefined(Expedite))
             {
                 writer.WritePropertyName("expedite"u8);
                 writer.WriteBooleanValue(Expedite.Value);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && ExpiresAt.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiresAt))
             {
                 writer.WritePropertyName("expiresAt"u8);
                 writer.WriteStringValue(ExpiresAt.Value, "O");
@@ -86,7 +85,7 @@ namespace Azure.Communication.JobRouter
             var format = options.Format == "W" ? ((IPersistableModel<RouterWorkerSelector>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -189,7 +188,7 @@ namespace Azure.Communication.JobRouter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -205,7 +204,7 @@ namespace Azure.Communication.JobRouter
                         return DeserializeRouterWorkerSelector(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RouterWorkerSelector)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -223,7 +222,7 @@ namespace Azure.Communication.JobRouter
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<RouterWorkerSelector>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

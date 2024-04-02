@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceVaultAndSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceVault != null)
+            if (Optional.IsDefined(SourceVault))
             {
                 writer.WritePropertyName("sourceVault"u8);
                 JsonSerializer.Serialize(writer, SourceVault);
             }
-            if (SecretUri != null)
+            if (Optional.IsDefined(SecretUri))
             {
                 writer.WritePropertyName("secretUrl"u8);
                 writer.WriteStringValue(SecretUri.AbsoluteUri);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudServiceVaultAndSecretReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeCloudServiceVaultAndSecretReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudServiceVaultAndSecretReference)} does not support reading '{options.Format}' format.");
             }
         }
 

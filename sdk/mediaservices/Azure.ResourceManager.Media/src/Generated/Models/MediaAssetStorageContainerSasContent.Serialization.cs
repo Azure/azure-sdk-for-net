@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaAssetStorageContainerSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Permissions.HasValue)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiryTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<MediaAssetStorageContainerSasContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeMediaAssetStorageContainerSasContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MediaAssetStorageContainerSasContent)} does not support reading '{options.Format}' format.");
             }
         }
 

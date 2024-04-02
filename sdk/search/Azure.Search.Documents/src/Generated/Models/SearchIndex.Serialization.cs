@@ -22,138 +22,138 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartArray();
             foreach (var item in _fields)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SearchField>(item);
             }
             writer.WriteEndArray();
-            if (!(ScoringProfiles is ChangeTrackingList<ScoringProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScoringProfiles))
             {
                 writer.WritePropertyName("scoringProfiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScoringProfiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScoringProfile>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultScoringProfile != null)
+            if (Optional.IsDefined(DefaultScoringProfile))
             {
                 writer.WritePropertyName("defaultScoringProfile"u8);
                 writer.WriteStringValue(DefaultScoringProfile);
             }
-            if (CorsOptions != null)
+            if (Optional.IsDefined(CorsOptions))
             {
                 if (CorsOptions != null)
                 {
                     writer.WritePropertyName("corsOptions"u8);
-                    writer.WriteObjectValue(CorsOptions);
+                    writer.WriteObjectValue<CorsOptions>(CorsOptions);
                 }
                 else
                 {
                     writer.WriteNull("corsOptions");
                 }
             }
-            if (!(Suggesters is ChangeTrackingList<SearchSuggester> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Suggesters))
             {
                 writer.WritePropertyName("suggesters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Suggesters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SearchSuggester>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Analyzers is ChangeTrackingList<LexicalAnalyzer> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Analyzers))
             {
                 writer.WritePropertyName("analyzers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Analyzers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LexicalAnalyzer>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tokenizers is ChangeTrackingList<LexicalTokenizer> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Tokenizers))
             {
                 writer.WritePropertyName("tokenizers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tokenizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LexicalTokenizer>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TokenFilters is ChangeTrackingList<TokenFilter> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(TokenFilters))
             {
                 writer.WritePropertyName("tokenFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in TokenFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TokenFilter>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(CharFilters is ChangeTrackingList<CharFilter> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(CharFilters))
             {
                 writer.WritePropertyName("charFilters"u8);
                 writer.WriteStartArray();
                 foreach (var item in CharFilters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CharFilter>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Normalizers is ChangeTrackingList<LexicalNormalizer> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(Normalizers))
             {
                 writer.WritePropertyName("normalizers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Normalizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<LexicalNormalizer>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (EncryptionKey != null)
+            if (Optional.IsDefined(EncryptionKey))
             {
                 if (EncryptionKey != null)
                 {
                     writer.WritePropertyName("encryptionKey"u8);
-                    writer.WriteObjectValue(EncryptionKey);
+                    writer.WriteObjectValue<SearchResourceEncryptionKey>(EncryptionKey);
                 }
                 else
                 {
                     writer.WriteNull("encryptionKey");
                 }
             }
-            if (Similarity != null)
+            if (Optional.IsDefined(Similarity))
             {
                 writer.WritePropertyName("similarity"u8);
-                writer.WriteObjectValue(Similarity);
+                writer.WriteObjectValue<SimilarityAlgorithm>(Similarity);
             }
-            if (SemanticSearch != null)
+            if (Optional.IsDefined(SemanticSearch))
             {
                 if (SemanticSearch != null)
                 {
                     writer.WritePropertyName("semantic"u8);
-                    writer.WriteObjectValue(SemanticSearch);
+                    writer.WriteObjectValue<SemanticSearch>(SemanticSearch);
                 }
                 else
                 {
                     writer.WriteNull("semantic");
                 }
             }
-            if (VectorSearch != null)
+            if (Optional.IsDefined(VectorSearch))
             {
                 if (VectorSearch != null)
                 {
                     writer.WritePropertyName("vectorSearch"u8);
-                    writer.WriteObjectValue(VectorSearch);
+                    writer.WriteObjectValue<VectorSearch>(VectorSearch);
                 }
                 else
                 {
                     writer.WriteNull("vectorSearch");
                 }
             }
-            if (_etag != null)
+            if (Optional.IsDefined(_etag))
             {
                 writer.WritePropertyName("@odata.etag"u8);
                 writer.WriteStringValue(_etag);

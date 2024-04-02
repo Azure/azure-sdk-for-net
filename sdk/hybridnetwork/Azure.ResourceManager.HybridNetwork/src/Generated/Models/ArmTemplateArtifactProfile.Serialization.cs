@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmTemplateArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TemplateName != null)
+            if (Optional.IsDefined(TemplateName))
             {
                 writer.WritePropertyName("templateName"u8);
                 writer.WriteStringValue(TemplateName);
             }
-            if (TemplateVersion != null)
+            if (Optional.IsDefined(TemplateVersion))
             {
                 writer.WritePropertyName("templateVersion"u8);
                 writer.WriteStringValue(TemplateVersion);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArmTemplateArtifactProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeArmTemplateArtifactProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArmTemplateArtifactProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -17,10 +17,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="key"/> is null. </exception>
         public LinkedIntegrationRuntimeKeyAuthorization(SecureString key)
         {
-            if (key == null)
-            {
-                throw new ArgumentNullException(nameof(key));
-            }
+            Argument.AssertNotNull(key, nameof(key));
 
             Key = key;
             AuthorizationType = "Key";

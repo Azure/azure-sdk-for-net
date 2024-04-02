@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPerformanceSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DataSegment != null)
+            if (Optional.IsDefined(DataSegment))
             {
                 if (DataSegment != null)
                 {
                     writer.WritePropertyName("dataSegment"u8);
-                    writer.WriteObjectValue(DataSegment);
+                    writer.WriteObjectValue<MonitoringDataSegment>(DataSegment, options);
                 }
                 else
                 {
@@ -39,22 +39,22 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 }
             }
             writer.WritePropertyName("metricThreshold"u8);
-            writer.WriteObjectValue(MetricThreshold);
+            writer.WriteObjectValue<ModelPerformanceMetricThresholdBase>(MetricThreshold, options);
             writer.WritePropertyName("productionData"u8);
             writer.WriteStartArray();
             foreach (var item in ProductionData)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<MonitoringInputDataBase>(item, options);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("referenceData"u8);
-            writer.WriteObjectValue(ReferenceData);
-            if (Mode.HasValue)
+            writer.WriteObjectValue<MonitoringInputDataBase>(ReferenceData, options);
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (!(Properties is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 if (Properties != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ModelPerformanceSignal>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -208,7 +208,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeModelPerformanceSignal(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ModelPerformanceSignal)} does not support reading '{options.Format}' format.");
             }
         }
 

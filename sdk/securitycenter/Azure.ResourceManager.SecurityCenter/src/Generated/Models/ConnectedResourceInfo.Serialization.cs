@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ConnectedResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ConnectedResourceId))
             {
                 writer.WritePropertyName("connectedResourceId"u8);
                 writer.WriteStringValue(ConnectedResourceId);
             }
-            if (options.Format != "W" && TcpPorts != null)
+            if (options.Format != "W" && Optional.IsDefined(TcpPorts))
             {
                 writer.WritePropertyName("tcpPorts"u8);
                 writer.WriteStringValue(TcpPorts);
             }
-            if (options.Format != "W" && UdpPorts != null)
+            if (options.Format != "W" && Optional.IsDefined(UdpPorts))
             {
                 writer.WritePropertyName("udpPorts"u8);
                 writer.WriteStringValue(UdpPorts);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectedResourceInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeConnectedResourceInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectedResourceInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -49,44 +49,44 @@ namespace Azure.ResourceManager.Synapse.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && SoftDeletePeriod.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SoftDeletePeriod))
             {
                 writer.WritePropertyName("softDeletePeriod"u8);
                 writer.WriteStringValue(SoftDeletePeriod.Value, "P");
             }
-            if (HotCachePeriod.HasValue)
+            if (Optional.IsDefined(HotCachePeriod))
             {
                 writer.WritePropertyName("hotCachePeriod"u8);
                 writer.WriteStringValue(HotCachePeriod.Value, "P");
             }
-            if (options.Format != "W" && Statistics != null)
+            if (options.Format != "W" && Optional.IsDefined(Statistics))
             {
                 writer.WritePropertyName("statistics"u8);
-                writer.WriteObjectValue(Statistics);
+                writer.WriteObjectValue<DatabaseStatistics>(Statistics, options);
             }
-            if (options.Format != "W" && LeaderClusterResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(LeaderClusterResourceId))
             {
                 writer.WritePropertyName("leaderClusterResourceId"u8);
                 writer.WriteStringValue(LeaderClusterResourceId);
             }
-            if (options.Format != "W" && AttachedDatabaseConfigurationName != null)
+            if (options.Format != "W" && Optional.IsDefined(AttachedDatabaseConfigurationName))
             {
                 writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
                 writer.WriteStringValue(AttachedDatabaseConfigurationName);
             }
-            if (options.Format != "W" && PrincipalsModificationKind.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrincipalsModificationKind))
             {
                 writer.WritePropertyName("principalsModificationKind"u8);
                 writer.WriteStringValue(PrincipalsModificationKind.Value.ToString());
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseReadOnlyFollowingDatabase>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -284,7 +284,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -300,7 +300,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseReadOnlyFollowingDatabase(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseReadOnlyFollowingDatabase)} does not support reading '{options.Format}' format.");
             }
         }
 

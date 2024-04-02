@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPAddress != null)
+            if (Optional.IsDefined(IPAddress))
             {
                 writer.WritePropertyName("ipAddress"u8);
                 writer.WriteStringValue(IPAddress.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (LatencyInMs.HasValue)
+            if (Optional.IsDefined(LatencyInMs))
             {
                 writer.WritePropertyName("latency"u8);
                 writer.WriteNumberValue(LatencyInMs.Value);
             }
-            if (IsAccessible.HasValue)
+            if (Optional.IsDefined(IsAccessible))
             {
                 writer.WritePropertyName("isAccessible"u8);
                 writer.WriteBooleanValue(IsAccessible.Value);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.StoragePool.Models
             var format = options.Format == "W" ? ((IPersistableModel<OutboundEndpointDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.StoragePool.Models
                         return DeserializeOutboundEndpointDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OutboundEndpointDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

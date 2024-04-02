@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Net;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 
@@ -25,26 +24,26 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ApiManagementServiceSkuProperties>(Sku, options);
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Zones is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
@@ -54,7 +53,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -80,74 +79,74 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (NotificationSenderEmail != null)
+            if (Optional.IsDefined(NotificationSenderEmail))
             {
                 writer.WritePropertyName("notificationSenderEmail"u8);
                 writer.WriteStringValue(NotificationSenderEmail);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && TargetProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(TargetProvisioningState))
             {
                 writer.WritePropertyName("targetProvisioningState"u8);
                 writer.WriteStringValue(TargetProvisioningState);
             }
-            if (options.Format != "W" && CreatedAtUtc.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedAtUtc))
             {
                 writer.WritePropertyName("createdAtUtc"u8);
                 writer.WriteStringValue(CreatedAtUtc.Value, "O");
             }
-            if (options.Format != "W" && GatewayUri != null)
+            if (options.Format != "W" && Optional.IsDefined(GatewayUri))
             {
                 writer.WritePropertyName("gatewayUrl"u8);
                 writer.WriteStringValue(GatewayUri.AbsoluteUri);
             }
-            if (options.Format != "W" && GatewayRegionalUri != null)
+            if (options.Format != "W" && Optional.IsDefined(GatewayRegionalUri))
             {
                 writer.WritePropertyName("gatewayRegionalUrl"u8);
                 writer.WriteStringValue(GatewayRegionalUri.AbsoluteUri);
             }
-            if (options.Format != "W" && PortalUri != null)
+            if (options.Format != "W" && Optional.IsDefined(PortalUri))
             {
                 writer.WritePropertyName("portalUrl"u8);
                 writer.WriteStringValue(PortalUri.AbsoluteUri);
             }
-            if (options.Format != "W" && ManagementApiUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ManagementApiUri))
             {
                 writer.WritePropertyName("managementApiUrl"u8);
                 writer.WriteStringValue(ManagementApiUri.AbsoluteUri);
             }
-            if (options.Format != "W" && ScmUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ScmUri))
             {
                 writer.WritePropertyName("scmUrl"u8);
                 writer.WriteStringValue(ScmUri.AbsoluteUri);
             }
-            if (options.Format != "W" && DeveloperPortalUri != null)
+            if (options.Format != "W" && Optional.IsDefined(DeveloperPortalUri))
             {
                 writer.WritePropertyName("developerPortalUrl"u8);
                 writer.WriteStringValue(DeveloperPortalUri.AbsoluteUri);
             }
-            if (!(HostnameConfigurations is ChangeTrackingList<HostnameConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HostnameConfigurations))
             {
                 writer.WritePropertyName("hostnameConfigurations"u8);
                 writer.WriteStartArray();
                 foreach (var item in HostnameConfigurations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HostnameConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PublicIPAddresses is ChangeTrackingList<IPAddress> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PublicIPAddresses))
             {
                 writer.WritePropertyName("publicIPAddresses"u8);
                 writer.WriteStartArray();
@@ -162,7 +161,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(PrivateIPAddresses is ChangeTrackingList<IPAddress> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(PrivateIPAddresses))
             {
                 writer.WritePropertyName("privateIPAddresses"u8);
                 writer.WriteStartArray();
@@ -177,32 +176,32 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndArray();
             }
-            if (PublicIPAddressId != null)
+            if (Optional.IsDefined(PublicIPAddressId))
             {
                 writer.WritePropertyName("publicIpAddressId"u8);
                 writer.WriteStringValue(PublicIPAddressId);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (VirtualNetworkConfiguration != null)
+            if (Optional.IsDefined(VirtualNetworkConfiguration))
             {
                 writer.WritePropertyName("virtualNetworkConfiguration"u8);
-                writer.WriteObjectValue(VirtualNetworkConfiguration);
+                writer.WriteObjectValue<VirtualNetworkConfiguration>(VirtualNetworkConfiguration, options);
             }
-            if (!(AdditionalLocations is ChangeTrackingList<AdditionalLocation> collection4 && collection4.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalLocations))
             {
                 writer.WritePropertyName("additionalLocations"u8);
                 writer.WriteStartArray();
                 foreach (var item in AdditionalLocations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AdditionalLocation>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(CustomProperties is ChangeTrackingDictionary<string, string> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomProperties))
             {
                 writer.WritePropertyName("customProperties"u8);
                 writer.WriteStartObject();
@@ -213,62 +212,62 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(Certificates is ChangeTrackingList<CertificateConfiguration> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(Certificates))
             {
                 writer.WritePropertyName("certificates"u8);
                 writer.WriteStartArray();
                 foreach (var item in Certificates)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CertificateConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (EnableClientCertificate.HasValue)
+            if (Optional.IsDefined(EnableClientCertificate))
             {
                 writer.WritePropertyName("enableClientCertificate"u8);
                 writer.WriteBooleanValue(EnableClientCertificate.Value);
             }
-            if (DisableGateway.HasValue)
+            if (Optional.IsDefined(DisableGateway))
             {
                 writer.WritePropertyName("disableGateway"u8);
                 writer.WriteBooleanValue(DisableGateway.Value);
             }
-            if (VirtualNetworkType.HasValue)
+            if (Optional.IsDefined(VirtualNetworkType))
             {
                 writer.WritePropertyName("virtualNetworkType"u8);
                 writer.WriteStringValue(VirtualNetworkType.Value.ToString());
             }
-            if (ApiVersionConstraint != null)
+            if (Optional.IsDefined(ApiVersionConstraint))
             {
                 writer.WritePropertyName("apiVersionConstraint"u8);
-                writer.WriteObjectValue(ApiVersionConstraint);
+                writer.WriteObjectValue<ApiVersionConstraint>(ApiVersionConstraint, options);
             }
-            if (Restore.HasValue)
+            if (Optional.IsDefined(Restore))
             {
                 writer.WritePropertyName("restore"u8);
                 writer.WriteBooleanValue(Restore.Value);
             }
-            if (!(PrivateEndpointConnections is ChangeTrackingList<RemotePrivateEndpointConnectionWrapper> collection7 && collection7.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateEndpointConnections))
             {
                 writer.WritePropertyName("privateEndpointConnections"u8);
                 writer.WriteStartArray();
                 foreach (var item in PrivateEndpointConnections)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RemotePrivateEndpointConnectionWrapper>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && PlatformVersion.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PlatformVersion))
             {
                 writer.WritePropertyName("platformVersion"u8);
                 writer.WriteStringValue(PlatformVersion.Value.ToString());
             }
-            if (PublisherEmail != null)
+            if (Optional.IsDefined(PublisherEmail))
             {
                 writer.WritePropertyName("publisherEmail"u8);
                 writer.WriteStringValue(PublisherEmail);
             }
-            if (PublisherName != null)
+            if (Optional.IsDefined(PublisherName))
             {
                 writer.WritePropertyName("publisherName"u8);
                 writer.WriteStringValue(PublisherName);
@@ -297,7 +296,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementServicePatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -781,7 +780,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -797,7 +796,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementServicePatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementServicePatch)} does not support reading '{options.Format}' format.");
             }
         }
 

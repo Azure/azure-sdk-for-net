@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
@@ -23,41 +25,41 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Namespace != null)
+            if (Optional.IsDefined(Namespace))
             {
                 writer.WritePropertyName("namespace"u8);
                 writer.WriteStringValue(Namespace);
             }
-            if (options.Format != "W" && RegistrationState != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationState))
             {
                 writer.WritePropertyName("registrationState"u8);
                 writer.WriteStringValue(RegistrationState);
             }
-            if (options.Format != "W" && RegistrationPolicy != null)
+            if (options.Format != "W" && Optional.IsDefined(RegistrationPolicy))
             {
                 writer.WritePropertyName("registrationPolicy"u8);
                 writer.WriteStringValue(RegistrationPolicy);
             }
-            if (options.Format != "W" && !(ResourceTypes is ChangeTrackingList<ProviderResourceType> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ResourceTypes))
             {
                 writer.WritePropertyName("resourceTypes"u8);
                 writer.WriteStartArray();
                 foreach (var item in ResourceTypes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ProviderResourceType>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ProviderAuthorizationConsentState.HasValue)
+            if (Optional.IsDefined(ProviderAuthorizationConsentState))
             {
                 writer.WritePropertyName("providerAuthorizationConsentState"u8);
                 writer.WriteStringValue(ProviderAuthorizationConsentState.Value.ToString());
@@ -85,7 +87,7 @@ namespace Azure.ResourceManager.Resources
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceProviderData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceProviderData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,6 +175,137 @@ namespace Azure.ResourceManager.Resources
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Namespace), out propertyOverride);
+            if (Optional.IsDefined(Namespace) || hasPropertyOverride)
+            {
+                builder.Append("  namespace: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Namespace.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Namespace}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Namespace}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationState), out propertyOverride);
+            if (Optional.IsDefined(RegistrationState) || hasPropertyOverride)
+            {
+                builder.Append("  registrationState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RegistrationState.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegistrationState}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegistrationState}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RegistrationPolicy), out propertyOverride);
+            if (Optional.IsDefined(RegistrationPolicy) || hasPropertyOverride)
+            {
+                builder.Append("  registrationPolicy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (RegistrationPolicy.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{RegistrationPolicy}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{RegistrationPolicy}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ResourceTypes), out propertyOverride);
+            if (Optional.IsCollectionDefined(ResourceTypes) || hasPropertyOverride)
+            {
+                if (ResourceTypes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  resourceTypes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in ResourceTypes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 4, true, "  resourceTypes: ");
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProviderAuthorizationConsentState), out propertyOverride);
+            if (Optional.IsDefined(ProviderAuthorizationConsentState) || hasPropertyOverride)
+            {
+                builder.Append("  providerAuthorizationConsentState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProviderAuthorizationConsentState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<ResourceProviderData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<ResourceProviderData>)this).GetFormatFromOptions(options) : options.Format;
@@ -181,8 +314,10 @@ namespace Azure.ResourceManager.Resources
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -198,7 +333,7 @@ namespace Azure.ResourceManager.Resources
                         return DeserializeResourceProviderData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceProviderData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceProviderData)} does not support reading '{options.Format}' format.");
             }
         }
 

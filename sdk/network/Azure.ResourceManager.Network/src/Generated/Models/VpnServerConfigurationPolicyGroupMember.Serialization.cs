@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigurationPolicyGroupMember>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupMember)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupMember)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (AttributeType.HasValue)
+            if (Optional.IsDefined(AttributeType))
             {
                 writer.WritePropertyName("attributeType"u8);
                 writer.WriteStringValue(AttributeType.Value.ToString());
             }
-            if (AttributeValue != null)
+            if (Optional.IsDefined(AttributeValue))
             {
                 writer.WritePropertyName("attributeValue"u8);
                 writer.WriteStringValue(AttributeValue);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigurationPolicyGroupMember>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupMember)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupMember)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupMember)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupMember)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnServerConfigurationPolicyGroupMember(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupMember)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupMember)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DenylistCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && ValueType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ValueType))
             {
                 writer.WritePropertyName("valueType"u8);
                 writer.WriteStringValue(ValueType.Value.ToString());
             }
-            if (options.Format != "W" && DisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DenylistCustomAlertRule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeDenylistCustomAlertRule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DenylistCustomAlertRule)} does not support reading '{options.Format}' format.");
             }
         }
 

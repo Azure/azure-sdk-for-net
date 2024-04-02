@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventRecommendedActionsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (GroupId.HasValue)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteNumberValue(GroupId.Value);
             }
-            if (ActionText != null)
+            if (Optional.IsDefined(ActionText))
             {
                 writer.WritePropertyName("actionText"u8);
                 writer.WriteStringValue(ActionText);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceHealthEventRecommendedActionsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ResourceHealth.Models
                         return DeserializeResourceHealthEventRecommendedActionsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceHealthEventRecommendedActionsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

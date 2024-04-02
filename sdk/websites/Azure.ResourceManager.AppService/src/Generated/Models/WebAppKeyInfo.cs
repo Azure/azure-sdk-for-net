@@ -60,6 +60,7 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Properties of function key info. </summary>
+        [WirePath("properties")]
         public WebAppKeyInfoProperties Properties { get; set; }
     }
 }

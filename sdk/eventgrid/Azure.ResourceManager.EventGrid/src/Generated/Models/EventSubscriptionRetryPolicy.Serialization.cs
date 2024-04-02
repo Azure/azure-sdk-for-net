@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxDeliveryAttempts.HasValue)
+            if (Optional.IsDefined(MaxDeliveryAttempts))
             {
                 writer.WritePropertyName("maxDeliveryAttempts"u8);
                 writer.WriteNumberValue(MaxDeliveryAttempts.Value);
             }
-            if (EventTimeToLiveInMinutes.HasValue)
+            if (Optional.IsDefined(EventTimeToLiveInMinutes))
             {
                 writer.WritePropertyName("eventTimeToLiveInMinutes"u8);
                 writer.WriteNumberValue(EventTimeToLiveInMinutes.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventSubscriptionRetryPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventSubscriptionRetryPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventSubscriptionRetryPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

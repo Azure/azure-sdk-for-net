@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlConnectivityUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConnectivityType.HasValue)
+            if (Optional.IsDefined(ConnectivityType))
             {
                 writer.WritePropertyName("connectivityType"u8);
                 writer.WriteStringValue(ConnectivityType.Value.ToString());
             }
-            if (Port.HasValue)
+            if (Optional.IsDefined(Port))
             {
                 writer.WritePropertyName("port"u8);
                 writer.WriteNumberValue(Port.Value);
             }
-            if (SqlAuthUpdateUserName != null)
+            if (Optional.IsDefined(SqlAuthUpdateUserName))
             {
                 writer.WritePropertyName("sqlAuthUpdateUserName"u8);
                 writer.WriteStringValue(SqlAuthUpdateUserName);
             }
-            if (SqlAuthUpdatePassword != null)
+            if (Optional.IsDefined(SqlAuthUpdatePassword))
             {
                 writer.WritePropertyName("sqlAuthUpdatePassword"u8);
                 writer.WriteStringValue(SqlAuthUpdatePassword);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlConnectivityUpdateSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlConnectivityUpdateSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlConnectivityUpdateSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

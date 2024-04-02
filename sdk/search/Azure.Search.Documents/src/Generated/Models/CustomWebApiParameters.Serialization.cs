@@ -17,12 +17,12 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("uri"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (!(HttpHeaders is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpHeaders))
             {
                 writer.WritePropertyName("httpHeaders"u8);
                 writer.WriteStartObject();
@@ -33,17 +33,17 @@ namespace Azure.Search.Documents.Indexes.Models
                 }
                 writer.WriteEndObject();
             }
-            if (HttpMethod != null)
+            if (Optional.IsDefined(HttpMethod))
             {
                 writer.WritePropertyName("httpMethod"u8);
                 writer.WriteStringValue(HttpMethod);
             }
-            if (Timeout.HasValue)
+            if (Optional.IsDefined(Timeout))
             {
                 writer.WritePropertyName("timeout"u8);
                 writer.WriteStringValue(Timeout.Value, "P");
             }
-            if (AuthResourceId != null)
+            if (Optional.IsDefined(AuthResourceId))
             {
                 if (AuthResourceId != null)
                 {
@@ -55,12 +55,12 @@ namespace Azure.Search.Documents.Indexes.Models
                     writer.WriteNull("authResourceId");
                 }
             }
-            if (AuthIdentity != null)
+            if (Optional.IsDefined(AuthIdentity))
             {
                 if (AuthIdentity != null)
                 {
                     writer.WritePropertyName("authIdentity"u8);
-                    writer.WriteObjectValue(AuthIdentity);
+                    writer.WriteObjectValue<SearchIndexerDataIdentity>(AuthIdentity);
                 }
                 else
                 {

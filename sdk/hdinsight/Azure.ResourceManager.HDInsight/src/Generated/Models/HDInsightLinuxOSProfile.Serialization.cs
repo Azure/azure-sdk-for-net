@@ -22,24 +22,24 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightLinuxOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (SshProfile != null)
+            if (Optional.IsDefined(SshProfile))
             {
                 writer.WritePropertyName("sshProfile"u8);
-                writer.WriteObjectValue(SshProfile);
+                writer.WriteObjectValue<SshProfile>(SshProfile, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightLinuxOSProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightLinuxOSProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightLinuxOSProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

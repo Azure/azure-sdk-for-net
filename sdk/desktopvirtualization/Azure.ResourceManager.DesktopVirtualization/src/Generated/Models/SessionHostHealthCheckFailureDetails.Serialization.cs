@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostHealthCheckFailureDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && ErrorCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteNumberValue(ErrorCode.Value);
             }
-            if (options.Format != "W" && LastHealthCheckOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastHealthCheckOn))
             {
                 writer.WritePropertyName("lastHealthCheckDateTime"u8);
                 writer.WriteStringValue(LastHealthCheckOn.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<SessionHostHealthCheckFailureDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeSessionHostHealthCheckFailureDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SessionHostHealthCheckFailureDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

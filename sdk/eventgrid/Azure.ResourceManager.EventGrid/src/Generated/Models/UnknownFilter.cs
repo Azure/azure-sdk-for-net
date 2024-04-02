@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.EventGrid.Models
 {
-    /// <summary> The UnknownFilter. </summary>
+    /// <summary> Unknown version of Filter. </summary>
     internal partial class UnknownFilter : EventGridFilter
     {
         /// <summary> Initializes a new instance of <see cref="UnknownFilter"/>. </summary>

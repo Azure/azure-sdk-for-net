@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettingsLogScrubbing>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(ScrubbingRules is ChangeTrackingList<WebApplicationFirewallScrubbingRules> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ScrubbingRules))
             {
                 writer.WritePropertyName("scrubbingRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in ScrubbingRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebApplicationFirewallScrubbingRules>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolicySettingsLogScrubbing>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializePolicySettingsLogScrubbing(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolicySettingsLogScrubbing)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<FailoverWorkflowModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverWorkflowModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverWorkflowModelCustomProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(ProtectedItemDetails is ChangeTrackingList<FailoverProtectedItemProperties> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ProtectedItemDetails))
             {
                 writer.WritePropertyName("protectedItemDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProtectedItemDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FailoverProtectedItemProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("instanceType"u8);
             writer.WriteStringValue(InstanceType);
-            if (options.Format != "W" && !(AffectedObjectDetails is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(AffectedObjectDetails))
             {
                 writer.WritePropertyName("affectedObjectDetails"u8);
                 writer.WriteStartObject();
@@ -72,7 +72,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<FailoverWorkflowModelCustomProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FailoverWorkflowModelCustomProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FailoverWorkflowModelCustomProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FailoverWorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverWorkflowModelCustomProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeFailoverWorkflowModelCustomProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FailoverWorkflowModelCustomProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FailoverWorkflowModelCustomProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

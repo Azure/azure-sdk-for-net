@@ -74,10 +74,13 @@ namespace Azure.ResourceManager.Sql
         }
 
         /// <summary> User-defined description of the job. </summary>
+        [WirePath("properties.description")]
         public string Description { get; set; }
         /// <summary> The job version number. </summary>
+        [WirePath("properties.version")]
         public int? Version { get; }
         /// <summary> Schedule properties of the job. </summary>
+        [WirePath("properties.schedule")]
         public SqlServerJobSchedule Schedule { get; set; }
     }
 }

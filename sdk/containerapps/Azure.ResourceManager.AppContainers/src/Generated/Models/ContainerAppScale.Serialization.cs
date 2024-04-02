@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScale>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppScale)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScale)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MinReplicas.HasValue)
+            if (Optional.IsDefined(MinReplicas))
             {
                 writer.WritePropertyName("minReplicas"u8);
                 writer.WriteNumberValue(MinReplicas.Value);
             }
-            if (MaxReplicas.HasValue)
+            if (Optional.IsDefined(MaxReplicas))
             {
                 writer.WritePropertyName("maxReplicas"u8);
                 writer.WriteNumberValue(MaxReplicas.Value);
             }
-            if (!(Rules is ChangeTrackingList<ContainerAppScaleRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerAppScaleRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerAppScale>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerAppScale)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerAppScale)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppScale)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScale)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeContainerAppScale(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerAppScale)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerAppScale)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisEnvironmentReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSsisEnvironmentReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSsisEnvironmentReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id.HasValue)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteNumberValue(Id.Value);
             }
-            if (EnvironmentFolderName != null)
+            if (Optional.IsDefined(EnvironmentFolderName))
             {
                 writer.WritePropertyName("environmentFolderName"u8);
                 writer.WriteStringValue(EnvironmentFolderName);
             }
-            if (EnvironmentName != null)
+            if (Optional.IsDefined(EnvironmentName))
             {
                 writer.WritePropertyName("environmentName"u8);
                 writer.WriteStringValue(EnvironmentName);
             }
-            if (ReferenceType != null)
+            if (Optional.IsDefined(ReferenceType))
             {
                 writer.WritePropertyName("referenceType"u8);
                 writer.WriteStringValue(ReferenceType);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSsisEnvironmentReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSsisEnvironmentReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSsisEnvironmentReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSsisEnvironmentReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSsisEnvironmentReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseSsisEnvironmentReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSsisEnvironmentReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSsisEnvironmentReference)} does not support reading '{options.Format}' format.");
             }
         }
 

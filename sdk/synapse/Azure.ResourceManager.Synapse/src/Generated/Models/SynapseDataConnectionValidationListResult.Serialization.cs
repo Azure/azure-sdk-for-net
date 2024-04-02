@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDataConnectionValidationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDataConnectionValidationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDataConnectionValidationListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<SynapseDataConnectionValidationResult> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SynapseDataConnectionValidationResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseDataConnectionValidationListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseDataConnectionValidationListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseDataConnectionValidationListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDataConnectionValidationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDataConnectionValidationListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseDataConnectionValidationListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseDataConnectionValidationListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseDataConnectionValidationListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

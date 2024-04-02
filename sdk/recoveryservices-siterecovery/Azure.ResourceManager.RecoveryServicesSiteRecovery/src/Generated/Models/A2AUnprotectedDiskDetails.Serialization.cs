@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AUnprotectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DiskLunId.HasValue)
+            if (Optional.IsDefined(DiskLunId))
             {
                 writer.WritePropertyName("diskLunId"u8);
                 writer.WriteNumberValue(DiskLunId.Value);
             }
-            if (DiskAutoProtectionStatus.HasValue)
+            if (Optional.IsDefined(DiskAutoProtectionStatus))
             {
                 writer.WritePropertyName("diskAutoProtectionStatus"u8);
                 writer.WriteStringValue(DiskAutoProtectionStatus.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<A2AUnprotectedDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeA2AUnprotectedDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(A2AUnprotectedDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventGrid
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CaCertificateResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string caCertificateName, CaCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (caCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(caCertificateName));
-            }
-            if (caCertificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(caCertificateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(caCertificateName, nameof(caCertificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _caCertificateClientDiagnostics.CreateScope("CaCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CaCertificateResource> CreateOrUpdate(WaitUntil waitUntil, string caCertificateName, CaCertificateData data, CancellationToken cancellationToken = default)
         {
-            if (caCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(caCertificateName));
-            }
-            if (caCertificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(caCertificateName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(caCertificateName, nameof(caCertificateName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _caCertificateClientDiagnostics.CreateScope("CaCertificateCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> is null. </exception>
         public virtual async Task<Response<CaCertificateResource>> GetAsync(string caCertificateName, CancellationToken cancellationToken = default)
         {
-            if (caCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(caCertificateName));
-            }
-            if (caCertificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(caCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(caCertificateName, nameof(caCertificateName));
 
             using var scope = _caCertificateClientDiagnostics.CreateScope("CaCertificateCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> is null. </exception>
         public virtual Response<CaCertificateResource> Get(string caCertificateName, CancellationToken cancellationToken = default)
         {
-            if (caCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(caCertificateName));
-            }
-            if (caCertificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(caCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(caCertificateName, nameof(caCertificateName));
 
             using var scope = _caCertificateClientDiagnostics.CreateScope("CaCertificateCollection.Get");
             scope.Start();
@@ -366,14 +330,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string caCertificateName, CancellationToken cancellationToken = default)
         {
-            if (caCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(caCertificateName));
-            }
-            if (caCertificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(caCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(caCertificateName, nameof(caCertificateName));
 
             using var scope = _caCertificateClientDiagnostics.CreateScope("CaCertificateCollection.Exists");
             scope.Start();
@@ -416,14 +373,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> is null. </exception>
         public virtual Response<bool> Exists(string caCertificateName, CancellationToken cancellationToken = default)
         {
-            if (caCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(caCertificateName));
-            }
-            if (caCertificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(caCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(caCertificateName, nameof(caCertificateName));
 
             using var scope = _caCertificateClientDiagnostics.CreateScope("CaCertificateCollection.Exists");
             scope.Start();
@@ -466,14 +416,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> is null. </exception>
         public virtual async Task<NullableResponse<CaCertificateResource>> GetIfExistsAsync(string caCertificateName, CancellationToken cancellationToken = default)
         {
-            if (caCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(caCertificateName));
-            }
-            if (caCertificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(caCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(caCertificateName, nameof(caCertificateName));
 
             using var scope = _caCertificateClientDiagnostics.CreateScope("CaCertificateCollection.GetIfExists");
             scope.Start();
@@ -518,14 +461,7 @@ namespace Azure.ResourceManager.EventGrid
         /// <exception cref="ArgumentNullException"> <paramref name="caCertificateName"/> is null. </exception>
         public virtual NullableResponse<CaCertificateResource> GetIfExists(string caCertificateName, CancellationToken cancellationToken = default)
         {
-            if (caCertificateName == null)
-            {
-                throw new ArgumentNullException(nameof(caCertificateName));
-            }
-            if (caCertificateName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(caCertificateName));
-            }
+            Argument.AssertNotNullOrEmpty(caCertificateName, nameof(caCertificateName));
 
             using var scope = _caCertificateClientDiagnostics.CreateScope("CaCertificateCollection.GetIfExists");
             scope.Start();

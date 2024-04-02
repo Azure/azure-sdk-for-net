@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.Vision.ImageAnalysis
@@ -23,14 +22,14 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<CropRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CropRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CropRegion)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("aspectRatio"u8);
             writer.WriteNumberValue(AspectRatio);
             writer.WritePropertyName("boundingBox"u8);
-            writer.WriteObjectValue(BoundingBox);
+            writer.WriteObjectValue<ImageBoundingBox>(BoundingBox, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +53,7 @@ namespace Azure.AI.Vision.ImageAnalysis
             var format = options.Format == "W" ? ((IPersistableModel<CropRegion>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CropRegion)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CropRegion)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +102,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CropRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CropRegion)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +118,7 @@ namespace Azure.AI.Vision.ImageAnalysis
                         return DeserializeCropRegion(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CropRegion)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CropRegion)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -137,7 +136,7 @@ namespace Azure.AI.Vision.ImageAnalysis
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<CropRegion>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

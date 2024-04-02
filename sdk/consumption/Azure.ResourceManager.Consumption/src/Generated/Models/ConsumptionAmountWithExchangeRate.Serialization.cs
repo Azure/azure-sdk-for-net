@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ExchangeRate.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExchangeRate))
             {
                 writer.WritePropertyName("exchangeRate"u8);
                 writer.WriteNumberValue(ExchangeRate.Value);
             }
-            if (options.Format != "W" && ExchangeRateMonth.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExchangeRateMonth))
             {
                 writer.WritePropertyName("exchangeRateMonth"u8);
                 writer.WriteNumberValue(ExchangeRateMonth.Value);
             }
-            if (options.Format != "W" && Currency != null)
+            if (options.Format != "W" && Optional.IsDefined(Currency))
             {
                 writer.WritePropertyName("currency"u8);
                 writer.WriteStringValue(Currency);
             }
-            if (options.Format != "W" && Value.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Consumption.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConsumptionAmountWithExchangeRate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Consumption.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Consumption.Models
                         return DeserializeConsumptionAmountWithExchangeRate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConsumptionAmountWithExchangeRate)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -6,6 +6,7 @@
 #nullable disable
 
 using System.Text.Json;
+using Azure.Communication.CallingServer;
 using Azure.Core;
 
 namespace Azure.Communication
@@ -17,12 +18,12 @@ namespace Azure.Communication
             writer.WriteStartObject();
             writer.WritePropertyName("userId"u8);
             writer.WriteStringValue(UserId);
-            if (IsAnonymous.HasValue)
+            if (CallingServer.Optional.IsDefined(IsAnonymous))
             {
                 writer.WritePropertyName("isAnonymous"u8);
                 writer.WriteBooleanValue(IsAnonymous.Value);
             }
-            if (Cloud.HasValue)
+            if (CallingServer.Optional.IsDefined(Cloud))
             {
                 writer.WritePropertyName("cloud"u8);
                 writer.WriteStringValue(Cloud.Value.ToString());

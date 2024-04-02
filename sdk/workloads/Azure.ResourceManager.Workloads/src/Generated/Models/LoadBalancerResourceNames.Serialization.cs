@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LoadBalancerName != null)
+            if (Optional.IsDefined(LoadBalancerName))
             {
                 writer.WritePropertyName("loadBalancerName"u8);
                 writer.WriteStringValue(LoadBalancerName);
             }
-            if (!(FrontendIPConfigurationNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(FrontendIPConfigurationNames))
             {
                 writer.WritePropertyName("frontendIpConfigurationNames"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BackendPoolNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BackendPoolNames))
             {
                 writer.WritePropertyName("backendPoolNames"u8);
                 writer.WriteStartArray();
@@ -51,7 +51,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(HealthProbeNames is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(HealthProbeNames))
             {
                 writer.WritePropertyName("healthProbeNames"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadBalancerResourceNames>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeLoadBalancerResourceNames(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadBalancerResourceNames)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayServerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayServerPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,22 +38,22 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<EncryptionProperties>(Encryption, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
             var format = options.Format == "W" ? ((IPersistableModel<FluidRelayServerPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FluidRelayServerPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FluidRelayServerPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayServerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayServerPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.FluidRelay.Models
                         return DeserializeFluidRelayServerPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FluidRelayServerPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FluidRelayServerPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

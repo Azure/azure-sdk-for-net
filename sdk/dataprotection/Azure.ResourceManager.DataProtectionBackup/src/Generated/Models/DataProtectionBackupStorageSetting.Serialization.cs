@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupStorageSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DataStoreType.HasValue)
+            if (Optional.IsDefined(DataStoreType))
             {
                 writer.WritePropertyName("datastoreType"u8);
                 writer.WriteStringValue(DataStoreType.Value.ToString());
             }
-            if (StorageSettingType.HasValue)
+            if (Optional.IsDefined(StorageSettingType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(StorageSettingType.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupStorageSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupStorageSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupStorageSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

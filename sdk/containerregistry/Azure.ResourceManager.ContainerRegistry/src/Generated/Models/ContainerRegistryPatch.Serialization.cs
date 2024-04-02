@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
                 JsonSerializer.Serialize(writer, Identity);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<ContainerRegistrySku>(Sku, options);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsAdminUserEnabled.HasValue)
+            if (Optional.IsDefined(IsAdminUserEnabled))
             {
                 writer.WritePropertyName("adminUserEnabled"u8);
                 writer.WriteBooleanValue(IsAdminUserEnabled.Value);
             }
-            if (NetworkRuleSet != null)
+            if (Optional.IsDefined(NetworkRuleSet))
             {
                 writer.WritePropertyName("networkRuleSet"u8);
-                writer.WriteObjectValue(NetworkRuleSet);
+                writer.WriteObjectValue<ContainerRegistryNetworkRuleSet>(NetworkRuleSet, options);
             }
-            if (Policies != null)
+            if (Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies);
+                writer.WriteObjectValue<ContainerRegistryPolicies>(Policies, options);
             }
-            if (Encryption != null)
+            if (Optional.IsDefined(Encryption))
             {
                 writer.WritePropertyName("encryption"u8);
-                writer.WriteObjectValue(Encryption);
+                writer.WriteObjectValue<ContainerRegistryEncryption>(Encryption, options);
             }
-            if (IsDataEndpointEnabled.HasValue)
+            if (Optional.IsDefined(IsDataEndpointEnabled))
             {
                 writer.WritePropertyName("dataEndpointEnabled"u8);
                 writer.WriteBooleanValue(IsDataEndpointEnabled.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
             }
-            if (NetworkRuleBypassOptions.HasValue)
+            if (Optional.IsDefined(NetworkRuleBypassOptions))
             {
                 writer.WritePropertyName("networkRuleBypassOptions"u8);
                 writer.WriteStringValue(NetworkRuleBypassOptions.Value.ToString());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -290,7 +290,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

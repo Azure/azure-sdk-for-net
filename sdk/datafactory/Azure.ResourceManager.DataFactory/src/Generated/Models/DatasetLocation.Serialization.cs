@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatasetLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(DatasetLocationType);
-            if (FolderPath != null)
+            if (Optional.IsDefined(FolderPath))
             {
                 writer.WritePropertyName("folderPath"u8);
                 JsonSerializer.Serialize(writer, FolderPath);
             }
-            if (FileName != null)
+            if (Optional.IsDefined(FileName))
             {
                 writer.WritePropertyName("fileName"u8);
                 JsonSerializer.Serialize(writer, FileName);
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatasetLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatasetLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDatasetLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatasetLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatasetLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

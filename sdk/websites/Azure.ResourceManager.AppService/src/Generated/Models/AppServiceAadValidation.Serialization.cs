@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +24,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceAadValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAadValidation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (JwtClaimChecks != null)
+            if (Optional.IsDefined(JwtClaimChecks))
             {
                 writer.WritePropertyName("jwtClaimChecks"u8);
-                writer.WriteObjectValue(JwtClaimChecks);
+                writer.WriteObjectValue<JwtClaimChecks>(JwtClaimChecks, options);
             }
-            if (!(AllowedAudiences is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(AllowedAudiences))
             {
                 writer.WritePropertyName("allowedAudiences"u8);
                 writer.WriteStartArray();
@@ -41,10 +43,10 @@ namespace Azure.ResourceManager.AppService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultAuthorizationPolicy != null)
+            if (Optional.IsDefined(DefaultAuthorizationPolicy))
             {
                 writer.WritePropertyName("defaultAuthorizationPolicy"u8);
-                writer.WriteObjectValue(DefaultAuthorizationPolicy);
+                writer.WriteObjectValue<DefaultAuthorizationPolicy>(DefaultAuthorizationPolicy, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +71,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadValidation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceAadValidation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceAadValidation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,6 +134,84 @@ namespace Azure.ResourceManager.AppService.Models
             return new AppServiceAadValidation(jwtClaimChecks, allowedAudiences ?? new ChangeTrackingList<string>(), defaultAuthorizationPolicy, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(JwtClaimChecks), out propertyOverride);
+            if (Optional.IsDefined(JwtClaimChecks) || hasPropertyOverride)
+            {
+                builder.Append("  jwtClaimChecks: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, JwtClaimChecks, options, 2, false, "  jwtClaimChecks: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(AllowedAudiences), out propertyOverride);
+            if (Optional.IsCollectionDefined(AllowedAudiences) || hasPropertyOverride)
+            {
+                if (AllowedAudiences.Any() || hasPropertyOverride)
+                {
+                    builder.Append("  allowedAudiences: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in AllowedAudiences)
+                        {
+                            if (item == null)
+                            {
+                                builder.Append("null");
+                                continue;
+                            }
+                            if (item.Contains(Environment.NewLine))
+                            {
+                                builder.AppendLine("    '''");
+                                builder.AppendLine($"{item}'''");
+                            }
+                            else
+                            {
+                                builder.AppendLine($"    '{item}'");
+                            }
+                        }
+                        builder.AppendLine("  ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DefaultAuthorizationPolicy), out propertyOverride);
+            if (Optional.IsDefined(DefaultAuthorizationPolicy) || hasPropertyOverride)
+            {
+                builder.Append("  defaultAuthorizationPolicy: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, DefaultAuthorizationPolicy, options, 2, false, "  defaultAuthorizationPolicy: ");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppServiceAadValidation>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceAadValidation>)this).GetFormatFromOptions(options) : options.Format;
@@ -140,8 +220,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceAadValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAadValidation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +239,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeAppServiceAadValidation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceAadValidation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceAadValidation)} does not support reading '{options.Format}' format.");
             }
         }
 

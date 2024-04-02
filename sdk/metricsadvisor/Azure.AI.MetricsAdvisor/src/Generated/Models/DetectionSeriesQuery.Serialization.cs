@@ -23,7 +23,7 @@ namespace Azure.AI.MetricsAdvisor.Models
             writer.WriteStartArray();
             foreach (var item in Series)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<SeriesIdentity>(item);
             }
             writer.WriteEndArray();
             writer.WriteEndObject();

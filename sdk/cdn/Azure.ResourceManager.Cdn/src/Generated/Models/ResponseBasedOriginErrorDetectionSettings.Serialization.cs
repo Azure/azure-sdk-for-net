@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResponseBasedOriginErrorDetectionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ResponseBasedDetectedErrorType.HasValue)
+            if (Optional.IsDefined(ResponseBasedDetectedErrorType))
             {
                 writer.WritePropertyName("responseBasedDetectedErrorTypes"u8);
                 writer.WriteStringValue(ResponseBasedDetectedErrorType.Value.ToSerialString());
             }
-            if (ResponseBasedFailoverThresholdPercentage.HasValue)
+            if (Optional.IsDefined(ResponseBasedFailoverThresholdPercentage))
             {
                 writer.WritePropertyName("responseBasedFailoverThresholdPercentage"u8);
                 writer.WriteNumberValue(ResponseBasedFailoverThresholdPercentage.Value);
             }
-            if (!(HttpErrorRanges is ChangeTrackingList<HttpErrorRange> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(HttpErrorRanges))
             {
                 writer.WritePropertyName("httpErrorRanges"u8);
                 writer.WriteStartArray();
                 foreach (var item in HttpErrorRanges)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HttpErrorRange>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResponseBasedOriginErrorDetectionSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeResponseBasedOriginErrorDetectionSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResponseBasedOriginErrorDetectionSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

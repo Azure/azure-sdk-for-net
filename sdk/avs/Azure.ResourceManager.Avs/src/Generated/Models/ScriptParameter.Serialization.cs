@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptParameter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ParameterType.HasValue)
+            if (options.Format != "W" && Avs.Optional.IsDefined(ParameterType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ParameterType.Value.ToString());
             }
-            if (Name != null)
+            if (Avs.Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Description != null)
+            if (options.Format != "W" && Avs.Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (options.Format != "W" && Visibility.HasValue)
+            if (options.Format != "W" && Avs.Optional.IsDefined(Visibility))
             {
                 writer.WritePropertyName("visibility"u8);
                 writer.WriteStringValue(Visibility.Value.ToString());
             }
-            if (options.Format != "W" && Optional.HasValue)
+            if (options.Format != "W" && Avs.Optional.IsDefined(Optional))
             {
                 writer.WritePropertyName("optional"u8);
                 writer.WriteStringValue(Optional.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ScriptParameter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ScriptParameter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ScriptParameter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ScriptParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptParameter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeScriptParameter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ScriptParameter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ScriptParameter)} does not support reading '{options.Format}' format.");
             }
         }
 

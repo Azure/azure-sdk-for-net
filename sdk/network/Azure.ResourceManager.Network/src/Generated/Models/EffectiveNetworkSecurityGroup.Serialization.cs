@@ -23,31 +23,31 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NetworkSecurityGroup != null)
+            if (Optional.IsDefined(NetworkSecurityGroup))
             {
                 writer.WritePropertyName("networkSecurityGroup"u8);
                 JsonSerializer.Serialize(writer, NetworkSecurityGroup);
             }
-            if (Association != null)
+            if (Optional.IsDefined(Association))
             {
                 writer.WritePropertyName("association"u8);
-                writer.WriteObjectValue(Association);
+                writer.WriteObjectValue<EffectiveNetworkSecurityGroupAssociation>(Association, options);
             }
-            if (!(EffectiveSecurityRules is ChangeTrackingList<EffectiveNetworkSecurityRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EffectiveSecurityRules))
             {
                 writer.WritePropertyName("effectiveSecurityRules"u8);
                 writer.WriteStartArray();
                 foreach (var item in EffectiveSecurityRules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EffectiveNetworkSecurityRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TagToIPAddresses is ChangeTrackingDictionary<string, IList<string>> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(TagToIPAddresses))
             {
                 writer.WritePropertyName("tagMap"u8);
                 writer.WriteStartObject();
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<EffectiveNetworkSecurityGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -206,7 +206,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeEffectiveNetworkSecurityGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EffectiveNetworkSecurityGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

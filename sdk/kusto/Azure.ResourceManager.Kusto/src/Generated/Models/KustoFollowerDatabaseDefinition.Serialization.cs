@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,17 +30,17 @@ namespace Azure.ResourceManager.Kusto.Models
             writer.WriteStringValue(ClusterResourceId);
             writer.WritePropertyName("attachedDatabaseConfigurationName"u8);
             writer.WriteStringValue(AttachedDatabaseConfigurationName);
-            if (options.Format != "W" && DatabaseName != null)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (options.Format != "W" && TableLevelSharingProperties != null)
+            if (options.Format != "W" && Optional.IsDefined(TableLevelSharingProperties))
             {
                 writer.WritePropertyName("tableLevelSharingProperties"u8);
-                writer.WriteObjectValue(TableLevelSharingProperties);
+                writer.WriteObjectValue<KustoDatabaseTableLevelSharingProperties>(TableLevelSharingProperties, options);
             }
-            if (options.Format != "W" && DatabaseShareOrigin.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DatabaseShareOrigin))
             {
                 writer.WritePropertyName("databaseShareOrigin"u8);
                 writer.WriteStringValue(DatabaseShareOrigin.Value.ToString());
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Kusto.Models
             var format = options.Format == "W" ? ((IPersistableModel<KustoFollowerDatabaseDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.Kusto.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.Kusto.Models
                         return DeserializeKustoFollowerDatabaseDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoFollowerDatabaseDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

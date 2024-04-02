@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DpmErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DpmErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DpmErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ErrorString != null)
+            if (Optional.IsDefined(ErrorString))
             {
                 writer.WritePropertyName("errorString"u8);
                 writer.WriteStringValue(ErrorString);
             }
-            if (!(Recommendations is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Recommendations))
             {
                 writer.WritePropertyName("recommendations"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DpmErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DpmErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DpmErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DpmErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DpmErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeDpmErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DpmErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DpmErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

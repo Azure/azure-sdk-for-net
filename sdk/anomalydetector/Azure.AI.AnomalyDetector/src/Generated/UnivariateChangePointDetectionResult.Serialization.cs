@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.AnomalyDetector
@@ -23,16 +22,16 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Period.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Period))
             {
                 writer.WritePropertyName("period"u8);
                 writer.WriteNumberValue(Period.Value);
             }
-            if (!(IsChangePoint is ChangeTrackingList<bool> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IsChangePoint))
             {
                 writer.WritePropertyName("isChangePoint"u8);
                 writer.WriteStartArray();
@@ -42,7 +41,7 @@ namespace Azure.AI.AnomalyDetector
                 }
                 writer.WriteEndArray();
             }
-            if (!(ConfidenceScores is ChangeTrackingList<float> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ConfidenceScores))
             {
                 writer.WritePropertyName("confidenceScores"u8);
                 writer.WriteStartArray();
@@ -75,7 +74,7 @@ namespace Azure.AI.AnomalyDetector
             var format = options.Format == "W" ? ((IPersistableModel<UnivariateChangePointDetectionResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +151,7 @@ namespace Azure.AI.AnomalyDetector
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +167,7 @@ namespace Azure.AI.AnomalyDetector
                         return DeserializeUnivariateChangePointDetectionResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UnivariateChangePointDetectionResult)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -186,7 +185,7 @@ namespace Azure.AI.AnomalyDetector
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UnivariateChangePointDetectionResult>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

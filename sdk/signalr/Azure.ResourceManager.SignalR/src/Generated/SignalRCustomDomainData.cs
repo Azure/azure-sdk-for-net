@@ -58,14 +58,8 @@ namespace Azure.ResourceManager.SignalR
         /// <exception cref="ArgumentNullException"> <paramref name="domainName"/> or <paramref name="customCertificate"/> is null. </exception>
         public SignalRCustomDomainData(string domainName, WritableSubResource customCertificate)
         {
-            if (domainName == null)
-            {
-                throw new ArgumentNullException(nameof(domainName));
-            }
-            if (customCertificate == null)
-            {
-                throw new ArgumentNullException(nameof(customCertificate));
-            }
+            Argument.AssertNotNull(domainName, nameof(domainName));
+            Argument.AssertNotNull(customCertificate, nameof(customCertificate));
 
             DomainName = domainName;
             CustomCertificate = customCertificate;
@@ -94,12 +88,15 @@ namespace Azure.ResourceManager.SignalR
         }
 
         /// <summary> Provisioning state of the resource. </summary>
+        [WirePath("properties.provisioningState")]
         public SignalRProvisioningState? ProvisioningState { get; }
         /// <summary> The custom domain name. </summary>
+        [WirePath("properties.domainName")]
         public string DomainName { get; set; }
         /// <summary> Reference to a resource. </summary>
         internal WritableSubResource CustomCertificate { get; set; }
         /// <summary> Gets or sets Id. </summary>
+        [WirePath("properties.customCertificate.id")]
         public ResourceIdentifier CustomCertificateId
         {
             get => CustomCertificate is null ? default : CustomCertificate.Id;

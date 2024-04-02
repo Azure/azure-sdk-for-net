@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IdentityType.HasValue)
+            if (Optional.IsDefined(IdentityType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(IdentityType.Value.ToString());
             }
-            if (UserAssignedIdentity != null)
+            if (Optional.IsDefined(UserAssignedIdentity))
             {
                 writer.WritePropertyName("userAssignedIdentity"u8);
                 writer.WriteStringValue(UserAssignedIdentity);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingIdentityInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeRoutingIdentityInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingIdentityInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

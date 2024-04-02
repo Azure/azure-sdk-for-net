@@ -19,18 +19,9 @@ namespace Azure.Communication.Identity.Models
         /// <exception cref="ArgumentNullException"> <paramref name="token"/>, <paramref name="appId"/> or <paramref name="userId"/> is null. </exception>
         public TeamsUserExchangeTokenRequest(string token, string appId, string userId)
         {
-            if (token == null)
-            {
-                throw new ArgumentNullException(nameof(token));
-            }
-            if (appId == null)
-            {
-                throw new ArgumentNullException(nameof(appId));
-            }
-            if (userId == null)
-            {
-                throw new ArgumentNullException(nameof(userId));
-            }
+            Argument.AssertNotNull(token, nameof(token));
+            Argument.AssertNotNull(appId, nameof(appId));
+            Argument.AssertNotNull(userId, nameof(userId));
 
             Token = token;
             AppId = appId;

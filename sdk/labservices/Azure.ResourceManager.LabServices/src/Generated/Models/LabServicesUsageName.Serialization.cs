@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LocalizedValue != null)
+            if (Optional.IsDefined(LocalizedValue))
             {
                 writer.WritePropertyName("localizedValue"u8);
                 writer.WriteStringValue(LocalizedValue);
             }
-            if (!(SkuInstances is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SkuInstances))
             {
                 writer.WritePropertyName("skuInstances"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.LabServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<LabServicesUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.LabServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.LabServices.Models
                         return DeserializeLabServicesUsageName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LabServicesUsageName)} does not support reading '{options.Format}' format.");
             }
         }
 

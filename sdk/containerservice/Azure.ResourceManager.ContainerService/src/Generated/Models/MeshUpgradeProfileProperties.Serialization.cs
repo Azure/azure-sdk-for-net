@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Revision != null)
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteStringValue(Revision);
             }
-            if (!(Upgrades is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Upgrades))
             {
                 writer.WritePropertyName("upgrades"u8);
                 writer.WriteStartArray();
@@ -41,13 +41,13 @@ namespace Azure.ResourceManager.ContainerService.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(CompatibleWith is ChangeTrackingList<CompatibleVersions> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(CompatibleWith))
             {
                 writer.WritePropertyName("compatibleWith"u8);
                 writer.WriteStartArray();
                 foreach (var item in CompatibleWith)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CompatibleVersions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MeshUpgradeProfileProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeMeshUpgradeProfileProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MeshUpgradeProfileProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

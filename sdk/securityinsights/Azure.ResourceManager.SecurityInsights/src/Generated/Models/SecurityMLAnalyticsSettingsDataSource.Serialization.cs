@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityMLAnalyticsSettingsDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConnectorId != null)
+            if (Optional.IsDefined(ConnectorId))
             {
                 writer.WritePropertyName("connectorId"u8);
                 writer.WriteStringValue(ConnectorId);
             }
-            if (!(DataTypes is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataTypes))
             {
                 writer.WritePropertyName("dataTypes"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityMLAnalyticsSettingsDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityMLAnalyticsSettingsDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityMLAnalyticsSettingsDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<SshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SshPublicKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (KeyData != null)
+            if (Optional.IsDefined(KeyData))
             {
                 writer.WritePropertyName("keyData"u8);
                 writer.WriteStringValue(KeyData);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<SshPublicKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SshPublicKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SshPublicKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshPublicKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeSshPublicKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SshPublicKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SshPublicKey)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -90,6 +90,10 @@ directive:
     where: $.definitions.FieldValue
     transform: >
       $.properties.valueObject.additionalProperties["x-nullable"] = true;
+  - from: swagger-document
+    where: $.definitions.FormFieldsReport
+    transform: >
+      $.properties.accuracy["x-nullable"] = true;
 
 # Rename duplicated types
   - from: swagger-document

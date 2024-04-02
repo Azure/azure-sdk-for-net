@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(EventHandlers is ChangeTrackingList<WebPubSubEventHandler> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHandlers))
             {
                 writer.WritePropertyName("eventHandlers"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventHandlers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WebPubSubEventHandler>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AnonymousConnectPolicy != null)
+            if (Optional.IsDefined(AnonymousConnectPolicy))
             {
                 writer.WritePropertyName("anonymousConnectPolicy"u8);
                 writer.WriteStringValue(AnonymousConnectPolicy);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubHubProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.WebPubSub.Models
                         return DeserializeWebPubSubHubProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubHubProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -38,7 +38,7 @@ namespace Azure.Storage.Sas
         private (AccountSasResourceTypes? Parsed, string Raw) _resourceTypes;
 
         // spr
-        private SasProtocol _protocol;
+        private (SasProtocol? Parsed, string Raw) _protocol;
 
         // st
         private DateTimeOffset _startTime;
@@ -119,7 +119,8 @@ namespace Azure.Storage.Sas
         /// Optional. Specifies the protocol permitted for a request made with
         /// the shared access signature.
         /// </summary>
-        public SasProtocol Protocol => _protocol;
+        public SasProtocol Protocol => _protocol.Parsed ?? SasExtensions.ParseProtocol(_protocol.Raw);
+        private string ProtocolAsString => _protocol.Raw ?? _protocol.Parsed?.ToProtocolString();
 
         /// <summary>
         /// Gets the optional time at which the shared access signature becomes
@@ -285,7 +286,7 @@ namespace Azure.Storage.Sas
                         _resourceTypes = (SasExtensions.ParseResourceTypes(kv.Value), kv.Value);
                         break;
                     case Constants.Sas.Parameters.ProtocolUpper:
-                        _protocol = SasExtensions.ParseProtocol(kv.Value);
+                        _protocol = (SasExtensions.ParseProtocol(kv.Value), kv.Value);
                         break;
                     case Constants.Sas.Parameters.StartTimeUpper:
                         _startTimeString = kv.Value;
@@ -384,7 +385,7 @@ namespace Azure.Storage.Sas
             _version = version;
             _services = (services, services?.ToPermissionsString());
             _resourceTypes = (resourceTypes, resourceTypes?.ToPermissionsString());
-            _protocol = protocol;
+            _protocol = (protocol, protocol.ToProtocolString());
             _startTime = startsOn;
             _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
             _expiryTime = expiresOn;
@@ -431,7 +432,7 @@ namespace Azure.Storage.Sas
             _version = version;
             _services = (services, services?.ToPermissionsString());
             _resourceTypes = (resourceTypes, resourceTypes?.ToPermissionsString());
-            _protocol = protocol;
+            _protocol = (protocol, SasExtensions.ToProtocolString(protocol));
             _startTime = startsOn;
             _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
             _expiryTime = expiresOn;
@@ -481,7 +482,7 @@ namespace Azure.Storage.Sas
             _version = version;
             _services = (services, services?.ToPermissionsString());
             _resourceTypes = (resourceTypes, resourceTypes?.ToPermissionsString());
-            _protocol = protocol;
+            _protocol = (protocol, SasExtensions.ToProtocolString(protocol));
             _startTime = startsOn;
             _startTimeString = startsOn.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
             _expiryTime = expiresOn;
@@ -682,9 +683,9 @@ namespace Azure.Storage.Sas
                 stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.ResourceTypes, _resourceTypes.Raw);
             }
 
-            if (Protocol != default)
+            if (!string.IsNullOrEmpty(ProtocolAsString))
             {
-                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Protocol, Protocol.ToProtocolString());
+                stringBuilder.AppendQueryParameter(Constants.Sas.Parameters.Protocol, ProtocolAsString);
             }
 
             if (StartsOn != DateTimeOffset.MinValue)

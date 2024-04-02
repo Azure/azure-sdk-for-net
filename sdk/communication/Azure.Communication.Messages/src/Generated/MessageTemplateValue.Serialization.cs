@@ -8,7 +8,6 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.Communication.Messages
@@ -23,14 +22,14 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
             writer.WritePropertyName("kind"u8);
-            writer.WriteStringValue(Kind);
+            writer.WriteStringValue(Kind.ToString());
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -54,7 +53,7 @@ namespace Azure.Communication.Messages
             var format = options.Format == "W" ? ((IPersistableModel<MessageTemplateValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -73,12 +72,12 @@ namespace Azure.Communication.Messages
             {
                 switch (discriminator.GetString())
                 {
-                    case "text": return MessageTemplateText.DeserializeMessageTemplateText(element, options);
-                    case "image": return MessageTemplateImage.DeserializeMessageTemplateImage(element, options);
                     case "document": return MessageTemplateDocument.DeserializeMessageTemplateDocument(element, options);
-                    case "video": return MessageTemplateVideo.DeserializeMessageTemplateVideo(element, options);
+                    case "image": return MessageTemplateImage.DeserializeMessageTemplateImage(element, options);
                     case "location": return MessageTemplateLocation.DeserializeMessageTemplateLocation(element, options);
                     case "quickAction": return MessageTemplateQuickAction.DeserializeMessageTemplateQuickAction(element, options);
+                    case "text": return MessageTemplateText.DeserializeMessageTemplateText(element, options);
+                    case "video": return MessageTemplateVideo.DeserializeMessageTemplateVideo(element, options);
                 }
             }
             return UnknownMessageTemplateValue.DeserializeUnknownMessageTemplateValue(element, options);
@@ -93,7 +92,7 @@ namespace Azure.Communication.Messages
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -109,7 +108,7 @@ namespace Azure.Communication.Messages
                         return DeserializeMessageTemplateValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTemplateValue)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -127,7 +126,7 @@ namespace Azure.Communication.Messages
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTemplateValue>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

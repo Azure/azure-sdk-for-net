@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AlertSettingsForAllJobFailures.HasValue)
+            if (Optional.IsDefined(AlertSettingsForAllJobFailures))
             {
                 writer.WritePropertyName("alertsForAllJobFailures"u8);
                 writer.WriteStringValue(AlertSettingsForAllJobFailures.Value.ToString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureMonitorAlertSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeAzureMonitorAlertSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMonitorAlertSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.AppService.Models
         /// <exception cref="ArgumentNullException"> <paramref name="targetSlot"/> is null. </exception>
         public CsmSlotEntity(string targetSlot, bool preserveVnet)
         {
-            if (targetSlot == null)
-            {
-                throw new ArgumentNullException(nameof(targetSlot));
-            }
+            Argument.AssertNotNull(targetSlot, nameof(targetSlot));
 
             TargetSlot = targetSlot;
             PreserveVnet = preserveVnet;
@@ -77,8 +74,10 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Destination deployment slot during swap operation. </summary>
+        [WirePath("targetSlot")]
         public string TargetSlot { get; }
         /// <summary> &lt;code&gt;true&lt;/code&gt; to preserve Virtual Network to the slot during swap; otherwise, &lt;code&gt;false&lt;/code&gt;. </summary>
+        [WirePath("preserveVnet")]
         public bool PreserveVnet { get; }
     }
 }

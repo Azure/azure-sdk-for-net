@@ -22,39 +22,39 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastFilter)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(And is ChangeTrackingList<ForecastFilter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(And))
             {
                 writer.WritePropertyName("and"u8);
                 writer.WriteStartArray();
                 foreach (var item in And)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ForecastFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Or is ChangeTrackingList<ForecastFilter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Or))
             {
                 writer.WritePropertyName("or"u8);
                 writer.WriteStartArray();
                 foreach (var item in Or)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ForecastFilter>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Dimensions != null)
+            if (Optional.IsDefined(Dimensions))
             {
                 writer.WritePropertyName("dimensions"u8);
-                writer.WriteObjectValue(Dimensions);
+                writer.WriteObjectValue<ForecastComparisonExpression>(Dimensions, options);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
-                writer.WriteObjectValue(Tags);
+                writer.WriteObjectValue<ForecastComparisonExpression>(Tags, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.CostManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForecastFilter>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForecastFilter)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForecastFilter)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForecastFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastFilter)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.CostManagement.Models
                         return DeserializeForecastFilter(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForecastFilter)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForecastFilter)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -10,7 +10,6 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -133,7 +132,7 @@ namespace Azure.Communication.Rooms
             }
             var model = updateParticipantsRequest;
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(model);
+            content.JsonWriter.WriteObjectValue<UpdateParticipantsRequest>(model);
             request.Content = content;
             return message;
         }

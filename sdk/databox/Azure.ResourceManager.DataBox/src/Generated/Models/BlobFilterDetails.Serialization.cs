@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobFilterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobFilterDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(BlobPrefixList is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BlobPrefixList))
             {
                 writer.WritePropertyName("blobPrefixList"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BlobPathList is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BlobPathList))
             {
                 writer.WritePropertyName("blobPathList"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(ContainerList is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ContainerList))
             {
                 writer.WritePropertyName("containerList"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<BlobFilterDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BlobFilterDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BlobFilterDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BlobFilterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobFilterDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeBlobFilterDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BlobFilterDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BlobFilterDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayClientAuthConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VerifyClientCertIssuerDN.HasValue)
+            if (Optional.IsDefined(VerifyClientCertIssuerDN))
             {
                 writer.WritePropertyName("verifyClientCertIssuerDN"u8);
                 writer.WriteBooleanValue(VerifyClientCertIssuerDN.Value);
             }
-            if (VerifyClientRevocation.HasValue)
+            if (Optional.IsDefined(VerifyClientRevocation))
             {
                 writer.WritePropertyName("verifyClientRevocation"u8);
                 writer.WriteStringValue(VerifyClientRevocation.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApplicationGatewayClientAuthConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeApplicationGatewayClientAuthConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApplicationGatewayClientAuthConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

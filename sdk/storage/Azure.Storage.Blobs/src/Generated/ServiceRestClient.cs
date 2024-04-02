@@ -11,10 +11,10 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
+using Azure.Storage.Common;
 
 namespace Azure.Storage.Blobs
 {
@@ -274,7 +274,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && !(include is ChangeTrackingList<ListContainersIncludeType> changeTrackingList && changeTrackingList.IsUndefined))
+            if (include != null && !(include is Common.ChangeTrackingList<ListContainersIncludeType> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }
@@ -595,7 +595,7 @@ namespace Azure.Storage.Blobs
             {
                 uri.AppendQuery("maxresults", maxresults.Value, true);
             }
-            if (include != null && !(include is ChangeTrackingList<FilterBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
+            if (include != null && !(include is Common.ChangeTrackingList<FilterBlobsIncludeItem> changeTrackingList && changeTrackingList.IsUndefined))
             {
                 uri.AppendQueryDelimited("include", include, ",", true);
             }

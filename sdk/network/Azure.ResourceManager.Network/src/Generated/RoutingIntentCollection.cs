@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<RoutingIntentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string routingIntentName, RoutingIntentData data, CancellationToken cancellationToken = default)
         {
-            if (routingIntentName == null)
-            {
-                throw new ArgumentNullException(nameof(routingIntentName));
-            }
-            if (routingIntentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routingIntentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<RoutingIntentResource> CreateOrUpdate(WaitUntil waitUntil, string routingIntentName, RoutingIntentData data, CancellationToken cancellationToken = default)
         {
-            if (routingIntentName == null)
-            {
-                throw new ArgumentNullException(nameof(routingIntentName));
-            }
-            if (routingIntentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routingIntentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
         public virtual async Task<Response<RoutingIntentResource>> GetAsync(string routingIntentName, CancellationToken cancellationToken = default)
         {
-            if (routingIntentName == null)
-            {
-                throw new ArgumentNullException(nameof(routingIntentName));
-            }
-            if (routingIntentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routingIntentName));
-            }
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
             using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
         public virtual Response<RoutingIntentResource> Get(string routingIntentName, CancellationToken cancellationToken = default)
         {
-            if (routingIntentName == null)
-            {
-                throw new ArgumentNullException(nameof(routingIntentName));
-            }
-            if (routingIntentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routingIntentName));
-            }
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
             using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string routingIntentName, CancellationToken cancellationToken = default)
         {
-            if (routingIntentName == null)
-            {
-                throw new ArgumentNullException(nameof(routingIntentName));
-            }
-            if (routingIntentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routingIntentName));
-            }
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
             using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
         public virtual Response<bool> Exists(string routingIntentName, CancellationToken cancellationToken = default)
         {
-            if (routingIntentName == null)
-            {
-                throw new ArgumentNullException(nameof(routingIntentName));
-            }
-            if (routingIntentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routingIntentName));
-            }
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
             using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
         public virtual async Task<NullableResponse<RoutingIntentResource>> GetIfExistsAsync(string routingIntentName, CancellationToken cancellationToken = default)
         {
-            if (routingIntentName == null)
-            {
-                throw new ArgumentNullException(nameof(routingIntentName));
-            }
-            if (routingIntentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routingIntentName));
-            }
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
             using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="routingIntentName"/> is null. </exception>
         public virtual NullableResponse<RoutingIntentResource> GetIfExists(string routingIntentName, CancellationToken cancellationToken = default)
         {
-            if (routingIntentName == null)
-            {
-                throw new ArgumentNullException(nameof(routingIntentName));
-            }
-            if (routingIntentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(routingIntentName));
-            }
+            Argument.AssertNotNullOrEmpty(routingIntentName, nameof(routingIntentName));
 
             using var scope = _routingIntentClientDiagnostics.CreateScope("RoutingIntentCollection.GetIfExists");
             scope.Start();

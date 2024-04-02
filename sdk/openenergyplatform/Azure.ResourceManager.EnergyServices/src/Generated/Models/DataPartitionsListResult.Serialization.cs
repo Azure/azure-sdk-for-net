@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartitionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(DataPartitionInfo is ChangeTrackingList<DataPartition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DataPartitionInfo))
             {
                 writer.WritePropertyName("dataPartitionInfo"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataPartitionInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataPartition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataPartitionsListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EnergyServices.Models
                         return DeserializeDataPartitionsListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataPartitionsListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

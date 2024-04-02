@@ -17,7 +17,7 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartObject();
             writer.WritePropertyName("ssmlText"u8);
             writer.WriteStringValue(SsmlText);
-            if (CustomVoiceEndpointId != null)
+            if (Optional.IsDefined(CustomVoiceEndpointId))
             {
                 writer.WritePropertyName("customVoiceEndpointId"u8);
                 writer.WriteStringValue(CustomVoiceEndpointId);

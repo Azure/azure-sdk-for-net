@@ -21,7 +21,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type.ToString());
             writer.WritePropertyName("referenceName"u8);
-            writer.WriteObjectValue(ReferenceName);
+            writer.WriteObjectValue<object>(ReferenceName);
             writer.WriteEndObject();
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, SynapseNotebookReference model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<SynapseNotebookReference>(model);
             }
             public override SynapseNotebookReference Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {
