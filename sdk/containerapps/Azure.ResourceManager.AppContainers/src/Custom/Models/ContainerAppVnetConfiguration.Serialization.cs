@@ -15,7 +15,10 @@ namespace Azure.ResourceManager.AppContainers.Models
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         internal static void DeserializeInfrastructureSubnetIdValue(JsonProperty property, ref ResourceIdentifier infrastructureSubnetId)
         {
-            if (property.Value.ValueKind != JsonValueKind.Null && !string.IsNullOrEmpty(property.Value.GetString()))
+            if (property.Value.ValueKind == JsonValueKind.Null)
+            	return;
+            var str = property.Value.GetString();
+            if (!string.IsNullOrEmpty(str))
             {
                 infrastructureSubnetId = new ResourceIdentifier(property.Value.GetString());
             }
