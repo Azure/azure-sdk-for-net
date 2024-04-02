@@ -46,7 +46,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="url"> Request URL with all query string parameters. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal RequestData(int version, IDictionary<string, object> additionalProperties, string id, string name, string duration, bool success, string responseCode, string source, string url, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal RequestData(int version, IDictionary<string, BinaryData> additionalProperties, string id, string name, string duration, bool success, string responseCode, string source, string url, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
         {
             Id = id;
             Name = name;

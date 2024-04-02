@@ -33,7 +33,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="severityLevel"> Trace severity level. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal MessageData(int version, IDictionary<string, object> additionalProperties, string message, SeverityLevel? severityLevel, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal MessageData(int version, IDictionary<string, BinaryData> additionalProperties, string message, SeverityLevel? severityLevel, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
         {
             Message = message;
             SeverityLevel = severityLevel;

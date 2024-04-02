@@ -39,7 +39,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="referredUri"> Fully qualified page URI or URL of the referring page; if unknown, leave blank. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal PageViewData(int version, IDictionary<string, object> additionalProperties, string id, string name, string url, string duration, string referredUri, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal PageViewData(int version, IDictionary<string, BinaryData> additionalProperties, string id, string name, string url, string duration, string referredUri, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
         {
             Id = id;
             Name = name;

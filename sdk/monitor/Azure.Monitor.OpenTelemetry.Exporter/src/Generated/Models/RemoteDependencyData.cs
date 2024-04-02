@@ -42,7 +42,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="success"> Indication of successful or unsuccessful call. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal RemoteDependencyData(int version, IDictionary<string, object> additionalProperties, string id, string name, string resultCode, string data, string type, string target, string duration, bool? success, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal RemoteDependencyData(int version, IDictionary<string, BinaryData> additionalProperties, string id, string name, string resultCode, string data, string type, string target, string duration, bool? success, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
         {
             Id = id;
             Name = name;

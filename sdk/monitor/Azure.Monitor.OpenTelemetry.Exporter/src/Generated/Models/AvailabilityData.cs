@@ -45,7 +45,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="message"> Diagnostic message for the result. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal AvailabilityData(int version, IDictionary<string, object> additionalProperties, string id, string name, string duration, bool success, string runLocation, string message, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal AvailabilityData(int version, IDictionary<string, BinaryData> additionalProperties, string id, string name, string duration, bool success, string runLocation, string message, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
         {
             Id = id;
             Name = name;

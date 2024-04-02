@@ -43,7 +43,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="domProcessing"> DOM processing time in TimeSpan 'G' (general long) format: d:hh:mm:ss.fffffff. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal PageViewPerfData(int version, IDictionary<string, object> additionalProperties, string id, string name, string url, string duration, string perfTotal, string networkConnect, string sentRequest, string receivedResponse, string domProcessing, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal PageViewPerfData(int version, IDictionary<string, BinaryData> additionalProperties, string id, string name, string url, string duration, string perfTotal, string networkConnect, string sentRequest, string receivedResponse, string domProcessing, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
         {
             Id = id;
             Name = name;

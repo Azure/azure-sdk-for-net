@@ -35,7 +35,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="problemId"> Identifier of where the exception was thrown in code. Used for exceptions grouping. Typically a combination of exception type and a function from the call stack. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal TelemetryExceptionData(int version, IDictionary<string, object> additionalProperties, IList<TelemetryExceptionDetails> exceptions, SeverityLevel? severityLevel, string problemId, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal TelemetryExceptionData(int version, IDictionary<string, BinaryData> additionalProperties, IList<TelemetryExceptionDetails> exceptions, SeverityLevel? severityLevel, string problemId, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
         {
             Exceptions = exceptions;
             SeverityLevel = severityLevel;

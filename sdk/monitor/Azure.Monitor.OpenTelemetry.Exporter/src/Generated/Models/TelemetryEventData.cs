@@ -32,7 +32,7 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
         /// <param name="name"> Event name. Keep it low cardinality to allow proper grouping and useful metrics. </param>
         /// <param name="properties"> Collection of custom properties. </param>
         /// <param name="measurements"> Collection of custom measurements. </param>
-        internal TelemetryEventData(int version, IDictionary<string, object> additionalProperties, string name, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
+        internal TelemetryEventData(int version, IDictionary<string, BinaryData> additionalProperties, string name, IDictionary<string, string> properties, IDictionary<string, double> measurements) : base(version, additionalProperties)
         {
             Name = name;
             Properties = properties;
