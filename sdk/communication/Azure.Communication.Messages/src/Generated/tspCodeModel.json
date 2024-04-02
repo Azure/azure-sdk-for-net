@@ -201,7 +201,7 @@
    ],
    "Namespace": "Azure.Communication.MessagesService",
    "Description": "Azure Communication Messages Versions",
-   "IsExtensible": true,
+   "IsExtensible": false,
    "IsNullable": false,
    "Usage": "None"
   }
