@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.NetworkFunction.Models
             IngestionType? ingestionType = default;
             IList<IngestionSourcesPropertiesFormat> ingestionSources = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("ingestionType"u8))
@@ -110,10 +110,10 @@ namespace Azure.ResourceManager.NetworkFunction.Models
                 }
                 if (options.Format != "W")
                 {
-                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = additionalPropertiesDictionary;
+            serializedAdditionalRawData = rawDataDictionary;
             return new IngestionPolicyPropertiesFormat(ingestionType, ingestionSources ?? new ChangeTrackingList<IngestionSourcesPropertiesFormat>(), serializedAdditionalRawData);
         }
 
