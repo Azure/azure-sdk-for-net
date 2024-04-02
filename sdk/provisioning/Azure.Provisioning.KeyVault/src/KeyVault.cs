@@ -59,6 +59,7 @@ namespace Azure.Provisioning.KeyVaults
                             }
                         })
                     } : default,
+                    networkRuleSet: new KeyVaultNetworkRuleSet(),
                     enableRbacAuthorization: true)))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));

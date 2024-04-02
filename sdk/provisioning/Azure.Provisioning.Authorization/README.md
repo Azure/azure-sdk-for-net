@@ -1,6 +1,6 @@
 # Azure Provisioning client library for .NET
 
-Azure.Provisioning.Authorization is a cloud development kit that allows you to declaratively specify your Azure infrastructure natively in .NET.
+Azure.Provisioning.Authorization simplifies declarative resource provisioning in .NET for Azure App Configuration.
 
 ## Getting started
 
