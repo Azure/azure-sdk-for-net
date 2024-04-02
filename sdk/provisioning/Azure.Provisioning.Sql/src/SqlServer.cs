@@ -57,16 +57,6 @@ namespace Azure.Provisioning.Sql
             {
                 AssignProperty(data => data.AdministratorLoginPassword, administratorPassword.Value);
             }
-            // if (administrator != null)
-            // {
-            //     AssignProperty(data => data.Administrators.Login, administrator.Value.LoginName);
-            //     AssignProperty(data => data.Administrators.Sid, administrator.Value.ObjectId);
-            //     AssignProperty(data => data.Administrators.AdministratorType, "'ActiveDirectory'");
-            //     if (scope.Root.Properties.TenantId == Guid.Empty)
-            //     {
-            //         AssignProperty(data => data.Administrators.TenantId, Tenant.TenantIdExpression);
-            //     }
-            // }
         }
 
         private SqlServer(
