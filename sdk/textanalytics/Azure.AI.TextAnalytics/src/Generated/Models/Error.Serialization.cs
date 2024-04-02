@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
@@ -43,7 +44,14 @@ namespace Azure.AI.TextAnalytics.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue<object>(item.Value);
+#if NET6_0_OR_GREATER
+				writer.WriteRawValue(item.Value);
+#else
+                using (JsonDocument document = JsonDocument.Parse(item.Value))
+                {
+                    JsonSerializer.Serialize(writer, document.RootElement);
+                }
+#endif
             }
             writer.WriteEndObject();
         }
@@ -59,8 +67,8 @@ namespace Azure.AI.TextAnalytics.Models
             string target = default;
             IList<Error> details = default;
             InnerErrorModel innererror = default;
-            IDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -101,7 +109,7 @@ namespace Azure.AI.TextAnalytics.Models
                     innererror = InnerErrorModel.DeserializeInnerErrorModel(property.Value);
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new Error(

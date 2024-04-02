@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 
 namespace Azure.IoT.TimeSeriesInsights
@@ -16,7 +17,7 @@ namespace Azure.IoT.TimeSeriesInsights
         internal TimeSeriesOperationError()
         {
             Details = new ChangeTrackingList<TimeSeriesOperationErrorDetails>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="TimeSeriesOperationError"/>. </summary>
@@ -26,7 +27,7 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="innerError"> Contains more specific error that narrows down the cause. May be null. </param>
         /// <param name="details"> Contains additional error information. May be null. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal TimeSeriesOperationError(string code, string message, string target, TimeSeriesOperationError innerError, IReadOnlyList<TimeSeriesOperationErrorDetails> details, IReadOnlyDictionary<string, object> additionalProperties)
+        internal TimeSeriesOperationError(string code, string message, string target, TimeSeriesOperationError innerError, IReadOnlyList<TimeSeriesOperationErrorDetails> details, IReadOnlyDictionary<string, BinaryData> additionalProperties)
         {
             Code = code;
             Message = message;

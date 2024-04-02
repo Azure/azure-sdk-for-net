@@ -24,7 +24,7 @@ namespace Azure.AI.TextAnalytics.Models
             Code = code;
             Message = message;
             Details = new ChangeTrackingList<Error>();
-            AdditionalProperties = new ChangeTrackingDictionary<string, object>();
+            AdditionalProperties = new ChangeTrackingDictionary<string, BinaryData>();
         }
 
         /// <summary> Initializes a new instance of <see cref="Error"/>. </summary>
@@ -34,7 +34,7 @@ namespace Azure.AI.TextAnalytics.Models
         /// <param name="details"> An array of details about specific errors that led to this reported error. </param>
         /// <param name="innererror"> An object containing more specific information than the current object about the error. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
-        internal Error(ErrorCode code, string message, string target, IList<Error> details, InnerErrorModel innererror, IDictionary<string, object> additionalProperties)
+        internal Error(ErrorCode code, string message, string target, IList<Error> details, InnerErrorModel innererror, IDictionary<string, BinaryData> additionalProperties)
         {
             Code = code;
             Message = message;
@@ -54,7 +54,36 @@ namespace Azure.AI.TextAnalytics.Models
         public IList<Error> Details { get; }
         /// <summary> An object containing more specific information than the current object about the error. </summary>
         public InnerErrorModel Innererror { get; set; }
-        /// <summary> Additional Properties. </summary>
-        public IDictionary<string, object> AdditionalProperties { get; }
+        /// <summary>
+        /// Additional Properties
+        /// <para>
+        /// To assign an object to the value of this property use <see cref="BinaryData.FromObjectAsJson{T}(T, System.Text.Json.JsonSerializerOptions?)"/>.
+        /// </para>
+        /// <para>
+        /// To assign an already formatted json string to this property use <see cref="BinaryData.FromString(string)"/>.
+        /// </para>
+        /// <para>
+        /// Examples:
+        /// <list type="bullet">
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson("foo")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("\"foo\"")</term>
+        /// <description>Creates a payload of "foo".</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromObjectAsJson(new { key = "value" })</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// <item>
+        /// <term>BinaryData.FromString("{\"key\": \"value\"}")</term>
+        /// <description>Creates a payload of { "key": "value" }.</description>
+        /// </item>
+        /// </list>
+        /// </para>
+        /// </summary>
+        public IDictionary<string, BinaryData> AdditionalProperties { get; }
     }
 }

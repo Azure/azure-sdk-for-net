@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -21,10 +22,10 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="details"> Contains additional error information. May be null. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesOperationError"/> instance for mocking. </returns>
-        public static TimeSeriesOperationError TimeSeriesOperationError(string code = null, string message = null, string target = null, TimeSeriesOperationError innerError = null, IEnumerable<TimeSeriesOperationErrorDetails> details = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static TimeSeriesOperationError TimeSeriesOperationError(string code = null, string message = null, string target = null, TimeSeriesOperationError innerError = null, IEnumerable<TimeSeriesOperationErrorDetails> details = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
             details ??= new List<TimeSeriesOperationErrorDetails>();
-            additionalProperties ??= new Dictionary<string, object>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new TimeSeriesOperationError(
                 code,
@@ -40,9 +41,9 @@ namespace Azure.IoT.TimeSeriesInsights
         /// <param name="message"> Human-readable, language-independent representation of the error. It is intended as an aid to developers and is not suitable for exposure to end users. </param>
         /// <param name="additionalProperties"> Additional Properties. </param>
         /// <returns> A new <see cref="TimeSeriesInsights.TimeSeriesOperationErrorDetails"/> instance for mocking. </returns>
-        public static TimeSeriesOperationErrorDetails TimeSeriesOperationErrorDetails(string code = null, string message = null, IReadOnlyDictionary<string, object> additionalProperties = null)
+        public static TimeSeriesOperationErrorDetails TimeSeriesOperationErrorDetails(string code = null, string message = null, IReadOnlyDictionary<string, BinaryData> additionalProperties = null)
         {
-            additionalProperties ??= new Dictionary<string, object>();
+            additionalProperties ??= new Dictionary<string, BinaryData>();
 
             return new TimeSeriesOperationErrorDetails(code, message, additionalProperties);
         }

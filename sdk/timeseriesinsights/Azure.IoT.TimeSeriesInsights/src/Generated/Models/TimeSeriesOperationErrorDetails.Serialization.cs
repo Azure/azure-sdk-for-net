@@ -5,6 +5,7 @@
 
 #nullable disable
 
+using System;
 using System.Collections.Generic;
 using System.Text.Json;
 
@@ -20,8 +21,8 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             string code = default;
             string message = default;
-            IReadOnlyDictionary<string, object> additionalProperties = default;
-            Dictionary<string, object> additionalPropertiesDictionary = new Dictionary<string, object>();
+            IReadOnlyDictionary<string, BinaryData> additionalProperties = default;
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("code"u8))
@@ -34,7 +35,7 @@ namespace Azure.IoT.TimeSeriesInsights
                     message = property.Value.GetString();
                     continue;
                 }
-                additionalPropertiesDictionary.Add(property.Name, property.Value.GetObject());
+                additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
             }
             additionalProperties = additionalPropertiesDictionary;
             return new TimeSeriesOperationErrorDetails(code, message, additionalProperties);
