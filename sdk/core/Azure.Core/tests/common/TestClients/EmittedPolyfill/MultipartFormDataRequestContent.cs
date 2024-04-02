@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -36,7 +38,7 @@ public class MultipartFormDataRequestContent : RequestContent
         }
     }
 
-    public void Add(Stream stream, string name, string fileName = default)
+    public void Add(Stream stream, string name, string? fileName = default)
     {
         Argument.AssertNotNull(stream, nameof(stream));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -44,7 +46,7 @@ public class MultipartFormDataRequestContent : RequestContent
         Add(new StreamContent(stream), name, fileName);
     }
 
-    public void Add(string content, string name, string fileName = default)
+    public void Add(string content, string name, string? fileName = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -52,7 +54,7 @@ public class MultipartFormDataRequestContent : RequestContent
         Add(new StringContent(content), name, fileName);
     }
 
-    public void Add(int content, string name, string fileName = default)
+    public void Add(int content, string name, string? fileName = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -61,7 +63,7 @@ public class MultipartFormDataRequestContent : RequestContent
         Add(new StringContent(value), name, fileName);
     }
 
-    public void Add(double content, string name, string fileName = default)
+    public void Add(double content, string name, string? fileName = default)
     {
         Argument.AssertNotNullOrEmpty(name, nameof(name));
 
@@ -70,7 +72,7 @@ public class MultipartFormDataRequestContent : RequestContent
         Add(new StringContent(value), name, fileName);
     }
 
-    public void Add(byte[] content, string name, string fileName = default)
+    public void Add(byte[] content, string name, string? fileName = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -78,7 +80,7 @@ public class MultipartFormDataRequestContent : RequestContent
         Add(new ByteArrayContent(content), name, fileName);
     }
 
-    public void Add(BinaryData content, string name, string fileName = default)
+    public void Add(BinaryData content, string name, string? fileName = default)
     {
         Argument.AssertNotNull(content, nameof(content));
         Argument.AssertNotNullOrEmpty(name, nameof(name));
@@ -86,7 +88,7 @@ public class MultipartFormDataRequestContent : RequestContent
         Add(new ByteArrayContent(content.ToArray()), name, fileName);
     }
 
-    private void Add(HttpContent content, string name, string fileName)
+    private void Add(HttpContent content, string name, string? fileName)
     {
         if (fileName is not null)
         {
@@ -171,8 +173,6 @@ public class MultipartFormDataRequestContent : RequestContent
     }
 
     public override void Dispose()
-    {
-        _multipartContent.Dispose();
-    }
+        => _multipartContent.Dispose();
 }
 #endif

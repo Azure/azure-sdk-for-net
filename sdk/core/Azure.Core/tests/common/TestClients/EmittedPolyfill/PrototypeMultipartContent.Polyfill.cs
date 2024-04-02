@@ -1,6 +1,8 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT License.
 
+#nullable enable
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,7 +11,6 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure.Core;
 
 namespace Azure.Core.Emitted;
 
@@ -165,8 +166,6 @@ internal class PrototypeMultipartContent : RequestContent
         stream.Write(EOMPC8, 0, EOMPC8.Length);
     }
 
-    public override void Dispose() { }
-
     //private int GetLength(ReadOnlySpan<byte> headerName, ReadOnlySpan<byte> headerValue)
     //    => headerName.Length + headerValue.Length + 4; // ": " + "\r\n"
 
@@ -239,7 +238,17 @@ internal class PrototypeMultipartContent : RequestContent
         return chars.ToString();
     }
 
-    private readonly struct Part
+    public override void Dispose()
+    {
+        foreach (Part part in _parts)
+        {
+            part.Dispose();
+        }
+
+        _parts.Clear();
+    }
+
+    private readonly struct Part : IDisposable
     {
         private const string CRLF = "\r\n";
         private static readonly byte[] CRLF8 = Encoding.UTF8.GetBytes(CRLF);
@@ -277,6 +286,8 @@ internal class PrototypeMultipartContent : RequestContent
             stream.Write(CRLF8, 0, CRLF8.Length);
             _data.WriteTo(stream, cancellationToken); // TODO: how are we goign to validate that the boundary is not contained in data?
         }
+
+        public void Dispose() => _data.Dispose();
     }
 }
 #endif
