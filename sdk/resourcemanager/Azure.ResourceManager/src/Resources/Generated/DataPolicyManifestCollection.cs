@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Resources
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual async Task<Response<DataPolicyManifestResource>> GetAsync(string policyMode, CancellationToken cancellationToken = default)
         {
-            if (policyMode == null)
-            {
-                throw new ArgumentNullException(nameof(policyMode));
-            }
-            if (policyMode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyMode));
-            }
+            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual Response<DataPolicyManifestResource> Get(string policyMode, CancellationToken cancellationToken = default)
         {
-            if (policyMode == null)
-            {
-                throw new ArgumentNullException(nameof(policyMode));
-            }
-            if (policyMode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyMode));
-            }
+            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.Get");
             scope.Start();
@@ -246,14 +230,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string policyMode, CancellationToken cancellationToken = default)
         {
-            if (policyMode == null)
-            {
-                throw new ArgumentNullException(nameof(policyMode));
-            }
-            if (policyMode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyMode));
-            }
+            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
             scope.Start();
@@ -296,14 +273,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual Response<bool> Exists(string policyMode, CancellationToken cancellationToken = default)
         {
-            if (policyMode == null)
-            {
-                throw new ArgumentNullException(nameof(policyMode));
-            }
-            if (policyMode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyMode));
-            }
+            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.Exists");
             scope.Start();
@@ -346,14 +316,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual async Task<NullableResponse<DataPolicyManifestResource>> GetIfExistsAsync(string policyMode, CancellationToken cancellationToken = default)
         {
-            if (policyMode == null)
-            {
-                throw new ArgumentNullException(nameof(policyMode));
-            }
-            if (policyMode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyMode));
-            }
+            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
             scope.Start();
@@ -398,14 +361,7 @@ namespace Azure.ResourceManager.Resources
         /// <exception cref="ArgumentNullException"> <paramref name="policyMode"/> is null. </exception>
         public virtual NullableResponse<DataPolicyManifestResource> GetIfExists(string policyMode, CancellationToken cancellationToken = default)
         {
-            if (policyMode == null)
-            {
-                throw new ArgumentNullException(nameof(policyMode));
-            }
-            if (policyMode.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(policyMode));
-            }
+            Argument.AssertNotNullOrEmpty(policyMode, nameof(policyMode));
 
             using var scope = _dataPolicyManifestClientDiagnostics.CreateScope("DataPolicyManifestCollection.GetIfExists");
             scope.Start();

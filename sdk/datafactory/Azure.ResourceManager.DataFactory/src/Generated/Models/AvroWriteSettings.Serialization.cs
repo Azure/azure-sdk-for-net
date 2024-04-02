@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvroWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecordName != null)
+            if (Optional.IsDefined(RecordName))
             {
                 writer.WritePropertyName("recordName"u8);
                 writer.WriteStringValue(RecordName);
             }
-            if (RecordNamespace != null)
+            if (Optional.IsDefined(RecordNamespace))
             {
                 writer.WritePropertyName("recordNamespace"u8);
                 writer.WriteStringValue(RecordNamespace);
             }
-            if (MaxRowsPerFile != null)
+            if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
-            if (FileNamePrefix != null)
+            if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 JsonSerializer.Serialize(writer, FileNamePrefix);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvroWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAvroWriteSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvroWriteSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

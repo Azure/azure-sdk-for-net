@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProbePath != null)
+            if (Optional.IsDefined(ProbePath))
             {
                 writer.WritePropertyName("probePath"u8);
                 writer.WriteStringValue(ProbePath);
             }
-            if (ProbeRequestType.HasValue)
+            if (Optional.IsDefined(ProbeRequestType))
             {
                 writer.WritePropertyName("probeRequestType"u8);
                 writer.WriteStringValue(ProbeRequestType.Value.ToSerialString());
             }
-            if (ProbeProtocol.HasValue)
+            if (Optional.IsDefined(ProbeProtocol))
             {
                 writer.WritePropertyName("probeProtocol"u8);
                 writer.WriteStringValue(ProbeProtocol.Value.ToSerialString());
             }
-            if (ProbeIntervalInSeconds.HasValue)
+            if (Optional.IsDefined(ProbeIntervalInSeconds))
             {
                 writer.WritePropertyName("probeIntervalInSeconds"u8);
                 writer.WriteNumberValue(ProbeIntervalInSeconds.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<HealthProbeSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeHealthProbeSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthProbeSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

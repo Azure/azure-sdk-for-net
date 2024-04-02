@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CurrentValue.HasValue)
+            if (Optional.IsDefined(CurrentValue))
             {
                 writer.WritePropertyName("currentValue"u8);
                 writer.WriteNumberValue(CurrentValue.Value);
             }
-            if (Limit.HasValue)
+            if (Optional.IsDefined(Limit))
             {
                 writer.WritePropertyName("limit"u8);
                 writer.WriteNumberValue(Limit.Value);
             }
-            if (Unit.HasValue)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<DevCenterUsageName>(Name, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevCenterUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevCenterUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevCenterUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevCenterUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevCenterUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevCenterUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTokenCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTokenCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTokenCertificate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name.HasValue)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expiry"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (Thumbprint != null)
+            if (Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
             }
-            if (EncodedPemCertificate != null)
+            if (Optional.IsDefined(EncodedPemCertificate))
             {
                 writer.WritePropertyName("encodedPemCertificate"u8);
                 writer.WriteStringValue(EncodedPemCertificate);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryTokenCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryTokenCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryTokenCertificate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTokenCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTokenCertificate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryTokenCertificate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryTokenCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryTokenCertificate)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceScalingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("scalingMechanism"u8);
-            writer.WriteObjectValue(ScalingMechanism);
+            writer.WriteObjectValue<ManagedServiceScalingMechanism>(ScalingMechanism, options);
             writer.WritePropertyName("scalingTrigger"u8);
-            writer.WriteObjectValue(ScalingTrigger);
+            writer.WriteObjectValue<ManagedServiceScalingTrigger>(ScalingTrigger, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedServiceScalingPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters.Models
                         return DeserializeManagedServiceScalingPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedServiceScalingPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

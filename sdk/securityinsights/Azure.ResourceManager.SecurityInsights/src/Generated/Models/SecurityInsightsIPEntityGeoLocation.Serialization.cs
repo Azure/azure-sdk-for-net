@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIPEntityGeoLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Asn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Asn))
             {
                 writer.WritePropertyName("asn"u8);
                 writer.WriteNumberValue(Asn.Value);
             }
-            if (options.Format != "W" && City != null)
+            if (options.Format != "W" && Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (options.Format != "W" && CountryCode != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryCode))
             {
                 writer.WritePropertyName("countryCode"u8);
                 writer.WriteStringValue(CountryCode);
             }
-            if (options.Format != "W" && CountryName != null)
+            if (options.Format != "W" && Optional.IsDefined(CountryName))
             {
                 writer.WritePropertyName("countryName"u8);
                 writer.WriteStringValue(CountryName);
             }
-            if (options.Format != "W" && Latitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Latitude))
             {
                 writer.WritePropertyName("latitude"u8);
                 writer.WriteNumberValue(Latitude.Value);
             }
-            if (options.Format != "W" && Longitude.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Longitude))
             {
                 writer.WritePropertyName("longitude"u8);
                 writer.WriteNumberValue(Longitude.Value);
             }
-            if (options.Format != "W" && State != null)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsIPEntityGeoLocation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsIPEntityGeoLocation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsIPEntityGeoLocation)} does not support reading '{options.Format}' format.");
             }
         }
 

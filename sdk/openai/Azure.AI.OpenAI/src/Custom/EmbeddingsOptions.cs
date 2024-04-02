@@ -71,4 +71,10 @@ public partial class EmbeddingsOptions
     {
         Input = new ChangeTrackingList<string>();
     }
+
+    // CUSTOM CODE NOTE:
+    // As an optimization, this library will represent the data via a mechanism independent of the wire encoding
+    // format.
+
+    internal EmbeddingEncodingFormat? EncodingFormat { get; set; }
 }

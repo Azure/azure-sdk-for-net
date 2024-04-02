@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionableRemediation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionableRemediation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionableRemediation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(SeverityLevels is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SeverityLevels))
             {
                 writer.WritePropertyName("severityLevels"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Categories is ChangeTrackingList<ActionableRemediationRuleCategory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Categories))
             {
                 writer.WritePropertyName("categories"u8);
                 writer.WriteStartArray();
@@ -51,10 +51,10 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 }
                 writer.WriteEndArray();
             }
-            if (BranchConfiguration != null)
+            if (Optional.IsDefined(BranchConfiguration))
             {
                 writer.WritePropertyName("branchConfiguration"u8);
-                writer.WriteObjectValue(BranchConfiguration);
+                writer.WriteObjectValue<TargetBranchConfiguration>(BranchConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActionableRemediation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActionableRemediation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActionableRemediation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActionableRemediation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionableRemediation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.SecurityDevOps.Models
                         return DeserializeActionableRemediation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActionableRemediation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActionableRemediation)} does not support reading '{options.Format}' format.");
             }
         }
 

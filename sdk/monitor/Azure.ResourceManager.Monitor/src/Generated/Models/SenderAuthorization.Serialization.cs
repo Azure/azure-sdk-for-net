@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SenderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SenderAuthorization)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Action != null)
+            if (Optional.IsDefined(Action))
             {
                 writer.WritePropertyName("action"u8);
                 writer.WriteStringValue(Action);
             }
-            if (Role != null)
+            if (Optional.IsDefined(Role))
             {
                 writer.WritePropertyName("role"u8);
                 writer.WriteStringValue(Role);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SenderAuthorization>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SenderAuthorization)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SenderAuthorization)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeSenderAuthorization(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SenderAuthorization)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SenderAuthorization)} does not support reading '{options.Format}' format.");
             }
         }
 

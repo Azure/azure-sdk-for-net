@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceLocationDataContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceLocationDataContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceLocationDataContract)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);
-            if (City != null)
+            if (Optional.IsDefined(City))
             {
                 writer.WritePropertyName("city"u8);
                 writer.WriteStringValue(City);
             }
-            if (District != null)
+            if (Optional.IsDefined(District))
             {
                 writer.WritePropertyName("district"u8);
                 writer.WriteStringValue(District);
             }
-            if (CountryOrRegion != null)
+            if (Optional.IsDefined(CountryOrRegion))
             {
                 writer.WritePropertyName("countryOrRegion"u8);
                 writer.WriteStringValue(CountryOrRegion);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceLocationDataContract>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceLocationDataContract)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceLocationDataContract)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceLocationDataContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceLocationDataContract)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeResourceLocationDataContract(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceLocationDataContract)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceLocationDataContract)} does not support reading '{options.Format}' format.");
             }
         }
 

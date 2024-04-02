@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Blueprint != null)
+            if (Optional.IsDefined(Blueprint))
             {
                 writer.WritePropertyName("blueprint"u8);
                 writer.WriteStringValue(Blueprint);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(ComponentVersion is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ComponentVersion))
             {
                 writer.WritePropertyName("componentVersion"u8);
                 writer.WriteStartObject();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Configurations != null)
+            if (Optional.IsDefined(Configurations))
             {
                 writer.WritePropertyName("configurations"u8);
 #if NET6_0_OR_GREATER
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

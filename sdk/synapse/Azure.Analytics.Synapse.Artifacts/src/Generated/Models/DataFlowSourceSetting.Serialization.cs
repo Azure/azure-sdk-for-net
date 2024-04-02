@@ -19,12 +19,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SourceName != null)
+            if (Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (RowLimit.HasValue)
+            if (Optional.IsDefined(RowLimit))
             {
                 writer.WritePropertyName("rowLimit"u8);
                 writer.WriteNumberValue(RowLimit.Value);
@@ -32,7 +32,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -73,7 +73,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DataFlowSourceSetting model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DataFlowSourceSetting>(model);
             }
             public override DataFlowSourceSetting Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

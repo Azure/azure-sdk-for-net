@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Key1 != null)
+            if (Optional.IsDefined(Key1))
             {
                 writer.WritePropertyName("key1"u8);
                 writer.WriteStringValue(Key1);
             }
-            if (Key2 != null)
+            if (Optional.IsDefined(Key2))
             {
                 writer.WritePropertyName("key2"u8);
                 writer.WriteStringValue(Key2);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<PartnerNamespaceSharedAccessKeys>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializePartnerNamespaceSharedAccessKeys(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PartnerNamespaceSharedAccessKeys)} does not support reading '{options.Format}' format.");
             }
         }
 

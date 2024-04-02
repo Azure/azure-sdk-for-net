@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneUserAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDataPlaneUserAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDataPlaneUserAccessPolicy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Permissions != null)
+            if (Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("permissions"u8);
                 writer.WriteStringValue(Permissions);
             }
-            if (AccessResourcePath != null)
+            if (Optional.IsDefined(AccessResourcePath))
             {
                 writer.WritePropertyName("accessResourcePath"u8);
                 writer.WriteStringValue(AccessResourcePath);
             }
-            if (ProfileName != null)
+            if (Optional.IsDefined(ProfileName))
             {
                 writer.WritePropertyName("profileName"u8);
                 writer.WriteStringValue(ProfileName);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expireTime"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryDataPlaneUserAccessPolicy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryDataPlaneUserAccessPolicy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryDataPlaneUserAccessPolicy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDataPlaneUserAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDataPlaneUserAccessPolicy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryDataPlaneUserAccessPolicy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryDataPlaneUserAccessPolicy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryDataPlaneUserAccessPolicy)} does not support reading '{options.Format}' format.");
             }
         }
 

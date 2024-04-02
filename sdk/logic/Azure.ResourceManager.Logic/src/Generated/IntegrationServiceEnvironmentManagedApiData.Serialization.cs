@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentManagedApiData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,19 +56,19 @@ namespace Azure.ResourceManager.Logic
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && NamePropertiesName != null)
+            if (options.Format != "W" && Optional.IsDefined(NamePropertiesName))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(NamePropertiesName);
             }
-            if (options.Format != "W" && !(ConnectionParameters is ChangeTrackingDictionary<string, BinaryData> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ConnectionParameters))
             {
                 writer.WritePropertyName("connectionParameters"u8);
                 writer.WriteStartObject();
@@ -91,12 +91,12 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
-                writer.WriteObjectValue(Metadata);
+                writer.WriteObjectValue<LogicApiResourceMetadata>(Metadata, options);
             }
-            if (options.Format != "W" && !(RuntimeUris is ChangeTrackingList<Uri> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RuntimeUris))
             {
                 writer.WritePropertyName("runtimeUrls"u8);
                 writer.WriteStartArray();
@@ -111,12 +111,12 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && GeneralInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(GeneralInformation))
             {
                 writer.WritePropertyName("generalInformation"u8);
-                writer.WriteObjectValue(GeneralInformation);
+                writer.WriteObjectValue<LogicApiResourceGeneralInformation>(GeneralInformation, options);
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<string> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
@@ -126,45 +126,45 @@ namespace Azure.ResourceManager.Logic
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && BackendService != null)
+            if (options.Format != "W" && Optional.IsDefined(BackendService))
             {
                 writer.WritePropertyName("backendService"u8);
-                writer.WriteObjectValue(BackendService);
+                writer.WriteObjectValue<LogicApiResourceBackendService>(BackendService, options);
             }
-            if (options.Format != "W" && Policies != null)
+            if (options.Format != "W" && Optional.IsDefined(Policies))
             {
                 writer.WritePropertyName("policies"u8);
-                writer.WriteObjectValue(Policies);
+                writer.WriteObjectValue<LogicApiResourcePolicies>(Policies, options);
             }
-            if (options.Format != "W" && ApiDefinitionUri != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiDefinitionUri))
             {
                 writer.WritePropertyName("apiDefinitionUrl"u8);
                 writer.WriteStringValue(ApiDefinitionUri.AbsoluteUri);
             }
-            if (options.Format != "W" && ApiDefinitions != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiDefinitions))
             {
                 writer.WritePropertyName("apiDefinitions"u8);
-                writer.WriteObjectValue(ApiDefinitions);
+                writer.WriteObjectValue<LogicApiResourceDefinitions>(ApiDefinitions, options);
             }
-            if (IntegrationServiceEnvironment != null)
+            if (Optional.IsDefined(IntegrationServiceEnvironment))
             {
                 writer.WritePropertyName("integrationServiceEnvironment"u8);
-                writer.WriteObjectValue(IntegrationServiceEnvironment);
+                writer.WriteObjectValue<LogicResourceReference>(IntegrationServiceEnvironment, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && Category.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category.Value.ToString());
             }
-            if (DeploymentParameters != null)
+            if (Optional.IsDefined(DeploymentParameters))
             {
                 writer.WritePropertyName("deploymentParameters"u8);
-                writer.WriteObjectValue(DeploymentParameters);
+                writer.WriteObjectValue<IntegrationServiceEnvironmentManagedApiDeploymentParameters>(DeploymentParameters, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -190,7 +190,7 @@ namespace Azure.ResourceManager.Logic
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentManagedApiData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -474,7 +474,7 @@ namespace Azure.ResourceManager.Logic
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -490,7 +490,7 @@ namespace Azure.ResourceManager.Logic
                         return DeserializeIntegrationServiceEnvironmentManagedApiData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentManagedApiData)} does not support reading '{options.Format}' format.");
             }
         }
 

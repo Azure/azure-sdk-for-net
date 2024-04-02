@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterValue)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.Blueprint.Models
                 }
 #endif
             }
-            if (Reference != null)
+            if (Optional.IsDefined(Reference))
             {
                 writer.WritePropertyName("reference"u8);
-                writer.WriteObjectValue(Reference);
+                writer.WriteObjectValue<SecretValueReference>(Reference, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Blueprint.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParameterValue>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParameterValue)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParameterValue)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParameterValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterValue)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Blueprint.Models
                         return DeserializeParameterValue(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParameterValue)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParameterValue)} does not support reading '{options.Format}' format.");
             }
         }
 

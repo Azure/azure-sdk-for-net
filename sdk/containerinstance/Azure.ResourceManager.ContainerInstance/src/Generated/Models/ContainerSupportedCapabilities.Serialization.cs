@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerSupportedCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MaxMemoryInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxMemoryInGB))
             {
                 writer.WritePropertyName("maxMemoryInGB"u8);
                 writer.WriteNumberValue(MaxMemoryInGB.Value);
             }
-            if (options.Format != "W" && MaxCpu.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxCpu))
             {
                 writer.WritePropertyName("maxCpu"u8);
                 writer.WriteNumberValue(MaxCpu.Value);
             }
-            if (options.Format != "W" && MaxGpuCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxGpuCount))
             {
                 writer.WritePropertyName("maxGpuCount"u8);
                 writer.WriteNumberValue(MaxGpuCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerSupportedCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerSupportedCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerSupportedCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

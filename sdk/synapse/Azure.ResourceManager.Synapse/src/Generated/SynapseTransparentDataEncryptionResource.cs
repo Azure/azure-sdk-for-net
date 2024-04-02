@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Synapse.Models;
 
 namespace Azure.ResourceManager.Synapse
@@ -199,10 +197,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseTransparentDataEncryptionResource>> UpdateAsync(WaitUntil waitUntil, SynapseTransparentDataEncryptionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionResource.Update");
             scope.Start();
@@ -248,10 +243,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SynapseTransparentDataEncryptionResource> Update(WaitUntil waitUntil, SynapseTransparentDataEncryptionData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _synapseTransparentDataEncryptionSqlPoolTransparentDataEncryptionsClientDiagnostics.CreateScope("SynapseTransparentDataEncryptionResource.Update");
             scope.Start();

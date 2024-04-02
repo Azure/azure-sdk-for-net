@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSProfileUpdateWindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSProfileUpdateWindowsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSProfileUpdateWindowsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisionVmAgent.HasValue)
+            if (Optional.IsDefined(ProvisionVmAgent))
             {
                 writer.WritePropertyName("provisionVMAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmAgent.Value);
             }
-            if (ProvisionVmConfigAgent.HasValue)
+            if (Optional.IsDefined(ProvisionVmConfigAgent))
             {
                 writer.WritePropertyName("provisionVMConfigAgent"u8);
                 writer.WriteBooleanValue(ProvisionVmConfigAgent.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Hci.Models
             var format = options.Format == "W" ? ((IPersistableModel<OSProfileUpdateWindowsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OSProfileUpdateWindowsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OSProfileUpdateWindowsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Hci.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OSProfileUpdateWindowsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSProfileUpdateWindowsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Hci.Models
                         return DeserializeOSProfileUpdateWindowsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OSProfileUpdateWindowsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OSProfileUpdateWindowsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

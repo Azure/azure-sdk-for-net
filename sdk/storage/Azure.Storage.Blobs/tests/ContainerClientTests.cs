@@ -3,8 +3,10 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -3289,6 +3291,55 @@ namespace Azure.Storage.Blobs.Test
             Assert.AreEqual(blobName, pageBlobClientFromContainer.Name);
             Assert.AreEqual(expectedUri, pageBlobClientFromConnectionString.Uri);
             Assert.AreEqual(blobName, pageBlobClientFromConnectionString.Name);
+        }
+
+        [Test]
+        [Sequential]
+        public void GetBlobClient_PreserveSas(
+            [Values("https,http", "http,https", "https")] string protocol)
+        {
+            string version = _serviceVersion.ToVersionString();
+            string service = "b";
+            string resourceType = "c";
+            string startTime = DateTimeOffset.Now.ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
+            string expiryTime = DateTimeOffset.Now.AddDays(1).ToString(Constants.SasTimeFormatSeconds, CultureInfo.InvariantCulture);
+            string identifier = "foo";
+            string resource = "bar";
+            string permissions = "rw";
+            string cacheControl = "no-store";
+            string contentDisposition = "inline";
+            string contentEncoding = "identity";
+            string contentLanguage = "en-US";
+            string contentType = "text/html";
+            string signature = "a+b=";
+
+            Dictionary<string, string> original = new()
+            {
+                { "sv", version },
+                { "ss", service },
+                { "srt", resourceType },
+                { "spr", protocol },
+                { "st", startTime },
+                { "se", expiryTime },
+                { "si", identifier },
+                { "sr", resource },
+                { "sp", permissions },
+                { "rscc", cacheControl },
+                { "rscd", contentDisposition },
+                { "rsce", contentEncoding },
+                { "rscl", contentLanguage },
+                { "rsct", contentType },
+                { "sig", signature },
+            };
+
+            string sas = SasQueryParametersInternals.Create(new Dictionary<string, string>(original)).ToString();
+
+            BlobContainerClient containerFromUri = new(new Uri($"https://myaccount.blob.core.windows.net/mycontainer?{sas}"));
+            BlobClient blob = containerFromUri.GetBlobClient("myblob");
+            Dictionary<string, string> blobQueryParams = blob.Uri.Query.Trim('?').Split('&').ToDictionary(
+                s => s.Split('=')[0],
+                s => WebUtility.UrlDecode(s.Split('=')[1]));
+            Assert.That(original, Is.EquivalentTo(blobQueryParams));
         }
 
         #region GenerateSasTests

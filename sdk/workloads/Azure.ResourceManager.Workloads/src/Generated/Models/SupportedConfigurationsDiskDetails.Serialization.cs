@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportedConfigurationsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedConfigurationsDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportedConfigurationsDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<SapDiskSku>(Sku, options);
             }
-            if (SizeInGB.HasValue)
+            if (Optional.IsDefined(SizeInGB))
             {
                 writer.WritePropertyName("sizeGB"u8);
                 writer.WriteNumberValue(SizeInGB.Value);
             }
-            if (MinimumSupportedDiskCount.HasValue)
+            if (Optional.IsDefined(MinimumSupportedDiskCount))
             {
                 writer.WritePropertyName("minimumSupportedDiskCount"u8);
                 writer.WriteNumberValue(MinimumSupportedDiskCount.Value);
             }
-            if (MaximumSupportedDiskCount.HasValue)
+            if (Optional.IsDefined(MaximumSupportedDiskCount))
             {
                 writer.WritePropertyName("maximumSupportedDiskCount"u8);
                 writer.WriteNumberValue(MaximumSupportedDiskCount.Value);
             }
-            if (IopsReadWrite.HasValue)
+            if (Optional.IsDefined(IopsReadWrite))
             {
                 writer.WritePropertyName("iopsReadWrite"u8);
                 writer.WriteNumberValue(IopsReadWrite.Value);
             }
-            if (MbpsReadWrite.HasValue)
+            if (Optional.IsDefined(MbpsReadWrite))
             {
                 writer.WritePropertyName("mbpsReadWrite"u8);
                 writer.WriteNumberValue(MbpsReadWrite.Value);
             }
-            if (DiskTier != null)
+            if (Optional.IsDefined(DiskTier))
             {
                 writer.WritePropertyName("diskTier"u8);
                 writer.WriteStringValue(DiskTier);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SupportedConfigurationsDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SupportedConfigurationsDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SupportedConfigurationsDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SupportedConfigurationsDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportedConfigurationsDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSupportedConfigurationsDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SupportedConfigurationsDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SupportedConfigurationsDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

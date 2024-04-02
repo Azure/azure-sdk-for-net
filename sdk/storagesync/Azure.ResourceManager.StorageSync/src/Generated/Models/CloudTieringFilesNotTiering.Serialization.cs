@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringFilesNotTiering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringFilesNotTiering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringFilesNotTiering)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && LastUpdatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastUpdatedOn))
             {
                 writer.WritePropertyName("lastUpdatedTimestamp"u8);
                 writer.WriteStringValue(LastUpdatedOn.Value, "O");
             }
-            if (options.Format != "W" && TotalFileCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TotalFileCount))
             {
                 writer.WritePropertyName("totalFileCount"u8);
                 writer.WriteNumberValue(TotalFileCount.Value);
             }
-            if (options.Format != "W" && !(Errors is ChangeTrackingList<FilesNotTieringError> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilesNotTieringError>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.StorageSync.Models
             var format = options.Format == "W" ? ((IPersistableModel<CloudTieringFilesNotTiering>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CloudTieringFilesNotTiering)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CloudTieringFilesNotTiering)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringFilesNotTiering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringFilesNotTiering)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.StorageSync.Models
                         return DeserializeCloudTieringFilesNotTiering(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CloudTieringFilesNotTiering)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CloudTieringFilesNotTiering)} does not support reading '{options.Format}' format.");
             }
         }
 

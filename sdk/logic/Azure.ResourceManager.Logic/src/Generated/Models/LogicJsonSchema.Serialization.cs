@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicJsonSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicJsonSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicJsonSchema)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
 #if NET6_0_OR_GREATER
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicJsonSchema>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicJsonSchema)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicJsonSchema)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicJsonSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicJsonSchema)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicJsonSchema(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicJsonSchema)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicJsonSchema)} does not support reading '{options.Format}' format.");
             }
         }
 

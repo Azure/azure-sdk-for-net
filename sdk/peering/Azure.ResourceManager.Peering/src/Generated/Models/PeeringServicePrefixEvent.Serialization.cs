@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && EventTimestamp.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EventTimestamp))
             {
                 writer.WritePropertyName("eventTimestamp"u8);
                 writer.WriteStringValue(EventTimestamp.Value, "O");
             }
-            if (options.Format != "W" && EventType != null)
+            if (options.Format != "W" && Optional.IsDefined(EventType))
             {
                 writer.WritePropertyName("eventType"u8);
                 writer.WriteStringValue(EventType);
             }
-            if (options.Format != "W" && EventSummary != null)
+            if (options.Format != "W" && Optional.IsDefined(EventSummary))
             {
                 writer.WritePropertyName("eventSummary"u8);
                 writer.WriteStringValue(EventSummary);
             }
-            if (options.Format != "W" && EventLevel != null)
+            if (options.Format != "W" && Optional.IsDefined(EventLevel))
             {
                 writer.WritePropertyName("eventLevel"u8);
                 writer.WriteStringValue(EventLevel);
             }
-            if (options.Format != "W" && EventDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(EventDescription))
             {
                 writer.WritePropertyName("eventDescription"u8);
                 writer.WriteStringValue(EventDescription);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Peering.Models
             var format = options.Format == "W" ? ((IPersistableModel<PeeringServicePrefixEvent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.Peering.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.Peering.Models
                         return DeserializePeeringServicePrefixEvent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PeeringServicePrefixEvent)} does not support reading '{options.Format}' format.");
             }
         }
 

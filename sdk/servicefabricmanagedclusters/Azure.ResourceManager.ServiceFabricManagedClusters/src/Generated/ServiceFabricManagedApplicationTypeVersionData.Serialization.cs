@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationTypeVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationTypeVersionData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -55,19 +55,19 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (AppPackageUri != null)
+            if (Optional.IsDefined(AppPackageUri))
             {
                 writer.WritePropertyName("appPackageUrl"u8);
                 writer.WriteStringValue(AppPackageUri.AbsoluteUri);
@@ -96,7 +96,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
             var format = options.Format == "W" ? ((IPersistableModel<ServiceFabricManagedApplicationTypeVersionData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationTypeVersionData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationTypeVersionData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -219,7 +219,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationTypeVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationTypeVersionData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -235,7 +235,7 @@ namespace Azure.ResourceManager.ServiceFabricManagedClusters
                         return DeserializeServiceFabricManagedApplicationTypeVersionData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationTypeVersionData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ServiceFabricManagedApplicationTypeVersionData)} does not support reading '{options.Format}' format.");
             }
         }
 

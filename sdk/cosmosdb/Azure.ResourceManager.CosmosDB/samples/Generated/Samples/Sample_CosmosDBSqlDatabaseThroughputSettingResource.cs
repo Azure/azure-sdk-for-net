@@ -7,11 +7,8 @@
 
 using System;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Identity;
-using Azure.ResourceManager;
-using Azure.ResourceManager.CosmosDB;
 using Azure.ResourceManager.CosmosDB.Models;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,7 +21,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task Get_CosmosDBSqlDatabaseThroughputGet()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlDatabaseThroughputGet.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlDatabaseThroughputGet.json
             // this example is just showing the usage of "SqlResources_GetSqlDatabaseThroughput" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task CreateOrUpdate_CosmosDBSqlDatabaseThroughputUpdate()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlDatabaseThroughputUpdate.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlDatabaseThroughputUpdate.json
             // this example is just showing the usage of "SqlResources_UpdateSqlDatabaseThroughput" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -98,7 +95,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task MigrateSqlDatabaseToAutoscale_CosmosDBSqlDatabaseMigrateToAutoscale()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlDatabaseMigrateToAutoscale.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlDatabaseMigrateToAutoscale.json
             // this example is just showing the usage of "SqlResources_MigrateSqlDatabaseToAutoscale" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -131,7 +128,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task MigrateSqlDatabaseToManualThroughput_CosmosDBSqlDatabaseMigrateToManualThroughput()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlDatabaseMigrateToManualThroughput.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlDatabaseMigrateToManualThroughput.json
             // this example is just showing the usage of "SqlResources_MigrateSqlDatabaseToManualThroughput" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -164,7 +161,7 @@ namespace Azure.ResourceManager.CosmosDB.Samples
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SqlDatabaseRetrieveThroughputDistribution_CosmosDBSqlDatabaseRetrieveThroughputDistribution()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlDatabaseRetrieveThroughputDistribution.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlDatabaseRetrieveThroughputDistribution.json
             // this example is just showing the usage of "SqlResources_SqlDatabaseRetrieveThroughputDistribution" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line
@@ -203,7 +200,7 @@ Id = new ResourceIdentifier("1"),
         [NUnit.Framework.Ignore("Only verifying that the sample builds")]
         public async Task SqlDatabaseRedistributeThroughput_CosmosDBSqlDatabaseRedistributeThroughput()
         {
-            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2023-09-15-preview/examples/CosmosDBSqlDatabaseRedistributeThroughput.json
+            // Generated from example definition: specification/cosmos-db/resource-manager/Microsoft.DocumentDB/preview/2024-02-15-preview/examples/CosmosDBSqlDatabaseRedistributeThroughput.json
             // this example is just showing the usage of "SqlResources_SqlDatabaseRedistributeThroughput" operation, for the dependent resources, they will have to be created separately.
 
             // get your azure access token, for more details of how Azure SDK get your access token, please refer to https://learn.microsoft.com/en-us/dotnet/azure/sdk/authentication?tabs=command-line

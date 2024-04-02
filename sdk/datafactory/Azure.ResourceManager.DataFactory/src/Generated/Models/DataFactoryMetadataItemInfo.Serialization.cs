@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryMetadataItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryMetadataItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryMetadataItemInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 JsonSerializer.Serialize(writer, Name);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 JsonSerializer.Serialize(writer, Value);
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryMetadataItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryMetadataItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryMetadataItemInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryMetadataItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryMetadataItemInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryMetadataItemInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryMetadataItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryMetadataItemInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

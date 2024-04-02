@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowSourceSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowSourceSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowSourceSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceName != null)
+            if (Optional.IsDefined(SourceName))
             {
                 writer.WritePropertyName("sourceName"u8);
                 writer.WriteStringValue(SourceName);
             }
-            if (RowLimit.HasValue)
+            if (Optional.IsDefined(RowLimit))
             {
                 writer.WritePropertyName("rowLimit"u8);
                 writer.WriteNumberValue(RowLimit.Value);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFlowSourceSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFlowSourceSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFlowSourceSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowSourceSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowSourceSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFlowSourceSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFlowSourceSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFlowSourceSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

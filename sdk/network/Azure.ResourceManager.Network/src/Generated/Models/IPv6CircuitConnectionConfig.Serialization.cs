@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AddressPrefix != null)
+            if (Optional.IsDefined(AddressPrefix))
             {
                 writer.WritePropertyName("addressPrefix"u8);
                 writer.WriteStringValue(AddressPrefix);
             }
-            if (options.Format != "W" && CircuitConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CircuitConnectionStatus))
             {
                 writer.WritePropertyName("circuitConnectionStatus"u8);
                 writer.WriteStringValue(CircuitConnectionStatus.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPv6CircuitConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeIPv6CircuitConnectionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPv6CircuitConnectionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

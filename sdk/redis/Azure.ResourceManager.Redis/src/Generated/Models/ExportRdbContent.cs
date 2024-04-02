@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Redis.Models
         /// <exception cref="ArgumentNullException"> <paramref name="prefix"/> or <paramref name="container"/> is null. </exception>
         public ExportRdbContent(string prefix, string container)
         {
-            if (prefix == null)
-            {
-                throw new ArgumentNullException(nameof(prefix));
-            }
-            if (container == null)
-            {
-                throw new ArgumentNullException(nameof(container));
-            }
+            Argument.AssertNotNull(prefix, nameof(prefix));
+            Argument.AssertNotNull(container, nameof(container));
 
             Prefix = prefix;
             Container = container;
@@ -87,14 +81,19 @@ namespace Azure.ResourceManager.Redis.Models
         }
 
         /// <summary> File format. </summary>
+        [WirePath("format")]
         public string Format { get; set; }
         /// <summary> Prefix to use for exported files. </summary>
+        [WirePath("prefix")]
         public string Prefix { get; }
         /// <summary> Container name to export to. </summary>
+        [WirePath("container")]
         public string Container { get; }
         /// <summary> Preferred auth method to communicate to storage account used for data archive, specify SAS or ManagedIdentity, default value is SAS. </summary>
+        [WirePath("preferred-data-archive-auth-method")]
         public string PreferredDataArchiveAuthMethod { get; set; }
         /// <summary> Subscription id of the storage container for data to be exported using ManagedIdentity. </summary>
+        [WirePath("storage-subscription-id")]
         public string StorageSubscriptionId { get; set; }
     }
 }

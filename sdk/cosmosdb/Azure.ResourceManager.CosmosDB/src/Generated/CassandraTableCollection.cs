@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.CosmosDB.Models;
 
 namespace Azure.ResourceManager.CosmosDB
@@ -67,7 +65,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<CassandraTableResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string tableName, CassandraTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.CreateOrUpdate");
             scope.Start();
@@ -126,7 +114,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> or <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<CassandraTableResource> CreateOrUpdate(WaitUntil waitUntil, string tableName, CassandraTableCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.CreateOrUpdate");
             scope.Start();
@@ -185,7 +163,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<Response<CassandraTableResource>> GetAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.Get");
             scope.Start();
@@ -237,7 +208,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<CassandraTableResource> Get(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.Get");
             scope.Start();
@@ -289,7 +253,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -318,7 +282,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -347,7 +311,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -361,14 +325,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.Exists");
             scope.Start();
@@ -397,7 +354,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -411,14 +368,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual Response<bool> Exists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.Exists");
             scope.Start();
@@ -447,7 +397,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -461,14 +411,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual async Task<NullableResponse<CassandraTableResource>> GetIfExistsAsync(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.GetIfExists");
             scope.Start();
@@ -499,7 +442,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-15-preview</description>
+        /// <description>2024-02-15-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -513,14 +456,7 @@ namespace Azure.ResourceManager.CosmosDB
         /// <exception cref="ArgumentNullException"> <paramref name="tableName"/> is null. </exception>
         public virtual NullableResponse<CassandraTableResource> GetIfExists(string tableName, CancellationToken cancellationToken = default)
         {
-            if (tableName == null)
-            {
-                throw new ArgumentNullException(nameof(tableName));
-            }
-            if (tableName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(tableName));
-            }
+            Argument.AssertNotNullOrEmpty(tableName, nameof(tableName));
 
             using var scope = _cassandraTableCassandraResourcesClientDiagnostics.CreateScope("CassandraTableCollection.GetIfExists");
             scope.Start();

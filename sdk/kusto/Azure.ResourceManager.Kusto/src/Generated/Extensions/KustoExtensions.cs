@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Kusto.Mocking;
 using Azure.ResourceManager.Kusto.Models;
 using Azure.ResourceManager.Resources;
@@ -49,10 +47,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoClusterResource"/> object. </returns>
         public static KustoClusterResource GetKustoClusterResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoClusterResource(id);
         }
@@ -71,10 +66,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoClusterPrincipalAssignmentResource"/> object. </returns>
         public static KustoClusterPrincipalAssignmentResource GetKustoClusterPrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoClusterPrincipalAssignmentResource(id);
         }
@@ -93,10 +85,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoDatabaseResource"/> object. </returns>
         public static KustoDatabaseResource GetKustoDatabaseResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoDatabaseResource(id);
         }
@@ -115,10 +104,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoAttachedDatabaseConfigurationResource"/> object. </returns>
         public static KustoAttachedDatabaseConfigurationResource GetKustoAttachedDatabaseConfigurationResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoAttachedDatabaseConfigurationResource(id);
         }
@@ -137,10 +123,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoManagedPrivateEndpointResource"/> object. </returns>
         public static KustoManagedPrivateEndpointResource GetKustoManagedPrivateEndpointResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoManagedPrivateEndpointResource(id);
         }
@@ -159,10 +142,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoDatabasePrincipalAssignmentResource"/> object. </returns>
         public static KustoDatabasePrincipalAssignmentResource GetKustoDatabasePrincipalAssignmentResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoDatabasePrincipalAssignmentResource(id);
         }
@@ -181,10 +161,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoScriptResource"/> object. </returns>
         public static KustoScriptResource GetKustoScriptResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoScriptResource(id);
         }
@@ -203,10 +180,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="SandboxCustomImageResource"/> object. </returns>
         public static SandboxCustomImageResource GetSandboxCustomImageResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetSandboxCustomImageResource(id);
         }
@@ -225,10 +199,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoPrivateEndpointConnectionResource"/> object. </returns>
         public static KustoPrivateEndpointConnectionResource GetKustoPrivateEndpointConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoPrivateEndpointConnectionResource(id);
         }
@@ -247,10 +218,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoPrivateLinkResource"/> object. </returns>
         public static KustoPrivateLinkResource GetKustoPrivateLinkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoPrivateLinkResource(id);
         }
@@ -269,10 +237,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> Returns a <see cref="KustoDataConnectionResource"/> object. </returns>
         public static KustoDataConnectionResource GetKustoDataConnectionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableKustoArmClient(client).GetKustoDataConnectionResource(id);
         }
@@ -289,10 +254,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An object representing collection of KustoClusterResources and their operations over a KustoClusterResource. </returns>
         public static KustoClusterCollection GetKustoClusters(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKustoResourceGroupResource(resourceGroupResource).GetKustoClusters();
         }
@@ -330,10 +292,7 @@ namespace Azure.ResourceManager.Kusto
         [ForwardsClientCalls]
         public static async Task<Response<KustoClusterResource>> GetKustoClusterAsync(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableKustoResourceGroupResource(resourceGroupResource).GetKustoClusterAsync(clusterName, cancellationToken).ConfigureAwait(false);
         }
@@ -371,10 +330,7 @@ namespace Azure.ResourceManager.Kusto
         [ForwardsClientCalls]
         public static Response<KustoClusterResource> GetKustoCluster(this ResourceGroupResource resourceGroupResource, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableKustoResourceGroupResource(resourceGroupResource).GetKustoCluster(clusterName, cancellationToken);
         }
@@ -410,10 +366,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoClusterResource> GetKustoClustersAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKustoSubscriptionResource(subscriptionResource).GetKustoClustersAsync(cancellationToken);
         }
@@ -449,10 +402,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoClusterResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoClusterResource> GetKustoClusters(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKustoSubscriptionResource(subscriptionResource).GetKustoClusters(cancellationToken);
         }
@@ -488,10 +438,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoSkuDescription> GetKustoEligibleSkusAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKustoSubscriptionResource(subscriptionResource).GetKustoEligibleSkusAsync(cancellationToken);
         }
@@ -527,10 +474,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoSkuDescription> GetKustoEligibleSkus(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKustoSubscriptionResource(subscriptionResource).GetKustoEligibleSkus(cancellationToken);
         }
@@ -567,10 +511,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static async Task<Response<KustoNameAvailabilityResult>> CheckKustoClusterNameAvailabilityAsync(this SubscriptionResource subscriptionResource, AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableKustoSubscriptionResource(subscriptionResource).CheckKustoClusterNameAvailabilityAsync(location, content, cancellationToken).ConfigureAwait(false);
         }
@@ -607,10 +548,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="subscriptionResource"/> or <paramref name="content"/> is null. </exception>
         public static Response<KustoNameAvailabilityResult> CheckKustoClusterNameAvailability(this SubscriptionResource subscriptionResource, AzureLocation location, KustoClusterNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKustoSubscriptionResource(subscriptionResource).CheckKustoClusterNameAvailability(location, content, cancellationToken);
         }
@@ -643,10 +581,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> An async collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<KustoSkuDescription> GetSkusAsync(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKustoSubscriptionResource(subscriptionResource).GetSkusAsync(location, cancellationToken);
         }
@@ -679,10 +614,7 @@ namespace Azure.ResourceManager.Kusto
         /// <returns> A collection of <see cref="KustoSkuDescription"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<KustoSkuDescription> GetSkus(this SubscriptionResource subscriptionResource, AzureLocation location, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableKustoSubscriptionResource(subscriptionResource).GetSkus(location, cancellationToken);
         }

@@ -10,7 +10,6 @@ using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
 using Azure.Core;
-using Azure.ResourceManager.MachineLearningCompute;
 
 namespace Azure.ResourceManager.MachineLearningCompute.Models
 {
@@ -23,21 +22,21 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaginatedOperationalizationClustersList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaginatedOperationalizationClustersList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaginatedOperationalizationClustersList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<OperationalizationClusterData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationalizationClusterData>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -65,7 +64,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<PaginatedOperationalizationClustersList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PaginatedOperationalizationClustersList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PaginatedOperationalizationClustersList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +122,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PaginatedOperationalizationClustersList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaginatedOperationalizationClustersList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +138,7 @@ namespace Azure.ResourceManager.MachineLearningCompute.Models
                         return DeserializePaginatedOperationalizationClustersList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PaginatedOperationalizationClustersList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PaginatedOperationalizationClustersList)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,74 +43,74 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (OwnerId != null)
+            if (Optional.IsDefined(OwnerId))
             {
                 writer.WritePropertyName("ownerId"u8);
                 writer.WriteStringValue(OwnerId);
             }
-            if (Scope != null)
+            if (Optional.IsDefined(Scope))
             {
                 writer.WritePropertyName("scope"u8);
                 writer.WriteStringValue(Scope);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDate"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startDate"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (ExpireOn.HasValue)
+            if (Optional.IsDefined(ExpireOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpireOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endDate"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (NotifiesOn.HasValue)
+            if (Optional.IsDefined(NotifiesOn))
             {
                 writer.WritePropertyName("notificationDate"u8);
                 writer.WriteStringValue(NotifiesOn.Value, "O");
             }
-            if (PrimaryKey != null)
+            if (Optional.IsDefined(PrimaryKey))
             {
                 writer.WritePropertyName("primaryKey"u8);
                 writer.WriteStringValue(PrimaryKey);
             }
-            if (SecondaryKey != null)
+            if (Optional.IsDefined(SecondaryKey))
             {
                 writer.WritePropertyName("secondaryKey"u8);
                 writer.WriteStringValue(SecondaryKey);
             }
-            if (StateComment != null)
+            if (Optional.IsDefined(StateComment))
             {
                 writer.WritePropertyName("stateComment"u8);
                 writer.WriteStringValue(StateComment);
             }
-            if (AllowTracing.HasValue)
+            if (Optional.IsDefined(AllowTracing))
             {
                 writer.WritePropertyName("allowTracing"u8);
                 writer.WriteBooleanValue(AllowTracing.Value);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionContractData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -340,7 +340,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -356,7 +356,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeSubscriptionContractData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionContractData)} does not support reading '{options.Format}' format.");
             }
         }
 

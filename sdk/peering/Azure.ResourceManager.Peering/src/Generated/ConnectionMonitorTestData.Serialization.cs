@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorTestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorTestData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Peering
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SourceAgent != null)
+            if (Optional.IsDefined(SourceAgent))
             {
                 writer.WritePropertyName("sourceAgent"u8);
                 writer.WriteStringValue(SourceAgent);
             }
-            if (Destination != null)
+            if (Optional.IsDefined(Destination))
             {
                 writer.WritePropertyName("destination"u8);
                 writer.WriteStringValue(Destination);
             }
-            if (DestinationPort.HasValue)
+            if (Optional.IsDefined(DestinationPort))
             {
                 writer.WritePropertyName("destinationPort"u8);
                 writer.WriteNumberValue(DestinationPort.Value);
             }
-            if (TestFrequencyInSec.HasValue)
+            if (Optional.IsDefined(TestFrequencyInSec))
             {
                 writer.WritePropertyName("testFrequencyInSec"u8);
                 writer.WriteNumberValue(TestFrequencyInSec.Value);
             }
-            if (options.Format != "W" && IsTestSuccessful.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsTestSuccessful))
             {
                 writer.WritePropertyName("isTestSuccessful"u8);
                 writer.WriteBooleanValue(IsTestSuccessful.Value);
             }
-            if (options.Format != "W" && !(Path is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStartArray();
@@ -85,7 +85,7 @@ namespace Azure.ResourceManager.Peering
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -114,7 +114,7 @@ namespace Azure.ResourceManager.Peering
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorTestData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorTestData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorTestData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -270,7 +270,7 @@ namespace Azure.ResourceManager.Peering
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorTestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorTestData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -286,7 +286,7 @@ namespace Azure.ResourceManager.Peering
                         return DeserializeConnectionMonitorTestData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorTestData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorTestData)} does not support reading '{options.Format}' format.");
             }
         }
 

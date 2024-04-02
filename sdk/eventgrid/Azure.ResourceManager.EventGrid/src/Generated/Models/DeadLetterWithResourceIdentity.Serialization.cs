@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeadLetterWithResourceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeadLetterWithResourceIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeadLetterWithResourceIdentity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<EventSubscriptionIdentity>(Identity, options);
             }
-            if (DeadLetterDestination != null)
+            if (Optional.IsDefined(DeadLetterDestination))
             {
                 writer.WritePropertyName("deadLetterDestination"u8);
-                writer.WriteObjectValue(DeadLetterDestination);
+                writer.WriteObjectValue<DeadLetterDestination>(DeadLetterDestination, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeadLetterWithResourceIdentity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeadLetterWithResourceIdentity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeadLetterWithResourceIdentity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeadLetterWithResourceIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeadLetterWithResourceIdentity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeDeadLetterWithResourceIdentity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeadLetterWithResourceIdentity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeadLetterWithResourceIdentity)} does not support reading '{options.Format}' format.");
             }
         }
 

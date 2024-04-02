@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -26,16 +25,16 @@ namespace Azure.ResourceManager.DnsResolver
             var format = options.Format == "W" ? ((IPersistableModel<DnsForwardingRulesetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsForwardingRulesetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsForwardingRulesetData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -63,7 +62,7 @@ namespace Azure.ResourceManager.DnsResolver
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -77,12 +76,12 @@ namespace Azure.ResourceManager.DnsResolver
                 JsonSerializer.Serialize(writer, item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && ResourceGuid.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceGuid))
             {
                 writer.WritePropertyName("resourceGuid"u8);
                 writer.WriteStringValue(ResourceGuid.Value);
@@ -111,7 +110,7 @@ namespace Azure.ResourceManager.DnsResolver
             var format = options.Format == "W" ? ((IPersistableModel<DnsForwardingRulesetData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DnsForwardingRulesetData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DnsForwardingRulesetData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -261,7 +260,7 @@ namespace Azure.ResourceManager.DnsResolver
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DnsForwardingRulesetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsForwardingRulesetData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -277,7 +276,7 @@ namespace Azure.ResourceManager.DnsResolver
                         return DeserializeDnsForwardingRulesetData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DnsForwardingRulesetData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DnsForwardingRulesetData)} does not support reading '{options.Format}' format.");
             }
         }
 

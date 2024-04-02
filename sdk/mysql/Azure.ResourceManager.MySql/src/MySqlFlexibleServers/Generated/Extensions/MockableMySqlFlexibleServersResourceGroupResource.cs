@@ -8,10 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
-using Azure.ResourceManager.MySql.FlexibleServers;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
 {
@@ -56,7 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -87,7 +84,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Mocking
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-06-01-preview</description>
+        /// <description>2023-12-01-preview</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>

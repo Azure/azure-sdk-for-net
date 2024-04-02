@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUriFolderJobOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AssetName != null)
+            if (Optional.IsDefined(AssetName))
             {
                 if (AssetName != null)
                 {
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetName");
                 }
             }
-            if (AssetVersion != null)
+            if (Optional.IsDefined(AssetVersion))
             {
                 if (AssetVersion != null)
                 {
@@ -50,24 +50,24 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("assetVersion");
                 }
             }
-            if (AutoDeleteSetting != null)
+            if (Optional.IsDefined(AutoDeleteSetting))
             {
                 if (AutoDeleteSetting != null)
                 {
                     writer.WritePropertyName("autoDeleteSetting"u8);
-                    writer.WriteObjectValue(AutoDeleteSetting);
+                    writer.WriteObjectValue<AutoDeleteSetting>(AutoDeleteSetting, options);
                 }
                 else
                 {
                     writer.WriteNull("autoDeleteSetting");
                 }
             }
-            if (Mode.HasValue)
+            if (Optional.IsDefined(Mode))
             {
                 writer.WritePropertyName("mode"u8);
                 writer.WriteStringValue(Mode.Value.ToString());
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 if (Uri != null)
                 {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("uri");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningUriFolderJobOutput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -232,7 +232,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningUriFolderJobOutput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningUriFolderJobOutput)} does not support reading '{options.Format}' format.");
             }
         }
 

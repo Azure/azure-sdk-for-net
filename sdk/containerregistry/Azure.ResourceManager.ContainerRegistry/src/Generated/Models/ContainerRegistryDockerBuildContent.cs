@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.ContainerRegistry.Models
 {
@@ -20,14 +19,8 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
         /// <exception cref="ArgumentNullException"> <paramref name="dockerFilePath"/> or <paramref name="platform"/> is null. </exception>
         public ContainerRegistryDockerBuildContent(string dockerFilePath, ContainerRegistryPlatformProperties platform)
         {
-            if (dockerFilePath == null)
-            {
-                throw new ArgumentNullException(nameof(dockerFilePath));
-            }
-            if (platform == null)
-            {
-                throw new ArgumentNullException(nameof(platform));
-            }
+            Argument.AssertNotNull(dockerFilePath, nameof(dockerFilePath));
+            Argument.AssertNotNull(platform, nameof(platform));
 
             ImageNames = new ChangeTrackingList<string>();
             DockerFilePath = dockerFilePath;

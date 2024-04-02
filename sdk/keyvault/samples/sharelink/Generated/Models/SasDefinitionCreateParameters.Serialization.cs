@@ -21,12 +21,12 @@ namespace Azure.Security.KeyVault.Storage.Models
             writer.WriteStringValue(SasType.ToString());
             writer.WritePropertyName("validityPeriod"u8);
             writer.WriteStringValue(ValidityPeriod);
-            if (SasDefinitionAttributes != null)
+            if (Optional.IsDefined(SasDefinitionAttributes))
             {
                 writer.WritePropertyName("attributes"u8);
-                writer.WriteObjectValue(SasDefinitionAttributes);
+                writer.WriteObjectValue<SasDefinitionAttributes>(SasDefinitionAttributes);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();

@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.AppPlatform.Models;
@@ -67,30 +67,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AppPlatformConfigServerData>> GetAsync(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -119,30 +98,9 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AppPlatformConfigServerData> Get(string subscriptionId, string resourceGroupName, string serviceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, serviceName);
             _pipeline.Send(message, cancellationToken);
@@ -181,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<AppPlatformConfigServerData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -197,34 +155,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdatePutAsync(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdatePutRequest(subscriptionId, resourceGroupName, serviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -248,34 +182,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdatePut(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdatePutRequest(subscriptionId, resourceGroupName, serviceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -308,7 +218,7 @@ namespace Azure.ResourceManager.AppPlatform
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<AppPlatformConfigServerData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -324,34 +234,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdatePatchAsync(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdatePatchRequest(subscriptionId, resourceGroupName, serviceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -375,34 +261,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdatePatch(string subscriptionId, string resourceGroupName, string serviceName, AppPlatformConfigServerData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdatePatchRequest(subscriptionId, resourceGroupName, serviceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -435,7 +297,7 @@ namespace Azure.ResourceManager.AppPlatform
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(settings);
+            content.JsonWriter.WriteObjectValue<ConfigServerSettings>(settings, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -451,34 +313,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ValidateAsync(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerSettings settings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(settings, nameof(settings));
 
             using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, settings);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -502,34 +340,10 @@ namespace Azure.ResourceManager.AppPlatform
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="serviceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Validate(string subscriptionId, string resourceGroupName, string serviceName, ConfigServerSettings settings, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (serviceName == null)
-            {
-                throw new ArgumentNullException(nameof(serviceName));
-            }
-            if (serviceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(serviceName));
-            }
-            if (settings == null)
-            {
-                throw new ArgumentNullException(nameof(settings));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(serviceName, nameof(serviceName));
+            Argument.AssertNotNull(settings, nameof(settings));
 
             using var message = CreateValidateRequest(subscriptionId, resourceGroupName, serviceName, settings);
             _pipeline.Send(message, cancellationToken);

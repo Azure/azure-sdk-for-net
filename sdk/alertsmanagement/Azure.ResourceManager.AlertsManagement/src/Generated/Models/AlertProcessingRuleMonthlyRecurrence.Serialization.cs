@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleMonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -35,12 +35,12 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             writer.WriteEndArray();
             writer.WritePropertyName("recurrenceType"u8);
             writer.WriteStringValue(RecurrenceType.ToString());
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "T");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "T");
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<AlertProcessingRuleMonthlyRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -158,7 +158,7 @@ namespace Azure.ResourceManager.AlertsManagement.Models
                         return DeserializeAlertProcessingRuleMonthlyRecurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AlertProcessingRuleMonthlyRecurrence)} does not support reading '{options.Format}' format.");
             }
         }
 

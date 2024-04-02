@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxDefinitionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevBoxDefinitionPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -37,29 +37,29 @@ namespace Azure.ResourceManager.DevCenter.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ImageReference != null)
+            if (Optional.IsDefined(ImageReference))
             {
                 writer.WritePropertyName("imageReference"u8);
-                writer.WriteObjectValue(ImageReference);
+                writer.WriteObjectValue<DevCenterImageReference>(ImageReference, options);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<DevCenterSku>(Sku, options);
             }
-            if (OSStorageType != null)
+            if (Optional.IsDefined(OSStorageType))
             {
                 writer.WritePropertyName("osStorageType"u8);
                 writer.WriteStringValue(OSStorageType);
             }
-            if (HibernateSupport.HasValue)
+            if (Optional.IsDefined(HibernateSupport))
             {
                 writer.WritePropertyName("hibernateSupport"u8);
                 writer.WriteStringValue(HibernateSupport.Value.ToString());
@@ -88,7 +88,7 @@ namespace Azure.ResourceManager.DevCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<DevBoxDefinitionPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DevBoxDefinitionPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DevBoxDefinitionPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -205,7 +205,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxDefinitionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevBoxDefinitionPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -221,7 +221,7 @@ namespace Azure.ResourceManager.DevCenter.Models
                         return DeserializeDevBoxDefinitionPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DevBoxDefinitionPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DevBoxDefinitionPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

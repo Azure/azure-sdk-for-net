@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Workspaces is ChangeTrackingList<FirewallPolicyLogAnalyticsWorkspace> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Workspaces))
             {
                 writer.WritePropertyName("workspaces"u8);
                 writer.WriteStartArray();
                 foreach (var item in Workspaces)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallPolicyLogAnalyticsWorkspace>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultWorkspaceId != null)
+            if (Optional.IsDefined(DefaultWorkspaceId))
             {
                 writer.WritePropertyName("defaultWorkspaceId"u8);
                 JsonSerializer.Serialize(writer, DefaultWorkspaceId);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyLogAnalyticsResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyLogAnalyticsResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyLogAnalyticsResources)} does not support reading '{options.Format}' format.");
             }
         }
 

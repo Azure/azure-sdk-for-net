@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlimPolicyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MetadataId != null)
+            if (options.Format != "W" && Optional.IsDefined(MetadataId))
             {
                 writer.WritePropertyName("metadataId"u8);
                 writer.WriteStringValue(MetadataId);
             }
-            if (options.Format != "W" && Category != null)
+            if (options.Format != "W" && Optional.IsDefined(Category))
             {
                 writer.WritePropertyName("category"u8);
                 writer.WriteStringValue(Category);
             }
-            if (options.Format != "W" && Title != null)
+            if (options.Format != "W" && Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (options.Format != "W" && Owner != null)
+            if (options.Format != "W" && Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (options.Format != "W" && AdditionalContentUri != null)
+            if (options.Format != "W" && Optional.IsDefined(AdditionalContentUri))
             {
                 writer.WritePropertyName("additionalContentUrl"u8);
                 writer.WriteStringValue(AdditionalContentUri.AbsoluteUri);
             }
-            if (options.Format != "W" && Metadata != null)
+            if (options.Format != "W" && Optional.IsDefined(Metadata))
             {
                 writer.WritePropertyName("metadata"u8);
 #if NET6_0_OR_GREATER
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlimPolicyMetadata>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -242,7 +242,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.PolicyInsights.Models
                         return DeserializeSlimPolicyMetadata(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlimPolicyMetadata)} does not support reading '{options.Format}' format.");
             }
         }
 

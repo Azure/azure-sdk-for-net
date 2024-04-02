@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             writer.WriteStringValue(NicId);
             writer.WritePropertyName("label"u8);
             writer.WriteStringValue(Label);
-            if (options.Format != "W" && NetworkName != null)
+            if (options.Format != "W" && Optional.IsDefined(NetworkName))
             {
                 writer.WritePropertyName("networkName"u8);
                 writer.WriteStringValue(NetworkName);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareToAzStackHciNicInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeVMwareToAzStackHciNicInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareToAzStackHciNicInput)} does not support reading '{options.Format}' format.");
             }
         }
 

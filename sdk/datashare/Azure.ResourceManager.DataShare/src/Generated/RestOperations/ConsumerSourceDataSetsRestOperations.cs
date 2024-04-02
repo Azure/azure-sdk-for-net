@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataShare.Models;
@@ -75,38 +74,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConsumerSourceDataSetList>> ListByShareSubscriptionAsync(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var message = CreateListByShareSubscriptionRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -135,38 +106,10 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConsumerSourceDataSetList> ListByShareSubscription(string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var message = CreateListByShareSubscriptionRequest(subscriptionId, resourceGroupName, accountName, shareSubscriptionName, skipToken);
             _pipeline.Send(message, cancellationToken);
@@ -210,42 +153,11 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ConsumerSourceDataSetList>> ListByShareSubscriptionNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var message = CreateListByShareSubscriptionNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, shareSubscriptionName, skipToken);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -275,42 +187,11 @@ namespace Azure.ResourceManager.DataShare
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="accountName"/> or <paramref name="shareSubscriptionName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ConsumerSourceDataSetList> ListByShareSubscriptionNextPage(string nextLink, string subscriptionId, string resourceGroupName, string accountName, string shareSubscriptionName, string skipToken = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (accountName == null)
-            {
-                throw new ArgumentNullException(nameof(accountName));
-            }
-            if (accountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(accountName));
-            }
-            if (shareSubscriptionName == null)
-            {
-                throw new ArgumentNullException(nameof(shareSubscriptionName));
-            }
-            if (shareSubscriptionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(shareSubscriptionName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(accountName, nameof(accountName));
+            Argument.AssertNotNullOrEmpty(shareSubscriptionName, nameof(shareSubscriptionName));
 
             using var message = CreateListByShareSubscriptionNextPageRequest(nextLink, subscriptionId, resourceGroupName, accountName, shareSubscriptionName, skipToken);
             _pipeline.Send(message, cancellationToken);

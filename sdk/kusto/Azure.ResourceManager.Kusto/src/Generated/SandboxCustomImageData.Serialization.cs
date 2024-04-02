@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<SandboxCustomImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SandboxCustomImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SandboxCustomImageData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,29 +43,29 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Language.HasValue)
+            if (Optional.IsDefined(Language))
             {
                 writer.WritePropertyName("language"u8);
                 writer.WriteStringValue(Language.Value.ToString());
             }
-            if (LanguageVersion != null)
+            if (Optional.IsDefined(LanguageVersion))
             {
                 writer.WritePropertyName("languageVersion"u8);
                 writer.WriteStringValue(LanguageVersion);
             }
-            if (RequirementsFileContent != null)
+            if (Optional.IsDefined(RequirementsFileContent))
             {
                 writer.WritePropertyName("requirementsFileContent"u8);
                 writer.WriteStringValue(RequirementsFileContent);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<SandboxCustomImageData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SandboxCustomImageData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SandboxCustomImageData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Kusto
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SandboxCustomImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SandboxCustomImageData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Kusto
                         return DeserializeSandboxCustomImageData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SandboxCustomImageData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SandboxCustomImageData)} does not support reading '{options.Format}' format.");
             }
         }
 

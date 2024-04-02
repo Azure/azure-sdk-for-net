@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.Sphere.Models
         /// <exception cref="ArgumentNullException"> <paramref name="deviceIdentifiers"/> is null. </exception>
         public ClaimSphereDevicesContent(IEnumerable<string> deviceIdentifiers)
         {
-            if (deviceIdentifiers == null)
-            {
-                throw new ArgumentNullException(nameof(deviceIdentifiers));
-            }
+            Argument.AssertNotNull(deviceIdentifiers, nameof(deviceIdentifiers));
 
             DeviceIdentifiers = deviceIdentifiers.ToList();
         }

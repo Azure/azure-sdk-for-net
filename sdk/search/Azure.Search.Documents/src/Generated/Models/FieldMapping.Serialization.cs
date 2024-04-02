@@ -17,17 +17,17 @@ namespace Azure.Search.Documents.Indexes.Models
             writer.WriteStartObject();
             writer.WritePropertyName("sourceFieldName"u8);
             writer.WriteStringValue(SourceFieldName);
-            if (TargetFieldName != null)
+            if (Optional.IsDefined(TargetFieldName))
             {
                 writer.WritePropertyName("targetFieldName"u8);
                 writer.WriteStringValue(TargetFieldName);
             }
-            if (MappingFunction != null)
+            if (Optional.IsDefined(MappingFunction))
             {
                 if (MappingFunction != null)
                 {
                     writer.WritePropertyName("mappingFunction"u8);
-                    writer.WriteObjectValue(MappingFunction);
+                    writer.WriteObjectValue<FieldMappingFunction>(MappingFunction);
                 }
                 else
                 {

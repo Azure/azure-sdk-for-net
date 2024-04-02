@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ScriptExecutionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ScriptExecutionId))
             {
                 writer.WritePropertyName("scriptExecutionId"u8);
                 writer.WriteNumberValue(ScriptExecutionId.Value);
             }
-            if (options.Format != "W" && StartOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && EndOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (options.Format != "W" && Status != null)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (options.Format != "W" && Operation != null)
+            if (options.Format != "W" && Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 writer.WriteStringValue(Operation);
             }
-            if (options.Format != "W" && !(ExecutionSummary is ChangeTrackingList<ScriptActionExecutionSummary> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ExecutionSummary))
             {
                 writer.WritePropertyName("executionSummary"u8);
                 writer.WriteStartArray();
                 foreach (var item in ExecutionSummary)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScriptActionExecutionSummary>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && DebugInformation != null)
+            if (options.Format != "W" && Optional.IsDefined(DebugInformation))
             {
                 writer.WritePropertyName("debugInformation"u8);
                 writer.WriteStringValue(DebugInformation);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("uri"u8);
             writer.WriteStringValue(Uri.AbsoluteUri);
-            if (Parameters != null)
+            if (Optional.IsDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStringValue(Parameters);
@@ -82,7 +82,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 writer.WriteStringValue(item);
             }
             writer.WriteEndArray();
-            if (options.Format != "W" && ApplicationName != null)
+            if (options.Format != "W" && Optional.IsDefined(ApplicationName))
             {
                 writer.WritePropertyName("applicationName"u8);
                 writer.WriteStringValue(ApplicationName);
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<RuntimeScriptActionDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -258,7 +258,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +274,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeRuntimeScriptActionDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RuntimeScriptActionDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("targetDetails"u8);
-            writer.WriteObjectValue(TargetDetails);
+            writer.WriteObjectValue<MySqlFlexibleServerBackupStoreDetails>(TargetDetails, options);
             writer.WritePropertyName("backupSettings"u8);
-            writer.WriteObjectValue(BackupSettings);
+            writer.WriteObjectValue<MySqlFlexibleServerBackupSettings>(BackupSettings, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<MySqlFlexibleServerBackupAndExportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeMySqlFlexibleServerBackupAndExportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MySqlFlexibleServerBackupAndExportContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (FeatureName != null)
+            if (Optional.IsDefined(FeatureName))
             {
                 writer.WritePropertyName("featureName"u8);
                 writer.WriteStringValue(FeatureName);
             }
-            if (FeatureType != null)
+            if (Optional.IsDefined(FeatureType))
             {
                 writer.WritePropertyName("featureType"u8);
                 writer.WriteStringValue(FeatureType);
@@ -59,7 +59,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, ExposureControlRequest model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<ExposureControlRequest>(model);
             }
             public override ExposureControlRequest Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

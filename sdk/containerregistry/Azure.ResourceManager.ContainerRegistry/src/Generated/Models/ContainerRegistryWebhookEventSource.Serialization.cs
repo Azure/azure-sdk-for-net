@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEventSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Addr != null)
+            if (Optional.IsDefined(Addr))
             {
                 writer.WritePropertyName("addr"u8);
                 writer.WriteStringValue(Addr);
             }
-            if (InstanceId != null)
+            if (Optional.IsDefined(InstanceId))
             {
                 writer.WritePropertyName("instanceID"u8);
                 writer.WriteStringValue(InstanceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryWebhookEventSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryWebhookEventSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryWebhookEventSource)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.SelfHelp.Models
         /// <param name="requiredParameterSets"> Required parameters for invoking this particular solution. </param>
         /// <returns> A new <see cref="Models.SelfHelpSolutionMetadata"/> instance for mocking. </returns>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, SystemData systemData, string solutionId, string solutionType, string description, IEnumerable<IList<string>> requiredParameterSets)
+        public static SelfHelpSolutionMetadata SelfHelpSolutionMetadata(ResourceIdentifier id, string name, ResourceType resourceType, ResourceManager.Models.SystemData systemData, string solutionId, string solutionType, string description, IEnumerable<IList<string>> requiredParameterSets)
         {
             return new SelfHelpSolutionMetadata(id, name, resourceType, systemData, default, serializedAdditionalRawData: null);
         }

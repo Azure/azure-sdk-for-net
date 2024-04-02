@@ -23,34 +23,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureSynapseArtifactsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -76,12 +76,12 @@ namespace Azure.ResourceManager.DataFactory.Models
             writer.WriteStartObject();
             writer.WritePropertyName("endpoint"u8);
             JsonSerializer.Serialize(writer, Endpoint);
-            if (Authentication != null)
+            if (Optional.IsDefined(Authentication))
             {
                 writer.WritePropertyName("authentication"u8);
                 JsonSerializer.Serialize(writer, Authentication);
             }
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 JsonSerializer.Serialize(writer, WorkspaceResourceId);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureSynapseArtifactsLinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeAzureSynapseArtifactsLinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureSynapseArtifactsLinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

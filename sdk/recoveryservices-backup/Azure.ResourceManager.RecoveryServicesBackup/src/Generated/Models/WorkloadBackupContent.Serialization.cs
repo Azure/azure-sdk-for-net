@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BackupType.HasValue)
+            if (Optional.IsDefined(BackupType))
             {
                 writer.WritePropertyName("backupType"u8);
                 writer.WriteStringValue(BackupType.Value.ToString());
             }
-            if (EnableCompression.HasValue)
+            if (Optional.IsDefined(EnableCompression))
             {
                 writer.WritePropertyName("enableCompression"u8);
                 writer.WriteBooleanValue(EnableCompression.Value);
             }
-            if (RecoveryPointExpireOn.HasValue)
+            if (Optional.IsDefined(RecoveryPointExpireOn))
             {
                 writer.WritePropertyName("recoveryPointExpiryTimeInUTC"u8);
                 writer.WriteStringValue(RecoveryPointExpireOn.Value, "O");
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<WorkloadBackupContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeWorkloadBackupContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WorkloadBackupContent)} does not support reading '{options.Format}' format.");
             }
         }
 

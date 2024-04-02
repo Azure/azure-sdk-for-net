@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataImportDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataImportDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataImportDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("accountDetails"u8);
-            writer.WriteObjectValue(AccountDetails);
-            if (LogCollectionLevel.HasValue)
+            writer.WriteObjectValue<DataAccountDetails>(AccountDetails, options);
+            if (Optional.IsDefined(LogCollectionLevel))
             {
                 writer.WritePropertyName("logCollectionLevel"u8);
                 writer.WriteStringValue(LogCollectionLevel.Value.ToSerialString());
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataImportDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataImportDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataImportDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataImportDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataImportDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataImportDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataImportDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataImportDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

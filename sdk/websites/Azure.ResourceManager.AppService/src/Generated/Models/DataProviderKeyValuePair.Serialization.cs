@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,16 +23,16 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProviderKeyValuePair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProviderKeyValuePair)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProviderKeyValuePair)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Key != null)
+            if (options.Format != "W" && Optional.IsDefined(Key))
             {
                 writer.WritePropertyName("key"u8);
                 writer.WriteStringValue(Key);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
 #if NET6_0_OR_GREATER
@@ -66,7 +67,7 @@ namespace Azure.ResourceManager.AppService.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProviderKeyValuePair>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProviderKeyValuePair)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProviderKeyValuePair)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -110,6 +111,57 @@ namespace Azure.ResourceManager.AppService.Models
             return new DataProviderKeyValuePair(key, value, serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Key), out propertyOverride);
+            if (Optional.IsDefined(Key) || hasPropertyOverride)
+            {
+                builder.Append("  key: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Key.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Key}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Key}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Value), out propertyOverride);
+            if (Optional.IsDefined(Value) || hasPropertyOverride)
+            {
+                builder.Append("  value: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<DataProviderKeyValuePair>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<DataProviderKeyValuePair>)this).GetFormatFromOptions(options) : options.Format;
@@ -118,8 +170,10 @@ namespace Azure.ResourceManager.AppService.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProviderKeyValuePair)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProviderKeyValuePair)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +189,7 @@ namespace Azure.ResourceManager.AppService.Models
                         return DeserializeDataProviderKeyValuePair(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProviderKeyValuePair)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProviderKeyValuePair)} does not support reading '{options.Format}' format.");
             }
         }
 

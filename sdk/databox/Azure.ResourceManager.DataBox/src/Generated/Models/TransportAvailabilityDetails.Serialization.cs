@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransportAvailabilityDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ShipmentType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ShipmentType))
             {
                 writer.WritePropertyName("shipmentType"u8);
                 writer.WriteStringValue(ShipmentType.Value.ToSerialString());
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<TransportAvailabilityDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TransportAvailabilityDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TransportAvailabilityDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TransportAvailabilityDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeTransportAvailabilityDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TransportAvailabilityDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TransportAvailabilityDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

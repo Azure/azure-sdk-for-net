@@ -19,24 +19,24 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Pipelines is ChangeTrackingList<TriggerPipelineReference> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Pipelines))
             {
                 writer.WritePropertyName("pipelines"u8);
                 writer.WriteStartArray();
                 foreach (var item in Pipelines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TriggerPipelineReference>(item);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Annotations is ChangeTrackingList<object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -47,14 +47,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<object>(item);
                 }
                 writer.WriteEndArray();
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -154,7 +154,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, MultiplePipelineTrigger model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<MultiplePipelineTrigger>(model);
             }
             public override MultiplePipelineTrigger Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

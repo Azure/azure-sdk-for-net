@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var format = options.Format == "W" ? ((IPersistableModel<EndpointResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointResourceData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,24 +43,24 @@ namespace Azure.ResourceManager.HybridConnectivity
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (EndpointType.HasValue)
+            if (Optional.IsDefined(EndpointType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(EndpointType.Value.ToString());
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -68,32 +68,32 @@ namespace Azure.ResourceManager.HybridConnectivity
             writer.WriteEndObject();
             writer.WritePropertyName("systemData"u8);
             writer.WriteStartObject();
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
                 writer.WriteStringValue(CreatedBy);
             }
-            if (CreatedByType.HasValue)
+            if (Optional.IsDefined(CreatedByType))
             {
                 writer.WritePropertyName("createdByType"u8);
                 writer.WriteStringValue(CreatedByType.Value.ToString());
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdAt"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (LastModifiedBy != null)
+            if (Optional.IsDefined(LastModifiedBy))
             {
                 writer.WritePropertyName("lastModifiedBy"u8);
                 writer.WriteStringValue(LastModifiedBy);
             }
-            if (LastModifiedByType.HasValue)
+            if (Optional.IsDefined(LastModifiedByType))
             {
                 writer.WritePropertyName("lastModifiedByType"u8);
                 writer.WriteStringValue(LastModifiedByType.Value.ToString());
             }
-            if (LastModifiedOn.HasValue)
+            if (Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedAt"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HybridConnectivity
             var format = options.Format == "W" ? ((IPersistableModel<EndpointResourceData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EndpointResourceData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EndpointResourceData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -299,7 +299,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EndpointResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointResourceData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -315,7 +315,7 @@ namespace Azure.ResourceManager.HybridConnectivity
                         return DeserializeEndpointResourceData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EndpointResourceData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EndpointResourceData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (ResourceType != null)
+            if (Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<CheckNameAvailabilityContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.AgFoodPlatform.Models
                         return DeserializeCheckNameAvailabilityContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CheckNameAvailabilityContent)} does not support reading '{options.Format}' format.");
             }
         }
 

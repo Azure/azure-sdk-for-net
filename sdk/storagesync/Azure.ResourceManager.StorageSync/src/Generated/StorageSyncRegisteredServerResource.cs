@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.StorageSync.Models;
 
 namespace Azure.ResourceManager.StorageSync
@@ -282,10 +280,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageSyncRegisteredServerResource>> UpdateAsync(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Update");
             scope.Start();
@@ -331,10 +326,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation<StorageSyncRegisteredServerResource> Update(WaitUntil waitUntil, StorageSyncRegisteredServerCreateOrUpdateContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.Update");
             scope.Start();
@@ -380,10 +372,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<ArmOperation> TriggerRolloverAsync(WaitUntil waitUntil, TriggerRolloverContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.TriggerRollover");
             scope.Start();
@@ -429,10 +418,7 @@ namespace Azure.ResourceManager.StorageSync
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual ArmOperation TriggerRollover(WaitUntil waitUntil, TriggerRolloverContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = _storageSyncRegisteredServerRegisteredServersClientDiagnostics.CreateScope("StorageSyncRegisteredServerResource.TriggerRollover");
             scope.Start();

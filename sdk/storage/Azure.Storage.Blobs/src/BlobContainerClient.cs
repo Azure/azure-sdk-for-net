@@ -12,6 +12,7 @@ using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.Storage.Blobs.Models;
 using Azure.Storage.Blobs.Specialized;
+using Azure.Storage.Common;
 using Azure.Storage.Cryptography;
 using Azure.Storage.Sas;
 using Metadata = System.Collections.Generic.IDictionary<string, string>;

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsQueryOrderBy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Field != null)
+            if (Optional.IsDefined(Field))
             {
                 writer.WritePropertyName("field"u8);
                 writer.WriteStringValue(Field);
             }
-            if (Order.HasValue)
+            if (Optional.IsDefined(Order))
             {
                 writer.WritePropertyName("order"u8);
                 writer.WriteStringValue(Order.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdpsQueryOrderBy>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeIdpsQueryOrderBy(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdpsQueryOrderBy)} does not support reading '{options.Format}' format.");
             }
         }
 

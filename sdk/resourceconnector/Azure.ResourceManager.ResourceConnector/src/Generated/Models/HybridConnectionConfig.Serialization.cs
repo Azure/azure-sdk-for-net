@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ExpirationTime.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpirationTime))
             {
                 writer.WritePropertyName("expirationTime"u8);
                 writer.WriteNumberValue(ExpirationTime.Value);
             }
-            if (options.Format != "W" && HybridConnectionName != null)
+            if (options.Format != "W" && Optional.IsDefined(HybridConnectionName))
             {
                 writer.WritePropertyName("hybridConnectionName"u8);
                 writer.WriteStringValue(HybridConnectionName);
             }
-            if (options.Format != "W" && Relay != null)
+            if (options.Format != "W" && Optional.IsDefined(Relay))
             {
                 writer.WritePropertyName("relay"u8);
                 writer.WriteStringValue(Relay);
             }
-            if (options.Format != "W" && Token != null)
+            if (options.Format != "W" && Optional.IsDefined(Token))
             {
                 writer.WritePropertyName("token"u8);
                 writer.WriteStringValue(Token);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
             var format = options.Format == "W" ? ((IPersistableModel<HybridConnectionConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.ResourceConnector.Models
                         return DeserializeHybridConnectionConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HybridConnectionConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

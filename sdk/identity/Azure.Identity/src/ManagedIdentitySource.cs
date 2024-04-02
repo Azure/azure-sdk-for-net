@@ -51,6 +51,12 @@ namespace Azure.Identity
             {
                 if (response.Status == 200)
                 {
+                    // This avoids the json parsing if we have already been cancelled.
+                    // Also, this handles the sync case, where we don't have to check for cancellation.
+                    if (cancellationToken.IsCancellationRequested)
+                    {
+                        throw new TaskCanceledException();
+                    }
                     using JsonDocument json = async
                     ? await JsonDocument.ParseAsync(response.ContentStream, default, cancellationToken).ConfigureAwait(false)
                     : JsonDocument.Parse(response.ContentStream);
@@ -61,6 +67,11 @@ namespace Azure.Identity
             catch (JsonException jex)
             {
                 throw new CredentialUnavailableException(UnexpectedResponse, jex);
+            }
+            catch (Exception e) when (response.Status == 200)
+            {
+                // This is a rare case where the request times out but the response was successful.
+                throw new RequestFailedException("Response from Managed Identity was successful, but the operation timed out prior to completion.", e);
             }
             catch (Exception e)
             {

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryDataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryDataDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryDataDiskImage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("lun"u8);
             writer.WriteNumberValue(Lun);
-            if (options.Format != "W" && DiskSizeGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeGB.Value);
             }
-            if (HostCaching.HasValue)
+            if (Optional.IsDefined(HostCaching))
             {
                 writer.WritePropertyName("hostCaching"u8);
                 writer.WriteStringValue(HostCaching.Value.ToString());
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<SharedGalleryDataDiskImage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SharedGalleryDataDiskImage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SharedGalleryDataDiskImage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryDataDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryDataDiskImage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeSharedGalleryDataDiskImage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SharedGalleryDataDiskImage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SharedGalleryDataDiskImage)} does not support reading '{options.Format}' format.");
             }
         }
 

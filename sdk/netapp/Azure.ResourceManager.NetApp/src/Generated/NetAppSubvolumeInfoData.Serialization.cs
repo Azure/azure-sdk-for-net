@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubvolumeInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppSubvolumeInfoData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.NetApp
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
             }
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 if (Size != null)
                 {
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("size");
                 }
             }
-            if (ParentPath != null)
+            if (Optional.IsDefined(ParentPath))
             {
                 if (ParentPath != null)
                 {
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.NetApp
                     writer.WriteNull("parentPath");
                 }
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
@@ -107,7 +107,7 @@ namespace Azure.ResourceManager.NetApp
             var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeInfoData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubvolumeInfoData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppSubvolumeInfoData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.NetApp
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubvolumeInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppSubvolumeInfoData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -243,7 +243,7 @@ namespace Azure.ResourceManager.NetApp
                         return DeserializeNetAppSubvolumeInfoData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubvolumeInfoData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppSubvolumeInfoData)} does not support reading '{options.Format}' format.");
             }
         }
 

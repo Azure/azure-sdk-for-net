@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlackChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 writer.WriteStringValue(ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 writer.WriteStringValue(ClientSecret);
             }
-            if (VerificationToken != null)
+            if (Optional.IsDefined(VerificationToken))
             {
                 writer.WritePropertyName("verificationToken"u8);
                 writer.WriteStringValue(VerificationToken);
             }
-            if (Scopes != null)
+            if (Optional.IsDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStringValue(Scopes);
             }
-            if (LandingPageUri != null)
+            if (Optional.IsDefined(LandingPageUri))
             {
                 writer.WritePropertyName("landingPageUrl"u8);
                 writer.WriteStringValue(LandingPageUri.AbsoluteUri);
             }
-            if (options.Format != "W" && RedirectAction != null)
+            if (options.Format != "W" && Optional.IsDefined(RedirectAction))
             {
                 writer.WritePropertyName("redirectAction"u8);
                 writer.WriteStringValue(RedirectAction);
             }
-            if (options.Format != "W" && LastSubmissionId != null)
+            if (options.Format != "W" && Optional.IsDefined(LastSubmissionId))
             {
                 writer.WritePropertyName("lastSubmissionId"u8);
                 writer.WriteStringValue(LastSubmissionId);
             }
-            if (RegisterBeforeOAuthFlow.HasValue)
+            if (Optional.IsDefined(RegisterBeforeOAuthFlow))
             {
                 writer.WritePropertyName("registerBeforeOAuthFlow"u8);
                 writer.WriteBooleanValue(RegisterBeforeOAuthFlow.Value);
             }
-            if (options.Format != "W" && IsValidated.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsValidated))
             {
                 writer.WritePropertyName("IsValidated"u8);
                 writer.WriteBooleanValue(IsValidated.Value);
             }
-            if (SigningSecret != null)
+            if (Optional.IsDefined(SigningSecret))
             {
                 writer.WritePropertyName("signingSecret"u8);
                 writer.WriteStringValue(SigningSecret);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<SlackChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeSlackChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SlackChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

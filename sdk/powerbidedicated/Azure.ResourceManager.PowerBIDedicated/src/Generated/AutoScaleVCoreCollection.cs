@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.PowerBIDedicated
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<AutoScaleVCoreResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string vcoreName, AutoScaleVCoreData data, CancellationToken cancellationToken = default)
         {
-            if (vcoreName == null)
-            {
-                throw new ArgumentNullException(nameof(vcoreName));
-            }
-            if (vcoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcoreName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<AutoScaleVCoreResource> CreateOrUpdate(WaitUntil waitUntil, string vcoreName, AutoScaleVCoreData data, CancellationToken cancellationToken = default)
         {
-            if (vcoreName == null)
-            {
-                throw new ArgumentNullException(nameof(vcoreName));
-            }
-            if (vcoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcoreName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
         public virtual async Task<Response<AutoScaleVCoreResource>> GetAsync(string vcoreName, CancellationToken cancellationToken = default)
         {
-            if (vcoreName == null)
-            {
-                throw new ArgumentNullException(nameof(vcoreName));
-            }
-            if (vcoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcoreName));
-            }
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
 
             using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
         public virtual Response<AutoScaleVCoreResource> Get(string vcoreName, CancellationToken cancellationToken = default)
         {
-            if (vcoreName == null)
-            {
-                throw new ArgumentNullException(nameof(vcoreName));
-            }
-            if (vcoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcoreName));
-            }
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
 
             using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.Get");
             scope.Start();
@@ -361,14 +325,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string vcoreName, CancellationToken cancellationToken = default)
         {
-            if (vcoreName == null)
-            {
-                throw new ArgumentNullException(nameof(vcoreName));
-            }
-            if (vcoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcoreName));
-            }
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
 
             using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.Exists");
             scope.Start();
@@ -411,14 +368,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
         public virtual Response<bool> Exists(string vcoreName, CancellationToken cancellationToken = default)
         {
-            if (vcoreName == null)
-            {
-                throw new ArgumentNullException(nameof(vcoreName));
-            }
-            if (vcoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcoreName));
-            }
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
 
             using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.Exists");
             scope.Start();
@@ -461,14 +411,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
         public virtual async Task<NullableResponse<AutoScaleVCoreResource>> GetIfExistsAsync(string vcoreName, CancellationToken cancellationToken = default)
         {
-            if (vcoreName == null)
-            {
-                throw new ArgumentNullException(nameof(vcoreName));
-            }
-            if (vcoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcoreName));
-            }
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
 
             using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.GetIfExists");
             scope.Start();
@@ -513,14 +456,7 @@ namespace Azure.ResourceManager.PowerBIDedicated
         /// <exception cref="ArgumentNullException"> <paramref name="vcoreName"/> is null. </exception>
         public virtual NullableResponse<AutoScaleVCoreResource> GetIfExists(string vcoreName, CancellationToken cancellationToken = default)
         {
-            if (vcoreName == null)
-            {
-                throw new ArgumentNullException(nameof(vcoreName));
-            }
-            if (vcoreName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vcoreName));
-            }
+            Argument.AssertNotNullOrEmpty(vcoreName, nameof(vcoreName));
 
             using var scope = _autoScaleVCoreClientDiagnostics.CreateScope("AutoScaleVCoreCollection.GetIfExists");
             scope.Start();

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DependencyName != null)
+            if (Optional.IsDefined(DependencyName))
             {
                 writer.WritePropertyName("dependencyName"u8);
                 writer.WriteStringValue(DependencyName);
             }
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (MinVersion != null)
+            if (Optional.IsDefined(MinVersion))
             {
                 writer.WritePropertyName("minVersion"u8);
                 writer.WriteStringValue(MinVersion);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsixPackageDependencies>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DesktopVirtualization.Models
                         return DeserializeMsixPackageDependencies(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsixPackageDependencies)} does not support reading '{options.Format}' format.");
             }
         }
 

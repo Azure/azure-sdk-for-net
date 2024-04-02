@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (ImmutableSubscriptionId != null)
+            if (Optional.IsDefined(ImmutableSubscriptionId))
             {
                 writer.WritePropertyName("immutableSubscriptionId"u8);
                 writer.WriteStringValue(ImmutableSubscriptionId);
             }
-            if (ImmutableResourceId != null)
+            if (Optional.IsDefined(ImmutableResourceId))
             {
                 writer.WritePropertyName("immutableResourceId"u8);
                 writer.WriteStringValue(ImmutableResourceId);
             }
-            if (VnetTrafficTag != null)
+            if (Optional.IsDefined(VnetTrafficTag))
             {
                 writer.WritePropertyName("vnetTrafficTag"u8);
                 writer.WriteStringValue(VnetTrafficTag);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeviceUpdatePrivateEndpointUpdate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeDeviceUpdatePrivateEndpointUpdate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeviceUpdatePrivateEndpointUpdate)} does not support reading '{options.Format}' format.");
             }
         }
 

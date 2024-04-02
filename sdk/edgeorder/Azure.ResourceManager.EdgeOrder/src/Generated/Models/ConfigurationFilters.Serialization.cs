@@ -22,19 +22,19 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationFilters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationFilters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationFilters)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("hierarchyInformation"u8);
-            writer.WriteObjectValue(HierarchyInformation);
-            if (!(FilterableProperty is ChangeTrackingList<FilterableProperty> collection && collection.IsUndefined))
+            writer.WriteObjectValue<HierarchyInformation>(HierarchyInformation, options);
+            if (Optional.IsCollectionDefined(FilterableProperty))
             {
                 writer.WritePropertyName("filterableProperty"u8);
                 writer.WriteStartArray();
                 foreach (var item in FilterableProperty)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FilterableProperty>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationFilters>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationFilters)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationFilters)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationFilters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationFilters)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeConfigurationFilters(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationFilters)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationFilters)} does not support reading '{options.Format}' format.");
             }
         }
 

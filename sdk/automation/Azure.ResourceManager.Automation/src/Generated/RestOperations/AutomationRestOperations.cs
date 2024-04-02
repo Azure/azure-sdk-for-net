@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automation.Models;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Automation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<GraphicalRunbookContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -72,34 +72,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<GraphicalRunbookContent>> ConvertGraphRunbookContentAsync(string subscriptionId, string resourceGroupName, string automationAccountName, GraphicalRunbookContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateConvertGraphRunbookContentRequest(subscriptionId, resourceGroupName, automationAccountName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -127,34 +103,10 @@ namespace Azure.ResourceManager.Automation
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="automationAccountName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<GraphicalRunbookContent> ConvertGraphRunbookContent(string subscriptionId, string resourceGroupName, string automationAccountName, GraphicalRunbookContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (automationAccountName == null)
-            {
-                throw new ArgumentNullException(nameof(automationAccountName));
-            }
-            if (automationAccountName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(automationAccountName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(automationAccountName, nameof(automationAccountName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateConvertGraphRunbookContentRequest(subscriptionId, resourceGroupName, automationAccountName, content);
             _pipeline.Send(message, cancellationToken);

@@ -6,7 +6,6 @@
 #nullable disable
 
 using System.Text.Json;
-using Azure.AI.TextAnalytics;
 
 namespace Azure.AI.TextAnalytics.Models
 {

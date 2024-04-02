@@ -22,91 +22,91 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtUpdateMigrationItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TargetVmName != null)
+            if (Optional.IsDefined(TargetVmName))
             {
                 writer.WritePropertyName("targetVmName"u8);
                 writer.WriteStringValue(TargetVmName);
             }
-            if (TargetVmSize != null)
+            if (Optional.IsDefined(TargetVmSize))
             {
                 writer.WritePropertyName("targetVmSize"u8);
                 writer.WriteStringValue(TargetVmSize);
             }
-            if (TargetResourceGroupId != null)
+            if (Optional.IsDefined(TargetResourceGroupId))
             {
                 writer.WritePropertyName("targetResourceGroupId"u8);
                 writer.WriteStringValue(TargetResourceGroupId);
             }
-            if (TargetAvailabilitySetId != null)
+            if (Optional.IsDefined(TargetAvailabilitySetId))
             {
                 writer.WritePropertyName("targetAvailabilitySetId"u8);
                 writer.WriteStringValue(TargetAvailabilitySetId);
             }
-            if (TargetAvailabilityZone != null)
+            if (Optional.IsDefined(TargetAvailabilityZone))
             {
                 writer.WritePropertyName("targetAvailabilityZone"u8);
                 writer.WriteStringValue(TargetAvailabilityZone);
             }
-            if (TargetProximityPlacementGroupId != null)
+            if (Optional.IsDefined(TargetProximityPlacementGroupId))
             {
                 writer.WritePropertyName("targetProximityPlacementGroupId"u8);
                 writer.WriteStringValue(TargetProximityPlacementGroupId);
             }
-            if (TargetBootDiagnosticsStorageAccountId != null)
+            if (Optional.IsDefined(TargetBootDiagnosticsStorageAccountId))
             {
                 writer.WritePropertyName("targetBootDiagnosticsStorageAccountId"u8);
                 writer.WriteStringValue(TargetBootDiagnosticsStorageAccountId);
             }
-            if (TargetNetworkId != null)
+            if (Optional.IsDefined(TargetNetworkId))
             {
                 writer.WritePropertyName("targetNetworkId"u8);
                 writer.WriteStringValue(TargetNetworkId);
             }
-            if (TestNetworkId != null)
+            if (Optional.IsDefined(TestNetworkId))
             {
                 writer.WritePropertyName("testNetworkId"u8);
                 writer.WriteStringValue(TestNetworkId);
             }
-            if (!(VmNics is ChangeTrackingList<VMwareCbtNicContent> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VmNics))
             {
                 writer.WritePropertyName("vmNics"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmNics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareCbtNicContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(VmDisks is ChangeTrackingList<VMwareCbtUpdateDiskContent> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(VmDisks))
             {
                 writer.WritePropertyName("vmDisks"u8);
                 writer.WriteStartArray();
                 foreach (var item in VmDisks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareCbtUpdateDiskContent>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (LicenseType.HasValue)
+            if (Optional.IsDefined(LicenseType))
             {
                 writer.WritePropertyName("licenseType"u8);
                 writer.WriteStringValue(LicenseType.Value.ToString());
             }
-            if (SqlServerLicenseType.HasValue)
+            if (Optional.IsDefined(SqlServerLicenseType))
             {
                 writer.WritePropertyName("sqlServerLicenseType"u8);
                 writer.WriteStringValue(SqlServerLicenseType.Value.ToString());
             }
-            if (PerformAutoResync != null)
+            if (Optional.IsDefined(PerformAutoResync))
             {
                 writer.WritePropertyName("performAutoResync"u8);
                 writer.WriteStringValue(PerformAutoResync);
             }
-            if (!(TargetVmTags is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetVmTags))
             {
                 writer.WritePropertyName("targetVmTags"u8);
                 writer.WriteStartObject();
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetDiskTags is ChangeTrackingDictionary<string, string> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetDiskTags))
             {
                 writer.WritePropertyName("targetDiskTags"u8);
                 writer.WriteStartObject();
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 }
                 writer.WriteEndObject();
             }
-            if (!(TargetNicTags is ChangeTrackingDictionary<string, string> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(TargetNicTags))
             {
                 writer.WritePropertyName("targetNicTags"u8);
                 writer.WriteStartObject();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<VMwareCbtUpdateMigrationItemContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -405,7 +405,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -421,7 +421,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeVMwareCbtUpdateMigrationItemContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareCbtUpdateMigrationItemContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapsePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapsePrivateLinkResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapsePrivateLinkResourceProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && !(RequiredMembers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredMembers))
             {
                 writer.WritePropertyName("requiredMembers"u8);
                 writer.WriteStartArray();
@@ -41,7 +41,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(RequiredZoneNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(RequiredZoneNames))
             {
                 writer.WritePropertyName("requiredZoneNames"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapsePrivateLinkResourceProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapsePrivateLinkResourceProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapsePrivateLinkResourceProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapsePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapsePrivateLinkResourceProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapsePrivateLinkResourceProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapsePrivateLinkResourceProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapsePrivateLinkResourceProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

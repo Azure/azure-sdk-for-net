@@ -18,12 +18,12 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Content != null)
+            if (Optional.IsDefined(Content))
             {
                 writer.WritePropertyName("content"u8);
                 writer.WriteStringValue(Content);
             }
-            if (Filename != null)
+            if (Optional.IsDefined(Filename))
             {
                 writer.WritePropertyName("filename"u8);
                 writer.WriteStringValue(Filename);
@@ -69,7 +69,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, LibraryRequirements model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<LibraryRequirements>(model);
             }
             public override LibraryRequirements Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

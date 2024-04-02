@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppContainerResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppContainerResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppContainerResources)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Cpu.HasValue)
+            if (Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteNumberValue(Cpu.Value);
             }
-            if (Memory != null)
+            if (Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
             }
-            if (options.Format != "W" && EphemeralStorage != null)
+            if (options.Format != "W" && Optional.IsDefined(EphemeralStorage))
             {
                 writer.WritePropertyName("ephemeralStorage"u8);
                 writer.WriteStringValue(EphemeralStorage);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppContainers.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppContainerResources>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppContainerResources)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppContainerResources)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppContainerResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppContainerResources)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppContainers.Models
                         return DeserializeAppContainerResources(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppContainerResources)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppContainerResources)} does not support reading '{options.Format}' format.");
             }
         }
 

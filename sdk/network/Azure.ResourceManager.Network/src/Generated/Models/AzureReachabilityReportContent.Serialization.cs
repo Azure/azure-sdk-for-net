@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("providerLocation"u8);
-            writer.WriteObjectValue(ProviderLocation);
-            if (!(Providers is ChangeTrackingList<string> collection && collection.IsUndefined))
+            writer.WriteObjectValue<AzureReachabilityReportLocation>(ProviderLocation, options);
+            if (Optional.IsCollectionDefined(Providers))
             {
                 writer.WritePropertyName("providers"u8);
                 writer.WriteStartArray();
@@ -38,7 +38,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(AzureLocations is ChangeTrackingList<AzureLocation> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AzureLocations))
             {
                 writer.WritePropertyName("azureLocations"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureReachabilityReportContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAzureReachabilityReportContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureReachabilityReportContent)} does not support reading '{options.Format}' format.");
             }
         }
 

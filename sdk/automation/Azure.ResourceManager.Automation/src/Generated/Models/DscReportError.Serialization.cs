@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscReportError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscReportError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscReportError)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ErrorSource != null)
+            if (Optional.IsDefined(ErrorSource))
             {
                 writer.WritePropertyName("errorSource"u8);
                 writer.WriteStringValue(ErrorSource);
             }
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (Locale != null)
+            if (Optional.IsDefined(Locale))
             {
                 writer.WritePropertyName("locale"u8);
                 writer.WriteStringValue(Locale);
             }
-            if (ErrorDetails != null)
+            if (Optional.IsDefined(ErrorDetails))
             {
                 writer.WritePropertyName("errorDetails"u8);
                 writer.WriteStringValue(ErrorDetails);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscReportError>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscReportError)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscReportError)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscReportError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscReportError)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscReportError(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscReportError)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscReportError)} does not support reading '{options.Format}' format.");
             }
         }
 

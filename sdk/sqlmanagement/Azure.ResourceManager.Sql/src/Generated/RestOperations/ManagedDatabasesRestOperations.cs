@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Sql.Models;
@@ -67,30 +67,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedDatabaseListResult>> ListByInstanceAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var message = CreateListByInstanceRequest(subscriptionId, resourceGroupName, managedInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -117,30 +96,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedDatabaseListResult> ListByInstance(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var message = CreateListByInstanceRequest(subscriptionId, resourceGroupName, managedInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -190,38 +148,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedDatabaseData>> GetAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -251,38 +181,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedDatabaseData> Get(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
             _pipeline.Send(message, cancellationToken);
@@ -322,7 +224,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<ManagedDatabaseData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -339,42 +241,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -400,42 +271,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, data);
             _pipeline.Send(message, cancellationToken);
@@ -481,38 +321,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -537,38 +349,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName);
             _pipeline.Send(message, cancellationToken);
@@ -603,7 +387,7 @@ namespace Azure.ResourceManager.Sql
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<ManagedDatabasePatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -620,42 +404,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabasePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -680,42 +433,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabasePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -749,7 +471,7 @@ namespace Azure.ResourceManager.Sql
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedDatabaseMoveDefinition);
+            content.JsonWriter.WriteObjectValue<ManagedDatabaseMoveDefinition>(managedDatabaseMoveDefinition, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -766,42 +488,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CancelMoveAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (managedDatabaseMoveDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(managedDatabaseMoveDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
 
             using var message = CreateCancelMoveRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, managedDatabaseMoveDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -826,42 +517,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CancelMove(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (managedDatabaseMoveDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(managedDatabaseMoveDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
 
             using var message = CreateCancelMoveRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, managedDatabaseMoveDefinition);
             _pipeline.Send(message, cancellationToken);
@@ -895,7 +555,7 @@ namespace Azure.ResourceManager.Sql
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedDatabaseMoveDefinition);
+            content.JsonWriter.WriteObjectValue<ManagedDatabaseMoveDefinition>(managedDatabaseMoveDefinition, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -912,42 +572,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CompleteMoveAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (managedDatabaseMoveDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(managedDatabaseMoveDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
 
             using var message = CreateCompleteMoveRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, managedDatabaseMoveDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -972,42 +601,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CompleteMove(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseMoveDefinition managedDatabaseMoveDefinition, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (managedDatabaseMoveDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(managedDatabaseMoveDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(managedDatabaseMoveDefinition, nameof(managedDatabaseMoveDefinition));
 
             using var message = CreateCompleteMoveRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, managedDatabaseMoveDefinition);
             _pipeline.Send(message, cancellationToken);
@@ -1041,7 +639,7 @@ namespace Azure.ResourceManager.Sql
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(completeDatabaseRestoreDefinition);
+            content.JsonWriter.WriteObjectValue<CompleteDatabaseRestoreDefinition>(completeDatabaseRestoreDefinition, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1058,42 +656,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CompleteRestoreAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (completeDatabaseRestoreDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(completeDatabaseRestoreDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
 
             using var message = CreateCompleteRestoreRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, completeDatabaseRestoreDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1118,42 +685,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CompleteRestore(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, CompleteDatabaseRestoreDefinition completeDatabaseRestoreDefinition, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (completeDatabaseRestoreDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(completeDatabaseRestoreDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(completeDatabaseRestoreDefinition, nameof(completeDatabaseRestoreDefinition));
 
             using var message = CreateCompleteRestoreRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, completeDatabaseRestoreDefinition);
             _pipeline.Send(message, cancellationToken);
@@ -1187,7 +723,7 @@ namespace Azure.ResourceManager.Sql
             request.Uri = uri;
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(managedDatabaseStartMoveDefinition);
+            content.JsonWriter.WriteObjectValue<ManagedDatabaseStartMoveDefinition>(managedDatabaseStartMoveDefinition, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -1204,42 +740,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StartMoveAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (managedDatabaseStartMoveDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(managedDatabaseStartMoveDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(managedDatabaseStartMoveDefinition, nameof(managedDatabaseStartMoveDefinition));
 
             using var message = CreateStartMoveRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, managedDatabaseStartMoveDefinition);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1264,42 +769,11 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="managedInstanceName"/> or <paramref name="databaseName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StartMove(string subscriptionId, string resourceGroupName, string managedInstanceName, string databaseName, ManagedDatabaseStartMoveDefinition managedDatabaseStartMoveDefinition, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (databaseName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(databaseName));
-            }
-            if (managedDatabaseStartMoveDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(managedDatabaseStartMoveDefinition));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
+            Argument.AssertNotNullOrEmpty(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(managedDatabaseStartMoveDefinition, nameof(managedDatabaseStartMoveDefinition));
 
             using var message = CreateStartMoveRequest(subscriptionId, resourceGroupName, managedInstanceName, databaseName, managedDatabaseStartMoveDefinition);
             _pipeline.Send(message, cancellationToken);
@@ -1343,30 +817,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedDatabaseListResult>> ListInaccessibleByInstanceAsync(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var message = CreateListInaccessibleByInstanceRequest(subscriptionId, resourceGroupName, managedInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1393,30 +846,9 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedDatabaseListResult> ListInaccessibleByInstance(string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var message = CreateListInaccessibleByInstanceRequest(subscriptionId, resourceGroupName, managedInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -1458,34 +890,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedDatabaseListResult>> ListByInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var message = CreateListByInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1513,34 +921,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedDatabaseListResult> ListByInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var message = CreateListByInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -1582,34 +966,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ManagedDatabaseListResult>> ListInaccessibleByInstanceNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var message = CreateListInaccessibleByInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1637,34 +997,10 @@ namespace Azure.ResourceManager.Sql
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="managedInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ManagedDatabaseListResult> ListInaccessibleByInstanceNextPage(string nextLink, string subscriptionId, string resourceGroupName, string managedInstanceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (managedInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(managedInstanceName));
-            }
-            if (managedInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(managedInstanceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(managedInstanceName, nameof(managedInstanceName));
 
             using var message = CreateListInaccessibleByInstanceNextPageRequest(nextLink, subscriptionId, resourceGroupName, managedInstanceName);
             _pipeline.Send(message, cancellationToken);

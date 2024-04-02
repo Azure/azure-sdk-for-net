@@ -64,10 +64,13 @@ namespace Azure.ResourceManager.Sql.Models
         }
 
         /// <summary> Gets the order. </summary>
+        [WirePath("order")]
         public int? Order { get; }
         /// <summary> Gets the name. </summary>
+        [WirePath("name")]
         public string Name { get; }
         /// <summary> Gets the status. </summary>
+        [WirePath("status")]
         public UpsertManagedServerOperationStepStatus? Status { get; }
     }
 }

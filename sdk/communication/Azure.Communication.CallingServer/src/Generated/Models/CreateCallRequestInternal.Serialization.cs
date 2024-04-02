@@ -19,22 +19,22 @@ namespace Azure.Communication.CallingServer
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
-            if (Subject != null)
+            writer.WriteObjectValue<CallSourceInternal>(Source);
+            if (Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
             writer.WritePropertyName("callbackUri"u8);
             writer.WriteStringValue(CallbackUri);
-            if (MediaStreamingConfiguration != null)
+            if (Optional.IsDefined(MediaStreamingConfiguration))
             {
                 writer.WritePropertyName("mediaStreamingConfiguration"u8);
-                writer.WriteObjectValue(MediaStreamingConfiguration);
+                writer.WriteObjectValue<MediaStreamingOptionsInternal>(MediaStreamingConfiguration);
             }
             writer.WriteEndObject();
         }

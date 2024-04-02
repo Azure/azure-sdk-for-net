@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DateTimeBegin.HasValue)
+            if (Optional.IsDefined(DateTimeBegin))
             {
                 writer.WritePropertyName("dateTimeBegin"u8);
                 writer.WriteStringValue(DateTimeBegin.Value, "O");
             }
-            if (DateTimeEnd.HasValue)
+            if (Optional.IsDefined(DateTimeEnd))
             {
                 writer.WritePropertyName("dateTimeEnd"u8);
                 writer.WriteStringValue(DateTimeEnd.Value, "O");
             }
-            if (Granularity.HasValue)
+            if (Optional.IsDefined(Granularity))
             {
                 writer.WritePropertyName("granularity"u8);
                 writer.WriteStringValue(Granularity.Value.ToString());
             }
-            if (!(Series is ChangeTrackingList<WafMetricsResponseSeriesItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Series))
             {
                 writer.WritePropertyName("series"u8);
                 writer.WriteStartArray();
                 foreach (var item in Series)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<WafMetricsResponseSeriesItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<WafMetricsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeWafMetricsResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WafMetricsResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

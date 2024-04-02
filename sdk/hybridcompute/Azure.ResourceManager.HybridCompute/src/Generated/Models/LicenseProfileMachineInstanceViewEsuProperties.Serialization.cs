@@ -22,47 +22,47 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AssignedLicense != null)
+            if (Optional.IsDefined(AssignedLicense))
             {
                 writer.WritePropertyName("assignedLicense"u8);
-                writer.WriteObjectValue(AssignedLicense);
+                writer.WriteObjectValue<HybridComputeLicense>(AssignedLicense, options);
             }
-            if (LicenseAssignmentState.HasValue)
+            if (Optional.IsDefined(LicenseAssignmentState))
             {
                 writer.WritePropertyName("licenseAssignmentState"u8);
                 writer.WriteStringValue(LicenseAssignmentState.Value.ToString());
             }
-            if (options.Format != "W" && ServerType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ServerType))
             {
                 writer.WritePropertyName("serverType"u8);
                 writer.WriteStringValue(ServerType.Value.ToString());
             }
-            if (options.Format != "W" && EsuEligibility.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EsuEligibility))
             {
                 writer.WritePropertyName("esuEligibility"u8);
                 writer.WriteStringValue(EsuEligibility.Value.ToString());
             }
-            if (options.Format != "W" && EsuKeyState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EsuKeyState))
             {
                 writer.WritePropertyName("esuKeyState"u8);
                 writer.WriteStringValue(EsuKeyState.Value.ToString());
             }
-            if (options.Format != "W" && AssignedLicenseImmutableId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AssignedLicenseImmutableId))
             {
                 writer.WritePropertyName("assignedLicenseImmutableId"u8);
                 writer.WriteStringValue(AssignedLicenseImmutableId.Value);
             }
-            if (options.Format != "W" && !(EsuKeys is ChangeTrackingList<EsuKey> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(EsuKeys))
             {
                 writer.WritePropertyName("esuKeys"u8);
                 writer.WriteStartArray();
                 foreach (var item in EsuKeys)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EsuKey>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
             var format = options.Format == "W" ? ((IPersistableModel<LicenseProfileMachineInstanceViewEsuProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -209,7 +209,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.HybridCompute.Models
                         return DeserializeLicenseProfileMachineInstanceViewEsuProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LicenseProfileMachineInstanceViewEsuProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

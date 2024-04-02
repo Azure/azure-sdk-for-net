@@ -10,10 +10,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MySql.Models;
 
 namespace Azure.ResourceManager.MySql
@@ -79,14 +77,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
         public virtual async Task<Response<MySqlQueryStatisticResource>> GetAsync(string queryStatisticId, CancellationToken cancellationToken = default)
         {
-            if (queryStatisticId == null)
-            {
-                throw new ArgumentNullException(nameof(queryStatisticId));
-            }
-            if (queryStatisticId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryStatisticId));
-            }
+            Argument.AssertNotNullOrEmpty(queryStatisticId, nameof(queryStatisticId));
 
             using var scope = _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics.CreateScope("MySqlQueryStatisticCollection.Get");
             scope.Start();
@@ -131,14 +122,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
         public virtual Response<MySqlQueryStatisticResource> Get(string queryStatisticId, CancellationToken cancellationToken = default)
         {
-            if (queryStatisticId == null)
-            {
-                throw new ArgumentNullException(nameof(queryStatisticId));
-            }
-            if (queryStatisticId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryStatisticId));
-            }
+            Argument.AssertNotNullOrEmpty(queryStatisticId, nameof(queryStatisticId));
 
             using var scope = _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics.CreateScope("MySqlQueryStatisticCollection.Get");
             scope.Start();
@@ -183,10 +167,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> An async collection of <see cref="MySqlQueryStatisticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<MySqlQueryStatisticResource> GetAllAsync(MySqlTopQueryStatisticsInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
@@ -220,10 +201,7 @@ namespace Azure.ResourceManager.MySql
         /// <returns> A collection of <see cref="MySqlQueryStatisticResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<MySqlQueryStatisticResource> GetAll(MySqlTopQueryStatisticsInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerRequest(Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => _mySqlQueryStatisticTopQueryStatisticsRestClient.CreateListByServerNextPageRequest(nextLink, Id.SubscriptionId, Id.ResourceGroupName, Id.Name, input);
@@ -257,14 +235,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string queryStatisticId, CancellationToken cancellationToken = default)
         {
-            if (queryStatisticId == null)
-            {
-                throw new ArgumentNullException(nameof(queryStatisticId));
-            }
-            if (queryStatisticId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryStatisticId));
-            }
+            Argument.AssertNotNullOrEmpty(queryStatisticId, nameof(queryStatisticId));
 
             using var scope = _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics.CreateScope("MySqlQueryStatisticCollection.Exists");
             scope.Start();
@@ -307,14 +278,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
         public virtual Response<bool> Exists(string queryStatisticId, CancellationToken cancellationToken = default)
         {
-            if (queryStatisticId == null)
-            {
-                throw new ArgumentNullException(nameof(queryStatisticId));
-            }
-            if (queryStatisticId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryStatisticId));
-            }
+            Argument.AssertNotNullOrEmpty(queryStatisticId, nameof(queryStatisticId));
 
             using var scope = _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics.CreateScope("MySqlQueryStatisticCollection.Exists");
             scope.Start();
@@ -357,14 +321,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
         public virtual async Task<NullableResponse<MySqlQueryStatisticResource>> GetIfExistsAsync(string queryStatisticId, CancellationToken cancellationToken = default)
         {
-            if (queryStatisticId == null)
-            {
-                throw new ArgumentNullException(nameof(queryStatisticId));
-            }
-            if (queryStatisticId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryStatisticId));
-            }
+            Argument.AssertNotNullOrEmpty(queryStatisticId, nameof(queryStatisticId));
 
             using var scope = _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics.CreateScope("MySqlQueryStatisticCollection.GetIfExists");
             scope.Start();
@@ -409,14 +366,7 @@ namespace Azure.ResourceManager.MySql
         /// <exception cref="ArgumentNullException"> <paramref name="queryStatisticId"/> is null. </exception>
         public virtual NullableResponse<MySqlQueryStatisticResource> GetIfExists(string queryStatisticId, CancellationToken cancellationToken = default)
         {
-            if (queryStatisticId == null)
-            {
-                throw new ArgumentNullException(nameof(queryStatisticId));
-            }
-            if (queryStatisticId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(queryStatisticId));
-            }
+            Argument.AssertNotNullOrEmpty(queryStatisticId, nameof(queryStatisticId));
 
             using var scope = _mySqlQueryStatisticTopQueryStatisticsClientDiagnostics.CreateScope("MySqlQueryStatisticCollection.GetIfExists");
             scope.Start();

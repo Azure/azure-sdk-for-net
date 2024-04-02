@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.DataFactory.Models;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<DataFactoryDataFlowDebugSessionContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -72,34 +72,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string factoryName, DataFactoryDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, factoryName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -123,34 +99,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string factoryName, DataFactoryDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, factoryName, content);
             _pipeline.Send(message, cancellationToken);
@@ -194,30 +146,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataFlowDebugSessionInfoListResult>> QueryByFactoryAsync(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var message = CreateQueryByFactoryRequest(subscriptionId, resourceGroupName, factoryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -244,30 +175,9 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataFlowDebugSessionInfoListResult> QueryByFactory(string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var message = CreateQueryByFactoryRequest(subscriptionId, resourceGroupName, factoryName);
             _pipeline.Send(message, cancellationToken);
@@ -304,7 +214,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<DataFactoryDataFlowDebugPackageContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -320,34 +230,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataFactoryDataFlowStartDebugSessionResult>> AddDataFlowAsync(string subscriptionId, string resourceGroupName, string factoryName, DataFactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAddDataFlowRequest(subscriptionId, resourceGroupName, factoryName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -375,34 +261,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataFactoryDataFlowStartDebugSessionResult> AddDataFlow(string subscriptionId, string resourceGroupName, string factoryName, DataFactoryDataFlowDebugPackageContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateAddDataFlowRequest(subscriptionId, resourceGroupName, factoryName, content);
             _pipeline.Send(message, cancellationToken);
@@ -439,7 +301,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<DeleteDataFlowDebugSessionContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -455,34 +317,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string factoryName, DeleteDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, factoryName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -505,34 +343,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string factoryName, DeleteDataFlowDebugSessionContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, factoryName, content);
             _pipeline.Send(message, cancellationToken);
@@ -564,7 +378,7 @@ namespace Azure.ResourceManager.DataFactory
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<DataFlowDebugCommandContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -580,34 +394,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ExecuteCommandAsync(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugCommandContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateExecuteCommandRequest(subscriptionId, resourceGroupName, factoryName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -631,34 +421,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ExecuteCommand(string subscriptionId, string resourceGroupName, string factoryName, DataFlowDebugCommandContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateExecuteCommandRequest(subscriptionId, resourceGroupName, factoryName, content);
             _pipeline.Send(message, cancellationToken);
@@ -696,34 +462,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DataFlowDebugSessionInfoListResult>> QueryByFactoryNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var message = CreateQueryByFactoryNextPageRequest(nextLink, subscriptionId, resourceGroupName, factoryName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -751,34 +493,10 @@ namespace Azure.ResourceManager.DataFactory
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="factoryName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DataFlowDebugSessionInfoListResult> QueryByFactoryNextPage(string nextLink, string subscriptionId, string resourceGroupName, string factoryName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (factoryName == null)
-            {
-                throw new ArgumentNullException(nameof(factoryName));
-            }
-            if (factoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(factoryName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(factoryName, nameof(factoryName));
 
             using var message = CreateQueryByFactoryNextPageRequest(nextLink, subscriptionId, resourceGroupName, factoryName);
             _pipeline.Send(message, cancellationToken);

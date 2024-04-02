@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Scopes is ChangeTrackingList<ScopeProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Scopes))
             {
                 writer.WritePropertyName("scopes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Scopes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ScopeProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Reservations.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionScopeProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Reservations.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Reservations.Models
                         return DeserializeSubscriptionScopeProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionScopeProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

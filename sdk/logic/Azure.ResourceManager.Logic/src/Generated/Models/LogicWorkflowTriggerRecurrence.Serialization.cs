@@ -22,39 +22,39 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerRecurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerRecurrence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (Interval.HasValue)
+            if (Optional.IsDefined(Interval))
             {
                 writer.WritePropertyName("interval"u8);
                 writer.WriteNumberValue(Interval.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (Schedule != null)
+            if (Optional.IsDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
-                writer.WriteObjectValue(Schedule);
+                writer.WriteObjectValue<LogicWorkflowRecurrenceSchedule>(Schedule, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<LogicWorkflowTriggerRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LogicWorkflowTriggerRecurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LogicWorkflowTriggerRecurrence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerRecurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerRecurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeLogicWorkflowTriggerRecurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerRecurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LogicWorkflowTriggerRecurrence)} does not support reading '{options.Format}' format.");
             }
         }
 

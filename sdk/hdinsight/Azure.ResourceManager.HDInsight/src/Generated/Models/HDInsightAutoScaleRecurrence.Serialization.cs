@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAutoScaleRecurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleRecurrence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TimeZone != null)
+            if (Optional.IsDefined(TimeZone))
             {
                 writer.WritePropertyName("timeZone"u8);
                 writer.WriteStringValue(TimeZone);
             }
-            if (!(Schedule is ChangeTrackingList<HDInsightAutoScaleSchedule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Schedule))
             {
                 writer.WritePropertyName("schedule"u8);
                 writer.WriteStartArray();
                 foreach (var item in Schedule)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<HDInsightAutoScaleSchedule>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleRecurrence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAutoScaleRecurrence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleRecurrence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAutoScaleRecurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleRecurrence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightAutoScaleRecurrence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAutoScaleRecurrence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleRecurrence)} does not support reading '{options.Format}' format.");
             }
         }
 

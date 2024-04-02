@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ReportCreatorTenantId != null)
+            if (Optional.IsDefined(ReportCreatorTenantId))
             {
                 writer.WritePropertyName("reportCreatorTenantId"u8);
                 writer.WriteStringValue(ReportCreatorTenantId);
             }
             writer.WritePropertyName("downloadType"u8);
             writer.WriteStringValue(DownloadType.ToString());
-            if (OfferGuid != null)
+            if (Optional.IsDefined(OfferGuid))
             {
                 writer.WritePropertyName("offerGuid"u8);
                 writer.WriteStringValue(OfferGuid);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotDownloadContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
                         return DeserializeSnapshotDownloadContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotDownloadContent)} does not support reading '{options.Format}' format.");
             }
         }
 

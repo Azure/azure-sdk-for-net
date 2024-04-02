@@ -66,12 +66,16 @@ namespace Azure.ResourceManager.AppService.Models
         }
 
         /// <summary> Gets the provider. </summary>
+        [WirePath("provider")]
         public string Provider { get; }
         /// <summary> Gets the resource. </summary>
+        [WirePath("resource")]
         public string Resource { get; }
         /// <summary> Gets the operation. </summary>
+        [WirePath("operation")]
         public string Operation { get; }
         /// <summary> Gets the description. </summary>
+        [WirePath("description")]
         public string Description { get; }
     }
 }

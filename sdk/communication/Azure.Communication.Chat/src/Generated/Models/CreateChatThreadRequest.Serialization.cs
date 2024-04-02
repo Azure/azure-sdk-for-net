@@ -17,13 +17,13 @@ namespace Azure.Communication.Chat
             writer.WriteStartObject();
             writer.WritePropertyName("topic"u8);
             writer.WriteStringValue(Topic);
-            if (!(Participants is ChangeTrackingList<ChatParticipantInternal> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Participants))
             {
                 writer.WritePropertyName("participants"u8);
                 writer.WriteStartArray();
                 foreach (var item in Participants)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ChatParticipantInternal>(item);
                 }
                 writer.WriteEndArray();
             }

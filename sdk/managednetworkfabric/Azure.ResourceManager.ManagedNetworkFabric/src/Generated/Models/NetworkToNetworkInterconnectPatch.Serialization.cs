@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,44 +42,44 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Layer2Configuration != null)
+            if (Optional.IsDefined(Layer2Configuration))
             {
                 writer.WritePropertyName("layer2Configuration"u8);
-                writer.WriteObjectValue(Layer2Configuration);
+                writer.WriteObjectValue<Layer2Configuration>(Layer2Configuration, options);
             }
-            if (OptionBLayer3Configuration != null)
+            if (Optional.IsDefined(OptionBLayer3Configuration))
             {
                 writer.WritePropertyName("optionBLayer3Configuration"u8);
-                writer.WriteObjectValue(OptionBLayer3Configuration);
+                writer.WriteObjectValue<OptionBLayer3Configuration>(OptionBLayer3Configuration, options);
             }
-            if (NpbStaticRouteConfiguration != null)
+            if (Optional.IsDefined(NpbStaticRouteConfiguration))
             {
                 writer.WritePropertyName("npbStaticRouteConfiguration"u8);
-                writer.WriteObjectValue(NpbStaticRouteConfiguration);
+                writer.WriteObjectValue<NpbStaticRouteConfiguration>(NpbStaticRouteConfiguration, options);
             }
-            if (ImportRoutePolicy != null)
+            if (Optional.IsDefined(ImportRoutePolicy))
             {
                 writer.WritePropertyName("importRoutePolicy"u8);
-                writer.WriteObjectValue(ImportRoutePolicy);
+                writer.WriteObjectValue<ImportRoutePolicyInformation>(ImportRoutePolicy, options);
             }
-            if (ExportRoutePolicy != null)
+            if (Optional.IsDefined(ExportRoutePolicy))
             {
                 writer.WritePropertyName("exportRoutePolicy"u8);
-                writer.WriteObjectValue(ExportRoutePolicy);
+                writer.WriteObjectValue<ExportRoutePolicyInformation>(ExportRoutePolicy, options);
             }
-            if (EgressAclId != null)
+            if (Optional.IsDefined(EgressAclId))
             {
                 writer.WritePropertyName("egressAclId"u8);
                 writer.WriteStringValue(EgressAclId);
             }
-            if (IngressAclId != null)
+            if (Optional.IsDefined(IngressAclId))
             {
                 writer.WritePropertyName("ingressAclId"u8);
                 writer.WriteStringValue(IngressAclId);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkToNetworkInterconnectPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkToNetworkInterconnectPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkToNetworkInterconnectPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

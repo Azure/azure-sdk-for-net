@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotPolicyDailySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SnapshotsToKeep.HasValue)
+            if (Optional.IsDefined(SnapshotsToKeep))
             {
                 writer.WritePropertyName("snapshotsToKeep"u8);
                 writer.WriteNumberValue(SnapshotsToKeep.Value);
             }
-            if (Hour.HasValue)
+            if (Optional.IsDefined(Hour))
             {
                 writer.WritePropertyName("hour"u8);
                 writer.WriteNumberValue(Hour.Value);
             }
-            if (Minute.HasValue)
+            if (Optional.IsDefined(Minute))
             {
                 writer.WritePropertyName("minute"u8);
                 writer.WriteNumberValue(Minute.Value);
             }
-            if (UsedBytes.HasValue)
+            if (Optional.IsDefined(UsedBytes))
             {
                 writer.WritePropertyName("usedBytes"u8);
                 writer.WriteNumberValue(UsedBytes.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<SnapshotPolicyDailySchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeSnapshotPolicyDailySchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SnapshotPolicyDailySchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -19,10 +19,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="sourceServerId"/> is null. </exception>
         public PostgreSqlServerPropertiesForReplica(ResourceIdentifier sourceServerId)
         {
-            if (sourceServerId == null)
-            {
-                throw new ArgumentNullException(nameof(sourceServerId));
-            }
+            Argument.AssertNotNull(sourceServerId, nameof(sourceServerId));
 
             SourceServerId = sourceServerId;
             CreateMode = PostgreSqlCreateMode.Replica;
@@ -50,6 +47,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The master server id to create replica from. </summary>
+        [WirePath("sourceServerId")]
         public ResourceIdentifier SourceServerId { get; }
     }
 }

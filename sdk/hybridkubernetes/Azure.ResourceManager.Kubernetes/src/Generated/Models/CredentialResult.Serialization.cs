@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Kubernetes.Models
             var format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CredentialResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteBase64StringValue(Value, "D");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
             var format = options.Format == "W" ? ((IPersistableModel<CredentialResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CredentialResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CredentialResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CredentialResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CredentialResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Kubernetes.Models
                         return DeserializeCredentialResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CredentialResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CredentialResult)} does not support reading '{options.Format}' format.");
             }
         }
 

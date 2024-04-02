@@ -16,17 +16,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(SourceSettings is ChangeTrackingList<DataFlowSourceSetting> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SourceSettings))
             {
                 writer.WritePropertyName("sourceSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in SourceSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataFlowSourceSetting>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, object> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -38,14 +38,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                         writer.WriteNullValue();
                         continue;
                     }
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<object>(item.Value);
                 }
                 writer.WriteEndObject();
             }
-            if (DatasetParameters != null)
+            if (Optional.IsDefined(DatasetParameters))
             {
                 writer.WritePropertyName("datasetParameters"u8);
-                writer.WriteObjectValue(DatasetParameters);
+                writer.WriteObjectValue<object>(DatasetParameters);
             }
             writer.WriteEndObject();
         }

@@ -15,22 +15,22 @@ namespace Azure.Security.Attestation
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Quote != null)
+            if (Optional.IsDefined(Quote))
             {
                 writer.WritePropertyName("quote"u8);
                 writer.WriteBase64StringValue(Quote, "U");
             }
-            if (RuntimeData != null)
+            if (Optional.IsDefined(RuntimeData))
             {
                 writer.WritePropertyName("runtimeData"u8);
-                writer.WriteObjectValue(RuntimeData);
+                writer.WriteObjectValue<RuntimeData>(RuntimeData);
             }
-            if (InitTimeData != null)
+            if (Optional.IsDefined(InitTimeData))
             {
                 writer.WritePropertyName("initTimeData"u8);
-                writer.WriteObjectValue(InitTimeData);
+                writer.WriteObjectValue<InitTimeData>(InitTimeData);
             }
-            if (DraftPolicyForAttestation != null)
+            if (Optional.IsDefined(DraftPolicyForAttestation))
             {
                 writer.WritePropertyName("draftPolicyForAttestation"u8);
                 writer.WriteStringValue(DraftPolicyForAttestation);

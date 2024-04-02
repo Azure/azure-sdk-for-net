@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeAlertErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeAlertErrorDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeAlertErrorDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ErrorCode != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorCode))
             {
                 writer.WritePropertyName("errorCode"u8);
                 writer.WriteStringValue(ErrorCode);
             }
-            if (options.Format != "W" && ErrorMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(ErrorMessage))
             {
                 writer.WritePropertyName("errorMessage"u8);
                 writer.WriteStringValue(ErrorMessage);
             }
-            if (options.Format != "W" && Occurrences.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Occurrences))
             {
                 writer.WritePropertyName("occurrences"u8);
                 writer.WriteNumberValue(Occurrences.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeAlertErrorDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeAlertErrorDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeAlertErrorDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeAlertErrorDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeAlertErrorDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeAlertErrorDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeAlertErrorDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeAlertErrorDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

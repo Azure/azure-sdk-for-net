@@ -51,10 +51,7 @@ namespace Azure.ResourceManager.PostgreSql.Models
         /// <exception cref="ArgumentNullException"> <paramref name="description"/> is null. </exception>
         internal PostgreSqlServerPrivateLinkServiceConnectionStateProperty(PostgreSqlPrivateLinkServiceConnectionStateStatus status, string description)
         {
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
+            Argument.AssertNotNull(description, nameof(description));
 
             Status = status;
             Description = description;
@@ -79,10 +76,13 @@ namespace Azure.ResourceManager.PostgreSql.Models
         }
 
         /// <summary> The private link service connection status. </summary>
+        [WirePath("status")]
         public PostgreSqlPrivateLinkServiceConnectionStateStatus Status { get; }
         /// <summary> The private link service connection description. </summary>
+        [WirePath("description")]
         public string Description { get; }
         /// <summary> The actions required for private link service connection. </summary>
+        [WirePath("actionsRequired")]
         public PostgreSqlPrivateLinkServiceConnectionStateRequiredAction? ActionsRequired { get; }
     }
 }

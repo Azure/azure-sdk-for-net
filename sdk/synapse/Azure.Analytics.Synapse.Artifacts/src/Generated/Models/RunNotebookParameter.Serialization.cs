@@ -18,15 +18,15 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Type != null)
+            if (Optional.IsDefined(Type))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(Type);
             }
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
-                writer.WriteObjectValue(Value);
+                writer.WriteObjectValue<object>(Value);
             }
             writer.WriteEndObject();
         }
@@ -63,7 +63,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookParameter model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<RunNotebookParameter>(model);
             }
             public override RunNotebookParameter Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

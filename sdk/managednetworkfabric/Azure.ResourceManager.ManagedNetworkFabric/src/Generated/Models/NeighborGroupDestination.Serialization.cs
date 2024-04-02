@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(IPv4Addresses is ChangeTrackingList<IPAddress> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv4Addresses))
             {
                 writer.WritePropertyName("ipv4Addresses"u8);
                 writer.WriteStartArray();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(IPv6Addresses is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(IPv6Addresses))
             {
                 writer.WritePropertyName("ipv6Addresses"u8);
                 writer.WriteStartArray();
@@ -75,7 +75,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NeighborGroupDestination>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNeighborGroupDestination(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NeighborGroupDestination)} does not support reading '{options.Format}' format.");
             }
         }
 

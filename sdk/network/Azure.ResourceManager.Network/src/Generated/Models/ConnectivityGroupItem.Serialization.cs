@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityGroupItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("networkGroupId"u8);
             writer.WriteStringValue(NetworkGroupId);
-            if (UseHubGateway.HasValue)
+            if (Optional.IsDefined(UseHubGateway))
             {
                 writer.WritePropertyName("useHubGateway"u8);
                 writer.WriteStringValue(UseHubGateway.Value.ToString());
             }
-            if (IsGlobal.HasValue)
+            if (Optional.IsDefined(IsGlobal))
             {
                 writer.WritePropertyName("isGlobal"u8);
                 writer.WriteStringValue(IsGlobal.Value.ToString());
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectivityGroupItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectivityGroupItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectivityGroupItem)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerDeploymentType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LanguageRuntime.HasValue)
+            if (Optional.IsDefined(LanguageRuntime))
             {
                 writer.WritePropertyName("languageRuntime"u8);
                 writer.WriteStringValue(LanguageRuntime.Value.ToString());
             }
-            if (AppSourceUri != null)
+            if (Optional.IsDefined(AppSourceUri))
             {
                 writer.WritePropertyName("appSourceUri"u8);
                 writer.WriteStringValue(AppSourceUri.AbsoluteUri);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerDeploymentType>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         return DeserializeConfidentialLedgerDeploymentType(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerDeploymentType)} does not support reading '{options.Format}' format.");
             }
         }
 

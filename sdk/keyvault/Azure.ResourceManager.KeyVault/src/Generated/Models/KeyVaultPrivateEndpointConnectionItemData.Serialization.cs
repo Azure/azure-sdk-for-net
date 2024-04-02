@@ -8,8 +8,9 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Resources.Models;
 
@@ -24,33 +25,33 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateEndpointConnectionItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionItemData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (PrivateEndpoint != null)
+            if (Optional.IsDefined(PrivateEndpoint))
             {
                 writer.WritePropertyName("privateEndpoint"u8);
                 JsonSerializer.Serialize(writer, PrivateEndpoint);
             }
-            if (ConnectionState != null)
+            if (Optional.IsDefined(ConnectionState))
             {
                 writer.WritePropertyName("privateLinkServiceConnectionState"u8);
-                writer.WriteObjectValue(ConnectionState);
+                writer.WriteObjectValue<KeyVaultPrivateLinkServiceConnectionState>(ConnectionState, options);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -79,7 +80,7 @@ namespace Azure.ResourceManager.KeyVault.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateEndpointConnectionItemData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionItemData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionItemData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -171,6 +172,124 @@ namespace Azure.ResourceManager.KeyVault.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            if (propertyOverrides != null)
+            {
+                TransformFlattenedOverrides(bicepOptions, propertyOverrides);
+            }
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Id.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Id}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Id}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ETag), out propertyOverride);
+            if (Optional.IsDefined(ETag) || hasPropertyOverride)
+            {
+                builder.Append("  etag: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ETag.Value.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(PrivateEndpoint), out propertyOverride);
+            if (Optional.IsDefined(PrivateEndpoint) || hasPropertyOverride)
+            {
+                builder.Append("    privateEndpoint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, PrivateEndpoint, options, 4, false, "    privateEndpoint: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ConnectionState), out propertyOverride);
+            if (Optional.IsDefined(ConnectionState) || hasPropertyOverride)
+            {
+                builder.Append("    privateLinkServiceConnectionState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    BicepSerializationHelpers.AppendChildObject(builder, ConnectionState, options, 4, false, "    privateLinkServiceConnectionState: ");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(ProvisioningState), out propertyOverride);
+            if (Optional.IsDefined(ProvisioningState) || hasPropertyOverride)
+            {
+                builder.Append("    provisioningState: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{ProvisioningState.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
+        private void TransformFlattenedOverrides(BicepModelReaderWriterOptions bicepOptions, IDictionary<string, string> propertyOverrides)
+        {
+            foreach (var item in propertyOverrides.ToList())
+            {
+                switch (item.Key)
+                {
+                    case "PrivateEndpointId":
+                        Dictionary<string, string> propertyDictionary = new Dictionary<string, string>();
+                        propertyDictionary.Add("Id", item.Value);
+                        bicepOptions.PropertyOverrides.Add(PrivateEndpoint, propertyDictionary);
+                        break;
+                    default:
+                        continue;
+                }
+            }
+        }
+
         BinaryData IPersistableModel<KeyVaultPrivateEndpointConnectionItemData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<KeyVaultPrivateEndpointConnectionItemData>)this).GetFormatFromOptions(options) : options.Format;
@@ -179,8 +298,10 @@ namespace Azure.ResourceManager.KeyVault.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionItemData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +317,7 @@ namespace Azure.ResourceManager.KeyVault.Models
                         return DeserializeKeyVaultPrivateEndpointConnectionItemData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionItemData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeyVaultPrivateEndpointConnectionItemData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationActionDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MechanismType != null)
+            if (Optional.IsDefined(MechanismType))
             {
                 writer.WritePropertyName("MechanismType"u8);
                 writer.WriteStringValue(MechanismType);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("Name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Status != null)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("Status"u8);
                 writer.WriteStringValue(Status);
             }
-            if (SubState != null)
+            if (Optional.IsDefined(SubState))
             {
                 writer.WritePropertyName("SubState"u8);
                 writer.WriteStringValue(SubState);
             }
-            if (SendOn.HasValue)
+            if (Optional.IsDefined(SendOn))
             {
                 writer.WritePropertyName("SendTime"u8);
                 writer.WriteStringValue(SendOn.Value, "O");
             }
-            if (Detail != null)
+            if (Optional.IsDefined(Detail))
             {
                 writer.WritePropertyName("Detail"u8);
                 writer.WriteStringValue(Detail);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationActionDetail>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeNotificationActionDetail(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationActionDetail)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,32 +22,32 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTopology>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTopology)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTopology)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("createdDateTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModified.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModified))
             {
                 writer.WritePropertyName("lastModified"u8);
                 writer.WriteStringValue(LastModified.Value, "O");
             }
-            if (!(Resources is ChangeTrackingList<TopologyResourceInfo> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Resources))
             {
                 writer.WritePropertyName("resources"u8);
                 writer.WriteStartArray();
                 foreach (var item in Resources)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TopologyResourceInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkTopology>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkTopology)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkTopology)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTopology)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTopology)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -168,7 +168,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkTopology(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkTopology)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkTopology)} does not support reading '{options.Format}' format.");
             }
         }
 

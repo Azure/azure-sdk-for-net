@@ -22,20 +22,20 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceAzureFileVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("shareName"u8);
             writer.WriteStringValue(ShareName);
-            if (IsReadOnly.HasValue)
+            if (Optional.IsDefined(IsReadOnly))
             {
                 writer.WritePropertyName("readOnly"u8);
                 writer.WriteBooleanValue(IsReadOnly.Value);
             }
             writer.WritePropertyName("storageAccountName"u8);
             writer.WriteStringValue(StorageAccountName);
-            if (StorageAccountKey != null)
+            if (Optional.IsDefined(StorageAccountKey))
             {
                 writer.WritePropertyName("storageAccountKey"u8);
                 writer.WriteStringValue(StorageAccountKey);
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceAzureFileVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerInstanceAzureFileVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceAzureFileVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("code"u8);
             writer.WriteStringValue(Code.ToString());
-            if (Cause != null)
+            if (Optional.IsDefined(Cause))
             {
                 writer.WritePropertyName("cause"u8);
                 writer.WriteStringValue(Cause);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityAssessmentStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityAssessmentStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityAssessmentStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityAssessmentStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityAssessmentStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityAssessmentStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

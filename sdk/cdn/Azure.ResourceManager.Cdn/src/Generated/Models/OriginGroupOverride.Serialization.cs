@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<OriginGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OriginGroup != null)
+            if (Optional.IsDefined(OriginGroup))
             {
                 writer.WritePropertyName("originGroup"u8);
                 JsonSerializer.Serialize(writer, OriginGroup);
             }
-            if (ForwardingProtocol.HasValue)
+            if (Optional.IsDefined(ForwardingProtocol))
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<OriginGroupOverride>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeOriginGroupOverride(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OriginGroupOverride)} does not support reading '{options.Format}' format.");
             }
         }
 

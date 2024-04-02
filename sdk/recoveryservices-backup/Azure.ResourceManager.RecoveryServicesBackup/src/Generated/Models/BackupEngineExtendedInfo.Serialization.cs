@@ -22,46 +22,46 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (ProtectedItemsCount.HasValue)
+            if (Optional.IsDefined(ProtectedItemsCount))
             {
                 writer.WritePropertyName("protectedItemsCount"u8);
                 writer.WriteNumberValue(ProtectedItemsCount.Value);
             }
-            if (ProtectedServersCount.HasValue)
+            if (Optional.IsDefined(ProtectedServersCount))
             {
                 writer.WritePropertyName("protectedServersCount"u8);
                 writer.WriteNumberValue(ProtectedServersCount.Value);
             }
-            if (DiskCount.HasValue)
+            if (Optional.IsDefined(DiskCount))
             {
                 writer.WritePropertyName("diskCount"u8);
                 writer.WriteNumberValue(DiskCount.Value);
             }
-            if (UsedDiskSpace.HasValue)
+            if (Optional.IsDefined(UsedDiskSpace))
             {
                 writer.WritePropertyName("usedDiskSpace"u8);
                 writer.WriteNumberValue(UsedDiskSpace.Value);
             }
-            if (AvailableDiskSpace.HasValue)
+            if (Optional.IsDefined(AvailableDiskSpace))
             {
                 writer.WritePropertyName("availableDiskSpace"u8);
                 writer.WriteNumberValue(AvailableDiskSpace.Value);
             }
-            if (RefreshedOn.HasValue)
+            if (Optional.IsDefined(RefreshedOn))
             {
                 writer.WritePropertyName("refreshedAt"u8);
                 writer.WriteStringValue(RefreshedOn.Value, "O");
             }
-            if (AzureProtectedInstances.HasValue)
+            if (Optional.IsDefined(AzureProtectedInstances))
             {
                 writer.WritePropertyName("azureProtectedInstances"u8);
                 writer.WriteNumberValue(AzureProtectedInstances.Value);
@@ -89,7 +89,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupEngineExtendedInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup.Models
                         return DeserializeBackupEngineExtendedInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupEngineExtendedInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

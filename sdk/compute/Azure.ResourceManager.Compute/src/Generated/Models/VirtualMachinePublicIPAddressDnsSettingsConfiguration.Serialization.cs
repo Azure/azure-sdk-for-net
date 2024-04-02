@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePublicIPAddressDnsSettingsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("domainNameLabel"u8);
             writer.WriteStringValue(DomainNameLabel);
-            if (DomainNameLabelScope.HasValue)
+            if (Optional.IsDefined(DomainNameLabelScope))
             {
                 writer.WritePropertyName("domainNameLabelScope"u8);
                 writer.WriteStringValue(DomainNameLabelScope.Value.ToString());
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachinePublicIPAddressDnsSettingsConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachinePublicIPAddressDnsSettingsConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachinePublicIPAddressDnsSettingsConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

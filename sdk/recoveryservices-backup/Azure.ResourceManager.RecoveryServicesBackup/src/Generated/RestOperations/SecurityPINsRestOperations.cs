@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.RecoveryServicesBackup.Models;
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue<SecurityPinContent>(content, new ModelReaderWriterOptions("W"));
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -75,30 +75,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<TokenInformation>> GetAsync(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -126,30 +105,9 @@ namespace Azure.ResourceManager.RecoveryServicesBackup
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="vaultName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<TokenInformation> Get(string subscriptionId, string resourceGroupName, string vaultName, SecurityPinContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (vaultName == null)
-            {
-                throw new ArgumentNullException(nameof(vaultName));
-            }
-            if (vaultName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(vaultName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(vaultName, nameof(vaultName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, vaultName, content);
             _pipeline.Send(message, cancellationToken);

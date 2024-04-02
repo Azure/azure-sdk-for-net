@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.EventHubs
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<EventHubsNamespaceAuthorizationRuleResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string authorizationRuleName, EventHubsAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<EventHubsNamespaceAuthorizationRuleResource> CreateOrUpdate(WaitUntil waitUntil, string authorizationRuleName, EventHubsAuthorizationRuleData data, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<EventHubsNamespaceAuthorizationRuleResource>> GetAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<EventHubsNamespaceAuthorizationRuleResource> Get(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual Response<bool> Exists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual async Task<NullableResponse<EventHubsNamespaceAuthorizationRuleResource>> GetIfExistsAsync(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.EventHubs
         /// <exception cref="ArgumentNullException"> <paramref name="authorizationRuleName"/> is null. </exception>
         public virtual NullableResponse<EventHubsNamespaceAuthorizationRuleResource> GetIfExists(string authorizationRuleName, CancellationToken cancellationToken = default)
         {
-            if (authorizationRuleName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationRuleName));
-            }
-            if (authorizationRuleName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationRuleName));
-            }
+            Argument.AssertNotNullOrEmpty(authorizationRuleName, nameof(authorizationRuleName));
 
             using var scope = _eventHubsNamespaceAuthorizationRuleNamespacesClientDiagnostics.CreateScope("EventHubsNamespaceAuthorizationRuleCollection.GetIfExists");
             scope.Start();

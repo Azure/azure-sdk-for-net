@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Monitor.Models;
@@ -63,18 +63,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiagnosticSettingData>> GetAsync(string resourceUri, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetRequest(resourceUri, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,18 +92,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiagnosticSettingData> Get(string resourceUri, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateGetRequest(resourceUri, name);
             _pipeline.Send(message, cancellationToken);
@@ -149,7 +129,7 @@ namespace Azure.ResourceManager.Monitor
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<DiagnosticSettingData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -164,22 +144,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<DiagnosticSettingData>> CreateOrUpdateAsync(string resourceUri, string name, DiagnosticSettingData data, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(resourceUri, name, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -206,22 +173,9 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<DiagnosticSettingData> CreateOrUpdate(string resourceUri, string name, DiagnosticSettingData data, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(resourceUri, name, data);
             _pipeline.Send(message, cancellationToken);
@@ -265,18 +219,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string resourceUri, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteRequest(resourceUri, name);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -298,18 +242,8 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentException"> <paramref name="name"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string resourceUri, string name, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
-            if (name == null)
-            {
-                throw new ArgumentNullException(nameof(name));
-            }
-            if (name.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(name));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
+            Argument.AssertNotNullOrEmpty(name, nameof(name));
 
             using var message = CreateDeleteRequest(resourceUri, name);
             _pipeline.Send(message, cancellationToken);
@@ -346,10 +280,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public async Task<Response<DiagnosticSettingsResourceCollection>> ListAsync(string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -373,10 +304,7 @@ namespace Azure.ResourceManager.Monitor
         /// <exception cref="ArgumentNullException"> <paramref name="resourceUri"/> is null. </exception>
         public Response<DiagnosticSettingsResourceCollection> List(string resourceUri, CancellationToken cancellationToken = default)
         {
-            if (resourceUri == null)
-            {
-                throw new ArgumentNullException(nameof(resourceUri));
-            }
+            Argument.AssertNotNull(resourceUri, nameof(resourceUri));
 
             using var message = CreateListRequest(resourceUri);
             _pipeline.Send(message, cancellationToken);

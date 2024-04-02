@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.DnsResolver.Models;
 using Azure.ResourceManager.Models;
@@ -60,10 +59,7 @@ namespace Azure.ResourceManager.DnsResolver
         /// <exception cref="ArgumentNullException"> <paramref name="dnsResolverOutboundEndpoints"/> is null. </exception>
         public DnsForwardingRulesetData(AzureLocation location, IEnumerable<WritableSubResource> dnsResolverOutboundEndpoints) : base(location)
         {
-            if (dnsResolverOutboundEndpoints == null)
-            {
-                throw new ArgumentNullException(nameof(dnsResolverOutboundEndpoints));
-            }
+            Argument.AssertNotNull(dnsResolverOutboundEndpoints, nameof(dnsResolverOutboundEndpoints));
 
             DnsResolverOutboundEndpoints = dnsResolverOutboundEndpoints.ToList();
         }

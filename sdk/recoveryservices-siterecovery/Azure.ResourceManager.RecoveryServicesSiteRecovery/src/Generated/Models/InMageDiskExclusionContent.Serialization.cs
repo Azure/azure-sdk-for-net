@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageDiskExclusionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(VolumeOptions is ChangeTrackingList<InMageVolumeExclusionOptions> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(VolumeOptions))
             {
                 writer.WritePropertyName("volumeOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in VolumeOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageVolumeExclusionOptions>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(DiskSignatureOptions is ChangeTrackingList<InMageDiskSignatureExclusionOptions> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(DiskSignatureOptions))
             {
                 writer.WritePropertyName("diskSignatureOptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in DiskSignatureOptions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<InMageDiskSignatureExclusionOptions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<InMageDiskExclusionContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeInMageDiskExclusionContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InMageDiskExclusionContent)} does not support reading '{options.Format}' format.");
             }
         }
 

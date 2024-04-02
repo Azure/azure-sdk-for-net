@@ -22,58 +22,58 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationCollectionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && Id != null)
+            if (options.Format != "W" && Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (UpdateConfiguration != null)
+            if (Optional.IsDefined(UpdateConfiguration))
             {
                 writer.WritePropertyName("updateConfiguration"u8);
-                writer.WriteObjectValue(UpdateConfiguration);
+                writer.WriteObjectValue<SoftwareUpdateConfigurationSpecificProperties>(UpdateConfiguration, options);
             }
-            if (Tasks != null)
+            if (Optional.IsDefined(Tasks))
             {
                 writer.WritePropertyName("tasks"u8);
-                writer.WriteObjectValue(Tasks);
+                writer.WriteObjectValue<SoftwareUpdateConfigurationTasks>(Tasks, options);
             }
-            if (Frequency.HasValue)
+            if (Optional.IsDefined(Frequency))
             {
                 writer.WritePropertyName("frequency"u8);
                 writer.WriteStringValue(Frequency.Value.ToString());
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (options.Format != "W" && CreatedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("creationTime"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (options.Format != "W" && LastModifiedOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastModifiedOn))
             {
                 writer.WritePropertyName("lastModifiedTime"u8);
                 writer.WriteStringValue(LastModifiedOn.Value, "O");
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (NextRunOn.HasValue)
+            if (Optional.IsDefined(NextRunOn))
             {
                 if (NextRunOn != null)
                 {
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<SoftwareUpdateConfigurationCollectionItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -262,7 +262,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -278,7 +278,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeSoftwareUpdateConfigurationCollectionItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SoftwareUpdateConfigurationCollectionItem)} does not support reading '{options.Format}' format.");
             }
         }
 

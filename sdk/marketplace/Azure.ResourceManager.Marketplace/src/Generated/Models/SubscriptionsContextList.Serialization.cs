@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionsContextList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionsContextList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionsContextList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(SubscriptionsIds is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionsIds))
             {
                 writer.WritePropertyName("subscriptionsIds"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionsContextList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionsContextList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionsContextList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionsContextList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionsContextList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeSubscriptionsContextList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionsContextList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionsContextList)} does not support reading '{options.Format}' format.");
             }
         }
 

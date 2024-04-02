@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Authorization.Models;
@@ -63,18 +63,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleManagementPolicyData>> GetAsync(string scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
 
             using var message = CreateGetRequest(scope, roleManagementPolicyName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -102,18 +92,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleManagementPolicyData> Get(string scope, string roleManagementPolicyName, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
 
             using var message = CreateGetRequest(scope, roleManagementPolicyName);
             _pipeline.Send(message, cancellationToken);
@@ -149,7 +129,7 @@ namespace Azure.ResourceManager.Authorization
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<RoleManagementPolicyData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -164,22 +144,9 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<RoleManagementPolicyData>> UpdateAsync(string scope, string roleManagementPolicyName, RoleManagementPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(scope, roleManagementPolicyName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -206,22 +173,9 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentException"> <paramref name="roleManagementPolicyName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<RoleManagementPolicyData> Update(string scope, string roleManagementPolicyName, RoleManagementPolicyData data, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
-            if (roleManagementPolicyName == null)
-            {
-                throw new ArgumentNullException(nameof(roleManagementPolicyName));
-            }
-            if (roleManagementPolicyName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(roleManagementPolicyName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
+            Argument.AssertNotNullOrEmpty(roleManagementPolicyName, nameof(roleManagementPolicyName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateUpdateRequest(scope, roleManagementPolicyName, data);
             _pipeline.Send(message, cancellationToken);
@@ -262,10 +216,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleManagementPolicyListResult>> ListForScopeAsync(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListForScopeRequest(scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -289,10 +240,7 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="scope"/> is null. </exception>
         public Response<RoleManagementPolicyListResult> ListForScope(string scope, CancellationToken cancellationToken = default)
         {
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListForScopeRequest(scope);
             _pipeline.Send(message, cancellationToken);
@@ -331,14 +279,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public async Task<Response<RoleManagementPolicyListResult>> ListForScopeNextPageAsync(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListForScopeNextPageRequest(nextLink, scope);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -363,14 +305,8 @@ namespace Azure.ResourceManager.Authorization
         /// <exception cref="ArgumentNullException"> <paramref name="nextLink"/> or <paramref name="scope"/> is null. </exception>
         public Response<RoleManagementPolicyListResult> ListForScopeNextPage(string nextLink, string scope, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (scope == null)
-            {
-                throw new ArgumentNullException(nameof(scope));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNull(scope, nameof(scope));
 
             using var message = CreateListForScopeNextPageRequest(nextLink, scope);
             _pipeline.Send(message, cancellationToken);

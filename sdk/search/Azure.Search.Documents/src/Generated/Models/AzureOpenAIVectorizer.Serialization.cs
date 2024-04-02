@@ -15,10 +15,10 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AzureOpenAIParameters != null)
+            if (Optional.IsDefined(AzureOpenAIParameters))
             {
                 writer.WritePropertyName("azureOpenAIParameters"u8);
-                writer.WriteObjectValue(AzureOpenAIParameters);
+                writer.WriteObjectValue<AzureOpenAIParameters>(AzureOpenAIParameters);
             }
             writer.WritePropertyName("name"u8);
             writer.WriteStringValue(Name);

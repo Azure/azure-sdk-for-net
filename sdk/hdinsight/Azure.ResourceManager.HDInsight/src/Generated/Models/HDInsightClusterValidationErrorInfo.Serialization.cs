@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterValidationErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Code != null)
+            if (Optional.IsDefined(Code))
             {
                 writer.WritePropertyName("code"u8);
                 writer.WriteStringValue(Code);
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (ErrorResource != null)
+            if (Optional.IsDefined(ErrorResource))
             {
                 writer.WritePropertyName("errorResource"u8);
                 writer.WriteStringValue(ErrorResource);
             }
-            if (!(MessageArguments is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MessageArguments))
             {
                 writer.WritePropertyName("messageArguments"u8);
                 writer.WriteStartArray();
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterValidationErrorInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -160,7 +160,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterValidationErrorInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterValidationErrorInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

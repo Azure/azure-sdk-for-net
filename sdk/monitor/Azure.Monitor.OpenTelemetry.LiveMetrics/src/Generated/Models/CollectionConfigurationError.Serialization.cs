@@ -15,28 +15,28 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (CollectionConfigurationErrorType.HasValue)
+            if (Optional.IsDefined(CollectionConfigurationErrorType))
             {
                 writer.WritePropertyName("CollectionConfigurationErrorType"u8);
                 writer.WriteStringValue(CollectionConfigurationErrorType.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("Message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (FullException != null)
+            if (Optional.IsDefined(FullException))
             {
                 writer.WritePropertyName("FullException"u8);
                 writer.WriteStringValue(FullException);
             }
-            if (!(Data is ChangeTrackingList<KeyValuePairString> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("Data"u8);
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<KeyValuePairString>(item);
                 }
                 writer.WriteEndArray();
             }

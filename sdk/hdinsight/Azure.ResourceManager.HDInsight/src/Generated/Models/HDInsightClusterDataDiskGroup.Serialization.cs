@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterDataDiskGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DisksPerNode.HasValue)
+            if (Optional.IsDefined(DisksPerNode))
             {
                 writer.WritePropertyName("disksPerNode"u8);
                 writer.WriteNumberValue(DisksPerNode.Value);
             }
-            if (options.Format != "W" && StorageAccountType != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageAccountType))
             {
                 writer.WritePropertyName("storageAccountType"u8);
                 writer.WriteStringValue(StorageAccountType);
             }
-            if (options.Format != "W" && DiskSizeInGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DiskSizeInGB))
             {
                 writer.WritePropertyName("diskSizeGB"u8);
                 writer.WriteNumberValue(DiskSizeInGB.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterDataDiskGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterDataDiskGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterDataDiskGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

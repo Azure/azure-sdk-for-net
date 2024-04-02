@@ -23,38 +23,38 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("secretSource"u8);
             JsonSerializer.Serialize(writer, SecretSource);
-            if (SecretVersion != null)
+            if (Optional.IsDefined(SecretVersion))
             {
                 writer.WritePropertyName("secretVersion"u8);
                 writer.WriteStringValue(SecretVersion);
             }
-            if (UseLatestVersion.HasValue)
+            if (Optional.IsDefined(UseLatestVersion))
             {
                 writer.WritePropertyName("useLatestVersion"u8);
                 writer.WriteBooleanValue(UseLatestVersion.Value);
             }
-            if (options.Format != "W" && Subject != null)
+            if (options.Format != "W" && Optional.IsDefined(Subject))
             {
                 writer.WritePropertyName("subject"u8);
                 writer.WriteStringValue(Subject);
             }
-            if (options.Format != "W" && ExpiresOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ExpiresOn))
             {
                 writer.WritePropertyName("expirationDate"u8);
                 writer.WriteStringValue(ExpiresOn.Value, "O");
             }
-            if (options.Format != "W" && CertificateAuthority != null)
+            if (options.Format != "W" && Optional.IsDefined(CertificateAuthority))
             {
                 writer.WritePropertyName("certificateAuthority"u8);
                 writer.WriteStringValue(CertificateAuthority);
             }
-            if (!(SubjectAlternativeNames is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubjectAlternativeNames))
             {
                 writer.WritePropertyName("subjectAlternativeNames"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Thumbprint != null)
+            if (options.Format != "W" && Optional.IsDefined(Thumbprint))
             {
                 writer.WritePropertyName("thumbprint"u8);
                 writer.WriteStringValue(Thumbprint);
@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomerCertificateProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeCustomerCertificateProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomerCertificateProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

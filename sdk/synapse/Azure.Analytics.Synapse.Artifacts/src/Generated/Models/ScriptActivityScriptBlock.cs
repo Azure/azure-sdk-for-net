@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Analytics.Synapse.Artifacts.Models
 {
@@ -20,10 +19,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public ScriptActivityScriptBlock(object text, ScriptType type)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             Type = type;

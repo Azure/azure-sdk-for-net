@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateIdentityCertificateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterUpdateIdentityCertificateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterUpdateIdentityCertificateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
             }
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (CertificatePassword != null)
+            if (Optional.IsDefined(CertificatePassword))
             {
                 writer.WritePropertyName("certificatePassword"u8);
                 writer.WriteStringValue(CertificatePassword);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightClusterUpdateIdentityCertificateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightClusterUpdateIdentityCertificateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightClusterUpdateIdentityCertificateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateIdentityCertificateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateIdentityCertificateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightClusterUpdateIdentityCertificateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateIdentityCertificateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightClusterUpdateIdentityCertificateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

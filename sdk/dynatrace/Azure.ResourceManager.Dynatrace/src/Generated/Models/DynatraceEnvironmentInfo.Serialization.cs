@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EnvironmentId != null)
+            if (Optional.IsDefined(EnvironmentId))
             {
                 writer.WritePropertyName("environmentId"u8);
                 writer.WriteStringValue(EnvironmentId);
             }
-            if (IngestionKey != null)
+            if (Optional.IsDefined(IngestionKey))
             {
                 writer.WritePropertyName("ingestionKey"u8);
                 writer.WriteStringValue(IngestionKey);
             }
-            if (LogsIngestionEndpoint != null)
+            if (Optional.IsDefined(LogsIngestionEndpoint))
             {
                 writer.WritePropertyName("logsIngestionEndpoint"u8);
                 writer.WriteStringValue(LogsIngestionEndpoint.AbsoluteUri);
             }
-            if (LandingUri != null)
+            if (Optional.IsDefined(LandingUri))
             {
                 writer.WritePropertyName("landingURL"u8);
                 writer.WriteStringValue(LandingUri.AbsoluteUri);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceEnvironmentInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceEnvironmentInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceEnvironmentInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

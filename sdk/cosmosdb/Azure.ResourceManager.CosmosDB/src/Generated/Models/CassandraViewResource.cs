@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="id"/> or <paramref name="viewDefinition"/> is null. </exception>
         public CassandraViewResource(string id, string viewDefinition)
         {
-            if (id == null)
-            {
-                throw new ArgumentNullException(nameof(id));
-            }
-            if (viewDefinition == null)
-            {
-                throw new ArgumentNullException(nameof(viewDefinition));
-            }
+            Argument.AssertNotNull(id, nameof(id));
+            Argument.AssertNotNull(viewDefinition, nameof(viewDefinition));
 
             Id = id;
             ViewDefinition = viewDefinition;
@@ -81,8 +75,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Name of the Cosmos DB Cassandra view. </summary>
+        [WirePath("id")]
         public string Id { get; set; }
         /// <summary> View Definition of the Cosmos DB Cassandra view. </summary>
+        [WirePath("viewDefinition")]
         public string ViewDefinition { get; set; }
     }
 }

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (SendingLogs.HasValue)
+            if (Optional.IsDefined(SendingLogs))
             {
                 writer.WritePropertyName("sendingLogs"u8);
                 writer.WriteStringValue(SendingLogs.Value.ToString());
             }
-            if (ReasonForLogsStatus != null)
+            if (Optional.IsDefined(ReasonForLogsStatus))
             {
                 writer.WritePropertyName("reasonForLogsStatus"u8);
                 writer.WriteStringValue(ReasonForLogsStatus);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Elastic.Models
             var format = options.Format == "W" ? ((IPersistableModel<MonitoredResourceContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.Elastic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.Elastic.Models
                         return DeserializeMonitoredResourceContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MonitoredResourceContent)} does not support reading '{options.Format}' format.");
             }
         }
 

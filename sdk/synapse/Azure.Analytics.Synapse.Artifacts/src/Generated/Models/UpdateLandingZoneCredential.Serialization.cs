@@ -18,10 +18,10 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (SasToken != null)
+            if (Optional.IsDefined(SasToken))
             {
                 writer.WritePropertyName("sasToken"u8);
-                writer.WriteObjectValue(SasToken);
+                writer.WriteObjectValue<SecureString>(SasToken);
             }
             writer.WriteEndObject();
         }
@@ -30,7 +30,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, UpdateLandingZoneCredential model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<UpdateLandingZoneCredential>(model);
             }
             public override UpdateLandingZoneCredential Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

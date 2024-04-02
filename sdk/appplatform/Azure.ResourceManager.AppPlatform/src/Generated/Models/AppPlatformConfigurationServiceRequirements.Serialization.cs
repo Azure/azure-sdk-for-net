@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceRequirements)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceRequirements)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Cpu != null)
+            if (options.Format != "W" && Optional.IsDefined(Cpu))
             {
                 writer.WritePropertyName("cpu"u8);
                 writer.WriteStringValue(Cpu);
             }
-            if (options.Format != "W" && Memory != null)
+            if (options.Format != "W" && Optional.IsDefined(Memory))
             {
                 writer.WritePropertyName("memory"u8);
                 writer.WriteStringValue(Memory);
             }
-            if (options.Format != "W" && InstanceCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
             var format = options.Format == "W" ? ((IPersistableModel<AppPlatformConfigurationServiceRequirements>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceRequirements)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceRequirements)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceRequirements)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceRequirements)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.AppPlatform.Models
                         return DeserializeAppPlatformConfigurationServiceRequirements(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceRequirements)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppPlatformConfigurationServiceRequirements)} does not support reading '{options.Format}' format.");
             }
         }
 

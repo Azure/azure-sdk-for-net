@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningContainerRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningContainerRegistryCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Location.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Passwords is ChangeTrackingList<MachineLearningPasswordDetail> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Passwords))
             {
                 writer.WritePropertyName("passwords"u8);
                 writer.WriteStartArray();
                 foreach (var item in Passwords)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MachineLearningPasswordDetail>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Username != null)
+            if (options.Format != "W" && Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningContainerRegistryCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningContainerRegistryCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningContainerRegistryCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningContainerRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningContainerRegistryCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningContainerRegistryCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningContainerRegistryCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningContainerRegistryCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

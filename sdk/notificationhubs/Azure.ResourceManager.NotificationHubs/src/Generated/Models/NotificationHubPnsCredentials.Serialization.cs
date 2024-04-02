@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubPnsCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPnsCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
-                writer.WriteObjectValue(Sku);
+                writer.WriteObjectValue<NotificationHubSku>(Sku, options);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -60,42 +60,42 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ApnsCredential != null)
+            if (Optional.IsDefined(ApnsCredential))
             {
                 writer.WritePropertyName("apnsCredential"u8);
-                writer.WriteObjectValue(ApnsCredential);
+                writer.WriteObjectValue<NotificationHubApnsCredential>(ApnsCredential, options);
             }
-            if (WnsCredential != null)
+            if (Optional.IsDefined(WnsCredential))
             {
                 writer.WritePropertyName("wnsCredential"u8);
-                writer.WriteObjectValue(WnsCredential);
+                writer.WriteObjectValue<NotificationHubWnsCredential>(WnsCredential, options);
             }
-            if (GcmCredential != null)
+            if (Optional.IsDefined(GcmCredential))
             {
                 writer.WritePropertyName("gcmCredential"u8);
-                writer.WriteObjectValue(GcmCredential);
+                writer.WriteObjectValue<NotificationHubGcmCredential>(GcmCredential, options);
             }
-            if (MpnsCredential != null)
+            if (Optional.IsDefined(MpnsCredential))
             {
                 writer.WritePropertyName("mpnsCredential"u8);
-                writer.WriteObjectValue(MpnsCredential);
+                writer.WriteObjectValue<NotificationHubMpnsCredential>(MpnsCredential, options);
             }
-            if (AdmCredential != null)
+            if (Optional.IsDefined(AdmCredential))
             {
                 writer.WritePropertyName("admCredential"u8);
-                writer.WriteObjectValue(AdmCredential);
+                writer.WriteObjectValue<NotificationHubAdmCredential>(AdmCredential, options);
             }
-            if (BaiduCredential != null)
+            if (Optional.IsDefined(BaiduCredential))
             {
                 writer.WritePropertyName("baiduCredential"u8);
-                writer.WriteObjectValue(BaiduCredential);
+                writer.WriteObjectValue<NotificationHubBaiduCredential>(BaiduCredential, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
             var format = options.Format == "W" ? ((IPersistableModel<NotificationHubPnsCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NotificationHubPnsCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NotificationHubPnsCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -303,7 +303,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubPnsCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPnsCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -319,7 +319,7 @@ namespace Azure.ResourceManager.NotificationHubs.Models
                         return DeserializeNotificationHubPnsCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NotificationHubPnsCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NotificationHubPnsCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

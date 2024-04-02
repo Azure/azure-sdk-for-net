@@ -23,16 +23,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParquetWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MaxRowsPerFile != null)
+            if (Optional.IsDefined(MaxRowsPerFile))
             {
                 writer.WritePropertyName("maxRowsPerFile"u8);
                 JsonSerializer.Serialize(writer, MaxRowsPerFile);
             }
-            if (FileNamePrefix != null)
+            if (Optional.IsDefined(FileNamePrefix))
             {
                 writer.WritePropertyName("fileNamePrefix"u8);
                 JsonSerializer.Serialize(writer, FileNamePrefix);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<ParquetWriteSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeParquetWriteSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ParquetWriteSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<JavaScriptFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JavaScriptFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JavaScriptFunctionBinding)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             writer.WriteStringValue(FunctionBindingType);
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Script != null)
+            if (Optional.IsDefined(Script))
             {
                 writer.WritePropertyName("script"u8);
                 writer.WriteStringValue(Script);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<JavaScriptFunctionBinding>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JavaScriptFunctionBinding)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JavaScriptFunctionBinding)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(JavaScriptFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JavaScriptFunctionBinding)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeJavaScriptFunctionBinding(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JavaScriptFunctionBinding)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JavaScriptFunctionBinding)} does not support reading '{options.Format}' format.");
             }
         }
 

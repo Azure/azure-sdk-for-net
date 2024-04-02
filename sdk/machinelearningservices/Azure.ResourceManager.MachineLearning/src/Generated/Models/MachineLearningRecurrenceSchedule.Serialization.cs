@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 writer.WriteNumberValue(item);
             }
             writer.WriteEndArray();
-            if (!(MonthDays is ChangeTrackingList<int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MonthDays))
             {
                 if (MonthDays != null)
                 {
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                     writer.WriteNull("monthDays");
                 }
             }
-            if (!(WeekDays is ChangeTrackingList<MachineLearningDayOfWeek> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(WeekDays))
             {
                 if (WeekDays != null)
                 {
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningRecurrenceSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningRecurrenceSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningRecurrenceSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

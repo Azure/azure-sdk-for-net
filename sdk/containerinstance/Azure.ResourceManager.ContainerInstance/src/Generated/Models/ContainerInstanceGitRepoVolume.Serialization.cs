@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceGitRepoVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceGitRepoVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceGitRepoVolume)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Directory != null)
+            if (Optional.IsDefined(Directory))
             {
                 writer.WritePropertyName("directory"u8);
                 writer.WriteStringValue(Directory);
             }
             writer.WritePropertyName("repository"u8);
             writer.WriteStringValue(Repository);
-            if (Revision != null)
+            if (Optional.IsDefined(Revision))
             {
                 writer.WritePropertyName("revision"u8);
                 writer.WriteStringValue(Revision);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerInstanceGitRepoVolume>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerInstanceGitRepoVolume)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerInstanceGitRepoVolume)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceGitRepoVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceGitRepoVolume)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.ContainerInstance.Models
                         return DeserializeContainerInstanceGitRepoVolume(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerInstanceGitRepoVolume)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerInstanceGitRepoVolume)} does not support reading '{options.Format}' format.");
             }
         }
 

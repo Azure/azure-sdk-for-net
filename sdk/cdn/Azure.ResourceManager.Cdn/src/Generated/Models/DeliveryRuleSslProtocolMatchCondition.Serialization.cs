@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleSslProtocolMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,12 +30,12 @@ namespace Azure.ResourceManager.Cdn.Models
             writer.WriteStringValue(SslProtocolMatchConditionType.ToString());
             writer.WritePropertyName("operator"u8);
             writer.WriteStringValue(SslProtocolOperator.ToString());
-            if (NegateCondition.HasValue)
+            if (Optional.IsDefined(NegateCondition))
             {
                 writer.WritePropertyName("negateCondition"u8);
                 writer.WriteBooleanValue(NegateCondition.Value);
             }
-            if (!(MatchValues is ChangeTrackingList<DeliveryRuleSslProtocol> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(MatchValues))
             {
                 writer.WritePropertyName("matchValues"u8);
                 writer.WriteStartArray();
@@ -45,7 +45,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Transforms is ChangeTrackingList<PreTransformCategory> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Transforms))
             {
                 writer.WritePropertyName("transforms"u8);
                 writer.WriteStartArray();
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<DeliveryRuleSslProtocolMatchCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -173,7 +173,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -189,7 +189,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeDeliveryRuleSslProtocolMatchCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DeliveryRuleSslProtocolMatchCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

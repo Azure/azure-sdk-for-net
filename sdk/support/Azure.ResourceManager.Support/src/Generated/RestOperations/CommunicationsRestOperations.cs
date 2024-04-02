@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Support.Models;
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Support
         {
             _pipeline = pipeline ?? throw new ArgumentNullException(nameof(pipeline));
             _endpoint = endpoint ?? new Uri("https://management.azure.com");
-            _apiVersion = apiVersion ?? "2022-09-01-preview";
+            _apiVersion = apiVersion ?? "2023-06-01-preview";
             _userAgent = new TelemetryDetails(GetType().Assembly, applicationId);
         }
 
@@ -54,14 +54,14 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<SupportNameAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Check the availability of a resource name. This API should be used to check the uniqueness of the name for adding a new communication to the support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -69,26 +69,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string supportTicketName, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, supportTicketName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -107,7 +90,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Check the availability of a resource name. This API should be used to check the uniqueness of the name for adding a new communication to the support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="content"> Input to check. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -115,26 +98,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string supportTicketName, SupportNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, supportTicketName, content);
             _pipeline.Send(message, cancellationToken);
@@ -180,7 +146,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
@@ -189,22 +155,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommunicationsListResult>> ListAsync(string subscriptionId, string supportTicketName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
             using var message = CreateListRequest(subscriptionId, supportTicketName, top, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -223,7 +175,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
@@ -232,22 +184,8 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommunicationsListResult> List(string subscriptionId, string supportTicketName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
             using var message = CreateListRequest(subscriptionId, supportTicketName, top, filter);
             _pipeline.Send(message, cancellationToken);
@@ -286,7 +224,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Returns communication details for a support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -294,30 +232,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SupportTicketCommunicationData>> GetAsync(string subscriptionId, string supportTicketName, string communicationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var message = CreateGetRequest(subscriptionId, supportTicketName, communicationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -338,7 +255,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Returns communication details for a support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="cancellationToken"> The cancellation token to use. </param>
@@ -346,30 +263,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SupportTicketCommunicationData> Get(string subscriptionId, string supportTicketName, string communicationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
 
             using var message = CreateGetRequest(subscriptionId, supportTicketName, communicationName);
             _pipeline.Send(message, cancellationToken);
@@ -407,14 +303,14 @@ namespace Azure.ResourceManager.Support
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<SupportTicketCommunicationData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
         }
 
         /// <summary> Adds a new customer communication to an Azure support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="data"> Communication object. </param>
@@ -423,34 +319,10 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string supportTicketName, string communicationName, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, supportTicketName, communicationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -465,7 +337,7 @@ namespace Azure.ResourceManager.Support
         }
 
         /// <summary> Adds a new customer communication to an Azure support ticket. </summary>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="communicationName"> Communication name. </param>
         /// <param name="data"> Communication object. </param>
@@ -474,34 +346,10 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="supportTicketName"/> or <paramref name="communicationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string supportTicketName, string communicationName, SupportTicketCommunicationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
-            if (communicationName == null)
-            {
-                throw new ArgumentNullException(nameof(communicationName));
-            }
-            if (communicationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(communicationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
+            Argument.AssertNotNullOrEmpty(communicationName, nameof(communicationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, supportTicketName, communicationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -531,7 +379,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
@@ -540,26 +388,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<CommunicationsListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string supportTicketName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, supportTicketName, top, filter);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -579,7 +410,7 @@ namespace Azure.ResourceManager.Support
 
         /// <summary> Lists all communications (attachments not included) for a support ticket. &lt;br/&gt;&lt;/br&gt; You can also filter support ticket communications by _CreatedDate_ or _CommunicationType_ using the $filter parameter. The only type of communication supported today is _Web_. Output will be a paged result with _nextLink_, using which you can retrieve the next set of Communication results. &lt;br/&gt;&lt;br/&gt;Support ticket data is available for 18 months after ticket creation. If a ticket was created more than 18 months ago, a request for data might cause an error. </summary>
         /// <param name="nextLink"> The URL to the next page of results. </param>
-        /// <param name="subscriptionId"> Azure subscription Id. </param>
+        /// <param name="subscriptionId"> The ID of the target subscription. The value must be an UUID. </param>
         /// <param name="supportTicketName"> Support ticket name. </param>
         /// <param name="top"> The number of values to return in the collection. Default is 10 and max is 10. </param>
         /// <param name="filter"> The filter to apply on the operation. You can filter by communicationType and createdDate properties. CommunicationType supports Equals ('eq') operator and createdDate supports Greater Than ('gt') and Greater Than or Equals ('ge') operators. You may combine the CommunicationType and CreatedDate filters by Logical And ('and') operator. </param>
@@ -588,26 +419,9 @@ namespace Azure.ResourceManager.Support
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="supportTicketName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<CommunicationsListResult> ListNextPage(string nextLink, string subscriptionId, string supportTicketName, int? top = null, string filter = null, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (supportTicketName == null)
-            {
-                throw new ArgumentNullException(nameof(supportTicketName));
-            }
-            if (supportTicketName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(supportTicketName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(supportTicketName, nameof(supportTicketName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, supportTicketName, top, filter);
             _pipeline.Send(message, cancellationToken);

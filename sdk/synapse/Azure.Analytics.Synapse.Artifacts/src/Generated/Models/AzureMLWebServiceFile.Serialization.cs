@@ -19,9 +19,9 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             writer.WriteStartObject();
             writer.WritePropertyName("filePath"u8);
-            writer.WriteObjectValue(FilePath);
+            writer.WriteObjectValue<object>(FilePath);
             writer.WritePropertyName("linkedServiceName"u8);
-            writer.WriteObjectValue(LinkedServiceName);
+            writer.WriteObjectValue<LinkedServiceReference>(LinkedServiceName);
             writer.WriteEndObject();
         }
 
@@ -53,7 +53,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureMLWebServiceFile model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureMLWebServiceFile>(model);
             }
             public override AzureMLWebServiceFile Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

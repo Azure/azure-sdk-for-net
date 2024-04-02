@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("enabled"u8);
             writer.WriteBooleanValue(Enabled);
-            if (!(EncryptionSettings is ChangeTrackingList<EncryptionSettingsElement> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EncryptionSettings))
             {
                 writer.WritePropertyName("encryptionSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in EncryptionSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EncryptionSettingsElement>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (EncryptionSettingsVersion != null)
+            if (Optional.IsDefined(EncryptionSettingsVersion))
             {
                 writer.WritePropertyName("encryptionSettingsVersion"u8);
                 writer.WriteStringValue(EncryptionSettingsVersion);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<EncryptionSettingsGroup>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeEncryptionSettingsGroup(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EncryptionSettingsGroup)} does not support reading '{options.Format}' format.");
             }
         }
 

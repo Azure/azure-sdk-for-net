@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppInstancesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("machineArmId"u8);
             writer.WriteStringValue(MachineArmId);
-            if (InstanceCount.HasValue)
+            if (Optional.IsDefined(InstanceCount))
             {
                 writer.WritePropertyName("instanceCount"u8);
                 writer.WriteNumberValue(InstanceCount.Value);
             }
-            if (JvmMemoryInMB.HasValue)
+            if (Optional.IsDefined(JvmMemoryInMB))
             {
                 writer.WritePropertyName("jvmMemoryInMB"u8);
                 writer.WriteNumberValue(JvmMemoryInMB.Value);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootAppInstancesItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootAppInstancesItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootAppInstancesItem)} does not support reading '{options.Format}' format.");
             }
         }
 

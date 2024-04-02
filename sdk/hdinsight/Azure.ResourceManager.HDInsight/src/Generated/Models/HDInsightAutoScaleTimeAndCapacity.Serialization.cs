@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleTimeAndCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAutoScaleTimeAndCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleTimeAndCapacity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Time != null)
+            if (Optional.IsDefined(Time))
             {
                 writer.WritePropertyName("time"u8);
                 writer.WriteStringValue(Time);
             }
-            if (MinInstanceCount.HasValue)
+            if (Optional.IsDefined(MinInstanceCount))
             {
                 writer.WritePropertyName("minInstanceCount"u8);
                 writer.WriteNumberValue(MinInstanceCount.Value);
             }
-            if (MaxInstanceCount.HasValue)
+            if (Optional.IsDefined(MaxInstanceCount))
             {
                 writer.WritePropertyName("maxInstanceCount"u8);
                 writer.WriteNumberValue(MaxInstanceCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<HDInsightAutoScaleTimeAndCapacity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HDInsightAutoScaleTimeAndCapacity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HDInsightAutoScaleTimeAndCapacity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAutoScaleTimeAndCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleTimeAndCapacity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeHDInsightAutoScaleTimeAndCapacity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HDInsightAutoScaleTimeAndCapacity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HDInsightAutoScaleTimeAndCapacity)} does not support reading '{options.Format}' format.");
             }
         }
 

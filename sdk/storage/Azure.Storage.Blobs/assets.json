@@ -2,5 +2,5 @@
   "AssetsRepo": "Azure/azure-sdk-assets",
   "AssetsRepoPrefixPath": "net",
   "TagPrefix": "net/storage/Azure.Storage.Blobs",
-  "Tag": "net/storage/Azure.Storage.Blobs_efaea7c293"
+  "Tag": "net/storage/Azure.Storage.Blobs_ff51f0da16"
 }

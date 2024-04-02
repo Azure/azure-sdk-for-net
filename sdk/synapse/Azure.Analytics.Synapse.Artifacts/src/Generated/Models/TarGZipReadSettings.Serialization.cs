@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (PreserveCompressionFileNameAsFolder != null)
+            if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
-                writer.WriteObjectValue(PreserveCompressionFileNameAsFolder);
+                writer.WriteObjectValue<object>(PreserveCompressionFileNameAsFolder);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -70,7 +70,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, TarGZipReadSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<TarGZipReadSettings>(model);
             }
             public override TarGZipReadSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

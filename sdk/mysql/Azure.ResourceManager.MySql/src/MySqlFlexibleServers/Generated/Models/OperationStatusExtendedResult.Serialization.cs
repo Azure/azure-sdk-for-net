@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.ResourceManager.MySql.FlexibleServers.Models
@@ -23,11 +22,11 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationStatusExtendedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatusExtendedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationStatusExtendedResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Properties is ChangeTrackingDictionary<string, BinaryData> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
                 writer.WriteStartObject();
@@ -50,49 +49,49 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && ResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status);
-            if (PercentComplete.HasValue)
+            if (Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (StartOn.HasValue)
+            if (Optional.IsDefined(StartOn))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartOn.Value, "O");
             }
-            if (EndOn.HasValue)
+            if (Optional.IsDefined(EndOn))
             {
                 writer.WritePropertyName("endTime"u8);
                 writer.WriteStringValue(EndOn.Value, "O");
             }
-            if (!(Operations is ChangeTrackingList<OperationStatusResult> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Operations))
             {
                 writer.WritePropertyName("operations"u8);
                 writer.WriteStartArray();
                 foreach (var item in Operations)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OperationStatusResult>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (Error != null)
+            if (Optional.IsDefined(Error))
             {
                 writer.WritePropertyName("error"u8);
                 JsonSerializer.Serialize(writer, Error);
@@ -120,7 +119,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
             var format = options.Format == "W" ? ((IPersistableModel<OperationStatusExtendedResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(OperationStatusExtendedResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(OperationStatusExtendedResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -277,7 +276,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatusExtendedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationStatusExtendedResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -293,7 +292,7 @@ namespace Azure.ResourceManager.MySql.FlexibleServers.Models
                         return DeserializeOperationStatusExtendedResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(OperationStatusExtendedResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(OperationStatusExtendedResult)} does not support reading '{options.Format}' format.");
             }
         }
 

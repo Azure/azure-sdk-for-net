@@ -51,6 +51,7 @@ public abstract partial class AssistantsTestBase : RecordedTestBase<OpenAITestEn
         HeaderRegexSanitizers.Add(new HeaderRegexSanitizer("api-key", "***********"));
         UriRegexSanitizers.Add(new UriRegexSanitizer("sig=[^\"]*", "sig=Sanitized"));
         UriRegexSanitizers.Add(new(TestEnvironment.AzureOpenAIResourceUri ?? s_placeholderAzureResourceUrl, s_placeholderAzureResourceUrl));
+        UriRegexSanitizers.Add(new("files/[^/\\?]*", "files/placeholder-file-id"));
         SanitizedQueryParameters.Add("sig");
     }
 

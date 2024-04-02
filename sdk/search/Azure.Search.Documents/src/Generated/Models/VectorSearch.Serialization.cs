@@ -16,43 +16,43 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(Profiles is ChangeTrackingList<VectorSearchProfile> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Profiles))
             {
                 writer.WritePropertyName("profiles"u8);
                 writer.WriteStartArray();
                 foreach (var item in Profiles)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchProfile>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Algorithms is ChangeTrackingList<VectorSearchAlgorithmConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Algorithms))
             {
                 writer.WritePropertyName("algorithms"u8);
                 writer.WriteStartArray();
                 foreach (var item in Algorithms)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchAlgorithmConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Vectorizers is ChangeTrackingList<VectorSearchVectorizer> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Vectorizers))
             {
                 writer.WritePropertyName("vectorizers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Vectorizers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchVectorizer>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Compressions is ChangeTrackingList<VectorSearchCompressionConfiguration> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Compressions))
             {
                 writer.WritePropertyName("compressions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Compressions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VectorSearchCompressionConfiguration>(item);
                 }
                 writer.WriteEndArray();
             }

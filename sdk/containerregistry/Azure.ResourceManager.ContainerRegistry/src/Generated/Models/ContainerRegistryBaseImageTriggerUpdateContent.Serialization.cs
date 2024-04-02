@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (BaseImageTriggerType.HasValue)
+            if (Optional.IsDefined(BaseImageTriggerType))
             {
                 writer.WritePropertyName("baseImageTriggerType"u8);
                 writer.WriteStringValue(BaseImageTriggerType.Value.ToString());
             }
-            if (UpdateTriggerEndpoint != null)
+            if (Optional.IsDefined(UpdateTriggerEndpoint))
             {
                 writer.WritePropertyName("updateTriggerEndpoint"u8);
                 writer.WriteStringValue(UpdateTriggerEndpoint);
             }
-            if (UpdateTriggerPayloadType.HasValue)
+            if (Optional.IsDefined(UpdateTriggerPayloadType))
             {
                 writer.WritePropertyName("updateTriggerPayloadType"u8);
                 writer.WriteStringValue(UpdateTriggerPayloadType.Value.ToString());
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryBaseImageTriggerUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryBaseImageTriggerUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryBaseImageTriggerUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

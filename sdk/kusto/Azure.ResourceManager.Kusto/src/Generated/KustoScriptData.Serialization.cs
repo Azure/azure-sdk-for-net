@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoScriptData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoScriptData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,39 +43,39 @@ namespace Azure.ResourceManager.Kusto
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ScriptUri != null)
+            if (Optional.IsDefined(ScriptUri))
             {
                 writer.WritePropertyName("scriptUrl"u8);
                 writer.WriteStringValue(ScriptUri.AbsoluteUri);
             }
-            if (ScriptUriSasToken != null)
+            if (Optional.IsDefined(ScriptUriSasToken))
             {
                 writer.WritePropertyName("scriptUrlSasToken"u8);
                 writer.WriteStringValue(ScriptUriSasToken);
             }
-            if (ScriptContent != null)
+            if (Optional.IsDefined(ScriptContent))
             {
                 writer.WritePropertyName("scriptContent"u8);
                 writer.WriteStringValue(ScriptContent);
             }
-            if (ForceUpdateTag != null)
+            if (Optional.IsDefined(ForceUpdateTag))
             {
                 writer.WritePropertyName("forceUpdateTag"u8);
                 writer.WriteStringValue(ForceUpdateTag);
             }
-            if (ShouldContinueOnErrors.HasValue)
+            if (Optional.IsDefined(ShouldContinueOnErrors))
             {
                 writer.WritePropertyName("continueOnErrors"u8);
                 writer.WriteBooleanValue(ShouldContinueOnErrors.Value);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.Kusto
             var format = options.Format == "W" ? ((IPersistableModel<KustoScriptData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KustoScriptData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KustoScriptData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.Kusto
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KustoScriptData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoScriptData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.Kusto
                         return DeserializeKustoScriptData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KustoScriptData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KustoScriptData)} does not support reading '{options.Format}' format.");
             }
         }
 

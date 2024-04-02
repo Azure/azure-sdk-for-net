@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PartnerRegistrationImmutableId.HasValue)
+            if (Optional.IsDefined(PartnerRegistrationImmutableId))
             {
                 writer.WritePropertyName("partnerRegistrationImmutableId"u8);
                 writer.WriteStringValue(PartnerRegistrationImmutableId.Value);
             }
-            if (PartnerName != null)
+            if (Optional.IsDefined(PartnerName))
             {
                 writer.WritePropertyName("partnerName"u8);
                 writer.WriteStringValue(PartnerName);
             }
-            if (AuthorizationExpireOn.HasValue)
+            if (Optional.IsDefined(AuthorizationExpireOn))
             {
                 writer.WritePropertyName("authorizationExpirationTimeInUtc"u8);
                 writer.WriteStringValue(AuthorizationExpireOn.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<EventGridPartnerContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeEventGridPartnerContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EventGridPartnerContent)} does not support reading '{options.Format}' format.");
             }
         }
 

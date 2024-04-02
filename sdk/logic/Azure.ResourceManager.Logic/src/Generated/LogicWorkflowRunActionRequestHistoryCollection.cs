@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Logic
 {
@@ -80,14 +78,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual async Task<Response<LogicWorkflowRunActionRequestHistoryResource>> GetAsync(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRequestHistoryCollection.Get");
             scope.Start();
@@ -132,14 +123,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual Response<LogicWorkflowRunActionRequestHistoryResource> Get(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRequestHistoryCollection.Get");
             scope.Start();
@@ -244,14 +228,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRequestHistoryCollection.Exists");
             scope.Start();
@@ -294,14 +271,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual Response<bool> Exists(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRequestHistoryCollection.Exists");
             scope.Start();
@@ -344,14 +314,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual async Task<NullableResponse<LogicWorkflowRunActionRequestHistoryResource>> GetIfExistsAsync(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRequestHistoryCollection.GetIfExists");
             scope.Start();
@@ -396,14 +359,7 @@ namespace Azure.ResourceManager.Logic
         /// <exception cref="ArgumentNullException"> <paramref name="requestHistoryName"/> is null. </exception>
         public virtual NullableResponse<LogicWorkflowRunActionRequestHistoryResource> GetIfExists(string requestHistoryName, CancellationToken cancellationToken = default)
         {
-            if (requestHistoryName == null)
-            {
-                throw new ArgumentNullException(nameof(requestHistoryName));
-            }
-            if (requestHistoryName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(requestHistoryName));
-            }
+            Argument.AssertNotNullOrEmpty(requestHistoryName, nameof(requestHistoryName));
 
             using var scope = _logicWorkflowRunActionRequestHistoryWorkflowRunActionRequestHistoriesClientDiagnostics.CreateScope("LogicWorkflowRunActionRequestHistoryCollection.GetIfExists");
             scope.Start();

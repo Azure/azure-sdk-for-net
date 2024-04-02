@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (TargetDatabaseName != null)
+            if (Optional.IsDefined(TargetDatabaseName))
             {
                 writer.WritePropertyName("targetDatabaseName"u8);
                 writer.WriteStringValue(TargetDatabaseName);
             }
-            if (!(TableMap is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(TableMap))
             {
                 writer.WritePropertyName("tableMap"u8);
                 writer.WriteStartObject();
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MigrateMySqlAzureDBForMySqlOfflineDatabaseInput>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -150,7 +150,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMigrateMySqlAzureDBForMySqlOfflineDatabaseInput(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MigrateMySqlAzureDBForMySqlOfflineDatabaseInput)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,39 +22,39 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (IntegrationServiceEnvironmentId != null)
+            if (Optional.IsDefined(IntegrationServiceEnvironmentId))
             {
                 writer.WritePropertyName("integrationServiceEnvironmentId"u8);
                 writer.WriteStringValue(IntegrationServiceEnvironmentId);
             }
-            if (EndpointsConfiguration != null)
+            if (Optional.IsDefined(EndpointsConfiguration))
             {
                 writer.WritePropertyName("endpointsConfiguration"u8);
-                writer.WriteObjectValue(EndpointsConfiguration);
+                writer.WriteObjectValue<FlowEndpointsConfiguration>(EndpointsConfiguration, options);
             }
-            if (NetworkConfiguration != null)
+            if (Optional.IsDefined(NetworkConfiguration))
             {
                 writer.WritePropertyName("networkConfiguration"u8);
-                writer.WriteObjectValue(NetworkConfiguration);
+                writer.WriteObjectValue<IntegrationServiceNetworkConfiguration>(NetworkConfiguration, options);
             }
-            if (EncryptionConfiguration != null)
+            if (Optional.IsDefined(EncryptionConfiguration))
             {
                 writer.WritePropertyName("encryptionConfiguration"u8);
-                writer.WriteObjectValue(EncryptionConfiguration);
+                writer.WriteObjectValue<IntegrationServiceEnvironmenEncryptionConfiguration>(EncryptionConfiguration, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<IntegrationServiceEnvironmentProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeIntegrationServiceEnvironmentProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IntegrationServiceEnvironmentProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

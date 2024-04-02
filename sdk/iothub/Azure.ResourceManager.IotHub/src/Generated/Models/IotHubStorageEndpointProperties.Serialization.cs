@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubStorageEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubStorageEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubStorageEndpointProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SasTtlAsIso8601.HasValue)
+            if (Optional.IsDefined(SasTtlAsIso8601))
             {
                 writer.WritePropertyName("sasTtlAsIso8601"u8);
                 writer.WriteStringValue(SasTtlAsIso8601.Value, "P");
@@ -35,15 +35,15 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(ConnectionString);
             writer.WritePropertyName("containerName"u8);
             writer.WriteStringValue(ContainerName);
-            if (AuthenticationType.HasValue)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 writer.WriteStringValue(AuthenticationType.Value.ToString());
             }
-            if (Identity != null)
+            if (Optional.IsDefined(Identity))
             {
                 writer.WritePropertyName("identity"u8);
-                writer.WriteObjectValue(Identity);
+                writer.WriteObjectValue<ManagedIdentity>(Identity, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubStorageEndpointProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubStorageEndpointProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubStorageEndpointProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubStorageEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubStorageEndpointProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeIotHubStorageEndpointProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubStorageEndpointProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubStorageEndpointProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

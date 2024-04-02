@@ -11,6 +11,8 @@ skip-semantics-validation: true
 keep-non-overloadable-protocol-signature: true
 modelerfour:
     seal-single-value-enum-by-default: true
+
+helper-namespace: Azure.Storage.Common
 ```
 
 ### Setup DPG Methods

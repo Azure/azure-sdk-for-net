@@ -22,37 +22,37 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshootingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (ReasonType != null)
+            if (Optional.IsDefined(ReasonType))
             {
                 writer.WritePropertyName("reasonType"u8);
                 writer.WriteStringValue(ReasonType);
             }
-            if (Summary != null)
+            if (Optional.IsDefined(Summary))
             {
                 writer.WritePropertyName("summary"u8);
                 writer.WriteStringValue(Summary);
             }
-            if (Detail != null)
+            if (Optional.IsDefined(Detail))
             {
                 writer.WritePropertyName("detail"u8);
                 writer.WriteStringValue(Detail);
             }
-            if (!(RecommendedActions is ChangeTrackingList<TroubleshootingRecommendedActions> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RecommendedActions))
             {
                 writer.WritePropertyName("recommendedActions"u8);
                 writer.WriteStartArray();
                 foreach (var item in RecommendedActions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TroubleshootingRecommendedActions>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TroubleshootingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeTroubleshootingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TroubleshootingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

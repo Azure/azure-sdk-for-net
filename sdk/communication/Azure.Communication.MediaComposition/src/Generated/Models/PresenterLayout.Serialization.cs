@@ -20,29 +20,29 @@ namespace Azure.Communication.MediaComposition
             writer.WriteStringValue(PresenterId);
             writer.WritePropertyName("supportId"u8);
             writer.WriteStringValue(SupportId);
-            if (SupportPosition.HasValue)
+            if (Optional.IsDefined(SupportPosition))
             {
                 writer.WritePropertyName("supportPosition"u8);
                 writer.WriteStringValue(SupportPosition.Value.ToString());
             }
-            if (SupportAspectRatio.HasValue)
+            if (Optional.IsDefined(SupportAspectRatio))
             {
                 writer.WritePropertyName("supportAspectRatio"u8);
                 writer.WriteNumberValue(SupportAspectRatio.Value);
             }
             writer.WritePropertyName("kind"u8);
             writer.WriteStringValue(Kind.ToString());
-            if (Resolution != null)
+            if (Optional.IsDefined(Resolution))
             {
                 writer.WritePropertyName("resolution"u8);
-                writer.WriteObjectValue(Resolution);
+                writer.WriteObjectValue<LayoutResolution>(Resolution);
             }
-            if (PlaceholderImageUri != null)
+            if (Optional.IsDefined(PlaceholderImageUri))
             {
                 writer.WritePropertyName("placeholderImageUri"u8);
                 writer.WriteStringValue(PlaceholderImageUri);
             }
-            if (ScalingMode.HasValue)
+            if (Optional.IsDefined(ScalingMode))
             {
                 writer.WritePropertyName("scalingMode"u8);
                 writer.WriteStringValue(ScalingMode.Value.ToString());

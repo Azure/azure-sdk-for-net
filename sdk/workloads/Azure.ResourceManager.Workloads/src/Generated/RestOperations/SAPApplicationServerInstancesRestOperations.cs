@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Workloads.Models;
@@ -69,38 +69,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SapApplicationServerInstanceData>> GetAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -130,38 +102,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SapApplicationServerInstanceData> Get(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -201,7 +145,7 @@ namespace Azure.ResourceManager.Workloads
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<SapApplicationServerInstanceData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -218,42 +162,11 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapApplicationServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -278,42 +191,11 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Create(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapApplicationServerInstanceData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName, data);
             _pipeline.Send(message, cancellationToken);
@@ -347,7 +229,7 @@ namespace Azure.ResourceManager.Workloads
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(patch);
+            content.JsonWriter.WriteObjectValue<SapApplicationServerInstancePatch>(patch, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -364,42 +246,11 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapApplicationServerInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName, patch);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -424,42 +275,11 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Update(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapApplicationServerInstancePatch patch, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
-            if (patch == null)
-            {
-                throw new ArgumentNullException(nameof(patch));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
+            Argument.AssertNotNull(patch, nameof(patch));
 
             using var message = CreateUpdateRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName, patch);
             _pipeline.Send(message, cancellationToken);
@@ -505,38 +325,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -561,38 +353,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -637,30 +401,9 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SapApplicationServerInstanceList>> ListAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -687,30 +430,9 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SapApplicationServerInstanceList> List(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -761,38 +483,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StartInstanceAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var message = CreateStartInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -816,38 +510,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StartInstance(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var message = CreateStartInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName);
             _pipeline.Send(message, cancellationToken);
@@ -884,7 +550,7 @@ namespace Azure.ResourceManager.Workloads
             {
                 request.Headers.Add("Content-Type", "application/json");
                 var content0 = new Utf8JsonRequestContent();
-                content0.JsonWriter.WriteObjectValue(content);
+                content0.JsonWriter.WriteObjectValue<SapStopContent>(content, new ModelReaderWriterOptions("W"));
                 request.Content = content0;
             }
             _userAgent.Apply(message);
@@ -902,38 +568,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> StopInstanceAsync(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var message = CreateStopInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -958,38 +596,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="sapVirtualInstanceName"/> or <paramref name="applicationInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response StopInstance(string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, string applicationInstanceName, SapStopContent content = null, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
-            if (applicationInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(applicationInstanceName));
-            }
-            if (applicationInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(applicationInstanceName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
+            Argument.AssertNotNullOrEmpty(applicationInstanceName, nameof(applicationInstanceName));
 
             using var message = CreateStopInstanceRequest(subscriptionId, resourceGroupName, sapVirtualInstanceName, applicationInstanceName, content);
             _pipeline.Send(message, cancellationToken);
@@ -1027,34 +637,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<SapApplicationServerInstanceList>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, sapVirtualInstanceName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1082,34 +668,10 @@ namespace Azure.ResourceManager.Workloads
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="sapVirtualInstanceName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<SapApplicationServerInstanceList> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string sapVirtualInstanceName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (sapVirtualInstanceName == null)
-            {
-                throw new ArgumentNullException(nameof(sapVirtualInstanceName));
-            }
-            if (sapVirtualInstanceName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sapVirtualInstanceName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(sapVirtualInstanceName, nameof(sapVirtualInstanceName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, sapVirtualInstanceName);
             _pipeline.Send(message, cancellationToken);

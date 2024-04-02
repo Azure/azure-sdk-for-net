@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.SecurityInsights.Models;
@@ -25,11 +24,11 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsWatchlistData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
@@ -49,74 +48,74 @@ namespace Azure.ResourceManager.SecurityInsights
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (WatchlistId.HasValue)
+            if (Optional.IsDefined(WatchlistId))
             {
                 writer.WritePropertyName("watchlistId"u8);
                 writer.WriteStringValue(WatchlistId.Value);
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
             }
-            if (Provider != null)
+            if (Optional.IsDefined(Provider))
             {
                 writer.WritePropertyName("provider"u8);
                 writer.WriteStringValue(Provider);
             }
-            if (Source.HasValue)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
                 writer.WriteStringValue(Source.Value.ToString());
             }
-            if (CreatedOn.HasValue)
+            if (Optional.IsDefined(CreatedOn))
             {
                 writer.WritePropertyName("created"u8);
                 writer.WriteStringValue(CreatedOn.Value, "O");
             }
-            if (UpdatedOn.HasValue)
+            if (Optional.IsDefined(UpdatedOn))
             {
                 writer.WritePropertyName("updated"u8);
                 writer.WriteStringValue(UpdatedOn.Value, "O");
             }
-            if (CreatedBy != null)
+            if (Optional.IsDefined(CreatedBy))
             {
                 writer.WritePropertyName("createdBy"u8);
-                writer.WriteObjectValue(CreatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(CreatedBy, options);
             }
-            if (UpdatedBy != null)
+            if (Optional.IsDefined(UpdatedBy))
             {
                 writer.WritePropertyName("updatedBy"u8);
-                writer.WriteObjectValue(UpdatedBy);
+                writer.WriteObjectValue<SecurityInsightsUserInfo>(UpdatedBy, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (WatchlistType != null)
+            if (Optional.IsDefined(WatchlistType))
             {
                 writer.WritePropertyName("watchlistType"u8);
                 writer.WriteStringValue(WatchlistType);
             }
-            if (WatchlistAlias != null)
+            if (Optional.IsDefined(WatchlistAlias))
             {
                 writer.WritePropertyName("watchlistAlias"u8);
                 writer.WriteStringValue(WatchlistAlias);
             }
-            if (IsDeleted.HasValue)
+            if (Optional.IsDefined(IsDeleted))
             {
                 writer.WritePropertyName("isDeleted"u8);
                 writer.WriteBooleanValue(IsDeleted.Value);
             }
-            if (!(Labels is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Labels))
             {
                 writer.WritePropertyName("labels"u8);
                 writer.WriteStartArray();
@@ -126,37 +125,37 @@ namespace Azure.ResourceManager.SecurityInsights
                 }
                 writer.WriteEndArray();
             }
-            if (DefaultDuration.HasValue)
+            if (Optional.IsDefined(DefaultDuration))
             {
                 writer.WritePropertyName("defaultDuration"u8);
                 writer.WriteStringValue(DefaultDuration.Value, "P");
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (NumberOfLinesToSkip.HasValue)
+            if (Optional.IsDefined(NumberOfLinesToSkip))
             {
                 writer.WritePropertyName("numberOfLinesToSkip"u8);
                 writer.WriteNumberValue(NumberOfLinesToSkip.Value);
             }
-            if (RawContent != null)
+            if (Optional.IsDefined(RawContent))
             {
                 writer.WritePropertyName("rawContent"u8);
                 writer.WriteStringValue(RawContent);
             }
-            if (ItemsSearchKey != null)
+            if (Optional.IsDefined(ItemsSearchKey))
             {
                 writer.WritePropertyName("itemsSearchKey"u8);
                 writer.WriteStringValue(ItemsSearchKey);
             }
-            if (ContentType != null)
+            if (Optional.IsDefined(ContentType))
             {
                 writer.WritePropertyName("contentType"u8);
                 writer.WriteStringValue(ContentType);
             }
-            if (UploadStatus != null)
+            if (Optional.IsDefined(UploadStatus))
             {
                 writer.WritePropertyName("uploadStatus"u8);
                 writer.WriteStringValue(UploadStatus);
@@ -185,7 +184,7 @@ namespace Azure.ResourceManager.SecurityInsights
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsWatchlistData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -467,7 +466,7 @@ namespace Azure.ResourceManager.SecurityInsights
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -483,7 +482,7 @@ namespace Azure.ResourceManager.SecurityInsights
                         return DeserializeSecurityInsightsWatchlistData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsWatchlistData)} does not support reading '{options.Format}' format.");
             }
         }
 

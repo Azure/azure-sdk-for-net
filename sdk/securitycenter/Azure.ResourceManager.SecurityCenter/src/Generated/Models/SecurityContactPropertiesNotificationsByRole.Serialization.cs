@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityContactPropertiesNotificationsByRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (!(Roles is ChangeTrackingList<SecurityAlertReceivingRole> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Roles))
             {
                 writer.WritePropertyName("roles"u8);
                 writer.WriteStartArray();
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityContactPropertiesNotificationsByRole>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeSecurityContactPropertiesNotificationsByRole(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityContactPropertiesNotificationsByRole)} does not support reading '{options.Format}' format.");
             }
         }
 

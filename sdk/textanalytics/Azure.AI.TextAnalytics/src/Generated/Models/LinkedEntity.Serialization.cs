@@ -23,12 +23,12 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStartArray();
             foreach (var item in Matches)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<LinkedEntityMatch>(item);
             }
             writer.WriteEndArray();
             writer.WritePropertyName("language"u8);
             writer.WriteStringValue(Language);
-            if (DataSourceEntityId != null)
+            if (Optional.IsDefined(DataSourceEntityId))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(DataSourceEntityId);
@@ -37,7 +37,7 @@ namespace Azure.AI.TextAnalytics
             writer.WriteStringValue(Url.AbsoluteUri);
             writer.WritePropertyName("dataSource"u8);
             writer.WriteStringValue(DataSource);
-            if (BingEntitySearchApiId != null)
+            if (Optional.IsDefined(BingEntitySearchApiId))
             {
                 writer.WritePropertyName("bingId"u8);
                 writer.WriteStringValue(BingEntitySearchApiId);

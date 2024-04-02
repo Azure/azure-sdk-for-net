@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Kusto.Models;
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<KustoClusterPrincipalAssignmentNameAvailabilityContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -72,34 +72,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<KustoNameAvailabilityResult>> CheckNameAvailabilityAsync(string subscriptionId, string resourceGroupName, string clusterName, KustoClusterPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, clusterName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -127,34 +103,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<KustoNameAvailabilityResult> CheckNameAvailability(string subscriptionId, string resourceGroupName, string clusterName, KustoClusterPrincipalAssignmentNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreateCheckNameAvailabilityRequest(subscriptionId, resourceGroupName, clusterName, content);
             _pipeline.Send(message, cancellationToken);
@@ -204,38 +156,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<KustoClusterPrincipalAssignmentData>> GetAsync(string subscriptionId, string resourceGroupName, string clusterName, string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, principalAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -265,38 +189,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<KustoClusterPrincipalAssignmentData> Get(string subscriptionId, string resourceGroupName, string clusterName, string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, clusterName, principalAssignmentName);
             _pipeline.Send(message, cancellationToken);
@@ -336,7 +232,7 @@ namespace Azure.ResourceManager.Kusto
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<KustoClusterPrincipalAssignmentData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -353,42 +249,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string clusterName, string principalAssignmentName, KustoClusterPrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, principalAssignmentName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -413,42 +278,11 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string clusterName, string principalAssignmentName, KustoClusterPrincipalAssignmentData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, clusterName, principalAssignmentName, data);
             _pipeline.Send(message, cancellationToken);
@@ -494,38 +328,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string clusterName, string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, principalAssignmentName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -550,38 +356,10 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="clusterName"/> or <paramref name="principalAssignmentName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string clusterName, string principalAssignmentName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
-            if (principalAssignmentName == null)
-            {
-                throw new ArgumentNullException(nameof(principalAssignmentName));
-            }
-            if (principalAssignmentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(principalAssignmentName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
+            Argument.AssertNotNullOrEmpty(principalAssignmentName, nameof(principalAssignmentName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, clusterName, principalAssignmentName);
             _pipeline.Send(message, cancellationToken);
@@ -626,30 +404,9 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ClusterPrincipalAssignmentListResult>> ListAsync(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -676,30 +433,9 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="clusterName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ClusterPrincipalAssignmentListResult> List(string subscriptionId, string resourceGroupName, string clusterName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (clusterName == null)
-            {
-                throw new ArgumentNullException(nameof(clusterName));
-            }
-            if (clusterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(clusterName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(clusterName, nameof(clusterName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, clusterName);
             _pipeline.Send(message, cancellationToken);

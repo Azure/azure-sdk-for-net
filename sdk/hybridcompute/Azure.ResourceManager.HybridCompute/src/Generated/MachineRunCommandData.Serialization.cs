@@ -24,11 +24,11 @@ namespace Azure.ResourceManager.HybridCompute
             var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -56,87 +56,87 @@ namespace Azure.ResourceManager.HybridCompute
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<MachineRunCommandScriptSource>(Source, options);
             }
-            if (!(Parameters is ChangeTrackingList<RunCommandInputParameter> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ProtectedParameters is ChangeTrackingList<RunCommandInputParameter> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(ProtectedParameters))
             {
                 writer.WritePropertyName("protectedParameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in ProtectedParameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RunCommandInputParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (AsyncExecution.HasValue)
+            if (Optional.IsDefined(AsyncExecution))
             {
                 writer.WritePropertyName("asyncExecution"u8);
                 writer.WriteBooleanValue(AsyncExecution.Value);
             }
-            if (RunAsUser != null)
+            if (Optional.IsDefined(RunAsUser))
             {
                 writer.WritePropertyName("runAsUser"u8);
                 writer.WriteStringValue(RunAsUser);
             }
-            if (RunAsPassword != null)
+            if (Optional.IsDefined(RunAsPassword))
             {
                 writer.WritePropertyName("runAsPassword"u8);
                 writer.WriteStringValue(RunAsPassword);
             }
-            if (TimeoutInSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutInSeconds))
             {
                 writer.WritePropertyName("timeoutInSeconds"u8);
                 writer.WriteNumberValue(TimeoutInSeconds.Value);
             }
-            if (OutputBlobUri != null)
+            if (Optional.IsDefined(OutputBlobUri))
             {
                 writer.WritePropertyName("outputBlobUri"u8);
                 writer.WriteStringValue(OutputBlobUri.AbsoluteUri);
             }
-            if (ErrorBlobUri != null)
+            if (Optional.IsDefined(ErrorBlobUri))
             {
                 writer.WritePropertyName("errorBlobUri"u8);
                 writer.WriteStringValue(ErrorBlobUri.AbsoluteUri);
             }
-            if (OutputBlobManagedIdentity != null)
+            if (Optional.IsDefined(OutputBlobManagedIdentity))
             {
                 writer.WritePropertyName("outputBlobManagedIdentity"u8);
-                writer.WriteObjectValue(OutputBlobManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(OutputBlobManagedIdentity, options);
             }
-            if (ErrorBlobManagedIdentity != null)
+            if (Optional.IsDefined(ErrorBlobManagedIdentity))
             {
                 writer.WritePropertyName("errorBlobManagedIdentity"u8);
-                writer.WriteObjectValue(ErrorBlobManagedIdentity);
+                writer.WriteObjectValue<RunCommandManagedIdentity>(ErrorBlobManagedIdentity, options);
             }
-            if (options.Format != "W" && ProvisioningState != null)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState);
             }
-            if (options.Format != "W" && InstanceView != null)
+            if (options.Format != "W" && Optional.IsDefined(InstanceView))
             {
                 writer.WritePropertyName("instanceView"u8);
-                writer.WriteObjectValue(InstanceView);
+                writer.WriteObjectValue<MachineRunCommandInstanceView>(InstanceView, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -162,7 +162,7 @@ namespace Azure.ResourceManager.HybridCompute
             var format = options.Format == "W" ? ((IPersistableModel<MachineRunCommandData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -408,7 +408,7 @@ namespace Azure.ResourceManager.HybridCompute
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -424,7 +424,7 @@ namespace Azure.ResourceManager.HybridCompute
                         return DeserializeMachineRunCommandData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineRunCommandData)} does not support reading '{options.Format}' format.");
             }
         }
 

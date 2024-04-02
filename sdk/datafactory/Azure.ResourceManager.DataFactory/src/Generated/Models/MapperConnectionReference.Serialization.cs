@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperConnectionReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperConnectionReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperConnectionReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ConnectionName != null)
+            if (Optional.IsDefined(ConnectionName))
             {
                 writer.WritePropertyName("connectionName"u8);
                 writer.WriteStringValue(ConnectionName);
             }
-            if (ConnectionType.HasValue)
+            if (Optional.IsDefined(ConnectionType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ConnectionType.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<MapperConnectionReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MapperConnectionReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MapperConnectionReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MapperConnectionReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperConnectionReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeMapperConnectionReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MapperConnectionReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MapperConnectionReference)} does not support reading '{options.Format}' format.");
             }
         }
 

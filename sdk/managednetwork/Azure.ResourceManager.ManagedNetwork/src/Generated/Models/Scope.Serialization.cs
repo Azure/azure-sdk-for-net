@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<Scope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Scope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Scope)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ManagementGroups is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ManagementGroups))
             {
                 writer.WritePropertyName("managementGroups"u8);
                 writer.WriteStartArray();
@@ -37,7 +37,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Subscriptions is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Subscriptions))
             {
                 writer.WritePropertyName("subscriptions"u8);
                 writer.WriteStartArray();
@@ -47,7 +47,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(VirtualNetworks is ChangeTrackingList<WritableSubResource> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(VirtualNetworks))
             {
                 writer.WritePropertyName("virtualNetworks"u8);
                 writer.WriteStartArray();
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(Subnets is ChangeTrackingList<WritableSubResource> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Subnets))
             {
                 writer.WritePropertyName("subnets"u8);
                 writer.WriteStartArray();
@@ -90,7 +90,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<Scope>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Scope)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Scope)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -187,7 +187,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Scope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Scope)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -203,7 +203,7 @@ namespace Azure.ResourceManager.ManagedNetwork.Models
                         return DeserializeScope(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Scope)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Scope)} does not support reading '{options.Format}' format.");
             }
         }
 

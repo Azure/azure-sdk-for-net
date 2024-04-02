@@ -22,53 +22,53 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementBackendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Title != null)
+            if (Optional.IsDefined(Title))
             {
                 writer.WritePropertyName("title"u8);
                 writer.WriteStringValue(Title);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (ResourceUri != null)
+            if (Optional.IsDefined(ResourceUri))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceUri.AbsoluteUri);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<BackendProperties>(Properties, options);
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<BackendCredentialsContract>(Credentials, options);
             }
-            if (Proxy != null)
+            if (Optional.IsDefined(Proxy))
             {
                 writer.WritePropertyName("proxy"u8);
-                writer.WriteObjectValue(Proxy);
+                writer.WriteObjectValue<BackendProxyContract>(Proxy, options);
             }
-            if (Tls != null)
+            if (Optional.IsDefined(Tls))
             {
                 writer.WritePropertyName("tls"u8);
-                writer.WriteObjectValue(Tls);
+                writer.WriteObjectValue<BackendTlsProperties>(Tls, options);
             }
-            if (Uri != null)
+            if (Optional.IsDefined(Uri))
             {
                 writer.WritePropertyName("url"u8);
                 writer.WriteStringValue(Uri.AbsoluteUri);
             }
-            if (Protocol.HasValue)
+            if (Optional.IsDefined(Protocol))
             {
                 writer.WritePropertyName("protocol"u8);
                 writer.WriteStringValue(Protocol.Value.ToString());
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementBackendPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -238,7 +238,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -254,7 +254,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeApiManagementBackendPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementBackendPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

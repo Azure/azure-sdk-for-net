@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobCreateOrUpdateContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Runbook != null)
+            if (Optional.IsDefined(Runbook))
             {
                 writer.WritePropertyName("runbook"u8);
-                writer.WriteObjectValue(Runbook);
+                writer.WriteObjectValue<RunbookAssociationProperty>(Runbook, options);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
@@ -44,7 +44,7 @@ namespace Azure.ResourceManager.Automation.Models
                 }
                 writer.WriteEndObject();
             }
-            if (RunOn != null)
+            if (Optional.IsDefined(RunOn))
             {
                 writer.WritePropertyName("runOn"u8);
                 writer.WriteStringValue(RunOn);
@@ -73,7 +73,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationJobCreateOrUpdateContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationJobCreateOrUpdateContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationJobCreateOrUpdateContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobCreateOrUpdateContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -169,7 +169,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationJobCreateOrUpdateContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationJobCreateOrUpdateContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationJobCreateOrUpdateContent)} does not support reading '{options.Format}' format.");
             }
         }
 

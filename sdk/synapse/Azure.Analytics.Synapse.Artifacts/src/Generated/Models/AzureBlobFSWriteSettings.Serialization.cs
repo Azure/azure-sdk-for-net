@@ -19,27 +19,27 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (BlockSizeInMB != null)
+            if (Optional.IsDefined(BlockSizeInMB))
             {
                 writer.WritePropertyName("blockSizeInMB"u8);
-                writer.WriteObjectValue(BlockSizeInMB);
+                writer.WriteObjectValue<object>(BlockSizeInMB);
             }
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
-            if (MaxConcurrentConnections != null)
+            if (Optional.IsDefined(MaxConcurrentConnections))
             {
                 writer.WritePropertyName("maxConcurrentConnections"u8);
-                writer.WriteObjectValue(MaxConcurrentConnections);
+                writer.WriteObjectValue<object>(MaxConcurrentConnections);
             }
-            if (CopyBehavior != null)
+            if (Optional.IsDefined(CopyBehavior))
             {
                 writer.WritePropertyName("copyBehavior"u8);
-                writer.WriteObjectValue(CopyBehavior);
+                writer.WriteObjectValue<object>(CopyBehavior);
             }
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }
@@ -100,7 +100,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, AzureBlobFSWriteSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<AzureBlobFSWriteSettings>(model);
             }
             public override AzureBlobFSWriteSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

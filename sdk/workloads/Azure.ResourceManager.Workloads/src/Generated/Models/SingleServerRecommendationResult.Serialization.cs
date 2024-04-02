@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VmSku != null)
+            if (Optional.IsDefined(VmSku))
             {
                 writer.WritePropertyName("vmSku"u8);
                 writer.WriteStringValue(VmSku);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SingleServerRecommendationResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -121,7 +121,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSingleServerRecommendationResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SingleServerRecommendationResult)} does not support reading '{options.Format}' format.");
             }
         }
 

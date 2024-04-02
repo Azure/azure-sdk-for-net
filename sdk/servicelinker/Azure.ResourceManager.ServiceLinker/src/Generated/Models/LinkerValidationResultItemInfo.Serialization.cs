@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkerValidationResultItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("description");
                 }
             }
-            if (Result.HasValue)
+            if (Optional.IsDefined(Result))
             {
                 if (Result != null)
                 {
@@ -55,7 +55,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("result");
                 }
             }
-            if (ErrorMessage != null)
+            if (Optional.IsDefined(ErrorMessage))
             {
                 if (ErrorMessage != null)
                 {
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                     writer.WriteNull("errorMessage");
                 }
             }
-            if (ErrorCode != null)
+            if (Optional.IsDefined(ErrorCode))
             {
                 if (ErrorCode != null)
                 {
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
             var format = options.Format == "W" ? ((IPersistableModel<LinkerValidationResultItemInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.ServiceLinker.Models
                         return DeserializeLinkerValidationResultItemInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LinkerValidationResultItemInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

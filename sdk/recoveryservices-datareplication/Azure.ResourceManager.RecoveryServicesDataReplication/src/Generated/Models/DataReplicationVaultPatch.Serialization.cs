@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationVaultPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -38,10 +38,10 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
-                writer.WriteObjectValue(Properties);
+                writer.WriteObjectValue<DataReplicationVaultProperties>(Properties, options);
             }
             if (options.Format != "W")
             {
@@ -58,7 +58,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -86,7 +86,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataReplicationVaultPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.RecoveryServicesDataReplication.Models
                         return DeserializeDataReplicationVaultPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataReplicationVaultPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

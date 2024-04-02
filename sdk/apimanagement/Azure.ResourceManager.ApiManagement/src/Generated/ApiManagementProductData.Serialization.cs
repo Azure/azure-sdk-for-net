@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementProductData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementProductData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.ApiManagement
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (Terms != null)
+            if (Optional.IsDefined(Terms))
             {
                 writer.WritePropertyName("terms"u8);
                 writer.WriteStringValue(Terms);
             }
-            if (IsSubscriptionRequired.HasValue)
+            if (Optional.IsDefined(IsSubscriptionRequired))
             {
                 writer.WritePropertyName("subscriptionRequired"u8);
                 writer.WriteBooleanValue(IsSubscriptionRequired.Value);
             }
-            if (IsApprovalRequired.HasValue)
+            if (Optional.IsDefined(IsApprovalRequired))
             {
                 writer.WritePropertyName("approvalRequired"u8);
                 writer.WriteBooleanValue(IsApprovalRequired.Value);
             }
-            if (SubscriptionsLimit.HasValue)
+            if (Optional.IsDefined(SubscriptionsLimit))
             {
                 writer.WritePropertyName("subscriptionsLimit"u8);
                 writer.WriteNumberValue(SubscriptionsLimit.Value);
             }
-            if (State.HasValue)
+            if (Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToSerialString());
             }
-            if (DisplayName != null)
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.ApiManagement
             var format = options.Format == "W" ? ((IPersistableModel<ApiManagementProductData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ApiManagementProductData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ApiManagementProductData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.ApiManagement
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementProductData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementProductData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -272,7 +272,7 @@ namespace Azure.ResourceManager.ApiManagement
                         return DeserializeApiManagementProductData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ApiManagementProductData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ApiManagementProductData)} does not support reading '{options.Format}' format.");
             }
         }
 

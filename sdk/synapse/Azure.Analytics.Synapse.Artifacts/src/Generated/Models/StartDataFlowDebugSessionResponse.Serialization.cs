@@ -18,7 +18,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (JobVersion != null)
+            if (Optional.IsDefined(JobVersion))
             {
                 writer.WritePropertyName("jobVersion"u8);
                 writer.WriteStringValue(JobVersion);
@@ -48,7 +48,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, StartDataFlowDebugSessionResponse model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<StartDataFlowDebugSessionResponse>(model);
             }
             public override StartDataFlowDebugSessionResponse Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

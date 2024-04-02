@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,19 +22,19 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzedDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzedDocument)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzedDocument)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("docType"u8);
             writer.WriteStringValue(DocType);
-            if (!(BoundingRegions is ChangeTrackingList<BoundingRegion> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(BoundingRegions))
             {
                 writer.WritePropertyName("boundingRegions"u8);
                 writer.WriteStartArray();
                 foreach (var item in BoundingRegions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<BoundingRegion>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -43,17 +42,17 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
-            if (!(Fields is ChangeTrackingDictionary<string, DocumentField> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Fields))
             {
                 writer.WritePropertyName("fields"u8);
                 writer.WriteStartObject();
                 foreach (var item in Fields)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DocumentField>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
@@ -82,7 +81,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<AnalyzedDocument>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AnalyzedDocument)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AnalyzedDocument)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +177,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzedDocument)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzedDocument)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +193,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeAnalyzedDocument(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AnalyzedDocument)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AnalyzedDocument)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -212,7 +211,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<AnalyzedDocument>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

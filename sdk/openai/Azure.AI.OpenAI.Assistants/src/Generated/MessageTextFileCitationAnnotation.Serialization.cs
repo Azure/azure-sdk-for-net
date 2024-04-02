@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,12 +22,12 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<MessageTextFileCitationAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("file_citation"u8);
-            writer.WriteObjectValue(InternalDetails);
+            writer.WriteObjectValue<InternalMessageTextFileCitationDetails>(InternalDetails, options);
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(Type);
             writer.WritePropertyName("text"u8);
@@ -60,7 +59,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<MessageTextFileCitationAnnotation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -133,7 +132,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -149,7 +148,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeMessageTextFileCitationAnnotation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MessageTextFileCitationAnnotation)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -167,7 +166,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal override RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<MessageTextFileCitationAnnotation>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Compute.Models;
 using Azure.ResourceManager.Resources;
 
@@ -84,18 +82,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<CapacityReservationGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string capacityReservationGroupName, CapacityReservationGroupData data, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -143,18 +131,8 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<CapacityReservationGroupResource> CreateOrUpdate(WaitUntil waitUntil, string capacityReservationGroupName, CapacityReservationGroupData data, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -201,14 +179,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual async Task<Response<CapacityReservationGroupResource>> GetAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.Get");
             scope.Start();
@@ -254,14 +225,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual Response<CapacityReservationGroupResource> Get(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.Get");
             scope.Start();
@@ -369,14 +333,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.Exists");
             scope.Start();
@@ -420,14 +377,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.Exists");
             scope.Start();
@@ -471,14 +421,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<CapacityReservationGroupResource>> GetIfExistsAsync(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.GetIfExists");
             scope.Start();
@@ -524,14 +467,7 @@ namespace Azure.ResourceManager.Compute
         /// <exception cref="ArgumentNullException"> <paramref name="capacityReservationGroupName"/> is null. </exception>
         public virtual NullableResponse<CapacityReservationGroupResource> GetIfExists(string capacityReservationGroupName, CapacityReservationGroupInstanceViewType? expand = null, CancellationToken cancellationToken = default)
         {
-            if (capacityReservationGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(capacityReservationGroupName));
-            }
-            if (capacityReservationGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(capacityReservationGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(capacityReservationGroupName, nameof(capacityReservationGroupName));
 
             using var scope = _capacityReservationGroupClientDiagnostics.CreateScope("CapacityReservationGroupCollection.GetIfExists");
             scope.Start();

@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.AI.ContentSafety
 {
@@ -51,10 +50,7 @@ namespace Azure.AI.ContentSafety
         /// <exception cref="ArgumentNullException"> <paramref name="text"/> is null. </exception>
         public AnalyzeTextOptions(string text)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
+            Argument.AssertNotNull(text, nameof(text));
 
             Text = text;
             Categories = new ChangeTrackingList<TextCategory>();

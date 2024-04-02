@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Automanage.Models;
@@ -60,14 +59,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AutomanageBestPracticeData>> GetAsync(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (bestPracticeName == null)
-            {
-                throw new ArgumentNullException(nameof(bestPracticeName));
-            }
-            if (bestPracticeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bestPracticeName));
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
             using var message = CreateGetRequest(bestPracticeName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -94,14 +86,7 @@ namespace Azure.ResourceManager.Automanage
         /// <exception cref="ArgumentException"> <paramref name="bestPracticeName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AutomanageBestPracticeData> Get(string bestPracticeName, CancellationToken cancellationToken = default)
         {
-            if (bestPracticeName == null)
-            {
-                throw new ArgumentNullException(nameof(bestPracticeName));
-            }
-            if (bestPracticeName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(bestPracticeName));
-            }
+            Argument.AssertNotNullOrEmpty(bestPracticeName, nameof(bestPracticeName));
 
             using var message = CreateGetRequest(bestPracticeName);
             _pipeline.Send(message, cancellationToken);

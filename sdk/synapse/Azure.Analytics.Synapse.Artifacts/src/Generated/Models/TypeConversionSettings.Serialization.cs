@@ -18,35 +18,35 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (AllowDataTruncation != null)
+            if (Optional.IsDefined(AllowDataTruncation))
             {
                 writer.WritePropertyName("allowDataTruncation"u8);
-                writer.WriteObjectValue(AllowDataTruncation);
+                writer.WriteObjectValue<object>(AllowDataTruncation);
             }
-            if (TreatBooleanAsNumber != null)
+            if (Optional.IsDefined(TreatBooleanAsNumber))
             {
                 writer.WritePropertyName("treatBooleanAsNumber"u8);
-                writer.WriteObjectValue(TreatBooleanAsNumber);
+                writer.WriteObjectValue<object>(TreatBooleanAsNumber);
             }
-            if (DateTimeFormat != null)
+            if (Optional.IsDefined(DateTimeFormat))
             {
                 writer.WritePropertyName("dateTimeFormat"u8);
-                writer.WriteObjectValue(DateTimeFormat);
+                writer.WriteObjectValue<object>(DateTimeFormat);
             }
-            if (DateTimeOffsetFormat != null)
+            if (Optional.IsDefined(DateTimeOffsetFormat))
             {
                 writer.WritePropertyName("dateTimeOffsetFormat"u8);
-                writer.WriteObjectValue(DateTimeOffsetFormat);
+                writer.WriteObjectValue<object>(DateTimeOffsetFormat);
             }
-            if (TimeSpanFormat != null)
+            if (Optional.IsDefined(TimeSpanFormat))
             {
                 writer.WritePropertyName("timeSpanFormat"u8);
-                writer.WriteObjectValue(TimeSpanFormat);
+                writer.WriteObjectValue<object>(TimeSpanFormat);
             }
-            if (Culture != null)
+            if (Optional.IsDefined(Culture))
             {
                 writer.WritePropertyName("culture"u8);
-                writer.WriteObjectValue(Culture);
+                writer.WriteObjectValue<object>(Culture);
             }
             writer.WriteEndObject();
         }
@@ -133,7 +133,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, TypeConversionSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<TypeConversionSettings>(model);
             }
             public override TypeConversionSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

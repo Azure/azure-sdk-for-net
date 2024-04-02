@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkProvisionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SparkReady.HasValue)
+            if (Optional.IsDefined(SparkReady))
             {
                 writer.WritePropertyName("sparkReady"u8);
                 writer.WriteBooleanValue(SparkReady.Value);
             }
-            if (Status.HasValue)
+            if (Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedNetworkProvisionStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeManagedNetworkProvisionStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedNetworkProvisionStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

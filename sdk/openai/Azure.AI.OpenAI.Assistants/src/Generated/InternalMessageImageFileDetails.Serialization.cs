@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,12 +22,12 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<InternalMessageImageFileDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalMessageImageFileDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalMessageImageFileDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("file_id"u8);
-            writer.WriteObjectValue(InternalDetails);
+            writer.WriteStringValue(InternalDetails);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -52,7 +51,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<InternalMessageImageFileDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(InternalMessageImageFileDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(InternalMessageImageFileDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -67,14 +66,14 @@ namespace Azure.AI.OpenAI.Assistants
             {
                 return null;
             }
-            InternalMessageImageFileIdDetails fileId = default;
+            string fileId = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
             Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("file_id"u8))
                 {
-                    fileId = InternalMessageImageFileIdDetails.DeserializeInternalMessageImageFileIdDetails(property.Value, options);
+                    fileId = property.Value.GetString();
                     continue;
                 }
                 if (options.Format != "W")
@@ -95,7 +94,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(InternalMessageImageFileDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalMessageImageFileDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -111,7 +110,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeInternalMessageImageFileDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(InternalMessageImageFileDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(InternalMessageImageFileDetails)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -129,7 +128,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<InternalMessageImageFileDetails>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

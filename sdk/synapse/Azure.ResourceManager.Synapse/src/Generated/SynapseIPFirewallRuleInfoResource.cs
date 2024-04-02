@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Synapse
 {
@@ -281,10 +279,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual async Task<ArmOperation<SynapseIPFirewallRuleInfoResource>> UpdateAsync(WaitUntil waitUntil, SynapseIPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoResource.Update");
             scope.Start();
@@ -330,10 +325,7 @@ namespace Azure.ResourceManager.Synapse
         /// <exception cref="ArgumentNullException"> <paramref name="info"/> is null. </exception>
         public virtual ArmOperation<SynapseIPFirewallRuleInfoResource> Update(WaitUntil waitUntil, SynapseIPFirewallRuleInfoData info, CancellationToken cancellationToken = default)
         {
-            if (info == null)
-            {
-                throw new ArgumentNullException(nameof(info));
-            }
+            Argument.AssertNotNull(info, nameof(info));
 
             using var scope = _synapseIPFirewallRuleInfoIPFirewallRulesClientDiagnostics.CreateScope("SynapseIPFirewallRuleInfoResource.Update");
             scope.Start();

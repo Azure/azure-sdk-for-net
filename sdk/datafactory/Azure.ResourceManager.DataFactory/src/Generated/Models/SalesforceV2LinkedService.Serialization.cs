@@ -23,34 +23,34 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SalesforceV2LinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SalesforceV2LinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SalesforceV2LinkedService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(LinkedServiceType);
-            if (ConnectVia != null)
+            if (Optional.IsDefined(ConnectVia))
             {
                 writer.WritePropertyName("connectVia"u8);
-                writer.WriteObjectValue(ConnectVia);
+                writer.WriteObjectValue<IntegrationRuntimeReference>(ConnectVia, options);
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, EntityParameterSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EntityParameterSpecification>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (!(Annotations is ChangeTrackingList<BinaryData> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Annotations))
             {
                 writer.WritePropertyName("annotations"u8);
                 writer.WriteStartArray();
@@ -74,32 +74,32 @@ namespace Azure.ResourceManager.DataFactory.Models
             }
             writer.WritePropertyName("typeProperties"u8);
             writer.WriteStartObject();
-            if (EnvironmentUri != null)
+            if (Optional.IsDefined(EnvironmentUri))
             {
                 writer.WritePropertyName("environmentUrl"u8);
                 JsonSerializer.Serialize(writer, EnvironmentUri);
             }
-            if (AuthenticationType != null)
+            if (Optional.IsDefined(AuthenticationType))
             {
                 writer.WritePropertyName("authenticationType"u8);
                 JsonSerializer.Serialize(writer, AuthenticationType);
             }
-            if (ClientId != null)
+            if (Optional.IsDefined(ClientId))
             {
                 writer.WritePropertyName("clientId"u8);
                 JsonSerializer.Serialize(writer, ClientId);
             }
-            if (ClientSecret != null)
+            if (Optional.IsDefined(ClientSecret))
             {
                 writer.WritePropertyName("clientSecret"u8);
                 JsonSerializer.Serialize(writer, ClientSecret);
             }
-            if (ApiVersion != null)
+            if (Optional.IsDefined(ApiVersion))
             {
                 writer.WritePropertyName("apiVersion"u8);
                 JsonSerializer.Serialize(writer, ApiVersion);
             }
-            if (EncryptedCredential != null)
+            if (Optional.IsDefined(EncryptedCredential))
             {
                 writer.WritePropertyName("encryptedCredential"u8);
                 writer.WriteStringValue(EncryptedCredential);
@@ -125,7 +125,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<SalesforceV2LinkedService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SalesforceV2LinkedService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SalesforceV2LinkedService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -148,7 +148,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             DataFactoryElement<string> environmentUrl = default;
             DataFactoryElement<string> authenticationType = default;
             DataFactoryElement<string> clientId = default;
-            DataFactorySecretBaseDefinition clientSecret = default;
+            DataFactorySecret clientSecret = default;
             DataFactoryElement<string> apiVersion = default;
             string encryptedCredential = default;
             IDictionary<string, BinaryData> additionalProperties = default;
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                             {
                                 continue;
                             }
-                            clientSecret = JsonSerializer.Deserialize<DataFactorySecretBaseDefinition>(property0.Value.GetRawText());
+                            clientSecret = JsonSerializer.Deserialize<DataFactorySecret>(property0.Value.GetRawText());
                             continue;
                         }
                         if (property0.NameEquals("apiVersion"u8))
@@ -298,7 +298,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SalesforceV2LinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SalesforceV2LinkedService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -314,7 +314,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeSalesforceV2LinkedService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SalesforceV2LinkedService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SalesforceV2LinkedService)} does not support reading '{options.Format}' format.");
             }
         }
 

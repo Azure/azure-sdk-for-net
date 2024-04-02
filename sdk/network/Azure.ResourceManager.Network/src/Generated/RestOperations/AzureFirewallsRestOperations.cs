@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -66,30 +66,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, azureFirewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -113,30 +92,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, azureFirewallName);
             _pipeline.Send(message, cancellationToken);
@@ -180,30 +138,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureFirewallData>> GetAsync(string subscriptionId, string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureFirewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -232,30 +169,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureFirewallData> Get(string subscriptionId, string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, azureFirewallName);
             _pipeline.Send(message, cancellationToken);
@@ -293,7 +209,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<AzureFirewallData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -309,34 +225,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, azureFirewallName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -360,34 +252,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string azureFirewallName, AzureFirewallData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, azureFirewallName, data);
             _pipeline.Send(message, cancellationToken);
@@ -419,7 +287,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(networkTagsObject);
+            content.JsonWriter.WriteObjectValue<NetworkTagsObject>(networkTagsObject, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -435,34 +303,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> UpdateTagsAsync(string subscriptionId, string resourceGroupName, string azureFirewallName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
-            if (networkTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(networkTagsObject));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, azureFirewallName, networkTagsObject);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -486,34 +330,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response UpdateTags(string subscriptionId, string resourceGroupName, string azureFirewallName, NetworkTagsObject networkTagsObject, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
-            if (networkTagsObject == null)
-            {
-                throw new ArgumentNullException(nameof(networkTagsObject));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            Argument.AssertNotNull(networkTagsObject, nameof(networkTagsObject));
 
             using var message = CreateUpdateTagsRequest(subscriptionId, resourceGroupName, azureFirewallName, networkTagsObject);
             _pipeline.Send(message, cancellationToken);
@@ -554,22 +374,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureFirewallListResult>> ListAsync(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -595,22 +401,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureFirewallListResult> List(string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -652,14 +444,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureFirewallListResult>> ListAllAsync(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAllRequest(subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -684,14 +469,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureFirewallListResult> ListAll(string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAllRequest(subscriptionId);
             _pipeline.Send(message, cancellationToken);
@@ -739,30 +517,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> ListLearnedPrefixesAsync(string subscriptionId, string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 
             using var message = CreateListLearnedPrefixesRequest(subscriptionId, resourceGroupName, azureFirewallName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -785,30 +542,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response ListLearnedPrefixes(string subscriptionId, string resourceGroupName, string azureFirewallName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
 
             using var message = CreateListLearnedPrefixesRequest(subscriptionId, resourceGroupName, azureFirewallName);
             _pipeline.Send(message, cancellationToken);
@@ -841,7 +577,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content0 = new Utf8JsonRequestContent();
-            content0.JsonWriter.WriteObjectValue(content);
+            content0.JsonWriter.WriteObjectValue<FirewallPacketCaptureContent>(content, new ModelReaderWriterOptions("W"));
             request.Content = content0;
             _userAgent.Apply(message);
             return message;
@@ -857,34 +593,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> PacketCaptureAsync(string subscriptionId, string resourceGroupName, string azureFirewallName, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePacketCaptureRequest(subscriptionId, resourceGroupName, azureFirewallName, content);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -907,34 +619,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="azureFirewallName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response PacketCapture(string subscriptionId, string resourceGroupName, string azureFirewallName, FirewallPacketCaptureContent content, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (azureFirewallName == null)
-            {
-                throw new ArgumentNullException(nameof(azureFirewallName));
-            }
-            if (azureFirewallName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(azureFirewallName));
-            }
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(azureFirewallName, nameof(azureFirewallName));
+            Argument.AssertNotNull(content, nameof(content));
 
             using var message = CreatePacketCaptureRequest(subscriptionId, resourceGroupName, azureFirewallName, content);
             _pipeline.Send(message, cancellationToken);
@@ -970,26 +658,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureFirewallListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1016,26 +687,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> or <paramref name="resourceGroupName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureFirewallListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName);
             _pipeline.Send(message, cancellationToken);
@@ -1075,18 +729,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<AzureFirewallListResult>> ListAllNextPageAsync(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAllNextPageRequest(nextLink, subscriptionId);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -1112,18 +756,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<AzureFirewallListResult> ListAllNextPage(string nextLink, string subscriptionId, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
 
             using var message = CreateListAllNextPageRequest(nextLink, subscriptionId);
             _pipeline.Send(message, cancellationToken);

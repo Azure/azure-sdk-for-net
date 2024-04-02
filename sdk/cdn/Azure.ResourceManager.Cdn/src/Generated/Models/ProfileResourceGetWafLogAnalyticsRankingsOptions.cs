@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Cdn.Models
 {
@@ -24,14 +23,8 @@ namespace Azure.ResourceManager.Cdn.Models
         /// <exception cref="ArgumentNullException"> <paramref name="metrics"/> or <paramref name="rankings"/> is null. </exception>
         public ProfileResourceGetWafLogAnalyticsRankingsOptions(IEnumerable<WafMetric> metrics, DateTimeOffset dateTimeBegin, DateTimeOffset dateTimeEnd, int maxRanking, IEnumerable<WafRankingType> rankings)
         {
-            if (metrics == null)
-            {
-                throw new ArgumentNullException(nameof(metrics));
-            }
-            if (rankings == null)
-            {
-                throw new ArgumentNullException(nameof(rankings));
-            }
+            Argument.AssertNotNull(metrics, nameof(metrics));
+            Argument.AssertNotNull(rankings, nameof(rankings));
 
             Metrics = metrics.ToList();
             DateTimeBegin = dateTimeBegin;

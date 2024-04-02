@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterZoneList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterZoneList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterZoneList)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Zones is ChangeTrackingList<AvsClusterZone> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Zones))
             {
                 writer.WritePropertyName("zones"u8);
                 writer.WriteStartArray();
                 foreach (var item in Zones)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AvsClusterZone>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Avs.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClusterZoneList>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClusterZoneList)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClusterZoneList)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.Avs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClusterZoneList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterZoneList)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Avs.Models
                         return DeserializeClusterZoneList(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClusterZoneList)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClusterZoneList)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,9 +8,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
-using Azure.ResourceManager;
 using Azure.ResourceManager.MobileNetwork.Mocking;
 using Azure.ResourceManager.Resources;
 
@@ -53,10 +51,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileAttachedDataNetworkResource"/> object. </returns>
         public static MobileAttachedDataNetworkResource GetMobileAttachedDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileAttachedDataNetworkResource(id);
         }
@@ -75,10 +70,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileDataNetworkResource"/> object. </returns>
         public static MobileDataNetworkResource GetMobileDataNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileDataNetworkResource(id);
         }
@@ -97,10 +89,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkDiagnosticsPackageResource"/> object. </returns>
         public static MobileNetworkDiagnosticsPackageResource GetMobileNetworkDiagnosticsPackageResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkDiagnosticsPackageResource(id);
         }
@@ -119,10 +108,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkResource"/> object. </returns>
         public static MobileNetworkResource GetMobileNetworkResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkResource(id);
         }
@@ -141,10 +127,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkPacketCaptureResource"/> object. </returns>
         public static MobileNetworkPacketCaptureResource GetMobileNetworkPacketCaptureResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkPacketCaptureResource(id);
         }
@@ -163,10 +146,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="PacketCoreControlPlaneResource"/> object. </returns>
         public static PacketCoreControlPlaneResource GetPacketCoreControlPlaneResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetPacketCoreControlPlaneResource(id);
         }
@@ -185,10 +165,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="TenantPacketCoreControlPlaneVersionResource"/> object. </returns>
         public static TenantPacketCoreControlPlaneVersionResource GetTenantPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetTenantPacketCoreControlPlaneVersionResource(id);
         }
@@ -207,10 +184,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="SubscriptionPacketCoreControlPlaneVersionResource"/> object. </returns>
         public static SubscriptionPacketCoreControlPlaneVersionResource GetSubscriptionPacketCoreControlPlaneVersionResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetSubscriptionPacketCoreControlPlaneVersionResource(id);
         }
@@ -229,10 +203,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="PacketCoreDataPlaneResource"/> object. </returns>
         public static PacketCoreDataPlaneResource GetPacketCoreDataPlaneResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetPacketCoreDataPlaneResource(id);
         }
@@ -251,10 +222,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkServiceResource"/> object. </returns>
         public static MobileNetworkServiceResource GetMobileNetworkServiceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkServiceResource(id);
         }
@@ -273,10 +241,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSimResource"/> object. </returns>
         public static MobileNetworkSimResource GetMobileNetworkSimResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSimResource(id);
         }
@@ -295,10 +260,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSimGroupResource"/> object. </returns>
         public static MobileNetworkSimGroupResource GetMobileNetworkSimGroupResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSimGroupResource(id);
         }
@@ -317,10 +279,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSimPolicyResource"/> object. </returns>
         public static MobileNetworkSimPolicyResource GetMobileNetworkSimPolicyResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSimPolicyResource(id);
         }
@@ -339,10 +298,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSiteResource"/> object. </returns>
         public static MobileNetworkSiteResource GetMobileNetworkSiteResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSiteResource(id);
         }
@@ -361,12 +317,28 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> Returns a <see cref="MobileNetworkSliceResource"/> object. </returns>
         public static MobileNetworkSliceResource GetMobileNetworkSliceResource(this ArmClient client, ResourceIdentifier id)
         {
-            if (client == null)
-            {
-                throw new ArgumentNullException(nameof(client));
-            }
+            Argument.AssertNotNull(client, nameof(client));
 
             return GetMockableMobileNetworkArmClient(client).GetMobileNetworkSliceResource(id);
+        }
+
+        /// <summary>
+        /// Gets an object representing an <see cref="ExtendedUEInfoResource" /> along with the instance operations that can be performed on it but with no data.
+        /// You can use <see cref="ExtendedUEInfoResource.CreateResourceIdentifier" /> to create an <see cref="ExtendedUEInfoResource" /> <see cref="ResourceIdentifier" /> from its components.
+        /// <item>
+        /// <term>Mocking</term>
+        /// <description>To mock this method, please mock <see cref="MockableMobileNetworkArmClient.GetExtendedUEInfoResource(ResourceIdentifier)"/> instead.</description>
+        /// </item>
+        /// </summary>
+        /// <param name="client"> The <see cref="ArmClient" /> instance the method will execute against. </param>
+        /// <param name="id"> The resource ID of the resource to get. </param>
+        /// <exception cref="ArgumentNullException"> <paramref name="client"/> is null. </exception>
+        /// <returns> Returns a <see cref="ExtendedUEInfoResource"/> object. </returns>
+        public static ExtendedUEInfoResource GetExtendedUEInfoResource(this ArmClient client, ResourceIdentifier id)
+        {
+            Argument.AssertNotNull(client, nameof(client));
+
+            return GetMockableMobileNetworkArmClient(client).GetExtendedUEInfoResource(id);
         }
 
         /// <summary>
@@ -381,10 +353,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileNetworkResources and their operations over a MobileNetworkResource. </returns>
         public static MobileNetworkCollection GetMobileNetworks(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworks();
         }
@@ -402,7 +371,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -422,10 +391,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<MobileNetworkResource>> GetMobileNetworkAsync(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworkAsync(mobileNetworkName, cancellationToken).ConfigureAwait(false);
         }
@@ -443,7 +409,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -463,10 +429,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<MobileNetworkResource> GetMobileNetwork(this ResourceGroupResource resourceGroupResource, string mobileNetworkName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetwork(mobileNetworkName, cancellationToken);
         }
@@ -483,10 +446,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of PacketCoreControlPlaneResources and their operations over a PacketCoreControlPlaneResource. </returns>
         public static PacketCoreControlPlaneCollection GetPacketCoreControlPlanes(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetPacketCoreControlPlanes();
         }
@@ -504,7 +464,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -524,10 +484,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<PacketCoreControlPlaneResource>> GetPacketCoreControlPlaneAsync(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetPacketCoreControlPlaneAsync(packetCoreControlPlaneName, cancellationToken).ConfigureAwait(false);
         }
@@ -545,7 +502,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -565,10 +522,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<PacketCoreControlPlaneResource> GetPacketCoreControlPlane(this ResourceGroupResource resourceGroupResource, string packetCoreControlPlaneName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetPacketCoreControlPlane(packetCoreControlPlaneName, cancellationToken);
         }
@@ -585,10 +539,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of MobileNetworkSimGroupResources and their operations over a MobileNetworkSimGroupResource. </returns>
         public static MobileNetworkSimGroupCollection GetMobileNetworkSimGroups(this ResourceGroupResource resourceGroupResource)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworkSimGroups();
         }
@@ -606,7 +557,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -626,10 +577,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<MobileNetworkSimGroupResource>> GetMobileNetworkSimGroupAsync(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return await GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworkSimGroupAsync(simGroupName, cancellationToken).ConfigureAwait(false);
         }
@@ -647,7 +595,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -667,10 +615,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<MobileNetworkSimGroupResource> GetMobileNetworkSimGroup(this ResourceGroupResource resourceGroupResource, string simGroupName, CancellationToken cancellationToken = default)
         {
-            if (resourceGroupResource == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupResource));
-            }
+            Argument.AssertNotNull(resourceGroupResource, nameof(resourceGroupResource));
 
             return GetMockableMobileNetworkResourceGroupResource(resourceGroupResource).GetMobileNetworkSimGroup(simGroupName, cancellationToken);
         }
@@ -687,10 +632,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of SubscriptionPacketCoreControlPlaneVersionResources and their operations over a SubscriptionPacketCoreControlPlaneVersionResource. </returns>
         public static SubscriptionPacketCoreControlPlaneVersionCollection GetSubscriptionPacketCoreControlPlaneVersions(this SubscriptionResource subscriptionResource)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersions();
         }
@@ -708,7 +650,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -728,10 +670,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<SubscriptionPacketCoreControlPlaneVersionResource>> GetSubscriptionPacketCoreControlPlaneVersionAsync(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return await GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersionAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
@@ -749,7 +688,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -769,10 +708,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<SubscriptionPacketCoreControlPlaneVersionResource> GetSubscriptionPacketCoreControlPlaneVersion(this SubscriptionResource subscriptionResource, string versionName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetSubscriptionPacketCoreControlPlaneVersion(versionName, cancellationToken);
         }
@@ -790,7 +726,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -808,10 +744,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="MobileNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MobileNetworkResource> GetMobileNetworksAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetMobileNetworksAsync(cancellationToken);
         }
@@ -829,7 +762,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -847,10 +780,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="MobileNetworkResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MobileNetworkResource> GetMobileNetworks(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetMobileNetworks(cancellationToken);
         }
@@ -868,7 +798,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -886,10 +816,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="PacketCoreControlPlaneResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanesAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetPacketCoreControlPlanesAsync(cancellationToken);
         }
@@ -907,7 +834,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -925,10 +852,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="PacketCoreControlPlaneResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<PacketCoreControlPlaneResource> GetPacketCoreControlPlanes(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetPacketCoreControlPlanes(cancellationToken);
         }
@@ -946,7 +870,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -964,10 +888,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An async collection of <see cref="MobileNetworkSimGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static AsyncPageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroupsAsync(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetMobileNetworkSimGroupsAsync(cancellationToken);
         }
@@ -985,7 +906,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1003,10 +924,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> A collection of <see cref="MobileNetworkSimGroupResource"/> that may take multiple service requests to iterate over. </returns>
         public static Pageable<MobileNetworkSimGroupResource> GetMobileNetworkSimGroups(this SubscriptionResource subscriptionResource, CancellationToken cancellationToken = default)
         {
-            if (subscriptionResource == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionResource));
-            }
+            Argument.AssertNotNull(subscriptionResource, nameof(subscriptionResource));
 
             return GetMockableMobileNetworkSubscriptionResource(subscriptionResource).GetMobileNetworkSimGroups(cancellationToken);
         }
@@ -1023,10 +941,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <returns> An object representing collection of TenantPacketCoreControlPlaneVersionResources and their operations over a TenantPacketCoreControlPlaneVersionResource. </returns>
         public static TenantPacketCoreControlPlaneVersionCollection GetTenantPacketCoreControlPlaneVersions(this TenantResource tenantResource)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableMobileNetworkTenantResource(tenantResource).GetTenantPacketCoreControlPlaneVersions();
         }
@@ -1044,7 +959,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1064,10 +979,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static async Task<Response<TenantPacketCoreControlPlaneVersionResource>> GetTenantPacketCoreControlPlaneVersionAsync(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return await GetMockableMobileNetworkTenantResource(tenantResource).GetTenantPacketCoreControlPlaneVersionAsync(versionName, cancellationToken).ConfigureAwait(false);
         }
@@ -1085,7 +997,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// </item>
         /// <item>
         /// <term>Default Api Version</term>
-        /// <description>2023-09-01</description>
+        /// <description>2024-02-01</description>
         /// </item>
         /// <item>
         /// <term>Resource</term>
@@ -1105,10 +1017,7 @@ namespace Azure.ResourceManager.MobileNetwork
         [ForwardsClientCalls]
         public static Response<TenantPacketCoreControlPlaneVersionResource> GetTenantPacketCoreControlPlaneVersion(this TenantResource tenantResource, string versionName, CancellationToken cancellationToken = default)
         {
-            if (tenantResource == null)
-            {
-                throw new ArgumentNullException(nameof(tenantResource));
-            }
+            Argument.AssertNotNull(tenantResource, nameof(tenantResource));
 
             return GetMockableMobileNetworkTenantResource(tenantResource).GetTenantPacketCoreControlPlaneVersion(versionName, cancellationToken);
         }

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewKafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,44 +43,44 @@ namespace Azure.ResourceManager.Purview
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ConsumerGroup != null)
+            if (Optional.IsDefined(ConsumerGroup))
             {
                 writer.WritePropertyName("consumerGroup"u8);
                 writer.WriteStringValue(ConsumerGroup);
             }
-            if (Credentials != null)
+            if (Optional.IsDefined(Credentials))
             {
                 writer.WritePropertyName("credentials"u8);
-                writer.WriteObjectValue(Credentials);
+                writer.WriteObjectValue<PurviewCredentials>(Credentials, options);
             }
-            if (EventHubPartitionId != null)
+            if (Optional.IsDefined(EventHubPartitionId))
             {
                 writer.WritePropertyName("eventHubPartitionId"u8);
                 writer.WriteStringValue(EventHubPartitionId);
             }
-            if (EventHubResourceId != null)
+            if (Optional.IsDefined(EventHubResourceId))
             {
                 writer.WritePropertyName("eventHubResourceId"u8);
                 writer.WriteStringValue(EventHubResourceId);
             }
-            if (EventHubType.HasValue)
+            if (Optional.IsDefined(EventHubType))
             {
                 writer.WritePropertyName("eventHubType"u8);
                 writer.WriteStringValue(EventHubType.Value.ToString());
             }
-            if (EventStreamingState.HasValue)
+            if (Optional.IsDefined(EventStreamingState))
             {
                 writer.WritePropertyName("eventStreamingState"u8);
                 writer.WriteStringValue(EventStreamingState.Value.ToString());
             }
-            if (EventStreamingType.HasValue)
+            if (Optional.IsDefined(EventStreamingType))
             {
                 writer.WritePropertyName("eventStreamingType"u8);
                 writer.WriteStringValue(EventStreamingType.Value.ToString());
@@ -109,7 +109,7 @@ namespace Azure.ResourceManager.Purview
             var format = options.Format == "W" ? ((IPersistableModel<PurviewKafkaConfigurationData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -260,7 +260,7 @@ namespace Azure.ResourceManager.Purview
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -276,7 +276,7 @@ namespace Azure.ResourceManager.Purview
                         return DeserializePurviewKafkaConfigurationData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PurviewKafkaConfigurationData)} does not support reading '{options.Format}' format.");
             }
         }
 

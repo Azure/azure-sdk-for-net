@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SasKeyForLabel != null)
+            if (options.Format != "W" && Optional.IsDefined(SasKeyForLabel))
             {
                 writer.WritePropertyName("sasKeyForLabel"u8);
                 writer.WriteStringValue(SasKeyForLabel);
             }
-            if (options.Format != "W" && CarrierName != null)
+            if (options.Format != "W" && Optional.IsDefined(CarrierName))
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (options.Format != "W" && CarrierDisplayName != null)
+            if (options.Format != "W" && Optional.IsDefined(CarrierDisplayName))
             {
                 writer.WritePropertyName("carrierDisplayName"u8);
                 writer.WriteStringValue(CarrierDisplayName);
             }
-            if (options.Format != "W" && TrackingId != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
             }
-            if (options.Format != "W" && TrackingUri != null)
+            if (options.Format != "W" && Optional.IsDefined(TrackingUri))
             {
                 writer.WritePropertyName("trackingUrl"u8);
                 writer.WriteStringValue(TrackingUri.AbsoluteUri);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
             var format = options.Format == "W" ? ((IPersistableModel<ReverseShippingDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.EdgeOrder.Models
                         return DeserializeReverseShippingDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ReverseShippingDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

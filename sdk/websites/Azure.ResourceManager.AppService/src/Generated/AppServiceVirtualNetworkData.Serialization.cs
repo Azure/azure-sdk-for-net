@@ -8,6 +8,8 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 using Azure.ResourceManager.AppService.Models;
@@ -24,11 +26,11 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
@@ -48,49 +50,49 @@ namespace Azure.ResourceManager.AppService
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (VnetResourceId != null)
+            if (Optional.IsDefined(VnetResourceId))
             {
                 writer.WritePropertyName("vnetResourceId"u8);
                 writer.WriteStringValue(VnetResourceId);
             }
-            if (options.Format != "W" && CertThumbprintString != null)
+            if (options.Format != "W" && Optional.IsDefined(CertThumbprintString))
             {
                 writer.WritePropertyName("certThumbprint"u8);
                 writer.WriteStringValue(CertThumbprintString);
             }
-            if (CertBlob != null)
+            if (Optional.IsDefined(CertBlob))
             {
                 writer.WritePropertyName("certBlob"u8);
                 writer.WriteStringValue(CertBlob);
             }
-            if (options.Format != "W" && !(Routes is ChangeTrackingList<AppServiceVirtualNetworkRoute> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Routes))
             {
                 writer.WritePropertyName("routes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Routes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<AppServiceVirtualNetworkRoute>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && IsResyncRequired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsResyncRequired))
             {
                 writer.WritePropertyName("resyncRequired"u8);
                 writer.WriteBooleanValue(IsResyncRequired.Value);
             }
-            if (DnsServers != null)
+            if (Optional.IsDefined(DnsServers))
             {
                 writer.WritePropertyName("dnsServers"u8);
                 writer.WriteStringValue(DnsServers);
             }
-            if (IsSwift.HasValue)
+            if (Optional.IsDefined(IsSwift))
             {
                 writer.WritePropertyName("isSwift"u8);
                 writer.WriteBooleanValue(IsSwift.Value);
@@ -119,7 +121,7 @@ namespace Azure.ResourceManager.AppService
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -269,6 +271,228 @@ namespace Azure.ResourceManager.AppService
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Name), out propertyOverride);
+            if (Optional.IsDefined(Name) || hasPropertyOverride)
+            {
+                builder.Append("  name: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Name.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Name}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Name}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Kind), out propertyOverride);
+            if (Optional.IsDefined(Kind) || hasPropertyOverride)
+            {
+                builder.Append("  kind: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (Kind.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{Kind}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{Kind}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Id), out propertyOverride);
+            if (Optional.IsDefined(Id) || hasPropertyOverride)
+            {
+                builder.Append("  id: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{Id.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(SystemData), out propertyOverride);
+            if (Optional.IsDefined(SystemData) || hasPropertyOverride)
+            {
+                builder.Append("  systemData: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{SystemData.ToString()}'");
+                }
+            }
+
+            builder.Append("  properties:");
+            builder.AppendLine(" {");
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(VnetResourceId), out propertyOverride);
+            if (Optional.IsDefined(VnetResourceId) || hasPropertyOverride)
+            {
+                builder.Append("    vnetResourceId: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{VnetResourceId.ToString()}'");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertThumbprintString), out propertyOverride);
+            if (Optional.IsDefined(CertThumbprintString) || hasPropertyOverride)
+            {
+                builder.Append("    certThumbprint: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CertThumbprintString.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CertThumbprintString}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CertThumbprintString}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(CertBlob), out propertyOverride);
+            if (Optional.IsDefined(CertBlob) || hasPropertyOverride)
+            {
+                builder.Append("    certBlob: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (CertBlob.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{CertBlob}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{CertBlob}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(Routes), out propertyOverride);
+            if (Optional.IsCollectionDefined(Routes) || hasPropertyOverride)
+            {
+                if (Routes.Any() || hasPropertyOverride)
+                {
+                    builder.Append("    routes: ");
+                    if (hasPropertyOverride)
+                    {
+                        builder.AppendLine($"{propertyOverride}");
+                    }
+                    else
+                    {
+                        builder.AppendLine("[");
+                        foreach (var item in Routes)
+                        {
+                            BicepSerializationHelpers.AppendChildObject(builder, item, options, 6, true, "    routes: ");
+                        }
+                        builder.AppendLine("    ]");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsResyncRequired), out propertyOverride);
+            if (Optional.IsDefined(IsResyncRequired) || hasPropertyOverride)
+            {
+                builder.Append("    resyncRequired: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsResyncRequired.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(DnsServers), out propertyOverride);
+            if (Optional.IsDefined(DnsServers) || hasPropertyOverride)
+            {
+                builder.Append("    dnsServers: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    if (DnsServers.Contains(Environment.NewLine))
+                    {
+                        builder.AppendLine("'''");
+                        builder.AppendLine($"{DnsServers}'''");
+                    }
+                    else
+                    {
+                        builder.AppendLine($"'{DnsServers}'");
+                    }
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(IsSwift), out propertyOverride);
+            if (Optional.IsDefined(IsSwift) || hasPropertyOverride)
+            {
+                builder.Append("    isSwift: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    var boolValue = IsSwift.Value == true ? "true" : "false";
+                    builder.AppendLine($"{boolValue}");
+                }
+            }
+
+            builder.AppendLine("  }");
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<AppServiceVirtualNetworkData>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<AppServiceVirtualNetworkData>)this).GetFormatFromOptions(options) : options.Format;
@@ -277,8 +501,10 @@ namespace Azure.ResourceManager.AppService
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -294,7 +520,7 @@ namespace Azure.ResourceManager.AppService
                         return DeserializeAppServiceVirtualNetworkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AppServiceVirtualNetworkData)} does not support reading '{options.Format}' format.");
             }
         }
 

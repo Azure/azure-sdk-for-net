@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnLinkProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LinkProviderName != null)
+            if (Optional.IsDefined(LinkProviderName))
             {
                 writer.WritePropertyName("linkProviderName"u8);
                 writer.WriteStringValue(LinkProviderName);
             }
-            if (LinkSpeedInMbps.HasValue)
+            if (Optional.IsDefined(LinkSpeedInMbps))
             {
                 writer.WritePropertyName("linkSpeedInMbps"u8);
                 writer.WriteNumberValue(LinkSpeedInMbps.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<VpnLinkProviderProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeVpnLinkProviderProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnLinkProviderProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

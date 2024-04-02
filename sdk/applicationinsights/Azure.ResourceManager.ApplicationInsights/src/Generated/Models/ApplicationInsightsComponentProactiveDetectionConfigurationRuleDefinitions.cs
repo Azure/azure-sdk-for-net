@@ -74,20 +74,28 @@ namespace Azure.ResourceManager.ApplicationInsights.Models
         }
 
         /// <summary> The rule name. </summary>
+        [WirePath("Name")]
         public string Name { get; set; }
         /// <summary> The rule name as it is displayed in UI. </summary>
+        [WirePath("DisplayName")]
         public string DisplayName { get; set; }
         /// <summary> The rule description. </summary>
+        [WirePath("Description")]
         public string Description { get; set; }
         /// <summary> URL which displays additional info about the proactive detection rule. </summary>
+        [WirePath("HelpUrl")]
         public Uri HelpUri { get; set; }
         /// <summary> A flag indicating whether the rule is hidden (from the UI). </summary>
+        [WirePath("IsHidden")]
         public bool? IsHidden { get; set; }
         /// <summary> A flag indicating whether the rule is enabled by default. </summary>
+        [WirePath("IsEnabledByDefault")]
         public bool? IsEnabledByDefault { get; set; }
         /// <summary> A flag indicating whether the rule is in preview. </summary>
+        [WirePath("IsInPreview")]
         public bool? IsInPreview { get; set; }
         /// <summary> A flag indicating whether email notifications are supported for detections for this rule. </summary>
+        [WirePath("SupportsEmailNotifications")]
         public bool? SupportsEmailNotifications { get; set; }
     }
 }

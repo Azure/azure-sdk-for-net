@@ -22,23 +22,23 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("type"u8);
             writer.WriteStringValue(RunRequestType);
-            if (IsArchiveEnabled.HasValue)
+            if (Optional.IsDefined(IsArchiveEnabled))
             {
                 writer.WritePropertyName("isArchiveEnabled"u8);
                 writer.WriteBooleanValue(IsArchiveEnabled.Value);
             }
-            if (AgentPoolName != null)
+            if (Optional.IsDefined(AgentPoolName))
             {
                 writer.WritePropertyName("agentPoolName"u8);
                 writer.WriteStringValue(AgentPoolName);
             }
-            if (LogTemplate != null)
+            if (Optional.IsDefined(LogTemplate))
             {
                 writer.WritePropertyName("logTemplate"u8);
                 writer.WriteStringValue(LogTemplate);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContainerRegistryRunContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.ContainerRegistry.Models
                         return DeserializeContainerRegistryRunContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContainerRegistryRunContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,29 +22,29 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FirstPlayExpiration.HasValue)
+            if (Optional.IsDefined(FirstPlayExpiration))
             {
                 writer.WritePropertyName("firstPlayExpiration"u8);
                 writer.WriteStringValue(FirstPlayExpiration.Value, "P");
             }
-            if (ScmsRestriction.HasValue)
+            if (Optional.IsDefined(ScmsRestriction))
             {
                 writer.WritePropertyName("scmsRestriction"u8);
                 writer.WriteNumberValue(ScmsRestriction.Value);
             }
-            if (AgcAndColorStripeRestriction.HasValue)
+            if (Optional.IsDefined(AgcAndColorStripeRestriction))
             {
                 writer.WritePropertyName("agcAndColorStripeRestriction"u8);
                 writer.WriteNumberValue(AgcAndColorStripeRestriction.Value);
             }
-            if (ExplicitAnalogTelevisionOutputRestriction != null)
+            if (Optional.IsDefined(ExplicitAnalogTelevisionOutputRestriction))
             {
                 writer.WritePropertyName("explicitAnalogTelevisionOutputRestriction"u8);
-                writer.WriteObjectValue(ExplicitAnalogTelevisionOutputRestriction);
+                writer.WriteObjectValue<ContentKeyPolicyPlayReadyExplicitAnalogTelevisionRestriction>(ExplicitAnalogTelevisionOutputRestriction, options);
             }
             writer.WritePropertyName("digitalVideoOnlyContentRestriction"u8);
             writer.WriteBooleanValue(HasDigitalVideoOnlyContentRestriction);
@@ -54,27 +54,27 @@ namespace Azure.ResourceManager.Media.Models
             writer.WriteBooleanValue(HasImageConstraintForAnalogComputerMonitorRestriction);
             writer.WritePropertyName("allowPassingVideoContentToUnknownOutput"u8);
             writer.WriteStringValue(AllowPassingVideoContentToUnknownOutput.ToString());
-            if (UncompressedDigitalVideoOutputProtectionLevel.HasValue)
+            if (Optional.IsDefined(UncompressedDigitalVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("uncompressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalVideoOutputProtectionLevel.Value);
             }
-            if (CompressedDigitalVideoOutputProtectionLevel.HasValue)
+            if (Optional.IsDefined(CompressedDigitalVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("compressedDigitalVideoOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalVideoOutputProtectionLevel.Value);
             }
-            if (AnalogVideoOutputProtectionLevel.HasValue)
+            if (Optional.IsDefined(AnalogVideoOutputProtectionLevel))
             {
                 writer.WritePropertyName("analogVideoOpl"u8);
                 writer.WriteNumberValue(AnalogVideoOutputProtectionLevel.Value);
             }
-            if (CompressedDigitalAudioOutputProtectionLevel.HasValue)
+            if (Optional.IsDefined(CompressedDigitalAudioOutputProtectionLevel))
             {
                 writer.WritePropertyName("compressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(CompressedDigitalAudioOutputProtectionLevel.Value);
             }
-            if (UncompressedDigitalAudioOutputProtectionLevel.HasValue)
+            if (Optional.IsDefined(UncompressedDigitalAudioOutputProtectionLevel))
             {
                 writer.WritePropertyName("uncompressedDigitalAudioOpl"u8);
                 writer.WriteNumberValue(UncompressedDigitalAudioOutputProtectionLevel.Value);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ContentKeyPolicyPlayReadyPlayRight>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -283,7 +283,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeContentKeyPolicyPlayReadyPlayRight(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ContentKeyPolicyPlayReadyPlayRight)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyIntrusionDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(SignatureOverrides is ChangeTrackingList<FirewallPolicyIntrusionDetectionSignatureSpecification> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SignatureOverrides))
             {
                 writer.WritePropertyName("signatureOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in SignatureOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallPolicyIntrusionDetectionSignatureSpecification>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(BypassTrafficSettings is ChangeTrackingList<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(BypassTrafficSettings))
             {
                 writer.WritePropertyName("bypassTrafficSettings"u8);
                 writer.WriteStartArray();
                 foreach (var item in BypassTrafficSettings)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<FirewallPolicyIntrusionDetectionBypassTrafficSpecifications>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(PrivateRanges is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(PrivateRanges))
             {
                 writer.WritePropertyName("privateRanges"u8);
                 writer.WriteStartArray();
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPolicyIntrusionDetectionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeFirewallPolicyIntrusionDetectionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPolicyIntrusionDetectionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

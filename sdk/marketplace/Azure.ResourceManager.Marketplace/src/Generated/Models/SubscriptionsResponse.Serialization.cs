@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && !(Value is ChangeTrackingList<MarketplaceSubscription> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<MarketplaceSubscription>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SkipToken != null)
+            if (options.Format != "W" && Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
             }
-            if (options.Format != "W" && Count.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Count))
             {
                 writer.WritePropertyName("count"u8);
                 writer.WriteNumberValue(Count.Value);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Marketplace.Models
             var format = options.Format == "W" ? ((IPersistableModel<SubscriptionsResponse>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -137,7 +137,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -153,7 +153,7 @@ namespace Azure.ResourceManager.Marketplace.Models
                         return DeserializeSubscriptionsResponse(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SubscriptionsResponse)} does not support reading '{options.Format}' format.");
             }
         }
 

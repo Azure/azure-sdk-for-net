@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketDimensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaBucketDimensions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeLoadTestingQuotaBucketDimensions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaBucketDimensions)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -26,8 +26,8 @@ public partial class ChatCompletions
         string id = default;
         DateTimeOffset created = default;
         IReadOnlyList<ChatChoice> choices = default;
-        Optional<IReadOnlyList<ContentFilterResultsForPrompt>> promptFilterResults = default;
-        Optional<string> systemFingerprint = default;
+        IReadOnlyList<ContentFilterResultsForPrompt> promptFilterResults = default;
+        string systemFingerprint = default;
         CompletionsUsage usage = default;
         IDictionary<string, BinaryData> serializedAdditionalRawData = default;
         Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
@@ -84,6 +84,6 @@ public partial class ChatCompletions
             }
         }
         serializedAdditionalRawData = additionalPropertiesDictionary;
-        return new ChatCompletions(id, created, choices, Optional.ToList(promptFilterResults), systemFingerprint.Value, usage, serializedAdditionalRawData);
+        return new ChatCompletions(id, created, choices, promptFilterResults ?? new ChangeTrackingList<ContentFilterResultsForPrompt>(), systemFingerprint, usage, serializedAdditionalRawData);
     }
 }

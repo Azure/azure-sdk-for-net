@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.ResourceManager.Network.Models
 {
@@ -51,10 +50,7 @@ namespace Azure.ResourceManager.Network.Models
         /// <exception cref="ArgumentNullException"> <paramref name="outputBlobSasUri"/> is null. </exception>
         public GetVpnSitesConfigurationContent(Uri outputBlobSasUri)
         {
-            if (outputBlobSasUri == null)
-            {
-                throw new ArgumentNullException(nameof(outputBlobSasUri));
-            }
+            Argument.AssertNotNull(outputBlobSasUri, nameof(outputBlobSasUri));
 
             VpnSites = new ChangeTrackingList<string>();
             OutputBlobSasUri = outputBlobSasUri;

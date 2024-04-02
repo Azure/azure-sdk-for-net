@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageCarrierInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CarrierName != null)
+            if (Optional.IsDefined(CarrierName))
             {
                 writer.WritePropertyName("carrierName"u8);
                 writer.WriteStringValue(CarrierName);
             }
-            if (TrackingId != null)
+            if (Optional.IsDefined(TrackingId))
             {
                 writer.WritePropertyName("trackingId"u8);
                 writer.WriteStringValue(TrackingId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<PackageCarrierInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializePackageCarrierInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PackageCarrierInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

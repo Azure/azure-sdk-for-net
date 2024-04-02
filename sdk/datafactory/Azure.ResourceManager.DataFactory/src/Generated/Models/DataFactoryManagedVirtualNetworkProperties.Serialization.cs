@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && VnetId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(VnetId))
             {
                 writer.WritePropertyName("vNetId"u8);
                 writer.WriteStringValue(VnetId.Value);
             }
-            if (options.Format != "W" && Alias != null)
+            if (options.Format != "W" && Optional.IsDefined(Alias))
             {
                 writer.WritePropertyName("alias"u8);
                 writer.WriteStringValue(Alias);
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataFactoryManagedVirtualNetworkProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -106,7 +106,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeDataFactoryManagedVirtualNetworkProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataFactoryManagedVirtualNetworkProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

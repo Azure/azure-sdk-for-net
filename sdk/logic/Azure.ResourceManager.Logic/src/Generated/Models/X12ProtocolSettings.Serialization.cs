@@ -22,51 +22,51 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("validationSettings"u8);
-            writer.WriteObjectValue(ValidationSettings);
+            writer.WriteObjectValue<X12ValidationSettings>(ValidationSettings, options);
             writer.WritePropertyName("framingSettings"u8);
-            writer.WriteObjectValue(FramingSettings);
+            writer.WriteObjectValue<X12FramingSettings>(FramingSettings, options);
             writer.WritePropertyName("envelopeSettings"u8);
-            writer.WriteObjectValue(EnvelopeSettings);
+            writer.WriteObjectValue<X12EnvelopeSettings>(EnvelopeSettings, options);
             writer.WritePropertyName("acknowledgementSettings"u8);
-            writer.WriteObjectValue(AcknowledgementSettings);
+            writer.WriteObjectValue<X12AcknowledgementSettings>(AcknowledgementSettings, options);
             writer.WritePropertyName("messageFilter"u8);
-            writer.WriteObjectValue(MessageFilter);
+            writer.WriteObjectValue<X12MessageFilter>(MessageFilter, options);
             writer.WritePropertyName("securitySettings"u8);
-            writer.WriteObjectValue(SecuritySettings);
+            writer.WriteObjectValue<X12SecuritySettings>(SecuritySettings, options);
             writer.WritePropertyName("processingSettings"u8);
-            writer.WriteObjectValue(ProcessingSettings);
-            if (!(EnvelopeOverrides is ChangeTrackingList<X12EnvelopeOverride> collection && collection.IsUndefined))
+            writer.WriteObjectValue<X12ProcessingSettings>(ProcessingSettings, options);
+            if (Optional.IsCollectionDefined(EnvelopeOverrides))
             {
                 writer.WritePropertyName("envelopeOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in EnvelopeOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<X12EnvelopeOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ValidationOverrides is ChangeTrackingList<X12ValidationOverride> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ValidationOverrides))
             {
                 writer.WritePropertyName("validationOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in ValidationOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<X12ValidationOverride>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(MessageFilterList is ChangeTrackingList<X12MessageIdentifier> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(MessageFilterList))
             {
                 writer.WritePropertyName("messageFilterList"u8);
                 writer.WriteStartArray();
                 foreach (var item in MessageFilterList)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<X12MessageIdentifier>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -74,16 +74,16 @@ namespace Azure.ResourceManager.Logic.Models
             writer.WriteStartArray();
             foreach (var item in SchemaReferences)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<X12SchemaReference>(item, options);
             }
             writer.WriteEndArray();
-            if (!(X12DelimiterOverrides is ChangeTrackingList<X12DelimiterOverrides> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(X12DelimiterOverrides))
             {
                 writer.WritePropertyName("x12DelimiterOverrides"u8);
                 writer.WriteStartArray();
                 foreach (var item in X12DelimiterOverrides)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<X12DelimiterOverrides>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -110,7 +110,7 @@ namespace Azure.ResourceManager.Logic.Models
             var format = options.Format == "W" ? ((IPersistableModel<X12ProtocolSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Logic.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -289,7 +289,7 @@ namespace Azure.ResourceManager.Logic.Models
                         return DeserializeX12ProtocolSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(X12ProtocolSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

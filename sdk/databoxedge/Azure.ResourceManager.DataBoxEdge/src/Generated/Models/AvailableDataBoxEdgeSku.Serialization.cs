@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ResourceType != null)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && Name.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name.Value.ToString());
             }
-            if (options.Format != "W" && Kind != null)
+            if (options.Format != "W" && Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (options.Format != "W" && Tier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Tier))
             {
                 writer.WritePropertyName("tier"u8);
                 writer.WriteStringValue(Tier.Value.ToString());
             }
-            if (options.Format != "W" && Size != null)
+            if (options.Format != "W" && Optional.IsDefined(Size))
             {
                 writer.WritePropertyName("size"u8);
                 writer.WriteStringValue(Size);
             }
-            if (options.Format != "W" && Family != null)
+            if (options.Format != "W" && Optional.IsDefined(Family))
             {
                 writer.WritePropertyName("family"u8);
                 writer.WriteStringValue(Family);
             }
-            if (options.Format != "W" && !(Locations is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Locations))
             {
                 writer.WritePropertyName("locations"u8);
                 writer.WriteStartArray();
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(ApiVersions is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ApiVersions))
             {
                 writer.WritePropertyName("apiVersions"u8);
                 writer.WriteStartArray();
@@ -76,42 +76,42 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(LocationInfo is ChangeTrackingList<DataBoxEdgeSkuLocationInfo> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(LocationInfo))
             {
                 writer.WritePropertyName("locationInfo"u8);
                 writer.WriteStartArray();
                 foreach (var item in LocationInfo)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeSkuLocationInfo>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Costs is ChangeTrackingList<DataBoxEdgeSkuCost> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Costs))
             {
                 writer.WritePropertyName("costs"u8);
                 writer.WriteStartArray();
                 foreach (var item in Costs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeSkuCost>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && SignupOption.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SignupOption))
             {
                 writer.WritePropertyName("signupOption"u8);
                 writer.WriteStringValue(SignupOption.Value.ToString());
             }
-            if (options.Format != "W" && Version.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version.Value.ToString());
             }
-            if (options.Format != "W" && Availability.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Availability))
             {
                 writer.WritePropertyName("availability"u8);
                 writer.WriteStringValue(Availability.Value.ToString());
             }
-            if (options.Format != "W" && !(ShipmentTypes is ChangeTrackingList<DataBoxEdgeShipmentType> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(ShipmentTypes))
             {
                 writer.WritePropertyName("shipmentTypes"u8);
                 writer.WriteStartArray();
@@ -121,13 +121,13 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Capabilities is ChangeTrackingList<DataBoxEdgeSkuCapability> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Capabilities))
             {
                 writer.WritePropertyName("capabilities"u8);
                 writer.WriteStartArray();
                 foreach (var item in Capabilities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxEdgeSkuCapability>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<AvailableDataBoxEdgeSku>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -371,7 +371,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -387,7 +387,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeAvailableDataBoxEdgeSku(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AvailableDataBoxEdgeSku)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,12 +22,12 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiSubnetIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("privateIpAddress"u8);
-            writer.WriteObjectValue(PrivateIPAddress);
+            writer.WriteObjectValue<AvailabilityGroupListenerPrivateIPAddress>(PrivateIPAddress, options);
             writer.WritePropertyName("sqlVirtualMachineInstance"u8);
             writer.WriteStringValue(SqlVmInstance);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -53,7 +53,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<MultiSubnetIPConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -102,7 +102,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeMultiSubnetIPConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MultiSubnetIPConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

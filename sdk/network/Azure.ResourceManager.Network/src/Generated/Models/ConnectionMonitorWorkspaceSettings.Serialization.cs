@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorWorkspaceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (WorkspaceResourceId != null)
+            if (Optional.IsDefined(WorkspaceResourceId))
             {
                 writer.WritePropertyName("workspaceResourceId"u8);
                 writer.WriteStringValue(WorkspaceResourceId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorWorkspaceSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorWorkspaceSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorWorkspaceSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

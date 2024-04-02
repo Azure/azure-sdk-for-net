@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -44,33 +44,33 @@ namespace Azure.ResourceManager.Automation.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsLogVerboseEnabled.HasValue)
+            if (Optional.IsDefined(IsLogVerboseEnabled))
             {
                 writer.WritePropertyName("logVerbose"u8);
                 writer.WriteBooleanValue(IsLogVerboseEnabled.Value);
             }
-            if (IsLogProgressEnabled.HasValue)
+            if (Optional.IsDefined(IsLogProgressEnabled))
             {
                 writer.WritePropertyName("logProgress"u8);
                 writer.WriteBooleanValue(IsLogProgressEnabled.Value);
             }
-            if (Source != null)
+            if (Optional.IsDefined(Source))
             {
                 writer.WritePropertyName("source"u8);
-                writer.WriteObjectValue(Source);
+                writer.WriteObjectValue<AutomationContentSource>(Source, options);
             }
-            if (!(Parameters is ChangeTrackingDictionary<string, DscConfigurationParameterDefinition> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartObject();
                 foreach (var item in Parameters)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<DscConfigurationParameterDefinition>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscConfigurationPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscConfigurationPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscConfigurationPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscConfigurationPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscConfigurationPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscConfigurationPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

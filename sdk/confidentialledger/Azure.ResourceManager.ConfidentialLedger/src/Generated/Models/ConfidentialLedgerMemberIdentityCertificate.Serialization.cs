@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Certificate != null)
+            if (Optional.IsDefined(Certificate))
             {
                 writer.WritePropertyName("certificate"u8);
                 writer.WriteStringValue(Certificate);
             }
-            if (Encryptionkey != null)
+            if (Optional.IsDefined(Encryptionkey))
             {
                 writer.WritePropertyName("encryptionkey"u8);
                 writer.WriteStringValue(Encryptionkey);
             }
-            if (Tags != null)
+            if (Optional.IsDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
 #if NET6_0_OR_GREATER
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfidentialLedgerMemberIdentityCertificate>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.ConfidentialLedger.Models
                         return DeserializeConfidentialLedgerMemberIdentityCertificate(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfidentialLedgerMemberIdentityCertificate)} does not support reading '{options.Format}' format.");
             }
         }
 

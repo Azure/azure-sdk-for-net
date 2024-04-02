@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeySetUserStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AzureUserName != null)
+            if (options.Format != "W" && Optional.IsDefined(AzureUserName))
             {
                 writer.WritePropertyName("azureUserName"u8);
                 writer.WriteStringValue(AzureUserName);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
             }
-            if (options.Format != "W" && StatusMessage != null)
+            if (options.Format != "W" && Optional.IsDefined(StatusMessage))
             {
                 writer.WritePropertyName("statusMessage"u8);
                 writer.WriteStringValue(StatusMessage);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<KeySetUserStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeKeySetUserStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KeySetUserStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

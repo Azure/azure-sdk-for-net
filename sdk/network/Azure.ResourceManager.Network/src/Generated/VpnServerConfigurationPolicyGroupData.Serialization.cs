@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 using Azure.ResourceManager.Resources.Models;
@@ -25,53 +24,53 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigurationPolicyGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsDefault.HasValue)
+            if (Optional.IsDefined(IsDefault))
             {
                 writer.WritePropertyName("isDefault"u8);
                 writer.WriteBooleanValue(IsDefault.Value);
             }
-            if (Priority.HasValue)
+            if (Optional.IsDefined(Priority))
             {
                 writer.WritePropertyName("priority"u8);
                 writer.WriteNumberValue(Priority.Value);
             }
-            if (!(PolicyMembers is ChangeTrackingList<VpnServerConfigurationPolicyGroupMember> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PolicyMembers))
             {
                 writer.WritePropertyName("policyMembers"u8);
                 writer.WriteStartArray();
                 foreach (var item in PolicyMembers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VpnServerConfigurationPolicyGroupMember>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(P2SConnectionConfigurations is ChangeTrackingList<WritableSubResource> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(P2SConnectionConfigurations))
             {
                 writer.WritePropertyName("p2SConnectionConfigurations"u8);
                 writer.WriteStartArray();
@@ -81,7 +80,7 @@ namespace Azure.ResourceManager.Network
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -110,7 +109,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<VpnServerConfigurationPolicyGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -265,7 +264,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -281,7 +280,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeVpnServerConfigurationPolicyGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VpnServerConfigurationPolicyGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

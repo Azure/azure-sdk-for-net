@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Confidence.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Confidence))
             {
                 writer.WritePropertyName("confidence"u8);
                 writer.WriteNumberValue(Confidence.Value);
             }
-            if (options.Format != "W" && ProviderName != null)
+            if (options.Format != "W" && Optional.IsDefined(ProviderName))
             {
                 writer.WritePropertyName("providerName"u8);
                 writer.WriteStringValue(ProviderName);
             }
-            if (options.Format != "W" && ReportLink != null)
+            if (options.Format != "W" && Optional.IsDefined(ReportLink))
             {
                 writer.WritePropertyName("reportLink"u8);
                 writer.WriteStringValue(ReportLink);
             }
-            if (options.Format != "W" && ThreatDescription != null)
+            if (options.Format != "W" && Optional.IsDefined(ThreatDescription))
             {
                 writer.WritePropertyName("threatDescription"u8);
                 writer.WriteStringValue(ThreatDescription);
             }
-            if (options.Format != "W" && ThreatName != null)
+            if (options.Format != "W" && Optional.IsDefined(ThreatName))
             {
                 writer.WritePropertyName("threatName"u8);
                 writer.WriteStringValue(ThreatName);
             }
-            if (options.Format != "W" && ThreatType != null)
+            if (options.Format != "W" && Optional.IsDefined(ThreatType))
             {
                 writer.WritePropertyName("threatType"u8);
                 writer.WriteStringValue(ThreatType);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsThreatIntelligence>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsThreatIntelligence(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsThreatIntelligence)} does not support reading '{options.Format}' format.");
             }
         }
 

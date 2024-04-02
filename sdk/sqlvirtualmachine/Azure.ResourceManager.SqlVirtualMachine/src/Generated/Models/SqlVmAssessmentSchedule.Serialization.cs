@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enable"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (WeeklyInterval.HasValue)
+            if (Optional.IsDefined(WeeklyInterval))
             {
                 writer.WritePropertyName("weeklyInterval"u8);
                 writer.WriteNumberValue(WeeklyInterval.Value);
             }
-            if (MonthlyOccurrence.HasValue)
+            if (Optional.IsDefined(MonthlyOccurrence))
             {
                 writer.WritePropertyName("monthlyOccurrence"u8);
                 writer.WriteNumberValue(MonthlyOccurrence.Value);
             }
-            if (DayOfWeek.HasValue)
+            if (Optional.IsDefined(DayOfWeek))
             {
                 writer.WritePropertyName("dayOfWeek"u8);
                 writer.WriteStringValue(DayOfWeek.Value.ToSerialString());
             }
-            if (StartTime != null)
+            if (Optional.IsDefined(StartTime))
             {
                 writer.WritePropertyName("startTime"u8);
                 writer.WriteStringValue(StartTime);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
             var format = options.Format == "W" ? ((IPersistableModel<SqlVmAssessmentSchedule>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -163,7 +163,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.SqlVirtualMachine.Models
                         return DeserializeSqlVmAssessmentSchedule(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SqlVmAssessmentSchedule)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,36 +22,36 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecordSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecordSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecordSet)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RecordType != null)
+            if (Optional.IsDefined(RecordType))
             {
                 writer.WritePropertyName("recordType"u8);
                 writer.WriteStringValue(RecordType);
             }
-            if (RecordSetName != null)
+            if (Optional.IsDefined(RecordSetName))
             {
                 writer.WritePropertyName("recordSetName"u8);
                 writer.WriteStringValue(RecordSetName);
             }
-            if (Fqdn != null)
+            if (Optional.IsDefined(Fqdn))
             {
                 writer.WritePropertyName("fqdn"u8);
                 writer.WriteStringValue(Fqdn);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (Ttl.HasValue)
+            if (Optional.IsDefined(Ttl))
             {
                 writer.WritePropertyName("ttl"u8);
                 writer.WriteNumberValue(Ttl.Value);
             }
-            if (!(IPAddresses is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(IPAddresses))
             {
                 writer.WritePropertyName("ipAddresses"u8);
                 writer.WriteStartArray();
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<RecordSet>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RecordSet)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RecordSet)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RecordSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecordSet)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -197,7 +197,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeRecordSet(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RecordSet)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RecordSet)} does not support reading '{options.Format}' format.");
             }
         }
 

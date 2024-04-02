@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Network
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<VpnServerConfigurationPolicyGroupResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData data, CancellationToken cancellationToken = default)
         {
-            if (configurationPolicyGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
-            }
-            if (configurationPolicyGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<VpnServerConfigurationPolicyGroupResource> CreateOrUpdate(WaitUntil waitUntil, string configurationPolicyGroupName, VpnServerConfigurationPolicyGroupData data, CancellationToken cancellationToken = default)
         {
-            if (configurationPolicyGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
-            }
-            if (configurationPolicyGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
         public virtual async Task<Response<VpnServerConfigurationPolicyGroupResource>> GetAsync(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            if (configurationPolicyGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
-            }
-            if (configurationPolicyGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
             using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
         public virtual Response<VpnServerConfigurationPolicyGroupResource> Get(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            if (configurationPolicyGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
-            }
-            if (configurationPolicyGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
             using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            if (configurationPolicyGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
-            }
-            if (configurationPolicyGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
             using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
         public virtual Response<bool> Exists(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            if (configurationPolicyGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
-            }
-            if (configurationPolicyGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
             using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
         public virtual async Task<NullableResponse<VpnServerConfigurationPolicyGroupResource>> GetIfExistsAsync(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            if (configurationPolicyGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
-            }
-            if (configurationPolicyGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
             using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentNullException"> <paramref name="configurationPolicyGroupName"/> is null. </exception>
         public virtual NullableResponse<VpnServerConfigurationPolicyGroupResource> GetIfExists(string configurationPolicyGroupName, CancellationToken cancellationToken = default)
         {
-            if (configurationPolicyGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(configurationPolicyGroupName));
-            }
-            if (configurationPolicyGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(configurationPolicyGroupName));
-            }
+            Argument.AssertNotNullOrEmpty(configurationPolicyGroupName, nameof(configurationPolicyGroupName));
 
             using var scope = _vpnServerConfigurationPolicyGroupConfigurationPolicyGroupsClientDiagnostics.CreateScope("VpnServerConfigurationPolicyGroupCollection.GetIfExists");
             scope.Start();

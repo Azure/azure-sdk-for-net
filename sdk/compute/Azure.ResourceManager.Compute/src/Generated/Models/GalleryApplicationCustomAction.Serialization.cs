@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationCustomAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationCustomAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationCustomAction)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,18 +30,18 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("script"u8);
             writer.WriteStringValue(Script);
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 writer.WritePropertyName("description"u8);
                 writer.WriteStringValue(Description);
             }
-            if (!(Parameters is ChangeTrackingList<GalleryApplicationCustomActionParameter> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Parameters))
             {
                 writer.WritePropertyName("parameters"u8);
                 writer.WriteStartArray();
                 foreach (var item in Parameters)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<GalleryApplicationCustomActionParameter>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<GalleryApplicationCustomAction>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GalleryApplicationCustomAction)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GalleryApplicationCustomAction)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationCustomAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationCustomAction)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -154,7 +154,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeGalleryApplicationCustomAction(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GalleryApplicationCustomAction)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GalleryApplicationCustomAction)} does not support reading '{options.Format}' format.");
             }
         }
 

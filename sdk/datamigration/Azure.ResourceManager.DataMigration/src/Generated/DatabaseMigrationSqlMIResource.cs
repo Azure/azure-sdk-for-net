@@ -9,10 +9,8 @@ using System;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.DataMigration.Models;
 using Azure.ResourceManager.Resources;
 
@@ -203,10 +201,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DatabaseMigrationSqlMIResource>> UpdateAsync(WaitUntil waitUntil, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMIResource.Update");
             scope.Start();
@@ -252,10 +247,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DatabaseMigrationSqlMIResource> Update(WaitUntil waitUntil, DatabaseMigrationSqlMIData data, CancellationToken cancellationToken = default)
         {
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMIResource.Update");
             scope.Start();
@@ -301,10 +293,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<ArmOperation> CancelAsync(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMIResource.Cancel");
             scope.Start();
@@ -350,10 +339,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual ArmOperation Cancel(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMIResource.Cancel");
             scope.Start();
@@ -399,10 +385,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual async Task<ArmOperation> CutoverAsync(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMIResource.Cutover");
             scope.Start();
@@ -448,10 +431,7 @@ namespace Azure.ResourceManager.DataMigration
         /// <exception cref="ArgumentNullException"> <paramref name="input"/> is null. </exception>
         public virtual ArmOperation Cutover(WaitUntil waitUntil, MigrationOperationInput input, CancellationToken cancellationToken = default)
         {
-            if (input == null)
-            {
-                throw new ArgumentNullException(nameof(input));
-            }
+            Argument.AssertNotNull(input, nameof(input));
 
             using var scope = _databaseMigrationSqlMIDatabaseMigrationsSqlMIClientDiagnostics.CreateScope("DatabaseMigrationSqlMIResource.Cutover");
             scope.Start();

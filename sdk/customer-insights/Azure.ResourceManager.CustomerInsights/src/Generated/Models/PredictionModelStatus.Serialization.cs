@@ -22,58 +22,58 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionModelStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && TenantId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
             }
-            if (options.Format != "W" && PredictionName != null)
+            if (options.Format != "W" && Optional.IsDefined(PredictionName))
             {
                 writer.WritePropertyName("predictionName"u8);
                 writer.WriteStringValue(PredictionName);
             }
-            if (options.Format != "W" && PredictionGuidId != null)
+            if (options.Format != "W" && Optional.IsDefined(PredictionGuidId))
             {
                 writer.WritePropertyName("predictionGuidId"u8);
                 writer.WriteStringValue(PredictionGuidId);
             }
             writer.WritePropertyName("status"u8);
             writer.WriteStringValue(Status.ToString());
-            if (options.Format != "W" && Message != null)
+            if (options.Format != "W" && Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
             }
-            if (options.Format != "W" && TrainingSetCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TrainingSetCount))
             {
                 writer.WritePropertyName("trainingSetCount"u8);
                 writer.WriteNumberValue(TrainingSetCount.Value);
             }
-            if (options.Format != "W" && TestSetCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TestSetCount))
             {
                 writer.WritePropertyName("testSetCount"u8);
                 writer.WriteNumberValue(TestSetCount.Value);
             }
-            if (options.Format != "W" && ValidationSetCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ValidationSetCount))
             {
                 writer.WritePropertyName("validationSetCount"u8);
                 writer.WriteNumberValue(ValidationSetCount.Value);
             }
-            if (options.Format != "W" && TrainingAccuracy.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(TrainingAccuracy))
             {
                 writer.WritePropertyName("trainingAccuracy"u8);
                 writer.WriteNumberValue(TrainingAccuracy.Value);
             }
-            if (options.Format != "W" && SignalsUsed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SignalsUsed))
             {
                 writer.WritePropertyName("signalsUsed"u8);
                 writer.WriteNumberValue(SignalsUsed.Value);
             }
-            if (options.Format != "W" && ModelVersion != null)
+            if (options.Format != "W" && Optional.IsDefined(ModelVersion))
             {
                 writer.WritePropertyName("modelVersion"u8);
                 writer.WriteStringValue(ModelVersion);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<PredictionModelStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -256,7 +256,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializePredictionModelStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PredictionModelStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -25,9 +25,9 @@ namespace Azure.AI.OpenAI
             _value = value ?? throw new ArgumentNullException(nameof(value));
         }
 
-        private const string EndpointValue = "Endpoint";
-        private const string DeploymentNameValue = "DeploymentName";
-        private const string ModelIdValue = "ModelId";
+        private const string EndpointValue = "endpoint";
+        private const string DeploymentNameValue = "deployment_name";
+        private const string ModelIdValue = "model_id";
 
         /// <summary> Represents vectorization performed by public service calls to an Azure OpenAI embedding model. </summary>
         public static OnYourDataVectorizationSourceType Endpoint { get; } = new OnYourDataVectorizationSourceType(EndpointValue);

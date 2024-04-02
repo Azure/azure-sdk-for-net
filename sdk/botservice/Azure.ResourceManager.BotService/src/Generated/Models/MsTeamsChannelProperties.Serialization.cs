@@ -22,33 +22,33 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsTeamsChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsTeamsChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsTeamsChannelProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsCallingEnabled.HasValue)
+            if (Optional.IsDefined(IsCallingEnabled))
             {
                 writer.WritePropertyName("enableCalling"u8);
                 writer.WriteBooleanValue(IsCallingEnabled.Value);
             }
-            if (CallingWebhook != null)
+            if (Optional.IsDefined(CallingWebhook))
             {
                 writer.WritePropertyName("callingWebhook"u8);
                 writer.WriteStringValue(CallingWebhook);
             }
             writer.WritePropertyName("isEnabled"u8);
             writer.WriteBooleanValue(IsEnabled);
-            if (IncomingCallRoute != null)
+            if (Optional.IsDefined(IncomingCallRoute))
             {
                 writer.WritePropertyName("incomingCallRoute"u8);
                 writer.WriteStringValue(IncomingCallRoute);
             }
-            if (DeploymentEnvironment != null)
+            if (Optional.IsDefined(DeploymentEnvironment))
             {
                 writer.WritePropertyName("deploymentEnvironment"u8);
                 writer.WriteStringValue(DeploymentEnvironment);
             }
-            if (AcceptedTerms.HasValue)
+            if (Optional.IsDefined(AcceptedTerms))
             {
                 if (AcceptedTerms != null)
                 {
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.BotService.Models
             var format = options.Format == "W" ? ((IPersistableModel<MsTeamsChannelProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MsTeamsChannelProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MsTeamsChannelProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.BotService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MsTeamsChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsTeamsChannelProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.BotService.Models
                         return DeserializeMsTeamsChannelProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MsTeamsChannelProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MsTeamsChannelProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

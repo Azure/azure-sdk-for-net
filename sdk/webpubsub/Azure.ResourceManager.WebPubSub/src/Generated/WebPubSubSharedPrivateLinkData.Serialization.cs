@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.WebPubSub
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubSharedPrivateLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,34 +43,34 @@ namespace Azure.ResourceManager.WebPubSub
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (GroupId != null)
+            if (Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (PrivateLinkResourceId != null)
+            if (Optional.IsDefined(PrivateLinkResourceId))
             {
                 writer.WritePropertyName("privateLinkResourceId"u8);
                 writer.WriteStringValue(PrivateLinkResourceId);
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (RequestMessage != null)
+            if (Optional.IsDefined(RequestMessage))
             {
                 writer.WritePropertyName("requestMessage"u8);
                 writer.WriteStringValue(RequestMessage);
             }
-            if (options.Format != "W" && Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Status))
             {
                 writer.WritePropertyName("status"u8);
                 writer.WriteStringValue(Status.Value.ToString());
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.WebPubSub
             var format = options.Format == "W" ? ((IPersistableModel<WebPubSubSharedPrivateLinkData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.WebPubSub
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -244,7 +244,7 @@ namespace Azure.ResourceManager.WebPubSub
                         return DeserializeWebPubSubSharedPrivateLinkData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(WebPubSubSharedPrivateLinkData)} does not support reading '{options.Format}' format.");
             }
         }
 

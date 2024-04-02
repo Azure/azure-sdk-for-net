@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 
 namespace Azure.Media.VideoAnalyzer.Edge.Models
 {
@@ -19,10 +18,7 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
         /// <exception cref="ArgumentNullException"> <paramref name="nodeName"/> is null. </exception>
         public NodeInput(string nodeName)
         {
-            if (nodeName == null)
-            {
-                throw new ArgumentNullException(nameof(nodeName));
-            }
+            Argument.AssertNotNull(nodeName, nameof(nodeName));
 
             NodeName = nodeName;
             OutputSelectors = new ChangeTrackingList<OutputSelector>();

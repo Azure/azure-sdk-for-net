@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && MeterId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MeterId))
             {
                 writer.WritePropertyName("meterId"u8);
                 writer.WriteStringValue(MeterId.Value);
             }
-            if (options.Format != "W" && MeterType != null)
+            if (options.Format != "W" && Optional.IsDefined(MeterType))
             {
                 writer.WritePropertyName("meterType"u8);
                 writer.WriteStringValue(MeterType);
             }
-            if (options.Format != "W" && Multiplier.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Multiplier))
             {
                 writer.WritePropertyName("multiplier"u8);
                 writer.WriteNumberValue(Multiplier.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxSkuCost>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxSkuCost(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxSkuCost)} does not support reading '{options.Format}' format.");
             }
         }
 

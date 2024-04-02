@@ -19,10 +19,10 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStartArray();
             foreach (var item in TargetParticipants)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<CommunicationIdentifierModel>(item);
             }
             writer.WriteEndArray();
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

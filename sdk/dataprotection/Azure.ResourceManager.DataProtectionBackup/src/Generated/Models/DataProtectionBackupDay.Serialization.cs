@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupDay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupDay)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Date.HasValue)
+            if (Optional.IsDefined(Date))
             {
                 writer.WritePropertyName("date"u8);
                 writer.WriteNumberValue(Date.Value);
             }
-            if (IsLast.HasValue)
+            if (Optional.IsDefined(IsLast))
             {
                 writer.WritePropertyName("isLast"u8);
                 writer.WriteBooleanValue(IsLast.Value);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataProtectionBackupDay>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataProtectionBackupDay)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataProtectionBackupDay)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupDay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupDay)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataProtectionBackup.Models
                         return DeserializeDataProtectionBackupDay(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataProtectionBackupDay)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataProtectionBackupDay)} does not support reading '{options.Format}' format.");
             }
         }
 

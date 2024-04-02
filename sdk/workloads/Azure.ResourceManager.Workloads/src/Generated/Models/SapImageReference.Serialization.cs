@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapImageReference)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Publisher != null)
+            if (Optional.IsDefined(Publisher))
             {
                 writer.WritePropertyName("publisher"u8);
                 writer.WriteStringValue(Publisher);
             }
-            if (Offer != null)
+            if (Optional.IsDefined(Offer))
             {
                 writer.WritePropertyName("offer"u8);
                 writer.WriteStringValue(Offer);
             }
-            if (Sku != null)
+            if (Optional.IsDefined(Sku))
             {
                 writer.WritePropertyName("sku"u8);
                 writer.WriteStringValue(Sku);
             }
-            if (Version != null)
+            if (Optional.IsDefined(Version))
             {
                 writer.WritePropertyName("version"u8);
                 writer.WriteStringValue(Version);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.Workloads.Models
             var format = options.Format == "W" ? ((IPersistableModel<SapImageReference>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SapImageReference)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SapImageReference)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.Workloads.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SapImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapImageReference)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.Workloads.Models
                         return DeserializeSapImageReference(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SapImageReference)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SapImageReference)} does not support reading '{options.Format}' format.");
             }
         }
 

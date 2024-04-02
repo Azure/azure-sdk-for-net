@@ -20,7 +20,7 @@ namespace Azure.AI.FormRecognizer.Models
             writer.WritePropertyName("targetResourceRegion"u8);
             writer.WriteStringValue(TargetResourceRegion);
             writer.WritePropertyName("copyAuthorization"u8);
-            writer.WriteObjectValue(CopyAuthorization);
+            writer.WriteObjectValue<CopyAuthorizationResult>(CopyAuthorization);
             writer.WriteEndObject();
         }
     }
