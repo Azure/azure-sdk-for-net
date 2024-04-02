@@ -20,7 +20,6 @@ resource sqlServer_DLIjdcaKF 'Microsoft.Sql/servers@2020-11-01-preview' = {
       administratorType: 'ActiveDirectory'
       login: adminLogin
       sid: adminObjectId
-      tenantId: tenant().tenantId
     }
   }
 }

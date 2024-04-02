@@ -36,7 +36,7 @@ namespace Azure.Provisioning.Sql
             string name,
             Parameter? administratorLogin = default,
             Parameter? administratorPassword = default,
-            SqlServerAdministrator? administrator = default,
+            ServerExternalAdministrator? administrator = default,
             ResourceGroup? parent = null,
             string version = DefaultVersion,
             AzureLocation? location = default)
@@ -46,7 +46,7 @@ namespace Azure.Provisioning.Sql
                 resourceType: ResourceTypeName,
                 version: "12.0",
                 publicNetworkAccess: ServerNetworkAccessFlag.Enabled,
-                administrators: new ServerExternalAdministrator()))
+                administrators: administrator ?? new ServerExternalAdministrator()))
         {
             AssignProperty(data => data.Name, GetAzureName(scope, name));
             if (administratorLogin != null)
@@ -57,16 +57,16 @@ namespace Azure.Provisioning.Sql
             {
                 AssignProperty(data => data.AdministratorLoginPassword, administratorPassword.Value);
             }
-            if (administrator != null)
-            {
-                AssignProperty(data => data.Administrators.Login, administrator.Value.LoginName);
-                AssignProperty(data => data.Administrators.Sid, administrator.Value.ObjectId);
-                AssignProperty(data => data.Administrators.AdministratorType, "'ActiveDirectory'");
-                if (scope.Root.Properties.TenantId == Guid.Empty)
-                {
-                    AssignProperty(data => data.Administrators.TenantId, Tenant.TenantIdExpression);
-                }
-            }
+            // if (administrator != null)
+            // {
+            //     AssignProperty(data => data.Administrators.Login, administrator.Value.LoginName);
+            //     AssignProperty(data => data.Administrators.Sid, administrator.Value.ObjectId);
+            //     AssignProperty(data => data.Administrators.AdministratorType, "'ActiveDirectory'");
+            //     if (scope.Root.Properties.TenantId == Guid.Empty)
+            //     {
+            //         AssignProperty(data => data.Administrators.TenantId, Tenant.TenantIdExpression);
+            //     }
+            // }
         }
 
         private SqlServer(

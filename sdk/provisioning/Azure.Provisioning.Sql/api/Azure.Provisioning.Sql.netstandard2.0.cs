@@ -19,15 +19,14 @@ namespace Azure.Provisioning.Sql
     }
     public partial class SqlServer : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlServerData>
     {
-        public SqlServer(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Parameter? administratorLogin = default(Azure.Provisioning.Parameter?), Azure.Provisioning.Parameter? administratorPassword = default(Azure.Provisioning.Parameter?), Azure.Provisioning.Sql.SqlServerAdministrator? administrator = default(Azure.Provisioning.Sql.SqlServerAdministrator?), Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string version = "2020-11-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlServerData>), default(bool)) { }
+        public SqlServer(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Parameter? administratorLogin = default(Azure.Provisioning.Parameter?), Azure.Provisioning.Parameter? administratorPassword = default(Azure.Provisioning.Parameter?), Azure.ResourceManager.Sql.Models.ServerExternalAdministrator? administrator = null, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null, string version = "2020-11-01-preview", Azure.Core.AzureLocation? location = default(Azure.Core.AzureLocation?)) : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlServerData>), default(bool)) { }
         public static Azure.Provisioning.Sql.SqlServer FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.ResourceManager.ResourceGroup? parent = null) { throw null; }
         protected override string GetAzureName(Azure.Provisioning.IConstruct scope, string resourceName) { throw null; }
     }
-    [System.Runtime.InteropServices.StructLayoutAttribute(System.Runtime.InteropServices.LayoutKind.Sequential)]
-    public readonly partial struct SqlServerAdministrator
+    public partial class SqlServerAdministrator : Azure.Provisioning.Resource<Azure.ResourceManager.Sql.SqlServerAzureADAdministratorData>
     {
-        private readonly object _dummy;
-        private readonly int _dummyPrimitive;
-        public SqlServerAdministrator(Azure.Provisioning.Parameter loginName, Azure.Provisioning.Parameter objectId) { throw null; }
+        public SqlServerAdministrator(Azure.Provisioning.IConstruct scope, Azure.Provisioning.Sql.SqlServer? parent = null, string name = "admin", string version = "2020-11-01-preview") : base (default(Azure.Provisioning.IConstruct), default(Azure.Provisioning.Resource), default(string), default(Azure.Core.ResourceType), default(string), default(System.Func<string, Azure.ResourceManager.Sql.SqlServerAzureADAdministratorData>), default(bool)) { }
+        protected override Azure.Provisioning.Resource? FindParentInScope(Azure.Provisioning.IConstruct scope) { throw null; }
+        public static Azure.Provisioning.Sql.SqlServerAdministrator FromExisting(Azure.Provisioning.IConstruct scope, string name, Azure.Provisioning.Sql.SqlServer parent) { throw null; }
     }
 }

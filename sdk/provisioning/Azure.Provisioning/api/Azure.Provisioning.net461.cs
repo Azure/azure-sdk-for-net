@@ -1,10 +1,5 @@
 namespace Azure.Provisioning
 {
-    public static partial class CdkExtensions
-    {
-        public static T? GetSingleResourceInScope<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
-        public static T? GetSingleResource<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
-    }
     public partial class Configuration
     {
         public Configuration() { }
@@ -89,6 +84,11 @@ namespace Azure.Provisioning
         public string Name { get { throw null; } }
         public Azure.Provisioning.IConstruct? Source { get { throw null; } }
         public string? Value { get { throw null; } }
+    }
+    public static partial class ProvisioningExtensions
+    {
+        public static T? GetSingleResourceInScope<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
+        public static T? GetSingleResource<T>(this Azure.Provisioning.IConstruct construct) where T : Azure.Provisioning.Resource { throw null; }
     }
     public abstract partial class Resource : System.ClientModel.Primitives.IPersistableModel<Azure.Provisioning.Resource>
     {
