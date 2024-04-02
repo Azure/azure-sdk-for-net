@@ -9,10 +9,26 @@ namespace Azure.ResourceManager.AppContainers
         /// <summary>
         /// Azure file properties for backward compatibility.
         /// </summary>
-        public ContainerAppAzureFileProperties ManagedEnvironmentStorageAzureFile { get => Properties.AzureFile; set => Properties.AzureFile = value; }
+        public ContainerAppAzureFileProperties ManagedEnvironmentStorageAzureFile {
+            get => Properties is null ? default : Properties.AzureFile;
+            set
+            {
+                if (Properties is null)
+                    Properties = new ManagedEnvironmentStorageProperties();
+                Properties.AzureFile = value;
+            }
+        }
         /// <summary>
         /// NFS Azure file properties.
         /// </summary>
-        public ContainerAppNfsAzureFileProperties ManagedEnvironmentStorageNfsAzureFile { get => Properties.NfsAzureFile; set => Properties.NfsAzureFile = value; }
+        public ContainerAppNfsAzureFileProperties ManagedEnvironmentStorageNfsAzureFile {
+            get => Properties is null ? default : Properties.NfsAzureFile;
+            set
+            {
+                if (Properties is null)
+                    Properties = new ManagedEnvironmentStorageProperties();
+                Properties.NfsAzureFile = value;
+            }
+        }
     }
 }
