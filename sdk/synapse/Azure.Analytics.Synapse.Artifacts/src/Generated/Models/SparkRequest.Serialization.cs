@@ -191,6 +191,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 numExecutors);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkRequest(document.RootElement);
+        }
+
         internal partial class SparkRequestConverter : JsonConverter<SparkRequest>
         {
             public override void Write(Utf8JsonWriter writer, SparkRequest model, JsonSerializerOptions options)

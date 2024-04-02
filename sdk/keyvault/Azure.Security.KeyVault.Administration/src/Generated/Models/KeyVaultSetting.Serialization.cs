@@ -44,5 +44,13 @@ namespace Azure.Security.KeyVault.Administration
             }
             return new KeyVaultSetting(name, value, type);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultSetting FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultSetting(document.RootElement);
+        }
     }
 }

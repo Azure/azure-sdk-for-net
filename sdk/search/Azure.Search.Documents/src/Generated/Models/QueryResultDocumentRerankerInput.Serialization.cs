@@ -40,5 +40,13 @@ namespace Azure.Search.Documents.Models
             }
             return new QueryResultDocumentRerankerInput(title, content, keywords);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static QueryResultDocumentRerankerInput FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeQueryResultDocumentRerankerInput(document.RootElement);
+        }
     }
 }

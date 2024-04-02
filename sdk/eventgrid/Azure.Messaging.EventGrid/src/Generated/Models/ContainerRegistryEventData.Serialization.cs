@@ -113,6 +113,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 connectedRegistry);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ContainerRegistryEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerRegistryEventData(document.RootElement);
+        }
+
         internal partial class ContainerRegistryEventDataConverter : JsonConverter<ContainerRegistryEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerRegistryEventData model, JsonSerializerOptions options)

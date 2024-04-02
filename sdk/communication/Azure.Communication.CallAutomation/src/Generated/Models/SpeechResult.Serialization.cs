@@ -28,5 +28,13 @@ namespace Azure.Communication.CallAutomation
             }
             return new SpeechResult(speech);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SpeechResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpeechResult(document.RootElement);
+        }
     }
 }

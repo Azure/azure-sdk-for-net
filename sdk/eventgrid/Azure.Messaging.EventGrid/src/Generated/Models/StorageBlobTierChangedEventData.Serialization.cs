@@ -104,6 +104,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 storageDiagnostics);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageBlobTierChangedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageBlobTierChangedEventData(document.RootElement);
+        }
+
         internal partial class StorageBlobTierChangedEventDataConverter : JsonConverter<StorageBlobTierChangedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageBlobTierChangedEventData model, JsonSerializerOptions options)

@@ -76,5 +76,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             }
             return new AnalyzedDocument(docType, boundingRegions ?? new ChangeTrackingList<BoundingRegion>(), spans, fields ?? new ChangeTrackingDictionary<string, DocumentField>(), confidence);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnalyzedDocument FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzedDocument(document.RootElement);
+        }
     }
 }

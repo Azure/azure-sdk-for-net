@@ -53,5 +53,13 @@ namespace Azure.Monitor.Query.Models
             }
             return new MetricTimeSeriesElement(metadatavalues ?? new ChangeTrackingList<MetadataValue>(), data ?? new ChangeTrackingList<MetricValue>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricTimeSeriesElement FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricTimeSeriesElement(document.RootElement);
+        }
     }
 }

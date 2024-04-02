@@ -42,5 +42,13 @@ namespace Azure.Maps.Routing.Models
             }
             return new RouteSectionTecCause(mainCauseCode, subCauseCode);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteSectionTecCause FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteSectionTecCause(document.RootElement);
+        }
     }
 }

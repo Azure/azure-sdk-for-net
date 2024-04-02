@@ -114,6 +114,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TriggerRun FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTriggerRun(document.RootElement);
+        }
+
         internal partial class TriggerRunConverter : JsonConverter<TriggerRun>
         {
             public override void Write(Utf8JsonWriter writer, TriggerRun model, JsonSerializerOptions options)

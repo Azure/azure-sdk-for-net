@@ -54,6 +54,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new IotHubDeviceConnectedEventData(deviceId, moduleId, hubName, deviceConnectionStateEventInfo);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new IotHubDeviceConnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIotHubDeviceConnectedEventData(document.RootElement);
+        }
+
         internal partial class IotHubDeviceConnectedEventDataConverter : JsonConverter<IotHubDeviceConnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, IotHubDeviceConnectedEventData model, JsonSerializerOptions options)

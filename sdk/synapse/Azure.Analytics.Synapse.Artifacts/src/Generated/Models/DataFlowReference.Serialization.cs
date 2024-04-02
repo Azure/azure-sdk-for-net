@@ -112,6 +112,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new DataFlowReference(type, referenceName, datasetParameters, parameters ?? new ChangeTrackingDictionary<string, object>(), additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFlowReference FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFlowReference(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DataFlowReference>(this);
+            return content;
+        }
+
         internal partial class DataFlowReferenceConverter : JsonConverter<DataFlowReference>
         {
             public override void Write(Utf8JsonWriter writer, DataFlowReference model, JsonSerializerOptions options)

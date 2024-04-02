@@ -54,5 +54,13 @@ namespace Azure.Monitor.OpenTelemetry.Exporter.Models
             }
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TelemetryExceptionDetails>(this);
+            return content;
+        }
     }
 }

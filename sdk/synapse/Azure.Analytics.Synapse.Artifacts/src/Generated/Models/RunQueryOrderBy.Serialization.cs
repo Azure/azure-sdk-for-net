@@ -25,6 +25,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<RunQueryOrderBy>(this);
+            return content;
+        }
+
         internal partial class RunQueryOrderByConverter : JsonConverter<RunQueryOrderBy>
         {
             public override void Write(Utf8JsonWriter writer, RunQueryOrderBy model, JsonSerializerOptions options)

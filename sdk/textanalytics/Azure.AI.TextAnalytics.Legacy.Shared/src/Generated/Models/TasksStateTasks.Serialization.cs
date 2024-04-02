@@ -131,5 +131,13 @@ namespace Azure.AI.TextAnalytics.Legacy.Models
                 entityLinkingTasks ?? new ChangeTrackingList<TasksStateTasksEntityLinkingTasksItem>(),
                 sentimentAnalysisTasks ?? new ChangeTrackingList<TasksStateTasksSentimentAnalysisTasksItem>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TasksStateTasks FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTasksStateTasks(document.RootElement);
+        }
     }
 }

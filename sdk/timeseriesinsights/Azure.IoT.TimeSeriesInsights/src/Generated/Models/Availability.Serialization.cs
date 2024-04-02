@@ -59,5 +59,13 @@ namespace Azure.IoT.TimeSeriesInsights
             }
             return new Availability(range, intervalSize, distribution ?? new ChangeTrackingDictionary<string, int>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static Availability FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvailability(document.RootElement);
+        }
     }
 }

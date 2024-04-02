@@ -104,6 +104,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 storageDiagnostics);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageAsyncOperationInitiatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageAsyncOperationInitiatedEventData(document.RootElement);
+        }
+
         internal partial class StorageAsyncOperationInitiatedEventDataConverter : JsonConverter<StorageAsyncOperationInitiatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageAsyncOperationInitiatedEventData model, JsonSerializerOptions options)

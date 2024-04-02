@@ -34,5 +34,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SearchServiceStatistics(counters, limits);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchServiceStatistics FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchServiceStatistics(document.RootElement);
+        }
     }
 }

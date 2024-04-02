@@ -100,5 +100,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             return new OnvifDevice(hostname, systemDateTime, dns, mediaProfiles ?? new ChangeTrackingList<MediaProfile>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OnvifDevice FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOnvifDevice(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OnvifDevice>(this);
+            return content;
+        }
     }
 }

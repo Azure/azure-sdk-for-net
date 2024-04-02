@@ -40,5 +40,13 @@ namespace Azure.MixedReality.RemoteRendering
             }
             return new ConversionList(conversions, nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ConversionList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeConversionList(document.RootElement);
+        }
     }
 }

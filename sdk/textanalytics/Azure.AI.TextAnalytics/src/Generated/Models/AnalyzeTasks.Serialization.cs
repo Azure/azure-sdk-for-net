@@ -62,5 +62,13 @@ namespace Azure.AI.TextAnalytics.Models
             }
             return new AnalyzeTasks(completed, failed, inProgress, total, items ?? new ChangeTrackingList<AnalyzeTextLROResult>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnalyzeTasks FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnalyzeTasks(document.RootElement);
+        }
     }
 }

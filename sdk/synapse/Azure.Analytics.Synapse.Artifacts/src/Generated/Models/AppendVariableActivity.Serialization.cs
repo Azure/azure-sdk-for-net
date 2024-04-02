@@ -201,6 +201,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 value);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AppendVariableActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAppendVariableActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AppendVariableActivity>(this);
+            return content;
+        }
+
         internal partial class AppendVariableActivityConverter : JsonConverter<AppendVariableActivity>
         {
             public override void Write(Utf8JsonWriter writer, AppendVariableActivity model, JsonSerializerOptions options)

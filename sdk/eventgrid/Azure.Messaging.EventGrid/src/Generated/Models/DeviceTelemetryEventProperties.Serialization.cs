@@ -63,5 +63,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new DeviceTelemetryEventProperties(body, properties ?? new ChangeTrackingDictionary<string, string>(), systemProperties ?? new ChangeTrackingDictionary<string, string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceTelemetryEventProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceTelemetryEventProperties(document.RootElement);
+        }
     }
 }

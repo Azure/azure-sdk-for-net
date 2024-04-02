@@ -245,6 +245,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 partitionSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureSqlSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureSqlSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureSqlSource>(this);
+            return content;
+        }
+
         internal partial class AzureSqlSourceConverter : JsonConverter<AzureSqlSource>
         {
             public override void Write(Utf8JsonWriter writer, AzureSqlSource model, JsonSerializerOptions options)

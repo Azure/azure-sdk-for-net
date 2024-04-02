@@ -32,6 +32,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new GitHubAccessTokenResponse(gitHubAccessToken);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static GitHubAccessTokenResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeGitHubAccessTokenResponse(document.RootElement);
+        }
+
         internal partial class GitHubAccessTokenResponseConverter : JsonConverter<GitHubAccessTokenResponse>
         {
             public override void Write(Utf8JsonWriter writer, GitHubAccessTokenResponse model, JsonSerializerOptions options)

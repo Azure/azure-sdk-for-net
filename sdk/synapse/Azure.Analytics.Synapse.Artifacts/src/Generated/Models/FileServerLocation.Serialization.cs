@@ -81,6 +81,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new FileServerLocation(type, folderPath, fileName, additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new FileServerLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFileServerLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<FileServerLocation>(this);
+            return content;
+        }
+
         internal partial class FileServerLocationConverter : JsonConverter<FileServerLocation>
         {
             public override void Write(Utf8JsonWriter writer, FileServerLocation model, JsonSerializerOptions options)

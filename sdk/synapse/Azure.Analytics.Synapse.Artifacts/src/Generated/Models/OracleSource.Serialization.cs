@@ -181,6 +181,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalColumns);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new OracleSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOracleSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<OracleSource>(this);
+            return content;
+        }
+
         internal partial class OracleSourceConverter : JsonConverter<OracleSource>
         {
             public override void Write(Utf8JsonWriter writer, OracleSource model, JsonSerializerOptions options)

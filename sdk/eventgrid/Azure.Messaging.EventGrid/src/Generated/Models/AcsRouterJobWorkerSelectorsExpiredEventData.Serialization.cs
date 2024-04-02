@@ -119,6 +119,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 expiredAttachedWorkerSelectors ?? new ChangeTrackingList<AcsRouterWorkerSelector>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterJobWorkerSelectorsExpiredEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterJobWorkerSelectorsExpiredEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterJobWorkerSelectorsExpiredEventDataConverter : JsonConverter<AcsRouterJobWorkerSelectorsExpiredEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobWorkerSelectorsExpiredEventData model, JsonSerializerOptions options)

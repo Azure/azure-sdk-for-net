@@ -16,6 +16,7 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("PhoneNumberCountries", typeof(IEnumerable<PhoneNumberCountry>))]
     [CodeGenSuppress("PhoneNumberCountries", typeof(IReadOnlyList<PhoneNumberCountry>), typeof(string))]
     [CodeGenSuppress("DeserializePhoneNumberCountries", typeof(JsonElement))]
+    [CodeGenSuppress("FromResponse", typeof(Response))]
     [CodeGenSuppress("Countries", typeof(IReadOnlyList<PhoneNumberCountry>))]
     [CodeGenSuppress("NextLink", typeof(string))]
     internal partial class PhoneNumberCountries

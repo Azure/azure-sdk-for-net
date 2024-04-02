@@ -113,6 +113,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 lastEnqueueTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EventHubCaptureFileCreatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventHubCaptureFileCreatedEventData(document.RootElement);
+        }
+
         internal partial class EventHubCaptureFileCreatedEventDataConverter : JsonConverter<EventHubCaptureFileCreatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, EventHubCaptureFileCreatedEventData model, JsonSerializerOptions options)

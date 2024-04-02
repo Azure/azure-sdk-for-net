@@ -96,6 +96,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new AzureBlobFSLocation(type, folderPath, fileName, additionalProperties, fileSystem);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureBlobFSLocation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureBlobFSLocation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureBlobFSLocation>(this);
+            return content;
+        }
+
         internal partial class AzureBlobFSLocationConverter : JsonConverter<AzureBlobFSLocation>
         {
             public override void Write(Utf8JsonWriter writer, AzureBlobFSLocation model, JsonSerializerOptions options)

@@ -142,5 +142,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
                 enableFaceMaskClassifier,
                 lines);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SpatialAnalysisPersonLineCrossingOperation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSpatialAnalysisPersonLineCrossingOperation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SpatialAnalysisPersonLineCrossingOperation>(this);
+            return content;
+        }
     }
 }

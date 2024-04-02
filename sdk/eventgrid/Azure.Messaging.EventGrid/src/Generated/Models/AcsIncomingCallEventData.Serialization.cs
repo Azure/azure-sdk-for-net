@@ -87,6 +87,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 correlationId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsIncomingCallEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsIncomingCallEventData(document.RootElement);
+        }
+
         internal partial class AcsIncomingCallEventDataConverter : JsonConverter<AcsIncomingCallEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsIncomingCallEventData model, JsonSerializerOptions options)

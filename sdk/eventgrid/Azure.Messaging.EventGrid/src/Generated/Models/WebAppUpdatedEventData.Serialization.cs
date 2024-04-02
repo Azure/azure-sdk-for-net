@@ -79,6 +79,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 verb);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebAppUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebAppUpdatedEventData(document.RootElement);
+        }
+
         internal partial class WebAppUpdatedEventDataConverter : JsonConverter<WebAppUpdatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, WebAppUpdatedEventData model, JsonSerializerOptions options)

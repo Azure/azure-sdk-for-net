@@ -32,5 +32,13 @@ namespace Azure.Maps.Search.Models
             }
             return new MapsDataSource(geometry);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapsDataSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapsDataSource(document.RootElement);
+        }
     }
 }

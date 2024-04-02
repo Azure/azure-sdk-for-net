@@ -40,5 +40,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AcsSmsEventBaseProperties(messageId, @from, to);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsSmsEventBaseProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsSmsEventBaseProperties(document.RootElement);
+        }
     }
 }

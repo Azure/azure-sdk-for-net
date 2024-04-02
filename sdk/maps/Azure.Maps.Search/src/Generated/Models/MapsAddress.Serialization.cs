@@ -184,5 +184,13 @@ namespace Azure.Maps.Search.Models
                 localName,
                 boundingBox);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MapsAddress FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapsAddress(document.RootElement);
+        }
     }
 }

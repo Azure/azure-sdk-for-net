@@ -95,6 +95,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 deleteTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsChatThreadWithUserDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsChatThreadWithUserDeletedEventData(document.RootElement);
+        }
+
         internal partial class AcsChatThreadWithUserDeletedEventDataConverter : JsonConverter<AcsChatThreadWithUserDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatThreadWithUserDeletedEventData model, JsonSerializerOptions options)

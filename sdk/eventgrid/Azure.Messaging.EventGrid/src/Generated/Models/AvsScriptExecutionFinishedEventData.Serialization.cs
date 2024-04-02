@@ -69,6 +69,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AvsScriptExecutionFinishedEventData(operationId, cmdletId, output ?? new ChangeTrackingList<string>(), namedOutputs ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvsScriptExecutionFinishedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvsScriptExecutionFinishedEventData(document.RootElement);
+        }
+
         internal partial class AvsScriptExecutionFinishedEventDataConverter : JsonConverter<AvsScriptExecutionFinishedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AvsScriptExecutionFinishedEventData model, JsonSerializerOptions options)

@@ -25,5 +25,13 @@ namespace Azure.Communication.CallAutomation
             writer.WriteStringValue(AudioChannelType.ToString());
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<MediaStreamingOptionsInternal>(this);
+            return content;
+        }
     }
 }

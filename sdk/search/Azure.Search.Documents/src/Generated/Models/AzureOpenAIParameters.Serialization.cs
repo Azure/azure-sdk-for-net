@@ -90,5 +90,21 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new AzureOpenAIParameters(resourceUri, deploymentId, apiKey, authIdentity);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AzureOpenAIParameters FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureOpenAIParameters(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureOpenAIParameters>(this);
+            return content;
+        }
     }
 }

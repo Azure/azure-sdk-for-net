@@ -48,6 +48,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new RedisPatchingCompletedEventData(timestamp, name, status);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RedisPatchingCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRedisPatchingCompletedEventData(document.RootElement);
+        }
+
         internal partial class RedisPatchingCompletedEventDataConverter : JsonConverter<RedisPatchingCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, RedisPatchingCompletedEventData model, JsonSerializerOptions options)

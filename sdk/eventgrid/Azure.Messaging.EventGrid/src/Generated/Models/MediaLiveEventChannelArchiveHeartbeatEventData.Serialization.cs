@@ -38,6 +38,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MediaLiveEventChannelArchiveHeartbeatEventData(channelLatencyMs, latencyResultCode);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventChannelArchiveHeartbeatEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventChannelArchiveHeartbeatEventData(document.RootElement);
+        }
+
         internal partial class MediaLiveEventChannelArchiveHeartbeatEventDataConverter : JsonConverter<MediaLiveEventChannelArchiveHeartbeatEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventChannelArchiveHeartbeatEventData model, JsonSerializerOptions options)

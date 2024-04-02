@@ -44,5 +44,13 @@ namespace Azure.Quantum.Jobs.Models
             }
             return new ProviderStatusList(value ?? new ChangeTrackingList<ProviderStatus>(), nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ProviderStatusList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeProviderStatusList(document.RootElement);
+        }
     }
 }

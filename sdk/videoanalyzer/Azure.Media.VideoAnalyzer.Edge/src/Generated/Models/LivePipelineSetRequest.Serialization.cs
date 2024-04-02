@@ -56,5 +56,21 @@ namespace Azure.Media.VideoAnalyzer.Edge.Models
             }
             return new LivePipelineSetRequest(methodName, apiVersion, livePipeline);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new LivePipelineSetRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLivePipelineSetRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LivePipelineSetRequest>(this);
+            return content;
+        }
     }
 }

@@ -54,6 +54,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new SignalRServiceClientConnectionConnectedEventData(timestamp, hubName, connectionId, userId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SignalRServiceClientConnectionConnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSignalRServiceClientConnectionConnectedEventData(document.RootElement);
+        }
+
         internal partial class SignalRServiceClientConnectionConnectedEventDataConverter : JsonConverter<SignalRServiceClientConnectionConnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, SignalRServiceClientConnectionConnectedEventData model, JsonSerializerOptions options)

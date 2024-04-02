@@ -31,6 +31,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             writer.WriteEndObject();
         }
 
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DeleteDataFlowDebugSessionRequest>(this);
+            return content;
+        }
+
         internal partial class DeleteDataFlowDebugSessionRequestConverter : JsonConverter<DeleteDataFlowDebugSessionRequest>
         {
             public override void Write(Utf8JsonWriter writer, DeleteDataFlowDebugSessionRequest model, JsonSerializerOptions options)

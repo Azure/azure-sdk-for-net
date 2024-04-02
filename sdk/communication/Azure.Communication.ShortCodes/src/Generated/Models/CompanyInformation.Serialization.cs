@@ -97,5 +97,21 @@ namespace Azure.Communication.ShortCodes.Models
             }
             return new CompanyInformation(name, url, address, contactInformation, customerCareInformation);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CompanyInformation FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCompanyInformation(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CompanyInformation>(this);
+            return content;
+        }
     }
 }

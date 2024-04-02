@@ -48,5 +48,13 @@ namespace Azure.Maps.Routing.Models
             }
             return new RouteRangeResult(formatVersion, reachableRange, report);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteRangeResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteRangeResult(document.RootElement);
+        }
     }
 }

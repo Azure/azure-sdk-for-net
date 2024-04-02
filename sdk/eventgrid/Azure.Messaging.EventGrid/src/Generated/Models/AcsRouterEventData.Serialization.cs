@@ -44,6 +44,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AcsRouterEventData(jobId, channelReference, channelId);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRouterEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterEventDataConverter : JsonConverter<AcsRouterEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterEventData model, JsonSerializerOptions options)

@@ -50,5 +50,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new DeviceConnectionStateEventProperties(deviceId, moduleId, hubName, deviceConnectionStateEventInfo);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DeviceConnectionStateEventProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDeviceConnectionStateEventProperties(document.RootElement);
+        }
     }
 }

@@ -71,5 +71,21 @@ namespace Azure.AI.TextAnalytics.Models
             }
             return new PreBuiltResult(errors, statistics, modelVersion);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PreBuiltResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePreBuiltResult(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<PreBuiltResult>(this);
+            return content;
+        }
     }
 }

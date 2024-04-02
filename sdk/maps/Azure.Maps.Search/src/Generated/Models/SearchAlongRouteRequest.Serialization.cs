@@ -23,5 +23,13 @@ namespace Azure.Maps.Search.Models
             }
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SearchAlongRouteRequest>(this);
+            return content;
+        }
     }
 }

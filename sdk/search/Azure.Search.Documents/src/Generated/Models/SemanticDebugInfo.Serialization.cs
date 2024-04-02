@@ -73,5 +73,13 @@ namespace Azure.Search.Documents.Models
             }
             return new SemanticDebugInfo(titleField, contentFields ?? new ChangeTrackingList<QueryResultDocumentSemanticField>(), keywordFields ?? new ChangeTrackingList<QueryResultDocumentSemanticField>(), rerankerInput);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SemanticDebugInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSemanticDebugInfo(document.RootElement);
+        }
     }
 }

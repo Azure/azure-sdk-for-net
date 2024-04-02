@@ -43,6 +43,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return UnknownWebLinkedServiceTypeProperties.DeserializeUnknownWebLinkedServiceTypeProperties(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebLinkedServiceTypeProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebLinkedServiceTypeProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<WebLinkedServiceTypeProperties>(this);
+            return content;
+        }
+
         internal partial class WebLinkedServiceTypePropertiesConverter : JsonConverter<WebLinkedServiceTypeProperties>
         {
             public override void Write(Utf8JsonWriter writer, WebLinkedServiceTypeProperties model, JsonSerializerOptions options)

@@ -50,5 +50,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new ResourceAuthorization(scope, action, evidence ?? new ChangeTrackingDictionary<string, string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ResourceAuthorization FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeResourceAuthorization(document.RootElement);
+        }
     }
 }

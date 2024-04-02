@@ -41,6 +41,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SsisExecutionParameter(value);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SsisExecutionParameter FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSsisExecutionParameter(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SsisExecutionParameter>(this);
+            return content;
+        }
+
         internal partial class SsisExecutionParameterConverter : JsonConverter<SsisExecutionParameter>
         {
             public override void Write(Utf8JsonWriter writer, SsisExecutionParameter model, JsonSerializerOptions options)

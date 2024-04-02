@@ -110,6 +110,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 errors ?? new ChangeTrackingList<AcsRouterCommunicationError>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsRouterJobClassificationFailedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterJobClassificationFailedEventData(document.RootElement);
+        }
+
         internal partial class AcsRouterJobClassificationFailedEventDataConverter : JsonConverter<AcsRouterJobClassificationFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsRouterJobClassificationFailedEventData model, JsonSerializerOptions options)

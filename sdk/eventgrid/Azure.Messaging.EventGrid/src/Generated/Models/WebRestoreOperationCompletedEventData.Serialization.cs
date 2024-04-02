@@ -79,6 +79,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 verb);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static WebRestoreOperationCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebRestoreOperationCompletedEventData(document.RootElement);
+        }
+
         internal partial class WebRestoreOperationCompletedEventDataConverter : JsonConverter<WebRestoreOperationCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, WebRestoreOperationCompletedEventData model, JsonSerializerOptions options)

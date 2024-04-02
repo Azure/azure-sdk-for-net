@@ -267,6 +267,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 reportStatusOnCallBack);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new WebHookActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeWebHookActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<WebHookActivity>(this);
+            return content;
+        }
+
         internal partial class WebHookActivityConverter : JsonConverter<WebHookActivity>
         {
             public override void Write(Utf8JsonWriter writer, WebHookActivity model, JsonSerializerOptions options)

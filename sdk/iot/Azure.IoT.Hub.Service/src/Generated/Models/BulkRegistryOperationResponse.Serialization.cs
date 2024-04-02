@@ -63,5 +63,13 @@ namespace Azure.IoT.Hub.Service.Models
             }
             return new BulkRegistryOperationResponse(isSuccessful, errors ?? new ChangeTrackingList<DeviceRegistryOperationError>(), warnings ?? new ChangeTrackingList<DeviceRegistryOperationWarning>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static BulkRegistryOperationResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeBulkRegistryOperationResponse(document.RootElement);
+        }
     }
 }

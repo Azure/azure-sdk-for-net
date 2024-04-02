@@ -97,6 +97,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 attributes ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new EventGridMqttClientCreatedOrUpdatedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEventGridMqttClientCreatedOrUpdatedEventData(document.RootElement);
+        }
+
         internal partial class EventGridMqttClientCreatedOrUpdatedEventDataConverter : JsonConverter<EventGridMqttClientCreatedOrUpdatedEventData>
         {
             public override void Write(Utf8JsonWriter writer, EventGridMqttClientCreatedOrUpdatedEventData model, JsonSerializerOptions options)

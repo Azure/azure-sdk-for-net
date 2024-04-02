@@ -19,5 +19,13 @@ namespace Azure.MixedReality.RemoteRendering
             writer.WriteNumberValue(MaxLeaseTimeMinutes);
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UpdateSessionOptions>(this);
+            return content;
+        }
     }
 }

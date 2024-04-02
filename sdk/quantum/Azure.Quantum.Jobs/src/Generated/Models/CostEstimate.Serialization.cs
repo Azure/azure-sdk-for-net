@@ -54,5 +54,13 @@ namespace Azure.Quantum.Jobs.Models
             }
             return new CostEstimate(currencyCode, events ?? new ChangeTrackingList<UsageEvent>(), estimatedTotal);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CostEstimate FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCostEstimate(document.RootElement);
+        }
     }
 }

@@ -85,5 +85,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 state,
                 expirationTime);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsRouterWorkerSelector FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsRouterWorkerSelector(document.RootElement);
+        }
     }
 }

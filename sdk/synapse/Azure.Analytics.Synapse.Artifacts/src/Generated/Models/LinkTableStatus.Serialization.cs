@@ -105,6 +105,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 lastTransactionCommitTime);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkTableStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkTableStatus(document.RootElement);
+        }
+
         internal partial class LinkTableStatusConverter : JsonConverter<LinkTableStatus>
         {
             public override void Write(Utf8JsonWriter writer, LinkTableStatus model, JsonSerializerOptions options)

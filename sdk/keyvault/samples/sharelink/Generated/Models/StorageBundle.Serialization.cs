@@ -89,5 +89,13 @@ namespace Azure.Security.KeyVault.Storage.Models
                 attributes,
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageBundle FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageBundle(document.RootElement);
+        }
     }
 }

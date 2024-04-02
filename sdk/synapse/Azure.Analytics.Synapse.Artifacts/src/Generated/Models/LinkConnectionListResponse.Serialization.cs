@@ -44,6 +44,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LinkConnectionListResponse(value, nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LinkConnectionListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLinkConnectionListResponse(document.RootElement);
+        }
+
         internal partial class LinkConnectionListResponseConverter : JsonConverter<LinkConnectionListResponse>
         {
             public override void Write(Utf8JsonWriter writer, LinkConnectionListResponse model, JsonSerializerOptions options)

@@ -44,6 +44,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new SqlScriptsListResponse(value, nextLink);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SqlScriptsListResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlScriptsListResponse(document.RootElement);
+        }
+
         internal partial class SqlScriptsListResponseConverter : JsonConverter<SqlScriptsListResponse>
         {
             public override void Write(Utf8JsonWriter writer, SqlScriptsListResponse model, JsonSerializerOptions options)

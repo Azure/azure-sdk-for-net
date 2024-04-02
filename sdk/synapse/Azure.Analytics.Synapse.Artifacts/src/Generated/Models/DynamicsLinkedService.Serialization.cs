@@ -355,6 +355,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 credential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DynamicsLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDynamicsLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DynamicsLinkedService>(this);
+            return content;
+        }
+
         internal partial class DynamicsLinkedServiceConverter : JsonConverter<DynamicsLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, DynamicsLinkedService model, JsonSerializerOptions options)

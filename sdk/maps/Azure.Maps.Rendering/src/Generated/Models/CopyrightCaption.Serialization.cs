@@ -34,5 +34,13 @@ namespace Azure.Maps.Rendering
             }
             return new CopyrightCaption(formatVersion, copyrightsCaption);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CopyrightCaption FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCopyrightCaption(document.RootElement);
+        }
     }
 }

@@ -117,5 +117,13 @@ namespace Azure.Maps.Search.Models
                 fuzzyLevel,
                 geoBias);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchSummary FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchSummary(document.RootElement);
+        }
     }
 }

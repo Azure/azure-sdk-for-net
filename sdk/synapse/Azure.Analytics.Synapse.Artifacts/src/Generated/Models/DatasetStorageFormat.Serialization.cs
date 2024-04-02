@@ -58,6 +58,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return UnknownDatasetStorageFormat.DeserializeUnknownDatasetStorageFormat(element);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DatasetStorageFormat FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDatasetStorageFormat(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DatasetStorageFormat>(this);
+            return content;
+        }
+
         internal partial class DatasetStorageFormatConverter : JsonConverter<DatasetStorageFormat>
         {
             public override void Write(Utf8JsonWriter writer, DatasetStorageFormat model, JsonSerializerOptions options)

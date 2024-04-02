@@ -28,5 +28,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new PhoneNumberIdentifierModel(value);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PhoneNumberIdentifierModel FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePhoneNumberIdentifierModel(document.RootElement);
+        }
     }
 }

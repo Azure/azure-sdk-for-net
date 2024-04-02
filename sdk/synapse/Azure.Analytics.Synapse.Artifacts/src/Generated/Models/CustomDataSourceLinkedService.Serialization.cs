@@ -155,6 +155,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 typeProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new CustomDataSourceLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomDataSourceLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<CustomDataSourceLinkedService>(this);
+            return content;
+        }
+
         internal partial class CustomDataSourceLinkedServiceConverter : JsonConverter<CustomDataSourceLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, CustomDataSourceLinkedService model, JsonSerializerOptions options)

@@ -58,6 +58,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new EncryptionDetails(doubleEncryptionEnabled, cmk);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EncryptionDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEncryptionDetails(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EncryptionDetails>(this);
+            return content;
+        }
+
         internal partial class EncryptionDetailsConverter : JsonConverter<EncryptionDetails>
         {
             public override void Write(Utf8JsonWriter writer, EncryptionDetails model, JsonSerializerOptions options)

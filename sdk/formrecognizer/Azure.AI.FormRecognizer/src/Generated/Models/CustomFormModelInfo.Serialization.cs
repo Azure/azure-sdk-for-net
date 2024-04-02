@@ -69,5 +69,13 @@ namespace Azure.AI.FormRecognizer.Training
                 modelName,
                 attributes);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CustomFormModelInfo FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCustomFormModelInfo(document.RootElement);
+        }
     }
 }

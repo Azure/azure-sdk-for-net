@@ -50,6 +50,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MediaLiveEventEncoderConnectedEventData(ingestUrl, streamId, encoderIp, encoderPort);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventEncoderConnectedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventEncoderConnectedEventData(document.RootElement);
+        }
+
         internal partial class MediaLiveEventEncoderConnectedEventDataConverter : JsonConverter<MediaLiveEventEncoderConnectedEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventEncoderConnectedEventData model, JsonSerializerOptions options)

@@ -132,6 +132,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalProperties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static IntegrationRuntimeComputeProperties FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeIntegrationRuntimeComputeProperties(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<IntegrationRuntimeComputeProperties>(this);
+            return content;
+        }
+
         internal partial class IntegrationRuntimeComputePropertiesConverter : JsonConverter<IntegrationRuntimeComputeProperties>
         {
             public override void Write(Utf8JsonWriter writer, IntegrationRuntimeComputeProperties model, JsonSerializerOptions options)

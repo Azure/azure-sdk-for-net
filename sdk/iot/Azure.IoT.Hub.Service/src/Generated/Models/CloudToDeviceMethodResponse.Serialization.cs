@@ -42,5 +42,13 @@ namespace Azure.IoT.Hub.Service.Models
             }
             return new CloudToDeviceMethodResponse(status, payload);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static CloudToDeviceMethodResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeCloudToDeviceMethodResponse(document.RootElement);
+        }
     }
 }

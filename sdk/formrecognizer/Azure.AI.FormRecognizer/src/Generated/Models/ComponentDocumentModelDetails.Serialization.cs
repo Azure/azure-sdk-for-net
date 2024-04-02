@@ -19,5 +19,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
             writer.WriteStringValue(ModelId);
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ComponentDocumentModelDetails>(this);
+            return content;
+        }
     }
 }

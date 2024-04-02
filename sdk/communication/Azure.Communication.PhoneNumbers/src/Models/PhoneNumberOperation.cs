@@ -19,7 +19,7 @@ namespace Azure.Communication.PhoneNumbers
     [CodeGenSuppress("Id")]
     [CodeGenSuppress("LastActionDateTime")]
     [CodeGenSuppress("DeserializePhoneNumberOperation", typeof(JsonElement))]
-
+    [CodeGenSuppress("FromResponse", typeof(Response))]
     internal partial class PhoneNumberOperation
     {
     }

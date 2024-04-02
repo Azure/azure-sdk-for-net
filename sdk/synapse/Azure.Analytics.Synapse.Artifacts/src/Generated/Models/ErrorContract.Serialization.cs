@@ -36,6 +36,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new ErrorContract(error);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ErrorContract FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeErrorContract(document.RootElement);
+        }
+
         internal partial class ErrorContractConverter : JsonConverter<ErrorContract>
         {
             public override void Write(Utf8JsonWriter writer, ErrorContract model, JsonSerializerOptions options)

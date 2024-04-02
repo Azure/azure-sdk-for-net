@@ -28,5 +28,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new AcsEmailDeliveryReportStatusDetails(statusMessage);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AcsEmailDeliveryReportStatusDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsEmailDeliveryReportStatusDetails(document.RootElement);
+        }
     }
 }

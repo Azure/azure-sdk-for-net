@@ -80,6 +80,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 connectedRegistry);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ContainerRegistryChartDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerRegistryChartDeletedEventData(document.RootElement);
+        }
+
         internal partial class ContainerRegistryChartDeletedEventDataConverter : JsonConverter<ContainerRegistryChartDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ContainerRegistryChartDeletedEventData model, JsonSerializerOptions options)

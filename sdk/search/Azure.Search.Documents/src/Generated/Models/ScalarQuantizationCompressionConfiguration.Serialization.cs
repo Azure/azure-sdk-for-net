@@ -98,5 +98,21 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new ScalarQuantizationCompressionConfiguration(name, kind, rerankWithOriginalVectors, defaultOversampling, scalarQuantizationParameters);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ScalarQuantizationCompressionConfiguration FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeScalarQuantizationCompressionConfiguration(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ScalarQuantizationCompressionConfiguration>(this);
+            return content;
+        }
     }
 }

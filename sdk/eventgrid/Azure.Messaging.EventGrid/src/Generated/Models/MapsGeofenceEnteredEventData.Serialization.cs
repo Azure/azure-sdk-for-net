@@ -82,6 +82,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MapsGeofenceEnteredEventData(expiredGeofenceGeometryId ?? new ChangeTrackingList<string>(), geometries ?? new ChangeTrackingList<MapsGeofenceGeometry>(), invalidPeriodGeofenceGeometryId ?? new ChangeTrackingList<string>(), isEventPublished);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MapsGeofenceEnteredEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMapsGeofenceEnteredEventData(document.RootElement);
+        }
+
         internal partial class MapsGeofenceEnteredEventDataConverter : JsonConverter<MapsGeofenceEnteredEventData>
         {
             public override void Write(Utf8JsonWriter writer, MapsGeofenceEnteredEventData model, JsonSerializerOptions options)

@@ -70,5 +70,13 @@ namespace Azure.AI.FormRecognizer.Models
             }
             return new PageResult(page, clusterId, keyValuePairs ?? new ChangeTrackingList<KeyValuePair>(), tables ?? new ChangeTrackingList<DataTable>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PageResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePageResult(document.RootElement);
+        }
     }
 }

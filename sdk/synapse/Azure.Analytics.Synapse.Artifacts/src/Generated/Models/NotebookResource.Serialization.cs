@@ -67,6 +67,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new NotebookResource(id, name, type, etag, properties);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static NotebookResource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeNotebookResource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<NotebookResource>(this);
+            return content;
+        }
+
         internal partial class NotebookResourceConverter : JsonConverter<NotebookResource>
         {
             public override void Write(Utf8JsonWriter writer, NotebookResource model, JsonSerializerOptions options)

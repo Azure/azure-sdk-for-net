@@ -149,6 +149,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 query);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new ImpalaSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeImpalaSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<ImpalaSource>(this);
+            return content;
+        }
+
         internal partial class ImpalaSourceConverter : JsonConverter<ImpalaSource>
         {
             public override void Write(Utf8JsonWriter writer, ImpalaSource model, JsonSerializerOptions options)

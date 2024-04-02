@@ -191,6 +191,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 errorCode);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new FailActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFailActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<FailActivity>(this);
+            return content;
+        }
+
         internal partial class FailActivityConverter : JsonConverter<FailActivity>
         {
             public override void Write(Utf8JsonWriter writer, FailActivity model, JsonSerializerOptions options)

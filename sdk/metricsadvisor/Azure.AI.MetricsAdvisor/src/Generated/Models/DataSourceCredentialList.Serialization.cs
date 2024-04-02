@@ -45,5 +45,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new DataSourceCredentialList(nextLink, value ?? new ChangeTrackingList<DataSourceCredentialEntity>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataSourceCredentialList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataSourceCredentialList(document.RootElement);
+        }
     }
 }

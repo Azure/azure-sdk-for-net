@@ -181,6 +181,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 flushImmediately);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AzureDataExplorerSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAzureDataExplorerSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<AzureDataExplorerSink>(this);
+            return content;
+        }
+
         internal partial class AzureDataExplorerSinkConverter : JsonConverter<AzureDataExplorerSink>
         {
             public override void Write(Utf8JsonWriter writer, AzureDataExplorerSink model, JsonSerializerOptions options)

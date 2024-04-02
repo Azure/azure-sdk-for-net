@@ -70,5 +70,21 @@ namespace Azure.Communication.ShortCodes.Models
             }
             return new UseCase(contentCategory, examples ?? new ChangeTrackingList<MessageExampleSequence>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static UseCase FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUseCase(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UseCase>(this);
+            return content;
+        }
     }
 }

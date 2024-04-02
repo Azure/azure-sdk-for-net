@@ -108,5 +108,13 @@ namespace Azure.AI.FormRecognizer.Models
                 tags ?? new ChangeTrackingDictionary<string, string>(),
                 error);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownOperationDetails FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownOperationDetails(document.RootElement);
+        }
     }
 }

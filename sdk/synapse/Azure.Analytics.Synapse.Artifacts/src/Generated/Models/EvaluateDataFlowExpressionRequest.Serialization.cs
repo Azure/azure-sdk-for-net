@@ -92,6 +92,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new EvaluateDataFlowExpressionRequest(sessionId, dataFlowName, streamName, rowLimits, expression);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static EvaluateDataFlowExpressionRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeEvaluateDataFlowExpressionRequest(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<EvaluateDataFlowExpressionRequest>(this);
+            return content;
+        }
+
         internal partial class EvaluateDataFlowExpressionRequestConverter : JsonConverter<EvaluateDataFlowExpressionRequest>
         {
             public override void Write(Utf8JsonWriter writer, EvaluateDataFlowExpressionRequest model, JsonSerializerOptions options)

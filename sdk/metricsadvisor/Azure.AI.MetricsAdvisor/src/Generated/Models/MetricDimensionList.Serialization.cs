@@ -44,5 +44,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new MetricDimensionList(nextLink, value ?? new ChangeTrackingList<string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricDimensionList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricDimensionList(document.RootElement);
+        }
     }
 }

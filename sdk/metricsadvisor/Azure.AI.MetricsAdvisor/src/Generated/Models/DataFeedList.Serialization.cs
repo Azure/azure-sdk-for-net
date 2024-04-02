@@ -44,5 +44,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new DataFeedList(nextLink, value ?? new ChangeTrackingList<DataFeedDetail>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static DataFeedList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDataFeedList(document.RootElement);
+        }
     }
 }

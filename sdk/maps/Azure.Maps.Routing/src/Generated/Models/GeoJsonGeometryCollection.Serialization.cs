@@ -27,5 +27,13 @@ namespace Azure.Maps.Routing.Models
             writer.WriteStringValue(Type.ToSerialString());
             writer.WriteEndObject();
         }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Common.Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<GeoJsonGeometryCollection>(this);
+            return content;
+        }
     }
 }

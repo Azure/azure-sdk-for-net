@@ -86,6 +86,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 storageDiagnostics);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageBlobRenamedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageBlobRenamedEventData(document.RootElement);
+        }
+
         internal partial class StorageBlobRenamedEventDataConverter : JsonConverter<StorageBlobRenamedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageBlobRenamedEventData model, JsonSerializerOptions options)

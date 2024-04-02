@@ -250,6 +250,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 table);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SqlServerTableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlServerTableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SqlServerTableDataset>(this);
+            return content;
+        }
+
         internal partial class SqlServerTableDatasetConverter : JsonConverter<SqlServerTableDataset>
         {
             public override void Write(Utf8JsonWriter writer, SqlServerTableDataset model, JsonSerializerOptions options)

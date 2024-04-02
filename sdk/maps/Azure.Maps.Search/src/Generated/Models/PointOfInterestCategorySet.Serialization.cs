@@ -32,5 +32,13 @@ namespace Azure.Maps.Search.Models
             }
             return new PointOfInterestCategorySet(id);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PointOfInterestCategorySet FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePointOfInterestCategorySet(document.RootElement);
+        }
     }
 }

@@ -47,5 +47,13 @@ namespace Azure.AI.MetricsAdvisor.Models
             }
             return new AnomalyAlert(alertId, timestamp, createdTime, modifiedTime);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AnomalyAlert FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAnomalyAlert(document.RootElement);
+        }
     }
 }

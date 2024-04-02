@@ -34,5 +34,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new ListSynonymMapsResult(value);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ListSynonymMapsResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeListSynonymMapsResult(document.RootElement);
+        }
     }
 }

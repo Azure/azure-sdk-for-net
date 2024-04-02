@@ -191,6 +191,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 condition);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new FilterActivity FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeFilterActivity(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<FilterActivity>(this);
+            return content;
+        }
+
         internal partial class FilterActivityConverter : JsonConverter<FilterActivity>
         {
             public override void Write(Utf8JsonWriter writer, FilterActivity model, JsonSerializerOptions options)

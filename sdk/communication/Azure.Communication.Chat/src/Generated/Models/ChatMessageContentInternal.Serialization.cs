@@ -75,5 +75,13 @@ namespace Azure.Communication.Chat
             }
             return new ChatMessageContentInternal(message, topic, participants ?? new ChangeTrackingList<ChatParticipantInternal>(), attachments ?? new ChangeTrackingList<ChatAttachmentInternal>(), initiatorCommunicationIdentifier);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ChatMessageContentInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeChatMessageContentInternal(document.RootElement);
+        }
     }
 }

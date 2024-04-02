@@ -57,5 +57,13 @@ namespace Azure.Search.Documents.Indexes.Models
             }
             return new SearchIndexerStatus(status, lastResult, executionHistory, limits);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SearchIndexerStatus FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchIndexerStatus(document.RootElement);
+        }
     }
 }

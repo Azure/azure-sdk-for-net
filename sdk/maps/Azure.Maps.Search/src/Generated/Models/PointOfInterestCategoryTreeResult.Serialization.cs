@@ -39,5 +39,13 @@ namespace Azure.Maps.Search.Models
             }
             return new PointOfInterestCategoryTreeResult(poiCategories ?? new ChangeTrackingList<PointOfInterestCategory>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static PointOfInterestCategoryTreeResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializePointOfInterestCategoryTreeResult(document.RootElement);
+        }
     }
 }

@@ -52,5 +52,13 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             }
             return new ContainerRegistryEventRequest(id, addr, host, method, useragent);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ContainerRegistryEventRequest FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeContainerRegistryEventRequest(document.RootElement);
+        }
     }
 }

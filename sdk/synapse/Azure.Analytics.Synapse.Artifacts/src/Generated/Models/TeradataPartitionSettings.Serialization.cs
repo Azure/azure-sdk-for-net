@@ -78,6 +78,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new TeradataPartitionSettings(partitionColumnName, partitionUpperBound, partitionLowerBound);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static TeradataPartitionSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeTeradataPartitionSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<TeradataPartitionSettings>(this);
+            return content;
+        }
+
         internal partial class TeradataPartitionSettingsConverter : JsonConverter<TeradataPartitionSettings>
         {
             public override void Write(Utf8JsonWriter writer, TeradataPartitionSettings model, JsonSerializerOptions options)

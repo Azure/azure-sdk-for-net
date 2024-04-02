@@ -44,5 +44,13 @@ namespace Azure.Data.SchemaRegistry.Models
             }
             return new SchemaGroups(schemaGroups ?? new ChangeTrackingList<string>(), nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SchemaGroups FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSchemaGroups(document.RootElement);
+        }
     }
 }

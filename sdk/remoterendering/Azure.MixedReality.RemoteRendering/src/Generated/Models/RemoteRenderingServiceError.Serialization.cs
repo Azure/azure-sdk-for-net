@@ -66,5 +66,13 @@ namespace Azure.MixedReality.RemoteRendering
             }
             return new RemoteRenderingServiceError(code, message, details ?? new ChangeTrackingList<RemoteRenderingServiceError>(), target, innerError);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RemoteRenderingServiceError FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRemoteRenderingServiceError(document.RootElement);
+        }
     }
 }

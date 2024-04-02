@@ -113,5 +113,13 @@ namespace Azure.AI.Language.QuestionAnswering
                 dialog,
                 answerSpan);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KnowledgeBaseAnswer FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKnowledgeBaseAnswer(document.RootElement);
+        }
     }
 }

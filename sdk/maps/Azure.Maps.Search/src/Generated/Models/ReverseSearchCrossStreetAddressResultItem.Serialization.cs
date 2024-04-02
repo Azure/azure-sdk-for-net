@@ -38,5 +38,13 @@ namespace Azure.Maps.Search.Models
             }
             return new ReverseSearchCrossStreetAddressResultItem(address, position);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ReverseSearchCrossStreetAddressResultItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeReverseSearchCrossStreetAddressResultItem(document.RootElement);
+        }
     }
 }

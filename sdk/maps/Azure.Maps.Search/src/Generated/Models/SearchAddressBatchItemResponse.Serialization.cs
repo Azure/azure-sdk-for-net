@@ -59,5 +59,13 @@ namespace Azure.Maps.Search.Models
             }
             return new SearchAddressBatchItemResponse(summary, results ?? new ChangeTrackingList<SearchAddressResultItem>(), error);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SearchAddressBatchItemResponse FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSearchAddressBatchItemResponse(document.RootElement);
+        }
     }
 }

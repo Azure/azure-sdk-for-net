@@ -89,5 +89,21 @@ namespace Azure.AI.TextAnalytics.Models
             }
             return new KeyPhraseResultDocumentsItem(id, warnings, statistics, keyPhrases);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new KeyPhraseResultDocumentsItem FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyPhraseResultDocumentsItem(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<KeyPhraseResultDocumentsItem>(this);
+            return content;
+        }
     }
 }

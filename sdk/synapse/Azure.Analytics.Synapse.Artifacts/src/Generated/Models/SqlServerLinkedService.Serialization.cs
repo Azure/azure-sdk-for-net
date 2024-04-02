@@ -234,6 +234,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 alwaysEncryptedSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new SqlServerLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSqlServerLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<SqlServerLinkedService>(this);
+            return content;
+        }
+
         internal partial class SqlServerLinkedServiceConverter : JsonConverter<SqlServerLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, SqlServerLinkedService model, JsonSerializerOptions options)

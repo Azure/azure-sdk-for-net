@@ -133,6 +133,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 additionalColumns);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DynamicsCrmSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDynamicsCrmSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DynamicsCrmSource>(this);
+            return content;
+        }
+
         internal partial class DynamicsCrmSourceConverter : JsonConverter<DynamicsCrmSource>
         {
             public override void Write(Utf8JsonWriter writer, DynamicsCrmSource model, JsonSerializerOptions options)

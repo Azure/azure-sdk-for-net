@@ -90,6 +90,14 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 error);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RunNotebookResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRunNotebookResult(document.RootElement);
+        }
+
         internal partial class RunNotebookResultConverter : JsonConverter<RunNotebookResult>
         {
             public override void Write(Utf8JsonWriter writer, RunNotebookResult model, JsonSerializerOptions options)

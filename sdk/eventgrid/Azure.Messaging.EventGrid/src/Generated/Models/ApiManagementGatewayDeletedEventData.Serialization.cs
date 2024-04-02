@@ -32,6 +32,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new ApiManagementGatewayDeletedEventData(resourceUri);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static ApiManagementGatewayDeletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeApiManagementGatewayDeletedEventData(document.RootElement);
+        }
+
         internal partial class ApiManagementGatewayDeletedEventDataConverter : JsonConverter<ApiManagementGatewayDeletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, ApiManagementGatewayDeletedEventData model, JsonSerializerOptions options)

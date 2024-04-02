@@ -79,5 +79,13 @@ namespace Azure.Security.KeyVault.Administration.Models
                 startTime,
                 endTime);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RestoreDetailsInternal FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRestoreDetailsInternal(document.RootElement);
+        }
     }
 }

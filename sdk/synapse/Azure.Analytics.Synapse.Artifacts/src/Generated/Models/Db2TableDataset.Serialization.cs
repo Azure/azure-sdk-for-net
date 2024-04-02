@@ -250,6 +250,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 table);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new Db2TableDataset FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDb2TableDataset(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Db2TableDataset>(this);
+            return content;
+        }
+
         internal partial class Db2TableDatasetConverter : JsonConverter<Db2TableDataset>
         {
             public override void Write(Utf8JsonWriter writer, Db2TableDataset model, JsonSerializerOptions options)

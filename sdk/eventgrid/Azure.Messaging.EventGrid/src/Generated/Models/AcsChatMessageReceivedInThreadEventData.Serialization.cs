@@ -118,6 +118,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 metadata ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AcsChatMessageReceivedInThreadEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAcsChatMessageReceivedInThreadEventData(document.RootElement);
+        }
+
         internal partial class AcsChatMessageReceivedInThreadEventDataConverter : JsonConverter<AcsChatMessageReceivedInThreadEventData>
         {
             public override void Write(Utf8JsonWriter writer, AcsChatMessageReceivedInThreadEventData model, JsonSerializerOptions options)

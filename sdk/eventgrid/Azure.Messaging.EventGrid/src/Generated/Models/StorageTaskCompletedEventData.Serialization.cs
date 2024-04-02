@@ -68,6 +68,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new StorageTaskCompletedEventData(status, completedDateTime, taskExecutionId, taskName, summaryReportBlobUrl);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static StorageTaskCompletedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeStorageTaskCompletedEventData(document.RootElement);
+        }
+
         internal partial class StorageTaskCompletedEventDataConverter : JsonConverter<StorageTaskCompletedEventData>
         {
             public override void Write(Utf8JsonWriter writer, StorageTaskCompletedEventData model, JsonSerializerOptions options)

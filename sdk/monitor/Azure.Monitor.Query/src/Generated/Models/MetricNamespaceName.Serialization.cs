@@ -28,5 +28,13 @@ namespace Azure.Monitor.Query.Models
             }
             return new MetricNamespaceName(metricNamespaceName);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MetricNamespaceName FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMetricNamespaceName(document.RootElement);
+        }
     }
 }

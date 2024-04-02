@@ -60,6 +60,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new AvsScriptExecutionFailedEventData(operationId, cmdletId, output ?? new ChangeTrackingList<string>(), failureMessage);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new AvsScriptExecutionFailedEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAvsScriptExecutionFailedEventData(document.RootElement);
+        }
+
         internal partial class AvsScriptExecutionFailedEventDataConverter : JsonConverter<AvsScriptExecutionFailedEventData>
         {
             public override void Write(Utf8JsonWriter writer, AvsScriptExecutionFailedEventData model, JsonSerializerOptions options)

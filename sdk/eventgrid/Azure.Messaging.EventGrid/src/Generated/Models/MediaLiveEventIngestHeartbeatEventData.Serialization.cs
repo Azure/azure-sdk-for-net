@@ -170,6 +170,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 healthy);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static MediaLiveEventIngestHeartbeatEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaLiveEventIngestHeartbeatEventData(document.RootElement);
+        }
+
         internal partial class MediaLiveEventIngestHeartbeatEventDataConverter : JsonConverter<MediaLiveEventIngestHeartbeatEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaLiveEventIngestHeartbeatEventData model, JsonSerializerOptions options)

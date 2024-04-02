@@ -291,6 +291,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new Db2LinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDb2LinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<Db2LinkedService>(this);
+            return content;
+        }
+
         internal partial class Db2LinkedServiceConverter : JsonConverter<Db2LinkedService>
         {
             public override void Write(Utf8JsonWriter writer, Db2LinkedService model, JsonSerializerOptions options)

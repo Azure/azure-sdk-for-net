@@ -58,5 +58,13 @@ namespace Azure.Maps.Routing.Models
             }
             return new RouteInstructionGroup(firstInstructionIndex, lastInstructionIndex, groupLengthInMeters, groupMessage);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static RouteInstructionGroup FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeRouteInstructionGroup(document.RootElement);
+        }
     }
 }

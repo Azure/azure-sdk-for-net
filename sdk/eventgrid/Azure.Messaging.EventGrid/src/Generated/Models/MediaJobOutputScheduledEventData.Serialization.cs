@@ -62,6 +62,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
             return new MediaJobOutputScheduledEventData(previousState, output, jobCorrelationData ?? new ChangeTrackingDictionary<string, string>());
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new MediaJobOutputScheduledEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeMediaJobOutputScheduledEventData(document.RootElement);
+        }
+
         internal partial class MediaJobOutputScheduledEventDataConverter : JsonConverter<MediaJobOutputScheduledEventData>
         {
             public override void Write(Utf8JsonWriter writer, MediaJobOutputScheduledEventData model, JsonSerializerOptions options)

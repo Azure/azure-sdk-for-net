@@ -77,5 +77,13 @@ namespace Azure.Analytics.Synapse.Spark.Models
             }
             return new SparkScheduler(submittedAt, scheduledAt, endedAt, cancellationRequestedAt, currentState);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SparkScheduler FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSparkScheduler(document.RootElement);
+        }
     }
 }

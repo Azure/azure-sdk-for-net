@@ -282,6 +282,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 encryptedCredential);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new XeroLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeXeroLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<XeroLinkedService>(this);
+            return content;
+        }
+
         internal partial class XeroLinkedServiceConverter : JsonConverter<XeroLinkedService>
         {
             public override void Write(Utf8JsonWriter writer, XeroLinkedService model, JsonSerializerOptions options)

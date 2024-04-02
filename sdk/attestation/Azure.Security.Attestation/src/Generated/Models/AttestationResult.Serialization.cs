@@ -332,6 +332,14 @@ namespace Azure.Security.Attestation
                 rpData);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static AttestationResult FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeAttestationResult(document.RootElement);
+        }
+
         internal partial class AttestationResultConverter : JsonConverter<AttestationResult>
         {
             public override void Write(Utf8JsonWriter writer, AttestationResult model, JsonSerializerOptions options)

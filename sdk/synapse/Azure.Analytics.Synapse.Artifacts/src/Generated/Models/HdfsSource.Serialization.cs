@@ -133,6 +133,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 distcpSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HdfsSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHdfsSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HdfsSource>(this);
+            return content;
+        }
+
         internal partial class HdfsSourceConverter : JsonConverter<HdfsSource>
         {
             public override void Write(Utf8JsonWriter writer, HdfsSource model, JsonSerializerOptions options)

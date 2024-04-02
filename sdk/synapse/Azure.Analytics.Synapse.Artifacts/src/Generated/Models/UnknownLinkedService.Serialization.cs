@@ -142,5 +142,21 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 annotations ?? new ChangeTrackingList<object>(),
                 additionalProperties);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new UnknownLinkedService FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeUnknownLinkedService(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<UnknownLinkedService>(this);
+            return content;
+        }
     }
 }

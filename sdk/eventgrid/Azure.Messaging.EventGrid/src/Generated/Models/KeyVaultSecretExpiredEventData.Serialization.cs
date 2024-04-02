@@ -83,6 +83,14 @@ namespace Azure.Messaging.EventGrid.SystemEvents
                 exp);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static KeyVaultSecretExpiredEventData FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeKeyVaultSecretExpiredEventData(document.RootElement);
+        }
+
         internal partial class KeyVaultSecretExpiredEventDataConverter : JsonConverter<KeyVaultSecretExpiredEventData>
         {
             public override void Write(Utf8JsonWriter writer, KeyVaultSecretExpiredEventData model, JsonSerializerOptions options)

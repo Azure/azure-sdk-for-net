@@ -100,5 +100,13 @@ namespace Azure.AI.FormRecognizer.DocumentAnalysis
                 apiVersion,
                 tags ?? new ChangeTrackingDictionary<string, string>());
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static OperationSummary FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeOperationSummary(document.RootElement);
+        }
     }
 }

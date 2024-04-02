@@ -117,6 +117,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 httpRequestTimeout);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new HttpSource FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeHttpSource(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<HttpSource>(this);
+            return content;
+        }
+
         internal partial class HttpSourceConverter : JsonConverter<HttpSource>
         {
             public override void Write(Utf8JsonWriter writer, HttpSource model, JsonSerializerOptions options)

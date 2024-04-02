@@ -71,6 +71,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
             return new LogSettings(enableCopyActivityLog, copyActivityLogSettings, logLocationSettings);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static LogSettings FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeLogSettings(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal virtual RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<LogSettings>(this);
+            return content;
+        }
+
         internal partial class LogSettingsConverter : JsonConverter<LogSettings>
         {
             public override void Write(Utf8JsonWriter writer, LogSettings model, JsonSerializerOptions options)

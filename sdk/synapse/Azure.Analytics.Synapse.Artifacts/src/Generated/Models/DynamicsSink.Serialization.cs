@@ -174,6 +174,22 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
                 alternateKeyName);
         }
 
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static new DynamicsSink FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeDynamicsSink(document.RootElement);
+        }
+
+        /// <summary> Convert into a Utf8JsonRequestContent. </summary>
+        internal override RequestContent ToRequestContent()
+        {
+            var content = new Utf8JsonRequestContent();
+            content.JsonWriter.WriteObjectValue<DynamicsSink>(this);
+            return content;
+        }
+
         internal partial class DynamicsSinkConverter : JsonConverter<DynamicsSink>
         {
             public override void Write(Utf8JsonWriter writer, DynamicsSink model, JsonSerializerOptions options)

@@ -40,5 +40,13 @@ namespace Azure.MixedReality.RemoteRendering
             }
             return new SessionsList(sessions, nextLink);
         }
+
+        /// <summary> Deserializes the model from a raw response. </summary>
+        /// <param name="response"> The response to deserialize the model from. </param>
+        internal static SessionsList FromResponse(Response response)
+        {
+            using var document = JsonDocument.Parse(response.Content);
+            return DeserializeSessionsList(document.RootElement);
+        }
     }
 }
