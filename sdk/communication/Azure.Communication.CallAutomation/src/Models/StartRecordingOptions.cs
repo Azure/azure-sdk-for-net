@@ -53,7 +53,7 @@ namespace Azure.Communication.CallAutomation
         /// <summary>
         /// The external storage option.
         /// </summary>
-        public ExternalStorage ExternalStorage { get; set; }
+        public RecordingStorage RecordingStorage { get; set; }
 
         /// <summary>
         /// The sequential order in which audio channels are assigned to participants in the unmixed recording.

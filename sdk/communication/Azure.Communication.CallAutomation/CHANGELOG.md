@@ -1,9 +1,10 @@
 # Release History
 
-## 1.2.0-beta.1 (Unreleased)
+## 1.2.0
 
 ### Features Added
 - StartRecording now accepts PauseOnStart.
+- RecordingStateResult and RecordingStateChanged now accepts RecordingKind
 
 ### Breaking Changes
 
