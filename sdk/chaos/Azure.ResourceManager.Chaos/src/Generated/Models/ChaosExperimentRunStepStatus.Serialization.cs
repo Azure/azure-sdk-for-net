@@ -94,7 +94,7 @@ namespace Azure.ResourceManager.Chaos.Models
             string status = default;
             IReadOnlyList<ChaosExperimentRunBranchStatus> branches = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("stepName"u8))
@@ -128,10 +128,10 @@ namespace Azure.ResourceManager.Chaos.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new ChaosExperimentRunStepStatus(stepName, stepId, status, branches ?? new ChangeTrackingList<ChaosExperimentRunBranchStatus>(), serializedAdditionalRawData);
         }
 

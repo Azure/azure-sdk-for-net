@@ -87,7 +87,7 @@ namespace Azure.ResourceManager.Cdn.Models
             CdnCacheLevel cacheType = default;
             TimeSpan? cacheDuration = default;
             IDictionary<string, BinaryData> serializedAdditionalRawData = default;
-            Dictionary<string, BinaryData> rawDataDictionary = new Dictionary<string, BinaryData>();
+            Dictionary<string, BinaryData> additionalPropertiesDictionary = new Dictionary<string, BinaryData>();
             foreach (var property in element.EnumerateObject())
             {
                 if (property.NameEquals("typeName"u8))
@@ -117,10 +117,10 @@ namespace Azure.ResourceManager.Cdn.Models
                 }
                 if (options.Format != "W")
                 {
-                    rawDataDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
+                    additionalPropertiesDictionary.Add(property.Name, BinaryData.FromString(property.Value.GetRawText()));
                 }
             }
-            serializedAdditionalRawData = rawDataDictionary;
+            serializedAdditionalRawData = additionalPropertiesDictionary;
             return new CacheExpirationActionProperties(typeName, cacheBehavior, cacheType, cacheDuration, serializedAdditionalRawData);
         }
 
