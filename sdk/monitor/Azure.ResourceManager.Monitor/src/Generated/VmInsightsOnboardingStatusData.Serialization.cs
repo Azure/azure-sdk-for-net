@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<VmInsightsOnboardingStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,35 +43,35 @@ namespace Azure.ResourceManager.Monitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ResourceId != null)
+            if (Optional.IsDefined(ResourceId))
             {
                 writer.WritePropertyName("resourceId"u8);
                 writer.WriteStringValue(ResourceId);
             }
-            if (OnboardingStatus.HasValue)
+            if (Optional.IsDefined(OnboardingStatus))
             {
                 writer.WritePropertyName("onboardingStatus"u8);
                 writer.WriteStringValue(OnboardingStatus.Value.ToString());
             }
-            if (DataStatus.HasValue)
+            if (Optional.IsDefined(DataStatus))
             {
                 writer.WritePropertyName("dataStatus"u8);
                 writer.WriteStringValue(DataStatus.Value.ToString());
             }
-            if (!(Data is ChangeTrackingList<DataContainer> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Data))
             {
                 writer.WritePropertyName("data"u8);
                 writer.WriteStartArray();
                 foreach (var item in Data)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataContainer>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.Monitor
             var format = options.Format == "W" ? ((IPersistableModel<VmInsightsOnboardingStatusData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -230,7 +230,7 @@ namespace Azure.ResourceManager.Monitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -246,7 +246,7 @@ namespace Azure.ResourceManager.Monitor
                         return DeserializeVmInsightsOnboardingStatusData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VmInsightsOnboardingStatusData)} does not support reading '{options.Format}' format.");
             }
         }
 

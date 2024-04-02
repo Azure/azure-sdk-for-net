@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.Avs.Models
 {
-    /// <summary> The UnknownPlacementPolicyProperties. </summary>
+    /// <summary> Unknown version of PlacementPolicyProperties. </summary>
     internal partial class UnknownPlacementPolicyProperties : PlacementPolicyProperties
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPlacementPolicyProperties"/>. </summary>

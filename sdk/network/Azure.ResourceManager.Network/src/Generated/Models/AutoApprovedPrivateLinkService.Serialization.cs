@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoApprovedPrivateLinkService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PrivateLinkService != null)
+            if (Optional.IsDefined(PrivateLinkService))
             {
                 writer.WritePropertyName("privateLinkService"u8);
                 writer.WriteStringValue(PrivateLinkService);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutoApprovedPrivateLinkService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeAutoApprovedPrivateLinkService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutoApprovedPrivateLinkService)} does not support reading '{options.Format}' format.");
             }
         }
 

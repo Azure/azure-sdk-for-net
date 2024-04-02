@@ -6,10 +6,10 @@
 #nullable disable
 
 using System;
+using System.ClientModel.Primitives;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 using Azure.ResourceManager.Network.Models;
@@ -69,38 +69,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> DeleteAsync(string subscriptionId, string resourceGroupName, string expressRoutePortName, string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, expressRoutePortName, authorizationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -125,38 +97,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response Delete(string subscriptionId, string resourceGroupName, string expressRoutePortName, string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var message = CreateDeleteRequest(subscriptionId, resourceGroupName, expressRoutePortName, authorizationName);
             _pipeline.Send(message, cancellationToken);
@@ -203,38 +147,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpressRoutePortAuthorizationData>> GetAsync(string subscriptionId, string resourceGroupName, string expressRoutePortName, string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, expressRoutePortName, authorizationName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -264,38 +180,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpressRoutePortAuthorizationData> Get(string subscriptionId, string resourceGroupName, string expressRoutePortName, string authorizationName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
 
             using var message = CreateGetRequest(subscriptionId, resourceGroupName, expressRoutePortName, authorizationName);
             _pipeline.Send(message, cancellationToken);
@@ -335,7 +223,7 @@ namespace Azure.ResourceManager.Network
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(data);
+            content.JsonWriter.WriteObjectValue<ExpressRoutePortAuthorizationData>(data, new ModelReaderWriterOptions("W"));
             request.Content = content;
             _userAgent.Apply(message);
             return message;
@@ -352,42 +240,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response> CreateOrUpdateAsync(string subscriptionId, string resourceGroupName, string expressRoutePortName, string authorizationName, ExpressRoutePortAuthorizationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, expressRoutePortName, authorizationName, data);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -412,42 +269,11 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/>, <paramref name="expressRoutePortName"/> or <paramref name="authorizationName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response CreateOrUpdate(string subscriptionId, string resourceGroupName, string expressRoutePortName, string authorizationName, ExpressRoutePortAuthorizationData data, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
-            if (authorizationName == null)
-            {
-                throw new ArgumentNullException(nameof(authorizationName));
-            }
-            if (authorizationName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(authorizationName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
+            Argument.AssertNotNullOrEmpty(authorizationName, nameof(authorizationName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var message = CreateCreateOrUpdateRequest(subscriptionId, resourceGroupName, expressRoutePortName, authorizationName, data);
             _pipeline.Send(message, cancellationToken);
@@ -491,30 +317,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpressRoutePortAuthorizationListResult>> ListAsync(string subscriptionId, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, expressRoutePortName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -541,30 +346,9 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpressRoutePortAuthorizationListResult> List(string subscriptionId, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var message = CreateListRequest(subscriptionId, resourceGroupName, expressRoutePortName);
             _pipeline.Send(message, cancellationToken);
@@ -606,34 +390,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         public async Task<Response<ExpressRoutePortAuthorizationListResult>> ListNextPageAsync(string nextLink, string subscriptionId, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, expressRoutePortName);
             await _pipeline.SendAsync(message, cancellationToken).ConfigureAwait(false);
@@ -661,34 +421,10 @@ namespace Azure.ResourceManager.Network
         /// <exception cref="ArgumentException"> <paramref name="subscriptionId"/>, <paramref name="resourceGroupName"/> or <paramref name="expressRoutePortName"/> is an empty string, and was expected to be non-empty. </exception>
         public Response<ExpressRoutePortAuthorizationListResult> ListNextPage(string nextLink, string subscriptionId, string resourceGroupName, string expressRoutePortName, CancellationToken cancellationToken = default)
         {
-            if (nextLink == null)
-            {
-                throw new ArgumentNullException(nameof(nextLink));
-            }
-            if (subscriptionId == null)
-            {
-                throw new ArgumentNullException(nameof(subscriptionId));
-            }
-            if (subscriptionId.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(subscriptionId));
-            }
-            if (resourceGroupName == null)
-            {
-                throw new ArgumentNullException(nameof(resourceGroupName));
-            }
-            if (resourceGroupName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(resourceGroupName));
-            }
-            if (expressRoutePortName == null)
-            {
-                throw new ArgumentNullException(nameof(expressRoutePortName));
-            }
-            if (expressRoutePortName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(expressRoutePortName));
-            }
+            Argument.AssertNotNull(nextLink, nameof(nextLink));
+            Argument.AssertNotNullOrEmpty(subscriptionId, nameof(subscriptionId));
+            Argument.AssertNotNullOrEmpty(resourceGroupName, nameof(resourceGroupName));
+            Argument.AssertNotNullOrEmpty(expressRoutePortName, nameof(expressRoutePortName));
 
             using var message = CreateListNextPageRequest(nextLink, subscriptionId, resourceGroupName, expressRoutePortName);
             _pipeline.Send(message, cancellationToken);

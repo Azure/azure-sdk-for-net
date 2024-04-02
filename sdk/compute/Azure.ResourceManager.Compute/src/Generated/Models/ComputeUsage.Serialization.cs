@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeUsage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -33,7 +33,7 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WritePropertyName("limit"u8);
             writer.WriteNumberValue(Limit);
             writer.WritePropertyName("name"u8);
-            writer.WriteObjectValue(Name);
+            writer.WriteObjectValue<ComputeUsageName>(Name, options);
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
                 foreach (var item in _serializedAdditionalRawData)
@@ -57,7 +57,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ComputeUsage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ComputeUsage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ComputeUsage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -118,7 +118,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ComputeUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeUsage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -134,7 +134,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeComputeUsage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ComputeUsage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ComputeUsage)} does not support reading '{options.Format}' format.");
             }
         }
 

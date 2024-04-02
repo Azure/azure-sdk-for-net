@@ -25,21 +25,21 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VMwareResourcePoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareResourcePoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareResourcePoolData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExtendedLocation != null)
+            if (Optional.IsDefined(ExtendedLocation))
             {
                 writer.WritePropertyName("extendedLocation"u8);
                 JsonSerializer.Serialize(writer, ExtendedLocation);
             }
-            if (Kind != null)
+            if (Optional.IsDefined(Kind))
             {
                 writer.WritePropertyName("kind"u8);
                 writer.WriteStringValue(Kind);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -67,94 +67,94 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && Uuid != null)
+            if (options.Format != "W" && Optional.IsDefined(Uuid))
             {
                 writer.WritePropertyName("uuid"u8);
                 writer.WriteStringValue(Uuid);
             }
-            if (VCenterId != null)
+            if (Optional.IsDefined(VCenterId))
             {
                 writer.WritePropertyName("vCenterId"u8);
                 writer.WriteStringValue(VCenterId);
             }
-            if (MoRefId != null)
+            if (Optional.IsDefined(MoRefId))
             {
                 writer.WritePropertyName("moRefId"u8);
                 writer.WriteStringValue(MoRefId);
             }
-            if (InventoryItemId != null)
+            if (Optional.IsDefined(InventoryItemId))
             {
                 writer.WritePropertyName("inventoryItemId"u8);
                 writer.WriteStringValue(InventoryItemId);
             }
-            if (options.Format != "W" && MoName != null)
+            if (options.Format != "W" && Optional.IsDefined(MoName))
             {
                 writer.WritePropertyName("moName"u8);
                 writer.WriteStringValue(MoName);
             }
-            if (options.Format != "W" && CpuSharesLevel != null)
+            if (options.Format != "W" && Optional.IsDefined(CpuSharesLevel))
             {
                 writer.WritePropertyName("cpuSharesLevel"u8);
                 writer.WriteStringValue(CpuSharesLevel);
             }
-            if (options.Format != "W" && CpuReservationMHz.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuReservationMHz))
             {
                 writer.WritePropertyName("cpuReservationMHz"u8);
                 writer.WriteNumberValue(CpuReservationMHz.Value);
             }
-            if (options.Format != "W" && CpuLimitMHz.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuLimitMHz))
             {
                 writer.WritePropertyName("cpuLimitMHz"u8);
                 writer.WriteNumberValue(CpuLimitMHz.Value);
             }
-            if (options.Format != "W" && MemSharesLevel != null)
+            if (options.Format != "W" && Optional.IsDefined(MemSharesLevel))
             {
                 writer.WritePropertyName("memSharesLevel"u8);
                 writer.WriteStringValue(MemSharesLevel);
             }
-            if (options.Format != "W" && MemReservationMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemReservationMB))
             {
                 writer.WritePropertyName("memReservationMB"u8);
                 writer.WriteNumberValue(MemReservationMB.Value);
             }
-            if (options.Format != "W" && MemLimitMB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemLimitMB))
             {
                 writer.WritePropertyName("memLimitMB"u8);
                 writer.WriteNumberValue(MemLimitMB.Value);
             }
-            if (options.Format != "W" && MemOverallUsageGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemOverallUsageGB))
             {
                 writer.WritePropertyName("memOverallUsageGB"u8);
                 writer.WriteNumberValue(MemOverallUsageGB.Value);
             }
-            if (options.Format != "W" && MemCapacityGB.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MemCapacityGB))
             {
                 writer.WritePropertyName("memCapacityGB"u8);
                 writer.WriteNumberValue(MemCapacityGB.Value);
             }
-            if (options.Format != "W" && CpuOverallUsageMHz.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuOverallUsageMHz))
             {
                 writer.WritePropertyName("cpuOverallUsageMHz"u8);
                 writer.WriteNumberValue(CpuOverallUsageMHz.Value);
             }
-            if (options.Format != "W" && CpuCapacityMHz.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CpuCapacityMHz))
             {
                 writer.WritePropertyName("cpuCapacityMHz"u8);
                 writer.WriteNumberValue(CpuCapacityMHz.Value);
             }
-            if (options.Format != "W" && CustomResourceName != null)
+            if (options.Format != "W" && Optional.IsDefined(CustomResourceName))
             {
                 writer.WritePropertyName("customResourceName"u8);
                 writer.WriteStringValue(CustomResourceName);
             }
-            if (options.Format != "W" && !(DatastoreIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DatastoreIds))
             {
                 writer.WritePropertyName("datastoreIds"u8);
                 writer.WriteStartArray();
@@ -164,7 +164,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(NetworkIds is ChangeTrackingList<string> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(NetworkIds))
             {
                 writer.WritePropertyName("networkIds"u8);
                 writer.WriteStartArray();
@@ -174,17 +174,17 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(Statuses is ChangeTrackingList<VMwareResourceStatus> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Statuses))
             {
                 writer.WritePropertyName("statuses"u8);
                 writer.WriteStartArray();
                 foreach (var item in Statuses)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VMwareResourceStatus>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -213,7 +213,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
             var format = options.Format == "W" ? ((IPersistableModel<VMwareResourcePoolData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VMwareResourcePoolData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VMwareResourcePoolData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -539,7 +539,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VMwareResourcePoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareResourcePoolData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -555,7 +555,7 @@ namespace Azure.ResourceManager.ConnectedVMwarevSphere
                         return DeserializeVMwareResourcePoolData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VMwareResourcePoolData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VMwareResourcePoolData)} does not support reading '{options.Format}' format.");
             }
         }
 

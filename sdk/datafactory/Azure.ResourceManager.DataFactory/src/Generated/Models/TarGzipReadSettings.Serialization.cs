@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PreserveCompressionFileNameAsFolder != null)
+            if (Optional.IsDefined(PreserveCompressionFileNameAsFolder))
             {
                 writer.WritePropertyName("preserveCompressionFileNameAsFolder"u8);
                 JsonSerializer.Serialize(writer, PreserveCompressionFileNameAsFolder);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<TarGzipReadSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializeTarGzipReadSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TarGzipReadSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

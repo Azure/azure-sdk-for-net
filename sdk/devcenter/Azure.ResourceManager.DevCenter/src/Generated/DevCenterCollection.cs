@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 using Azure.ResourceManager.Resources;
 
 namespace Azure.ResourceManager.DevCenter
@@ -83,18 +81,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<DevCenterResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string devCenterName, DevCenterData data, CancellationToken cancellationToken = default)
         {
-            if (devCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(devCenterName));
-            }
-            if (devCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devCenterClientDiagnostics.CreateScope("DevCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -142,18 +130,8 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<DevCenterResource> CreateOrUpdate(WaitUntil waitUntil, string devCenterName, DevCenterData data, CancellationToken cancellationToken = default)
         {
-            if (devCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(devCenterName));
-            }
-            if (devCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _devCenterClientDiagnostics.CreateScope("DevCenterCollection.CreateOrUpdate");
             scope.Start();
@@ -199,14 +177,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
         public virtual async Task<Response<DevCenterResource>> GetAsync(string devCenterName, CancellationToken cancellationToken = default)
         {
-            if (devCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(devCenterName));
-            }
-            if (devCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
 
             using var scope = _devCenterClientDiagnostics.CreateScope("DevCenterCollection.Get");
             scope.Start();
@@ -251,14 +222,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
         public virtual Response<DevCenterResource> Get(string devCenterName, CancellationToken cancellationToken = default)
         {
-            if (devCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(devCenterName));
-            }
-            if (devCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
 
             using var scope = _devCenterClientDiagnostics.CreateScope("DevCenterCollection.Get");
             scope.Start();
@@ -365,14 +329,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string devCenterName, CancellationToken cancellationToken = default)
         {
-            if (devCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(devCenterName));
-            }
-            if (devCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
 
             using var scope = _devCenterClientDiagnostics.CreateScope("DevCenterCollection.Exists");
             scope.Start();
@@ -415,14 +372,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
         public virtual Response<bool> Exists(string devCenterName, CancellationToken cancellationToken = default)
         {
-            if (devCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(devCenterName));
-            }
-            if (devCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
 
             using var scope = _devCenterClientDiagnostics.CreateScope("DevCenterCollection.Exists");
             scope.Start();
@@ -465,14 +415,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
         public virtual async Task<NullableResponse<DevCenterResource>> GetIfExistsAsync(string devCenterName, CancellationToken cancellationToken = default)
         {
-            if (devCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(devCenterName));
-            }
-            if (devCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
 
             using var scope = _devCenterClientDiagnostics.CreateScope("DevCenterCollection.GetIfExists");
             scope.Start();
@@ -517,14 +460,7 @@ namespace Azure.ResourceManager.DevCenter
         /// <exception cref="ArgumentNullException"> <paramref name="devCenterName"/> is null. </exception>
         public virtual NullableResponse<DevCenterResource> GetIfExists(string devCenterName, CancellationToken cancellationToken = default)
         {
-            if (devCenterName == null)
-            {
-                throw new ArgumentNullException(nameof(devCenterName));
-            }
-            if (devCenterName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(devCenterName));
-            }
+            Argument.AssertNotNullOrEmpty(devCenterName, nameof(devCenterName));
 
             using var scope = _devCenterClientDiagnostics.CreateScope("DevCenterCollection.GetIfExists");
             scope.Start();

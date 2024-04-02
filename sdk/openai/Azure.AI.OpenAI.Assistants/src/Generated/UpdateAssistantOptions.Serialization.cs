@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.OpenAI.Assistants
@@ -23,16 +22,16 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<UpdateAssistantOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateAssistantOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateAssistantOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Model != null)
+            if (Optional.IsDefined(Model))
             {
                 writer.WritePropertyName("model"u8);
                 writer.WriteStringValue(Model);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 if (Name != null)
                 {
@@ -44,7 +43,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("name");
                 }
             }
-            if (Description != null)
+            if (Optional.IsDefined(Description))
             {
                 if (Description != null)
                 {
@@ -56,7 +55,7 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("description");
                 }
             }
-            if (Instructions != null)
+            if (Optional.IsDefined(Instructions))
             {
                 if (Instructions != null)
                 {
@@ -68,17 +67,17 @@ namespace Azure.AI.OpenAI.Assistants
                     writer.WriteNull("instructions");
                 }
             }
-            if (!(Tools is ChangeTrackingList<ToolDefinition> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tools))
             {
                 writer.WritePropertyName("tools"u8);
                 writer.WriteStartArray();
                 foreach (var item in Tools)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ToolDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(FileIds is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FileIds))
             {
                 writer.WritePropertyName("file_ids"u8);
                 writer.WriteStartArray();
@@ -88,7 +87,7 @@ namespace Azure.AI.OpenAI.Assistants
                 }
                 writer.WriteEndArray();
             }
-            if (!(Metadata is ChangeTrackingDictionary<string, string> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Metadata))
             {
                 if (Metadata != null)
                 {
@@ -129,7 +128,7 @@ namespace Azure.AI.OpenAI.Assistants
             var format = options.Format == "W" ? ((IPersistableModel<UpdateAssistantOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateAssistantOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateAssistantOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -258,7 +257,7 @@ namespace Azure.AI.OpenAI.Assistants
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateAssistantOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateAssistantOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -274,7 +273,7 @@ namespace Azure.AI.OpenAI.Assistants
                         return DeserializeUpdateAssistantOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateAssistantOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateAssistantOptions)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -292,7 +291,7 @@ namespace Azure.AI.OpenAI.Assistants
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<UpdateAssistantOptions>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

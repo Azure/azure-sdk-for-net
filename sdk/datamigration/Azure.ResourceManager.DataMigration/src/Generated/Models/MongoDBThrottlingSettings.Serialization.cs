@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBThrottlingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBThrottlingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBThrottlingSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MinFreeCpu.HasValue)
+            if (Optional.IsDefined(MinFreeCpu))
             {
                 writer.WritePropertyName("minFreeCpu"u8);
                 writer.WriteNumberValue(MinFreeCpu.Value);
             }
-            if (MinFreeMemoryMb.HasValue)
+            if (Optional.IsDefined(MinFreeMemoryMb))
             {
                 writer.WritePropertyName("minFreeMemoryMb"u8);
                 writer.WriteNumberValue(MinFreeMemoryMb.Value);
             }
-            if (MaxParallelism.HasValue)
+            if (Optional.IsDefined(MaxParallelism))
             {
                 writer.WritePropertyName("maxParallelism"u8);
                 writer.WriteNumberValue(MaxParallelism.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<MongoDBThrottlingSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MongoDBThrottlingSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MongoDBThrottlingSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBThrottlingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBThrottlingSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeMongoDBThrottlingSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MongoDBThrottlingSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MongoDBThrottlingSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

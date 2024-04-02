@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && Tunnel != null)
+            if (options.Format != "W" && Optional.IsDefined(Tunnel))
             {
                 writer.WritePropertyName("tunnel"u8);
                 writer.WriteStringValue(Tunnel);
             }
-            if (options.Format != "W" && ConnectionStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ConnectionStatus))
             {
                 writer.WritePropertyName("connectionStatus"u8);
                 writer.WriteStringValue(ConnectionStatus.Value.ToString());
             }
-            if (options.Format != "W" && IngressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IngressBytesTransferred))
             {
                 writer.WritePropertyName("ingressBytesTransferred"u8);
                 writer.WriteNumberValue(IngressBytesTransferred.Value);
             }
-            if (options.Format != "W" && EgressBytesTransferred.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(EgressBytesTransferred))
             {
                 writer.WritePropertyName("egressBytesTransferred"u8);
                 writer.WriteNumberValue(EgressBytesTransferred.Value);
             }
-            if (options.Format != "W" && LastConnectionEstablishedOn != null)
+            if (options.Format != "W" && Optional.IsDefined(LastConnectionEstablishedOn))
             {
                 writer.WritePropertyName("lastConnectionEstablishedUtcTime"u8);
                 writer.WriteStringValue(LastConnectionEstablishedOn);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<TunnelConnectionHealth>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeTunnelConnectionHealth(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(TunnelConnectionHealth)} does not support reading '{options.Format}' format.");
             }
         }
 

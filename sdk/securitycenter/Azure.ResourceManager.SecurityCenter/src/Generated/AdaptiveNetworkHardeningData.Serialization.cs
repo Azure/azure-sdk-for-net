@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<AdaptiveNetworkHardeningData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,35 +43,35 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(Rules is ChangeTrackingList<RecommendedSecurityRule> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Rules))
             {
                 writer.WritePropertyName("rules"u8);
                 writer.WriteStartArray();
                 foreach (var item in Rules)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RecommendedSecurityRule>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (RulesCalculatedOn.HasValue)
+            if (Optional.IsDefined(RulesCalculatedOn))
             {
                 writer.WritePropertyName("rulesCalculationTime"u8);
                 writer.WriteStringValue(RulesCalculatedOn.Value, "O");
             }
-            if (!(EffectiveNetworkSecurityGroups is ChangeTrackingList<EffectiveNetworkSecurityGroups> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(EffectiveNetworkSecurityGroups))
             {
                 writer.WritePropertyName("effectiveNetworkSecurityGroups"u8);
                 writer.WriteStartArray();
                 foreach (var item in EffectiveNetworkSecurityGroups)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<EffectiveNetworkSecurityGroups>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<AdaptiveNetworkHardeningData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -224,7 +224,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -240,7 +240,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeAdaptiveNetworkHardeningData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AdaptiveNetworkHardeningData)} does not support reading '{options.Format}' format.");
             }
         }
 

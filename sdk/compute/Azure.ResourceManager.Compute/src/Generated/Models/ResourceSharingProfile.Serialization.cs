@@ -23,11 +23,11 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSharingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(SubscriptionIds is ChangeTrackingList<WritableSubResource> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SubscriptionIds))
             {
                 writer.WritePropertyName("subscriptionIds"u8);
                 writer.WriteStartArray();
@@ -60,7 +60,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceSharingProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeResourceSharingProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceSharingProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

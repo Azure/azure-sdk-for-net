@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdentityManagementProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ManagementType.HasValue)
+            if (Optional.IsDefined(ManagementType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ManagementType.Value.ToString());
             }
-            if (ApplicationId != null)
+            if (Optional.IsDefined(ApplicationId))
             {
                 writer.WritePropertyName("applicationId"u8);
                 writer.WriteStringValue(ApplicationId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<IdentityManagementProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -112,7 +112,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.ProviderHub.Models
                         return DeserializeIdentityManagementProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IdentityManagementProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

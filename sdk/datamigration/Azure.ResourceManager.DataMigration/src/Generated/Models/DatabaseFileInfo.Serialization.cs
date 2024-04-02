@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DatabaseName != null)
+            if (Optional.IsDefined(DatabaseName))
             {
                 writer.WritePropertyName("databaseName"u8);
                 writer.WriteStringValue(DatabaseName);
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (LogicalName != null)
+            if (Optional.IsDefined(LogicalName))
             {
                 writer.WritePropertyName("logicalName"u8);
                 writer.WriteStringValue(LogicalName);
             }
-            if (PhysicalFullName != null)
+            if (Optional.IsDefined(PhysicalFullName))
             {
                 writer.WritePropertyName("physicalFullName"u8);
                 writer.WriteStringValue(PhysicalFullName);
             }
-            if (RestoreFullName != null)
+            if (Optional.IsDefined(RestoreFullName))
             {
                 writer.WritePropertyName("restoreFullName"u8);
                 writer.WriteStringValue(RestoreFullName);
             }
-            if (FileType.HasValue)
+            if (Optional.IsDefined(FileType))
             {
                 writer.WritePropertyName("fileType"u8);
                 writer.WriteStringValue(FileType.Value.ToString());
             }
-            if (SizeMB.HasValue)
+            if (Optional.IsDefined(SizeMB))
             {
                 writer.WritePropertyName("sizeMB"u8);
                 writer.WriteNumberValue(SizeMB.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DataMigration.Models
             var format = options.Format == "W" ? ((IPersistableModel<DatabaseFileInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -179,7 +179,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -195,7 +195,7 @@ namespace Azure.ResourceManager.DataMigration.Models
                         return DeserializeDatabaseFileInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DatabaseFileInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

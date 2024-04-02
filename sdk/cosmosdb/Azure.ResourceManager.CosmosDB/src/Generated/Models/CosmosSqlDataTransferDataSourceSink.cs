@@ -11,7 +11,7 @@ using System.Collections.Generic;
 namespace Azure.ResourceManager.CosmosDB.Models
 {
     /// <summary> A CosmosDB No Sql API data source/sink. </summary>
-    public partial class CosmosSqlDataTransferDataSourceSink : DataTransferDataSourceSink
+    public partial class CosmosSqlDataTransferDataSourceSink : BaseCosmosDataTransferDataSourceSink
     {
         /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="databaseName"></param>
@@ -19,14 +19,8 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="databaseName"/> or <paramref name="containerName"/> is null. </exception>
         public CosmosSqlDataTransferDataSourceSink(string databaseName, string containerName)
         {
-            if (databaseName == null)
-            {
-                throw new ArgumentNullException(nameof(databaseName));
-            }
-            if (containerName == null)
-            {
-                throw new ArgumentNullException(nameof(containerName));
-            }
+            Argument.AssertNotNull(databaseName, nameof(databaseName));
+            Argument.AssertNotNull(containerName, nameof(containerName));
 
             DatabaseName = databaseName;
             ContainerName = containerName;
@@ -36,14 +30,13 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="CosmosSqlDataTransferDataSourceSink"/>. </summary>
         /// <param name="component"></param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
+        /// <param name="remoteAccountName"></param>
         /// <param name="databaseName"></param>
         /// <param name="containerName"></param>
-        /// <param name="remoteAccountName"></param>
-        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string databaseName, string containerName, string remoteAccountName) : base(component, serializedAdditionalRawData)
+        internal CosmosSqlDataTransferDataSourceSink(DataTransferComponent component, IDictionary<string, BinaryData> serializedAdditionalRawData, string remoteAccountName, string databaseName, string containerName) : base(component, serializedAdditionalRawData, remoteAccountName)
         {
             DatabaseName = databaseName;
             ContainerName = containerName;
-            RemoteAccountName = remoteAccountName;
             Component = component;
         }
 
@@ -53,10 +46,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Gets or sets the database name. </summary>
+        [WirePath("databaseName")]
         public string DatabaseName { get; set; }
         /// <summary> Gets or sets the container name. </summary>
+        [WirePath("containerName")]
         public string ContainerName { get; set; }
-        /// <summary> Gets or sets the remote account name. </summary>
-        public string RemoteAccountName { get; set; }
     }
 }

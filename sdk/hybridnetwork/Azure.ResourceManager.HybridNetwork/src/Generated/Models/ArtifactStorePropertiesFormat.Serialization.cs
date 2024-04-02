@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactStorePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
             }
-            if (StoreType.HasValue)
+            if (Optional.IsDefined(StoreType))
             {
                 writer.WritePropertyName("storeType"u8);
                 writer.WriteStringValue(StoreType.Value.ToString());
             }
-            if (ReplicationStrategy.HasValue)
+            if (Optional.IsDefined(ReplicationStrategy))
             {
                 writer.WritePropertyName("replicationStrategy"u8);
                 writer.WriteStringValue(ReplicationStrategy.Value.ToString());
             }
-            if (ManagedResourceGroupConfiguration != null)
+            if (Optional.IsDefined(ManagedResourceGroupConfiguration))
             {
                 writer.WritePropertyName("managedResourceGroupConfiguration"u8);
-                writer.WriteObjectValue(ManagedResourceGroupConfiguration);
+                writer.WriteObjectValue<ArtifactStorePropertiesFormatManagedResourceGroupConfiguration>(ManagedResourceGroupConfiguration, options);
             }
-            if (options.Format != "W" && StorageResourceId != null)
+            if (options.Format != "W" && Optional.IsDefined(StorageResourceId))
             {
                 writer.WritePropertyName("storageResourceId"u8);
                 writer.WriteStringValue(StorageResourceId);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<ArtifactStorePropertiesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.HybridNetwork.Models
                         return DeserializeArtifactStorePropertiesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ArtifactStorePropertiesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

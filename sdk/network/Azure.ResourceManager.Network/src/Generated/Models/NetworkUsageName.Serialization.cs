@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkUsageName)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Value != null)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStringValue(Value);
             }
-            if (LocalizedValue != null)
+            if (Optional.IsDefined(LocalizedValue))
             {
                 writer.WritePropertyName("localizedValue"u8);
                 writer.WriteStringValue(LocalizedValue);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkUsageName>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkUsageName)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkUsageName)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkUsageName)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkUsageName(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkUsageName)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkUsageName)} does not support reading '{options.Format}' format.");
             }
         }
 

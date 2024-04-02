@@ -22,26 +22,26 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSshCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningVmSshCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningVmSshCredentials)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Username != null)
+            if (Optional.IsDefined(Username))
             {
                 writer.WritePropertyName("username"u8);
                 writer.WriteStringValue(Username);
             }
-            if (Password != null)
+            if (Optional.IsDefined(Password))
             {
                 writer.WritePropertyName("password"u8);
                 writer.WriteStringValue(Password);
             }
-            if (PublicKeyData != null)
+            if (Optional.IsDefined(PublicKeyData))
             {
                 writer.WritePropertyName("publicKeyData"u8);
                 writer.WriteStringValue(PublicKeyData);
             }
-            if (PrivateKeyData != null)
+            if (Optional.IsDefined(PrivateKeyData))
             {
                 writer.WritePropertyName("privateKeyData"u8);
                 writer.WriteStringValue(PrivateKeyData);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<MachineLearningVmSshCredentials>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MachineLearningVmSshCredentials)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MachineLearningVmSshCredentials)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -130,7 +130,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningVmSshCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningVmSshCredentials)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -146,7 +146,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeMachineLearningVmSshCredentials(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MachineLearningVmSshCredentials)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MachineLearningVmSshCredentials)} does not support reading '{options.Format}' format.");
             }
         }
 

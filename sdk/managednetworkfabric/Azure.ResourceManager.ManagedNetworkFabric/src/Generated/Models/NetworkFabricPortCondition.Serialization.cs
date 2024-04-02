@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPortCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricPortCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricPortCondition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (PortType.HasValue)
+            if (Optional.IsDefined(PortType))
             {
                 writer.WritePropertyName("portType"u8);
                 writer.WriteStringValue(PortType.Value.ToString());
             }
             writer.WritePropertyName("layer4Protocol"u8);
             writer.WriteStringValue(Layer4Protocol.ToString());
-            if (!(Ports is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Ports))
             {
                 writer.WritePropertyName("ports"u8);
                 writer.WriteStartArray();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(PortGroupNames is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PortGroupNames))
             {
                 writer.WritePropertyName("portGroupNames"u8);
                 writer.WriteStartArray();
@@ -76,7 +76,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkFabricPortCondition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkFabricPortCondition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkFabricPortCondition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -159,7 +159,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricPortCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricPortCondition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -175,7 +175,7 @@ namespace Azure.ResourceManager.ManagedNetworkFabric.Models
                         return DeserializeNetworkFabricPortCondition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkFabricPortCondition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkFabricPortCondition)} does not support reading '{options.Format}' format.");
             }
         }
 

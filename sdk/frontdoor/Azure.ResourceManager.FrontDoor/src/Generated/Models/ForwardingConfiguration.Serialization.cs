@@ -23,33 +23,33 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForwardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CustomForwardingPath != null)
+            if (Optional.IsDefined(CustomForwardingPath))
             {
                 writer.WritePropertyName("customForwardingPath"u8);
                 writer.WriteStringValue(CustomForwardingPath);
             }
-            if (ForwardingProtocol.HasValue)
+            if (Optional.IsDefined(ForwardingProtocol))
             {
                 writer.WritePropertyName("forwardingProtocol"u8);
                 writer.WriteStringValue(ForwardingProtocol.Value.ToString());
             }
-            if (CacheConfiguration != null)
+            if (Optional.IsDefined(CacheConfiguration))
             {
                 if (CacheConfiguration != null)
                 {
                     writer.WritePropertyName("cacheConfiguration"u8);
-                    writer.WriteObjectValue(CacheConfiguration);
+                    writer.WriteObjectValue<FrontDoorCacheConfiguration>(CacheConfiguration, options);
                 }
                 else
                 {
                     writer.WriteNull("cacheConfiguration");
                 }
             }
-            if (BackendPool != null)
+            if (Optional.IsDefined(BackendPool))
             {
                 writer.WritePropertyName("backendPool"u8);
                 JsonSerializer.Serialize(writer, BackendPool);
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
             var format = options.Format == "W" ? ((IPersistableModel<ForwardingConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -181,7 +181,7 @@ namespace Azure.ResourceManager.FrontDoor.Models
                         return DeserializeForwardingConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ForwardingConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

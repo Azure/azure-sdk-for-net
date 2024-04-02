@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.Kusto
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SandboxCustomImageResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string sandboxCustomImageName, SandboxCustomImageData data, CancellationToken cancellationToken = default)
         {
-            if (sandboxCustomImageName == null)
-            {
-                throw new ArgumentNullException(nameof(sandboxCustomImageName));
-            }
-            if (sandboxCustomImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sandboxCustomImageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("SandboxCustomImageCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SandboxCustomImageResource> CreateOrUpdate(WaitUntil waitUntil, string sandboxCustomImageName, SandboxCustomImageData data, CancellationToken cancellationToken = default)
         {
-            if (sandboxCustomImageName == null)
-            {
-                throw new ArgumentNullException(nameof(sandboxCustomImageName));
-            }
-            if (sandboxCustomImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sandboxCustomImageName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("SandboxCustomImageCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
         public virtual async Task<Response<SandboxCustomImageResource>> GetAsync(string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
-            if (sandboxCustomImageName == null)
-            {
-                throw new ArgumentNullException(nameof(sandboxCustomImageName));
-            }
-            if (sandboxCustomImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sandboxCustomImageName));
-            }
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("SandboxCustomImageCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
         public virtual Response<SandboxCustomImageResource> Get(string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
-            if (sandboxCustomImageName == null)
-            {
-                throw new ArgumentNullException(nameof(sandboxCustomImageName));
-            }
-            if (sandboxCustomImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sandboxCustomImageName));
-            }
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("SandboxCustomImageCollection.Get");
             scope.Start();
@@ -360,14 +324,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
-            if (sandboxCustomImageName == null)
-            {
-                throw new ArgumentNullException(nameof(sandboxCustomImageName));
-            }
-            if (sandboxCustomImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sandboxCustomImageName));
-            }
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("SandboxCustomImageCollection.Exists");
             scope.Start();
@@ -410,14 +367,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
         public virtual Response<bool> Exists(string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
-            if (sandboxCustomImageName == null)
-            {
-                throw new ArgumentNullException(nameof(sandboxCustomImageName));
-            }
-            if (sandboxCustomImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sandboxCustomImageName));
-            }
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("SandboxCustomImageCollection.Exists");
             scope.Start();
@@ -460,14 +410,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
         public virtual async Task<NullableResponse<SandboxCustomImageResource>> GetIfExistsAsync(string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
-            if (sandboxCustomImageName == null)
-            {
-                throw new ArgumentNullException(nameof(sandboxCustomImageName));
-            }
-            if (sandboxCustomImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sandboxCustomImageName));
-            }
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("SandboxCustomImageCollection.GetIfExists");
             scope.Start();
@@ -512,14 +455,7 @@ namespace Azure.ResourceManager.Kusto
         /// <exception cref="ArgumentNullException"> <paramref name="sandboxCustomImageName"/> is null. </exception>
         public virtual NullableResponse<SandboxCustomImageResource> GetIfExists(string sandboxCustomImageName, CancellationToken cancellationToken = default)
         {
-            if (sandboxCustomImageName == null)
-            {
-                throw new ArgumentNullException(nameof(sandboxCustomImageName));
-            }
-            if (sandboxCustomImageName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(sandboxCustomImageName));
-            }
+            Argument.AssertNotNullOrEmpty(sandboxCustomImageName, nameof(sandboxCustomImageName));
 
             using var scope = _sandboxCustomImageClientDiagnostics.CreateScope("SandboxCustomImageCollection.GetIfExists");
             scope.Start();

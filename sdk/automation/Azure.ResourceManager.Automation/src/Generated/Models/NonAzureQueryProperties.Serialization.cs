@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<NonAzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (FunctionAlias != null)
+            if (Optional.IsDefined(FunctionAlias))
             {
                 writer.WritePropertyName("functionAlias"u8);
                 writer.WriteStringValue(FunctionAlias);
             }
-            if (WorkspaceId != null)
+            if (Optional.IsDefined(WorkspaceId))
             {
                 writer.WritePropertyName("workspaceId"u8);
                 writer.WriteStringValue(WorkspaceId);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<NonAzureQueryProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeNonAzureQueryProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NonAzureQueryProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

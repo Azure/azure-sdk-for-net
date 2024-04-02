@@ -22,27 +22,27 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataMasking>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMasking)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMasking)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(QueryParams is ChangeTrackingList<DataMaskingEntity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(QueryParams))
             {
                 writer.WritePropertyName("queryParams"u8);
                 writer.WriteStartArray();
                 foreach (var item in QueryParams)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataMaskingEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Headers is ChangeTrackingList<DataMaskingEntity> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartArray();
                 foreach (var item in Headers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataMaskingEntity>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataMasking>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataMasking)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataMasking)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataMasking)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMasking)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -152,7 +152,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeDataMasking(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataMasking)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataMasking)} does not support reading '{options.Format}' format.");
             }
         }
 

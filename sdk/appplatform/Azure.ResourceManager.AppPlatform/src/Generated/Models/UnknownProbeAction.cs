@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.AppPlatform.Models
 {
-    /// <summary> The UnknownProbeAction. </summary>
+    /// <summary> Unknown version of ProbeAction. </summary>
     internal partial class UnknownProbeAction : AppInstanceProbeAction
     {
         /// <summary> Initializes a new instance of <see cref="UnknownProbeAction"/>. </summary>

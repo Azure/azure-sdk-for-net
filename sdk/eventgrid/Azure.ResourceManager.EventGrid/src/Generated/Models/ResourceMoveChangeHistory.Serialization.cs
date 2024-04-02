@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMoveChangeHistory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AzureSubscriptionId != null)
+            if (Optional.IsDefined(AzureSubscriptionId))
             {
                 writer.WritePropertyName("azureSubscriptionId"u8);
                 writer.WriteStringValue(AzureSubscriptionId);
             }
-            if (ResourceGroupName != null)
+            if (Optional.IsDefined(ResourceGroupName))
             {
                 writer.WritePropertyName("resourceGroupName"u8);
                 writer.WriteStringValue(ResourceGroupName);
             }
-            if (ChangedTimeUtc.HasValue)
+            if (Optional.IsDefined(ChangedTimeUtc))
             {
                 writer.WritePropertyName("changedTimeUtc"u8);
                 writer.WriteStringValue(ChangedTimeUtc.Value, "O");
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.EventGrid.Models
             var format = options.Format == "W" ? ((IPersistableModel<ResourceMoveChangeHistory>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -123,7 +123,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -139,7 +139,7 @@ namespace Azure.ResourceManager.EventGrid.Models
                         return DeserializeResourceMoveChangeHistory(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ResourceMoveChangeHistory)} does not support reading '{options.Format}' format.");
             }
         }
 

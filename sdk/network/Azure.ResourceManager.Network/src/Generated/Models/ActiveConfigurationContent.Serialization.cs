@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveConfigurationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveConfigurationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveConfigurationContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Regions is ChangeTrackingList<AzureLocation> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Regions))
             {
                 writer.WritePropertyName("regions"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ActiveConfigurationContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ActiveConfigurationContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ActiveConfigurationContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ActiveConfigurationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveConfigurationContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeActiveConfigurationContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ActiveConfigurationContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ActiveConfigurationContent)} does not support reading '{options.Format}' format.");
             }
         }
 

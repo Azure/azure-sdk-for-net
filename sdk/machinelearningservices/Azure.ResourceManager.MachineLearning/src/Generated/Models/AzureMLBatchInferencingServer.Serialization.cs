@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureMLBatchInferencingServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMLBatchInferencingServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMLBatchInferencingServer)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CodeConfiguration != null)
+            if (Optional.IsDefined(CodeConfiguration))
             {
                 if (CodeConfiguration != null)
                 {
                     writer.WritePropertyName("codeConfiguration"u8);
-                    writer.WriteObjectValue(CodeConfiguration);
+                    writer.WriteObjectValue<MachineLearningCodeConfiguration>(CodeConfiguration, options);
                 }
                 else
                 {
@@ -63,7 +63,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureMLBatchInferencingServer>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureMLBatchInferencingServer)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureMLBatchInferencingServer)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureMLBatchInferencingServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMLBatchInferencingServer)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeAzureMLBatchInferencingServer(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureMLBatchInferencingServer)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureMLBatchInferencingServer)} does not support reading '{options.Format}' format.");
             }
         }
 

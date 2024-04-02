@@ -22,57 +22,57 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(ServiceBusQueues is ChangeTrackingList<RoutingServiceBusQueueEndpointProperties> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceBusQueues))
             {
                 writer.WritePropertyName("serviceBusQueues"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusQueues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingServiceBusQueueEndpointProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(ServiceBusTopics is ChangeTrackingList<RoutingServiceBusTopicEndpointProperties> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(ServiceBusTopics))
             {
                 writer.WritePropertyName("serviceBusTopics"u8);
                 writer.WriteStartArray();
                 foreach (var item in ServiceBusTopics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingServiceBusTopicEndpointProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(EventHubs is ChangeTrackingList<RoutingEventHubProperties> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(EventHubs))
             {
                 writer.WritePropertyName("eventHubs"u8);
                 writer.WriteStartArray();
                 foreach (var item in EventHubs)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingEventHubProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(StorageContainers is ChangeTrackingList<RoutingStorageContainerProperties> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(StorageContainers))
             {
                 writer.WritePropertyName("storageContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in StorageContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingStorageContainerProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(CosmosDBSqlContainers is ChangeTrackingList<RoutingCosmosDBSqlApiProperties> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(CosmosDBSqlContainers))
             {
                 writer.WritePropertyName("cosmosDBSqlContainers"u8);
                 writer.WriteStartArray();
                 foreach (var item in CosmosDBSqlContainers)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingCosmosDBSqlApiProperties>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingEndpoints>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -217,7 +217,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -233,7 +233,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRoutingEndpoints(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingEndpoints)} does not support reading '{options.Format}' format.");
             }
         }
 

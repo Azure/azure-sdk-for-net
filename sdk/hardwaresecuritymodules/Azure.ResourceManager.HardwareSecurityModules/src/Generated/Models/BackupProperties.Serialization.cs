@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (AzureStorageResourceUri != null)
+            if (Optional.IsDefined(AzureStorageResourceUri))
             {
                 writer.WritePropertyName("azureStorageResourceUri"u8);
                 writer.WriteStringValue(AzureStorageResourceUri.AbsoluteUri);
             }
-            if (options.Format != "W" && LastBackupOn.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(LastBackupOn))
             {
                 writer.WritePropertyName("lastBackupDateTime"u8);
                 writer.WriteStringValue(LastBackupOn.Value, "O");
             }
-            if (options.Format != "W" && LastBackupStatus != null)
+            if (options.Format != "W" && Optional.IsDefined(LastBackupStatus))
             {
                 writer.WritePropertyName("lastBackupStatus"u8);
                 writer.WriteStringValue(LastBackupStatus);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
             var format = options.Format == "W" ? ((IPersistableModel<BackupProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(BackupProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(BackupProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(BackupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.HardwareSecurityModules.Models
                         return DeserializeBackupProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(BackupProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(BackupProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

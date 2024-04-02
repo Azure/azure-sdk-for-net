@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSqlPoolColumnData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSqlPoolColumnData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSqlPoolColumnData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,19 +43,19 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (ColumnType.HasValue)
+            if (Optional.IsDefined(ColumnType))
             {
                 writer.WritePropertyName("columnType"u8);
                 writer.WriteStringValue(ColumnType.Value.ToString());
             }
-            if (options.Format != "W" && IsComputed.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsComputed))
             {
                 writer.WritePropertyName("isComputed"u8);
                 writer.WriteBooleanValue(IsComputed.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseSqlPoolColumnData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseSqlPoolColumnData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseSqlPoolColumnData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSqlPoolColumnData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSqlPoolColumnData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -204,7 +204,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseSqlPoolColumnData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseSqlPoolColumnData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseSqlPoolColumnData)} does not support reading '{options.Format}' format.");
             }
         }
 

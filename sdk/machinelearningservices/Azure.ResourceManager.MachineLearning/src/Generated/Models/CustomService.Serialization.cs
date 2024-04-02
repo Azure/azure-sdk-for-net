@@ -22,60 +22,60 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomService)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Image != null)
+            if (Optional.IsDefined(Image))
             {
                 writer.WritePropertyName("image"u8);
-                writer.WriteObjectValue(Image);
+                writer.WriteObjectValue<ImageSetting>(Image, options);
             }
-            if (!(EnvironmentVariables is ChangeTrackingDictionary<string, EnvironmentVariable> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(EnvironmentVariables))
             {
                 writer.WritePropertyName("environmentVariables"u8);
                 writer.WriteStartObject();
                 foreach (var item in EnvironmentVariables)
                 {
                     writer.WritePropertyName(item.Key);
-                    writer.WriteObjectValue(item.Value);
+                    writer.WriteObjectValue<EnvironmentVariable>(item.Value, options);
                 }
                 writer.WriteEndObject();
             }
-            if (Docker != null)
+            if (Optional.IsDefined(Docker))
             {
                 if (Docker != null)
                 {
                     writer.WritePropertyName("docker"u8);
-                    writer.WriteObjectValue(Docker);
+                    writer.WriteObjectValue<DockerSetting>(Docker, options);
                 }
                 else
                 {
                     writer.WriteNull("docker");
                 }
             }
-            if (!(Endpoints is ChangeTrackingList<ContainerEndpoint> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(Endpoints))
             {
                 writer.WritePropertyName("endpoints"u8);
                 writer.WriteStartArray();
                 foreach (var item in Endpoints)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ContainerEndpoint>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Volumes is ChangeTrackingList<VolumeDefinition> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Volumes))
             {
                 writer.WritePropertyName("volumes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Volumes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<VolumeDefinition>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
             var format = options.Format == "W" ? ((IPersistableModel<CustomService>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(CustomService)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(CustomService)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -212,7 +212,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(CustomService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomService)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -228,7 +228,7 @@ namespace Azure.ResourceManager.MachineLearning.Models
                         return DeserializeCustomService(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(CustomService)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(CustomService)} does not support reading '{options.Format}' format.");
             }
         }
 

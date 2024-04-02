@@ -23,21 +23,21 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPRange)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (Address != null)
+            if (Optional.IsDefined(Address))
             {
                 writer.WritePropertyName("address"u8);
                 writer.WriteStringValue(Address.ToString());
             }
-            if (SubnetPrefixLength.HasValue)
+            if (Optional.IsDefined(SubnetPrefixLength))
             {
                 writer.WritePropertyName("subnetPrefixLength"u8);
                 writer.WriteNumberValue(SubnetPrefixLength.Value);
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<IPRange>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IPRange)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IPRange)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -128,7 +128,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IPRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPRange)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -144,7 +144,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeIPRange(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IPRange)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IPRange)} does not support reading '{options.Format}' format.");
             }
         }
 

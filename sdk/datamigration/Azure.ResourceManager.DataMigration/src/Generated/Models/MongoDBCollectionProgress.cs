@@ -26,14 +26,8 @@ namespace Azure.ResourceManager.DataMigration.Models
         /// <exception cref="ArgumentNullException"> <paramref name="elapsedTime"/> or <paramref name="errors"/> is null. </exception>
         internal MongoDBCollectionProgress(long bytesCopied, long documentsCopied, string elapsedTime, IReadOnlyDictionary<string, MongoDBError> errors, long eventsPending, long eventsReplayed, MongoDBMigrationState state, long totalBytes, long totalDocuments) : base(bytesCopied, documentsCopied, elapsedTime, errors, eventsPending, eventsReplayed, state, totalBytes, totalDocuments)
         {
-            if (elapsedTime == null)
-            {
-                throw new ArgumentNullException(nameof(elapsedTime));
-            }
-            if (errors == null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
+            Argument.AssertNotNull(elapsedTime, nameof(elapsedTime));
+            Argument.AssertNotNull(errors, nameof(errors));
 
             ResultType = MongoDBProgressResultType.Collection;
         }

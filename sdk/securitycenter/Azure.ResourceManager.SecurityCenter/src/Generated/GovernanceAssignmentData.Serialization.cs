@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,42 +43,42 @@ namespace Azure.ResourceManager.SecurityCenter
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Owner != null)
+            if (Optional.IsDefined(Owner))
             {
                 writer.WritePropertyName("owner"u8);
                 writer.WriteStringValue(Owner);
             }
-            if (RemediationDueOn.HasValue)
+            if (Optional.IsDefined(RemediationDueOn))
             {
                 writer.WritePropertyName("remediationDueDate"u8);
                 writer.WriteStringValue(RemediationDueOn.Value, "O");
             }
-            if (RemediationEta != null)
+            if (Optional.IsDefined(RemediationEta))
             {
                 writer.WritePropertyName("remediationEta"u8);
-                writer.WriteObjectValue(RemediationEta);
+                writer.WriteObjectValue<RemediationEta>(RemediationEta, options);
             }
-            if (IsGracePeriod.HasValue)
+            if (Optional.IsDefined(IsGracePeriod))
             {
                 writer.WritePropertyName("isGracePeriod"u8);
                 writer.WriteBooleanValue(IsGracePeriod.Value);
             }
-            if (GovernanceEmailNotification != null)
+            if (Optional.IsDefined(GovernanceEmailNotification))
             {
                 writer.WritePropertyName("governanceEmailNotification"u8);
-                writer.WriteObjectValue(GovernanceEmailNotification);
+                writer.WriteObjectValue<GovernanceEmailNotification>(GovernanceEmailNotification, options);
             }
-            if (AdditionalData != null)
+            if (Optional.IsDefined(AdditionalData))
             {
                 writer.WritePropertyName("additionalData"u8);
-                writer.WriteObjectValue(AdditionalData);
+                writer.WriteObjectValue<GovernanceAssignmentAdditionalInfo>(AdditionalData, options);
             }
             writer.WriteEndObject();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -104,7 +104,7 @@ namespace Azure.ResourceManager.SecurityCenter
             var format = options.Format == "W" ? ((IPersistableModel<GovernanceAssignmentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -248,7 +248,7 @@ namespace Azure.ResourceManager.SecurityCenter
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -264,7 +264,7 @@ namespace Azure.ResourceManager.SecurityCenter
                         return DeserializeGovernanceAssignmentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GovernanceAssignmentData)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPanoramaStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPanoramaStatus)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PanoramaServerStatus.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PanoramaServerStatus))
             {
                 writer.WritePropertyName("panoramaServerStatus"u8);
                 writer.WriteStringValue(PanoramaServerStatus.Value.ToString());
             }
-            if (options.Format != "W" && PanoramaServer2Status.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PanoramaServer2Status))
             {
                 writer.WritePropertyName("panoramaServer2Status"u8);
                 writer.WriteStringValue(PanoramaServer2Status.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
             var format = options.Format == "W" ? ((IPersistableModel<FirewallPanoramaStatus>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FirewallPanoramaStatus)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FirewallPanoramaStatus)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPanoramaStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPanoramaStatus)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.PaloAltoNetworks.Ngfw.Models
                         return DeserializeFirewallPanoramaStatus(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FirewallPanoramaStatus)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FirewallPanoramaStatus)} does not support reading '{options.Format}' format.");
             }
         }
 

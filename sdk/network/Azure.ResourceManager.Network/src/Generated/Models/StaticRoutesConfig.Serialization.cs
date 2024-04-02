@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticRoutesConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PropagateStaticRoutes.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PropagateStaticRoutes))
             {
                 writer.WritePropertyName("propagateStaticRoutes"u8);
                 writer.WriteBooleanValue(PropagateStaticRoutes.Value);
             }
-            if (VnetLocalRouteOverrideCriteria.HasValue)
+            if (Optional.IsDefined(VnetLocalRouteOverrideCriteria))
             {
                 writer.WritePropertyName("vnetLocalRouteOverrideCriteria"u8);
                 writer.WriteStringValue(VnetLocalRouteOverrideCriteria.Value.ToString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<StaticRoutesConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeStaticRoutesConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StaticRoutesConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IPTagType != null)
+            if (Optional.IsDefined(IPTagType))
             {
                 writer.WritePropertyName("ipTagType"u8);
                 writer.WriteStringValue(IPTagType);
             }
-            if (Tag != null)
+            if (Optional.IsDefined(Tag))
             {
                 writer.WritePropertyName("tag"u8);
                 writer.WriteStringValue(Tag);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<VirtualMachineIPTag>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeVirtualMachineIPTag(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(VirtualMachineIPTag)} does not support reading '{options.Format}' format.");
             }
         }
 

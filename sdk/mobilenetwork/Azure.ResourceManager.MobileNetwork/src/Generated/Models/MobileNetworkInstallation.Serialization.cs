@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInstallation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DesiredState.HasValue)
+            if (Optional.IsDefined(DesiredState))
             {
                 writer.WritePropertyName("desiredState"u8);
                 writer.WriteStringValue(DesiredState.Value.ToString());
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && ReinstallRequired.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ReinstallRequired))
             {
                 writer.WritePropertyName("reinstallRequired"u8);
                 writer.WriteStringValue(ReinstallRequired.Value.ToString());
             }
-            if (options.Format != "W" && !(Reasons is ChangeTrackingList<MobileNetworkInstallationReason> collection && collection.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Reasons))
             {
                 writer.WritePropertyName("reasons"u8);
                 writer.WriteStartArray();
@@ -52,7 +52,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && Operation != null)
+            if (options.Format != "W" && Optional.IsDefined(Operation))
             {
                 writer.WritePropertyName("operation"u8);
                 JsonSerializer.Serialize(writer, Operation);
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
             var format = options.Format == "W" ? ((IPersistableModel<MobileNetworkInstallation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -178,7 +178,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -194,7 +194,7 @@ namespace Azure.ResourceManager.MobileNetwork.Models
                         return DeserializeMobileNetworkInstallation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MobileNetworkInstallation)} does not support reading '{options.Format}' format.");
             }
         }
 

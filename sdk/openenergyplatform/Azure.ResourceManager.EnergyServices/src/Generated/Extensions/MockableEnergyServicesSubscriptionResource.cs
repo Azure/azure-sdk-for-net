@@ -9,11 +9,8 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.EnergyServices;
 using Azure.ResourceManager.EnergyServices.Models;
 
 namespace Azure.ResourceManager.EnergyServices.Mocking
@@ -71,10 +68,7 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual async Task<Response<EnergyServiceNameAvailabilityResult>> CheckNameAvailabilityLocationAsync(EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableEnergyServicesSubscriptionResource.CheckNameAvailabilityLocation");
             scope.Start();
@@ -112,10 +106,7 @@ namespace Azure.ResourceManager.EnergyServices.Mocking
         /// <exception cref="ArgumentNullException"> <paramref name="content"/> is null. </exception>
         public virtual Response<EnergyServiceNameAvailabilityResult> CheckNameAvailabilityLocation(EnergyServiceNameAvailabilityContent content, CancellationToken cancellationToken = default)
         {
-            if (content == null)
-            {
-                throw new ArgumentNullException(nameof(content));
-            }
+            Argument.AssertNotNull(content, nameof(content));
 
             using var scope = LocationsClientDiagnostics.CreateScope("MockableEnergyServicesSubscriptionResource.CheckNameAvailabilityLocation");
             scope.Start();

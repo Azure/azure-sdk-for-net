@@ -16,10 +16,10 @@ namespace Azure.AI.TextAnalytics.Legacy
         {
             writer.WriteStartObject();
             writer.WritePropertyName("analysisInput"u8);
-            writer.WriteObjectValue(AnalysisInput);
+            writer.WriteObjectValue<MultiLanguageBatchInput>(AnalysisInput);
             writer.WritePropertyName("tasks"u8);
-            writer.WriteObjectValue(Tasks);
-            if (DisplayName != null)
+            writer.WriteObjectValue<JobManifestTasks>(Tasks);
+            if (Optional.IsDefined(DisplayName))
             {
                 writer.WritePropertyName("displayName"u8);
                 writer.WriteStringValue(DisplayName);

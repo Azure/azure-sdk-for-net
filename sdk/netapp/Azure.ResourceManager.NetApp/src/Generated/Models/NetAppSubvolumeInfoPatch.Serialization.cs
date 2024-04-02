@@ -22,13 +22,13 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubvolumeInfoPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppSubvolumeInfoPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Size.HasValue)
+            if (Optional.IsDefined(Size))
             {
                 if (Size != null)
                 {
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.NetApp.Models
                     writer.WriteNull("size");
                 }
             }
-            if (Path != null)
+            if (Optional.IsDefined(Path))
             {
                 writer.WritePropertyName("path"u8);
                 writer.WriteStringValue(Path);
@@ -69,7 +69,7 @@ namespace Azure.ResourceManager.NetApp.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetAppSubvolumeInfoPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetAppSubvolumeInfoPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetAppSubvolumeInfoPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.NetApp.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubvolumeInfoPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppSubvolumeInfoPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -151,7 +151,7 @@ namespace Azure.ResourceManager.NetApp.Models
                         return DeserializeNetAppSubvolumeInfoPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetAppSubvolumeInfoPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetAppSubvolumeInfoPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

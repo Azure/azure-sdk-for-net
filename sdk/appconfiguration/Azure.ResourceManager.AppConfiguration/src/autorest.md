@@ -18,6 +18,7 @@ skip-csproj: true
 modelerfour:
   flatten-payloads: false
 use-model-reader-writer: true
+enable-bicep-serialization: true
 deserialize-null-collection-as-null-value: true
 
 no-property-type-replacement: RegenerateKeyContent

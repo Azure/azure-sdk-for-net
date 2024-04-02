@@ -8,6 +8,7 @@
 using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
+using System.Text;
 using System.Text.Json;
 using Azure.Core;
 
@@ -22,31 +23,31 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (TimeoutSeconds.HasValue)
+            if (Optional.IsDefined(TimeoutSeconds))
             {
                 writer.WritePropertyName("timeoutSeconds"u8);
                 writer.WriteNumberValue(TimeoutSeconds.Value);
             }
-            if (RetryAttempts.HasValue)
+            if (Optional.IsDefined(RetryAttempts))
             {
                 writer.WritePropertyName("retryAttempts"u8);
                 writer.WriteNumberValue(RetryAttempts.Value);
             }
-            if (InitialRetryIntervalSeconds.HasValue)
+            if (Optional.IsDefined(InitialRetryIntervalSeconds))
             {
                 writer.WritePropertyName("initialRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(InitialRetryIntervalSeconds.Value);
             }
-            if (MaximumRetryIntervalSeconds.HasValue)
+            if (Optional.IsDefined(MaximumRetryIntervalSeconds))
             {
                 writer.WritePropertyName("maximumRetryIntervalSeconds"u8);
                 writer.WriteNumberValue(MaximumRetryIntervalSeconds.Value);
             }
-            if (RetryIntervalBackoffMultiplier.HasValue)
+            if (Optional.IsDefined(RetryIntervalBackoffMultiplier))
             {
                 writer.WritePropertyName("retryIntervalBackoffMultiplier"u8);
                 writer.WriteNumberValue(RetryIntervalBackoffMultiplier.Value);
@@ -74,7 +75,7 @@ namespace Azure.ResourceManager.Sql.Models
             var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -158,6 +159,91 @@ namespace Azure.ResourceManager.Sql.Models
                 serializedAdditionalRawData);
         }
 
+        private BinaryData SerializeBicep(ModelReaderWriterOptions options)
+        {
+            StringBuilder builder = new StringBuilder();
+            BicepModelReaderWriterOptions bicepOptions = options as BicepModelReaderWriterOptions;
+            IDictionary<string, string> propertyOverrides = null;
+            bool hasObjectOverride = bicepOptions != null && bicepOptions.PropertyOverrides.TryGetValue(this, out propertyOverrides);
+            bool hasPropertyOverride = false;
+            string propertyOverride = null;
+
+            builder.AppendLine("{");
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(TimeoutSeconds), out propertyOverride);
+            if (Optional.IsDefined(TimeoutSeconds) || hasPropertyOverride)
+            {
+                builder.Append("  timeoutSeconds: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{TimeoutSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryAttempts), out propertyOverride);
+            if (Optional.IsDefined(RetryAttempts) || hasPropertyOverride)
+            {
+                builder.Append("  retryAttempts: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{RetryAttempts.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(InitialRetryIntervalSeconds), out propertyOverride);
+            if (Optional.IsDefined(InitialRetryIntervalSeconds) || hasPropertyOverride)
+            {
+                builder.Append("  initialRetryIntervalSeconds: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{InitialRetryIntervalSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(MaximumRetryIntervalSeconds), out propertyOverride);
+            if (Optional.IsDefined(MaximumRetryIntervalSeconds) || hasPropertyOverride)
+            {
+                builder.Append("  maximumRetryIntervalSeconds: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"{MaximumRetryIntervalSeconds.Value}");
+                }
+            }
+
+            hasPropertyOverride = hasObjectOverride && propertyOverrides.TryGetValue(nameof(RetryIntervalBackoffMultiplier), out propertyOverride);
+            if (Optional.IsDefined(RetryIntervalBackoffMultiplier) || hasPropertyOverride)
+            {
+                builder.Append("  retryIntervalBackoffMultiplier: ");
+                if (hasPropertyOverride)
+                {
+                    builder.AppendLine($"{propertyOverride}");
+                }
+                else
+                {
+                    builder.AppendLine($"'{RetryIntervalBackoffMultiplier.Value.ToString()}'");
+                }
+            }
+
+            builder.AppendLine("}");
+            return BinaryData.FromString(builder.ToString());
+        }
+
         BinaryData IPersistableModel<JobStepExecutionOptions>.Write(ModelReaderWriterOptions options)
         {
             var format = options.Format == "W" ? ((IPersistableModel<JobStepExecutionOptions>)this).GetFormatFromOptions(options) : options.Format;
@@ -166,8 +252,10 @@ namespace Azure.ResourceManager.Sql.Models
             {
                 case "J":
                     return ModelReaderWriter.Write(this, options);
+                case "bicep":
+                    return SerializeBicep(options);
                 default:
-                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +271,7 @@ namespace Azure.ResourceManager.Sql.Models
                         return DeserializeJobStepExecutionOptions(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(JobStepExecutionOptions)} does not support reading '{options.Format}' format.");
             }
         }
 

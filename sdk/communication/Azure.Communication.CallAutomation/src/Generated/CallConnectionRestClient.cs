@@ -9,7 +9,6 @@ using System;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
 
@@ -245,7 +244,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(transferToParticipantRequest);
+            content.JsonWriter.WriteObjectValue<TransferToParticipantRequestInternal>(transferToParticipantRequest);
             request.Content = content;
             return message;
         }
@@ -401,7 +400,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(addParticipantRequest);
+            content.JsonWriter.WriteObjectValue<AddParticipantRequestInternal>(addParticipantRequest);
             request.Content = content;
             return message;
         }
@@ -487,7 +486,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(removeParticipantRequest);
+            content.JsonWriter.WriteObjectValue<RemoveParticipantRequestInternal>(removeParticipantRequest);
             request.Content = content;
             return message;
         }
@@ -573,7 +572,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(muteParticipantsRequest);
+            content.JsonWriter.WriteObjectValue<MuteParticipantsRequestInternal>(muteParticipantsRequest);
             request.Content = content;
             return message;
         }
@@ -659,7 +658,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(unmuteParticipantsRequest);
+            content.JsonWriter.WriteObjectValue<UnmuteParticipantsRequestInternal>(unmuteParticipantsRequest);
             request.Content = content;
             return message;
         }
@@ -745,7 +744,7 @@ namespace Azure.Communication.CallAutomation
             request.Headers.Add("Accept", "application/json");
             request.Headers.Add("Content-Type", "application/json");
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(cancelAddParticipantRequest);
+            content.JsonWriter.WriteObjectValue<CancelAddParticipantRequestInternal>(cancelAddParticipantRequest);
             request.Content = content;
             return message;
         }

@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDeployContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationDeployContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationDeployContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (Branch != null)
+            if (Optional.IsDefined(Branch))
             {
                 writer.WritePropertyName("branch"u8);
                 writer.WriteStringValue(Branch);
             }
-            if (ForceDelete.HasValue)
+            if (Optional.IsDefined(ForceDelete))
             {
                 writer.WritePropertyName("force"u8);
                 writer.WriteBooleanValue(ForceDelete.Value);
@@ -62,7 +62,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConfigurationDeployContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConfigurationDeployContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConfigurationDeployContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationDeployContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationDeployContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.ApiManagement.Models
                         return DeserializeConfigurationDeployContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConfigurationDeployContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConfigurationDeployContent)} does not support reading '{options.Format}' format.");
             }
         }
 

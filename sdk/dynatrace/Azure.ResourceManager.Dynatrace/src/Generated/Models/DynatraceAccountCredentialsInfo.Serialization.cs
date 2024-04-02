@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceAccountCredentialsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountId != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountId))
             {
                 writer.WritePropertyName("accountId"u8);
                 writer.WriteStringValue(AccountId);
             }
-            if (options.Format != "W" && ApiKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ApiKey))
             {
                 writer.WritePropertyName("apiKey"u8);
                 writer.WriteStringValue(ApiKey);
             }
-            if (options.Format != "W" && RegionId != null)
+            if (options.Format != "W" && Optional.IsDefined(RegionId))
             {
                 writer.WritePropertyName("regionId"u8);
                 writer.WriteStringValue(RegionId);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
             var format = options.Format == "W" ? ((IPersistableModel<DynatraceAccountCredentialsInfo>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -119,7 +119,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -135,7 +135,7 @@ namespace Azure.ResourceManager.Dynatrace.Models
                         return DeserializeDynatraceAccountCredentialsInfo(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DynatraceAccountCredentialsInfo)} does not support reading '{options.Format}' format.");
             }
         }
 

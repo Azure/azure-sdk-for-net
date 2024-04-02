@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClearKeyEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClearKeyEncryptionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClearKeyEncryptionConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (CustomKeysAcquisitionUriTemplate != null)
+            if (Optional.IsDefined(CustomKeysAcquisitionUriTemplate))
             {
                 writer.WritePropertyName("customKeysAcquisitionUrlTemplate"u8);
                 writer.WriteStringValue(CustomKeysAcquisitionUriTemplate);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Media.Models
             var format = options.Format == "W" ? ((IPersistableModel<ClearKeyEncryptionConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ClearKeyEncryptionConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ClearKeyEncryptionConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Media.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ClearKeyEncryptionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClearKeyEncryptionConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Media.Models
                         return DeserializeClearKeyEncryptionConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ClearKeyEncryptionConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ClearKeyEncryptionConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

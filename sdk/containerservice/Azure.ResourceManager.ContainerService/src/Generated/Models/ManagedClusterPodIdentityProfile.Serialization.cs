@@ -22,37 +22,37 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterPodIdentityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterPodIdentityProfile)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (IsEnabled.HasValue)
+            if (Optional.IsDefined(IsEnabled))
             {
                 writer.WritePropertyName("enabled"u8);
                 writer.WriteBooleanValue(IsEnabled.Value);
             }
-            if (AllowNetworkPluginKubenet.HasValue)
+            if (Optional.IsDefined(AllowNetworkPluginKubenet))
             {
                 writer.WritePropertyName("allowNetworkPluginKubenet"u8);
                 writer.WriteBooleanValue(AllowNetworkPluginKubenet.Value);
             }
-            if (!(UserAssignedIdentities is ChangeTrackingList<ManagedClusterPodIdentity> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(UserAssignedIdentities))
             {
                 writer.WritePropertyName("userAssignedIdentities"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentities)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterPodIdentity>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(UserAssignedIdentityExceptions is ChangeTrackingList<ManagedClusterPodIdentityException> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(UserAssignedIdentityExceptions))
             {
                 writer.WritePropertyName("userAssignedIdentityExceptions"u8);
                 writer.WriteStartArray();
                 foreach (var item in UserAssignedIdentityExceptions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ManagedClusterPodIdentityException>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedClusterPodIdentityProfile>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedClusterPodIdentityProfile)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedClusterPodIdentityProfile)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -166,7 +166,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentityProfile)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -182,7 +182,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeManagedClusterPodIdentityProfile(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentityProfile)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedClusterPodIdentityProfile)} does not support reading '{options.Format}' format.");
             }
         }
 

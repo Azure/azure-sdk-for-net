@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 
 namespace Azure.AI.DocumentIntelligence
@@ -23,28 +22,28 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentPage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("pageNumber"u8);
             writer.WriteNumberValue(PageNumber);
-            if (Angle.HasValue)
+            if (Optional.IsDefined(Angle))
             {
                 writer.WritePropertyName("angle"u8);
                 writer.WriteNumberValue(Angle.Value);
             }
-            if (Width.HasValue)
+            if (Optional.IsDefined(Width))
             {
                 writer.WritePropertyName("width"u8);
                 writer.WriteNumberValue(Width.Value);
             }
-            if (Height.HasValue)
+            if (Optional.IsDefined(Height))
             {
                 writer.WritePropertyName("height"u8);
                 writer.WriteNumberValue(Height.Value);
             }
-            if (Unit.HasValue)
+            if (Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit.Value.ToString());
@@ -53,56 +52,56 @@ namespace Azure.AI.DocumentIntelligence
             writer.WriteStartArray();
             foreach (var item in Spans)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<DocumentSpan>(item, options);
             }
             writer.WriteEndArray();
-            if (!(Words is ChangeTrackingList<DocumentWord> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Words))
             {
                 writer.WritePropertyName("words"u8);
                 writer.WriteStartArray();
                 foreach (var item in Words)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentWord>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(SelectionMarks is ChangeTrackingList<DocumentSelectionMark> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(SelectionMarks))
             {
                 writer.WritePropertyName("selectionMarks"u8);
                 writer.WriteStartArray();
                 foreach (var item in SelectionMarks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentSelectionMark>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Lines is ChangeTrackingList<DocumentLine> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(Lines))
             {
                 writer.WritePropertyName("lines"u8);
                 writer.WriteStartArray();
                 foreach (var item in Lines)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentLine>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Barcodes is ChangeTrackingList<DocumentBarcode> collection2 && collection2.IsUndefined))
+            if (Optional.IsCollectionDefined(Barcodes))
             {
                 writer.WritePropertyName("barcodes"u8);
                 writer.WriteStartArray();
                 foreach (var item in Barcodes)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentBarcode>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(Formulas is ChangeTrackingList<DocumentFormula> collection3 && collection3.IsUndefined))
+            if (Optional.IsCollectionDefined(Formulas))
             {
                 writer.WritePropertyName("formulas"u8);
                 writer.WriteStartArray();
                 foreach (var item in Formulas)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DocumentFormula>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -129,7 +128,7 @@ namespace Azure.AI.DocumentIntelligence
             var format = options.Format == "W" ? ((IPersistableModel<DocumentPage>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DocumentPage)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DocumentPage)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -310,7 +309,7 @@ namespace Azure.AI.DocumentIntelligence
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DocumentPage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentPage)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -326,7 +325,7 @@ namespace Azure.AI.DocumentIntelligence
                         return DeserializeDocumentPage(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DocumentPage)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DocumentPage)} does not support reading '{options.Format}' format.");
             }
         }
 
@@ -344,7 +343,7 @@ namespace Azure.AI.DocumentIntelligence
         internal virtual RequestContent ToRequestContent()
         {
             var content = new Utf8JsonRequestContent();
-            content.JsonWriter.WriteObjectValue(this);
+            content.JsonWriter.WriteObjectValue<DocumentPage>(this, new ModelReaderWriterOptions("W"));
             return content;
         }
     }

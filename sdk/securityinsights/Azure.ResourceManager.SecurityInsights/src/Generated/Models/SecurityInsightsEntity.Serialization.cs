@@ -21,7 +21,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,7 +42,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -70,7 +70,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<SecurityInsightsEntity>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -99,9 +99,9 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                     case "Host": return SecurityInsightsHostEntity.DeserializeSecurityInsightsHostEntity(element, options);
                     case "IoTDevice": return SecurityInsightsIotDeviceEntity.DeserializeSecurityInsightsIotDeviceEntity(element, options);
                     case "Ip": return SecurityInsightsIPEntity.DeserializeSecurityInsightsIPEntity(element, options);
+                    case "Mailbox": return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element, options);
                     case "MailCluster": return SecurityInsightsMailClusterEntity.DeserializeSecurityInsightsMailClusterEntity(element, options);
                     case "MailMessage": return SecurityInsightsMailMessageEntity.DeserializeSecurityInsightsMailMessageEntity(element, options);
-                    case "Mailbox": return SecurityInsightsMailboxEntity.DeserializeSecurityInsightsMailboxEntity(element, options);
                     case "Malware": return SecurityInsightsMalwareEntity.DeserializeSecurityInsightsMalwareEntity(element, options);
                     case "Process": return SecurityInsightsProcessEntity.DeserializeSecurityInsightsProcessEntity(element, options);
                     case "RegistryKey": return SecurityInsightsRegistryKeyEntity.DeserializeSecurityInsightsRegistryKeyEntity(element, options);
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -140,7 +140,7 @@ namespace Azure.ResourceManager.SecurityInsights.Models
                         return DeserializeSecurityInsightsEntity(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SecurityInsightsEntity)} does not support reading '{options.Format}' format.");
             }
         }
 

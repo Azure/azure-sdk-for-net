@@ -16,82 +16,82 @@ namespace Azure.Search.Documents.Indexes.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (ParsingMode.HasValue)
+            if (Optional.IsDefined(ParsingMode))
             {
                 writer.WritePropertyName("parsingMode"u8);
                 writer.WriteStringValue(ParsingMode.Value.ToString());
             }
-            if (ExcludedFileNameExtensions != null)
+            if (Optional.IsDefined(ExcludedFileNameExtensions))
             {
                 writer.WritePropertyName("excludedFileNameExtensions"u8);
                 writer.WriteStringValue(ExcludedFileNameExtensions);
             }
-            if (IndexedFileNameExtensions != null)
+            if (Optional.IsDefined(IndexedFileNameExtensions))
             {
                 writer.WritePropertyName("indexedFileNameExtensions"u8);
                 writer.WriteStringValue(IndexedFileNameExtensions);
             }
-            if (FailOnUnsupportedContentType.HasValue)
+            if (Optional.IsDefined(FailOnUnsupportedContentType))
             {
                 writer.WritePropertyName("failOnUnsupportedContentType"u8);
                 writer.WriteBooleanValue(FailOnUnsupportedContentType.Value);
             }
-            if (FailOnUnprocessableDocument.HasValue)
+            if (Optional.IsDefined(FailOnUnprocessableDocument))
             {
                 writer.WritePropertyName("failOnUnprocessableDocument"u8);
                 writer.WriteBooleanValue(FailOnUnprocessableDocument.Value);
             }
-            if (IndexStorageMetadataOnlyForOversizedDocuments.HasValue)
+            if (Optional.IsDefined(IndexStorageMetadataOnlyForOversizedDocuments))
             {
                 writer.WritePropertyName("indexStorageMetadataOnlyForOversizedDocuments"u8);
                 writer.WriteBooleanValue(IndexStorageMetadataOnlyForOversizedDocuments.Value);
             }
-            if (DelimitedTextHeaders != null)
+            if (Optional.IsDefined(DelimitedTextHeaders))
             {
                 writer.WritePropertyName("delimitedTextHeaders"u8);
                 writer.WriteStringValue(DelimitedTextHeaders);
             }
-            if (DelimitedTextDelimiter != null)
+            if (Optional.IsDefined(DelimitedTextDelimiter))
             {
                 writer.WritePropertyName("delimitedTextDelimiter"u8);
                 writer.WriteStringValue(DelimitedTextDelimiter);
             }
-            if (FirstLineContainsHeaders.HasValue)
+            if (Optional.IsDefined(FirstLineContainsHeaders))
             {
                 writer.WritePropertyName("firstLineContainsHeaders"u8);
                 writer.WriteBooleanValue(FirstLineContainsHeaders.Value);
             }
-            if (DocumentRoot != null)
+            if (Optional.IsDefined(DocumentRoot))
             {
                 writer.WritePropertyName("documentRoot"u8);
                 writer.WriteStringValue(DocumentRoot);
             }
-            if (DataToExtract.HasValue)
+            if (Optional.IsDefined(DataToExtract))
             {
                 writer.WritePropertyName("dataToExtract"u8);
                 writer.WriteStringValue(DataToExtract.Value.ToString());
             }
-            if (ImageAction.HasValue)
+            if (Optional.IsDefined(ImageAction))
             {
                 writer.WritePropertyName("imageAction"u8);
                 writer.WriteStringValue(ImageAction.Value.ToString());
             }
-            if (AllowSkillsetToReadFileData.HasValue)
+            if (Optional.IsDefined(AllowSkillsetToReadFileData))
             {
                 writer.WritePropertyName("allowSkillsetToReadFileData"u8);
                 writer.WriteBooleanValue(AllowSkillsetToReadFileData.Value);
             }
-            if (PdfTextRotationAlgorithm.HasValue)
+            if (Optional.IsDefined(PdfTextRotationAlgorithm))
             {
                 writer.WritePropertyName("pdfTextRotationAlgorithm"u8);
                 writer.WriteStringValue(PdfTextRotationAlgorithm.Value.ToString());
             }
-            if (ExecutionEnvironment.HasValue)
+            if (Optional.IsDefined(ExecutionEnvironment))
             {
                 writer.WritePropertyName("executionEnvironment"u8);
                 writer.WriteStringValue(ExecutionEnvironment.Value.ToString());
             }
-            if (_queryTimeout != null)
+            if (Optional.IsDefined(_queryTimeout))
             {
                 writer.WritePropertyName("queryTimeout"u8);
                 writer.WriteStringValue(_queryTimeout);
@@ -99,7 +99,7 @@ namespace Azure.Search.Documents.Indexes.Models
             foreach (var item in AdditionalProperties)
             {
                 writer.WritePropertyName(item.Key);
-                writer.WriteObjectValue(item.Value);
+                writer.WriteObjectValue<object>(item.Value);
             }
             writer.WriteEndObject();
         }

@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteServiceProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteServiceProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteServiceProvider)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
-            if (Location.HasValue)
+            if (Optional.IsDefined(Location))
             {
                 writer.WritePropertyName("location"u8);
                 writer.WriteStringValue(Location.Value);
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.Network.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(PeeringLocations is ChangeTrackingList<string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(PeeringLocations))
             {
                 writer.WritePropertyName("peeringLocations"u8);
                 writer.WriteStartArray();
@@ -69,17 +69,17 @@ namespace Azure.ResourceManager.Network.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(BandwidthsOffered is ChangeTrackingList<ExpressRouteServiceProviderBandwidthsOffered> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(BandwidthsOffered))
             {
                 writer.WritePropertyName("bandwidthsOffered"u8);
                 writer.WriteStartArray();
                 foreach (var item in BandwidthsOffered)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ExpressRouteServiceProviderBandwidthsOffered>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExpressRouteServiceProvider>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExpressRouteServiceProvider)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExpressRouteServiceProvider)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -257,7 +257,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteServiceProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteServiceProvider)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -273,7 +273,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeExpressRouteServiceProvider(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExpressRouteServiceProvider)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExpressRouteServiceProvider)} does not support reading '{options.Format}' format.");
             }
         }
 

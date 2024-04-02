@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersionCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVersionCapabilities)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(SupportPlan is ChangeTrackingList<KubernetesSupportPlan> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(SupportPlan))
             {
                 writer.WritePropertyName("supportPlan"u8);
                 writer.WriteStartArray();
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.ContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVersionCapabilities>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVersionCapabilities)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVersionCapabilities)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -111,7 +111,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVersionCapabilities)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.ContainerService.Models
                         return DeserializeKubernetesVersionCapabilities(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVersionCapabilities)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVersionCapabilities)} does not support reading '{options.Format}' format.");
             }
         }
 

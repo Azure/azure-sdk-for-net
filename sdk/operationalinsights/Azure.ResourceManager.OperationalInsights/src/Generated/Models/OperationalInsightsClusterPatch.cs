@@ -7,7 +7,6 @@
 
 using System;
 using System.Collections.Generic;
-using Azure.Core;
 using Azure.ResourceManager.Models;
 
 namespace Azure.ResourceManager.OperationalInsights.Models
@@ -71,14 +70,19 @@ namespace Azure.ResourceManager.OperationalInsights.Models
         }
 
         /// <summary> The identity of the resource. Current supported identity types: None, SystemAssigned, UserAssigned. </summary>
+        [WirePath("identity")]
         public ManagedServiceIdentity Identity { get; set; }
         /// <summary> The sku properties. </summary>
+        [WirePath("sku")]
         public OperationalInsightsClusterSku Sku { get; set; }
         /// <summary> Resource tags. </summary>
+        [WirePath("tags")]
         public IDictionary<string, string> Tags { get; }
         /// <summary> The associated key properties. </summary>
+        [WirePath("properties.keyVaultProperties")]
         public OperationalInsightsKeyVaultProperties KeyVaultProperties { get; set; }
         /// <summary> The cluster's billing type. </summary>
+        [WirePath("properties.billingType")]
         public OperationalInsightsBillingType? BillingType { get; set; }
     }
 }

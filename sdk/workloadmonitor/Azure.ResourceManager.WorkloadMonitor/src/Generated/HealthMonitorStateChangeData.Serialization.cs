@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             var format = options.Format == "W" ? ((IPersistableModel<HealthMonitorStateChangeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,49 +43,49 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MonitorName != null)
+            if (Optional.IsDefined(MonitorName))
             {
                 writer.WritePropertyName("monitorName"u8);
                 writer.WriteStringValue(MonitorName);
             }
-            if (MonitorType != null)
+            if (Optional.IsDefined(MonitorType))
             {
                 writer.WritePropertyName("monitorType"u8);
                 writer.WriteStringValue(MonitorType);
             }
-            if (MonitoredObject != null)
+            if (Optional.IsDefined(MonitoredObject))
             {
                 writer.WritePropertyName("monitoredObject"u8);
                 writer.WriteStringValue(MonitoredObject);
             }
-            if (EvaluationTimestamp != null)
+            if (Optional.IsDefined(EvaluationTimestamp))
             {
                 writer.WritePropertyName("evaluationTimestamp"u8);
                 writer.WriteStringValue(EvaluationTimestamp);
             }
-            if (CurrentStateFirstObservedTimestamp != null)
+            if (Optional.IsDefined(CurrentStateFirstObservedTimestamp))
             {
                 writer.WritePropertyName("currentStateFirstObservedTimestamp"u8);
                 writer.WriteStringValue(CurrentStateFirstObservedTimestamp);
             }
-            if (options.Format != "W" && PreviousMonitorState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PreviousMonitorState))
             {
                 writer.WritePropertyName("previousMonitorState"u8);
                 writer.WriteStringValue(PreviousMonitorState.Value.ToString());
             }
-            if (options.Format != "W" && CurrentMonitorState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(CurrentMonitorState))
             {
                 writer.WritePropertyName("currentMonitorState"u8);
                 writer.WriteStringValue(CurrentMonitorState.Value.ToString());
             }
-            if (Evidence != null)
+            if (Optional.IsDefined(Evidence))
             {
                 writer.WritePropertyName("evidence"u8);
 #if NET6_0_OR_GREATER
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 }
 #endif
             }
-            if (MonitorConfiguration != null)
+            if (Optional.IsDefined(MonitorConfiguration))
             {
                 writer.WritePropertyName("monitorConfiguration"u8);
 #if NET6_0_OR_GREATER
@@ -133,7 +133,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
             var format = options.Format == "W" ? ((IPersistableModel<HealthMonitorStateChangeData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -294,7 +294,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -310,7 +310,7 @@ namespace Azure.ResourceManager.WorkloadMonitor
                         return DeserializeHealthMonitorStateChangeData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(HealthMonitorStateChangeData)} does not support reading '{options.Format}' format.");
             }
         }
 

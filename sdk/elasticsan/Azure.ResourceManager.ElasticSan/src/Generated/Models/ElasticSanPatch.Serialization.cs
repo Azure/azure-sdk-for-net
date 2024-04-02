@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -39,17 +39,17 @@ namespace Azure.ResourceManager.ElasticSan.Models
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (BaseSizeTiB.HasValue)
+            if (Optional.IsDefined(BaseSizeTiB))
             {
                 writer.WritePropertyName("baseSizeTiB"u8);
                 writer.WriteNumberValue(BaseSizeTiB.Value);
             }
-            if (ExtendedCapacitySizeTiB.HasValue)
+            if (Optional.IsDefined(ExtendedCapacitySizeTiB))
             {
                 writer.WritePropertyName("extendedCapacitySizeTiB"u8);
                 writer.WriteNumberValue(ExtendedCapacitySizeTiB.Value);
             }
-            if (PublicNetworkAccess.HasValue)
+            if (Optional.IsDefined(PublicNetworkAccess))
             {
                 writer.WritePropertyName("publicNetworkAccess"u8);
                 writer.WriteStringValue(PublicNetworkAccess.Value.ToString());
@@ -78,7 +78,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
             var format = options.Format == "W" ? ((IPersistableModel<ElasticSanPatch>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.ElasticSan.Models
                         return DeserializeElasticSanPatch(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ElasticSanPatch)} does not support reading '{options.Format}' format.");
             }
         }
 

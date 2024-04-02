@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.StorageMover
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<StorageMoverAgentResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string agentName, StorageMoverAgentData data, CancellationToken cancellationToken = default)
         {
-            if (agentName == null)
-            {
-                throw new ArgumentNullException(nameof(agentName));
-            }
-            if (agentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<StorageMoverAgentResource> CreateOrUpdate(WaitUntil waitUntil, string agentName, StorageMoverAgentData data, CancellationToken cancellationToken = default)
         {
-            if (agentName == null)
-            {
-                throw new ArgumentNullException(nameof(agentName));
-            }
-            if (agentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         public virtual async Task<Response<StorageMoverAgentResource>> GetAsync(string agentName, CancellationToken cancellationToken = default)
         {
-            if (agentName == null)
-            {
-                throw new ArgumentNullException(nameof(agentName));
-            }
-            if (agentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentName));
-            }
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
             using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         public virtual Response<StorageMoverAgentResource> Get(string agentName, CancellationToken cancellationToken = default)
         {
-            if (agentName == null)
-            {
-                throw new ArgumentNullException(nameof(agentName));
-            }
-            if (agentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentName));
-            }
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
             using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string agentName, CancellationToken cancellationToken = default)
         {
-            if (agentName == null)
-            {
-                throw new ArgumentNullException(nameof(agentName));
-            }
-            if (agentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentName));
-            }
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
             using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         public virtual Response<bool> Exists(string agentName, CancellationToken cancellationToken = default)
         {
-            if (agentName == null)
-            {
-                throw new ArgumentNullException(nameof(agentName));
-            }
-            if (agentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentName));
-            }
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
             using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         public virtual async Task<NullableResponse<StorageMoverAgentResource>> GetIfExistsAsync(string agentName, CancellationToken cancellationToken = default)
         {
-            if (agentName == null)
-            {
-                throw new ArgumentNullException(nameof(agentName));
-            }
-            if (agentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentName));
-            }
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
             using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.StorageMover
         /// <exception cref="ArgumentNullException"> <paramref name="agentName"/> is null. </exception>
         public virtual NullableResponse<StorageMoverAgentResource> GetIfExists(string agentName, CancellationToken cancellationToken = default)
         {
-            if (agentName == null)
-            {
-                throw new ArgumentNullException(nameof(agentName));
-            }
-            if (agentName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(agentName));
-            }
+            Argument.AssertNotNullOrEmpty(agentName, nameof(agentName));
 
             using var scope = _storageMoverAgentAgentsClientDiagnostics.CreateScope("StorageMoverAgentCollection.GetIfExists");
             scope.Start();

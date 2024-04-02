@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.HybridNetwork.Models
 {
-    /// <summary> The UnknownAzureOperatorNexusNetworkFunctionApplication. </summary>
+    /// <summary> Unknown version of AzureOperatorNexusNetworkFunctionApplication. </summary>
     internal partial class UnknownAzureOperatorNexusNetworkFunctionApplication : AzureOperatorNexusNetworkFunctionApplication
     {
         /// <summary> Initializes a new instance of <see cref="UnknownAzureOperatorNexusNetworkFunctionApplication"/>. </summary>

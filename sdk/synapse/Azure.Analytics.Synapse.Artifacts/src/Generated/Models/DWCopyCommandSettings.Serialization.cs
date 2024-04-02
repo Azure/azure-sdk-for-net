@@ -19,17 +19,17 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (!(DefaultValues is ChangeTrackingList<DWCopyCommandDefaultValue> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(DefaultValues))
             {
                 writer.WritePropertyName("defaultValues"u8);
                 writer.WriteStartArray();
                 foreach (var item in DefaultValues)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DWCopyCommandDefaultValue>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (!(AdditionalOptions is ChangeTrackingDictionary<string, string> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(AdditionalOptions))
             {
                 writer.WritePropertyName("additionalOptions"u8);
                 writer.WriteStartObject();
@@ -89,7 +89,7 @@ namespace Azure.Analytics.Synapse.Artifacts.Models
         {
             public override void Write(Utf8JsonWriter writer, DWCopyCommandSettings model, JsonSerializerOptions options)
             {
-                writer.WriteObjectValue(model);
+                writer.WriteObjectValue<DWCopyCommandSettings>(model);
             }
             public override DWCopyCommandSettings Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             {

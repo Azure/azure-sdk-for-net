@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,19 +42,19 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (IsAvailable.HasValue)
+            if (Optional.IsDefined(IsAvailable))
             {
                 writer.WritePropertyName("isAvailable"u8);
                 writer.WriteBooleanValue(IsAvailable.Value);
             }
-            if (AvailabilityStatus != null)
+            if (Optional.IsDefined(AvailabilityStatus))
             {
                 writer.WritePropertyName("availabilityStatus"u8);
                 writer.WriteStringValue(AvailabilityStatus);
@@ -83,7 +83,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
             var format = options.Format == "W" ? ((IPersistableModel<LoadTestingQuotaAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -199,7 +199,7 @@ namespace Azure.ResourceManager.LoadTesting.Models
                         return DeserializeLoadTestingQuotaAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(LoadTestingQuotaAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

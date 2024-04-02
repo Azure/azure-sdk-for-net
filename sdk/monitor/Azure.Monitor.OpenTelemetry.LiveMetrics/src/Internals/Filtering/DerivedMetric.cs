@@ -22,15 +22,15 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         private static readonly MethodInfo DoubleParseMethodInfo = typeof(double).GetMethod(
            "Parse",
-           new[] { typeof(string), typeof(IFormatProvider) });
+           new[] { typeof(string), typeof(IFormatProvider) })!;
 
         private static readonly MethodInfo ObjectToStringMethodInfo = typeof(object).GetMethod(
             "ToString",
-            BindingFlags.Public | BindingFlags.Instance);
+            BindingFlags.Public | BindingFlags.Instance)!;
 
         private static readonly MethodInfo DoubleToStringMethodInfo = typeof(double).GetMethod(
             "ToString",
-            new[] { typeof(IFormatProvider) });
+            new[] { typeof(IFormatProvider) })!;
 
         private readonly DerivedMetricInfo info;
 
@@ -110,7 +110,7 @@ namespace Azure.Monitor.OpenTelemetry.LiveMetrics.Internals.Filtering
 
         public override string ToString()
         {
-            return this.info.ToString();
+            return this.info.ToString()!;
         }
 
         private void CreateFilters(out CollectionConfigurationError[] errors)

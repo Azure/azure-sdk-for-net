@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProfileEnumValidValuesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Value.HasValue)
+            if (Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteNumberValue(Value.Value);
             }
-            if (!(LocalizedValueNames is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(LocalizedValueNames))
             {
                 writer.WritePropertyName("localizedValueNames"u8);
                 writer.WriteStartObject();
@@ -65,7 +65,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ProfileEnumValidValuesFormat>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeProfileEnumValidValuesFormat(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ProfileEnumValidValuesFormat)} does not support reading '{options.Format}' format.");
             }
         }
 

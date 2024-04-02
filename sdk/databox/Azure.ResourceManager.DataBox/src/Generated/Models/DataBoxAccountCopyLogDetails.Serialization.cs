@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxAccountCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && AccountName != null)
+            if (options.Format != "W" && Optional.IsDefined(AccountName))
             {
                 writer.WritePropertyName("accountName"u8);
                 writer.WriteStringValue(AccountName);
             }
-            if (options.Format != "W" && CopyLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(CopyLogLink))
             {
                 writer.WritePropertyName("copyLogLink"u8);
                 writer.WriteStringValue(CopyLogLink);
             }
-            if (options.Format != "W" && CopyVerboseLogLink != null)
+            if (options.Format != "W" && Optional.IsDefined(CopyVerboseLogLink))
             {
                 writer.WritePropertyName("copyVerboseLogLink"u8);
                 writer.WriteStringValue(CopyVerboseLogLink);
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxAccountCopyLogDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxAccountCopyLogDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxAccountCopyLogDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

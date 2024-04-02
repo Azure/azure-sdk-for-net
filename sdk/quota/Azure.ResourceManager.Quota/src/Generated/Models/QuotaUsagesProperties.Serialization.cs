@@ -22,41 +22,41 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaUsagesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Usages != null)
+            if (Optional.IsDefined(Usages))
             {
                 writer.WritePropertyName("usages"u8);
-                writer.WriteObjectValue(Usages);
+                writer.WriteObjectValue<QuotaUsagesObject>(Usages, options);
             }
-            if (options.Format != "W" && Unit != null)
+            if (options.Format != "W" && Optional.IsDefined(Unit))
             {
                 writer.WritePropertyName("unit"u8);
                 writer.WriteStringValue(Unit);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
-                writer.WriteObjectValue(Name);
+                writer.WriteObjectValue<QuotaRequestResourceName>(Name, options);
             }
-            if (ResourceTypeName != null)
+            if (Optional.IsDefined(ResourceTypeName))
             {
                 writer.WritePropertyName("resourceType"u8);
                 writer.WriteStringValue(ResourceTypeName);
             }
-            if (options.Format != "W" && QuotaPeriod.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(QuotaPeriod))
             {
                 writer.WritePropertyName("quotaPeriod"u8);
                 writer.WriteStringValue(QuotaPeriod.Value, "P");
             }
-            if (options.Format != "W" && IsQuotaApplicable.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsQuotaApplicable))
             {
                 writer.WritePropertyName("isQuotaApplicable"u8);
                 writer.WriteBooleanValue(IsQuotaApplicable.Value);
             }
-            if (Properties != null)
+            if (Optional.IsDefined(Properties))
             {
                 writer.WritePropertyName("properties"u8);
 #if NET6_0_OR_GREATER
@@ -91,7 +91,7 @@ namespace Azure.ResourceManager.Quota.Models
             var format = options.Format == "W" ? ((IPersistableModel<QuotaUsagesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -198,7 +198,7 @@ namespace Azure.ResourceManager.Quota.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -214,7 +214,7 @@ namespace Azure.ResourceManager.Quota.Models
                         return DeserializeQuotaUsagesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(QuotaUsagesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

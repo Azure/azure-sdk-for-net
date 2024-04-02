@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<FormulaPropertiesFromVm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (LabVmId != null)
+            if (Optional.IsDefined(LabVmId))
             {
                 writer.WritePropertyName("labVmId"u8);
                 writer.WriteStringValue(LabVmId);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
             var format = options.Format == "W" ? ((IPersistableModel<FormulaPropertiesFromVm>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.DevTestLabs.Models
                         return DeserializeFormulaPropertiesFromVm(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(FormulaPropertiesFromVm)} does not support reading '{options.Format}' format.");
             }
         }
 

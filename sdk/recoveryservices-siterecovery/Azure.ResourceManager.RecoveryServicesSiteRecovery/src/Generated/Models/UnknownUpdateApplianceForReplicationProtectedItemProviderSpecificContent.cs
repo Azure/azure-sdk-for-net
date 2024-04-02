@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
 {
-    /// <summary> The UnknownUpdateApplianceForReplicationProtectedItemProviderSpecificContent. </summary>
+    /// <summary> Unknown version of UpdateApplianceForReplicationProtectedItemProviderSpecificInput. </summary>
     internal partial class UnknownUpdateApplianceForReplicationProtectedItemProviderSpecificContent : UpdateApplianceForReplicationProtectedItemProviderSpecificContent
     {
         /// <summary> Initializes a new instance of <see cref="UnknownUpdateApplianceForReplicationProtectedItemProviderSpecificContent"/>. </summary>

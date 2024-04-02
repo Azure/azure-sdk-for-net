@@ -53,22 +53,10 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <exception cref="ArgumentNullException"> <paramref name="path"/>, <paramref name="clientEncryptionKeyId"/>, <paramref name="encryptionType"/> or <paramref name="encryptionAlgorithm"/> is null. </exception>
         public CosmosDBClientEncryptionIncludedPath(string path, string clientEncryptionKeyId, string encryptionType, string encryptionAlgorithm)
         {
-            if (path == null)
-            {
-                throw new ArgumentNullException(nameof(path));
-            }
-            if (clientEncryptionKeyId == null)
-            {
-                throw new ArgumentNullException(nameof(clientEncryptionKeyId));
-            }
-            if (encryptionType == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionType));
-            }
-            if (encryptionAlgorithm == null)
-            {
-                throw new ArgumentNullException(nameof(encryptionAlgorithm));
-            }
+            Argument.AssertNotNull(path, nameof(path));
+            Argument.AssertNotNull(clientEncryptionKeyId, nameof(clientEncryptionKeyId));
+            Argument.AssertNotNull(encryptionType, nameof(encryptionType));
+            Argument.AssertNotNull(encryptionAlgorithm, nameof(encryptionAlgorithm));
 
             Path = path;
             ClientEncryptionKeyId = clientEncryptionKeyId;
@@ -97,12 +85,16 @@ namespace Azure.ResourceManager.CosmosDB.Models
         }
 
         /// <summary> Path that needs to be encrypted. </summary>
+        [WirePath("path")]
         public string Path { get; set; }
         /// <summary> The identifier of the Client Encryption Key to be used to encrypt the path. </summary>
+        [WirePath("clientEncryptionKeyId")]
         public string ClientEncryptionKeyId { get; set; }
         /// <summary> The type of encryption to be performed. Eg - Deterministic, Randomized. </summary>
+        [WirePath("encryptionType")]
         public string EncryptionType { get; set; }
         /// <summary> The encryption algorithm which will be used. Eg - AEAD_AES_256_CBC_HMAC_SHA256. </summary>
+        [WirePath("encryptionAlgorithm")]
         public string EncryptionAlgorithm { get; set; }
     }
 }

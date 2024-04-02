@@ -67,6 +67,7 @@ namespace Azure.ResourceManager.PostgreSql.FlexibleServers.Models
         }
 
         /// <summary> Number of storage containers the plugin will use during backup. More than one containers may be used for size limitations, parallelism, or redundancy etc. </summary>
+        [WirePath("properties.numberOfContainers")]
         public int NumberOfContainers { get; }
     }
 }

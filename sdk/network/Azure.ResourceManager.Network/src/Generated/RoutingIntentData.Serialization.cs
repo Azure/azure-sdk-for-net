@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Network.Models;
 
@@ -24,43 +23,43 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<RoutingIntentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingIntentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingIntentData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && ETag.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (Id != null)
+            if (Optional.IsDefined(Id))
             {
                 writer.WritePropertyName("id"u8);
                 writer.WriteStringValue(Id);
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (options.Format != "W" && ResourceType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ResourceType))
             {
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType.Value);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (!(RoutingPolicies is ChangeTrackingList<RoutingPolicy> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(RoutingPolicies))
             {
                 writer.WritePropertyName("routingPolicies"u8);
                 writer.WriteStartArray();
                 foreach (var item in RoutingPolicies)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RoutingPolicy>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -89,7 +88,7 @@ namespace Azure.ResourceManager.Network
             var format = options.Format == "W" ? ((IPersistableModel<RoutingIntentData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingIntentData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingIntentData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -206,7 +205,7 @@ namespace Azure.ResourceManager.Network
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingIntentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingIntentData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -222,7 +221,7 @@ namespace Azure.ResourceManager.Network
                         return DeserializeRoutingIntentData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingIntentData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingIntentData)} does not support reading '{options.Format}' format.");
             }
         }
 

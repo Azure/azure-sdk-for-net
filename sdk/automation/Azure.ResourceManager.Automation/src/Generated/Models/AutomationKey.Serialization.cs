@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationKey)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && KeyName.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(KeyName))
             {
                 writer.WritePropertyName("KeyName"u8);
                 writer.WriteStringValue(KeyName.Value.ToString());
             }
-            if (options.Format != "W" && Permissions.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(Permissions))
             {
                 writer.WritePropertyName("Permissions"u8);
                 writer.WriteStringValue(Permissions.Value.ToString());
             }
-            if (options.Format != "W" && Value != null)
+            if (options.Format != "W" && Optional.IsDefined(Value))
             {
                 writer.WritePropertyName("Value"u8);
                 writer.WriteStringValue(Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<AutomationKey>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AutomationKey)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AutomationKey)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AutomationKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationKey)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeAutomationKey(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AutomationKey)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AutomationKey)} does not support reading '{options.Format}' format.");
             }
         }
 

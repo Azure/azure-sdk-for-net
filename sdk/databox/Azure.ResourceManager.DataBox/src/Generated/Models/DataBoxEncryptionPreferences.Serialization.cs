@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEncryptionPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEncryptionPreferences)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEncryptionPreferences)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DoubleEncryption.HasValue)
+            if (Optional.IsDefined(DoubleEncryption))
             {
                 writer.WritePropertyName("doubleEncryption"u8);
                 writer.WriteStringValue(DoubleEncryption.Value.ToSerialString());
             }
-            if (HardwareEncryption.HasValue)
+            if (Optional.IsDefined(HardwareEncryption))
             {
                 writer.WritePropertyName("hardwareEncryption"u8);
                 writer.WriteStringValue(HardwareEncryption.Value.ToSerialString());
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEncryptionPreferences>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEncryptionPreferences)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEncryptionPreferences)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEncryptionPreferences)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEncryptionPreferences)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxEncryptionPreferences(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEncryptionPreferences)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEncryptionPreferences)} does not support reading '{options.Format}' format.");
             }
         }
 

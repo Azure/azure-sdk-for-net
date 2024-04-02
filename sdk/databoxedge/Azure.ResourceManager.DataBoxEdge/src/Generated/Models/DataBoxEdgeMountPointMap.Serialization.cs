@@ -22,28 +22,28 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMountPointMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("shareId"u8);
             writer.WriteStringValue(ShareId);
-            if (options.Format != "W" && RoleId != null)
+            if (options.Format != "W" && Optional.IsDefined(RoleId))
             {
                 writer.WritePropertyName("roleId"u8);
                 writer.WriteStringValue(RoleId);
             }
-            if (options.Format != "W" && MountPoint != null)
+            if (options.Format != "W" && Optional.IsDefined(MountPoint))
             {
                 writer.WritePropertyName("mountPoint"u8);
                 writer.WriteStringValue(MountPoint);
             }
-            if (options.Format != "W" && MountType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MountType))
             {
                 writer.WritePropertyName("mountType"u8);
                 writer.WriteStringValue(MountType.Value.ToString());
             }
-            if (options.Format != "W" && RoleType.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(RoleType))
             {
                 writer.WritePropertyName("roleType"u8);
                 writer.WriteStringValue(RoleType.Value.ToString());
@@ -71,7 +71,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeMountPointMap>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeDataBoxEdgeMountPointMap(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeMountPointMap)} does not support reading '{options.Format}' format.");
             }
         }
 

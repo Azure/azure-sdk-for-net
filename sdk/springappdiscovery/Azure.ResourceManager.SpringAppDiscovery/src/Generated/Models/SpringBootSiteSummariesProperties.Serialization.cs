@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteSummariesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (DiscoveredServers.HasValue)
+            if (Optional.IsDefined(DiscoveredServers))
             {
                 writer.WritePropertyName("discoveredServers"u8);
                 writer.WriteNumberValue(DiscoveredServers.Value);
             }
-            if (DiscoveredApps.HasValue)
+            if (Optional.IsDefined(DiscoveredApps))
             {
                 writer.WritePropertyName("discoveredApps"u8);
                 writer.WriteNumberValue(DiscoveredApps.Value);
             }
-            if (!(Errors is ChangeTrackingList<SpringBootSiteError> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Errors))
             {
                 writer.WritePropertyName("errors"u8);
                 writer.WriteStartArray();
                 foreach (var item in Errors)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<SpringBootSiteError>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (ProvisioningState.HasValue)
+            if (Optional.IsDefined(ProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(ProvisioningState.Value.ToString());
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SpringBootSiteSummariesProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -156,7 +156,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Models
                         return DeserializeSpringBootSiteSummariesProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SpringBootSiteSummariesProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

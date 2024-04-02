@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubDefinitionDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ApplyAllocationPolicy.HasValue)
+            if (Optional.IsDefined(ApplyAllocationPolicy))
             {
                 writer.WritePropertyName("applyAllocationPolicy"u8);
                 writer.WriteBooleanValue(ApplyAllocationPolicy.Value);
             }
-            if (AllocationWeight.HasValue)
+            if (Optional.IsDefined(AllocationWeight))
             {
                 writer.WritePropertyName("allocationWeight"u8);
                 writer.WriteNumberValue(AllocationWeight.Value);
             }
-            if (options.Format != "W" && Name != null)
+            if (options.Format != "W" && Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -68,7 +68,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
             var format = options.Format == "W" ? ((IPersistableModel<IotHubDefinitionDescription>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -149,7 +149,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -165,7 +165,7 @@ namespace Azure.ResourceManager.DeviceProvisioningServices.Models
                         return DeserializeIotHubDefinitionDescription(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(IotHubDefinitionDescription)} does not support reading '{options.Format}' format.");
             }
         }
 

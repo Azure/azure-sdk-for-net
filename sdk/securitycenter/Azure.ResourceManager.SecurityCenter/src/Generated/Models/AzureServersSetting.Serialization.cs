@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureServersSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureServersSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureServersSetting)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -44,14 +44,14 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (SelectedProvider.HasValue)
+            if (Optional.IsDefined(SelectedProvider))
             {
                 writer.WritePropertyName("selectedProvider"u8);
                 writer.WriteStringValue(SelectedProvider.Value.ToString());
@@ -80,7 +80,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<AzureServersSetting>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AzureServersSetting)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AzureServersSetting)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -180,7 +180,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AzureServersSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureServersSetting)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -196,7 +196,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeAzureServersSetting(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AzureServersSetting)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AzureServersSetting)} does not support reading '{options.Format}' format.");
             }
         }
 

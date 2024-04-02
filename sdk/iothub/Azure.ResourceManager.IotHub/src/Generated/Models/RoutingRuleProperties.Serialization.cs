@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingRuleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingRuleProperties)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,7 +30,7 @@ namespace Azure.ResourceManager.IotHub.Models
             writer.WriteStringValue(Name);
             writer.WritePropertyName("source"u8);
             writer.WriteStringValue(Source.ToString());
-            if (Condition != null)
+            if (Optional.IsDefined(Condition))
             {
                 writer.WritePropertyName("condition"u8);
                 writer.WriteStringValue(Condition);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.IotHub.Models
             var format = options.Format == "W" ? ((IPersistableModel<RoutingRuleProperties>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RoutingRuleProperties)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RoutingRuleProperties)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.IotHub.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RoutingRuleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingRuleProperties)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.IotHub.Models
                         return DeserializeRoutingRuleProperties(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RoutingRuleProperties)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RoutingRuleProperties)} does not support reading '{options.Format}' format.");
             }
         }
 

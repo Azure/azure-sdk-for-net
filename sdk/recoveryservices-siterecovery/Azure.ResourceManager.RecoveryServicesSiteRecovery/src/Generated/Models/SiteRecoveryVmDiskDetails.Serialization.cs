@@ -22,56 +22,56 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (VhdType != null)
+            if (Optional.IsDefined(VhdType))
             {
                 writer.WritePropertyName("vhdType"u8);
                 writer.WriteStringValue(VhdType);
             }
-            if (VhdId != null)
+            if (Optional.IsDefined(VhdId))
             {
                 writer.WritePropertyName("vhdId"u8);
                 writer.WriteStringValue(VhdId);
             }
-            if (DiskId != null)
+            if (Optional.IsDefined(DiskId))
             {
                 writer.WritePropertyName("diskId"u8);
                 writer.WriteStringValue(DiskId);
             }
-            if (VhdName != null)
+            if (Optional.IsDefined(VhdName))
             {
                 writer.WritePropertyName("vhdName"u8);
                 writer.WriteStringValue(VhdName);
             }
-            if (MaxSizeMB != null)
+            if (Optional.IsDefined(MaxSizeMB))
             {
                 writer.WritePropertyName("maxSizeMB"u8);
                 writer.WriteStringValue(MaxSizeMB);
             }
-            if (TargetDiskLocation != null)
+            if (Optional.IsDefined(TargetDiskLocation))
             {
                 writer.WritePropertyName("targetDiskLocation"u8);
                 writer.WriteStringValue(TargetDiskLocation);
             }
-            if (TargetDiskName != null)
+            if (Optional.IsDefined(TargetDiskName))
             {
                 writer.WritePropertyName("targetDiskName"u8);
                 writer.WriteStringValue(TargetDiskName);
             }
-            if (LunId != null)
+            if (Optional.IsDefined(LunId))
             {
                 writer.WritePropertyName("lunId"u8);
                 writer.WriteStringValue(LunId);
             }
-            if (DiskEncryptionSetId != null)
+            if (Optional.IsDefined(DiskEncryptionSetId))
             {
                 writer.WritePropertyName("diskEncryptionSetId"u8);
                 writer.WriteStringValue(DiskEncryptionSetId);
             }
-            if (CustomTargetDiskName != null)
+            if (Optional.IsDefined(CustomTargetDiskName))
             {
                 writer.WritePropertyName("customTargetDiskName"u8);
                 writer.WriteStringValue(CustomTargetDiskName);
@@ -99,7 +99,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
             var format = options.Format == "W" ? ((IPersistableModel<SiteRecoveryVmDiskDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -211,7 +211,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -227,7 +227,7 @@ namespace Azure.ResourceManager.RecoveryServicesSiteRecovery.Models
                         return DeserializeSiteRecoveryVmDiskDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SiteRecoveryVmDiskDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

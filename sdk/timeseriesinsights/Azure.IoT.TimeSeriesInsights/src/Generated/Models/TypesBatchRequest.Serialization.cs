@@ -15,25 +15,25 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Get != null)
+            if (Optional.IsDefined(Get))
             {
                 writer.WritePropertyName("get"u8);
-                writer.WriteObjectValue(Get);
+                writer.WriteObjectValue<TypesRequestBatchGetOrDelete>(Get);
             }
-            if (!(Put is ChangeTrackingList<TimeSeriesType> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Put))
             {
                 writer.WritePropertyName("put"u8);
                 writer.WriteStartArray();
                 foreach (var item in Put)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TimeSeriesType>(item);
                 }
                 writer.WriteEndArray();
             }
-            if (Delete != null)
+            if (Optional.IsDefined(Delete))
             {
                 writer.WritePropertyName("delete"u8);
-                writer.WriteObjectValue(Delete);
+                writer.WriteObjectValue<TypesRequestBatchGetOrDelete>(Delete);
             }
             writer.WriteEndObject();
         }

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyslogDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyslogDataSource)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Streams is ChangeTrackingList<SyslogDataSourceStream> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Streams))
             {
                 writer.WritePropertyName("streams"u8);
                 writer.WriteStartArray();
@@ -36,7 +36,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(FacilityNames is ChangeTrackingList<SyslogDataSourceFacilityName> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(FacilityNames))
             {
                 writer.WritePropertyName("facilityNames"u8);
                 writer.WriteStartArray();
@@ -46,7 +46,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (!(LogLevels is ChangeTrackingList<SyslogDataSourceLogLevel> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(LogLevels))
             {
                 writer.WritePropertyName("logLevels"u8);
                 writer.WriteStartArray();
@@ -56,7 +56,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 }
                 writer.WriteEndArray();
             }
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.Monitor.Models
             var format = options.Format == "W" ? ((IPersistableModel<SyslogDataSource>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SyslogDataSource)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SyslogDataSource)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -172,7 +172,7 @@ namespace Azure.ResourceManager.Monitor.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SyslogDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyslogDataSource)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -188,7 +188,7 @@ namespace Azure.ResourceManager.Monitor.Models
                         return DeserializeSyslogDataSource(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SyslogDataSource)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SyslogDataSource)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -24,7 +24,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -43,7 +43,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
@@ -52,31 +52,31 @@ namespace Azure.ResourceManager.DataBoxEdge
             writer.WriteStartObject();
             writer.WritePropertyName("alias"u8);
             writer.WriteStringValue(Alias);
-            if (UserName != null)
+            if (Optional.IsDefined(UserName))
             {
                 writer.WritePropertyName("userName"u8);
                 writer.WriteStringValue(UserName);
             }
-            if (AccountKey != null)
+            if (Optional.IsDefined(AccountKey))
             {
                 writer.WritePropertyName("accountKey"u8);
-                writer.WriteObjectValue(AccountKey);
+                writer.WriteObjectValue<AsymmetricEncryptedSecret>(AccountKey, options);
             }
-            if (ConnectionString != null)
+            if (Optional.IsDefined(ConnectionString))
             {
                 writer.WritePropertyName("connectionString"u8);
                 writer.WriteStringValue(ConnectionString);
             }
             writer.WritePropertyName("sslStatus"u8);
             writer.WriteStringValue(SslStatus.ToString());
-            if (BlobDomainName != null)
+            if (Optional.IsDefined(BlobDomainName))
             {
                 writer.WritePropertyName("blobDomainName"u8);
                 writer.WriteStringValue(BlobDomainName);
             }
             writer.WritePropertyName("accountType"u8);
             writer.WriteStringValue(AccountType.ToString());
-            if (StorageAccountId != null)
+            if (Optional.IsDefined(StorageAccountId))
             {
                 writer.WritePropertyName("storageAccountId"u8);
                 writer.WriteStringValue(StorageAccountId);
@@ -105,7 +105,7 @@ namespace Azure.ResourceManager.DataBoxEdge
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxEdgeStorageAccountCredentialData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -251,7 +251,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -267,7 +267,7 @@ namespace Azure.ResourceManager.DataBoxEdge
                         return DeserializeDataBoxEdgeStorageAccountCredentialData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxEdgeStorageAccountCredentialData)} does not support reading '{options.Format}' format.");
             }
         }
 

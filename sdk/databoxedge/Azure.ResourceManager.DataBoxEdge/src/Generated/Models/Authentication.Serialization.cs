@@ -22,14 +22,14 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<Authentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Authentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Authentication)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SymmetricKey != null)
+            if (Optional.IsDefined(SymmetricKey))
             {
                 writer.WritePropertyName("symmetricKey"u8);
-                writer.WriteObjectValue(SymmetricKey);
+                writer.WriteObjectValue<DataBoxEdgeSymmetricKey>(SymmetricKey, options);
             }
             if (options.Format != "W" && _serializedAdditionalRawData != null)
             {
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<Authentication>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(Authentication)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(Authentication)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -101,7 +101,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(Authentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Authentication)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -117,7 +117,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeAuthentication(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(Authentication)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(Authentication)} does not support reading '{options.Format}' format.");
             }
         }
 

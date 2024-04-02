@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseGetSsisObjectMetadataContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseGetSsisObjectMetadataContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseGetSsisObjectMetadataContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (MetadataPath != null)
+            if (Optional.IsDefined(MetadataPath))
             {
                 writer.WritePropertyName("metadataPath"u8);
                 writer.WriteStringValue(MetadataPath);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Synapse.Models
             var format = options.Format == "W" ? ((IPersistableModel<SynapseGetSsisObjectMetadataContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseGetSsisObjectMetadataContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseGetSsisObjectMetadataContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Synapse.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseGetSsisObjectMetadataContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseGetSsisObjectMetadataContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Synapse.Models
                         return DeserializeSynapseGetSsisObjectMetadataContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseGetSsisObjectMetadataContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseGetSsisObjectMetadataContent)} does not support reading '{options.Format}' format.");
             }
         }
 

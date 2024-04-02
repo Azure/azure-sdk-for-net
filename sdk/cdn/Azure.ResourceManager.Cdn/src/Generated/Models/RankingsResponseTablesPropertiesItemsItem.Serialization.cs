@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RankingsResponseTablesPropertiesItemsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (Name != null)
+            if (Optional.IsDefined(Name))
             {
                 writer.WritePropertyName("name"u8);
                 writer.WriteStringValue(Name);
             }
-            if (!(Metrics is ChangeTrackingList<RankingsResponseTablesPropertiesItemsMetricsItem> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Metrics))
             {
                 writer.WritePropertyName("metrics"u8);
                 writer.WriteStartArray();
                 foreach (var item in Metrics)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<RankingsResponseTablesPropertiesItemsMetricsItem>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Cdn.Models
             var format = options.Format == "W" ? ((IPersistableModel<RankingsResponseTablesPropertiesItemsItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -122,7 +122,7 @@ namespace Azure.ResourceManager.Cdn.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -138,7 +138,7 @@ namespace Azure.ResourceManager.Cdn.Models
                         return DeserializeRankingsResponseTablesPropertiesItemsItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RankingsResponseTablesPropertiesItemsItem)} does not support reading '{options.Format}' format.");
             }
         }
 

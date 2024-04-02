@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(PreferredDisks is ChangeTrackingDictionary<string, int> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(PreferredDisks))
             {
                 writer.WritePropertyName("preferredDisks"u8);
                 writer.WriteStartObject();
@@ -37,37 +37,37 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
-            if (options.Format != "W" && !(CopyProgress is ChangeTrackingList<DataBoxDiskCopyProgress> collection0 && collection0.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CopyProgress))
             {
                 writer.WritePropertyName("copyProgress"u8);
                 writer.WriteStartArray();
                 foreach (var item in CopyProgress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxDiskCopyProgress>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(GranularCopyProgress is ChangeTrackingList<DataBoxDiskGranularCopyProgress> collection1 && collection1.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GranularCopyProgress))
             {
                 writer.WritePropertyName("granularCopyProgress"u8);
                 writer.WriteStartArray();
                 foreach (var item in GranularCopyProgress)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxDiskGranularCopyProgress>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(GranularCopyLogDetails is ChangeTrackingList<DataBoxDiskGranularCopyLogDetails> collection2 && collection2.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(GranularCopyLogDetails))
             {
                 writer.WritePropertyName("granularCopyLogDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in GranularCopyLogDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxDiskGranularCopyLogDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && !(DisksAndSizeDetails is ChangeTrackingDictionary<string, int> collection3 && collection3.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(DisksAndSizeDetails))
             {
                 writer.WritePropertyName("disksAndSizeDetails"u8);
                 writer.WriteStartObject();
@@ -78,106 +78,106 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndObject();
             }
-            if (Passkey != null)
+            if (Optional.IsDefined(Passkey))
             {
                 writer.WritePropertyName("passkey"u8);
                 writer.WriteStringValue(Passkey);
             }
-            if (options.Format != "W" && !(JobStages is ChangeTrackingList<DataBoxJobStage> collection4 && collection4.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(JobStages))
             {
                 writer.WritePropertyName("jobStages"u8);
                 writer.WriteStartArray();
                 foreach (var item in JobStages)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataBoxJobStage>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("contactDetails"u8);
-            writer.WriteObjectValue(ContactDetails);
-            if (ShippingAddress != null)
+            writer.WriteObjectValue<DataBoxContactDetails>(ContactDetails, options);
+            if (Optional.IsDefined(ShippingAddress))
             {
                 writer.WritePropertyName("shippingAddress"u8);
-                writer.WriteObjectValue(ShippingAddress);
+                writer.WriteObjectValue<DataBoxShippingAddress>(ShippingAddress, options);
             }
-            if (options.Format != "W" && DeliveryPackage != null)
+            if (options.Format != "W" && Optional.IsDefined(DeliveryPackage))
             {
                 writer.WritePropertyName("deliveryPackage"u8);
-                writer.WriteObjectValue(DeliveryPackage);
+                writer.WriteObjectValue<PackageShippingDetails>(DeliveryPackage, options);
             }
-            if (options.Format != "W" && ReturnPackage != null)
+            if (options.Format != "W" && Optional.IsDefined(ReturnPackage))
             {
                 writer.WritePropertyName("returnPackage"u8);
-                writer.WriteObjectValue(ReturnPackage);
+                writer.WriteObjectValue<PackageShippingDetails>(ReturnPackage, options);
             }
-            if (!(DataImportDetails is ChangeTrackingList<DataImportDetails> collection5 && collection5.IsUndefined))
+            if (Optional.IsCollectionDefined(DataImportDetails))
             {
                 writer.WritePropertyName("dataImportDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataImportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataImportDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(DataExportDetails is ChangeTrackingList<DataExportDetails> collection6 && collection6.IsUndefined))
+            if (Optional.IsCollectionDefined(DataExportDetails))
             {
                 writer.WritePropertyName("dataExportDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in DataExportDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DataExportDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
             writer.WritePropertyName("jobDetailsType"u8);
             writer.WriteStringValue(JobDetailsType.ToSerialString());
-            if (Preferences != null)
+            if (Optional.IsDefined(Preferences))
             {
                 writer.WritePropertyName("preferences"u8);
-                writer.WriteObjectValue(Preferences);
+                writer.WriteObjectValue<DataBoxOrderPreferences>(Preferences, options);
             }
-            if (ReverseShippingDetails != null)
+            if (Optional.IsDefined(ReverseShippingDetails))
             {
                 writer.WritePropertyName("reverseShippingDetails"u8);
-                writer.WriteObjectValue(ReverseShippingDetails);
+                writer.WriteObjectValue<ReverseShippingDetails>(ReverseShippingDetails, options);
             }
-            if (options.Format != "W" && !(CopyLogDetails is ChangeTrackingList<CopyLogDetails> collection7 && collection7.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(CopyLogDetails))
             {
                 writer.WritePropertyName("copyLogDetails"u8);
                 writer.WriteStartArray();
                 foreach (var item in CopyLogDetails)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<CopyLogDetails>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && ReverseShipmentLabelSasKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ReverseShipmentLabelSasKey))
             {
                 writer.WritePropertyName("reverseShipmentLabelSasKey"u8);
                 writer.WriteStringValue(ReverseShipmentLabelSasKey);
             }
-            if (options.Format != "W" && ChainOfCustodySasKey != null)
+            if (options.Format != "W" && Optional.IsDefined(ChainOfCustodySasKey))
             {
                 writer.WritePropertyName("chainOfCustodySasKey"u8);
                 writer.WriteStringValue(ChainOfCustodySasKey);
             }
-            if (options.Format != "W" && DeviceErasureDetails != null)
+            if (options.Format != "W" && Optional.IsDefined(DeviceErasureDetails))
             {
                 writer.WritePropertyName("deviceErasureDetails"u8);
-                writer.WriteObjectValue(DeviceErasureDetails);
+                writer.WriteObjectValue<DeviceErasureDetails>(DeviceErasureDetails, options);
             }
-            if (KeyEncryptionKey != null)
+            if (Optional.IsDefined(KeyEncryptionKey))
             {
                 writer.WritePropertyName("keyEncryptionKey"u8);
-                writer.WriteObjectValue(KeyEncryptionKey);
+                writer.WriteObjectValue<DataBoxKeyEncryptionKey>(KeyEncryptionKey, options);
             }
-            if (ExpectedDataSizeInTerabytes.HasValue)
+            if (Optional.IsDefined(ExpectedDataSizeInTerabytes))
             {
                 writer.WritePropertyName("expectedDataSizeInTeraBytes"u8);
                 writer.WriteNumberValue(ExpectedDataSizeInTerabytes.Value);
             }
-            if (options.Format != "W" && !(Actions is ChangeTrackingList<CustomerResolutionCode> collection8 && collection8.IsUndefined))
+            if (options.Format != "W" && Optional.IsCollectionDefined(Actions))
             {
                 writer.WritePropertyName("actions"u8);
                 writer.WriteStartArray();
@@ -187,17 +187,17 @@ namespace Azure.ResourceManager.DataBox.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && LastMitigationActionOnJob != null)
+            if (options.Format != "W" && Optional.IsDefined(LastMitigationActionOnJob))
             {
                 writer.WritePropertyName("lastMitigationActionOnJob"u8);
-                writer.WriteObjectValue(LastMitigationActionOnJob);
+                writer.WriteObjectValue<LastMitigationActionOnJob>(LastMitigationActionOnJob, options);
             }
-            if (options.Format != "W" && DataCenterAddress != null)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterAddress))
             {
                 writer.WritePropertyName("datacenterAddress"u8);
-                writer.WriteObjectValue(DataCenterAddress);
+                writer.WriteObjectValue<DataCenterAddressResult>(DataCenterAddress, options);
             }
-            if (options.Format != "W" && DataCenterCode.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(DataCenterCode))
             {
                 writer.WritePropertyName("dataCenterCode"u8);
                 writer.WriteStringValue(DataCenterCode.Value.ToString());
@@ -225,7 +225,7 @@ namespace Azure.ResourceManager.DataBox.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataBoxDiskJobDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -579,7 +579,7 @@ namespace Azure.ResourceManager.DataBox.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -595,7 +595,7 @@ namespace Azure.ResourceManager.DataBox.Models
                         return DeserializeDataBoxDiskJobDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataBoxDiskJobDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

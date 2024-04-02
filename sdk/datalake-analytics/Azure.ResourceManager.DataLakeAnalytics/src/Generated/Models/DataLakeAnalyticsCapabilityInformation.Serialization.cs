@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsCapabilityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsCapabilityInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && SubscriptionId.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId.Value);
             }
-            if (options.Format != "W" && State.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(State))
             {
                 writer.WritePropertyName("state"u8);
                 writer.WriteStringValue(State.Value.ToString());
             }
-            if (options.Format != "W" && MaxAccountCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxAccountCount))
             {
                 writer.WritePropertyName("maxAccountCount"u8);
                 writer.WriteNumberValue(MaxAccountCount.Value);
             }
-            if (options.Format != "W" && AccountCount.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(AccountCount))
             {
                 writer.WritePropertyName("accountCount"u8);
                 writer.WriteNumberValue(AccountCount.Value);
             }
-            if (options.Format != "W" && IsUnderMigrationState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(IsUnderMigrationState))
             {
                 writer.WritePropertyName("migrationState"u8);
                 writer.WriteBooleanValue(IsUnderMigrationState.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<DataLakeAnalyticsCapabilityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DataLakeAnalyticsCapabilityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DataLakeAnalyticsCapabilityInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -167,7 +167,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsCapabilityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsCapabilityInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -183,7 +183,7 @@ namespace Azure.ResourceManager.DataLakeAnalytics.Models
                         return DeserializeDataLakeAnalyticsCapabilityInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DataLakeAnalyticsCapabilityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DataLakeAnalyticsCapabilityInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

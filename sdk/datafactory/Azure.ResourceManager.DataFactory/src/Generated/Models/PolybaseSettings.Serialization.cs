@@ -23,26 +23,26 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolybaseSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolybaseSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolybaseSettings)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (RejectType.HasValue)
+            if (Optional.IsDefined(RejectType))
             {
                 writer.WritePropertyName("rejectType"u8);
                 writer.WriteStringValue(RejectType.Value.ToString());
             }
-            if (RejectValue != null)
+            if (Optional.IsDefined(RejectValue))
             {
                 writer.WritePropertyName("rejectValue"u8);
                 JsonSerializer.Serialize(writer, RejectValue);
             }
-            if (RejectSampleValue != null)
+            if (Optional.IsDefined(RejectSampleValue))
             {
                 writer.WritePropertyName("rejectSampleValue"u8);
                 JsonSerializer.Serialize(writer, RejectSampleValue);
             }
-            if (UseTypeDefault != null)
+            if (Optional.IsDefined(UseTypeDefault))
             {
                 writer.WritePropertyName("useTypeDefault"u8);
                 JsonSerializer.Serialize(writer, UseTypeDefault);
@@ -67,7 +67,7 @@ namespace Azure.ResourceManager.DataFactory.Models
             var format = options.Format == "W" ? ((IPersistableModel<PolybaseSettings>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PolybaseSettings)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PolybaseSettings)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -141,7 +141,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PolybaseSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolybaseSettings)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -157,7 +157,7 @@ namespace Azure.ResourceManager.DataFactory.Models
                         return DeserializePolybaseSettings(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PolybaseSettings)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PolybaseSettings)} does not support reading '{options.Format}' format.");
             }
         }
 

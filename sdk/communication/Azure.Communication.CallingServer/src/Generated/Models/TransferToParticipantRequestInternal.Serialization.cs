@@ -16,18 +16,18 @@ namespace Azure.Communication.CallingServer
         {
             writer.WriteStartObject();
             writer.WritePropertyName("targetParticipant"u8);
-            writer.WriteObjectValue(TargetParticipant);
-            if (TransfereeCallerId != null)
+            writer.WriteObjectValue<CommunicationIdentifierModel>(TargetParticipant);
+            if (Optional.IsDefined(TransfereeCallerId))
             {
                 writer.WritePropertyName("transfereeCallerId"u8);
-                writer.WriteObjectValue(TransfereeCallerId);
+                writer.WriteObjectValue<PhoneNumberIdentifierModel>(TransfereeCallerId);
             }
-            if (UserToUserInformation != null)
+            if (Optional.IsDefined(UserToUserInformation))
             {
                 writer.WritePropertyName("userToUserInformation"u8);
                 writer.WriteStringValue(UserToUserInformation);
             }
-            if (OperationContext != null)
+            if (Optional.IsDefined(OperationContext))
             {
                 writer.WritePropertyName("operationContext"u8);
                 writer.WriteStringValue(OperationContext);

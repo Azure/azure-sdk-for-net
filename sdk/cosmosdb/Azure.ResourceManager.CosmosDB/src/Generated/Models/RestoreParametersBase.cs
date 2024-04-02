@@ -53,17 +53,24 @@ namespace Azure.ResourceManager.CosmosDB.Models
         /// <summary> Initializes a new instance of <see cref="RestoreParametersBase"/>. </summary>
         /// <param name="restoreSource"> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </param>
         /// <param name="restoreTimestampInUtc"> Time to which the account has to be restored (ISO-8601 format). </param>
+        /// <param name="isRestoreWithTtlDisabled"> Specifies whether the restored account will have Time-To-Live disabled upon the successful restore. </param>
         /// <param name="serializedAdditionalRawData"> Keeps track of any properties unknown to the library. </param>
-        internal RestoreParametersBase(string restoreSource, DateTimeOffset? restoreTimestampInUtc, IDictionary<string, BinaryData> serializedAdditionalRawData)
+        internal RestoreParametersBase(string restoreSource, DateTimeOffset? restoreTimestampInUtc, bool? isRestoreWithTtlDisabled, IDictionary<string, BinaryData> serializedAdditionalRawData)
         {
             RestoreSource = restoreSource;
             RestoreTimestampInUtc = restoreTimestampInUtc;
+            IsRestoreWithTtlDisabled = isRestoreWithTtlDisabled;
             _serializedAdditionalRawData = serializedAdditionalRawData;
         }
 
         /// <summary> The id of the restorable database account from which the restore has to be initiated. For example: /subscriptions/{subscriptionId}/providers/Microsoft.DocumentDB/locations/{location}/restorableDatabaseAccounts/{restorableDatabaseAccountName}. </summary>
+        [WirePath("restoreSource")]
         public string RestoreSource { get; set; }
         /// <summary> Time to which the account has to be restored (ISO-8601 format). </summary>
+        [WirePath("restoreTimestampInUtc")]
         public DateTimeOffset? RestoreTimestampInUtc { get; set; }
+        /// <summary> Specifies whether the restored account will have Time-To-Live disabled upon the successful restore. </summary>
+        [WirePath("restoreWithTtlDisabled")]
+        public bool? IsRestoreWithTtlDisabled { get; set; }
     }
 }

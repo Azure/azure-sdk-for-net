@@ -22,37 +22,37 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(L2Networks is ChangeTrackingList<L2NetworkAttachmentConfiguration> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(L2Networks))
             {
                 writer.WritePropertyName("l2Networks"u8);
                 writer.WriteStartArray();
                 foreach (var item in L2Networks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<L2NetworkAttachmentConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(L3Networks is ChangeTrackingList<L3NetworkAttachmentConfiguration> collection0 && collection0.IsUndefined))
+            if (Optional.IsCollectionDefined(L3Networks))
             {
                 writer.WritePropertyName("l3Networks"u8);
                 writer.WriteStartArray();
                 foreach (var item in L3Networks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<L3NetworkAttachmentConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (!(TrunkedNetworks is ChangeTrackingList<TrunkedNetworkAttachmentConfiguration> collection1 && collection1.IsUndefined))
+            if (Optional.IsCollectionDefined(TrunkedNetworks))
             {
                 writer.WritePropertyName("trunkedNetworks"u8);
                 writer.WriteStartArray();
                 foreach (var item in TrunkedNetworks)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<TrunkedNetworkAttachmentConfiguration>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -79,7 +79,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
             var format = options.Format == "W" ? ((IPersistableModel<AttachedNetworkConfiguration>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -161,7 +161,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.NetworkCloud.Models
                         return DeserializeAttachedNetworkConfiguration(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(AttachedNetworkConfiguration)} does not support reading '{options.Format}' format.");
             }
         }
 

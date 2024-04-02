@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExcludedServicesConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExcludedServicesConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExcludedServicesConfig)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ExcludedServicesConfigId != null)
+            if (Optional.IsDefined(ExcludedServicesConfigId))
             {
                 writer.WritePropertyName("excludedServicesConfigId"u8);
                 writer.WriteStringValue(ExcludedServicesConfigId);
             }
-            if (ExcludedServicesList != null)
+            if (Optional.IsDefined(ExcludedServicesList))
             {
                 writer.WritePropertyName("excludedServicesList"u8);
                 writer.WriteStringValue(ExcludedServicesList);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HDInsight.Models
             var format = options.Format == "W" ? ((IPersistableModel<ExcludedServicesConfig>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ExcludedServicesConfig)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ExcludedServicesConfig)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ExcludedServicesConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExcludedServicesConfig)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HDInsight.Models
                         return DeserializeExcludedServicesConfig(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ExcludedServicesConfig)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ExcludedServicesConfig)} does not support reading '{options.Format}' format.");
             }
         }
 

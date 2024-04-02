@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateInstallProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateInstallProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateInstallProgress)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && PercentComplete.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PercentComplete))
             {
                 writer.WritePropertyName("percentComplete"u8);
                 writer.WriteNumberValue(PercentComplete.Value);
             }
-            if (options.Format != "W" && NumberOfUpdatesToInstall.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesToInstall))
             {
                 writer.WritePropertyName("numberOfUpdatesToInstall"u8);
                 writer.WriteNumberValue(NumberOfUpdatesToInstall.Value);
             }
-            if (options.Format != "W" && NumberOfUpdatesInstalled.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfUpdatesInstalled))
             {
                 writer.WritePropertyName("numberOfUpdatesInstalled"u8);
                 writer.WriteNumberValue(NumberOfUpdatesInstalled.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
             var format = options.Format == "W" ? ((IPersistableModel<UpdateInstallProgress>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(UpdateInstallProgress)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(UpdateInstallProgress)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(UpdateInstallProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateInstallProgress)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -147,7 +147,7 @@ namespace Azure.ResourceManager.DataBoxEdge.Models
                         return DeserializeUpdateInstallProgress(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(UpdateInstallProgress)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(UpdateInstallProgress)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -8,7 +8,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Azure.Core;
 
 namespace Azure.ResourceManager.AppComplianceAutomation.Models
 {
@@ -57,14 +56,8 @@ namespace Azure.ResourceManager.AppComplianceAutomation.Models
         /// <exception cref="ArgumentNullException"> <paramref name="timeZone"/> or <paramref name="resources"/> is null. </exception>
         public ReportProperties(string timeZone, DateTimeOffset triggerOn, IEnumerable<ResourceMetadata> resources)
         {
-            if (timeZone == null)
-            {
-                throw new ArgumentNullException(nameof(timeZone));
-            }
-            if (resources == null)
-            {
-                throw new ArgumentNullException(nameof(resources));
-            }
+            Argument.AssertNotNull(timeZone, nameof(timeZone));
+            Argument.AssertNotNull(resources, nameof(resources));
 
             TimeZone = timeZone;
             TriggerOn = triggerOn;

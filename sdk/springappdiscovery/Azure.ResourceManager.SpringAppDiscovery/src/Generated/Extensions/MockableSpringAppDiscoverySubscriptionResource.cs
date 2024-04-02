@@ -8,11 +8,8 @@
 using System;
 using System.Threading;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
-using Azure.ResourceManager.SpringAppDiscovery;
 
 namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
 {
@@ -139,14 +136,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <returns> An async collection of <see cref="SpringBootServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SpringBootServerResource> GetSpringBootServersAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpringBootServerspringbootserversRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, siteName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpringBootServerspringbootserversRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, siteName);
@@ -181,14 +171,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <returns> A collection of <see cref="SpringBootServerResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SpringBootServerResource> GetSpringBootServers(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpringBootServerspringbootserversRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, siteName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpringBootServerspringbootserversRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, siteName);
@@ -223,14 +206,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <returns> An async collection of <see cref="SpringBootAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual AsyncPageable<SpringBootAppResource> GetSpringBootAppsAsync(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpringBootAppspringbootappsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, siteName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpringBootAppspringbootappsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, siteName);
@@ -265,14 +241,7 @@ namespace Azure.ResourceManager.SpringAppDiscovery.Mocking
         /// <returns> A collection of <see cref="SpringBootAppResource"/> that may take multiple service requests to iterate over. </returns>
         public virtual Pageable<SpringBootAppResource> GetSpringBootApps(string siteName, CancellationToken cancellationToken = default)
         {
-            if (siteName == null)
-            {
-                throw new ArgumentNullException(nameof(siteName));
-            }
-            if (siteName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(siteName));
-            }
+            Argument.AssertNotNullOrEmpty(siteName, nameof(siteName));
 
             HttpMessage FirstPageRequest(int? pageSizeHint) => SpringBootAppspringbootappsRestClient.CreateListBySubscriptionRequest(Id.SubscriptionId, siteName);
             HttpMessage NextPageRequest(int? pageSizeHint, string nextLink) => SpringBootAppspringbootappsRestClient.CreateListBySubscriptionNextPageRequest(nextLink, Id.SubscriptionId, siteName);

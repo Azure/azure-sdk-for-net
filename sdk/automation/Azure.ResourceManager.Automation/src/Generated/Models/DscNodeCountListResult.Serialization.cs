@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeCountListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeCountListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeCountListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Value is ChangeTrackingList<DscNodeCount> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Value))
             {
                 writer.WritePropertyName("value"u8);
                 writer.WriteStartArray();
                 foreach (var item in Value)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<DscNodeCount>(item, options);
                 }
                 writer.WriteEndArray();
             }
-            if (TotalCount.HasValue)
+            if (Optional.IsDefined(TotalCount))
             {
                 writer.WritePropertyName("totalCount"u8);
                 writer.WriteNumberValue(TotalCount.Value);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Automation.Models
             var format = options.Format == "W" ? ((IPersistableModel<DscNodeCountListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(DscNodeCountListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(DscNodeCountListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Automation.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeCountListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeCountListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Automation.Models
                         return DeserializeDscNodeCountListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(DscNodeCountListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(DscNodeCountListResult)} does not support reading '{options.Format}' format.");
             }
         }
 

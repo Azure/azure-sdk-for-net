@@ -22,18 +22,18 @@ namespace Azure.ResourceManager.MixedReality.Models
             var format = options.Format == "W" ? ((IPersistableModel<MixedRealityNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MixedRealityNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MixedRealityNameAvailabilityResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
             writer.WritePropertyName("nameAvailable"u8);
             writer.WriteBooleanValue(IsNameAvailable);
-            if (Reason.HasValue)
+            if (Optional.IsDefined(Reason))
             {
                 writer.WritePropertyName("reason"u8);
                 writer.WriteStringValue(Reason.Value.ToString());
             }
-            if (Message != null)
+            if (Optional.IsDefined(Message))
             {
                 writer.WritePropertyName("message"u8);
                 writer.WriteStringValue(Message);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.MixedReality.Models
             var format = options.Format == "W" ? ((IPersistableModel<MixedRealityNameAvailabilityResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(MixedRealityNameAvailabilityResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(MixedRealityNameAvailabilityResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -120,7 +120,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(MixedRealityNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MixedRealityNameAvailabilityResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -136,7 +136,7 @@ namespace Azure.ResourceManager.MixedReality.Models
                         return DeserializeMixedRealityNameAvailabilityResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(MixedRealityNameAvailabilityResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(MixedRealityNameAvailabilityResult)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,17 +22,17 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (!(Exclusions is ChangeTrackingList<OwaspCrsExclusionEntry> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Exclusions))
             {
                 writer.WritePropertyName("exclusions"u8);
                 writer.WriteStartArray();
                 foreach (var item in Exclusions)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<OwaspCrsExclusionEntry>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -40,7 +40,7 @@ namespace Azure.ResourceManager.Network.Models
             writer.WriteStartArray();
             foreach (var item in ManagedRuleSets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<ManagedRuleSet>(item, options);
             }
             writer.WriteEndArray();
             if (options.Format != "W" && _serializedAdditionalRawData != null)
@@ -66,7 +66,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ManagedRulesDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -129,7 +129,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -145,7 +145,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeManagedRulesDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ManagedRulesDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

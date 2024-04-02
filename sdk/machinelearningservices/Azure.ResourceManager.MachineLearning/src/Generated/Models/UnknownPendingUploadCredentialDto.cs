@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Azure.ResourceManager.MachineLearning.Models
 {
-    /// <summary> The UnknownPendingUploadCredentialDto. </summary>
+    /// <summary> Unknown version of PendingUploadCredentialDto. </summary>
     internal partial class UnknownPendingUploadCredentialDto : PendingUploadCredentialDto
     {
         /// <summary> Initializes a new instance of <see cref="UnknownPendingUploadCredentialDto"/>. </summary>

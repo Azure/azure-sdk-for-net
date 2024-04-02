@@ -22,31 +22,31 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvironmentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (NativeResourceId != null)
+            if (Optional.IsDefined(NativeResourceId))
             {
                 writer.WritePropertyName("nativeResourceId"u8);
                 writer.WriteStringValue(NativeResourceId);
             }
-            if (EnvironmentHierarchyId != null)
+            if (Optional.IsDefined(EnvironmentHierarchyId))
             {
                 writer.WritePropertyName("environmentHierarchyId"u8);
                 writer.WriteStringValue(EnvironmentHierarchyId);
             }
-            if (OrganizationalHierarchyId != null)
+            if (Optional.IsDefined(OrganizationalHierarchyId))
             {
                 writer.WritePropertyName("organizationalHierarchyId"u8);
                 writer.WriteStringValue(OrganizationalHierarchyId);
             }
-            if (SubscriptionId != null)
+            if (Optional.IsDefined(SubscriptionId))
             {
                 writer.WritePropertyName("subscriptionId"u8);
                 writer.WriteStringValue(SubscriptionId);
             }
-            if (TenantId.HasValue)
+            if (Optional.IsDefined(TenantId))
             {
                 writer.WritePropertyName("tenantId"u8);
                 writer.WriteStringValue(TenantId.Value);
@@ -74,7 +74,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
             var format = options.Format == "W" ? ((IPersistableModel<EnvironmentDetails>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -155,7 +155,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Azure.ResourceManager.SecurityCenter.Models
                         return DeserializeEnvironmentDetails(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(EnvironmentDetails)} does not support reading '{options.Format}' format.");
             }
         }
 

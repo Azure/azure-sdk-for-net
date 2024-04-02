@@ -51,14 +51,8 @@ namespace Azure.ResourceManager.Logic.Models
         /// <exception cref="ArgumentNullException"> <paramref name="qualifier"/> or <paramref name="value"/> is null. </exception>
         public IntegrationAccountBusinessIdentity(string qualifier, string value)
         {
-            if (qualifier == null)
-            {
-                throw new ArgumentNullException(nameof(qualifier));
-            }
-            if (value == null)
-            {
-                throw new ArgumentNullException(nameof(value));
-            }
+            Argument.AssertNotNull(qualifier, nameof(qualifier));
+            Argument.AssertNotNull(value, nameof(value));
 
             Qualifier = qualifier;
             Value = value;

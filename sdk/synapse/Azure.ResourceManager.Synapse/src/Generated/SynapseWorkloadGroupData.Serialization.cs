@@ -23,7 +23,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseWorkloadGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseWorkloadGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseWorkloadGroupData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -42,39 +42,39 @@ namespace Azure.ResourceManager.Synapse
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (MinResourcePercent.HasValue)
+            if (Optional.IsDefined(MinResourcePercent))
             {
                 writer.WritePropertyName("minResourcePercent"u8);
                 writer.WriteNumberValue(MinResourcePercent.Value);
             }
-            if (MaxResourcePercent.HasValue)
+            if (Optional.IsDefined(MaxResourcePercent))
             {
                 writer.WritePropertyName("maxResourcePercent"u8);
                 writer.WriteNumberValue(MaxResourcePercent.Value);
             }
-            if (MinResourcePercentPerRequest.HasValue)
+            if (Optional.IsDefined(MinResourcePercentPerRequest))
             {
                 writer.WritePropertyName("minResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MinResourcePercentPerRequest.Value);
             }
-            if (MaxResourcePercentPerRequest.HasValue)
+            if (Optional.IsDefined(MaxResourcePercentPerRequest))
             {
                 writer.WritePropertyName("maxResourcePercentPerRequest"u8);
                 writer.WriteNumberValue(MaxResourcePercentPerRequest.Value);
             }
-            if (Importance != null)
+            if (Optional.IsDefined(Importance))
             {
                 writer.WritePropertyName("importance"u8);
                 writer.WriteStringValue(Importance);
             }
-            if (QueryExecutionTimeout.HasValue)
+            if (Optional.IsDefined(QueryExecutionTimeout))
             {
                 writer.WritePropertyName("queryExecutionTimeout"u8);
                 writer.WriteNumberValue(QueryExecutionTimeout.Value);
@@ -103,7 +103,7 @@ namespace Azure.ResourceManager.Synapse
             var format = options.Format == "W" ? ((IPersistableModel<SynapseWorkloadGroupData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(SynapseWorkloadGroupData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(SynapseWorkloadGroupData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -247,7 +247,7 @@ namespace Azure.ResourceManager.Synapse
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(SynapseWorkloadGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseWorkloadGroupData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -263,7 +263,7 @@ namespace Azure.ResourceManager.Synapse
                         return DeserializeSynapseWorkloadGroupData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(SynapseWorkloadGroupData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(SynapseWorkloadGroupData)} does not support reading '{options.Format}' format.");
             }
         }
 

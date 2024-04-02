@@ -16,15 +16,15 @@ namespace Azure.AI.Translation.Document
         {
             writer.WriteStartObject();
             writer.WritePropertyName("source"u8);
-            writer.WriteObjectValue(Source);
+            writer.WriteObjectValue<TranslationSource>(Source);
             writer.WritePropertyName("targets"u8);
             writer.WriteStartArray();
             foreach (var item in Targets)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<TranslationTarget>(item);
             }
             writer.WriteEndArray();
-            if (StorageUriKind.HasValue)
+            if (Optional.IsDefined(StorageUriKind))
             {
                 writer.WritePropertyName("storageType"u8);
                 writer.WriteStringValue(StorageUriKind.Value.ToSerialString());

@@ -22,11 +22,11 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagementQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagementQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagementQueryContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SkipToken != null)
+            if (Optional.IsDefined(SkipToken))
             {
                 writer.WritePropertyName("skipToken"u8);
                 writer.WriteStringValue(SkipToken);
@@ -54,7 +54,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<NetworkManagementQueryContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(NetworkManagementQueryContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(NetworkManagementQueryContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -97,7 +97,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagementQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagementQueryContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -113,7 +113,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeNetworkManagementQueryContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(NetworkManagementQueryContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(NetworkManagementQueryContent)} does not support reading '{options.Format}' format.");
             }
         }
 

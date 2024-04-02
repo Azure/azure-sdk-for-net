@@ -17,7 +17,7 @@ namespace Azure.Monitor.Query.Models
             writer.WriteStartObject();
             writer.WritePropertyName("id"u8);
             writer.WriteStringValue(Id);
-            if (!(Headers is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Headers))
             {
                 writer.WritePropertyName("headers"u8);
                 writer.WriteStartObject();
@@ -29,7 +29,7 @@ namespace Azure.Monitor.Query.Models
                 writer.WriteEndObject();
             }
             writer.WritePropertyName("body"u8);
-            writer.WriteObjectValue(Body);
+            writer.WriteObjectValue<QueryBody>(Body);
             writer.WritePropertyName("path"u8);
             writer.WriteStringValue(Path);
             writer.WritePropertyName("method"u8);

@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDefinition)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ImageExists.HasValue)
+            if (Optional.IsDefined(ImageExists))
             {
                 writer.WritePropertyName("imageExists"u8);
                 writer.WriteBooleanValue(ImageExists.Value);
             }
-            if (ContentUri != null)
+            if (Optional.IsDefined(ContentUri))
             {
                 writer.WritePropertyName("contentUrl"u8);
                 writer.WriteStringValue(ContentUri.AbsoluteUri);
             }
-            if (RelativePath != null)
+            if (Optional.IsDefined(RelativePath))
             {
                 writer.WritePropertyName("relativePath"u8);
                 writer.WriteStringValue(RelativePath);
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
             var format = options.Format == "W" ? ((IPersistableModel<ImageDefinition>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ImageDefinition)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ImageDefinition)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -127,7 +127,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ImageDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDefinition)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -143,7 +143,7 @@ namespace Azure.ResourceManager.CustomerInsights.Models
                         return DeserializeImageDefinition(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ImageDefinition)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ImageDefinition)} does not support reading '{options.Format}' format.");
             }
         }
 

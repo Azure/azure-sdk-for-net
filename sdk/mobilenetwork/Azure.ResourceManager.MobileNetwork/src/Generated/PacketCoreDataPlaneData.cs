@@ -57,10 +57,7 @@ namespace Azure.ResourceManager.MobileNetwork
         /// <exception cref="ArgumentNullException"> <paramref name="userPlaneAccessInterface"/> is null. </exception>
         public PacketCoreDataPlaneData(AzureLocation location, MobileNetworkInterfaceProperties userPlaneAccessInterface) : base(location)
         {
-            if (userPlaneAccessInterface == null)
-            {
-                throw new ArgumentNullException(nameof(userPlaneAccessInterface));
-            }
+            Argument.AssertNotNull(userPlaneAccessInterface, nameof(userPlaneAccessInterface));
 
             UserPlaneAccessInterface = userPlaneAccessInterface;
             UserPlaneAccessVirtualIPv4Addresses = new ChangeTrackingList<string>();

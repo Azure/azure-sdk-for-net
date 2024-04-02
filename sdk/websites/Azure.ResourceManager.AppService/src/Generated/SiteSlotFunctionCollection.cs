@@ -12,10 +12,8 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using Autorest.CSharp.Core;
-using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
-using Azure.ResourceManager;
 
 namespace Azure.ResourceManager.AppService
 {
@@ -82,18 +80,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         public virtual async Task<ArmOperation<SiteSlotFunctionResource>> CreateOrUpdateAsync(WaitUntil waitUntil, string functionName, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.CreateOrUpdate");
             scope.Start();
@@ -141,18 +129,8 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> or <paramref name="data"/> is null. </exception>
         public virtual ArmOperation<SiteSlotFunctionResource> CreateOrUpdate(WaitUntil waitUntil, string functionName, FunctionEnvelopeData data, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionName));
-            }
-            if (data == null)
-            {
-                throw new ArgumentNullException(nameof(data));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
+            Argument.AssertNotNull(data, nameof(data));
 
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.CreateOrUpdate");
             scope.Start();
@@ -198,14 +176,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual async Task<Response<SiteSlotFunctionResource>> GetAsync(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.Get");
             scope.Start();
@@ -250,14 +221,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual Response<SiteSlotFunctionResource> Get(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.Get");
             scope.Start();
@@ -362,14 +326,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual async Task<Response<bool>> ExistsAsync(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.Exists");
             scope.Start();
@@ -412,14 +369,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual Response<bool> Exists(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.Exists");
             scope.Start();
@@ -462,14 +412,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual async Task<NullableResponse<SiteSlotFunctionResource>> GetIfExistsAsync(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetIfExists");
             scope.Start();
@@ -514,14 +457,7 @@ namespace Azure.ResourceManager.AppService
         /// <exception cref="ArgumentNullException"> <paramref name="functionName"/> is null. </exception>
         public virtual NullableResponse<SiteSlotFunctionResource> GetIfExists(string functionName, CancellationToken cancellationToken = default)
         {
-            if (functionName == null)
-            {
-                throw new ArgumentNullException(nameof(functionName));
-            }
-            if (functionName.Length == 0)
-            {
-                throw new ArgumentException("Value cannot be an empty string.", nameof(functionName));
-            }
+            Argument.AssertNotNullOrEmpty(functionName, nameof(functionName));
 
             using var scope = _siteSlotFunctionWebAppsClientDiagnostics.CreateScope("SiteSlotFunctionCollection.GetIfExists");
             scope.Start();

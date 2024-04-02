@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVirtualIPItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVirtualIPItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVirtualIPItem)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (EndIP != null)
+            if (Optional.IsDefined(EndIP))
             {
                 writer.WritePropertyName("endIP"u8);
                 writer.WriteStringValue(EndIP);
             }
-            if (StartIP != null)
+            if (Optional.IsDefined(StartIP))
             {
                 writer.WritePropertyName("startIP"u8);
                 writer.WriteStringValue(StartIP);
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
             var format = options.Format == "W" ? ((IPersistableModel<KubernetesVirtualIPItem>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(KubernetesVirtualIPItem)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(KubernetesVirtualIPItem)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -108,7 +108,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVirtualIPItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVirtualIPItem)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -124,7 +124,7 @@ namespace Azure.ResourceManager.HybridContainerService.Models
                         return DeserializeKubernetesVirtualIPItem(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(KubernetesVirtualIPItem)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(KubernetesVirtualIPItem)} does not support reading '{options.Format}' format.");
             }
         }
 

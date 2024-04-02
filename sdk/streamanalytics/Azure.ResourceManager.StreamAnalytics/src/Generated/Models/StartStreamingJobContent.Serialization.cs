@@ -22,16 +22,16 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StartStreamingJobContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartStreamingJobContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StartStreamingJobContent)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (OutputStartMode.HasValue)
+            if (Optional.IsDefined(OutputStartMode))
             {
                 writer.WritePropertyName("outputStartMode"u8);
                 writer.WriteStringValue(OutputStartMode.Value.ToString());
             }
-            if (OutputStartOn.HasValue)
+            if (Optional.IsDefined(OutputStartOn))
             {
                 writer.WritePropertyName("outputStartTime"u8);
                 writer.WriteStringValue(OutputStartOn.Value, "O");
@@ -59,7 +59,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
             var format = options.Format == "W" ? ((IPersistableModel<StartStreamingJobContent>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(StartStreamingJobContent)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(StartStreamingJobContent)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -116,7 +116,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(StartStreamingJobContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StartStreamingJobContent)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -132,7 +132,7 @@ namespace Azure.ResourceManager.StreamAnalytics.Models
                         return DeserializeStartStreamingJobContent(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(StartStreamingJobContent)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(StartStreamingJobContent)} does not support reading '{options.Format}' format.");
             }
         }
 

@@ -22,22 +22,22 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (SourceStatus.HasValue)
+            if (Optional.IsDefined(SourceStatus))
             {
                 writer.WritePropertyName("sourceStatus"u8);
                 writer.WriteStringValue(SourceStatus.Value.ToString());
             }
-            if (!(States is ChangeTrackingList<ConnectionStateSnapshot> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(States))
             {
                 writer.WritePropertyName("states"u8);
                 writer.WriteStartArray();
                 foreach (var item in States)
                 {
-                    writer.WriteObjectValue(item);
+                    writer.WriteObjectValue<ConnectionStateSnapshot>(item, options);
                 }
                 writer.WriteEndArray();
             }
@@ -64,7 +64,7 @@ namespace Azure.ResourceManager.Network.Models
             var format = options.Format == "W" ? ((IPersistableModel<ConnectionMonitorQueryResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -126,7 +126,7 @@ namespace Azure.ResourceManager.Network.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -142,7 +142,7 @@ namespace Azure.ResourceManager.Network.Models
                         return DeserializeConnectionMonitorQueryResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(ConnectionMonitorQueryResult)} does not support reading '{options.Format}' format.");
             }
         }
 

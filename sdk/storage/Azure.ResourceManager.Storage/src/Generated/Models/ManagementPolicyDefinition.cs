@@ -50,10 +50,7 @@ namespace Azure.ResourceManager.Storage.Models
         /// <exception cref="ArgumentNullException"> <paramref name="actions"/> is null. </exception>
         public ManagementPolicyDefinition(ManagementPolicyAction actions)
         {
-            if (actions == null)
-            {
-                throw new ArgumentNullException(nameof(actions));
-            }
+            Argument.AssertNotNull(actions, nameof(actions));
 
             Actions = actions;
         }
@@ -75,8 +72,10 @@ namespace Azure.ResourceManager.Storage.Models
         }
 
         /// <summary> An object that defines the action set. </summary>
+        [WirePath("actions")]
         public ManagementPolicyAction Actions { get; set; }
         /// <summary> An object that defines the filter set. </summary>
+        [WirePath("filters")]
         public ManagementPolicyFilter Filters { get; set; }
     }
 }

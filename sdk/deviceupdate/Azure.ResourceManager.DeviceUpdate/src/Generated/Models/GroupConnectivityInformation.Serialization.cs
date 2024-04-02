@@ -22,21 +22,21 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<GroupConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (options.Format != "W" && GroupId != null)
+            if (options.Format != "W" && Optional.IsDefined(GroupId))
             {
                 writer.WritePropertyName("groupId"u8);
                 writer.WriteStringValue(GroupId);
             }
-            if (options.Format != "W" && MemberName != null)
+            if (options.Format != "W" && Optional.IsDefined(MemberName))
             {
                 writer.WritePropertyName("memberName"u8);
                 writer.WriteStringValue(MemberName);
             }
-            if (!(CustomerVisibleFqdns is ChangeTrackingList<string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(CustomerVisibleFqdns))
             {
                 writer.WritePropertyName("customerVisibleFqdns"u8);
                 writer.WriteStartArray();
@@ -46,17 +46,17 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 }
                 writer.WriteEndArray();
             }
-            if (options.Format != "W" && InternalFqdn != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalFqdn))
             {
                 writer.WritePropertyName("internalFqdn"u8);
                 writer.WriteStringValue(InternalFqdn);
             }
-            if (RedirectMapId != null)
+            if (Optional.IsDefined(RedirectMapId))
             {
                 writer.WritePropertyName("redirectMapId"u8);
                 writer.WriteStringValue(RedirectMapId);
             }
-            if (PrivateLinkServiceArmRegion.HasValue)
+            if (Optional.IsDefined(PrivateLinkServiceArmRegion))
             {
                 writer.WritePropertyName("privateLinkServiceArmRegion"u8);
                 writer.WriteStringValue(PrivateLinkServiceArmRegion.Value);
@@ -84,7 +84,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
             var format = options.Format == "W" ? ((IPersistableModel<GroupConnectivityInformation>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -177,7 +177,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -193,7 +193,7 @@ namespace Azure.ResourceManager.DeviceUpdate.Models
                         return DeserializeGroupConnectivityInformation(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(GroupConnectivityInformation)} does not support reading '{options.Format}' format.");
             }
         }
 

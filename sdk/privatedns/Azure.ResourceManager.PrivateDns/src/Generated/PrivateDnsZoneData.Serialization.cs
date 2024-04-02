@@ -9,7 +9,6 @@ using System;
 using System.ClientModel.Primitives;
 using System.Collections.Generic;
 using System.Text.Json;
-using Azure;
 using Azure.Core;
 using Azure.ResourceManager.Models;
 using Azure.ResourceManager.PrivateDns.Models;
@@ -25,16 +24,16 @@ namespace Azure.ResourceManager.PrivateDns
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
-            if (ETag.HasValue)
+            if (Optional.IsDefined(ETag))
             {
                 writer.WritePropertyName("etag"u8);
                 writer.WriteStringValue(ETag.Value.ToString());
             }
-            if (!(Tags is ChangeTrackingDictionary<string, string> collection && collection.IsUndefined))
+            if (Optional.IsCollectionDefined(Tags))
             {
                 writer.WritePropertyName("tags"u8);
                 writer.WriteStartObject();
@@ -62,49 +61,49 @@ namespace Azure.ResourceManager.PrivateDns
                 writer.WritePropertyName("type"u8);
                 writer.WriteStringValue(ResourceType);
             }
-            if (options.Format != "W" && SystemData != null)
+            if (options.Format != "W" && Optional.IsDefined(SystemData))
             {
                 writer.WritePropertyName("systemData"u8);
                 JsonSerializer.Serialize(writer, SystemData);
             }
             writer.WritePropertyName("properties"u8);
             writer.WriteStartObject();
-            if (options.Format != "W" && MaxNumberOfRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfRecords))
             {
                 writer.WritePropertyName("maxNumberOfRecordSets"u8);
                 writer.WriteNumberValue(MaxNumberOfRecords.Value);
             }
-            if (options.Format != "W" && NumberOfRecords.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfRecords))
             {
                 writer.WritePropertyName("numberOfRecordSets"u8);
                 writer.WriteNumberValue(NumberOfRecords.Value);
             }
-            if (options.Format != "W" && MaxNumberOfVirtualNetworkLinks.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfVirtualNetworkLinks))
             {
                 writer.WritePropertyName("maxNumberOfVirtualNetworkLinks"u8);
                 writer.WriteNumberValue(MaxNumberOfVirtualNetworkLinks.Value);
             }
-            if (options.Format != "W" && NumberOfVirtualNetworkLinks.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfVirtualNetworkLinks))
             {
                 writer.WritePropertyName("numberOfVirtualNetworkLinks"u8);
                 writer.WriteNumberValue(NumberOfVirtualNetworkLinks.Value);
             }
-            if (options.Format != "W" && MaxNumberOfVirtualNetworkLinksWithRegistration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(MaxNumberOfVirtualNetworkLinksWithRegistration))
             {
                 writer.WritePropertyName("maxNumberOfVirtualNetworkLinksWithRegistration"u8);
                 writer.WriteNumberValue(MaxNumberOfVirtualNetworkLinksWithRegistration.Value);
             }
-            if (options.Format != "W" && NumberOfVirtualNetworkLinksWithRegistration.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(NumberOfVirtualNetworkLinksWithRegistration))
             {
                 writer.WritePropertyName("numberOfVirtualNetworkLinksWithRegistration"u8);
                 writer.WriteNumberValue(NumberOfVirtualNetworkLinksWithRegistration.Value);
             }
-            if (options.Format != "W" && PrivateDnsProvisioningState.HasValue)
+            if (options.Format != "W" && Optional.IsDefined(PrivateDnsProvisioningState))
             {
                 writer.WritePropertyName("provisioningState"u8);
                 writer.WriteStringValue(PrivateDnsProvisioningState.Value.ToString());
             }
-            if (options.Format != "W" && InternalId != null)
+            if (options.Format != "W" && Optional.IsDefined(InternalId))
             {
                 writer.WritePropertyName("internalId"u8);
                 writer.WriteStringValue(InternalId);
@@ -133,7 +132,7 @@ namespace Azure.ResourceManager.PrivateDns
             var format = options.Format == "W" ? ((IPersistableModel<PrivateDnsZoneData>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -333,7 +332,7 @@ namespace Azure.ResourceManager.PrivateDns
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -349,7 +348,7 @@ namespace Azure.ResourceManager.PrivateDns
                         return DeserializePrivateDnsZoneData(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(PrivateDnsZoneData)} does not support reading '{options.Format}' format.");
             }
         }
 

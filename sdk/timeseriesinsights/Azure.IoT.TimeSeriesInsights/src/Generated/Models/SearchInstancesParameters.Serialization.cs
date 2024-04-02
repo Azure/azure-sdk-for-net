@@ -15,22 +15,22 @@ namespace Azure.IoT.TimeSeriesInsights
         void IUtf8JsonSerializable.Write(Utf8JsonWriter writer)
         {
             writer.WriteStartObject();
-            if (Recursive.HasValue)
+            if (Optional.IsDefined(Recursive))
             {
                 writer.WritePropertyName("recursive"u8);
                 writer.WriteBooleanValue(Recursive.Value);
             }
-            if (Sort != null)
+            if (Optional.IsDefined(Sort))
             {
                 writer.WritePropertyName("sort"u8);
-                writer.WriteObjectValue(Sort);
+                writer.WriteObjectValue<InstancesSortParameter>(Sort);
             }
-            if (Highlights.HasValue)
+            if (Optional.IsDefined(Highlights))
             {
                 writer.WritePropertyName("highlights"u8);
                 writer.WriteBooleanValue(Highlights.Value);
             }
-            if (PageSize.HasValue)
+            if (Optional.IsDefined(PageSize))
             {
                 writer.WritePropertyName("pageSize"u8);
                 writer.WriteNumberValue(PageSize.Value);

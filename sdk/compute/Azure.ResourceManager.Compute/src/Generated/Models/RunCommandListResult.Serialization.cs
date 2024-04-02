@@ -22,7 +22,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandListResult)} does not support writing '{format}' format.");
             }
 
             writer.WriteStartObject();
@@ -30,10 +30,10 @@ namespace Azure.ResourceManager.Compute.Models
             writer.WriteStartArray();
             foreach (var item in Value)
             {
-                writer.WriteObjectValue(item);
+                writer.WriteObjectValue<RunCommandDocumentBase>(item, options);
             }
             writer.WriteEndArray();
-            if (NextLink != null)
+            if (Optional.IsDefined(NextLink))
             {
                 writer.WritePropertyName("nextLink"u8);
                 writer.WriteStringValue(NextLink);
@@ -61,7 +61,7 @@ namespace Azure.ResourceManager.Compute.Models
             var format = options.Format == "W" ? ((IPersistableModel<RunCommandListResult>)this).GetFormatFromOptions(options) : options.Format;
             if (format != "J")
             {
-                throw new FormatException($"The model {nameof(RunCommandListResult)} does not support '{format}' format.");
+                throw new FormatException($"The model {nameof(RunCommandListResult)} does not support reading '{format}' format.");
             }
 
             using JsonDocument document = JsonDocument.ParseValue(ref reader);
@@ -115,7 +115,7 @@ namespace Azure.ResourceManager.Compute.Models
                 case "J":
                     return ModelReaderWriter.Write(this, options);
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandListResult)} does not support writing '{options.Format}' format.");
             }
         }
 
@@ -131,7 +131,7 @@ namespace Azure.ResourceManager.Compute.Models
                         return DeserializeRunCommandListResult(document.RootElement, options);
                     }
                 default:
-                    throw new FormatException($"The model {nameof(RunCommandListResult)} does not support '{options.Format}' format.");
+                    throw new FormatException($"The model {nameof(RunCommandListResult)} does not support reading '{options.Format}' format.");
             }
         }
 
