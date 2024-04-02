@@ -37,6 +37,7 @@ namespace Azure.Provisioning.Storage
                 location: Environment.GetEnvironmentVariable("AZURE_LOCATION") ?? AzureLocation.WestUS,
                 sku: new StorageSku(sku),
                 kind: kind,
+                networkRuleSet: new StorageAccountNetworkRuleSet(StorageNetworkDefaultAction.Deny),
                 // access tier cannot be set for premium accounts
                 accessTier: kind == StorageKind.BlobStorage || kind == StorageKind.StorageV2 ? StorageAccountAccessTier.Hot : null))
         {

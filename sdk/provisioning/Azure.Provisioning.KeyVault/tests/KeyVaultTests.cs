@@ -27,6 +27,19 @@ namespace Azure.Provisioning.KeyVaults.Tests
         }
 
         [RecordedTest]
+        public async Task KeyVaultNetworkRuleSet()
+        {
+            TestInfrastructure infrastructure = new TestInfrastructure(configuration: new Configuration { UseInteractiveMode = true });
+            var vault = infrastructure.AddKeyVault();
+            vault.AssignProperty(data => data.Properties.NetworkRuleSet.DefaultAction, "'Allow'");
+            vault.AssignProperty(data => data.Properties.NetworkRuleSet.Bypass, "'AzureServices'");
+
+            infrastructure.Build(GetOutputPath());
+
+            await ValidateBicepAsync(interactiveMode: true);
+        }
+
+        [RecordedTest]
         public async Task ExistingKeyVaultResource()
         {
             var infra = new TestInfrastructure();

@@ -131,6 +131,18 @@ namespace Azure.Provisioning.Storage.Tests
         }
 
         [RecordedTest]
+        public async Task StorageAccountWithNetworkRuleSet()
+        {
+            var infra = new TestInfrastructure();
+            var storageAccount = infra.AddStorageAccount(name: "photoAcct", sku: StorageSkuName.PremiumLrs, kind: StorageKind.BlockBlobStorage);
+            storageAccount.AssignProperty(p => p.NetworkRuleSet.DefaultAction, "'Allow'");
+            storageAccount.AssignProperty(p => p.NetworkRuleSet.Bypass, "'AzureServices'");
+            infra.Build(GetOutputPath());
+
+            await ValidateBicepAsync();
+        }
+
+        [RecordedTest]
         public async Task ExistingResources()
         {
             var infra = new TestInfrastructure();
